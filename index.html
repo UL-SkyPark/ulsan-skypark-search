@@ -96,12 +96,19 @@
       box-shadow:0 12px 50px rgba(0,0,0,0.22);
     }
 
-    /* PC/태블릿: 표 */
+    /* ✅ 가로 스크롤 래퍼 */
+    .table-wrapper{
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 12px;
+    }
+
+    /* 테이블 */
     table{
       border-collapse: collapse;
       width:100%;
-      margin-top:12px;
-      table-layout: fixed;
+      table-layout: auto;
     }
     th, td{
       border:1px solid #e0e0e0;
@@ -109,24 +116,21 @@
       text-align:left;
       font-size:16px;
       vertical-align:middle;
-      overflow:hidden;
-      text-overflow: ellipsis;
       white-space: nowrap;
     }
     th{
       background: linear-gradient(145deg,#f8f9fa,#e9ecef);
       font-weight:800;
       color:#2c3e50;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-    th:nth-child(1), td:nth-child(1){ width: 23%; }
-    th:nth-child(2), td:nth-child(2){ width: 35%; }
-    th:nth-child(3), td:nth-child(3){ width: 23%; }
-    th:nth-child(4), td:nth-child(4){ width: 19%; }
 
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
     .loading{ font-size:18px; color:#4CAF50; padding:24px; font-weight:600; }
 
-    /* ✅ 모바일: 봉안번호만 줄바꿈, 나머지는 한 줄 */
+    /* ✅ 모바일: 가로 스크롤 */
     @media (max-width: 480px){
       .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
       main{ margin:8px; padding:40px 16px; min-height: 94vh; }
@@ -140,61 +144,23 @@
 
       #result{ width:100%; padding:16px; max-height: 520px; }
 
-      /* 테이블 → 카드 변환 */
-      table, tbody, tr, td { display:block; }
-      th { display:none; }
-
-      /* 빈 카드(헤더 tr) 제거 */
-      table > tbody > tr:first-child { display:none; }
-
-      tr{
-        margin-bottom: 12px;
-        border: 1px solid #e0e0e0;
-        border-radius: 12px;
-        padding: 12px;
-        background: #fff;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      /* 테이블 최소 너비 설정 → 가로 스크롤 발생 */
+      table{
+        min-width: 650px;  /* 모바일 화면보다 넓게 → 가로 스크롤 */
+        font-size: 14px;
       }
 
-      /* ✅ 기본: 한 줄 유지(말줄임) */
-      td{
-        border:none;
-        padding: 8px 0;
-        
-        display:flex;
-        align-items:center;
-        gap: 10px;
-        
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        
-        font-size: 15px;
-        line-height: 1.4;
-        min-width: 0;
-      }
-
-      /* 라벨 */
-      td::before{
-        content: attr(data-label);
-        flex: 0 0 72px;
-        font-weight: 700;
-        color: #546e7a;
-        font-size: 13px;
+      th, td{
+        padding: 10px 8px;
         white-space: nowrap;
       }
 
-      td + td{ border-top: 1px solid #f1f3f5; }
-
-      /* ✅ 봉안번호(2번째)만 줄바꿈 허용 */
-      tr td:nth-child(2){
-        white-space: normal;        /* 줄바꿈 허용 */
-        word-break: break-all;      /* 긴 문자열 강제 줄바꿈 */
-        overflow: visible;
-        text-overflow: clip;
-        align-items: flex-start;    /* 여러 줄일 때 위쪽 정렬 */
-        font-size: 13px;
-        line-height: 1.35;
+      /* 봉안번호만 줄바꿈 허용 (선택) */
+      td:nth-child(2){
+        white-space: normal;
+        word-break: break-all;
+        min-width: 180px;
+        max-width: 250px;
       }
     }
   </style>
@@ -270,16 +236,17 @@
       );
 
       if (found.length > 0) {
-        let table = "<table><tr><th>고인명</th><th>봉안번호</th><th>신청자명</th><th>안치일자</th></tr>";
+        // ✅ table-wrapper로 감싸서 가로 스크롤
+        let table = '<div class="table-wrapper"><table><tr><th>고인명</th><th>봉안번호</th><th>신청자명</th><th>안치일자</th></tr>';
         found.forEach(row => {
           table += `<tr>
-            <td data-label="고인명">${row["사망자명"] || ""}</td>
-            <td data-label="봉안번호">${row["봉안번호"] || ""}</td>
-            <td data-label="신청자명">${maskName(row["신청자명"])}</td>
-            <td data-label="안치일자">${row["안치일자"] || ""}</td>
+            <td>${row["사망자명"] || ""}</td>
+            <td>${row["봉안번호"] || ""}</td>
+            <td>${maskName(row["신청자명"])}</td>
+            <td>${row["안치일자"] || ""}</td>
           </tr>`;
         });
-        table += "</table>";
+        table += '</table></div>';
         resultDiv.innerHTML = `<p><strong>검색 결과 ${found.length}건</strong></p>` + table;
       } else {
         resultDiv.innerHTML = `<div class="no-result">'<strong>${keyword}</strong>'에 대한 검색 결과가 없습니다.</div>`;
