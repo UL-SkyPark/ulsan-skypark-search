@@ -11,14 +11,14 @@
       font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
       min-height: 100vh;
       text-align: center;
-      
-      /* ✅ 16:10 비율의 로고 포함 배경 이미지 적용 */
-      background-image: url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/5d7bf339-5aae-44bb-95fe-e831eb5b3d2d.png');
+
+      /* ✅ 생성된 배경 이미지 적용 */
+      background-image: url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/f57d12a7-b5da-4bc4-b019-45f834a3dd9f.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
-      
+
       display: flex;
       justify-content: center;
       align-items: center;
@@ -26,7 +26,9 @@
     }
 
     .home-btn{
-      position: fixed; top: 12px; left: 12px;
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px;
       background: linear-gradient(135deg, #e3f2fd, #bbdefb);
       color: #1976d2;
       border: 1px solid rgba(187,222,251,0.4);
@@ -45,7 +47,7 @@
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      
+
       width: min(1100px, 100%);
       max-width: 100%;
       padding: 60px 40px;
@@ -108,14 +110,20 @@
     form button{
       font-size:18px;
       padding:16px 32px;
-      background: linear-gradient(145deg,#4CAF50,#45a049);
+      background: linear-gradient(145deg, #1a237e, #283593);
       color:#fff;
       border:none;
       border-radius:14px;
       cursor:pointer;
       height:52px;
       font-weight:600;
-      box-shadow:0 6px 25px rgba(76,175,80,0.45);
+      box-shadow:0 6px 25px rgba(26, 35, 126, 0.45);
+      transition: all 0.25s ease;
+    }
+
+    form button:hover{
+      background: linear-gradient(145deg, #0d1642, #1a237e);
+      box-shadow:0 8px 30px rgba(26, 35, 126, 0.6);
     }
 
     #result{
@@ -190,7 +198,7 @@
     }
 
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
-    .loading{ font-size:18px; color:#4CAF50; padding:24px; font-weight:600; }
+    .loading{ font-size:18px; color:#1a237e; padding:24px; font-weight:600; }
 
     /* ======================================== */
     .detail-modal{
@@ -198,18 +206,18 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      
+
       width: min(560px, 90vw);
       max-height: 85vh;
       overflow: auto;
-      
+
       border: none;
       border-radius: 16px;
       padding: 0;
       box-shadow: 0 20px 60px rgba(0,0,0,0.4);
       background: #fff;
     }
-    
+
     .detail-modal::backdrop{
       background: rgba(0,0,0,0.5);
     }
@@ -297,7 +305,7 @@
       line-height: 1.4;
       word-break: break-word;
     }
-    
+
     .info-value.mono{
       font-family: "Malgun Gothic", "맑은 고딕", monospace;
     }
@@ -324,7 +332,7 @@
 
       body * { visibility: hidden; }
       .detail-modal, .detail-modal * { visibility: visible; }
-      
+
       .detail-modal{
         position: static;
         width: 120mm;
@@ -409,7 +417,12 @@
         padding: 10px;
       }
 
-      .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
+      .home-btn{ 
+        font-size:14px; 
+        padding:10px 14px; 
+        bottom:12px; 
+        right:12px; 
+      }
 
       main{
         width: 100%;
@@ -433,7 +446,7 @@
         font-size:14px;
         padding:10px; 
       }
-      
+
       .detail-modal{ width: 94vw; }
       .modal-title{ font-size: 18px; }
       .title-underline{ width: 100%; }
@@ -478,19 +491,19 @@
       <div class="info-grid">
         <div class="info-label">고인명</div>
         <div class="info-value" id="modalName"></div>
-        
+
         <div class="divider"></div>
-        
+
         <div class="info-label">봉안실</div>
         <div class="info-value mono" id="modalRoom"></div>
-        
+
         <div class="divider"></div>
-        
+
         <div class="info-label">신청자</div>
         <div class="info-value" id="modalApplicant"></div>
-        
+
         <div class="divider"></div>
-        
+
         <div class="info-label">안치일자</div>
         <div class="info-value" id="modalDate"></div>
       </div>
@@ -560,7 +573,7 @@
       document.getElementById("modalRoom").textContent = room;
       document.getElementById("modalApplicant").textContent = applicant;
       document.getElementById("modalDate").textContent = date;
-      
+
       document.getElementById("detailModal").showModal();
     }
 
@@ -643,7 +656,7 @@
 
         html += `</tbody></table></div>`;
         resultDiv.innerHTML = html;
-        
+
         bindTableClick();
 
       } else {
