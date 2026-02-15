@@ -49,7 +49,7 @@
       background: rgba(255,255,255,0.15);
       backdrop-filter: blur(12px);
       border-radius: 25px;
-      padding: 50px;
+      padding: 40px 50px 50px; /* 상단 패딩 줄여서 위로 올림 */
       margin: 20px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15);
       z-index: 10;
@@ -57,7 +57,7 @@
 
     /* 타이틀 영역 */
     .title-container {
-      margin-bottom: 40px;
+      margin-bottom: 30px; /* 타이틀과 검색 간격 줄임 */
       line-height: 1.1;
     }
 
@@ -66,13 +66,13 @@
       text-shadow: 2px 2px 4px rgba(255,255,255,0.9);
       font-weight: 300;
       margin: 0;
-      font-size: 50px; /* 50px로 변경 */
+      font-size: 50px;
       letter-spacing: -1px;
     }
 
     h1 span {
       display: block;
-      font-size: 1.25em; /* 두 번째 줄은 첫 번째 줄의 125% 크기 */
+      font-size: 1em; /* 첫 번째 줄의 100% 크기로 변경 */
       font-weight: 400;
       margin-top: 5px;
       opacity: 0.9;
@@ -83,36 +83,39 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
+      gap: 20px;
     }
 
     form {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 15px;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     form label {
-      font-size: 22px; /* 약간 키움 */
+      font-size: 22px;
       color: #2c3e50;
       font-weight: 500;
+      white-space: nowrap;
     }
     
     form input {
       font-size: 20px;
-      padding: 18px 25px;
+      padding: 12px 20px; /* 높이 줄임 (18px → 12px) */
       border: 2px solid rgba(0,0,0,0.1);
       border-radius: 12px;
       background: rgba(255,255,255,0.95);
       width: 350px;
-      max-width: 90vw;
+      max-width: 70vw;
+      min-width: 280px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     
     form button {
       font-size: 20px;
-      padding: 18px 35px;
+      padding: 12px 30px; /* 높이 맞춤 (18px → 12px) */
       background-color: #4CAF50;
       color: white;
       border: none;
@@ -120,7 +123,8 @@
       cursor: pointer;
       box-shadow: 0 6px 20px rgba(76,175,80,0.4);
       transition: all 0.3s ease;
-      width: 120px;
+      height: 48px; /* 입력창과 높이 정확히 맞춤 */
+      flex-shrink: 0;
     }
 
     form button:hover {
@@ -178,35 +182,41 @@
     @media (max-width: 768px) {
       main {
         margin: 10px;
-        padding: 30px 20px;
+        padding: 25px 20px 40px; /* 모바일에서도 위로 올림 */
         height: 85vh;
       }
       
       .title-container {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
       }
       
       h1 {
-        font-size: 36px; /* 모바일에서 가독성 위해 축소 */
+        font-size: 36px;
       }
       
       h1 span {
-        font-size: 0.75em;
+        font-size: 1em;
+      }
+      
+      form {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
       }
       
       form input {
-        width: 280px;
-        font-size: 18px;
-        padding: 16px 20px;
+        width: 100%;
+        max-width: none;
+        min-width: auto;
+      }
+      
+      form button {
+        width: 140px;
+        align-self: center;
       }
       
       form label {
         font-size: 20px;
-      }
-      
-      form button {
-        width: 110px;
-        padding: 16px 25px;
       }
     }
 
@@ -216,7 +226,12 @@
       }
       
       form input {
-        width: 250px;
+        padding: 14px 16px;
+      }
+      
+      form button {
+        padding: 14px 24px;
+        width: 120px;
       }
     }
   </style>
@@ -231,7 +246,8 @@
     
     <div class="search-form-container">
       <form id="searchForm">
-       <input type="text" id="keyword" name="keyword" placeholder="고인명을 입력하세요" required>
+        <label for="keyword">고인명</label>
+        <input type="text" id="keyword" name="keyword" placeholder="고인명을 입력하세요" required>
         <button type="submit">검색</button>
       </form>
     </div>
