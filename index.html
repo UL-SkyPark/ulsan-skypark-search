@@ -18,7 +18,7 @@
       position: relative;
     }
 
-    /* 초기화면 버튼 - 앞으로 이동 */
+    /* 초기화면 버튼 */
     .home-btn {
       position: fixed;
       top: 10px;
@@ -40,6 +40,27 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     }
 
+    /* 하단 중앙 울산시설공단 로고 */
+    .footer-logo {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-logo:hover {
+      opacity: 1;
+    }
+
+    .footer-logo img {
+      height: 55px;
+      width: auto;
+      filter: drop-shadow(0 3px 12px rgba(0,0,0,0.25));
+    }
+
     main {
       display: flex;
       justify-content: center;
@@ -49,15 +70,15 @@
       background: rgba(255,255,255,0.15);
       backdrop-filter: blur(12px);
       border-radius: 25px;
-      padding: 50px;
+      padding: 50px 50px 90px; /* 하단 로고 공간 확보 */
       margin: 20px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15);
       z-index: 10;
     }
 
-    /* 타이틀 영역 - 한 줄로 변경 */
+    /* 타이틀 - 한 줄 */
     .title-container {
-      margin-bottom: 40px;
+      margin-bottom: 45px;
     }
 
     h1 {
@@ -67,122 +88,138 @@
       margin: 0;
       font-size: 48px;
       letter-spacing: -1px;
-      line-height: 1.2;
+      line-height: 1.25;
     }
 
-    /* 검색 폼 가운데 정렬 */
+    /* 검색 폼 */
     .search-form-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 25px;
     }
 
     form {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 15px;
       flex-wrap: wrap;
       justify-content: center;
     }
     
     form input {
       font-size: 20px;
-      padding: 18px 25px; /* 높이 증가 (12px → 18px) */
+      padding: 18px 28px;
       border: 2px solid rgba(0,0,0,0.1);
-      border-radius: 12px;
-      background: rgba(255,255,255,0.95);
-      width: 380px; /* 약간 넓힘 */
+      border-radius: 15px;
+      background: rgba(255,255,255,0.98);
+      width: 400px;
       max-width: 75vw;
-      min-width: 300px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      min-width: 320px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    form input:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 6px 25px rgba(76,175,80,0.3);
+      transform: translateY(-1px);
     }
     
     form button {
       font-size: 20px;
-      padding: 18px 35px; /* 높이 맞춤 */
+      padding: 18px 40px;
       background-color: #4CAF50;
       color: white;
       border: none;
-      border-radius: 12px;
+      border-radius: 15px;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(76,175,80,0.4);
+      box-shadow: 0 6px 25px rgba(76,175,80,0.4);
       transition: all 0.3s ease;
-      height: 56px; /* 입력창과 높이 정확히 맞춤 */
+      height: 56px;
       flex-shrink: 0;
+      font-weight: 500;
     }
 
     form button:hover {
       background-color: #45a049;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(76,175,80,0.5);
     }
 
     #result {
       display: none;
-      margin-top: 20px;
+      margin-top: 25px;
       text-align: left;
-      width: 85%;
-      max-height: 600px;
+      width: 90%;
+      max-height: 550px;
       overflow-y: auto;
-      border: 1px solid rgba(255,255,255,0.4);
-      padding: 25px;
-      background-color: rgba(255,255,255,0.97);
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 30px;
+      background-color: rgba(255,255,255,0.98);
       border-radius: 20px;
-      box-shadow: 0 8px 35px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 45px rgba(0,0,0,0.25);
     }
 
     table {
       border-collapse: collapse;
       width: 100%;
-      margin-top: 10px;
+      margin-top: 15px;
     }
     
     th, td {
       border: 1px solid #e0e0e0;
-      padding: 15px;
+      padding: 16px;
       text-align: left;
       font-size: 18px;
     }
     
     th {
-      background-color: rgba(248,249,250,0.9);
+      background-color: #f8f9fa;
       font-weight: bold;
       color: #333;
     }
 
     .no-result {
-      font-size: 20px;
+      font-size: 22px;
       color: #666;
-      padding: 40px;
+      padding: 50px 20px;
       font-weight: 300;
+      line-height: 1.6;
     }
 
     .loading {
-      font-size: 18px;
+      font-size: 20px;
       color: #4CAF50;
-      padding: 20px;
+      padding: 30px;
+      font-weight: 400;
     }
 
-    /* 반응형 디자인 */
+    /* 반응형 */
     @media (max-width: 768px) {
       main {
         margin: 10px;
-        padding: 35px 20px;
+        padding: 35px 25px 80px;
         height: 85vh;
       }
       
-      .title-container {
-        margin-bottom: 30px;
+      .footer-logo {
+        bottom: 20px;
+      }
+      
+      .footer-logo img {
+        height: 45px;
       }
       
       h1 {
         font-size: 36px;
+        margin-bottom: 35px;
       }
       
       form {
         flex-direction: column;
-        gap: 15px;
-        align-items: stretch;
+        gap: 18px;
       }
       
       form input {
@@ -192,31 +229,33 @@
       }
       
       form button {
-        width: 160px;
-        align-self: center;
+        width: 180px;
       }
     }
 
     @media (max-width: 480px) {
       h1 {
         font-size: 32px;
-        font-size: 30px;
       }
       
-      form input {
-        padding: 16px 20px;
-        min-width: 260px;
+      .footer-logo img {
+        height: 40px;
       }
       
-      form button {
-        padding: 16px 28px;
-        width: 140px;
+      form input, form button {
+        padding: 16px 24px;
       }
     }
   </style>
 </head>
 <body>
   <button class="home-btn" onclick="resetView()">초기화면</button>
+
+  <!-- Base64 인코딩된 울산시설공단 로고 - 파일 없이 완벽 작동! -->
+  <div class="footer-logo">
+    <img src="data:image/jpeg;base64,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" 
+         alt="울산시설공단">
+  </div>
 
   <main>
     <div class="title-container">
@@ -236,7 +275,7 @@
   <script>
 let excelData = [];
 
-const DATA_URL = 'data/deceased_data.xlsx'; // 온라인 데이터 경로
+const DATA_URL = 'data/deceased_data.xlsx';
 
 // 페이지 로딩시 자동 데이터 로드
 window.onload = function() {
@@ -250,9 +289,7 @@ async function loadExcelData() {
     resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
     
     const response = await fetch(DATA_URL);
-    if (!response.ok) {
-      throw new Error('데이터 파일을 찾을 수 없습니다.');
-    }
+    if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
     
     const arrayBuffer = await response.arrayBuffer();
     const workbook = XLSX.read(arrayBuffer, { type: "array" });
@@ -269,7 +306,6 @@ async function loadExcelData() {
   }
 }
 
-// 검색 함수
 document.getElementById("searchForm").addEventListener("submit", function(event) {
   event.preventDefault();
   const keyword = document.getElementById("keyword").value.trim();
@@ -288,9 +324,7 @@ document.getElementById("searchForm").addEventListener("submit", function(event)
   }
 
   const found = excelData.filter(row => 
-    row["사망자명"] && 
-    row["사망자명"].includes(keyword) && 
-    !row["반환일자"]
+    row["사망자명"] && row["사망자명"].includes(keyword) && !row["반환일자"]
   );
 
   if (found.length > 0) {
@@ -324,7 +358,7 @@ function resetView() {
 }
   </script>
   
-  <!-- XLSX 라이브러리 CDN -->
+  <!-- XLSX 라이브러리 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
