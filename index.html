@@ -172,76 +172,85 @@
   </div>
 
   <script>
-    let excelData = [];
-    const uploadPassword = "1234";
+let excelData = [];
 
-    function requestPassword() {
-      const inputPassword = prompt("엑셀 업로드 암호를 입력하세요:");
-      if (inputPassword === null) {
-        alert("업로드가 취소되었습니다.");
-        return;
-      }
-      if (inputPassword !== uploadPassword) {
-        alert("암호가 올바르지 않습니다.");
-        return;
-      }
-      document.getElementById("excelFile").click();
-    }
+const DATA_URL = 'data/deceased_data.xlsx'; // 온라인 데이터 경로
 
-    document.getElementById("excelFile").addEventListener("change", function(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-        excelData = XLSX.utils.sheet_to_json(sheet);
-        alert("엑셀 파일이 성공적으로 업로드되었습니다!");
-      };
-      reader.readAsArrayBuffer(file);
+// 페이지 로딩시 자동 데이터 로드
+window.onload = function() {
+  loadExcelData();
+};
+
+async function loadExcelData() {
+  try {
+    const response = await fetch(DATA_URL);
+    const arrayBuffer = await response.arrayBuffer();
+    const workbook = XLSX.read(arrayBuffer, { type: "array" });
+    const sheetName = workbook.SheetNames[0];
+    excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    console.log('데이터 로드 완료:', excelData.length, '건');
+  } catch (error) {
+    console.error('데이터 로드 실패:', error);
+    alert('데이터 파일을 불러올 수 없습니다. 관리자에게 문의하세요.');
+  }
+}
+
+// 나머지 함수들은 동일...
+function requestPassword() {
+  const inputPassword = prompt("엑셀 업로드 암호를 입력하세요:");
+  if (inputPassword === null) return;
+  if (inputPassword !== "1234") {
+    alert("암호가 올바르지 않습니다.");
+    return;
+  }
+  document.getElementById("excelFile").click();
+}
+
+// 검색 함수 (기존과 동일)
+document.getElementById("searchForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const keyword = document.getElementById("keyword").value.trim();
+  const resultDiv = document.getElementById("result");
+
+  if (excelData.length === 0) {
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = '<p>데이터를 불러오는 중입니다. 잠시 후 다시 검색해주세요.</p>';
+    return;
+  }
+
+  const found = excelData.filter(row => 
+    row["사망자명"] === keyword && !row["반환일자"]
+  );
+
+  if (found.length > 0) {
+    let table = "<table><tr><th>고인명</th><th>봉안번호</th><th>신청자명</th><th>안치일자</th></tr>";
+    found.forEach(row => {
+      table += `<tr>
+        <td>${row["사망자명"] || ""}</td>
+        <td>${row["봉안번호"] || ""}</td>
+        <td>${maskName(row["신청자명"])}</td>
+        <td>${row["안치일자"] || ""}</td>
+      </tr>`;
     });
+    table += "</table>";
+    resultDiv.innerHTML = table;
+  } else {
+    resultDiv.innerHTML = "검색 결과가 없습니다.";
+  }
+  resultDiv.style.display = "block";
+});
 
-    function maskName(name) {
-      if (!name) return "";
-      if (name.length === 2) return name[0] + "*";
-      else if (name.length > 2) return name[0] + "*".repeat(name.length - 2) + name[name.length - 1];
-      else return name;
-    }
+function maskName(name) {
+  if (!name) return "";
+  if (name.length === 2) return name[0] + "*";
+  if (name.length > 2) return name[0] + "*".repeat(name.length - 2) + name.slice(-1);
+  return name;
+}
 
-    document.getElementById("searchForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      const keyword = document.getElementById("keyword").value.trim();
-      const resultDiv = document.getElementById("result");
-
-      if (!excelData || excelData.length === 0) {
-        resultDiv.style.display = "block";
-        resultDiv.textContent = "엑셀 파일을 먼저 업로드하세요.";
-        return;
-      }
-
-      const found = excelData.filter(row => row["사망자명"] === keyword && !row["반환일자"]);
-
-      if (found.length > 0) {
-        let table = "<table><tr><th>고인명</th><th>봉안번호</th><th>신청자명</th><th>안치일자</th></tr>";
-        found.forEach(row => {
-          table += `<tr><td>${row["사망자명"] || ""}</td><td>${row["봉안번호"] || ""}</td><td>${maskName(row["신청자명"])}</td><td>${row["안치일자"] || ""}</td></tr>`;
-        });
-        table += "</table>";
-        resultDiv.style.display = "block";
-        resultDiv.innerHTML = table;
-      } else {
-        resultDiv.style.display = "block";
-        resultDiv.textContent = "검색 결과가 없습니다.";
-      }
-    });
-
-    function resetView() {
-      document.getElementById("keyword").value = "";
-      document.getElementById("result").innerHTML = "";
-      document.getElementById("result").style.display = "none";
-    }
-  </script>
+function resetView() {
+  document.getElementById("keyword").value = "";
+  document.getElementById("result").style.display = "none";
+}
+</script>
 </body>
 </html>
