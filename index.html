@@ -5,23 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>울산하늘공원 추모의집 고인 검색</title>
   <style>
+    /* 기본 초기화(미리보기 코드에서 가져옴) */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
       min-height: 100vh;
-      position: relative;
-      /* 축소된 추모 분위기 배경 + 국화 */
-      background-image: 
-        radial-gradient(circle at 25% 85%, rgba(210,230,255,0.3) 0%, transparent 50%),
-        radial-gradient(circle at 75% 25%, rgba(245,252,255,0.4) 0%, transparent 50%),
-        /* 축소된 국화 패턴 */
-        url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNhKSIvPjxkZWZzPjxwYXR0ZXJuIGlkPSJhIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSIxMiIgb3BhY2l0eT0iMC4wNiIgZmlsbD0iI2ZmZjhmZiIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iMTUwIiByPSI4IiBvcGFjaXR5PSIwLjA0IiBmaWxsPSIjZmZmZWZmIi8+PGNpcmNsZSBjeD0iMTUwIiBjeT0iNTAiIHI9IjEwIiBvcGFjaXR5PSIwLjA1IiBmaWxsPSIjZjdmN2Y3Ii8+PC9wYXR0ZXJuPjwvZGVmcz48L3N2Zz4='),
-        linear-gradient(to bottom, #ebf2ff 0%, #f8fbff 50%, #fdfefe 100%);
-      background-size: 180px 180px, cover;
+      text-align: center;
+
+      /* ✅ 하늘 + 구름 + 국화 배경 (미리보기 코드에서 가져옴) */
+      background:
+        /* 1. 하늘 그라데이션 - 새벽 하늘 */
+        linear-gradient(135deg,
+          #87CEFA 0%,
+          #B0E0E6 20%,
+          #E0F6FF 40%,
+          #F0F8FF 60%,
+          #F5FAFF 80%,
+          #FAFBFD 100%
+        ),
+
+        /* 2. 구름 계층 1 - 높은 구름 */
+        radial-gradient(ellipse 120px 60px at 15% 15%, rgba(255,255,255,0.8) 0%, transparent 60%),
+        radial-gradient(ellipse 100px 50px at 75% 10%, rgba(255,255,255,0.75) 0%, transparent 60%),
+        radial-gradient(ellipse 80px 40px at 40% 25%, rgba(255,255,255,0.7) 0%, transparent 60%),
+
+        /* 3. 구름 계층 2 - 중간 구름 */
+        radial-gradient(ellipse 90px 45px at 5% 55%, rgba(255,255,255,0.65) 0%, transparent 55%),
+        radial-gradient(ellipse 110px 55px at 85% 45%, rgba(255,255,255,0.6) 0%, transparent 55%),
+
+        /* 4. 구름 계층 3 - 낮은 구름 */
+        radial-gradient(ellipse 70px 35px at 25% 75%, rgba(255,255,255,0.55) 0%, transparent 50%),
+        radial-gradient(ellipse 60px 30px at 65% 85%, rgba(255,255,255,0.5) 0%, transparent 50%),
+
+        /* 5. 국화 패턴(은은한 점묘 느낌) */
+        radial-gradient(circle 25px at 20% 30%, rgba(255,248,192,0.12) 0%, transparent 50%),
+        radial-gradient(circle 22px at 60% 20%, rgba(255,255,224,0.10) 0%, transparent 50%),
+        radial-gradient(circle 28px at 80% 65%, rgba(255,248,192,0.15) 0%, transparent 50%),
+        radial-gradient(circle 20px at 10% 80%, rgba(255,255,224,0.11) 0%, transparent 50%),
+        radial-gradient(circle 24px at 45% 90%, rgba(255,248,192,0.13) 0%, transparent 50%),
+
+        /* 6. 국화 디테일 */
+        radial-gradient(ellipse 8px 6px at 22% 32%, rgba(255,235,100,0.20) 0%, transparent 70%),
+        radial-gradient(ellipse 7px 5px at 62% 22%, rgba(255,240,120,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 9px 7px at 82% 67%, rgba(255,235,100,0.22) 0%, transparent 70%);
+
+      background-size:
+        cover,
+        500px 300px, 450px 280px, 400px 250px,
+        420px 260px, 480px 290px,
+        380px 240px, 360px 220px,
+        300px 300px, 280px 280px, 320px 320px, 260px 260px, 290px 290px,
+        50px 50px, 45px 45px, 55px 55px;
+
+      background-position:
+        center,
+        10% 8%, 65% 5%, 35% 18%,
+        3% 48%, 78% 38%,
+        22% 68%, 58% 78%,
+        18% 28%, 58% 18%, 77% 62%, 8% 77%, 42% 87%,
+        20% 30%, 60% 20%, 80% 65%;
+
+      background-repeat: no-repeat, repeat;
       background-attachment: fixed;
-      background-blend-mode: overlay;
+
+      /* 배경이 살짝 움직이게 */
+      animation: skyBreathe 30s ease-in-out infinite;
+    }
+
+    @keyframes skyBreathe {
+      0%, 100% {
+        background-position:
+          center,
+          10% 8%, 65% 5%, 35% 18%, 3% 48%, 78% 38%, 22% 68%, 58% 78%,
+          18% 28%, 58% 18%, 77% 62%, 8% 77%, 42% 87%,
+          20% 30%, 60% 20%, 80% 65%;
+      }
+      50% {
+        background-position:
+          center,
+          12% 10%, 67% 7%, 37% 20%, 5% 50%, 80% 40%, 24% 70%, 60% 80%,
+          20% 30%, 60% 20%, 79% 64%, 10% 79%, 44% 89%,
+          22% 32%, 62% 22%, 82% 67%;
+      }
     }
 
     .home-btn {
@@ -52,12 +118,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 85vh; /* 축소 */
+      height: 85vh;
       flex-direction: column;
       background: rgba(255,255,255,0.15);
       backdrop-filter: blur(12px);
       border-radius: 25px;
-      padding: 45px 40px; /* 축소 */
+      padding: 45px 40px;
       margin: 20px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.18);
       z-index: 10;
@@ -85,29 +151,28 @@
     }
 
     .title-container {
-      margin-bottom: 35px; /* 축소 */
+      margin-bottom: 35px;
       z-index: 2;
       position: relative;
     }
 
     h1 {
       color: #2c3e50;
-      text-shadow: 
+      text-shadow:
         2px 2px 5px rgba(255,255,255,0.8),
         0 0 15px rgba(255,255,255,0.3);
       font-weight: 700;
-      font-size: 42px; /* 축소 */
+      font-size: 42px;
       letter-spacing: -0.8px;
       line-height: 1.2;
       margin: 0;
-      font-family: Arial, sans-serif;
     }
 
     .search-form-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px; /* 축소 */
+      gap: 20px;
       z-index: 2;
       position: relative;
     }
@@ -115,21 +180,21 @@
     form {
       display: flex;
       align-items: center;
-      gap: 12px; /* 축소 */
+      gap: 12px;
       flex-wrap: wrap;
       justify-content: center;
     }
-    
+
     form input {
-      font-size: 18px; /* 축소 */
-      padding: 16px 24px; /* 축소 */
+      font-size: 18px;
+      padding: 16px 24px;
       border: 2px solid rgba(255,255,255,0.35);
       border-radius: 14px;
       background: rgba(255,255,255,0.96);
-      width: 360px; /* 축소 */
+      width: 360px;
       max-width: 72vw;
       min-width: 280px;
-      box-shadow: 
+      box-shadow:
         0 6px 25px rgba(0,0,0,0.12),
         inset 0 1px 4px rgba(255,255,255,0.9);
       outline: none;
@@ -139,26 +204,26 @@
 
     form input:focus {
       border-color: #4CAF50;
-      box-shadow: 
+      box-shadow:
         0 10px 35px rgba(76,175,80,0.25),
         inset 0 1px 6px rgba(255,255,255,1);
       transform: translateY(-1px);
       width: 370px;
     }
-    
+
     form button {
-      font-size: 18px; /* 축소 */
-      padding: 16px 32px; /* 축소 */
+      font-size: 18px;
+      padding: 16px 32px;
       background: linear-gradient(145deg, #4CAF50, #45a049);
       color: white;
       border: none;
       border-radius: 14px;
       cursor: pointer;
-      box-shadow: 
+      box-shadow:
         0 6px 25px rgba(76,175,80,0.45),
         inset 0 1px 4px rgba(255,255,255,0.25);
       transition: all 0.3s ease;
-      height: 52px; /* 축소 */
+      height: 52px;
       flex-shrink: 0;
       font-weight: 600;
       letter-spacing: 0.3px;
@@ -166,7 +231,7 @@
 
     form button:hover {
       transform: translateY(-2px);
-      box-shadow: 
+      box-shadow:
         0 12px 35px rgba(76,175,80,0.55),
         inset 0 1px 6px rgba(255,255,255,0.35);
     }
@@ -175,11 +240,11 @@
       display: none;
       margin-top: 25px;
       text-align: left;
-      width: 88%; /* 축소 */
-      max-height: 500px; /* 축소 */
+      width: 88%;
+      max-height: 500px;
       overflow-y: auto;
       border: 1px solid rgba(255,255,255,0.35);
-      padding: 28px; /* 축소 */
+      padding: 28px;
       background: rgba(255,255,255,0.95);
       border-radius: 20px;
       box-shadow: 0 12px 50px rgba(0,0,0,0.22);
@@ -192,14 +257,14 @@
       width: 100%;
       margin-top: 15px;
     }
-    
+
     th, td {
       border: 1px solid #e0e0e0;
-      padding: 15px; /* 축소 */
+      padding: 15px;
       text-align: left;
-      font-size: 17px; /* 축소 */
+      font-size: 17px;
     }
-    
+
     th {
       background: linear-gradient(145deg, #f8f9fa, #e9ecef);
       font-weight: bold;
@@ -207,21 +272,20 @@
     }
 
     .no-result {
-      font-size: 20px; /* 축소 */
+      font-size: 20px;
       color: #666;
-      padding: 45px 25px; /* 축소 */
+      padding: 45px 25px;
       font-weight: 400;
       line-height: 1.6;
     }
 
     .loading {
-      font-size: 19px; /* 축소 */
+      font-size: 19px;
       color: #4CAF50;
       padding: 30px;
       font-weight: 500;
     }
 
-    /* 반응형 */
     @media (max-width: 768px) {
       main {
         margin: 12px;
@@ -229,28 +293,28 @@
         height: 82vh;
         border-radius: 20px;
       }
-      
+
       h1 {
         font-size: 34px;
         margin-bottom: 30px;
       }
-      
+
       form {
         flex-direction: column;
         gap: 15px;
       }
-      
+
       form input {
         width: 100%;
         max-width: none;
         min-width: auto;
         padding: 18px 26px;
       }
-      
+
       form input:focus {
         width: 100%;
       }
-      
+
       form button {
         width: 160px;
         padding: 18px 32px;
@@ -258,22 +322,10 @@
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 30px;
-      }
-      
-      main {
-        padding: 30px 20px;
-      }
-      
-      form input, form button {
-        padding: 16px 22px;
-      }
-      
-      .home-btn {
-        font-size: 15px;
-        padding: 10px 16px;
-      }
+      h1 { font-size: 30px; }
+      main { padding: 30px 20px; }
+      form input, form button { padding: 16px 22px; }
+      .home-btn { font-size: 15px; padding: 10px 16px; }
     }
   </style>
 </head>
@@ -284,101 +336,102 @@
     <div class="title-container">
       <h1>울산하늘공원 추모의집 고인 검색</h1>
     </div>
-    
+
     <div class="search-form-container">
       <form id="searchForm">
         <input type="text" id="keyword" name="keyword" placeholder="고인명을 입력하세요" required>
         <button type="submit">검색</button>
       </form>
     </div>
-    
+
     <div id="result"></div>
   </main>
 
   <script>
-let excelData = [];
-const DATA_URL = 'data/deceased_data.xlsx';
+    let excelData = [];
+    const DATA_URL = 'data/deceased_data.xlsx';
 
-window.onload = function() {
-  loadExcelData();
-};
+    window.onload = function() {
+      loadExcelData();
+    };
 
-async function loadExcelData() {
-  try {
-    const resultDiv = document.getElementById("result");
-    resultDiv.style.display = "block";
-    resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
-    
-    const response = await fetch(DATA_URL);
-    if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
-    
-    const arrayBuffer = await response.arrayBuffer();
-    const workbook = XLSX.read(arrayBuffer, { type: "array" });
-    const sheetName = workbook.SheetNames[0];
-    excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-    
-    console.log('데이터 로드 완료:', excelData.length, '건');
-    resultDiv.style.display = "none";
-  } catch (error) {
-    console.error('데이터 로드 실패:', error);
-    document.getElementById("result").innerHTML = 
-      '<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>';
-    document.getElementById("result").style.display = "block";
-  }
-}
+    async function loadExcelData() {
+      try {
+        const resultDiv = document.getElementById("result");
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
 
-document.getElementById("searchForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const keyword = document.getElementById("keyword").value.trim();
-  const resultDiv = document.getElementById("result");
+        const response = await fetch(DATA_URL);
+        if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
 
-  if (excelData.length === 0) {
-    resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다. 잠시 후 다시 검색해주세요.</div>';
-    resultDiv.style.display = "block";
-    return;
-  }
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-  if (!keyword) {
-    resultDiv.innerHTML = '<div class="no-result">검색어를 입력해주세요.</div>';
-    resultDiv.style.display = "block";
-    return;
-  }
+        console.log('데이터 로드 완료:', excelData.length, '건');
+        resultDiv.style.display = "none";
+      } catch (error) {
+        console.error('데이터 로드 실패:', error);
+        document.getElementById("result").innerHTML =
+          '<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>';
+        document.getElementById("result").style.display = "block";
+      }
+    }
 
-  const found = excelData.filter(row => 
-    row["사망자명"] && row["사망자명"].includes(keyword) && !row["반환일자"]
-  );
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const keyword = document.getElementById("keyword").value.trim();
+      const resultDiv = document.getElementById("result");
 
-  if (found.length > 0) {
-    let table = "<table><tr><th>고인명</th><th>봉안번호</th><th>신청자명</th><th>안치일자</th></tr>";
-    found.forEach(row => {
-      table += `<tr>
-        <td>${row["사망자명"] || ""}</td>
-        <td>${row["봉안번호"] || ""}</td>
-        <td>${maskName(row["신청자명"])}</td>
-        <td>${row["안치일자"] || ""}</td>
-      </tr>`;
+      if (excelData.length === 0) {
+        resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다. 잠시 후 다시 검색해주세요.</div>';
+        resultDiv.style.display = "block";
+        return;
+      }
+
+      if (!keyword) {
+        resultDiv.innerHTML = '<div class="no-result">검색어를 입력해주세요.</div>';
+        resultDiv.style.display = "block";
+        return;
+      }
+
+      const found = excelData.filter(row =>
+        row["사망자명"] && row["사망자명"].includes(keyword) && !row["반환일자"]
+      );
+
+      if (found.length > 0) {
+        let table = "<table><tr><th>고인명</th><th>봉안번호</th><th>신청자명</th><th>안치일자</th></tr>";
+        found.forEach(row => {
+          table += `<tr>
+            <td>${row["사망자명"] || ""}</td>
+            <td>${row["봉안번호"] || ""}</td>
+            <td>${maskName(row["신청자명"])}</td>
+            <td>${row["안치일자"] || ""}</td>
+          </tr>`;
+        });
+        table += "</table>";
+        resultDiv.innerHTML = `<p><strong>검색 결과 ${found.length}건</strong></p>` + table;
+      } else {
+        resultDiv.innerHTML = `<div class="no-result">'<strong>${keyword}</strong>'에 대한 검색 결과가 없습니다.</div>`;
+      }
+      resultDiv.style.display = "block";
     });
-    table += "</table>";
-    resultDiv.innerHTML = `<p><strong>검색 결과 ${found.length}건</strong></p>` + table;
-  } else {
-    resultDiv.innerHTML = `<div class="no-result">'<strong>${keyword}</strong>'에 대한 검색 결과가 없습니다.</div>`;
-  }
-  resultDiv.style.display = "block";
-});
 
-function maskName(name) {
-  if (!name) return "";
-  if (name.length === 2) return name[0] + "*";
-  if (name.length > 2) return name[0] + "*".repeat(name.length - 2) + name.slice(-1);
-  return name;
-}
+    function maskName(name) {
+      if (!name) return "";
+      if (name.length === 2) return name[0] + "*";
+      if (name.length > 2) return name[0] + "*".repeat(name.length - 2) + name.slice(-1);
+      return name;
+    }
 
-function resetView() {
-  document.getElementById("keyword").value = "";
-  document.getElementById("result").style.display = "none";
-}
+    function resetView() {
+      document.getElementById("keyword").value = "";
+      document.getElementById("result").style.display = "none";
+    }
   </script>
-  
+
+  <!-- XLSX 라이브러리 (CDNjs) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
