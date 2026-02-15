@@ -12,8 +12,8 @@
       min-height: 100vh;
       text-align: center;
 
-      /* ✅ 생성된 배경 이미지 적용 */
-      background-image: url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/f57d12a7-b5da-4bc4-b019-45f834a3dd9f.png');
+      /* ✅ 최종 생성된 배경 이미지 적용 */
+      background-image: url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -28,18 +28,23 @@
     .home-btn{
       position: fixed; 
       bottom: 20px; 
-      right: 20px;
-      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-      color: #1976d2;
-      border: 1px solid rgba(187,222,251,0.4);
+      left: 20px;
+      background: linear-gradient(135deg, #e8f5e9, #c5e1a5);
+      color: #558b2f;
+      border: 1px solid rgba(197, 225, 165, 0.6);
       padding: 12px 18px;
       cursor: pointer;
       border-radius: 8px;
       font-size: 16px;
-      font-weight: 500;
-      box-shadow: 0 3px 12px rgba(144,202,249,0.25);
+      font-weight: 600;
+      box-shadow: 0 3px 12px rgba(139, 195, 74, 0.3);
       z-index: 100;
       transition: all 0.3s ease;
+    }
+
+    .home-btn:hover{
+      background: linear-gradient(135deg, #c5e1a5, #aed581);
+      box-shadow: 0 4px 16px rgba(139, 195, 74, 0.4);
     }
 
     main{
@@ -421,7 +426,7 @@
         font-size:14px; 
         padding:10px 14px; 
         bottom:12px; 
-        right:12px; 
+        left:12px; 
       }
 
       main{
