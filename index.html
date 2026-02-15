@@ -66,8 +66,6 @@
       box-shadow:0 6px 25px rgba(0,0,0,0.12);
       outline:none;
       transition: all 0.25s ease;
-      -webkit-appearance: none;
-      appearance: none;
     }
     form input:focus{ border-color:#4CAF50; transform: translateY(-1px); width:370px; }
 
@@ -128,7 +126,7 @@
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
     .loading{ font-size:18px; color:#4CAF50; padding:24px; font-weight:600; }
 
-    /* ✅ 모바일: 카드형(한글 1글자씩 떨어지는 문제 해결 버전) */
+    /* ✅ 모바일: 봉안번호만 줄바꿈, 나머지는 한 줄 */
     @media (max-width: 480px){
       .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
       main{ margin:8px; padding:40px 16px; min-height: 94vh; }
@@ -146,7 +144,7 @@
       table, tbody, tr, td { display:block; }
       th { display:none; }
 
-      /* ✅ 빈 카드(헤더 tr) 제거: 첫 번째 tr 숨김 */
+      /* 빈 카드(헤더 tr) 제거 */
       table > tbody > tr:first-child { display:none; }
 
       tr{
@@ -158,40 +156,46 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       }
 
+      /* ✅ 기본: 한 줄 유지(말줄임) */
       td{
         border:none;
         padding: 8px 0;
+        
         display:flex;
-        align-items:flex-start;
+        align-items:center;
         gap: 10px;
-        line-height: 1.4;
+        
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
         font-size: 15px;
-
-        /* ✅ 핵심: 한글이 1글자씩 떨어지는 설정 제거 */
-        overflow-wrap: normal;     /* anywhere 금지 */ /* [web:133] */
-        word-break: keep-all;      /* 한글 단어 단위 줄바꿈 */ /* [web:122] */
-        white-space: normal;
+        line-height: 1.4;
+        min-width: 0;
       }
 
-      /* 값(오른쪽)이 너무 좁아지지 않게 */
+      /* 라벨 */
       td::before{
         content: attr(data-label);
         flex: 0 0 72px;
         font-weight: 700;
         color: #546e7a;
         font-size: 13px;
-        line-height: 1.4;
-      }
-
-      /* ✅ 끊을 데 없는 긴 문자열(봉안번호 등)만 예외로 줄바꿈 허용 */
-      tr td:nth-child(2){
-        font-size: 13px;
-        letter-spacing: -0.2px;
-        word-break: normal;
-        overflow-wrap: break-word; /* 긴 번호/영문/숫자 덩어리만 안전하게 */ /* [web:133] */
+        white-space: nowrap;
       }
 
       td + td{ border-top: 1px solid #f1f3f5; }
+
+      /* ✅ 봉안번호(2번째)만 줄바꿈 허용 */
+      tr td:nth-child(2){
+        white-space: normal;        /* 줄바꿈 허용 */
+        word-break: break-all;      /* 긴 문자열 강제 줄바꿈 */
+        overflow: visible;
+        text-overflow: clip;
+        align-items: flex-start;    /* 여러 줄일 때 위쪽 정렬 */
+        font-size: 13px;
+        line-height: 1.35;
+      }
     }
   </style>
 </head>
