@@ -3,32 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>울산하늘공원 추모의집 고인 검색</title>
+  <title>울산하늘공원 고인 검색</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body{
       font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
       min-height: 100vh;
       text-align: center;
-
-      /* ✅ 최종 생성된 배경 이미지 적용 */
       background-image: url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
-
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
     }
-
     .home-btn{
-      position: fixed; 
-      bottom: 20px; 
-      right: 20px;
+      position: fixed; bottom: 20px; right: 20px;
       background: linear-gradient(135deg, #e8f5e9, #c5e1a5);
       color: #558b2f;
       border: 1px solid rgba(197, 225, 165, 0.6);
@@ -41,33 +34,23 @@
       z-index: 100;
       transition: all 0.3s ease;
     }
-
     .home-btn:hover{
       background: linear-gradient(135deg, #c5e1a5, #aed581);
       box-shadow: 0 4px 16px rgba(139, 195, 74, 0.4);
     }
-
     main{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
       width: min(1100px, 100%);
       max-width: 100%;
       padding: 60px 40px;
       margin: 0;
-
       background: rgba(255,255,255,0.25);
       backdrop-filter: blur(15px);
       border-radius: 25px;
-
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       border: 1px solid rgba(255,255,255,0.4);
     }
-
     .title-container{ margin-bottom: 30px; width: 100%; }
-
     h1{
       color:#1f3a5a;
       text-shadow: 2px 2px 5px rgba(255,255,255,0.8);
@@ -79,25 +62,33 @@
       margin: 0;
     }
     .title-line{ display:inline; }
-
     .search-form-container{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:14px;
-      width:100%;
-      margin-bottom: 20px;
+      display:flex; flex-direction:column; align-items:center;
+      gap:14px; width:100%; margin-bottom: 20px;
     }
-
-    form{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      justify-content:center;
-      width:100%;
+    .search-row{
+      display:flex; align-items:center; justify-content:center;
+      gap:12px; width:100%; flex-wrap:wrap;
     }
-
+    .menu-buttons{
+      display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
+    }
+    .menu-btn{
+      font-size:16px; padding:14px 16px; border-radius:14px;
+      border:1px solid rgba(255,255,255,0.55);
+      cursor:pointer; font-weight:800; color:#1f3a5a;
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 6px 22px rgba(0,0,0,0.10);
+      transition: all 0.2s ease;
+      min-width: 92px;
+    }
+    .menu-btn:hover{ transform: translateY(-1px); box-shadow: 0 8px 26px rgba(0,0,0,0.14); }
+    .menu-btn.active{
+      background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+      border-color: rgba(187, 222, 251, 0.9);
+      color:#0d47a1;
+    }
+    form{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center; }
     form input{
       font-size:18px;
       padding:16px 24px;
@@ -111,7 +102,6 @@
       outline:none;
       transition: all 0.25s ease;
     }
-
     form button{
       font-size:18px;
       padding:16px 32px;
@@ -125,12 +115,20 @@
       box-shadow:0 6px 25px rgba(144, 202, 249, 0.4);
       transition: all 0.25s ease;
     }
-
     form button:hover{
       background: linear-gradient(145deg, #90caf9, #64b5f6);
       box-shadow:0 8px 30px rgba(144, 202, 249, 0.5);
     }
-
+    .data-badge{
+      font-size: 13px;
+      color:#1f3a5a;
+      font-weight: 800;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.55);
+      padding: 8px 12px;
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    }
     #result{
       display:none;
       margin-top: 0;
@@ -146,20 +144,8 @@
       border-radius:20px;
       box-shadow:0 12px 50px rgba(0,0,0,0.22);
     }
-
-    .table-wrapper{
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      margin-top: 12px;
-    }
-
-    table{
-      border-collapse: collapse;
-      width: 100%;
-      table-layout: fixed;
-    }
-
+    .table-wrapper{ width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 12px; }
+    table{ border-collapse: collapse; width: 100%; table-layout: fixed; }
     th, td{
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       border:1px solid #e0e0e0;
@@ -169,12 +155,10 @@
       white-space: nowrap;
       text-align: center;
     }
-
     th:nth-child(1), td:nth-child(1) { width: 20%; }
     th:nth-child(2), td:nth-child(2) { width: 35%; }
     th:nth-child(3), td:nth-child(3) { width: 20%; }
     th:nth-child(4), td:nth-child(4) { width: 25%; }
-
     th{
       background: linear-gradient(145deg,#f8f9fa,#e9ecef);
       font-weight: 900;
@@ -183,291 +167,75 @@
       top: 0;
       z-index: 10;
     }
-
-    td{
-      font-weight: 600;
-      color: #111;
-    }
-
-    tbody tr{
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    tbody tr:hover{
-      background: #e3f2fd;
-    }
-
-    td.col-room{
-      font-family: "Malgun Gothic", "맑은 고딕", monospace;
-      letter-spacing: 0px;
-    }
-
+    td{ font-weight: 600; color: #111; }
+    tbody tr{ cursor: pointer; transition: background 0.2s; }
+    tbody tr:hover{ background: #e3f2fd; }
+    td.col-room{ font-family: "Malgun Gothic", "맑은 고딕", monospace; letter-spacing: 0px; }
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
     .loading{ font-size:18px; color:#1565c0; padding:24px; font-weight:600; }
 
-    /* ======================================== */
     .detail-modal{
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-
-      width: min(560px, 90vw);
-      max-height: 85vh;
-      overflow: auto;
-
-      border: none;
-      border-radius: 16px;
-      padding: 0;
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: min(560px, 90vw); max-height: 85vh; overflow: auto;
+      border: none; border-radius: 16px; padding: 0;
       box-shadow: 0 20px 60px rgba(0,0,0,0.4);
       background: #fff;
     }
-
-    .detail-modal::backdrop{
-      background: rgba(0,0,0,0.5);
-    }
-
+    .detail-modal::backdrop{ background: rgba(0,0,0,0.5); }
     .modal-header{
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 20px 24px 16px;
-      background: #fff;
-      border-bottom: none;
+      display: flex; flex-direction: column; align-items: flex-start;
+      padding: 20px 24px 16px; background: #fff; border-bottom: none;
     }
-
     .modal-title-row{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-bottom: 12px;
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; margin-bottom: 12px;
     }
-
     .modal-title{
-      font-size: 20px;
-      font-weight: 900;
-      color: #1f3a5a;
-      letter-spacing: -0.3px;
+      font-size: 20px; font-weight: 900; color: #1f3a5a; letter-spacing: -0.3px;
     }
-
     .title-underline{
-      width: 100%;
-      height: 2px;
+      width: 100%; height: 2px;
       background: linear-gradient(90deg, #2c3e50 0%, #95a5a6 100%);
       margin: 0;
     }
-
-    .modal-actions{
-      display: flex;
-      gap: 8px;
-    }
-
+    .modal-actions{ display: flex; gap: 8px; }
     .btn-print, .btn-close{
-      padding: 8px 16px;
-      border: 1px solid #ccc;
-      background: #fff;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 14px;
+      padding: 8px 16px; border: 1px solid #ccc; background: #fff;
+      border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px;
       transition: all 0.2s;
     }
-
     .btn-print{
-      background: #2196F3;
-      color: #fff;
-      border-color: #1976D2;
-      display: none;
+      background: #2196F3; color: #fff; border-color: #1976D2; display: none;
     }
     .btn-print:hover{ background: #1976D2; }
     .btn-close:hover{ background: #f0f0f0; }
-
-    .modal-body{
-      padding: 24px 30px 30px;
-      text-align: left;
-    }
-
+    .modal-body{ padding: 24px 30px 30px; text-align: left; }
     .info-grid{
-      display: grid;
-      grid-template-columns: 90px 1fr;
-      gap: 18px;
-      align-items: baseline;
+      display: grid; grid-template-columns: 90px 1fr;
+      gap: 18px; align-items: baseline;
     }
-
-    .info-label{
-      font-size: 14px;
-      color: #666;
-      font-weight: 700;
-      padding-top: 6px;
-    }
-
+    .info-label{ font-size: 14px; color: #666; font-weight: 700; padding-top: 6px; }
     .info-value{
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      font-size: 20pt;
-      font-weight: 800;
-      color: #111;
-      line-height: 1.4;
-      word-break: break-word;
+      font-size: 20pt; font-weight: 800; color: #111;
+      line-height: 1.4; word-break: break-word;
     }
+    .info-value.mono{ font-family: "Malgun Gothic", "맑은 고딕", monospace; }
+    .divider{ grid-column: 1 / -1; height: 1px; background: #e9ecef; margin: 8px 0; }
 
-    .info-value.mono{
-      font-family: "Malgun Gothic", "맑은 고딕", monospace;
-    }
-
-    .divider{
-      grid-column: 1 / -1;
-      height: 1px;
-      background: #e9ecef;
-      margin: 8px 0;
-    }
-
-    /* ======================================== */
-    /* 인쇄 스타일 */
-    @media print {
-      @page {
-        margin: 20mm;
-      }
-
-      html, body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        background: white;
-        display: block;
-      }
-
-      body * { 
-        visibility: hidden; 
-      }
-
-      .detail-modal, .detail-modal * { 
-        visibility: visible; 
-      }
-
-      .detail-modal{
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        transform: none;
-        box-shadow: none;
-        border: none;
-        overflow: visible;
-        border-radius: 0;
-        padding: 0;
-        margin: 0;
-        background: white;
-      }
-
-      .modal-header {
-        padding: 0 0 15px 0;
-        margin-bottom: 20px;
-      }
-
-      .modal-title-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .modal-title {
-        font-size: 24pt;
-        color: #000;
-        font-weight: 900;
-      }
-
-      .modal-actions { 
-        display: none; 
-      }
-
-      .title-underline {
-        width: 100%;
-        height: 2px;
-        background: #333;
-        margin-top: 10px;
-      }
-
-      .modal-body {
-        padding: 0;
-      }
-
-      .info-grid {
-        display: grid;
-        grid-template-columns: 80px 1fr;
-        gap: 20px;
-        align-items: baseline;
-      }
-
-      .info-label {
-        font-size: 12pt;
-        color: #666;
-        font-weight: 700;
-      }
-
-      .info-value {
-        font-size: 20pt;
-        color: #000;
-        font-weight: 800;
-        line-height: 1.4;
-      }
-
-      .divider {
-        grid-column: 1 / -1;
-        height: 1px;
-        background: #ddd;
-        margin: 10px 0;
-      }
-    }
-
-    /* PC 버전에서만 출력 버튼 표시 */
-    @media (min-width: 769px){
-      .btn-print { 
-        display: inline-block; 
-      }
-    }
-
+    @media (min-width: 769px){ .btn-print { display: inline-block; } }
     @media (max-width: 480px){
-      body{
-        padding: 10px;
-      }
-
-      .home-btn{ 
-        font-size:14px; 
-        padding:10px 14px; 
-        bottom:12px; 
-        right:12px; 
-      }
-
-      main{
-        width: 100%;
-        padding: 40px 20px;
-      }
-
-      h1{ font-size:26px; letter-spacing: -0.5px; }
-      .title-line{ display:block; }
-      .title-container{ margin-bottom: 20px; }
-
-      form{ flex-direction:column; gap:10px; }
+      body{ padding: 10px; }
+      main{ width:100%; padding: 40px 20px; }
+      h1{ font-size:26px; }
+      .search-row{ flex-direction: column; gap:10px; }
+      .menu-buttons{ width:100%; justify-content:center; }
+      .menu-btn{ width: 32%; min-width: 0; padding: 12px 10px; font-size: 14px; border-radius: 12px; }
+      form{ flex-direction:column; gap:10px; width:100%; }
       form input{ width:100%; max-width:none; min-width:auto; font-size:16px; padding:14px 18px; }
       form button{ width:100%; max-width:240px; height:48px; font-size:16px; padding:14px 22px; }
-
-      #result{
-        padding:16px;
-        max-height: 400px;
-      }
-
-      th, td{ 
-        font-size:14px;
-        padding:10px; 
-      }
-
+      th, td{ font-size:14px; padding:10px; }
       .detail-modal{ width: 94vw; }
-      .modal-title{ font-size: 18px; }
-      .title-underline{ width: 100%; }
       .info-value{ font-size: 18pt; }
     }
   </style>
@@ -480,15 +248,25 @@
     <div class="title-container">
       <h1>
         <span class="title-line">울산하늘공원</span>
-        <span class="title-line">추모의집 고인검색</span>
+        <span class="title-line">고인 검색</span>
       </h1>
     </div>
 
     <div class="search-form-container">
-      <form id="searchForm">
-        <input type="text" id="keyword" name="keyword" placeholder="고인명을 입력하세요" required autocomplete="off" />
-        <button type="submit">검색</button>
-      </form>
+      <div class="search-row">
+        <div class="menu-buttons" role="tablist" aria-label="검색 구분">
+          <button type="button" class="menu-btn active" data-mode="all" onclick="setMode('all')">전체</button>
+          <button type="button" class="menu-btn" data-mode="memorial" onclick="setMode('memorial')">추모의집</button>
+          <button type="button" class="menu-btn" data-mode="nature" onclick="setMode('nature')">자연장지</button>
+        </div>
+
+        <form id="searchForm">
+          <input type="text" id="keyword" name="keyword" placeholder="고인명을 입력하세요" required autocomplete="off" />
+          <button type="submit">검색</button>
+        </form>
+      </div>
+
+      <div class="data-badge" id="dataStatus">데이터: 검색 시 불러옵니다</div>
     </div>
 
     <div id="result"></div>
@@ -505,6 +283,7 @@
       </div>
       <div class="title-underline"></div>
     </div>
+
     <div class="modal-body">
       <div class="info-grid">
         <div class="info-label">고인명</div>
@@ -512,7 +291,12 @@
 
         <div class="divider"></div>
 
-        <div class="info-label">봉안실</div>
+        <div class="info-label" id="labelType" style="display:none;">구분</div>
+        <div class="info-value" id="modalType" style="display:none;"></div>
+
+        <div class="divider" id="dividerAfterType" style="display:none;"></div>
+
+        <div class="info-label" id="labelRoom">봉안실</div>
         <div class="info-value mono" id="modalRoom"></div>
 
         <div class="divider"></div>
@@ -522,38 +306,140 @@
 
         <div class="divider"></div>
 
-        <div class="info-label">안치일자</div>
+        <div class="info-label" id="labelDate">안치일자</div>
         <div class="info-value" id="modalDate"></div>
       </div>
     </div>
   </dialog>
 
   <script>
-    let excelData = [];
-    const DATA_URL = 'data/deceased_data.xlsx';
+    const SOURCES = {
+      memorial: 'data/deceased_data.xlsx',
+      nature:   'data/nature_data.xlsx'
+    };
 
-    window.onload = function() { loadExcelData(); };
+    const MEM_FIELDS = {
+      name: "사망자명",
+      loc: "봉안번호",
+      applicant: "신청자명",
+      date: "안치일자",
+      returned: "반환일자"
+    };
 
-    async function loadExcelData() {
-      try {
-        const resultDiv = document.getElementById("result");
-        resultDiv.style.display = "block";
-        resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
+    // ✅ 자연장지 엑셀 컬럼(확정)
+    const NAT_FIELDS = {
+      name: "사망자명",
+      loc: "자연장번호",
+      applicant: "신청자명",
+      date: "안치일자"
+    };
 
-        const response = await fetch(DATA_URL);
-        if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
+    let currentMode = 'all';
 
-        const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
-        excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    let excelDataMemorial = [];
+    let excelDataNature = [];
+    let loadPromiseMemorial = null;
+    let loadPromiseNature = null;
 
-        resultDiv.style.display = "none";
-      } catch (error) {
-        document.getElementById("result").innerHTML =
-          '<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>';
-        document.getElementById("result").style.display = "block";
+    let lastFound = [];
+
+    window.onload = function() {
+      setActiveButton(currentMode);
+      refreshBadge();
+    };
+
+    function getModeLabel(mode){
+      if (mode === 'memorial') return '추모의집';
+      if (mode === 'nature') return '자연장지';
+      return '전체';
+    }
+
+    function updateBadge(text) {
+      document.getElementById("dataStatus").textContent = text;
+    }
+
+    function refreshBadge(){
+      const m = excelDataMemorial.length;
+      const n = excelDataNature.length;
+
+      if (currentMode === 'memorial'){
+        updateBadge(m > 0 ? `데이터: 추모의집 ${m}건 로드됨` : `데이터: 추모의집 (검색 시 불러옵니다)`);
+        return;
       }
+      if (currentMode === 'nature'){
+        updateBadge(n > 0 ? `데이터: 자연장지 ${n}건 로드됨` : `데이터: 자연장지 (검색 시 불러옵니다)`);
+        return;
+      }
+
+      if (m > 0 && n > 0) updateBadge(`데이터: 전체(추모의집 ${m} + 자연장지 ${n}) 로드됨`);
+      else if (m > 0 || n > 0) updateBadge(`데이터: 전체 (현재 로드: 추모의집 ${m} / 자연장지 ${n})`);
+      else updateBadge(`데이터: 전체 (검색 시 불러옵니다)`);
+    }
+
+    function setActiveButton(mode){
+      document.querySelectorAll(".menu-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.mode === mode);
+      });
+    }
+
+    function setMode(mode){
+      currentMode = mode;
+      setActiveButton(mode);
+      resetResultOnly();
+      refreshBadge();
+    }
+
+    async function fetchExcel(url){
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다: ' + url);
+
+      const arrayBuffer = await response.arrayBuffer();
+      const workbook = XLSX.read(arrayBuffer, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      return XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    }
+
+    async function ensureMemorialLoaded(){
+      if (excelDataMemorial.length > 0) return;
+      if (!loadPromiseMemorial){
+        loadPromiseMemorial = fetchExcel(SOURCES.memorial)
+          .then(data => { excelDataMemorial = data; })
+          .finally(() => { loadPromiseMemorial = null; });
+      }
+      await loadPromiseMemorial;
+    }
+
+    async function ensureNatureLoaded(){
+      if (excelDataNature.length > 0) return;
+      if (!loadPromiseNature){
+        loadPromiseNature = fetchExcel(SOURCES.nature)
+          .then(data => { excelDataNature = data; })
+          .finally(() => { loadPromiseNature = null; });
+      }
+      await loadPromiseNature;
+    }
+
+    async function ensureDataForSearch(mode){
+      if (mode === 'memorial'){
+        await ensureMemorialLoaded();
+        return { partialFail: [] };
+      }
+      if (mode === 'nature'){
+        await ensureNatureLoaded();
+        return { partialFail: [] };
+      }
+
+      const partialFail = [];
+      await Promise.all([
+        ensureMemorialLoaded().catch(() => partialFail.push('추모의집')),
+        ensureNatureLoaded().catch(() => partialFail.push('자연장지'))
+      ]);
+
+      if (excelDataMemorial.length === 0 && excelDataNature.length === 0){
+        throw new Error('전체 데이터 로딩 실패');
+      }
+
+      return { partialFail };
     }
 
     function normalizeRoom(raw) {
@@ -568,29 +454,52 @@
       return String(raw);
     }
 
-    function getHeaderLabels() {
-      return {
-        name: "고인명",
-        room: "봉안실",
-        applicant: "신청자",
-        date: "안치일자"
-      };
+    // ✅ 자연장번호: 잔디장-1-1-001 / 수목장-1-1-001 → 보기 좋게
+    function normalizeNatureNo(raw){
+      if (!raw) return "";
+      const s = String(raw).trim();
+      // 하이픈 주변 공백 정리: " - " 형태
+      return s
+        .split("-")
+        .map(part => part.trim())
+        .filter(Boolean)
+        .join(" - ");
     }
 
     function maskName(name) {
       if (!name) return "";
-      const trimmed = name.substring(0, 3);
+      const trimmed = String(name).substring(0, 3);
       if (trimmed.length === 1) return trimmed;
       if (trimmed.length === 2) return trimmed[0] + "*";
       if (trimmed.length === 3) return trimmed[0] + "*" + trimmed[2];
       return trimmed;
     }
 
-    function openModal(name, room, applicant, date) {
-      document.getElementById("modalName").textContent = name;
-      document.getElementById("modalRoom").textContent = room;
-      document.getElementById("modalApplicant").textContent = applicant;
-      document.getElementById("modalDate").textContent = date;
+    function getHeaderLabels(mode) {
+      if (mode === 'nature'){
+        // 자연장지 표출명
+        return { name: "고인명", loc: "안장번호", applicant: "신청자", date: "안장일자" };
+      }
+      if (mode === 'memorial'){
+        return { name: "고인명", loc: "봉안실", applicant: "신청자", date: "안치일자" };
+      }
+      return { name: "고인명", loc: "위치번호", applicant: "신청자", date: "일자" };
+    }
+
+    function openModal(record) {
+      document.getElementById("modalName").textContent = record.name || "";
+      document.getElementById("modalRoom").textContent = record.location || "";
+      document.getElementById("modalApplicant").textContent = record.applicant || "";
+      document.getElementById("modalDate").textContent = record.date || "";
+
+      document.getElementById("labelRoom").textContent = record.locationLabel || "위치번호";
+      document.getElementById("labelDate").textContent = record.dateLabel || "일자";
+
+      const showType = (currentMode === 'all' && record.typeLabel);
+      document.getElementById("labelType").style.display = showType ? "block" : "none";
+      document.getElementById("modalType").style.display = showType ? "block" : "none";
+      document.getElementById("dividerAfterType").style.display = showType ? "block" : "none";
+      if (showType) document.getElementById("modalType").textContent = record.typeLabel;
 
       document.getElementById("detailModal").showModal();
     }
@@ -600,39 +509,67 @@
       if (!table) return;
 
       table.addEventListener("click", function(e) {
-        const td = e.target.closest("td");
-        if (!td) return;
+        const tr = e.target.closest("tr[data-idx]");
+        if (!tr) return;
 
-        const tr = td.closest("tr");
-        const cells = tr.querySelectorAll("td");
+        const idx = Number(tr.dataset.idx);
+        const rec = lastFound[idx];
+        if (!rec) return;
 
-        openModal(
-          cells[0].textContent.trim(),
-          cells[1].textContent.trim(),
-          cells[2].textContent.trim(),
-          cells[3].textContent.trim()
-        );
+        openModal(rec);
       });
     }
 
     document.getElementById("detailModal").addEventListener("click", function(e) {
       const rect = this.getBoundingClientRect();
-      const isInDialog = 
+      const isInDialog =
         rect.top <= e.clientY && e.clientY <= rect.bottom &&
-        rect.left <= e.clientX && e.clientX <= rect.right;
+        rect.left <= e.clientX && e.clientY <= rect.bottom;
       if (!isInDialog) this.close();
     });
 
-    document.getElementById("searchForm").addEventListener("submit", function(event) {
+    function searchMemorial(keyword){
+      return excelDataMemorial
+        .filter(row =>
+          row[MEM_FIELDS.name] &&
+          String(row[MEM_FIELDS.name]).includes(keyword) &&
+          !row[MEM_FIELDS.returned]
+        )
+        .map(row => ({
+          type: 'memorial',
+          typeLabel: '추모의집',
+          name: row[MEM_FIELDS.name] || "",
+          location: normalizeRoom(row[MEM_FIELDS.loc] || ""),
+          applicant: maskName(row[MEM_FIELDS.applicant]),
+          date: row[MEM_FIELDS.date] || "",
+          locationLabel: "봉안실",
+          dateLabel: "안치일자"
+        }));
+    }
+
+    function searchNature(keyword){
+      return excelDataNature
+        .filter(row =>
+          row[NAT_FIELDS.name] &&
+          String(row[NAT_FIELDS.name]).includes(keyword)
+        )
+        .map(row => ({
+          type: 'nature',
+          typeLabel: '자연장지',
+          name: row[NAT_FIELDS.name] || "",
+          location: normalizeNatureNo(row[NAT_FIELDS.loc] || ""),
+          applicant: maskName(row[NAT_FIELDS.applicant]),
+          date: row[NAT_FIELDS.date] || "",
+          locationLabel: "안장번호",
+          dateLabel: "안장일자"
+        }));
+    }
+
+    document.getElementById("searchForm").addEventListener("submit", async function(event) {
       event.preventDefault();
+
       const keyword = document.getElementById("keyword").value.trim();
       const resultDiv = document.getElementById("result");
-
-      if (excelData.length === 0) {
-        resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다. 잠시 후 다시 검색해주세요.</div>';
-        resultDiv.style.display = "block";
-        return;
-      }
 
       if (!keyword) {
         resultDiv.innerHTML = '<div class="no-result">검색어를 입력해주세요.</div>';
@@ -640,35 +577,65 @@
         return;
       }
 
-      const found = excelData.filter(row =>
-        row["사망자명"] && row["사망자명"].includes(keyword) && !row["반환일자"]
-      );
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
 
-      if (found.length > 0) {
-        const h = getHeaderLabels();
+      let partialFail = [];
+      try{
+        const r = await ensureDataForSearch(currentMode);
+        partialFail = r.partialFail || [];
+        refreshBadge();
+      }catch(err){
+        refreshBadge();
+        resultDiv.innerHTML =
+          '<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>';
+        return;
+      }
 
-        let html = `<p><strong>검색 결과 ${found.length}건</strong> <span style="font-size:13px; color:#666;">(행을 클릭하면 상세 정보가 나타납니다)</span></p>`;
+      let foundRecords = [];
+      if (currentMode === 'memorial') foundRecords = searchMemorial(keyword);
+      else if (currentMode === 'nature') foundRecords = searchNature(keyword);
+      else {
+        if (excelDataMemorial.length > 0) foundRecords.push(...searchMemorial(keyword));
+        if (excelDataNature.length > 0) foundRecords.push(...searchNature(keyword));
+      }
+
+      lastFound = foundRecords;
+
+      const h = getHeaderLabels(currentMode);
+
+      if (foundRecords.length > 0) {
+        let html = `
+          <p>
+            <strong>${getModeLabel(currentMode)} 검색 결과 ${foundRecords.length}건</strong>
+            <span style="font-size:13px; color:#666;">(행을 클릭하면 상세 정보가 나타납니다)</span>
+          </p>
+        `;
+
+        if (partialFail.length > 0) {
+          html += `<p style="font-size:13px; color:#d32f2f; margin-top:8px;">
+            ※ ${partialFail.join(", ")} 데이터 로딩 실패로 검색에서 제외되었습니다.
+          </p>`;
+        }
+
         html += `<div class="table-wrapper">
           <table>
             <thead>
               <tr>
                 <th>${h.name}</th>
-                <th class="col-room">${h.room}</th>
+                <th class="col-room">${h.loc}</th>
                 <th>${h.applicant}</th>
                 <th>${h.date}</th>
               </tr>
             </thead>
             <tbody>`;
 
-        found.forEach(row => {
-          const rawBon = row["봉안번호"] || "";
-          const bon = normalizeRoom(rawBon);
-
-          html += `<tr>
-            <td>${row["사망자명"] || ""}</td>
-            <td class="col-room">${bon}</td>
-            <td>${maskName(row["신청자명"])}</td>
-            <td>${row["안치일자"] || ""}</td>
+        foundRecords.forEach((rec, idx) => {
+          html += `<tr data-idx="${idx}">
+            <td>${rec.name}</td>
+            <td class="col-room">${rec.location}</td>
+            <td>${rec.applicant}</td>
+            <td>${rec.date}</td>
           </tr>`;
         });
 
@@ -676,17 +643,24 @@
         resultDiv.innerHTML = html;
 
         bindTableClick();
-
       } else {
-        resultDiv.innerHTML = `<div class="no-result">'<strong>${keyword}</strong>'에 대한 검색 결과가 없습니다.</div>`;
+        let msg = `'${keyword}'에 대한 검색 결과가 없습니다.`;
+        if (partialFail.length > 0 && currentMode === 'all') {
+          msg += `<br><span style="font-size:13px; color:#d32f2f;">(일부 데이터 로딩 실패로 결과가 누락될 수 있습니다)</span>`;
+        }
+        resultDiv.innerHTML = `<div class="no-result">${msg}</div>`;
       }
-
-      resultDiv.style.display = "block";
     });
+
+    function resetResultOnly(){
+      document.getElementById("result").style.display = "none";
+      document.getElementById("result").innerHTML = "";
+      lastFound = [];
+    }
 
     function resetView() {
       document.getElementById("keyword").value = "";
-      document.getElementById("result").style.display = "none";
+      resetResultOnly();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
