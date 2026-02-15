@@ -136,34 +136,39 @@
       margin-top: 12px;
     }
 
+    /* ✅ 테이블 레이아웃 및 컬럼 너비 설정 */
     table{
       border-collapse: collapse;
-      width: max-content;
-      min-width: 100%;
-      table-layout: auto;
+      width: 100%;
+      table-layout: fixed;  /* ✅ 고정 레이아웃으로 변경 */
     }
 
     th, td{
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       border:1px solid #e0e0e0;
       padding:12px 16px;
-      font-size: 20pt;
+      font-size: 18pt;
       vertical-align:middle;
       white-space: nowrap;
+      text-align: center;  /* ✅ 모두 가운데 정렬 */
     }
+
+    /* ✅ 컬럼별 너비 지정: 고인명=신청자 동일 */
+    th:nth-child(1), td:nth-child(1) { width: 20%; }  /* 고인명 */
+    th:nth-child(2), td:nth-child(2) { width: 35%; }  /* 봉안실 */
+    th:nth-child(3), td:nth-child(3) { width: 20%; }  /* 신청자 */
+    th:nth-child(4), td:nth-child(4) { width: 25%; }  /* 안치일자 */
 
     th{
       background: linear-gradient(145deg,#f8f9fa,#e9ecef);
       font-weight: 900;
       color:#2c3e50;
-      text-align: center;
       position: sticky;
       top: 0;
       z-index: 10;
     }
 
     td{
-      text-align: left;
       font-weight: 600;
       color: #111;
     }
@@ -365,7 +370,6 @@
         padding: 0;
       }
 
-      /* ✅ 화면 모양 그대로 유지 */
       .info-grid {
         display: grid;
         grid-template-columns: 70px 1fr;
@@ -533,12 +537,12 @@
       return String(raw);
     }
 
+    // ✅ PC/모바일 공통으로 "신청자"로 통일
     function getHeaderLabels() {
-      const isMobile = window.matchMedia("(max-width: 480px)").matches;
       return {
         name: "고인명",
         room: "봉안실",
-        applicant: isMobile ? "신청자" : "신청자명",
+        applicant: "신청자",  // ✅ 통일
         date: "안치일자"
       };
     }
