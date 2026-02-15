@@ -322,61 +322,61 @@
       margin: 8px 0;
     }
 
+    /* ======================================== */
+    /* 인쇄 스타일 */
     @media print {
-      @page {
-        size: 120mm auto;
-        margin: 0;
-      }
-
       body {
-        width: 120mm;
-        margin: 0;
-        padding: 0;
         background: white;
       }
 
-      body * { visibility: hidden; }
-      .detail-modal, .detail-modal * { visibility: visible; }
+      body * { 
+        visibility: hidden; 
+      }
+
+      .detail-modal, .detail-modal * { 
+        visibility: visible; 
+      }
 
       .detail-modal{
         position: static;
-        width: 120mm;
-        max-width: 120mm;
+        width: 100%;
+        max-width: 100%;
         height: auto;
         transform: none;
         box-shadow: none;
         border: none;
         overflow: visible;
         border-radius: 0;
-        padding: 8mm;
+        padding: 20mm;
+        margin: 0;
       }
 
       .modal-header {
-        padding: 0 0 12px 0;
-        margin-bottom: 15px;
+        padding: 0 0 15px 0;
+        margin-bottom: 20px;
       }
 
       .modal-title-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 10px;
       }
 
       .modal-title {
-        font-size: 18pt;
+        font-size: 24pt;
         color: #000;
         font-weight: 900;
-        text-align: left;
-        letter-spacing: -0.5px;
       }
 
-      .modal-actions { display: none; }
+      .modal-actions { 
+        display: none; 
+      }
 
       .title-underline {
         width: 100%;
         height: 2px;
         background: #333;
-        margin-top: 8px;
+        margin-top: 10px;
       }
 
       .modal-body {
@@ -385,36 +385,37 @@
 
       .info-grid {
         display: grid;
-        grid-template-columns: 70px 1fr;
-        gap: 15px;
+        grid-template-columns: 80px 1fr;
+        gap: 20px;
         align-items: baseline;
       }
 
       .info-label {
-        font-size: 11pt;
+        font-size: 12pt;
         color: #666;
         font-weight: 700;
-        padding-top: 4px;
       }
 
       .info-value {
         font-size: 20pt;
         color: #000;
         font-weight: 800;
-        line-height: 1.3;
-        word-break: break-all;
+        line-height: 1.4;
       }
 
       .divider {
         grid-column: 1 / -1;
         height: 1px;
-        background: #e0e0e0;
-        margin: 8px 0;
+        background: #ddd;
+        margin: 10px 0;
       }
     }
 
+    /* PC 버전에서만 출력 버튼 표시 */
     @media (min-width: 769px){
-      .btn-print { display: inline-block; }
+      .btn-print { 
+        display: inline-block; 
+      }
     }
 
     @media (max-width: 480px){
