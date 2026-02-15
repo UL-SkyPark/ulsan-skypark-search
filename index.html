@@ -47,12 +47,9 @@
 
     .title-container{ margin-bottom: 35px; }
     h1{
-      color:#1f3a5a;
-      text-shadow: 2px 2px 5px rgba(255,255,255,0.8);
-      font-weight: 800;
-      font-size: 42px;
-      letter-spacing: -0.8px;
-      line-height: 1.2;
+      color:#1f3a5a; text-shadow: 2px 2px 5px rgba(255,255,255,0.8);
+      font-weight: 800; font-size: 42px;
+      letter-spacing: -0.8px; line-height: 1.2;
       word-break: keep-all;
       margin: 0;
     }
@@ -130,7 +127,7 @@
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
     .loading{ font-size:18px; color:#4CAF50; padding:24px; font-weight:600; }
 
-    /* ✅ 모바일: 카드형(각 항목 1줄씩) + 봉안번호만 글자 작게 */
+    /* ✅ 모바일: 카드형(정상) */
     @media (max-width: 480px){
       .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
       main{ margin:8px; padding:40px 16px; min-height: 94vh; }
@@ -145,8 +142,11 @@
       #result{ width:100%; padding:16px; max-height: 520px; }
 
       /* 테이블 → 카드 변환 */
-      table, thead, tbody, th, td, tr { display:block; }
-      thead tr { display:none; }
+      table, tbody, tr, td { display:block; }
+      th { display:none; }
+
+      /* ✅ 헤더 tr(첫 줄) 완전 숨김: 빈 카드 제거 */
+      table > tbody > tr:first-child { display:none; }
 
       tr{
         margin-bottom: 12px;
@@ -157,50 +157,38 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       }
 
-      /* ✅ 각 td가 한 줄(라벨+값) */
+      /* ✅ 한 줄 느낌(라벨+값). 값이 너무 길면 그때만 줄바꿈 */
       td{
         border:none;
         padding: 8px 0;
         display:flex;
         align-items:flex-start;
-        gap: 8px;
+        gap: 10px;
+        line-height: 1.4;
+        font-size: 15px;
 
-        /* 기본: 줄바꿈 허용(값이 길면 다음 줄로) */ /* [web:100] */
+        /* 기본은 폭 안에서 최대한 유지, 정말 길면 줄바꿈 */
         white-space: normal;
         overflow: visible;
         text-overflow: clip;
-        word-break: break-word;
-
-        font-size: 15px;
-        line-height: 1.45;
+        overflow-wrap: anywhere; /* 긴 문자열(봉안번호 등)도 화면 안에서 끊기게 */
       }
 
-      /* 라벨 */
       td::before{
         content: attr(data-label);
-        flex: 0 0 74px;
+        flex: 0 0 72px;     /* 라벨 폭 줄여서 전체 길이 단축 */
         font-weight: 700;
-        color: #555;
+        color: #546e7a;
         font-size: 13px;
-        line-height: 1.45;
+        line-height: 1.4;
       }
 
-      /* 구분선 */
-      td + td{
-        border-top: 1px solid #f1f3f5;
-      }
+      td + td{ border-top: 1px solid #f1f3f5; }
 
-      /* ✅ 봉안번호(2번째 항목)만 글자 크기 줄이기 */ /* [web:91] */
+      /* 봉안번호(2번째 항목)만 글자 약간 축소 */
       tr td:nth-child(2){
         font-size: 13px;
         letter-spacing: -0.2px;
-      }
-
-      /* ✅ 나머지(고인명/신청자명/안치일자)는 줄바꿈 허용 유지 */
-      tr td:nth-child(1),
-      tr td:nth-child(3),
-      tr td:nth-child(4){
-        white-space: normal;
       }
     }
   </style>
