@@ -9,8 +9,8 @@
 
     body{
       font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
-      min-height: 100vh;
-      text-align: center;
+      min-height: 90vh;
+      text-align: center; /* 전체는 중앙 정렬 */
       background: linear-gradient(135deg,#d4ebf7 0%,#e8f4f8 30%,#f5fbfd 65%,#ffffff 100%);
       background-attachment: fixed;
     }
@@ -32,15 +32,12 @@
       touch-action: manipulation;
     }
 
-    /* ✅ "중앙에서 살짝 위" 배치 */
     main{
       display:flex;
       flex-direction:column;
-
-      justify-content:center;     /* 세로 중앙 */
+      justify-content:center;
       align-items:center;
-
-      min-height: 100vh;
+      min-height: 94vh;
 
       background: rgba(255,255,255,0.18);
       backdrop-filter: blur(12px);
@@ -52,8 +49,7 @@
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       border: 1px solid rgba(255,255,255,0.3);
 
-      /* 중앙에서 "조금만" 위로 */
-      transform: translateY(-22px); /* [web:313] */
+      transform: translateY(-22px);
     }
 
     .title-container{ margin-bottom: 20px; width: 100%; }
@@ -119,7 +115,7 @@
     #result{
       display:none;
       margin-top: 18px;
-      text-align:left;
+      text-align:left; /* 결과 테이블은 왼쪽 정렬 */
       width: min(1100px, 94%);
       max-height: 560px;
       overflow:auto;
@@ -184,11 +180,22 @@
     tbody tr{ cursor: pointer; }
     tbody tr:hover{ background: #fafafa; }
 
+    /* ✅ 모달 스타일 */
     .row-dialog{
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      
+      text-align: left; /* ✅ 모달 내부 텍스트 왼쪽 정렬 (핵심) */
+
       border: none;
       border-radius: 16px;
       padding: 0;
       width: min(560px, 92vw);
+      max-height: 85vh;
+      overflow: auto;
       box-shadow: 0 18px 60px rgba(0,0,0,0.35);
     }
     .row-dialog::backdrop{ background: rgba(0,0,0,0.45); }
@@ -197,7 +204,7 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 12px;
+      gap: 10px;
       padding: 14px 16px;
       border-bottom: 1px solid #ececec;
       background: #fff;
@@ -207,13 +214,24 @@
       color: #374151;
       font-weight: 900;
     }
-    .row-dialog__close{
+
+    .row-dialog__actions{ display: flex; gap: 8px; }
+
+    .row-dialog__close, .row-dialog__print{
       border: 1px solid #d1d5db;
       background: #fff;
       border-radius: 10px;
-      padding: 8px 10px;
+      padding: 8px 12px;
       cursor: pointer;
       font-weight: 800;
+      font-size: 13px;
+    }
+
+    .row-dialog__print{
+      background: linear-gradient(145deg, #3b82f6, #2563eb);
+      color: #fff;
+      border-color: #2563eb;
+      display: none; /* 기본 숨김(모바일) */
     }
 
     .row-dialog__body{
@@ -231,23 +249,47 @@
       font-size: 12px;
       color: #6b7280;
       font-weight: 800;
-      padding-top: 6px;
+      padding-top: 8px; /* 값 글자 크기에 맞춰 라벨 위치 미세 조정 */
     }
+
+    /* ✅ 값: 20pt 맑은고딕 */
     .v{
-      font-size: 20px;
-      line-height: 1.3;
-      font-weight: 900;
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      font-size: 20pt;
+      line-height: 1.35;
+      font-weight: 700;
       color: #111827;
       word-break: break-word;
     }
     .v.mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: "Malgun Gothic", "맑은 고딕", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 20pt;
       letter-spacing: 0.2px;
-      font-size: 18px;
     }
 
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
     .loading{ font-size:18px; color:#4CAF50; padding:24px; font-weight:600; }
+
+    @media print {
+      body *{ visibility: hidden; }
+      .row-dialog, .row-dialog * { visibility: visible; }
+      .row-dialog{
+        position: absolute; top: 0; left: 0;
+        width: 100%; max-height: none;
+        box-shadow: none; border: none; transform: none;
+        text-align: left;
+      }
+      .row-dialog__head{ border-bottom: 2px solid #333; padding-bottom: 12px; }
+      .row-dialog__actions{ display: none; }
+      .row-dialog__title{ font-size: 16px; }
+      .kv{ gap: 12px 14px; }
+      .k{ font-size: 13px; color: #555; }
+      .v{ font-size: 18pt; color: #000; }
+    }
+
+    @media (min-width: 769px){
+      .row-dialog__print{ display: inline-block; }
+    }
 
     @media (max-width: 480px){
       .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
@@ -256,18 +298,13 @@
         margin:8px;
         padding: 52px 16px 50px;
         min-height: 96vh;
-        transform: translateY(-14px); /* 모바일은 살짝 덜 올림 */ /* [web:313] */
+        transform: translateY(-14px);
       }
 
       h1{ font-size:26px; letter-spacing: -0.5px; }
       .title-line{ display:block; }
 
-      #result{
-        width:100%;
-        max-height: 560px;
-        margin-top: 14px;
-      }
-
+      #result{ width:100%; max-height: 560px; margin-top: 14px; }
       .result-bar{ padding: 12px 14px; }
       .result-body{ padding: 14px; }
 
@@ -275,8 +312,10 @@
       th{ top: 44px; }
 
       .kv{ grid-template-columns: 74px 1fr; }
-      .v{ font-size: 18px; }
-      .v.mono{ font-size: 16px; }
+      .v{ font-size: 18pt; } /* 모바일은 약간 축소 */
+      .v.mono{ font-size: 18pt; }
+
+      .row-dialog{ width: 94vw; }
     }
   </style>
 </head>
@@ -305,7 +344,10 @@
   <dialog id="rowDialog" class="row-dialog" aria-label="선택한 행 상세 보기">
     <div class="row-dialog__head">
       <div class="row-dialog__title">선택한 정보</div>
-      <button type="button" id="rowDialogClose" class="row-dialog__close">닫기</button>
+      <div class="row-dialog__actions">
+        <button type="button" id="rowDialogPrint" class="row-dialog__print">출력</button>
+        <button type="button" id="rowDialogClose" class="row-dialog__close">닫기</button>
+      </div>
     </div>
     <div class="row-dialog__body">
       <div class="kv">
@@ -380,6 +422,7 @@
 
       const dialog = document.getElementById("rowDialog");
       const closeBtn = document.getElementById("rowDialogClose");
+      const printBtn = document.getElementById("rowDialogPrint");
 
       const v1 = document.getElementById("v1");
       const v2 = document.getElementById("v2");
@@ -410,6 +453,10 @@
       });
 
       closeBtn.addEventListener("click", () => dialog.close());
+
+      printBtn.addEventListener("click", () => {
+        window.print();
+      });
 
       dialog.addEventListener("click", (e) => {
         const rect = dialog.getBoundingClientRect();
