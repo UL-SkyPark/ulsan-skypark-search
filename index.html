@@ -12,54 +12,56 @@
       min-height: 100vh;
       text-align: center;
 
-      /* ✅ 배경효과(구름/국화) 제거 → 푸른 그라데이션만 */
+      /* ✅ 더 은은한 푸른 그라데이션 */
       background: linear-gradient(135deg,
-        #7fc8ff 0%,
-        #cfeeff 35%,
-        #eef8ff 70%,
+        #d4ebf7 0%,
+        #e8f4f8 30%,
+        #f5fbfd 65%,
         #ffffff 100%
       );
       background-attachment: fixed;
     }
 
+    /* ✅ 은은한 하늘색 버튼 */
     .home-btn {
       position: fixed;
       top: 12px;
       left: 12px;
-      background-color: rgba(255,255,255,0.95);
-      color: #2c3e50;
-      border: 1px solid rgba(44,62,80,0.15);
+      background: linear-gradient(135deg, #b3e5fc, #81d4fa); /* 하늘색 그라데이션 */
+      color: #0d47a1; /* 진한 파란 텍스트 */
+      border: 1px solid rgba(129,212,250,0.3);
       padding: 12px 18px;
       cursor: pointer;
       border-radius: 8px;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 600;
       backdrop-filter: blur(8px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 15px rgba(129,212,250,0.35);
       z-index: 100;
       transition: all 0.3s ease;
     }
 
     .home-btn:hover {
-      background-color: rgba(255,255,255,1);
-      box-shadow: 0 6px 25px rgba(0,0,0,0.2);
-      transform: translateY(-1px);
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7);
+      box-shadow: 0 6px 25px rgba(79,195,247,0.5);
+      transform: translateY(-2px);
     }
 
+    /* ✅ 가운데 카드 높이 더 늘림 */
     main {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 85vh;
+      height: 92vh;              /* 88vh → 92vh */
       flex-direction: column;
-      background: rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.18);
       backdrop-filter: blur(12px);
       border-radius: 25px;
-      padding: 45px 40px;
+      padding: 65px 40px;       /* 55px → 65px */
       margin: 20px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       z-index: 10;
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.3);
       position: relative;
       overflow: hidden;
     }
@@ -140,16 +142,15 @@
       box-shadow: 0 12px 35px rgba(76,175,80,0.55);
     }
 
-    /* ✅ 검색결과 전체 폭을 조금 줄임 */
     #result {
       display: none;
       margin-top: 25px;
       text-align: left;
-      width: min(860px, 88%); /* 전반적인 폭 축소 */
-      max-height: 500px;
+      width: min(900px, 90%);   /* 폭도 살짝 증가 */
+      max-height: 550px;        /* 520px → 550px */
       overflow-y: auto;
       border: 1px solid rgba(255,255,255,0.35);
-      padding: 22px; /* 살짝 축소 */
+      padding: 22px;
       background: rgba(255,255,255,0.95);
       border-radius: 20px;
       box-shadow: 0 12px 50px rgba(0,0,0,0.22);
@@ -157,12 +158,11 @@
       position: relative;
     }
 
-    /* ✅ 봉안번호 열 폭 줄이기: table-layout: fixed + 열별 width 지정 */
     table {
       border-collapse: collapse;
       width: 100%;
       margin-top: 12px;
-      table-layout: fixed; /* 열 너비 고정 레이아웃 */ /* [web:14] */
+      table-layout: fixed;
     }
 
     th, td {
@@ -173,7 +173,7 @@
       vertical-align: middle;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap; /* 긴 봉안번호/이름이 있어도 폭 유지 */
+      white-space: nowrap;
     }
 
     th {
@@ -182,11 +182,11 @@
       color: #2c3e50;
     }
 
-    /* 열 폭(4열 기준): 1 고인명 / 2 봉안번호 / 3 신청자명 / 4 안치일자 */
-    th:nth-child(1), td:nth-child(1) { width: 30%; }
-    th:nth-child(2), td:nth-child(2) { width: 16%; } /* ✅ 봉안번호 줄임 */
-    th:nth-child(3), td:nth-child(3) { width: 24%; }
-    th:nth-child(4), td:nth-child(4) { width: 30%; }
+    /* ✅ 봉안번호 35%로 증가, 나머지 재조정 */
+    th:nth-child(1), td:nth-child(1) { width: 23%; } /* 고인명 (26% → 23%) */
+    th:nth-child(2), td:nth-child(2) { width: 35%; } /* 봉안번호 (22% → 35%) */
+    th:nth-child(3), td:nth-child(3) { width: 23%; } /* 신청자명 (고인명과 동일) */
+    th:nth-child(4), td:nth-child(4) { width: 19%; } /* 안치일자 (26% → 19%) */
 
     .no-result {
       font-size: 19px;
@@ -206,8 +206,8 @@
     @media (max-width: 768px) {
       main {
         margin: 12px;
-        padding: 35px 25px;
-        height: 82vh;
+        padding: 50px 25px;
+        height: 88vh;
         border-radius: 20px;
       }
 
@@ -237,13 +237,12 @@
         padding: 18px;
       }
 
-      /* 모바일에서는 날짜가 길어지면 줄바꿈 허용(필요시) */
       td:nth-child(4) { white-space: normal; }
     }
 
     @media (max-width: 480px) {
       h1 { font-size: 30px; }
-      main { padding: 30px 20px; }
+      main { padding: 40px 20px; }
       form input, form button { padding: 16px 22px; }
       .home-btn { font-size: 15px; padding: 10px 16px; }
     }
@@ -351,6 +350,6 @@
     }
   </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> <!-- [web:4] -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
