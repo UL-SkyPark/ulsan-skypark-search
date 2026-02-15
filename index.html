@@ -146,8 +146,8 @@
     th, td{
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       border:1px solid #e0e0e0;
-      padding:14px 18px;
-      font-size: 24pt;
+      padding:12px 16px;
+      font-size: 20pt;
       vertical-align:middle;
       white-space: nowrap;
     }
@@ -301,31 +301,99 @@
       margin: 8px 0;
     }
 
+    /* ========================================
+       🖨 120mm 라벨 프린터 출력 스타일
+       ======================================== */
     @media print {
+      @page {
+        size: 120mm auto;  /* ✅ 120mm 폭, 높이 자동 */
+        margin: 0;
+      }
+
+      body {
+        width: 120mm;
+        margin: 0;
+        padding: 0;
+        background: white;
+      }
+
       body * { visibility: hidden; }
       .detail-modal, .detail-modal * { visibility: visible; }
       
       .detail-modal{
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%;
-        max-width: none;
+        position: static;
+        width: 120mm;
+        max-width: 120mm;
+        height: auto;
         transform: none;
         box-shadow: none;
+        border: none;
+        overflow: visible;
+        border-radius: 0;
+        padding: 8mm;  /* ✅ 좌우 여백 넉넉하게 */
+      }
+
+      .modal-header {
+        padding: 0 0 10px 0;
+        margin-bottom: 12px;
+      }
+
+      .modal-title-row {
+        flex-direction: column;
+        align-items: center;  /* ✅ 중앙 정렬 */
+        gap: 8px;
+      }
+
+      .modal-title {
+        font-size: 20pt;  /* ✅ 120mm에 맞게 크게 */
+        color: #000;
+        font-weight: 900;
+        text-align: center;
+        letter-spacing: -0.5px;
       }
 
       .modal-actions { display: none; }
-      .modal-header { 
-        border-bottom: none; 
-        padding-bottom: 16px;
+
+      .title-underline {
+        width: 100%;
+        height: 2.5px;  /* ✅ 약간 굵게 */
+        background: #000;
+        margin-top: 8px;
       }
-      .title-underline { 
-        background: #000; 
-        height: 2px;
+
+      .modal-body {
+        padding: 0;
       }
-      
-      .info-label { color: #000; font-size: 12pt; }
-      .info-value { font-size: 18pt; color: #000; }
+
+      /* ✅ 120mm는 넓으니 그리드 레이아웃 유지 가능 */
+      .info-grid {
+        display: grid;
+        grid-template-columns: 70px 1fr;  /* ✅ 라벨 폭 최적화 */
+        gap: 12px 16px;
+        align-items: baseline;
+      }
+
+      .info-label {
+        font-size: 12pt;
+        color: #000;
+        font-weight: 800;
+        padding-top: 4px;
+      }
+
+      .info-value {
+        font-size: 22pt;  /* ✅ 120mm에 맞게 크게 */
+        color: #000;
+        font-weight: 900;
+        line-height: 1.3;
+        word-break: break-all;
+      }
+
+      .divider {
+        height: 1px;
+        background: #ddd;
+        margin: 8px 0;
+        grid-column: 1 / -1;
+      }
     }
 
     @media (min-width: 769px){
@@ -475,18 +543,12 @@
       };
     }
 
-    // ✅ 신청자명을 3글자로 제한하고 마스킹 처리
     function maskName(name) {
       if (!name) return "";
-      
-      // 3글자까지만 자르기
       const trimmed = name.substring(0, 3);
-      
-      // 마스킹 적용
       if (trimmed.length === 1) return trimmed;
       if (trimmed.length === 2) return trimmed[0] + "*";
       if (trimmed.length === 3) return trimmed[0] + "*" + trimmed[2];
-      
       return trimmed;
     }
 
