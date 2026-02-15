@@ -11,7 +11,12 @@
       font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
       min-height: 100vh;
       text-align: center;
-      background: linear-gradient(135deg,#d4ebf7 0%,#e8f4f8 30%,#f5fbfd 65%,#ffffff 100%);
+      
+      /* ✅ 생성된 이미지를 배경으로 설정 */
+      background-image: url('https://user-gen-media-assets.s3.amazonaws.com/seedream_images/2f07e86e-3801-48a7-b5e4-b54b0bf6493b.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       background-attachment: fixed;
       
       display: flex;
@@ -46,12 +51,12 @@
       padding: 60px 40px;
       margin: 0;
 
-      background: rgba(255,255,255,0.18);
-      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.25);  /* ✅ 투명도 약간 증가 */
+      backdrop-filter: blur(15px);  /* ✅ 블러 효과 강화 */
       border-radius: 25px;
 
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.4);
     }
 
     .title-container{ margin-bottom: 30px; width: 100%; }
@@ -136,11 +141,10 @@
       margin-top: 12px;
     }
 
-    /* ✅ 테이블 레이아웃 및 컬럼 너비 설정 */
     table{
       border-collapse: collapse;
       width: 100%;
-      table-layout: fixed;  /* ✅ 고정 레이아웃으로 변경 */
+      table-layout: fixed;
     }
 
     th, td{
@@ -150,14 +154,13 @@
       font-size: 18pt;
       vertical-align:middle;
       white-space: nowrap;
-      text-align: center;  /* ✅ 모두 가운데 정렬 */
+      text-align: center;
     }
 
-    /* ✅ 컬럼별 너비 지정: 고인명=신청자 동일 */
-    th:nth-child(1), td:nth-child(1) { width: 20%; }  /* 고인명 */
-    th:nth-child(2), td:nth-child(2) { width: 35%; }  /* 봉안실 */
-    th:nth-child(3), td:nth-child(3) { width: 20%; }  /* 신청자 */
-    th:nth-child(4), td:nth-child(4) { width: 25%; }  /* 안치일자 */
+    th:nth-child(1), td:nth-child(1) { width: 20%; }
+    th:nth-child(2), td:nth-child(2) { width: 35%; }
+    th:nth-child(3), td:nth-child(3) { width: 20%; }
+    th:nth-child(4), td:nth-child(4) { width: 25%; }
 
     th{
       background: linear-gradient(145deg,#f8f9fa,#e9ecef);
@@ -306,9 +309,6 @@
       margin: 8px 0;
     }
 
-    /* ========================================
-       🖨 120mm 라벨 프린터 - 화면 모양 그대로 출력
-       ======================================== */
     @media print {
       @page {
         size: 120mm auto;
@@ -537,12 +537,11 @@
       return String(raw);
     }
 
-    // ✅ PC/모바일 공통으로 "신청자"로 통일
     function getHeaderLabels() {
       return {
         name: "고인명",
         room: "봉안실",
-        applicant: "신청자",  // ✅ 통일
+        applicant: "신청자",
         date: "안치일자"
       };
     }
