@@ -267,6 +267,7 @@
       text-align: left;
     }
 
+    /* 화면 표시용 그리드 */
     .info-grid{
       display: grid;
       grid-template-columns: 90px 1fr;
@@ -302,11 +303,11 @@
     }
 
     /* ========================================
-       🖨 120mm 라벨 프린터 출력 스타일
+       🖨 120mm 라벨 프린터 - 표 형식 출력
        ======================================== */
     @media print {
       @page {
-        size: 120mm auto;  /* ✅ 120mm 폭, 높이 자동 */
+        size: 120mm auto;
         margin: 0;
       }
 
@@ -330,22 +331,22 @@
         border: none;
         overflow: visible;
         border-radius: 0;
-        padding: 8mm;  /* ✅ 좌우 여백 넉넉하게 */
+        padding: 8mm;
       }
 
       .modal-header {
-        padding: 0 0 10px 0;
-        margin-bottom: 12px;
+        padding: 0 0 12px 0;
+        margin-bottom: 15px;
       }
 
       .modal-title-row {
         flex-direction: column;
-        align-items: center;  /* ✅ 중앙 정렬 */
+        align-items: center;
         gap: 8px;
       }
 
       .modal-title {
-        font-size: 20pt;  /* ✅ 120mm에 맞게 크게 */
+        font-size: 20pt;
         color: #000;
         font-weight: 900;
         text-align: center;
@@ -356,7 +357,7 @@
 
       .title-underline {
         width: 100%;
-        height: 2.5px;  /* ✅ 약간 굵게 */
+        height: 3px;
         background: #000;
         margin-top: 8px;
       }
@@ -365,34 +366,45 @@
         padding: 0;
       }
 
-      /* ✅ 120mm는 넓으니 그리드 레이아웃 유지 가능 */
+      /* ✅ 화면용 그리드 숨기고 표 형식으로 변환 */
       .info-grid {
-        display: grid;
-        grid-template-columns: 70px 1fr;  /* ✅ 라벨 폭 최적화 */
-        gap: 12px 16px;
-        align-items: baseline;
+        display: table;
+        width: 100%;
+        border-collapse: collapse;
+        border: 2px solid #000;
+      }
+
+      .info-grid > * {
+        display: table-row;
       }
 
       .info-label {
-        font-size: 12pt;
+        display: table-cell;
+        font-size: 13pt;
         color: #000;
-        font-weight: 800;
-        padding-top: 4px;
+        font-weight: 900;
+        padding: 10px 12px;
+        border: 1.5px solid #000;
+        background: #f5f5f5;
+        width: 80px;
+        text-align: center;
+        vertical-align: middle;
       }
 
       .info-value {
-        font-size: 22pt;  /* ✅ 120mm에 맞게 크게 */
+        display: table-cell;
+        font-size: 22pt;
         color: #000;
         font-weight: 900;
         line-height: 1.3;
+        padding: 10px 12px;
+        border: 1.5px solid #000;
         word-break: break-all;
+        vertical-align: middle;
       }
 
       .divider {
-        height: 1px;
-        background: #ddd;
-        margin: 8px 0;
-        grid-column: 1 / -1;
+        display: none;  /* 표 형식에서는 구분선 불필요 */
       }
     }
 
