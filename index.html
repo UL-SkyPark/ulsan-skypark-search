@@ -13,6 +13,12 @@
       text-align: center;
       background: linear-gradient(135deg,#d4ebf7 0%,#e8f4f8 30%,#f5fbfd 65%,#ffffff 100%);
       background-attachment: fixed;
+      
+      /* ✅ body를 flex container로 만들어 main을 중앙 배치 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
 
     .home-btn{
@@ -28,33 +34,29 @@
       box-shadow: 0 3px 12px rgba(144,202,249,0.25);
       z-index: 100;
       transition: all 0.3s ease;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
     }
 
+    /* ✅ main 컨테이너: 화면 중앙 정렬 */
     main{
       display:flex;
       flex-direction:column;
-      justify-content:flex-start;
+      justify-content:center;  /* ✅ flex-start → center 변경 */
       align-items:center;
-      min-height: 94vh;
+      
+      width: min(1100px, 100%);
+      max-width: 100%;
+      padding: 60px 40px;  /* ✅ 패딩 균형있게 조정 */
+      margin: 0;  /* ✅ margin 제거 (body에서 중앙 정렬) */
 
       background: rgba(255,255,255,0.18);
       backdrop-filter: blur(12px);
       border-radius: 25px;
 
-      /* ✅ 너무 위로 올라간 것 완화: 살짝 아래로 */
-      padding: 72px 40px 65px;  /* (이전 46px 보다 아래 / 중앙보다 위) */
-      margin: 20px;
-
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       border: 1px solid rgba(255,255,255,0.3);
     }
 
-    .title-container{
-      margin-bottom: 20px;
-      width: 100%;
-    }
+    .title-container{ margin-bottom: 30px; width: 100%; }
 
     h1{
       color:#1f3a5a;
@@ -74,6 +76,7 @@
       align-items:center;
       gap:14px;
       width:100%;
+      margin-bottom: 20px;  /* ✅ 검색 폼과 결과 사이 여백 */
     }
 
     form{
@@ -110,16 +113,15 @@
       height:52px;
       font-weight:600;
       box-shadow:0 6px 25px rgba(76,175,80,0.45);
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
     }
 
     #result{
       display:none;
-      margin-top: 18px;
+      margin-top: 0;  /* ✅ margin 조정 */
       text-align:left;
-      width: min(1100px, 94%);
-      max-height: 560px;
+      width: 100%;
+      max-width: 100%;
+      max-height: 500px;
       overflow:auto;
       -webkit-overflow-scrolling: touch;
       border:1px solid rgba(255,255,255,0.35);
@@ -136,7 +138,6 @@
       margin-top: 12px;
     }
 
-    /* ✅ 타이트: 내용 기반 폭 */
     table{
       border-collapse: collapse;
       width: max-content;
@@ -162,6 +163,14 @@
       z-index: 10;
     }
 
+    tbody tr{
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    tbody tr:hover{
+      background: #e3f2fd;
+    }
+
     th.col-room, td.col-room{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       letter-spacing: 0.2px;
@@ -170,35 +179,160 @@
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
     .loading{ font-size:18px; color:#4CAF50; padding:24px; font-weight:600; }
 
+    /* ======================================== */
+    .detail-modal{
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      
+      width: min(560px, 90vw);
+      max-height: 85vh;
+      overflow: auto;
+      
+      border: none;
+      border-radius: 16px;
+      padding: 0;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      background: #fff;
+    }
+    
+    .detail-modal::backdrop{
+      background: rgba(0,0,0,0.5);
+    }
+
+    .modal-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .modal-title{
+      font-size: 18px;
+      font-weight: 800;
+      color: #333;
+    }
+
+    .modal-actions{
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-print, .btn-close{
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .btn-print{
+      background: #2196F3;
+      color: #fff;
+      border-color: #1976D2;
+      display: none;
+    }
+    .btn-print:hover{ background: #1976D2; }
+    .btn-close:hover{ background: #f0f0f0; }
+
+    .modal-body{
+      padding: 30px;
+      text-align: left;
+    }
+
+    .info-grid{
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 18px;
+      align-items: baseline;
+    }
+
+    .info-label{
+      font-size: 14px;
+      color: #666;
+      font-weight: 700;
+      padding-top: 6px;
+    }
+
+    .info-value{
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      font-size: 20pt;
+      font-weight: 800;
+      color: #111;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    
+    .info-value.mono{
+      font-family: "Malgun Gothic", "맑은 고딕", monospace;
+    }
+
+    .divider{
+      grid-column: 1 / -1;
+      height: 1px;
+      background: #e9ecef;
+      margin: 8px 0;
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      .detail-modal, .detail-modal * { visibility: visible; }
+      
+      .detail-modal{
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        max-width: none;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .modal-actions { display: none; }
+      .modal-header { border-bottom: 2px solid #000; }
+      
+      .info-label { color: #000; font-size: 12pt; }
+      .info-value { font-size: 18pt; color: #000; }
+    }
+
+    @media (min-width: 769px){
+      .btn-print { display: inline-block; }
+    }
+
     @media (max-width: 480px){
+      body{
+        padding: 10px;  /* ✅ 모바일 여백 */
+      }
+
       .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
 
       main{
-        margin:8px;
-        padding: 66px 16px 50px; /* ✅ 모바일도 살짝 아래로 */
-        min-height: 96vh;
+        width: 100%;
+        padding: 40px 20px;  /* ✅ 모바일 패딩 */
       }
 
       h1{ font-size:26px; letter-spacing: -0.5px; }
       .title-line{ display:block; }
-      .title-container{ margin-bottom: 14px; }
+      .title-container{ margin-bottom: 20px; }
 
       form{ flex-direction:column; gap:10px; }
       form input{ width:100%; max-width:none; min-width:auto; font-size:16px; padding:14px 18px; }
-      form input:focus{ width:100%; transform:none; }
       form button{ width:100%; max-width:240px; height:48px; font-size:16px; padding:14px 22px; }
 
       #result{
-        width:100%;
         padding:16px;
-        max-height: 520px;
-        margin-top: 14px;
+        max-height: 400px;
       }
 
-      th, td{
-        font-size:14px;
-        padding:10px;
-      }
+      th, td{ font-size:14px; padding:10px; }
+      
+      .detail-modal{ width: 94vw; }
+      .info-value{ font-size: 18pt; }
     }
   </style>
 </head>
@@ -223,6 +357,37 @@
 
     <div id="result"></div>
   </main>
+
+  <dialog id="detailModal" class="detail-modal">
+    <div class="modal-header">
+      <div class="modal-title">상세 정보</div>
+      <div class="modal-actions">
+        <button type="button" class="btn-print" onclick="window.print()">출력</button>
+        <button type="button" class="btn-close" onclick="document.getElementById('detailModal').close()">닫기</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="info-grid">
+        <div class="info-label">고인명</div>
+        <div class="info-value" id="modalName"></div>
+        
+        <div class="divider"></div>
+        
+        <div class="info-label">봉안실</div>
+        <div class="info-value mono" id="modalRoom"></div>
+        
+        <div class="divider"></div>
+        
+        <div class="info-label">신청자</div>
+        <div class="info-value" id="modalApplicant"></div>
+        
+        <div class="divider"></div>
+        
+        <div class="info-label">안치일자</div>
+        <div class="info-value" id="modalDate"></div>
+      </div>
+    </div>
+  </dialog>
 
   <script>
     let excelData = [];
@@ -252,23 +417,18 @@
       }
     }
 
-    // 봉안실 정규화: "00실00000" → "00실 00000"
     function normalizeRoom(raw) {
       if (!raw) return "";
       const s = String(raw).replace(/\s+/g, "");
-
       const exact = s.match(/^(\d{2})실(\d{5})$/);
       if (exact) return `${exact[1]}실 ${exact[2]}`;
-
       const room = s.match(/(\d{2})실/);
       const digits = s.replace(/\D/g, "");
       const last5 = digits.slice(-5);
-
       if (room && last5.length === 5) return `${room[1]}실 ${last5}`;
       return String(raw);
     }
 
-    // ✅ 모바일에서 헤더를 줄여서 출력하기
     function getHeaderLabels() {
       const isMobile = window.matchMedia("(max-width: 480px)").matches;
       return {
@@ -278,6 +438,50 @@
         date: "안치일자"
       };
     }
+
+    function maskName(name) {
+      if (!name) return "";
+      if (name.length === 2) return name[0] + "*";
+      if (name.length > 2) return name[0] + "*".repeat(name.length - 2) + name.slice(-1);
+      return name;
+    }
+
+    function openModal(name, room, applicant, date) {
+      document.getElementById("modalName").textContent = name;
+      document.getElementById("modalRoom").textContent = room;
+      document.getElementById("modalApplicant").textContent = applicant;
+      document.getElementById("modalDate").textContent = date;
+      
+      document.getElementById("detailModal").showModal();
+    }
+
+    function bindTableClick() {
+      const table = document.querySelector("#result table");
+      if (!table) return;
+
+      table.addEventListener("click", function(e) {
+        const td = e.target.closest("td");
+        if (!td) return;
+
+        const tr = td.closest("tr");
+        const cells = tr.querySelectorAll("td");
+
+        openModal(
+          cells[0].textContent.trim(),
+          cells[1].textContent.trim(),
+          cells[2].textContent.trim(),
+          cells[3].textContent.trim()
+        );
+      });
+    }
+
+    document.getElementById("detailModal").addEventListener("click", function(e) {
+      const rect = this.getBoundingClientRect();
+      const isInDialog = 
+        rect.top <= e.clientY && e.clientY <= rect.bottom &&
+        rect.left <= e.clientX && e.clientX <= rect.right;
+      if (!isInDialog) this.close();
+    });
 
     document.getElementById("searchForm").addEventListener("submit", function(event) {
       event.preventDefault();
@@ -303,7 +507,7 @@
       if (found.length > 0) {
         const h = getHeaderLabels();
 
-        let html = `<p><strong>검색 결과 ${found.length}건</strong></p>`;
+        let html = `<p><strong>검색 결과 ${found.length}건</strong> <span style="font-size:13px; color:#666;">(행을 클릭하면 상세 정보가 나타납니다)</span></p>`;
         html += `<div class="table-wrapper">
           <table>
             <thead>
@@ -322,7 +526,7 @@
 
           html += `<tr>
             <td>${row["사망자명"] || ""}</td>
-            <td class="col-room" title="${String(rawBon).replace(/"/g, "&quot;")}">${bon}</td>
+            <td class="col-room">${bon}</td>
             <td>${maskName(row["신청자명"])}</td>
             <td>${row["안치일자"] || ""}</td>
           </tr>`;
@@ -330,19 +534,15 @@
 
         html += `</tbody></table></div>`;
         resultDiv.innerHTML = html;
+        
+        bindTableClick();
+
       } else {
         resultDiv.innerHTML = `<div class="no-result">'<strong>${keyword}</strong>'에 대한 검색 결과가 없습니다.</div>`;
       }
 
       resultDiv.style.display = "block";
     });
-
-    function maskName(name) {
-      if (!name) return "";
-      if (name.length === 2) return name[0] + "*";
-      if (name.length > 2) return name[0] + "*".repeat(name.length - 2) + name.slice(-1);
-      return name;
-    }
 
     function resetView() {
       document.getElementById("keyword").value = "";
