@@ -14,7 +14,6 @@
       background: linear-gradient(135deg,#d4ebf7 0%,#e8f4f8 30%,#f5fbfd 65%,#ffffff 100%);
       background-attachment: fixed;
       
-      /* ✅ body를 flex container로 만들어 main을 중앙 배치 */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -36,17 +35,16 @@
       transition: all 0.3s ease;
     }
 
-    /* ✅ main 컨테이너: 화면 중앙 정렬 */
     main{
       display:flex;
       flex-direction:column;
-      justify-content:center;  /* ✅ flex-start → center 변경 */
+      justify-content:center;
       align-items:center;
       
       width: min(1100px, 100%);
       max-width: 100%;
-      padding: 60px 40px;  /* ✅ 패딩 균형있게 조정 */
-      margin: 0;  /* ✅ margin 제거 (body에서 중앙 정렬) */
+      padding: 60px 40px;
+      margin: 0;
 
       background: rgba(255,255,255,0.18);
       backdrop-filter: blur(12px);
@@ -76,7 +74,7 @@
       align-items:center;
       gap:14px;
       width:100%;
-      margin-bottom: 20px;  /* ✅ 검색 폼과 결과 사이 여백 */
+      margin-bottom: 20px;
     }
 
     form{
@@ -117,7 +115,7 @@
 
     #result{
       display:none;
-      margin-top: 0;  /* ✅ margin 조정 */
+      margin-top: 0;
       text-align:left;
       width: 100%;
       max-width: 100%;
@@ -145,22 +143,32 @@
       table-layout: auto;
     }
 
+    /* ✅ PC 기본 스타일: 28pt 맑은고딕 */
     th, td{
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       border:1px solid #e0e0e0;
-      padding:12px;
-      text-align:left;
-      font-size:16px;
+      padding:16px 20px;
+      font-size: 28pt;  /* ✅ 28포인트 */
       vertical-align:middle;
       white-space: nowrap;
     }
 
+    /* ✅ 헤더: 가운데 정렬 + 굵게 */
     th{
       background: linear-gradient(145deg,#f8f9fa,#e9ecef);
-      font-weight:800;
+      font-weight: 900;  /* ✅ 굵게 */
       color:#2c3e50;
+      text-align: center;  /* ✅ 가운데 정렬 */
       position: sticky;
       top: 0;
       z-index: 10;
+    }
+
+    /* 데이터 행: 왼쪽 정렬 유지 (또는 가운데로 하려면 center로 변경) */
+    td{
+      text-align: left;
+      font-weight: 600;
+      color: #111;
     }
 
     tbody tr{
@@ -171,9 +179,10 @@
       background: #e3f2fd;
     }
 
-    th.col-room, td.col-room{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      letter-spacing: 0.2px;
+    /* 봉안실 컬럼은 monospace 유지 */
+    td.col-room{
+      font-family: "Malgun Gothic", "맑은 고딕", monospace;
+      letter-spacing: 0px;
     }
 
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
@@ -304,16 +313,17 @@
       .btn-print { display: inline-block; }
     }
 
+    /* ✅ 모바일: 폰트 크기 축소 */
     @media (max-width: 480px){
       body{
-        padding: 10px;  /* ✅ 모바일 여백 */
+        padding: 10px;
       }
 
       .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
 
       main{
         width: 100%;
-        padding: 40px 20px;  /* ✅ 모바일 패딩 */
+        padding: 40px 20px;
       }
 
       h1{ font-size:26px; letter-spacing: -0.5px; }
@@ -329,7 +339,11 @@
         max-height: 400px;
       }
 
-      th, td{ font-size:14px; padding:10px; }
+      /* ✅ 모바일에서는 작게 표시 */
+      th, td{ 
+        font-size:14px;  /* 28pt → 14px */
+        padding:10px; 
+      }
       
       .detail-modal{ width: 94vw; }
       .info-value{ font-size: 18pt; }
