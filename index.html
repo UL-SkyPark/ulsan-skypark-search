@@ -31,7 +31,6 @@
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
-    .home-btn:hover{ background: linear-gradient(135deg,#bbdefb,#90caf9); transform: translateY(-1px); }
 
     main{
       display:flex; justify-content:center; align-items:center;
@@ -75,12 +74,6 @@
       outline:none;
       transition: all 0.25s ease;
     }
-    form input:focus{
-      border-color:#4CAF50;
-      box-shadow:0 10px 35px rgba(76,175,80,0.25);
-      transform: translateY(-1px);
-      width:370px;
-    }
 
     form button{
       font-size:18px;
@@ -93,11 +86,9 @@
       height:52px;
       font-weight:600;
       box-shadow:0 6px 25px rgba(76,175,80,0.45);
-      transition: all 0.25s ease;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
-    form button:hover{ transform: translateY(-2px); box-shadow:0 12px 35px rgba(76,175,80,0.55); }
 
     #result{
       display:none;
@@ -114,7 +105,6 @@
       box-shadow:0 12px 50px rgba(0,0,0,0.22);
     }
 
-    /* 기본(PC): 일반 테이블 */
     table{
       border-collapse: collapse;
       width: 100%;
@@ -144,7 +134,6 @@
     th:nth-child(3), td:nth-child(3){ width: 23%; }
     th:nth-child(4), td:nth-child(4){ width: 19%; }
 
-    /* 봉안실은 고정폭 + 가독성 */
     td.col-room{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       letter-spacing: 0.2px;
@@ -153,7 +142,7 @@
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
     .loading{ font-size:18px; color:#4CAF50; padding:24px; font-weight:600; }
 
-    /* ✅ 모바일: 스택형(2줄, 2×2) */
+    /* ✅ 모바일: 스택형(2줄) + 작은 회색 라벨 */
     @media (max-width: 480px){
       .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
       main{ margin:8px; padding:40px 16px; min-height: 96vh; }
@@ -161,28 +150,13 @@
       .title-line{ display:block; }
 
       form{ flex-direction:column; gap:12px; }
-      form input{
-        width:100%;
-        max-width:none;
-        min-width:auto;
-        font-size:16px;
-        padding:14px 18px;
-      }
-      form input:focus{ width:100%; transform:none; }
-      form button{
-        width:100%;
-        max-width:220px;
-        height:48px;
-        font-size:16px;
-        padding:14px 22px;
-      }
+      form input{ width:100%; max-width:none; min-width:auto; font-size:16px; padding:14px 18px; }
+      form button{ width:100%; max-width:220px; height:48px; font-size:16px; padding:14px 22px; }
 
       #result{ width:100%; padding:16px; max-height: 520px; }
 
-      /* 모바일 헤더 숨김 */
       thead { display:none; }
 
-      /* 핵심: 행(tr)을 grid로 바꿔 2열 배치 */
       tbody tr{
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -204,6 +178,15 @@
         overflow: hidden;
         text-overflow: ellipsis;
         min-width: 0;
+      }
+
+      /* ✅ 작은 회색 라벨: "고인명: " */
+      tbody td::before{
+        content: attr(data-label) ": ";
+        font-size: 11px;
+        color: #8a8f98;
+        font-weight: 600;
+        letter-spacing: -0.2px;
       }
 
       tbody td:nth-child(1){
@@ -272,20 +255,19 @@
       }
     }
 
-    // ✅ 봉안실 정규화: "00실00000" → "00실 00000"
+    // 봉안실 정규화: "00실00000" → "00실 00000"
     function normalizeRoom(raw) {
       if (!raw) return "";
       const s = String(raw).replace(/\s+/g, "");
 
       const exact = s.match(/^(\d{2})실(\d{5})$/);
-      if (exact) return `${exact[1]}실 ${exact[2]}`; // ✅ 공백 1칸
+      if (exact) return `${exact[1]}실 ${exact[2]}`;
 
       const room = s.match(/(\d{2})실/);
       const digits = s.replace(/\D/g, "");
       const last5 = digits.slice(-5);
 
-      if (room && last5.length === 5) return `${room[1]}실 ${last5}`; // ✅ 공백 1칸
-
+      if (room && last5.length === 5) return `${room[1]}실 ${last5}`;
       return String(raw);
     }
 
@@ -328,10 +310,10 @@
           const bon = normalizeRoom(rawBon);
 
           html += `<tr>
-            <td>${row["사망자명"] || ""}</td>
-            <td class="col-room" title="${String(rawBon).replace(/"/g, "&quot;")}">${bon}</td>
-            <td>${maskName(row["신청자명"])}</td>
-            <td>${row["안치일자"] || ""}</td>
+            <td data-label="고인명">${row["사망자명"] || ""}</td>
+            <td class="col-room" data-label="봉안실" title="${String(rawBon).replace(/"/g, "&quot;")}">${bon}</td>
+            <td data-label="신청자명">${maskName(row["신청자명"])}</td>
+            <td data-label="안치일자">${row["안치일자"] || ""}</td>
           </tr>`;
         });
 
