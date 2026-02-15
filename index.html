@@ -32,29 +32,31 @@
       touch-action: manipulation;
     }
 
+    /* ✅ "중앙에서 살짝 위" 배치 */
     main{
       display:flex;
       flex-direction:column;
-      justify-content:flex-start;
+
+      justify-content:center;     /* 세로 중앙 */
       align-items:center;
+
       min-height: 94vh;
 
       background: rgba(255,255,255,0.18);
       backdrop-filter: blur(12px);
       border-radius: 25px;
 
-      /* ✅ 너무 위로 올라간 것 완화: 살짝 아래로 */
-      padding: 72px 40px 65px;  /* (이전 46px 보다 아래 / 중앙보다 위) */
+      padding: 65px 40px 65px;
       margin: 20px;
 
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       border: 1px solid rgba(255,255,255,0.3);
+
+      /* 중앙에서 "조금만" 위로 */
+      transform: translateY(-22px); /* [web:313] */
     }
 
-    .title-container{
-      margin-bottom: 20px;
-      width: 100%;
-    }
+    .title-container{ margin-bottom: 20px; width: 100%; }
 
     h1{
       color:#1f3a5a;
@@ -123,11 +125,24 @@
       overflow:auto;
       -webkit-overflow-scrolling: touch;
       border:1px solid rgba(255,255,255,0.35);
-      padding:22px;
+      padding:0;
       background: rgba(255,255,255,0.95);
       border-radius:20px;
       box-shadow:0 12px 50px rgba(0,0,0,0.22);
     }
+
+    .result-bar{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,0.98);
+      border-bottom: 1px solid #e6e6e6;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: #1f3a5a;
+    }
+
+    .result-body{ padding: 16px; }
 
     .table-wrapper{
       width: 100%;
@@ -136,7 +151,6 @@
       margin-top: 12px;
     }
 
-    /* ✅ 타이트: 내용 기반 폭 */
     table{
       border-collapse: collapse;
       width: max-content;
@@ -158,13 +172,78 @@
       font-weight:800;
       color:#2c3e50;
       position: sticky;
-      top: 0;
+      top: 48px;
       z-index: 10;
     }
 
     th.col-room, td.col-room{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       letter-spacing: 0.2px;
+    }
+
+    tbody tr{ cursor: pointer; }
+    tbody tr:hover{ background: #fafafa; }
+
+    .row-dialog{
+      border: none;
+      border-radius: 16px;
+      padding: 0;
+      width: min(560px, 92vw);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+    }
+    .row-dialog::backdrop{ background: rgba(0,0,0,0.45); }
+
+    .row-dialog__head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #ececec;
+      background: #fff;
+    }
+    .row-dialog__title{
+      font-size: 14px;
+      color: #374151;
+      font-weight: 900;
+    }
+    .row-dialog__close{
+      border: 1px solid #d1d5db;
+      background: #fff;
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .row-dialog__body{
+      padding: 16px;
+      background: #fff;
+    }
+
+    .kv{
+      display:grid;
+      grid-template-columns: 88px 1fr;
+      gap: 10px 12px;
+      align-items: start;
+    }
+    .k{
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 800;
+      padding-top: 6px;
+    }
+    .v{
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 900;
+      color: #111827;
+      word-break: break-word;
+    }
+    .v.mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      letter-spacing: 0.2px;
+      font-size: 18px;
     }
 
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
@@ -175,30 +254,29 @@
 
       main{
         margin:8px;
-        padding: 66px 16px 50px; /* ✅ 모바일도 살짝 아래로 */
+        padding: 52px 16px 50px;
         min-height: 96vh;
+        transform: translateY(-14px); /* 모바일은 살짝 덜 올림 */ /* [web:313] */
       }
 
       h1{ font-size:26px; letter-spacing: -0.5px; }
       .title-line{ display:block; }
-      .title-container{ margin-bottom: 14px; }
-
-      form{ flex-direction:column; gap:10px; }
-      form input{ width:100%; max-width:none; min-width:auto; font-size:16px; padding:14px 18px; }
-      form input:focus{ width:100%; transform:none; }
-      form button{ width:100%; max-width:240px; height:48px; font-size:16px; padding:14px 22px; }
 
       #result{
         width:100%;
-        padding:16px;
-        max-height: 520px;
+        max-height: 560px;
         margin-top: 14px;
       }
 
-      th, td{
-        font-size:14px;
-        padding:10px;
-      }
+      .result-bar{ padding: 12px 14px; }
+      .result-body{ padding: 14px; }
+
+      th, td{ font-size:14px; padding:10px; }
+      th{ top: 44px; }
+
+      .kv{ grid-template-columns: 74px 1fr; }
+      .v{ font-size: 18px; }
+      .v.mono{ font-size: 16px; }
     }
   </style>
 </head>
@@ -223,6 +301,21 @@
 
     <div id="result"></div>
   </main>
+
+  <dialog id="rowDialog" class="row-dialog" aria-label="선택한 행 상세 보기">
+    <div class="row-dialog__head">
+      <div class="row-dialog__title">선택한 정보</div>
+      <button type="button" id="rowDialogClose" class="row-dialog__close">닫기</button>
+    </div>
+    <div class="row-dialog__body">
+      <div class="kv">
+        <div class="k" id="k1">고인명</div><div class="v" id="v1"></div>
+        <div class="k" id="k2">봉안실</div><div class="v mono" id="v2"></div>
+        <div class="k" id="k3">신청자</div><div class="v" id="v3"></div>
+        <div class="k" id="k4">안치일자</div><div class="v" id="v4"></div>
+      </div>
+    </div>
+  </dialog>
 
   <script>
     let excelData = [];
@@ -252,7 +345,6 @@
       }
     }
 
-    // 봉안실 정규화: "00실00000" → "00실 00000"
     function normalizeRoom(raw) {
       if (!raw) return "";
       const s = String(raw).replace(/\s+/g, "");
@@ -268,7 +360,6 @@
       return String(raw);
     }
 
-    // ✅ 모바일에서 헤더를 줄여서 출력하기
     function getHeaderLabels() {
       const isMobile = window.matchMedia("(max-width: 480px)").matches;
       return {
@@ -277,6 +368,56 @@
         applicant: isMobile ? "신청자" : "신청자명",
         date: "안치일자"
       };
+    }
+
+    function bindRowModal() {
+      const resultDiv = document.getElementById("result");
+      const table = resultDiv.querySelector("table");
+      if (!table) return;
+
+      if (table.dataset.rowModalBound === "1") return;
+      table.dataset.rowModalBound = "1";
+
+      const dialog = document.getElementById("rowDialog");
+      const closeBtn = document.getElementById("rowDialogClose");
+
+      const v1 = document.getElementById("v1");
+      const v2 = document.getElementById("v2");
+      const v3 = document.getElementById("v3");
+      const v4 = document.getElementById("v4");
+      const k3 = document.getElementById("k3");
+
+      table.addEventListener("click", (event) => {
+        const td = event.target.closest("td");
+        if (!td) return;
+
+        const tr = td.closest("tr");
+        if (!tr) return;
+
+        const tds = tr.querySelectorAll("td");
+        if (tds.length < 4) return;
+
+        const h = getHeaderLabels();
+        k3.textContent = h.applicant;
+
+        v1.textContent = (tds[0].textContent || "").trim();
+        v2.textContent = (tds[1].textContent || "").trim();
+        v3.textContent = (tds[2].textContent || "").trim();
+        v4.textContent = (tds[3].textContent || "").trim();
+
+        dialog.showModal();
+        closeBtn.focus();
+      });
+
+      closeBtn.addEventListener("click", () => dialog.close());
+
+      dialog.addEventListener("click", (e) => {
+        const rect = dialog.getBoundingClientRect();
+        const inDialog =
+          rect.top <= e.clientY && e.clientY <= rect.bottom &&
+          rect.left <= e.clientX && e.clientX <= rect.right;
+        if (!inDialog) dialog.close();
+      });
     }
 
     document.getElementById("searchForm").addEventListener("submit", function(event) {
@@ -303,18 +444,21 @@
       if (found.length > 0) {
         const h = getHeaderLabels();
 
-        let html = `<p><strong>검색 결과 ${found.length}건</strong></p>`;
-        html += `<div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>${h.name}</th>
-                <th class="col-room">${h.room}</th>
-                <th>${h.applicant}</th>
-                <th>${h.date}</th>
-              </tr>
-            </thead>
-            <tbody>`;
+        let html = `
+          <div class="result-bar">검색 결과 ${found.length}건</div>
+          <div class="result-body">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>${h.name}</th>
+                    <th class="col-room">${h.room}</th>
+                    <th>${h.applicant}</th>
+                    <th>${h.date}</th>
+                  </tr>
+                </thead>
+                <tbody>
+        `;
 
         found.forEach(row => {
           const rawBon = row["봉안번호"] || "";
@@ -328,13 +472,16 @@
           </tr>`;
         });
 
-        html += `</tbody></table></div>`;
+        html += `</tbody></table></div></div>`;
         resultDiv.innerHTML = html;
+
+        bindRowModal();
       } else {
         resultDiv.innerHTML = `<div class="no-result">'<strong>${keyword}</strong>'에 대한 검색 결과가 없습니다.</div>`;
       }
 
       resultDiv.style.display = "block";
+      resultDiv.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
     function maskName(name) {
