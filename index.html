@@ -40,6 +40,27 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     }
 
+    /* 하단 중앙 로고 */
+    .footer-logo {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-logo:hover {
+      opacity: 1;
+    }
+
+    .footer-logo img {
+      height: 50px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+    }
+
     main {
       display: flex;
       justify-content: center;
@@ -49,7 +70,7 @@
       background: rgba(255,255,255,0.15);
       backdrop-filter: blur(12px);
       border-radius: 25px;
-      padding: 40px 50px 50px; /* 상단 패딩 줄여서 위로 올림 */
+      padding: 40px 50px 80px; /* 하단 패딩 증가로 로고 공간 확보 */
       margin: 20px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15);
       z-index: 10;
@@ -57,7 +78,7 @@
 
     /* 타이틀 영역 */
     .title-container {
-      margin-bottom: 30px; /* 타이틀과 검색 간격 줄임 */
+      margin-bottom: 30px;
       line-height: 1.1;
     }
 
@@ -72,7 +93,7 @@
 
     h1 span {
       display: block;
-      font-size: 1em; /* 첫 번째 줄의 100% 크기로 변경 */
+      font-size: 1em;
       font-weight: 400;
       margin-top: 5px;
       opacity: 0.9;
@@ -103,7 +124,7 @@
     
     form input {
       font-size: 20px;
-      padding: 12px 20px; /* 높이 줄임 (18px → 12px) */
+      padding: 12px 20px;
       border: 2px solid rgba(0,0,0,0.1);
       border-radius: 12px;
       background: rgba(255,255,255,0.95);
@@ -115,7 +136,7 @@
     
     form button {
       font-size: 20px;
-      padding: 12px 30px; /* 높이 맞춤 (18px → 12px) */
+      padding: 12px 30px;
       background-color: #4CAF50;
       color: white;
       border: none;
@@ -123,7 +144,7 @@
       cursor: pointer;
       box-shadow: 0 6px 20px rgba(76,175,80,0.4);
       transition: all 0.3s ease;
-      height: 48px; /* 입력창과 높이 정확히 맞춤 */
+      height: 48px;
       flex-shrink: 0;
     }
 
@@ -182,8 +203,12 @@
     @media (max-width: 768px) {
       main {
         margin: 10px;
-        padding: 25px 20px 40px; /* 모바일에서도 위로 올림 */
+        padding: 25px 20px 70px; /* 모바일 하단 여백 조정 */
         height: 85vh;
+      }
+      
+      .footer-logo img {
+        height: 40px;
       }
       
       .title-container {
@@ -221,6 +246,14 @@
     }
 
     @media (max-width: 480px) {
+      .footer-logo {
+        bottom: 15px;
+      }
+      
+      .footer-logo img {
+        height: 36px;
+      }
+      
       h1 {
         font-size: 32px;
       }
@@ -238,6 +271,11 @@
 </head>
 <body>
   <button class="home-btn" onclick="resetView()">초기화면</button>
+
+  <!-- 하단 중앙 울산시설공단 로고 -->
+  <div class="footer-logo">
+    <img src="logo.jpg" alt="울산시설공단">
+  </div>
 
   <main>
     <div class="title-container">
