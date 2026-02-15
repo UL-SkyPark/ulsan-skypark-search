@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>울산하늘공원 추모의집 고인 검색</title>
   <style>
-    /* 기본 스타일 초기화 */
+    /* 기본 초기화 */
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body{
@@ -14,6 +14,10 @@
       text-align: center;
       background: linear-gradient(135deg,#d4ebf7 0%,#e8f4f8 30%,#f5fbfd 65%,#ffffff 100%);
       background-attachment: fixed;
+      display: flex;             /* body 자체를 flex 컨테이너로 */
+      justify-content: center;   /* 가로 중앙 */
+      align-items: center;       /* 세로 중앙 */
+      flex-direction: column;
     }
 
     /* 초기화면 버튼 */
@@ -38,22 +42,23 @@
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      min-height: 94vh;
+      
+      /* 기존: min-height: 94vh; transform: translateY(-22px); */
+      /* 변경: 너무 위로 붙지 않게 조정 */
+      width: min(1000px, 92%);
+      min-height: auto;  /* 높이 강제 제거 */
+      padding: 80px 40px; /* 내부 여백을 넉넉하게 */
+      margin: 40px 0;     /* 위아래 외부 여백 추가 */
 
       background: rgba(255,255,255,0.18);
       backdrop-filter: blur(12px);
       border-radius: 25px;
 
-      padding: 65px 40px 65px;
-      margin: 20px;
-
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       border: 1px solid rgba(255,255,255,0.3);
-
-      transform: translateY(-22px);
     }
 
-    .title-container{ margin-bottom: 20px; width: 100%; }
+    .title-container{ margin-bottom: 30px; width: 100%; }
 
     h1{
       color:#1f3a5a;
@@ -67,7 +72,7 @@
     }
     .title-line{ display:inline; }
 
-    /* 검색 폼 스타일 */
+    /* 검색 폼 */
     .search-form-container{
       display:flex;
       flex-direction:column;
@@ -112,12 +117,12 @@
       box-shadow:0 6px 25px rgba(76,175,80,0.45);
     }
 
-    /* 검색 결과 영역 */
+    /* 결과 영역 */
     #result{
       display:none;
-      margin-top: 24px;
+      margin-top: 30px;
       text-align:left;
-      width: min(1000px, 94%); /* 테이블에 맞게 넓힘 */
+      width: 100%; /* 부모(main) 너비에 맞춤 */
       max-height: 600px;
       overflow:auto;
       -webkit-overflow-scrolling: touch;
@@ -137,171 +142,67 @@
       padding: 16px 20px;
       font-weight: 800;
       color: #1f3a5a;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
-    .print-btn {
-      background: #fff;
-      border: 1px solid #ccc;
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      font-weight: 700;
-      color: #333;
-    }
-    .print-btn:hover { background: #f0f0f0; }
-
-    /* 테이블 스타일 (PC/화면용) */
-    .table-wrapper {
+    .table-wrapper{
       width: 100%;
       overflow-x: auto;
     }
 
-    table {
-      width: 100%;
+    table{
       border-collapse: collapse;
-      table-layout: auto;
+      width: 100%;
+      min-width: 600px; /* 테이블 최소 너비 보장 */
     }
 
-    th, td {
-      padding: 14px 16px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
+    th, td{
+      padding:14px 16px;
+      text-align:left;
+      border-bottom:1px solid #eee;
       white-space: nowrap;
     }
 
-    th {
+    th{
       background: #f9fafb;
-      font-size: 14px;
-      font-weight: 700;
-      color: #555;
+      font-size:15px;
+      font-weight:700;
+      color:#555;
       position: sticky;
-      top: 56px; /* result-bar 높이만큼 */
+      top: 52px; /* result-bar 높이 */
+      z-index: 10;
     }
 
-    td {
-      font-size: 17px;
-      color: #111;
-      font-weight: 500;
+    td{
+      font-size:17px;
+      color:#111;
+      font-weight:500;
     }
 
-    /* 봉안실 번호 전용 폰트 */
-    .mono {
+    /* 봉안실 번호 폰트 */
+    .mono{
       font-family: "Malgun Gothic", "맑은 고딕", monospace;
       letter-spacing: 0px;
     }
 
+    tbody tr:hover{ background: #f5fbfd; }
+
     .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; text-align: center; }
     .loading{ font-size:18px; color:#4CAF50; padding:24px; font-weight:600; text-align: center; }
 
-
-    /* ✅ 인쇄 전용 스타일 (영수증/라벨 10cm 폭 최적화) */
-    @media print {
-      @page {
-        size: 100mm auto;  /* 폭 100mm(10cm), 높이 자동 */
-        margin: 0;       /* 여백 제거 */
-      }
-
-      body {
-        width: 100mm;      /* 본문 폭 고정 */
-        margin: 0;
-        padding: 5mm;      /* 내부 여백 */
-        background: white; 
-        text-align: left;
-        font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      }
-
-      /* 인쇄 시 숨길 요소들 */
-      .home-btn, .title-container, .search-form-container, .print-btn {
-        display: none !important;
-      }
-
-      main {
-        display: block;
-        margin: 0;
-        padding: 0;
-        background: none;
-        border: none;
-        box-shadow: none;
-        transform: none;
-        min-height: auto;
-      }
-
-      #result {
-        display: block !important;
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        border: none;
-        background: none;
-        box-shadow: none;
-        max-height: none;
-        overflow: visible;
-      }
-
-      .result-bar {
-        border-bottom: 2px solid #000;
-        padding: 0 0 10px 0;
-        margin-bottom: 10px;
-        position: static;
-        background: none;
-        display: block; /* 플렉스 해제 */
-      }
-      .result-bar span { font-size: 14pt; }
-
-      /* 인쇄 시 테이블 스타일 변경 */
-      table {
-        display: block;
-        width: 100%;
-      }
-      thead { display: none; } /* 헤더 숨김 */
-      
-      tbody, tr, td {
-        display: block;
-        width: 100%;
-        border: none;
-        padding: 0;
-        white-space: normal; /* 줄바꿈 허용 */
-      }
-
-      tr {
-        margin-bottom: 15px;
-        border-bottom: 1px dashed #000;
-        padding-bottom: 10px;
-        page-break-inside: avoid;
-      }
-      tr:last-child { border-bottom: none; }
-
-      /* 각 셀을 라벨: 값 형태로 변환하여 출력 */
-      td {
-        margin-bottom: 4px;
-        font-size: 16pt; /* 인쇄용 큰 글씨 */
-        color: #000;
-        font-weight: 700;
-        padding-left: 0;
-      }
-
-      /* CSS 가상 요소로 라벨 추가 (헤더 대신) */
-      td:nth-of-type(1)::before { content: "고인명: "; font-size: 12pt; color: #555; font-weight: normal; }
-      td:nth-of-type(2)::before { content: "봉안실: "; font-size: 12pt; color: #555; font-weight: normal; }
-      td:nth-of-type(3)::before { content: "신청자: "; font-size: 12pt; color: #555; font-weight: normal; }
-      td:nth-of-type(4)::before { content: "안치일: "; font-size: 12pt; color: #555; font-weight: normal; }
-    }
-
+    /* 모바일 대응 */
     @media (max-width: 480px){
       .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
-      main{ margin:8px; padding: 52px 16px 50px; transform: translateY(-14px); }
+      
+      main{ 
+        margin: 20px 10px; /* 모바일에서는 여백 축소 */
+        padding: 40px 16px 40px; 
+      }
+
       h1{ font-size:26px; }
       .title-line{ display:block; }
       #result{ width:100%; }
       .result-bar{ padding: 12px 16px; }
-      
-      /* 모바일에서도 테이블 가로 스크롤 허용 */
-      td, th { font-size: 15px; padding: 10px; }
+      th, td{ font-size:14px; padding:10px; }
     }
   </style>
 </head>
@@ -335,11 +236,6 @@
 
     async function loadExcelData() {
       try {
-        const resultDiv = document.getElementById("result");
-        // 로딩 시에는 result창을 숨겨둠 (검색 전에는 안 보이게)
-        // resultDiv.style.display = "block"; 
-        // resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
-
         const response = await fetch(DATA_URL);
         if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
 
@@ -348,14 +244,12 @@
         const sheetName = workbook.SheetNames[0];
         excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { defval: "" });
 
-        // 데이터 로드 완료 후 별도 메시지 없음 (검색 대기)
       } catch (error) {
-        const resultDiv = document.getElementById("result");
-        resultDiv.innerHTML = '<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>';
-        resultDiv.style.display = "block";
+        console.error("데이터 로드 실패:", error);
       }
     }
 
+    // 봉안실 번호 포맷팅
     function normalizeRoom(raw) {
       if (!raw) return "";
       const s = String(raw).replace(/\s+/g, "");
@@ -368,6 +262,7 @@
       return String(raw);
     }
 
+    // 이름 마스킹
     function maskName(name) {
       if (!name) return "";
       if (name.length === 2) return name[0] + "*";
@@ -381,7 +276,7 @@
       const resultDiv = document.getElementById("result");
 
       if (excelData.length === 0) {
-        resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다. 잠시 후 다시 검색해주세요.</div>';
+        resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다. 잠시 후 다시 시도해주세요.</div>';
         resultDiv.style.display = "block";
         return;
       }
@@ -392,7 +287,7 @@
         return;
       }
 
-      // 검색 로직 (반환일자 없는 건만)
+      // 검색 로직
       const found = excelData.filter(row => {
         const name = String(row["사망자명"] ?? "");
         const returned = String(row["반환일자"] ?? "").trim();
@@ -400,12 +295,8 @@
       });
 
       if (found.length > 0) {
-        // 테이블 헤더 (PC 화면용)
         let html = `
-          <div class="result-bar">
-            <span>검색 결과 ${found.length}건</span>
-            <button type="button" class="print-btn" onclick="window.print()">출력</button>
-          </div>
+          <div class="result-bar">검색 결과 ${found.length}건</div>
           <div class="table-wrapper">
             <table>
               <thead>
@@ -441,7 +332,7 @@
 
       resultDiv.style.display = "block";
       
-      // 검색 후 화면 스크롤 (모바일 배려)
+      // 스크롤 이동
       setTimeout(() => {
         resultDiv.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 100);
