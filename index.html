@@ -7,379 +7,152 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
+    body{
       font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
       min-height: 100vh;
       text-align: center;
-      /* iOS 바운스 스크롤 방지 */
-      overscroll-behavior: none;
-
-      /* 더 은은한 푸른 그라데이션 */
-      background: linear-gradient(135deg,
-        #d4ebf7 0%,
-        #e8f4f8 30%,
-        #f5fbfd 65%,
-        #ffffff 100%
-      );
+      background: linear-gradient(135deg,#d4ebf7 0%,#e8f4f8 30%,#f5fbfd 65%,#ffffff 100%);
       background-attachment: fixed;
     }
 
-    /* 은은한 하늘색 버튼 */
-    .home-btn {
-      position: fixed;
-      top: 12px;
-      left: 12px;
+    .home-btn{
+      position: fixed; top: 12px; left: 12px;
       background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-      color: #1976d2;
-      border: 1px solid rgba(187,222,251,0.4);
-      padding: 12px 18px;
-      cursor: pointer;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 500;
-      backdrop-filter: blur(8px);
+      color: #1976d2; border: 1px solid rgba(187,222,251,0.4);
+      padding: 12px 18px; cursor: pointer; border-radius: 8px;
+      font-size: 16px; font-weight: 500;
       box-shadow: 0 3px 12px rgba(144,202,249,0.25);
-      z-index: 100;
-      transition: all 0.3s ease;
-      /* 터치 최적화 */
+      z-index: 100; transition: all 0.3s ease;
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
     }
+    .home-btn:hover{ background: linear-gradient(135deg,#bbdefb,#90caf9); transform: translateY(-1px); }
 
-    .home-btn:hover {
-      background: linear-gradient(135deg, #bbdefb, #90caf9);
-      box-shadow: 0 5px 20px rgba(144,202,249,0.35);
-      transform: translateY(-1px);
-    }
-
-    .home-btn:active {
-      transform: translateY(0);
-    }
-
-    /* 가운데 카드 */
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 92vh; /* height → min-height (모바일 대응) */
-      flex-direction: column;
+    main{
+      display:flex; justify-content:center; align-items:center;
+      min-height: 92vh; flex-direction:column;
       background: rgba(255,255,255,0.18);
-      backdrop-filter: blur(12px);
-      border-radius: 25px;
-      padding: 65px 40px;
-      margin: 20px;
+      backdrop-filter: blur(12px); border-radius: 25px;
+      padding: 65px 40px; margin: 20px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-      z-index: 10;
       border: 1px solid rgba(255,255,255,0.3);
-      position: relative;
-      overflow: visible; /* hidden → visible (모바일 스크롤 대응) */
     }
 
-    .title-container {
-      margin-bottom: 35px;
-      z-index: 2;
-      position: relative;
+    .title-container{ margin-bottom: 35px; }
+    h1{
+      color:#1f3a5a; text-shadow: 2px 2px 5px rgba(255,255,255,0.8);
+      font-weight: 800; font-size: 42px;
+      letter-spacing: -0.8px; line-height: 1.2;
+      word-break: keep-all;
     }
+    .title-line{ display: inline; }
 
-    h1 {
-      color: #1f3a5a;
-      text-shadow: 2px 2px 5px rgba(255,255,255,0.8);
-      font-weight: 800;
-      font-size: 42px;
-      letter-spacing: -0.8px;
-      line-height: 1.2;
-      margin: 0;
-      word-break: keep-all; /* 한글 줄바꿈 최적화 */
-    }
-
-    .search-form-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      z-index: 2;
-      position: relative;
-      width: 100%;
-    }
-
-    form {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
-    }
-
-    form input {
-      font-size: 18px;
-      padding: 16px 24px;
-      border: 2px solid rgba(255,255,255,0.5);
-      border-radius: 14px;
+    .search-form-container{ display:flex; flex-direction:column; align-items:center; gap:20px; width:100%; }
+    form{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center; }
+    form input{
+      font-size:18px; padding:16px 24px;
+      border:2px solid rgba(255,255,255,0.5); border-radius:14px;
       background: rgba(255,255,255,0.96);
-      width: 360px;
-      max-width: 72vw;
-      min-width: 280px;
-      box-shadow: 0 6px 25px rgba(0,0,0,0.12);
-      outline: none;
-      transition: all 0.3s ease;
-      font-weight: 400;
-      /* 모바일 입력 최적화 */
-      -webkit-appearance: none;
-      appearance: none;
+      width:360px; max-width:72vw; min-width:280px;
+      box-shadow:0 6px 25px rgba(0,0,0,0.12); outline:none;
     }
-
-    form input:focus {
-      border-color: #4CAF50;
-      box-shadow: 0 10px 35px rgba(76,175,80,0.25);
-      transform: translateY(-1px);
-      width: 370px;
-    }
-
-    form button {
-      font-size: 18px;
-      padding: 16px 32px;
-      background: linear-gradient(145deg, #4CAF50, #45a049);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: 0 6px 25px rgba(76,175,80,0.45);
-      transition: all 0.3s ease;
-      height: 52px;
-      flex-shrink: 0;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      /* 터치 최적화 */
+    form input:focus{ border-color:#4CAF50; transform: translateY(-1px); width:370px; }
+    form button{
+      font-size:18px; padding:16px 32px;
+      background: linear-gradient(145deg,#4CAF50,#45a049);
+      color:#fff; border:none; border-radius:14px;
+      cursor:pointer; height:52px; font-weight:600;
+      box-shadow:0 6px 25px rgba(76,175,80,0.45);
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+    }
+    form button:hover{ transform: translateY(-2px); }
+
+    #result{
+      display:none; margin-top:25px; text-align:left;
+      width: min(900px, 90%); max-height: 550px;
+      overflow:auto; -webkit-overflow-scrolling: touch;
+      border:1px solid rgba(255,255,255,0.35); padding:22px;
+      background: rgba(255,255,255,0.95); border-radius:20px;
+      box-shadow:0 12px 50px rgba(0,0,0,0.22);
     }
 
-    form button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 35px rgba(76,175,80,0.55);
-    }
-
-    form button:active {
-      transform: translateY(0);
-    }
-
-    #result {
-      display: none;
-      margin-top: 25px;
-      text-align: left;
-      width: min(900px, 90%);
-      max-height: 550px;
-      overflow-y: auto;
-      /* 모바일 스크롤 부드럽게 */
-      -webkit-overflow-scrolling: touch;
-      border: 1px solid rgba(255,255,255,0.35);
-      padding: 22px;
-      background: rgba(255,255,255,0.95);
-      border-radius: 20px;
-      box-shadow: 0 12px 50px rgba(0,0,0,0.22);
-      z-index: 2;
-      position: relative;
-    }
-
-    /* ✅ 모바일용 테이블 스크롤 래퍼 */
-    .table-wrapper {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      margin-top: 12px;
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
+    table{
+      border-collapse: collapse; width:100%; margin-top:12px;
       table-layout: fixed;
-      min-width: 600px; /* 모바일에서 가로 스크롤 */
     }
-
-    th, td {
-      border: 1px solid #e0e0e0;
-      padding: 12px 12px;
-      text-align: left;
-      font-size: 16px;
-      vertical-align: middle;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    th, td{
+      border:1px solid #e0e0e0; padding:12px;
+      text-align:left; font-size:16px;
+      vertical-align:middle; overflow:hidden;
+      text-overflow: ellipsis; white-space: nowrap;
     }
+    th{ background: linear-gradient(145deg,#f8f9fa,#e9ecef); font-weight:800; color:#2c3e50; }
+    th:nth-child(1), td:nth-child(1){ width: 23%; }
+    th:nth-child(2), td:nth-child(2){ width: 35%; }
+    th:nth-child(3), td:nth-child(3){ width: 23%; }
+    th:nth-child(4), td:nth-child(4){ width: 19%; }
 
-    th {
-      background: linear-gradient(145deg, #f8f9fa, #e9ecef);
-      font-weight: 800;
-      color: #2c3e50;
-      position: sticky;
-      top: 0; /* 테이블 헤더 고정 */
-      z-index: 10;
-    }
+    .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
+    .loading{ font-size:18px; color:#4CAF50; padding:24px; font-weight:600; }
 
-    /* 봉안번호 35%로 증가, 나머지 재조정 */
-    th:nth-child(1), td:nth-child(1) { width: 23%; } /* 고인명 */
-    th:nth-child(2), td:nth-child(2) { width: 35%; } /* 봉안번호 */
-    th:nth-child(3), td:nth-child(3) { width: 23%; } /* 신청자명 */
-    th:nth-child(4), td:nth-child(4) { width: 19%; } /* 안치일자 */
+    /* ✅ 모바일: 카드형 레이아웃 */
+    @media (max-width: 480px){
+      .home-btn{ font-size:14px; padding:10px 14px; top:8px; left:8px; }
+      main{ margin:8px; padding:40px 16px; }
+      h1{ font-size:26px; }
+      .title-line{ display:block; } /* 제목 2줄 */
 
-    .no-result {
-      font-size: 19px;
-      color: #666;
-      padding: 35px 20px;
-      font-weight: 400;
-      line-height: 1.6;
-    }
+      form{ flex-direction:column; gap:12px; }
+      form input{ width:100%; font-size:16px; padding:14px 18px; }
+      form input:focus{ width:100%; transform:none; }
+      form button{ width:100%; max-width:200px; height:48px; font-size:16px; }
 
-    .loading {
-      font-size: 18px;
-      color: #4CAF50;
-      padding: 24px;
-      font-weight: 600;
-    }
+      #result{ width: 100%; padding: 16px; max-height: 500px; }
 
-    /* ✅ 태블릿 (768px 이하) */
-    @media (max-width: 768px) {
-      main {
-        margin: 10px;
-        padding: 40px 20px;
-        min-height: 90vh;
-        border-radius: 20px;
-      }
+      /* 테이블 → 카드 변환 */
+      table, thead, tbody, th, td, tr { display: block; }
+      thead tr { display: none; } /* 헤더 숨김 */
 
-      h1 { 
-        font-size: 32px;
-        margin-bottom: 25px;
-      }
-
-      form {
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      form input {
-        width: 100%;
-        max-width: none;
-        min-width: auto;
-        padding: 16px 20px;
-        font-size: 16px;
-      }
-
-      form input:focus { 
-        width: 100%;
-        transform: none; /* 모바일에서는 변형 제거 */
-      }
-
-      form button {
-        width: 100%;
-        max-width: 200px;
-        padding: 16px 28px;
-        font-size: 17px;
-      }
-
-      #result {
-        width: 100%;
-        padding: 16px;
-        max-height: 450px;
-      }
-
-      table {
-        font-size: 15px;
-        min-width: 550px; /* 태블릿 최소 너비 */
-      }
-
-      th, td {
-        padding: 10px 8px;
-      }
-
-      /* 안치일자 줄바꿈 허용 */
-      td:nth-child(4) { 
-        white-space: normal;
-        word-break: keep-all;
-      }
-    }
-
-    /* ✅ 모바일 (480px 이하) */
-    @media (max-width: 480px) {
-      body {
-        font-size: 14px;
-      }
-
-      .home-btn { 
-        font-size: 14px; 
-        padding: 10px 14px;
-        top: 8px;
-        left: 8px;
-      }
-
-      main { 
-        padding: 30px 15px;
-        margin: 8px;
-        min-height: 92vh;
-      }
-
-      h1 { 
-        font-size: 26px;
-        letter-spacing: -0.5px;
-      }
-
-      form input {
-        padding: 14px 18px;
-        font-size: 16px; /* iOS 자동 줌 방지 */
-      }
-
-      form button { 
-        padding: 14px 24px;
-        font-size: 16px;
-        height: 48px;
-      }
-
-      #result {
+      tr {
+        margin-bottom: 14px;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
         padding: 14px;
-        max-height: 400px;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       }
 
-      table {
+      td {
+        border: none;
+        position: relative;
+        padding: 9px 10px 9px 105px; /* 라벨 공간 */
+        text-align: left;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      /* 라벨 자동 표시 */
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 9px;
+        font-weight: 700;
+        color: #555;
         font-size: 14px;
-        min-width: 500px; /* 모바일 최소 너비 */
+        width: 85px;
       }
 
-      th, td {
-        padding: 8px 6px;
-      }
-
-      .no-result,
-      .loading {
+      /* 첫 번째 td(고인명)만 강조 */
+      td:first-child {
+        font-weight: 600;
+        color: #1f3a5a;
         font-size: 16px;
-        padding: 25px 15px;
-      }
-    }
-
-    /* ✅ 초소형 모바일 (360px 이하) */
-    @media (max-width: 360px) {
-      h1 { font-size: 24px; }
-      
-      table {
-        min-width: 450px;
-        font-size: 13px;
-      }
-
-      th, td {
-        padding: 8px 5px;
-      }
-    }
-
-    /* ✅ 가로 모드 최적화 */
-    @media (max-height: 600px) and (orientation: landscape) {
-      main {
-        min-height: auto;
-        padding: 30px 25px;
-        margin: 10px;
-      }
-
-      h1 { font-size: 28px; }
-
-      #result {
-        max-height: 300px;
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 11px;
+        margin-bottom: 6px;
       }
     }
   </style>
@@ -389,7 +162,10 @@
 
   <main>
     <div class="title-container">
-      <h1>울산하늘공원 추모의집 고인 검색</h1>
+      <h1>
+        <span class="title-line">울산하늘공원</span>
+        <span class="title-line">추모의집 고인검색</span>
+      </h1>
     </div>
 
     <div class="search-form-container">
@@ -406,9 +182,7 @@
     let excelData = [];
     const DATA_URL = 'data/deceased_data.xlsx';
 
-    window.onload = function() {
-      loadExcelData();
-    };
+    window.onload = function() { loadExcelData(); };
 
     async function loadExcelData() {
       try {
@@ -424,10 +198,8 @@
         const sheetName = workbook.SheetNames[0];
         excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-        console.log('데이터 로드 완료:', excelData.length, '건');
         resultDiv.style.display = "none";
       } catch (error) {
-        console.error('데이터 로드 실패:', error);
         document.getElementById("result").innerHTML =
           '<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>';
         document.getElementById("result").style.display = "block";
@@ -456,27 +228,21 @@
       );
 
       if (found.length > 0) {
-        // ✅ 테이블을 래퍼로 감싸서 가로 스크롤 가능하게
-        let table = '<div class="table-wrapper"><table><tr><th>고인명</th><th>봉안번호</th><th>신청자명</th><th>안치일자</th></tr>';
+        let table = "<table><tr><th>고인명</th><th>봉안번호</th><th>신청자명</th><th>안치일자</th></tr>";
         found.forEach(row => {
           table += `<tr>
-            <td>${row["사망자명"] || ""}</td>
-            <td title="${row["봉안번호"] || ""}">${row["봉안번호"] || ""}</td>
-            <td>${maskName(row["신청자명"])}</td>
-            <td>${row["안치일자"] || ""}</td>
+            <td data-label="고인명">${row["사망자명"] || ""}</td>
+            <td data-label="봉안번호">${row["봉안번호"] || ""}</td>
+            <td data-label="신청자명">${maskName(row["신청자명"])}</td>
+            <td data-label="안치일자">${row["안치일자"] || ""}</td>
           </tr>`;
         });
-        table += '</table></div>';
+        table += "</table>";
         resultDiv.innerHTML = `<p><strong>검색 결과 ${found.length}건</strong></p>` + table;
       } else {
         resultDiv.innerHTML = `<div class="no-result">'<strong>${keyword}</strong>'에 대한 검색 결과가 없습니다.</div>`;
       }
       resultDiv.style.display = "block";
-      
-      // ✅ 모바일에서 결과 영역으로 부드럽게 스크롤
-      setTimeout(() => {
-        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 100);
     });
 
     function maskName(name) {
@@ -489,8 +255,6 @@
     function resetView() {
       document.getElementById("keyword").value = "";
       document.getElementById("result").style.display = "none";
-      // ✅ 모바일에서 상단으로 부드럽게 스크롤
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 
