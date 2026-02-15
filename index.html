@@ -12,7 +12,10 @@
       min-height: 100vh;
       text-align: center;
 
-      background-image: url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
+      /* 배경 유지 + 가독성용 오버레이 */
+      background-image:
+        linear-gradient(rgba(245,247,250,0.88), rgba(245,247,250,0.88)),
+        url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -21,350 +24,354 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 22px;
     }
 
-    .home-btn{
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: linear-gradient(135deg, #e8f5e9, #c5e1a5);
-      color: #558b2f;
-      border: 1px solid rgba(197, 225, 165, 0.6);
-      padding: 12px 18px;
-      cursor: pointer;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 700;
-      box-shadow: 0 3px 12px rgba(139, 195, 74, 0.3);
-      z-index: 100;
-      transition: all 0.3s ease;
-    }
-
-    .home-btn:hover{
-      background: linear-gradient(135deg, #c5e1a5, #aed581);
-      box-shadow: 0 4px 16px rgba(139, 195, 74, 0.4);
-    }
-
+    /* ===== 키오스크 카드 ===== */
     main{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-
-      width: min(1100px, 100%);
-      max-width: 100%;
-      padding: 60px 40px;
-      margin: 0;
-
-      background: rgba(255,255,255,0.25);
-      backdrop-filter: blur(15px);
-      border-radius: 25px;
-
-      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-      border: 1px solid rgba(255,255,255,0.4);
-    }
-
-    .title-container{ margin-bottom: 22px; width: 100%; }
-
-    h1{
-      color:#1f3a5a;
-      text-shadow: 2px 2px 5px rgba(255,255,255,0.8);
-      font-weight: 900;
-      font-size: 42px;
-      letter-spacing: -0.8px;
-      line-height: 1.15;
-      word-break: keep-all;
-      margin: 0;
-    }
-    .title-line{ display:inline; }
-
-    /* ✅ 제목과 검색창 사이에 탭 */
-    .tabs-wrap{
-      width: 100%;
-      display:flex;
-      justify-content:center;
-      margin: 6px 0 18px;
-    }
-
-    .tabs{
-      width: min(720px, 100%);
-      display:flex;
-      justify-content:center;
-      gap: 0;
-      background: rgba(255,255,255,0.85);
-      border: 1px solid rgba(255,255,255,0.55);
-      border-radius: 16px;
-      padding: 6px;
-      box-shadow: 0 8px 26px rgba(0,0,0,0.10);
+      width: min(1080px, 100%);
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(31,58,90,0.10);
+      border-radius: 18px;
+      box-shadow: 0 18px 55px rgba(15, 23, 42, 0.12);
       overflow: hidden;
     }
 
-    .tab-btn{
-      flex: 1;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      padding: 14px 10px 12px;
-      font-size: 17px;
+    .header{
+      padding: 26px 26px 14px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(250,252,255,1));
+    }
+
+    .title{
+      font-size: 38px;
       font-weight: 900;
-      color: #2c3e50;
+      color: #12335a;
+      letter-spacing: -1px;
+      line-height: 1.15;
+    }
+
+    .subnote{
+      margin-top: 10px;
+      font-size: 15px;
+      color: rgba(18, 51, 90, 0.75);
+      font-weight: 700;
+    }
+
+    /* ===== 탭(키오스크 스타일) ===== */
+    .tabs{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      padding: 0 26px;
+      margin-top: 16px;
+    }
+
+    .tab-btn{
+      appearance: none;
+      border: none;
+      background: rgba(241, 245, 249, 1);
+      color: #334155;
+      cursor: pointer;
+      padding: 16px 10px;
+      font-size: 18px;
+      font-weight: 900;
       position: relative;
-      transition: background 0.2s ease, color 0.2s ease;
-      border-radius: 12px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      border-bottom: none;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .tab-btn + .tab-btn{
+      border-left: none;
     }
 
     .tab-btn:hover{
-      background: rgba(33, 150, 243, 0.08);
+      background: rgba(226, 232, 240, 1);
     }
 
-    /* ✅ 선택된 탭: 하단 파란 밑줄만 */
+    /* 선택 탭: 하단 파란 밑줄 + 흰 바탕 */
     .tab-btn.active{
+      background: #ffffff;
       color: #0d47a1;
-      background: rgba(33, 150, 243, 0.10);
+      z-index: 2;
     }
     .tab-btn.active::after{
       content:"";
       position:absolute;
-      left: 16%;
-      right: 16%;
-      bottom: 6px;
-      height: 4px;
+      left: 18%;
+      right: 18%;
+      bottom: 8px;
+      height: 5px;
       border-radius: 999px;
       background: #1976D2;
     }
 
-    .search-form-container{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:12px;
-      width:100%;
-      margin-bottom: 20px;
+    /* ===== 본문 ===== */
+    .content{
+      padding: 18px 26px 26px;
+      background: #ffffff;
+      border-top: 1px solid rgba(15, 23, 42, 0.08);
     }
 
-    form{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      justify-content:center;
-      width:100%;
+    /* 키오스크 입력영역 */
+    .search-box{
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-top: 2px;
     }
 
-    form input{
-      font-size:18px;
-      padding:16px 24px;
-      border:2px solid rgba(255,255,255,0.5);
-      border-radius:14px;
-      background: rgba(255,255,255,0.96);
-      width:360px;
-      max-width:72vw;
-      min-width:280px;
-      box-shadow:0 6px 25px rgba(0,0,0,0.12);
-      outline:none;
-      transition: all 0.25s ease;
-    }
-
-    form button{
-      font-size:18px;
-      padding:16px 32px;
-      background: linear-gradient(145deg, #bbdefb, #90caf9);
-      color:#1565c0;
-      border:none;
-      border-radius:14px;
-      cursor:pointer;
-      height:52px;
-      font-weight:900;
-      box-shadow:0 6px 25px rgba(144, 202, 249, 0.4);
-      transition: all 0.25s ease;
-    }
-
-    form button:hover{
-      background: linear-gradient(145deg, #90caf9, #64b5f6);
-      box-shadow:0 8px 30px rgba(144, 202, 249, 0.5);
-    }
-
-    .data-badge{
-      font-size: 13px;
-      color:#1f3a5a;
-      font-weight: 900;
-      background: rgba(255,255,255,0.75);
-      border: 1px solid rgba(255,255,255,0.55);
-      padding: 8px 12px;
-      border-radius: 999px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.10);
-    }
-
-    #result{
-      display:none;
-      margin-top: 0;
-      text-align:left;
+    .input-wrap{
+      position: relative;
       width: 100%;
-      max-width: 100%;
-      max-height: 500px;
-      overflow:auto;
-      -webkit-overflow-scrolling: touch;
-      border:1px solid rgba(255,255,255,0.35);
-      padding:22px;
-      background: rgba(255,255,255,0.95);
-      border-radius:20px;
-      box-shadow:0 12px 50px rgba(0,0,0,0.22);
+    }
+
+    .input-label{
+      text-align: left;
+      font-weight: 900;
+      color: #1f3a5a;
+      font-size: 16px;
+      margin: 10px 0 8px;
+    }
+
+    input[type="text"]{
+      width: 100%;
+      height: 64px;
+      padding: 0 18px;
+      font-size: 20px;
+      font-weight: 800;
+      border-radius: 14px;
+      border: 2px solid rgba(15, 23, 42, 0.12);
+      background: #ffffff;
+      outline: none;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input[type="text"]:focus{
+      border-color: rgba(25, 118, 210, 0.55);
+      box-shadow: 0 10px 26px rgba(25,118,210,0.18);
+    }
+
+    .btn-search{
+      height: 64px;
+      padding: 0 26px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 900;
+      color: #ffffff;
+      background: linear-gradient(180deg, #1e88e5, #1565c0);
+      box-shadow: 0 10px 26px rgba(21, 101, 192, 0.28);
+      transition: transform 0.08s ease, box-shadow 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-search:active{
+      transform: translateY(1px);
+      box-shadow: 0 6px 18px rgba(21, 101, 192, 0.22);
+    }
+
+    /* 안내 문구(필요시) */
+    .hint{
+      margin-top: 12px;
+      text-align: left;
+      font-size: 14px;
+      color: rgba(51, 65, 85, 0.85);
+      font-weight: 700;
+    }
+
+    /* 결과 영역 */
+    #result{
+      display: none;
+      margin-top: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      background: #ffffff;
+      box-shadow: 0 12px 34px rgba(15, 23, 42, 0.10);
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .result-head{
+      padding: 14px 16px;
+      background: rgba(241, 245, 249, 1);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-title{
+      font-size: 16px;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .result-sub{
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(51, 65, 85, 0.85);
+      text-align: right;
+      white-space: nowrap;
     }
 
     .table-wrapper{
-      width: 100%;
-      overflow-x: auto;
+      max-height: 520px;
+      overflow: auto;
       -webkit-overflow-scrolling: touch;
-      margin-top: 12px;
     }
 
     table{
-      border-collapse: collapse;
       width: 100%;
+      border-collapse: collapse;
       table-layout: fixed;
     }
 
     th, td{
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      border:1px solid #e0e0e0;
-      padding:12px 16px;
-      font-size: 18pt;
-      vertical-align:middle;
-      white-space: nowrap;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      padding: 14px 14px;
+      font-size: 18px;
+      font-weight: 800;
       text-align: center;
+      white-space: nowrap;
     }
 
-    th:nth-child(1), td:nth-child(1) { width: 20%; }
-    th:nth-child(2), td:nth-child(2) { width: 35%; }
-    th:nth-child(3), td:nth-child(3) { width: 20%; }
-    th:nth-child(4), td:nth-child(4) { width: 25%; }
-
     th{
-      background: linear-gradient(145deg,#f8f9fa,#e9ecef);
-      font-weight: 900;
-      color:#2c3e50;
       position: sticky;
       top: 0;
-      z-index: 10;
+      background: #ffffff;
+      z-index: 5;
+      font-weight: 900;
+      color: #1f3a5a;
+      border-bottom: 2px solid rgba(25,118,210,0.25);
     }
 
     td{
-      font-weight: 700;
-      color: #111;
+      color: #0f172a;
     }
 
     tbody tr{
       cursor: pointer;
-      transition: background 0.2s;
-    }
-    tbody tr:hover{
-      background: #e3f2fd;
+      transition: background 0.12s ease;
     }
 
-    td.col-room{
+    tbody tr:hover{
+      background: rgba(227, 242, 253, 0.65);
+    }
+
+    .col-loc{
       font-family: "Malgun Gothic", "맑은 고딕", monospace;
       letter-spacing: 0px;
     }
 
-    .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
-    .loading{ font-size:18px; color:#1565c0; padding:24px; font-weight:700; }
+    .loading{
+      padding: 22px 16px;
+      font-size: 16px;
+      font-weight: 900;
+      color: #1565c0;
+    }
 
-    /* ===== 상세 모달 ===== */
+    .no-result{
+      padding: 26px 16px;
+      font-size: 16px;
+      font-weight: 900;
+      color: rgba(51, 65, 85, 0.9);
+      line-height: 1.6;
+    }
+
+    /* ===== 모달 ===== */
     .detail-modal{
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: min(560px, 90vw);
+      width: min(560px, 92vw);
       max-height: 85vh;
       overflow: auto;
       border: none;
       border-radius: 16px;
       padding: 0;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      box-shadow: 0 22px 70px rgba(0,0,0,0.42);
       background: #fff;
     }
 
-    .detail-modal::backdrop{ background: rgba(0,0,0,0.5); }
+    .detail-modal::backdrop{ background: rgba(0,0,0,0.55); }
 
     .modal-header{
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 20px 24px 16px;
-      background: #fff;
+      padding: 18px 20px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
     }
 
     .modal-title-row{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
-      margin-bottom: 12px;
+      gap: 10px;
     }
 
     .modal-title{
       font-size: 20px;
       font-weight: 900;
-      color: #1f3a5a;
-      letter-spacing: -0.3px;
+      color: #12335a;
     }
 
-    .title-underline{
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, #2c3e50 0%, #95a5a6 100%);
-      margin: 0;
+    .modal-actions{
+      display: flex;
+      gap: 8px;
     }
-
-    .modal-actions{ display: flex; gap: 8px; }
 
     .btn-print, .btn-close{
-      padding: 8px 16px;
-      border: 1px solid #ccc;
+      padding: 10px 14px;
+      border: 1px solid rgba(15, 23, 42, 0.14);
       background: #fff;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       font-weight: 900;
       font-size: 14px;
-      transition: all 0.2s;
     }
 
     .btn-print{
-      background: #2196F3;
+      background: #1976D2;
       color: #fff;
-      border-color: #1976D2;
+      border-color: #1565c0;
       display: none;
     }
-    .btn-print:hover{ background: #1976D2; }
-    .btn-close:hover{ background: #f0f0f0; }
+
+    .btn-close:hover{ background: rgba(241, 245, 249, 1); }
+    .btn-print:hover{ background: #1565c0; }
 
     .modal-body{
-      padding: 24px 30px 30px;
+      padding: 18px 22px 22px;
       text-align: left;
     }
 
     .info-grid{
       display: grid;
-      grid-template-columns: 90px 1fr;
-      gap: 18px;
+      grid-template-columns: 92px 1fr;
+      gap: 14px 16px;
       align-items: baseline;
     }
 
     .info-label{
       font-size: 14px;
-      color: #666;
       font-weight: 900;
+      color: rgba(51, 65, 85, 0.85);
       padding-top: 6px;
     }
 
     .info-value{
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      font-size: 20pt;
+      font-size: 20px;
       font-weight: 900;
-      color: #111;
-      line-height: 1.4;
+      color: #0f172a;
+      line-height: 1.35;
       word-break: break-word;
     }
 
@@ -375,8 +382,8 @@
     .divider{
       grid-column: 1 / -1;
       height: 1px;
-      background: #e9ecef;
-      margin: 8px 0;
+      background: rgba(15, 23, 42, 0.08);
+      margin: 6px 0;
     }
 
     /* PC에서만 출력 버튼 */
@@ -384,62 +391,33 @@
       .btn-print { display: inline-block; }
     }
 
+    /* 모바일 키오스크 대응 */
     @media (max-width: 480px){
-      body{ padding: 10px; }
+      body{ padding: 12px; }
 
-      main{
-        width: 100%;
-        padding: 40px 20px;
-      }
+      .header{ padding: 20px 18px 12px; }
+      .title{ font-size: 26px; }
 
-      h1{ font-size:26px; letter-spacing: -0.5px; }
-      .title-line{ display:block; }
-      .title-container{ margin-bottom: 16px; }
+      .tabs{ padding: 0 18px; }
+      .tab-btn{ font-size: 15px; padding: 14px 8px; }
+      .tab-btn.active::after{ left: 22%; right: 22%; height: 5px; bottom: 7px; }
 
-      .tabs{
-        width: 100%;
-        padding: 6px;
-        border-radius: 14px;
-      }
+      .content{ padding: 14px 18px 18px; }
+      .search-box{ grid-template-columns: 1fr; }
+      .btn-search{ width: 100%; }
 
-      .tab-btn{
-        font-size: 14px;
-        padding: 12px 8px 10px;
-        border-radius: 12px;
-      }
-      .tab-btn.active::after{
-        left: 18%;
-        right: 18%;
-        bottom: 6px;
-        height: 4px;
-      }
-
-      form{ flex-direction:column; gap:10px; }
-      form input{ width:100%; max-width:none; min-width:auto; font-size:16px; padding:14px 18px; }
-      form button{ width:100%; max-width:240px; height:48px; font-size:16px; padding:14px 22px; }
-
-      #result{ padding:16px; max-height: 400px; }
-      th, td{ font-size:14px; padding:10px; }
-      .detail-modal{ width: 94vw; }
-      .modal-title{ font-size: 18px; }
-      .info-value{ font-size: 18pt; }
+      th, td{ font-size: 14px; padding: 12px 10px; }
     }
   </style>
 </head>
 
 <body>
-  <button class="home-btn" onclick="resetView()">초기화면</button>
-
   <main>
-    <div class="title-container">
-      <h1>
-        <span class="title-line">울산하늘공원</span>
-        <span class="title-line">고인 검색</span>
-      </h1>
-    </div>
+    <div class="header">
+      <div class="title">울산하늘공원 고인 검색</div>
+      <div class="subnote">고인명을 입력한 뒤 검색을 눌러주세요.</div>
 
-    <!-- ✅ 제목과 검색창 사이 탭 -->
-    <div class="tabs-wrap">
+      <!-- 제목과 검색창 사이 탭 -->
       <div class="tabs" role="tablist" aria-label="검색 구분">
         <button type="button" class="tab-btn active" data-mode="all" onclick="setMode('all')">전체</button>
         <button type="button" class="tab-btn" data-mode="memorial" onclick="setMode('memorial')">추모의집</button>
@@ -447,19 +425,23 @@
       </div>
     </div>
 
-    <div class="search-form-container">
-      <form id="searchForm">
-        <input type="text" id="keyword" name="keyword" placeholder="고인명을 입력하세요" required autocomplete="off" />
-        <button type="submit">검색</button>
+    <div class="content">
+      <div class="input-label">고인명</div>
+
+      <form id="searchForm" class="search-box">
+        <div class="input-wrap">
+          <input type="text" id="keyword" name="keyword" placeholder="예) 홍길동" required autocomplete="off" />
+        </div>
+        <button class="btn-search" type="submit">검색</button>
       </form>
 
-      <div class="data-badge" id="dataStatus">데이터: 검색 시 불러옵니다</div>
-    </div>
+      <div class="hint">※ 검색 결과 행을 누르면 상세 정보가 표시됩니다.</div>
 
-    <div id="result"></div>
+      <div id="result"></div>
+    </div>
   </main>
 
-  <!-- ===== 상세 모달 ===== -->
+  <!-- 상세 모달 -->
   <dialog id="detailModal" class="detail-modal">
     <div class="modal-header">
       <div class="modal-title-row">
@@ -469,7 +451,6 @@
           <button type="button" class="btn-close" onclick="document.getElementById('detailModal').close()">닫기</button>
         </div>
       </div>
-      <div class="title-underline"></div>
     </div>
 
     <div class="modal-body">
@@ -484,8 +465,8 @@
 
         <div class="divider" id="dividerAfterType" style="display:none;"></div>
 
-        <div class="info-label" id="labelRoom">봉안실</div>
-        <div class="info-value mono" id="modalRoom"></div>
+        <div class="info-label" id="labelLoc">봉안실</div>
+        <div class="info-value mono" id="modalLoc"></div>
 
         <div class="divider"></div>
 
@@ -500,13 +481,14 @@
     </div>
   </dialog>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
     /* =========================
        데이터 소스 / 컬럼 매핑
        ========================= */
     const SOURCES = {
-      memorial: 'data/deceased_data.xlsx',  // 추모의집(기존)
-      nature:   'data/nature_data.xlsx'     // 자연장지(신규)
+      memorial: 'data/deceased_data.xlsx',  // 추모의집
+      nature:   'data/nature_data.xlsx'     // 자연장지
     };
 
     const MEM_FIELDS = {
@@ -537,50 +519,13 @@
 
     let lastFound = [];
 
-    window.onload = function() {
-      setActiveTab(currentMode);
-      refreshBadge();
-    };
-
-    function getModeLabel(mode){
-      if (mode === 'memorial') return '추모의집';
-      if (mode === 'nature') return '자연장지';
-      return '전체';
-    }
-
-    function updateBadge(text) {
-      document.getElementById("dataStatus").textContent = text;
-    }
-
-    function refreshBadge(){
-      const m = excelDataMemorial.length;
-      const n = excelDataNature.length;
-
-      if (currentMode === 'memorial'){
-        updateBadge(m > 0 ? `데이터: 추모의집 ${m}건 로드됨` : `데이터: 추모의집 (검색 시 불러옵니다)`);
-        return;
-      }
-      if (currentMode === 'nature'){
-        updateBadge(n > 0 ? `데이터: 자연장지 ${n}건 로드됨` : `데이터: 자연장지 (검색 시 불러옵니다)`);
-        return;
-      }
-
-      if (m > 0 && n > 0) updateBadge(`데이터: 전체(추모의집 ${m} + 자연장지 ${n}) 로드됨`);
-      else if (m > 0 || n > 0) updateBadge(`데이터: 전체 (현재 로드: 추모의집 ${m} / 자연장지 ${n})`);
-      else updateBadge(`데이터: 전체 (검색 시 불러옵니다)`);
-    }
-
-    function setActiveTab(mode){
+    function setMode(mode){
+      currentMode = mode;
       document.querySelectorAll(".tab-btn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.mode === mode);
       });
-    }
-
-    function setMode(mode){
-      currentMode = mode;
-      setActiveTab(mode);
       resetResultOnly();
-      refreshBadge();
+      document.getElementById("keyword").focus();
     }
 
     async function fetchExcel(url){
@@ -613,7 +558,7 @@
       await loadPromiseNature;
     }
 
-    // 검색 시점에만 로드
+    // 검색 시점 지연 로딩
     async function ensureDataForSearch(mode){
       if (mode === 'memorial'){
         await ensureMemorialLoaded();
@@ -633,12 +578,11 @@
       if (excelDataMemorial.length === 0 && excelDataNature.length === 0){
         throw new Error('전체 데이터 로딩 실패');
       }
-
       return { partialFail };
     }
 
     /* =========================
-       표출/모달 유틸
+       유틸
        ========================= */
     function normalizeRoom(raw) {
       if (!raw) return "";
@@ -656,11 +600,7 @@
     function normalizeNatureNo(raw){
       if (!raw) return "";
       const s = String(raw).trim();
-      return s
-        .split("-")
-        .map(part => part.trim())
-        .filter(Boolean)
-        .join(" - ");
+      return s.split("-").map(p => p.trim()).filter(Boolean).join(" - ");
     }
 
     function maskName(name) {
@@ -684,11 +624,11 @@
 
     function openModal(record) {
       document.getElementById("modalName").textContent = record.name || "";
-      document.getElementById("modalRoom").textContent = record.location || "";
+      document.getElementById("modalLoc").textContent = record.location || "";
       document.getElementById("modalApplicant").textContent = record.applicant || "";
       document.getElementById("modalDate").textContent = record.date || "";
 
-      document.getElementById("labelRoom").textContent = record.locationLabel || "위치번호";
+      document.getElementById("labelLoc").textContent = record.locationLabel || "위치번호";
       document.getElementById("labelDate").textContent = record.dateLabel || "일자";
 
       const showType = (currentMode === 'all' && record.typeLabel);
@@ -725,7 +665,7 @@
     });
 
     /* =========================
-       검색 로직
+       검색
        ========================= */
     function searchMemorial(keyword){
       return excelDataMemorial
@@ -764,106 +704,91 @@
         }));
     }
 
+    function renderResults(records, keyword){
+      const resultDiv = document.getElementById("result");
+      const h = getHeaderLabels(currentMode);
+
+      if (!records || records.length === 0){
+        resultDiv.innerHTML = `<div class="no-result">‘${keyword}’에 대한 검색 결과가 없습니다.</div>`;
+        return;
+      }
+
+      const titleLeft = `${(currentMode==='all'?'전체':(currentMode==='memorial'?'추모의집':'자연장지'))} 검색 결과 ${records.length}건`;
+      const titleRight = `행을 누르면 상세 정보`;
+
+      let html = `
+        <div class="result-head">
+          <div class="result-title">${titleLeft}</div>
+          <div class="result-sub">${titleRight}</div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:20%">${h.name}</th>
+                <th style="width:35%">${h.loc}</th>
+                <th style="width:20%">${h.applicant}</th>
+                <th style="width:25%">${h.date}</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      records.forEach((rec, idx) => {
+        html += `
+          <tr data-idx="${idx}">
+            <td>${rec.name}</td>
+            <td class="col-loc">${rec.location}</td>
+            <td>${rec.applicant}</td>
+            <td>${rec.date}</td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table></div>`;
+      resultDiv.innerHTML = html;
+      bindTableClick();
+    }
+
     document.getElementById("searchForm").addEventListener("submit", async function(event) {
       event.preventDefault();
 
       const keyword = document.getElementById("keyword").value.trim();
       const resultDiv = document.getElementById("result");
 
-      if (!keyword) {
-        resultDiv.innerHTML = '<div class="no-result">검색어를 입력해주세요.</div>';
-        resultDiv.style.display = "block";
-        return;
-      }
+      if (!keyword) return;
 
       resultDiv.style.display = "block";
-      resultDiv.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
+      resultDiv.innerHTML = `<div class="loading">데이터를 불러오고 있습니다...</div>`;
 
-      let partialFail = [];
       try{
-        const r = await ensureDataForSearch(currentMode);
-        partialFail = r.partialFail || [];
-        refreshBadge();
+        await ensureDataForSearch(currentMode);
       }catch(err){
-        refreshBadge();
-        resultDiv.innerHTML =
-          '<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>';
+        resultDiv.innerHTML = `<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>`;
         return;
       }
 
-      let foundRecords = [];
-      if (currentMode === 'memorial') foundRecords = searchMemorial(keyword);
-      else if (currentMode === 'nature') foundRecords = searchNature(keyword);
+      let found = [];
+      if (currentMode === 'memorial') found = searchMemorial(keyword);
+      else if (currentMode === 'nature') found = searchNature(keyword);
       else {
-        if (excelDataMemorial.length > 0) foundRecords.push(...searchMemorial(keyword));
-        if (excelDataNature.length > 0) foundRecords.push(...searchNature(keyword));
+        if (excelDataMemorial.length > 0) found.push(...searchMemorial(keyword));
+        if (excelDataNature.length > 0) found.push(...searchNature(keyword));
       }
 
-      lastFound = foundRecords;
-
-      const h = getHeaderLabels(currentMode);
-
-      if (foundRecords.length > 0) {
-        let html = `
-          <p>
-            <strong>${getModeLabel(currentMode)} 검색 결과 ${foundRecords.length}건</strong>
-            <span style="font-size:13px; color:#666;">(행을 클릭하면 상세 정보가 나타납니다)</span>
-          </p>
-        `;
-
-        if (partialFail.length > 0) {
-          html += `<p style="font-size:13px; color:#d32f2f; margin-top:8px;">
-            ※ ${partialFail.join(", ")} 데이터 로딩 실패로 검색에서 제외되었습니다.
-          </p>`;
-        }
-
-        html += `<div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>${h.name}</th>
-                <th class="col-room">${h.loc}</th>
-                <th>${h.applicant}</th>
-                <th>${h.date}</th>
-              </tr>
-            </thead>
-            <tbody>`;
-
-        foundRecords.forEach((rec, idx) => {
-          html += `<tr data-idx="${idx}">
-            <td>${rec.name}</td>
-            <td class="col-room">${rec.location}</td>
-            <td>${rec.applicant}</td>
-            <td>${rec.date}</td>
-          </tr>`;
-        });
-
-        html += `</tbody></table></div>`;
-        resultDiv.innerHTML = html;
-
-        bindTableClick();
-      } else {
-        let msg = `'${keyword}'에 대한 검색 결과가 없습니다.`;
-        if (partialFail.length > 0 && currentMode === 'all') {
-          msg += `<br><span style="font-size:13px; color:#d32f2f;">(일부 데이터 로딩 실패로 결과가 누락될 수 있습니다)</span>`;
-        }
-        resultDiv.innerHTML = `<div class="no-result">${msg}</div>`;
-      }
+      lastFound = found;
+      renderResults(found, keyword);
     });
 
     function resetResultOnly(){
-      document.getElementById("result").style.display = "none";
-      document.getElementById("result").innerHTML = "";
+      const resultDiv = document.getElementById("result");
+      resultDiv.style.display = "none";
+      resultDiv.innerHTML = "";
       lastFound = [];
     }
 
-    function resetView() {
-      document.getElementById("keyword").value = "";
-      resetResultOnly();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // 첫 화면용 리셋(요청 시에만 쓰고 싶으면 버튼 추가 가능)
+    // function resetView(){ ... }
   </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
