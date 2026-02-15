@@ -43,7 +43,8 @@
       backdrop-filter: blur(12px);
       border-radius: 25px;
 
-      padding: 46px 40px 65px;
+      /* ✅ 너무 위로 올라간 것 완화: 살짝 아래로 */
+      padding: 72px 40px 65px;  /* (이전 46px 보다 아래 / 중앙보다 위) */
       margin: 20px;
 
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
@@ -51,8 +52,7 @@
     }
 
     .title-container{
-      margin-top: 6px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
       width: 100%;
     }
 
@@ -129,20 +129,19 @@
       box-shadow:0 12px 50px rgba(0,0,0,0.22);
     }
 
-    /* ✅ 모바일 가로 스크롤 래퍼 */
     .table-wrapper{
       width: 100%;
-      overflow-x: auto; /* [web:56] */
+      overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       margin-top: 12px;
     }
 
-    /* ✅ "최대한 타이트" 핵심: table-layout:auto + width 고정 제거 */
+    /* ✅ 타이트: 내용 기반 폭 */
     table{
       border-collapse: collapse;
-      width: max-content;      /* 내용만큼만 딱(가능한 브라우저에서) */
-      min-width: 100%;         /* PC에서는 결과 영역 너비는 채우도록 */
-      table-layout: auto;      /* 내용 기반 폭 계산 */ /* [web:25] */
+      width: max-content;
+      min-width: 100%;
+      table-layout: auto;
     }
 
     th, td{
@@ -151,8 +150,6 @@
       text-align:left;
       font-size:16px;
       vertical-align:middle;
-
-      /* 타이트하게 하려면 줄바꿈 없이(내용이 폭을 결정) */
       white-space: nowrap;
     }
 
@@ -165,8 +162,7 @@
       z-index: 10;
     }
 
-    /* 봉안실은 숫자 가독성 위해 monospace만 유지(폭은 고정하지 않음) */
-    td.col-room, th.col-room{
+    th.col-room, td.col-room{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       letter-spacing: 0.2px;
     }
@@ -179,7 +175,7 @@
 
       main{
         margin:8px;
-        padding: 44px 16px 50px;
+        padding: 66px 16px 50px; /* ✅ 모바일도 살짝 아래로 */
         min-height: 96vh;
       }
 
@@ -272,6 +268,17 @@
       return String(raw);
     }
 
+    // ✅ 모바일에서 헤더를 줄여서 출력하기
+    function getHeaderLabels() {
+      const isMobile = window.matchMedia("(max-width: 480px)").matches;
+      return {
+        name: "고인명",
+        room: "봉안실",
+        applicant: isMobile ? "신청자" : "신청자명",
+        date: "안치일자"
+      };
+    }
+
     document.getElementById("searchForm").addEventListener("submit", function(event) {
       event.preventDefault();
       const keyword = document.getElementById("keyword").value.trim();
@@ -294,15 +301,17 @@
       );
 
       if (found.length > 0) {
+        const h = getHeaderLabels();
+
         let html = `<p><strong>검색 결과 ${found.length}건</strong></p>`;
         html += `<div class="table-wrapper">
           <table>
             <thead>
               <tr>
-                <th>고인명</th>
-                <th class="col-room">봉안실</th>
-                <th>신청자명</th>
-                <th>안치일자</th>
+                <th>${h.name}</th>
+                <th class="col-room">${h.room}</th>
+                <th>${h.applicant}</th>
+                <th>${h.date}</th>
               </tr>
             </thead>
             <tbody>`;
