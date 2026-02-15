@@ -6,22 +6,28 @@
   <title>울산하늘공원 고인 검색</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body{
       font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
       min-height: 100vh;
       text-align: center;
+
       background-image: url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
+
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
     }
+
     .home-btn{
-      position: fixed; bottom: 20px; right: 20px;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
       background: linear-gradient(135deg, #e8f5e9, #c5e1a5);
       color: #558b2f;
       border: 1px solid rgba(197, 225, 165, 0.6);
@@ -29,32 +35,42 @@
       cursor: pointer;
       border-radius: 8px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       box-shadow: 0 3px 12px rgba(139, 195, 74, 0.3);
       z-index: 100;
       transition: all 0.3s ease;
     }
+
     .home-btn:hover{
       background: linear-gradient(135deg, #c5e1a5, #aed581);
       box-shadow: 0 4px 16px rgba(139, 195, 74, 0.4);
     }
+
     main{
-      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+
       width: min(1100px, 100%);
       max-width: 100%;
       padding: 60px 40px;
       margin: 0;
+
       background: rgba(255,255,255,0.25);
       backdrop-filter: blur(15px);
       border-radius: 25px;
+
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       border: 1px solid rgba(255,255,255,0.4);
     }
-    .title-container{ margin-bottom: 30px; width: 100%; }
+
+    .title-container{ margin-bottom: 22px; width: 100%; }
+
     h1{
       color:#1f3a5a;
       text-shadow: 2px 2px 5px rgba(255,255,255,0.8);
-      font-weight: 800;
+      font-weight: 900;
       font-size: 42px;
       letter-spacing: -0.8px;
       line-height: 1.15;
@@ -62,33 +78,80 @@
       margin: 0;
     }
     .title-line{ display:inline; }
+
+    /* ✅ 제목과 검색창 사이에 탭 */
+    .tabs-wrap{
+      width: 100%;
+      display:flex;
+      justify-content:center;
+      margin: 6px 0 18px;
+    }
+
+    .tabs{
+      width: min(720px, 100%);
+      display:flex;
+      justify-content:center;
+      gap: 0;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 16px;
+      padding: 6px;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.10);
+      overflow: hidden;
+    }
+
+    .tab-btn{
+      flex: 1;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 14px 10px 12px;
+      font-size: 17px;
+      font-weight: 900;
+      color: #2c3e50;
+      position: relative;
+      transition: background 0.2s ease, color 0.2s ease;
+      border-radius: 12px;
+    }
+
+    .tab-btn:hover{
+      background: rgba(33, 150, 243, 0.08);
+    }
+
+    /* ✅ 선택된 탭: 하단 파란 밑줄만 */
+    .tab-btn.active{
+      color: #0d47a1;
+      background: rgba(33, 150, 243, 0.10);
+    }
+    .tab-btn.active::after{
+      content:"";
+      position:absolute;
+      left: 16%;
+      right: 16%;
+      bottom: 6px;
+      height: 4px;
+      border-radius: 999px;
+      background: #1976D2;
+    }
+
     .search-form-container{
-      display:flex; flex-direction:column; align-items:center;
-      gap:14px; width:100%; margin-bottom: 20px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+      width:100%;
+      margin-bottom: 20px;
     }
-    .search-row{
-      display:flex; align-items:center; justify-content:center;
-      gap:12px; width:100%; flex-wrap:wrap;
+
+    form{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+      width:100%;
     }
-    .menu-buttons{
-      display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
-    }
-    .menu-btn{
-      font-size:16px; padding:14px 16px; border-radius:14px;
-      border:1px solid rgba(255,255,255,0.55);
-      cursor:pointer; font-weight:800; color:#1f3a5a;
-      background: rgba(255,255,255,0.92);
-      box-shadow: 0 6px 22px rgba(0,0,0,0.10);
-      transition: all 0.2s ease;
-      min-width: 92px;
-    }
-    .menu-btn:hover{ transform: translateY(-1px); box-shadow: 0 8px 26px rgba(0,0,0,0.14); }
-    .menu-btn.active{
-      background: linear-gradient(145deg, #e3f2fd, #bbdefb);
-      border-color: rgba(187, 222, 251, 0.9);
-      color:#0d47a1;
-    }
-    form{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center; }
+
     form input{
       font-size:18px;
       padding:16px 24px;
@@ -102,6 +165,7 @@
       outline:none;
       transition: all 0.25s ease;
     }
+
     form button{
       font-size:18px;
       padding:16px 32px;
@@ -111,24 +175,27 @@
       border-radius:14px;
       cursor:pointer;
       height:52px;
-      font-weight:600;
+      font-weight:900;
       box-shadow:0 6px 25px rgba(144, 202, 249, 0.4);
       transition: all 0.25s ease;
     }
+
     form button:hover{
       background: linear-gradient(145deg, #90caf9, #64b5f6);
       box-shadow:0 8px 30px rgba(144, 202, 249, 0.5);
     }
+
     .data-badge{
       font-size: 13px;
       color:#1f3a5a;
-      font-weight: 800;
+      font-weight: 900;
       background: rgba(255,255,255,0.75);
       border: 1px solid rgba(255,255,255,0.55);
       padding: 8px 12px;
       border-radius: 999px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.10);
     }
+
     #result{
       display:none;
       margin-top: 0;
@@ -144,8 +211,20 @@
       border-radius:20px;
       box-shadow:0 12px 50px rgba(0,0,0,0.22);
     }
-    .table-wrapper{ width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 12px; }
-    table{ border-collapse: collapse; width: 100%; table-layout: fixed; }
+
+    .table-wrapper{
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 12px;
+    }
+
+    table{
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
+
     th, td{
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       border:1px solid #e0e0e0;
@@ -155,10 +234,12 @@
       white-space: nowrap;
       text-align: center;
     }
+
     th:nth-child(1), td:nth-child(1) { width: 20%; }
     th:nth-child(2), td:nth-child(2) { width: 35%; }
     th:nth-child(3), td:nth-child(3) { width: 20%; }
     th:nth-child(4), td:nth-child(4) { width: 25%; }
+
     th{
       background: linear-gradient(145deg,#f8f9fa,#e9ecef);
       font-weight: 900;
@@ -167,75 +248,180 @@
       top: 0;
       z-index: 10;
     }
-    td{ font-weight: 600; color: #111; }
-    tbody tr{ cursor: pointer; transition: background 0.2s; }
-    tbody tr:hover{ background: #e3f2fd; }
-    td.col-room{ font-family: "Malgun Gothic", "맑은 고딕", monospace; letter-spacing: 0px; }
-    .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
-    .loading{ font-size:18px; color:#1565c0; padding:24px; font-weight:600; }
 
+    td{
+      font-weight: 700;
+      color: #111;
+    }
+
+    tbody tr{
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    tbody tr:hover{
+      background: #e3f2fd;
+    }
+
+    td.col-room{
+      font-family: "Malgun Gothic", "맑은 고딕", monospace;
+      letter-spacing: 0px;
+    }
+
+    .no-result{ font-size:19px; color:#666; padding:35px 20px; line-height:1.6; }
+    .loading{ font-size:18px; color:#1565c0; padding:24px; font-weight:700; }
+
+    /* ===== 상세 모달 ===== */
     .detail-modal{
-      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: min(560px, 90vw); max-height: 85vh; overflow: auto;
-      border: none; border-radius: 16px; padding: 0;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(560px, 90vw);
+      max-height: 85vh;
+      overflow: auto;
+      border: none;
+      border-radius: 16px;
+      padding: 0;
       box-shadow: 0 20px 60px rgba(0,0,0,0.4);
       background: #fff;
     }
+
     .detail-modal::backdrop{ background: rgba(0,0,0,0.5); }
+
     .modal-header{
-      display: flex; flex-direction: column; align-items: flex-start;
-      padding: 20px 24px 16px; background: #fff; border-bottom: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px 24px 16px;
+      background: #fff;
     }
+
     .modal-title-row{
-      display: flex; justify-content: space-between; align-items: center;
-      width: 100%; margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 12px;
     }
+
     .modal-title{
-      font-size: 20px; font-weight: 900; color: #1f3a5a; letter-spacing: -0.3px;
+      font-size: 20px;
+      font-weight: 900;
+      color: #1f3a5a;
+      letter-spacing: -0.3px;
     }
+
     .title-underline{
-      width: 100%; height: 2px;
+      width: 100%;
+      height: 2px;
       background: linear-gradient(90deg, #2c3e50 0%, #95a5a6 100%);
       margin: 0;
     }
+
     .modal-actions{ display: flex; gap: 8px; }
+
     .btn-print, .btn-close{
-      padding: 8px 16px; border: 1px solid #ccc; background: #fff;
-      border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px;
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 14px;
       transition: all 0.2s;
     }
+
     .btn-print{
-      background: #2196F3; color: #fff; border-color: #1976D2; display: none;
+      background: #2196F3;
+      color: #fff;
+      border-color: #1976D2;
+      display: none;
     }
     .btn-print:hover{ background: #1976D2; }
     .btn-close:hover{ background: #f0f0f0; }
-    .modal-body{ padding: 24px 30px 30px; text-align: left; }
-    .info-grid{
-      display: grid; grid-template-columns: 90px 1fr;
-      gap: 18px; align-items: baseline;
+
+    .modal-body{
+      padding: 24px 30px 30px;
+      text-align: left;
     }
-    .info-label{ font-size: 14px; color: #666; font-weight: 700; padding-top: 6px; }
+
+    .info-grid{
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 18px;
+      align-items: baseline;
+    }
+
+    .info-label{
+      font-size: 14px;
+      color: #666;
+      font-weight: 900;
+      padding-top: 6px;
+    }
+
     .info-value{
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      font-size: 20pt; font-weight: 800; color: #111;
-      line-height: 1.4; word-break: break-word;
+      font-size: 20pt;
+      font-weight: 900;
+      color: #111;
+      line-height: 1.4;
+      word-break: break-word;
     }
-    .info-value.mono{ font-family: "Malgun Gothic", "맑은 고딕", monospace; }
-    .divider{ grid-column: 1 / -1; height: 1px; background: #e9ecef; margin: 8px 0; }
 
-    @media (min-width: 769px){ .btn-print { display: inline-block; } }
+    .info-value.mono{
+      font-family: "Malgun Gothic", "맑은 고딕", monospace;
+    }
+
+    .divider{
+      grid-column: 1 / -1;
+      height: 1px;
+      background: #e9ecef;
+      margin: 8px 0;
+    }
+
+    /* PC에서만 출력 버튼 */
+    @media (min-width: 769px){
+      .btn-print { display: inline-block; }
+    }
+
     @media (max-width: 480px){
       body{ padding: 10px; }
-      main{ width:100%; padding: 40px 20px; }
-      h1{ font-size:26px; }
-      .search-row{ flex-direction: column; gap:10px; }
-      .menu-buttons{ width:100%; justify-content:center; }
-      .menu-btn{ width: 32%; min-width: 0; padding: 12px 10px; font-size: 14px; border-radius: 12px; }
-      form{ flex-direction:column; gap:10px; width:100%; }
+
+      main{
+        width: 100%;
+        padding: 40px 20px;
+      }
+
+      h1{ font-size:26px; letter-spacing: -0.5px; }
+      .title-line{ display:block; }
+      .title-container{ margin-bottom: 16px; }
+
+      .tabs{
+        width: 100%;
+        padding: 6px;
+        border-radius: 14px;
+      }
+
+      .tab-btn{
+        font-size: 14px;
+        padding: 12px 8px 10px;
+        border-radius: 12px;
+      }
+      .tab-btn.active::after{
+        left: 18%;
+        right: 18%;
+        bottom: 6px;
+        height: 4px;
+      }
+
+      form{ flex-direction:column; gap:10px; }
       form input{ width:100%; max-width:none; min-width:auto; font-size:16px; padding:14px 18px; }
       form button{ width:100%; max-width:240px; height:48px; font-size:16px; padding:14px 22px; }
+
+      #result{ padding:16px; max-height: 400px; }
       th, td{ font-size:14px; padding:10px; }
       .detail-modal{ width: 94vw; }
+      .modal-title{ font-size: 18px; }
       .info-value{ font-size: 18pt; }
     }
   </style>
@@ -252,19 +438,20 @@
       </h1>
     </div>
 
-    <div class="search-form-container">
-      <div class="search-row">
-        <div class="menu-buttons" role="tablist" aria-label="검색 구분">
-          <button type="button" class="menu-btn active" data-mode="all" onclick="setMode('all')">전체</button>
-          <button type="button" class="menu-btn" data-mode="memorial" onclick="setMode('memorial')">추모의집</button>
-          <button type="button" class="menu-btn" data-mode="nature" onclick="setMode('nature')">자연장지</button>
-        </div>
-
-        <form id="searchForm">
-          <input type="text" id="keyword" name="keyword" placeholder="고인명을 입력하세요" required autocomplete="off" />
-          <button type="submit">검색</button>
-        </form>
+    <!-- ✅ 제목과 검색창 사이 탭 -->
+    <div class="tabs-wrap">
+      <div class="tabs" role="tablist" aria-label="검색 구분">
+        <button type="button" class="tab-btn active" data-mode="all" onclick="setMode('all')">전체</button>
+        <button type="button" class="tab-btn" data-mode="memorial" onclick="setMode('memorial')">추모의집</button>
+        <button type="button" class="tab-btn" data-mode="nature" onclick="setMode('nature')">자연장지</button>
       </div>
+    </div>
+
+    <div class="search-form-container">
+      <form id="searchForm">
+        <input type="text" id="keyword" name="keyword" placeholder="고인명을 입력하세요" required autocomplete="off" />
+        <button type="submit">검색</button>
+      </form>
 
       <div class="data-badge" id="dataStatus">데이터: 검색 시 불러옵니다</div>
     </div>
@@ -272,6 +459,7 @@
     <div id="result"></div>
   </main>
 
+  <!-- ===== 상세 모달 ===== -->
   <dialog id="detailModal" class="detail-modal">
     <div class="modal-header">
       <div class="modal-title-row">
@@ -313,9 +501,12 @@
   </dialog>
 
   <script>
+    /* =========================
+       데이터 소스 / 컬럼 매핑
+       ========================= */
     const SOURCES = {
-      memorial: 'data/deceased_data.xlsx',
-      nature:   'data/nature_data.xlsx'
+      memorial: 'data/deceased_data.xlsx',  // 추모의집(기존)
+      nature:   'data/nature_data.xlsx'     // 자연장지(신규)
     };
 
     const MEM_FIELDS = {
@@ -326,7 +517,7 @@
       returned: "반환일자"
     };
 
-    // ✅ 자연장지 엑셀 컬럼(확정)
+    // 자연장지 엑셀 컬럼: 사망자명 / 자연장번호 / 신청자명 / 안치일자
     const NAT_FIELDS = {
       name: "사망자명",
       loc: "자연장번호",
@@ -334,6 +525,9 @@
       date: "안치일자"
     };
 
+    /* =========================
+       상태 / 캐시 / 지연 로딩
+       ========================= */
     let currentMode = 'all';
 
     let excelDataMemorial = [];
@@ -344,7 +538,7 @@
     let lastFound = [];
 
     window.onload = function() {
-      setActiveButton(currentMode);
+      setActiveTab(currentMode);
       refreshBadge();
     };
 
@@ -376,15 +570,15 @@
       else updateBadge(`데이터: 전체 (검색 시 불러옵니다)`);
     }
 
-    function setActiveButton(mode){
-      document.querySelectorAll(".menu-btn").forEach(btn => {
+    function setActiveTab(mode){
+      document.querySelectorAll(".tab-btn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.mode === mode);
       });
     }
 
     function setMode(mode){
       currentMode = mode;
-      setActiveButton(mode);
+      setActiveTab(mode);
       resetResultOnly();
       refreshBadge();
     }
@@ -419,6 +613,7 @@
       await loadPromiseNature;
     }
 
+    // 검색 시점에만 로드
     async function ensureDataForSearch(mode){
       if (mode === 'memorial'){
         await ensureMemorialLoaded();
@@ -442,6 +637,9 @@
       return { partialFail };
     }
 
+    /* =========================
+       표출/모달 유틸
+       ========================= */
     function normalizeRoom(raw) {
       if (!raw) return "";
       const s = String(raw).replace(/\s+/g, "");
@@ -454,11 +652,10 @@
       return String(raw);
     }
 
-    // ✅ 자연장번호: 잔디장-1-1-001 / 수목장-1-1-001 → 보기 좋게
+    // 자연장번호: "잔디장-1-1-001" → "잔디장 - 1 - 1 - 001"
     function normalizeNatureNo(raw){
       if (!raw) return "";
       const s = String(raw).trim();
-      // 하이픈 주변 공백 정리: " - " 형태
       return s
         .split("-")
         .map(part => part.trim())
@@ -477,7 +674,6 @@
 
     function getHeaderLabels(mode) {
       if (mode === 'nature'){
-        // 자연장지 표출명
         return { name: "고인명", loc: "안장번호", applicant: "신청자", date: "안장일자" };
       }
       if (mode === 'memorial'){
@@ -524,10 +720,13 @@
       const rect = this.getBoundingClientRect();
       const isInDialog =
         rect.top <= e.clientY && e.clientY <= rect.bottom &&
-        rect.left <= e.clientX && e.clientY <= rect.bottom;
+        rect.left <= e.clientX && e.clientX <= rect.right;
       if (!isInDialog) this.close();
     });
 
+    /* =========================
+       검색 로직
+       ========================= */
     function searchMemorial(keyword){
       return excelDataMemorial
         .filter(row =>
