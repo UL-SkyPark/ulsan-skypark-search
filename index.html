@@ -137,6 +137,7 @@
       box-shadow: 0 10px 26px rgba(25,118,210,0.18);
     }
 
+    /* ✅ 버튼: 텍스트만(아이콘 제거), 큼직한 확인/조회 스타일 */
     .btn-search{
       height: 64px;
       padding: 0 22px;
@@ -153,7 +154,6 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
       min-width: 220px;
       letter-spacing: -0.2px;
     }
@@ -207,19 +207,16 @@
       white-space: nowrap;
     }
 
+    /* ✅ 모바일에서 ... 축약 금지 + 가로 스크롤 */
     .table-wrapper{
       max-height: 520px;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-
-      /* ✅ 가로 스크롤 항상 가능 */
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     table{
       border-collapse: collapse;
-
-      /* ✅ 모바일에서 줄이지 않고 가로로 밀리게 */
       width: max-content;
       min-width: 100%;
       table-layout: auto;
@@ -232,7 +229,6 @@
       font-weight: 800;
       text-align: center;
 
-      /* ✅ ... 축약 금지 */
       white-space: nowrap;
       overflow: visible;
       text-overflow: clip;
@@ -252,14 +248,11 @@
       cursor: pointer;
       transition: background 0.12s ease;
     }
-    tbody tr:hover{ background: rgba(227, 242, 253, 0.65); }
-
-    tbody tr.selected{
-      background: rgba(25,118,210,0.16) !important;
-      outline: 2px solid rgba(25,118,210,0.35);
-      outline-offset: -2px;
+    tbody tr:hover{
+      background: rgba(227, 242, 253, 0.65);
     }
-    tbody tr.selected td{ font-weight: 900; }
+
+    /* ✅ 선택 고정 강조 제거(요청사항) - selected 관련 스타일 없음 */
 
     .col-loc{
       font-family: "Malgun Gothic", "맑은 고딕", monospace;
@@ -406,12 +399,95 @@
         font-size: 22px;
         border-radius: 16px;
       }
-      .btn-search::before{ font-size: 24px; }
 
       th, td{ font-size: 14px; padding: 12px 10px; }
 
-      /* ✅ 모바일에서는 열을 더 넉넉히(스크롤로 전부 보기) */
-      table{ min-width: 720px; } /* 필요하면 640~900 사이로 조절 */
+      /* 모바일에서 가로 스크롤을 확실히 유도(필요 시 값 조절) */
+      table{ min-width: 720px; }
+    }
+
+    /* ==========================
+       ✅ 라벨 프린터(가로 12cm) 인쇄 스타일
+       - 모달 내용만 출력
+       - 용지 폭: 120mm
+       - 높이는 내용에 맞게 자동(브라우저/프린터에 따라 다름)
+       ========================== */
+    @media print {
+      @page {
+        size: 120mm auto;
+        margin: 4mm;
+      }
+
+      html, body {
+        width: 120mm;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        background: #fff !important;
+        display: block;
+      }
+
+      body * { visibility: hidden; }
+
+      .detail-modal, .detail-modal * { visibility: visible; }
+
+      .detail-modal{
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 120mm;
+        max-width: 120mm;
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+        background: #fff;
+      }
+
+      .modal-actions{ display: none !important; }
+
+      .modal-header{
+        padding: 0 0 4mm 0;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .modal-title{
+        font-size: 16pt;
+        color: #000;
+        font-weight: 900;
+      }
+
+      .modal-body{
+        padding: 4mm 0 0 0;
+      }
+
+      .info-grid{
+        grid-template-columns: 22mm 1fr;
+        gap: 3mm 4mm;
+      }
+
+      .info-label{
+        font-size: 10.5pt;
+        color: #444;
+      }
+
+      .info-value{
+        font-size: 14pt;
+        color: #000;
+      }
+
+      /* 라벨 폭에서 줄바꿈이 필요할 경우 대비 */
+      .info-value.mono{
+        word-break: break-word;
+      }
+
+      .divider{
+        margin: 2mm 0;
+        background: #e5e5e5;
+      }
     }
   </style>
 </head>
@@ -512,10 +588,12 @@
     };
 
     let currentMode = 'all';
+
     let excelDataMemorial = [];
     let excelDataNature = [];
     let loadPromiseMemorial = null;
     let loadPromiseNature = null;
+
     let lastFound = [];
 
     function setMode(mode){
@@ -633,13 +711,6 @@
       document.getElementById("detailModal").showModal();
     }
 
-    function setSelectedRow(tr){
-      const tbody = tr.closest("tbody");
-      if (!tbody) return;
-      tbody.querySelectorAll("tr.selected").forEach(r => r.classList.remove("selected"));
-      tr.classList.add("selected");
-    }
-
     function bindTableClick() {
       const table = document.querySelector("#result table");
       if (!table) return;
@@ -647,8 +718,6 @@
       table.addEventListener("click", function(e) {
         const tr = e.target.closest("tr[data-idx]");
         if (!tr) return;
-
-        setSelectedRow(tr);
 
         const idx = Number(tr.dataset.idx);
         const rec = lastFound[idx];
@@ -662,7 +731,7 @@
       const rect = this.getBoundingClientRect();
       const isInDialog =
         rect.top <= e.clientY && e.clientY <= rect.bottom &&
-        rect.left <= e.clientX && e.clientY <= rect.bottom;
+        rect.left <= e.clientX && e.clientX <= rect.right;
       if (!isInDialog) this.close();
     });
 
@@ -697,8 +766,8 @@
             type: 'nature',
             typeLabel: '자연장지',
             name: row[NAT_FIELDS.name] || "",
-            location: normalizeNatureNoForTable(raw),
-            locationModal: normalizeNatureNoForModal(raw),
+            location: normalizeNatureNoForTable(raw),      // 테이블: 잔디장-1-5-001
+            locationModal: normalizeNatureNoForModal(raw), // 모달: 잔디장 - 1 - 5 - 001
             applicant: maskName(row[NAT_FIELDS.applicant]),
             date: row[NAT_FIELDS.date] || "",
             locationLabel: "안장번호",
@@ -752,9 +821,6 @@
       resultDiv.innerHTML = html;
 
       bindTableClick();
-
-      const firstRow = resultDiv.querySelector("tbody tr[data-idx='0']");
-      if (firstRow) firstRow.classList.add("selected");
     }
 
     document.getElementById("searchForm").addEventListener("submit", async function(event) {
