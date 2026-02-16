@@ -12,46 +12,42 @@
       min-height: 100vh;
       text-align: center;
 
-      /* ✅ 오버레이(1) + 배경이미지(2) 레이어 분리 */
+      /* ✅ 새로운 배경 이미지 적용 */
       background-image:
-        linear-gradient(rgba(245,247,250,0.40), rgba(245,247,250,0.40)),
-        url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
+        linear-gradient(rgba(255,255,255,0.15), rgba(255,255,255,0.25)),
+        url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/e5d36c2e-1a84-46e0-b1b7-1b9327cc6e32.jpg');
 
+      background-position: top center, top center;
       background-size: cover, cover;
       background-repeat: no-repeat, no-repeat;
-
-      /* ✅ 기본은 둘 다 center */
-      background-position: center, center;
-
-      /* 레이어별로 고정 */
-      background-attachment: fixed, fixed;
+      background-attachment: scroll, scroll;
 
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 22px;
-
-      /* 하단 고정 로고와 겹침 방지 */
       padding-bottom: 110px;
     }
 
-    /* ✅ PC에서만 "이미지 레이어"만 아래로 약 2cm(≈76px) 이동 */
-    @media (min-width: 769px){
+    /* ✅ 모바일에서는 배경 전체가 보이도록 조정 */
+    @media (max-width: 768px){
       body{
-        background-position: center, center calc(50% + 76px);
+        background-size: auto 100%, auto 100%;
+        background-position: top center, top center;
+        align-items: flex-start;
+        padding-top: 60px;
       }
     }
 
     main{
       width: min(1080px, 100%);
-      background: rgba(255,255,255,0.90);
+      background: rgba(255,255,255,0.92);
       border: 1px solid rgba(31,58,90,0.10);
       border-radius: 18px;
       box-shadow: 0 18px 55px rgba(15, 23, 42, 0.12);
       overflow: hidden;
-
       position: relative;
-      z-index: 20; /* 로고보다 위 */
+      z-index: 20;
     }
 
     .header{
@@ -397,24 +393,21 @@
       margin: 6px 0;
     }
 
-    /* 출력 전용: 하단 로고(평소 숨김) */
     .print-footer{ display: none; }
 
     @media (min-width: 769px){
       .btn-print { display: inline-block; }
     }
 
-    /* 모바일: 메인창 위치 + 로고 축소 */
+    /* 모바일 */
     @media (max-width: 480px){
       body{
         padding: 12px;
         padding-bottom: 80px;
-        justify-content: flex-start;
-        align-items: center;
         padding-top: 40px;
       }
 
-      main{ background: rgba(255,255,255,0.80); }
+      main{ background: rgba(255,255,255,0.85); }
 
       .header{ padding: 20px 18px 12px; }
       .title{ font-size: 26px; }
@@ -444,7 +437,7 @@
       }
     }
 
-    /* 하단 로고: 검색결과보다 뒤 + 스크롤 시 자연스럽게 숨김 */
+    /* 하단 로고 */
     .footer-logo{
       position: fixed;
       bottom: 18px;
@@ -454,7 +447,6 @@
       opacity: 0.92;
       z-index: 5;
       pointer-events: none;
-
       transition: opacity 0.35s ease, transform 0.35s ease;
       will-change: opacity, transform;
     }
@@ -473,10 +465,7 @@
       filter: drop-shadow(0 12px 32px rgba(0,0,0,0.34));
     }
 
-    /* =========================
-       8cm(80mm) 감열지 출력 설정
-       - 폰트 조금 키움(줄바꿈 최소화 위해 라벨폭 축소)
-    ========================== */
+    /* 8cm(80mm) 감열지 출력 설정 */
     @media print {
       @page {
         size: 80mm auto;
@@ -521,7 +510,6 @@
         text-align: center;
       }
 
-      /* ✅ 제목 폰트 업 */
       .modal-title{
         font-size: 15pt;
         color: #000;
@@ -531,13 +519,11 @@
 
       .modal-body{ padding: 3mm 0 0 0; }
 
-      /* ✅ 라벨폭 살짝 줄여서 값이 줄바꿈 안 나게 버팀 */
       .info-grid{
         grid-template-columns: 16mm 1fr;
         gap: 2.0mm 2.6mm;
       }
 
-      /* ✅ 라벨/값 폰트 업 */
       .info-label{
         font-size: 11pt;
         color: #444;
@@ -550,7 +536,6 @@
       }
       .info-value.mono{ word-break: break-word; }
 
-      /* ✅ 구분선 조금 더 은은하게 */
       .divider{
         margin: 1.6mm 0;
         height: 1px;
@@ -883,7 +868,7 @@
       const h = getHeaderLabels(currentMode);
 
       if (!records || records.length === 0){
-        resultDiv.innerHTML = `<div class="no-result">‘${keyword}’에 대한 검색 결과가 없습니다.</div>`;
+        resultDiv.innerHTML = `<div class="no-result">'${keyword}'에 대한 검색 결과가 없습니다.</div>`;
         return;
       }
 
