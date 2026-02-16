@@ -867,7 +867,7 @@
         })
         .map(row => ({
           type:'memorial',
-          typeLabel:'추모의집',
+          // typeLabel:'추모의집',
           name:row[MEM_FIELDS.name] || "",
           location:normalizeRoom(row[MEM_FIELDS.loc] || ""),
           applicant:maskName(row[MEM_FIELDS.applicant]),
