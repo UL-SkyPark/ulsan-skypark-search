@@ -24,6 +24,9 @@
       justify-content: center;
       align-items: center;
       padding: 22px;
+
+      /* ✅ 하단 고정 로고와 겹침 방지 */
+      padding-bottom: 110px;
     }
 
     main{
@@ -380,7 +383,7 @@
     }
 
     @media (max-width: 480px){
-      body{ padding: 12px; }
+      body{ padding: 12px; padding-bottom: 110px; }
       main{ background: rgba(255,255,255,0.86); }
 
       .header{ padding: 20px 18px 12px; }
@@ -404,6 +407,27 @@
       th, td{ font-size: 14px; padding: 12px 10px; }
     }
 
+    /* ✅ 하단 로고(고정) */
+    .footer-logo{
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      opacity: 0.92;
+      z-index: 50;
+      pointer-events: none; /* 클릭 방해 없게 */
+    }
+
+    .footer-logo img{
+      height: 100px;         /* 크기 조절 */
+      max-width: 260px;
+      width: auto;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.15));
+    }
+
     /* ✅ 라벨 프린터(가로 12cm) 인쇄 스타일: 모달만 출력 */
     @media print {
       @page {
@@ -422,6 +446,9 @@
 
       body * { visibility: hidden; }
       .detail-modal, .detail-modal * { visibility: visible; }
+
+      /* 인쇄 시 하단 로고는 숨김 */
+      .footer-logo{ display: none !important; }
 
       .detail-modal{
         position: absolute;
@@ -516,6 +543,13 @@
       <div id="result"></div>
     </div>
   </main>
+
+  <!-- ✅ 하단 고정 로고
+       로고 파일을 같은 폴더에 두면 src="ulsan_logo.png"
+       폴더에 넣었다면 예: src="images/ulsan_logo.png" 로 바꾸면 됨 -->
+  <div class="footer-logo" aria-hidden="true">
+    <img src="ulsan_logo.png" alt="울산시설공단 로고">
+  </div>
 
   <dialog id="detailModal" class="detail-modal">
     <div class="modal-header">
