@@ -29,6 +29,7 @@
       padding-bottom: 110px;
     }
 
+    /* ✅ main(검색결과 영역)가 로고보다 위에 뜨도록 z-index 지정 */
     main{
       width: min(1080px, 100%);
       background: rgba(255,255,255,0.88);
@@ -36,6 +37,9 @@
       border-radius: 18px;
       box-shadow: 0 18px 55px rgba(15, 23, 42, 0.12);
       overflow: hidden;
+
+      position: relative; /* ✅ z-index 적용 */
+      z-index: 20;        /* ✅ 로고보다 위 */
     }
 
     .header{
@@ -407,7 +411,7 @@
       th, td{ font-size: 14px; padding: 12px 10px; }
     }
 
-    /* ✅ 하단 로고(고정) */
+    /* ✅ 하단 로고(고정): 검색결과보다 뒤로 + 은은한 그림자 */
     .footer-logo{
       position: fixed;
       bottom: 18px;
@@ -415,17 +419,19 @@
       transform: translateX(-50%);
       text-align: center;
       opacity: 0.92;
-      z-index: 50;
-      pointer-events: none; /* 클릭 방해 없게 */
+      z-index: 5;            /* ✅ main(20)보다 낮게 -> 뒤로 */
+      pointer-events: none;  /* 클릭 방해 없게 */
     }
 
     .footer-logo img{
-      height: 100px;         /* 크기 조절 */
+      height: 100px;
       max-width: 260px;
       width: auto;
       display: block;
       margin: 0 auto;
-      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.15));
+
+      /* ✅ 은은한 그림자(기존보다 더 부드럽게) */
+      filter: drop-shadow(0 8px 22px rgba(0,0,0,0.14));
     }
 
     /* ✅ 라벨 프린터(가로 12cm) 인쇄 스타일: 모달만 출력 */
@@ -544,9 +550,7 @@
     </div>
   </main>
 
-  <!-- ✅ 하단 고정 로고
-       로고 파일을 같은 폴더에 두면 src="ulsan_logo.png"
-       폴더에 넣었다면 예: src="images/ulsan_logo.png" 로 바꾸면 됨 -->
+  <!-- ✅ 하단 고정 로고 -->
   <div class="footer-logo" aria-hidden="true">
     <img src="ulsan_logo.png" alt="울산시설공단 로고">
   </div>
@@ -685,7 +689,6 @@
       return String(raw);
     }
 
-    /* ✅ 모달도 '잔디장-1-1-001' 형태로 표시(요청사항) */
     function normalizeNatureNo(raw){
       if (!raw) return "";
       const s = String(raw).trim();
@@ -784,7 +787,7 @@
             type: 'nature',
             typeLabel: '자연장지',
             name: row[NAT_FIELDS.name] || "",
-            location: normalizeNatureNo(raw),   // ✅ 테이블/모달 동일: 잔디장-1-1-001
+            location: normalizeNatureNo(raw),
             applicant: maskName(row[NAT_FIELDS.applicant]),
             date: row[NAT_FIELDS.date] || "",
             locationLabel: "안장번호",
