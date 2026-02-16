@@ -12,14 +12,19 @@
       min-height: 100vh;
       text-align: center;
 
-      /* 배경 오버레이(배경 더 잘 보이도록 투명도 조절) */
+      /* ✅ 오버레이(1) + 배경이미지(2) 레이어 분리 */
       background-image:
         linear-gradient(rgba(245,247,250,0.40), rgba(245,247,250,0.40)),
         url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+
+      background-size: cover, cover;
+      background-repeat: no-repeat, no-repeat;
+
+      /* ✅ 기본은 둘 다 center */
+      background-position: center, center;
+
+      /* 레이어별로 고정 */
+      background-attachment: fixed, fixed;
 
       display: flex;
       justify-content: center;
@@ -30,10 +35,10 @@
       padding-bottom: 110px;
     }
 
-    /* ✅ PC에서만 배경을 아래로 약 2cm(≈76px) 이동 */
+    /* ✅ PC에서만 "이미지 레이어"만 아래로 약 2cm(≈76px) 이동 */
     @media (min-width: 769px){
       body{
-        background-position: center calc(50% + 76px);
+        background-position: center, center calc(50% + 76px);
       }
     }
 
@@ -171,7 +176,6 @@
       letter-spacing: -0.2px;
     }
 
-    /* hover 색 변화 */
     .btn-search:hover{
       background: linear-gradient(180deg, #2f97ff, #0f5ab3);
       box-shadow: 0 14px 34px rgba(21, 101, 192, 0.34);
@@ -394,9 +398,7 @@
     }
 
     /* 출력 전용: 하단 로고(평소 숨김) */
-    .print-footer{
-      display: none;
-    }
+    .print-footer{ display: none; }
 
     @media (min-width: 769px){
       .btn-print { display: inline-block; }
@@ -473,9 +475,7 @@
 
     /* =========================
        8cm(80mm) 감열지 출력 설정
-       - 폭 80mm
-       - 정보 사이 희미한 가로줄
-       - 하단 로고 출력
+       - 폰트 조금 키움(줄바꿈 최소화 위해 라벨폭 축소)
     ========================== */
     @media print {
       @page {
@@ -521,8 +521,9 @@
         text-align: center;
       }
 
+      /* ✅ 제목 폰트 업 */
       .modal-title{
-        font-size: 13pt;
+        font-size: 15pt;
         color: #000;
         font-weight: 900;
         letter-spacing: -0.2px;
@@ -530,19 +531,30 @@
 
       .modal-body{ padding: 3mm 0 0 0; }
 
+      /* ✅ 라벨폭 살짝 줄여서 값이 줄바꿈 안 나게 버팀 */
       .info-grid{
-        grid-template-columns: 18mm 1fr;
-        gap: 2.2mm 3mm;
+        grid-template-columns: 16mm 1fr;
+        gap: 2.0mm 2.6mm;
       }
 
-      .info-label{ font-size: 9.5pt; color: #444; }
-      .info-value{ font-size: 12.5pt; color: #000; }
+      /* ✅ 라벨/값 폰트 업 */
+      .info-label{
+        font-size: 11pt;
+        color: #444;
+        line-height: 1.15;
+      }
+      .info-value{
+        font-size: 14.5pt;
+        color: #000;
+        line-height: 1.15;
+      }
       .info-value.mono{ word-break: break-word; }
 
+      /* ✅ 구분선 조금 더 은은하게 */
       .divider{
         margin: 1.6mm 0;
         height: 1px;
-        background: rgba(0,0,0,0.18);
+        background: rgba(0,0,0,0.16);
       }
 
       .print-footer{
