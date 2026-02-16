@@ -12,7 +12,7 @@
       min-height: 100vh;
       text-align: center;
 
-      /* 배경 오버레이 조금 진하게 */
+      /* ✅ 배경 오버레이(현재 값 유지: 0.40) */
       background-image:
         linear-gradient(rgba(245,247,250,0.40), rgba(245,247,250,0.40)),
         url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
@@ -26,7 +26,7 @@
       align-items: center;
       padding: 22px;
 
-      /* 하단 고정 로고와 겹침 방지 */
+      /* ✅ 로고가 겹치지 않도록 여유(데스크탑) */
       padding-bottom: 110px;
     }
 
@@ -39,7 +39,7 @@
       overflow: hidden;
 
       position: relative;
-      z-index: 20; /* 로고보다 위 */
+      z-index: 20; /* ✅ 로고보다 위 */
     }
 
     .header{
@@ -389,8 +389,16 @@
       .btn-print { display: inline-block; }
     }
 
+    /* ✅ 모바일: 메인창 너무 위에 뜨는 문제 해결 + 로고 축소 */
     @media (max-width: 480px){
-      body{ padding: 12px; padding-bottom: 110px; }
+      body{
+        padding: 12px;
+        padding-bottom: 80px;   /* 로고 공간 줄임 */
+        justify-content: flex-start; /* 중앙정렬 해제 */
+        align-items: center;
+        padding-top: 40px;      /* 위쪽 여백 확보 */
+      }
+
       main{ background: rgba(255,255,255,0.80); }
 
       .header{ padding: 20px 18px 12px; }
@@ -412,9 +420,18 @@
       }
 
       th, td{ font-size: 14px; padding: 12px 10px; }
+
+      .footer-logo{
+        bottom: 10px;
+      }
+      .footer-logo img{
+        height: 60px;      /* ✅ 모바일 로고 축소 */
+        max-width: 160px;
+        opacity: 0.85;
+      }
     }
 
-    /* 하단 로고: 검색결과보다 뒤 + 그림자 진하게 */
+    /* ✅ 하단 로고: 검색결과보다 뒤 + 그림자 진하게 */
     .footer-logo{
       position: fixed;
       bottom: 18px;
@@ -424,6 +441,16 @@
       opacity: 0.92;
       z-index: 5;            /* main(20)보다 낮게 */
       pointer-events: none;
+
+      /* ✅ 스크롤 시 자연스럽게 사라지게(기본 표시) */
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      will-change: opacity, transform;
+    }
+
+    /* ✅ 숨김 상태(스크롤 내릴 때 적용) */
+    .footer-logo.is-hidden{
+      opacity: 0;
+      transform: translateX(-50%) translateY(12px);
     }
 
     .footer-logo img{
@@ -530,7 +557,7 @@
     </div>
   </main>
 
-  <div class="footer-logo" aria-hidden="true">
+  <div class="footer-logo" id="footerLogo" aria-hidden="true">
     <img src="ulsan_logo.png" alt="울산시설공단 로고">
   </div>
 
@@ -604,35 +631,20 @@
 
     /* =========================
       ✅ 실서비스용 검색 정규화
-      - trim
-      - 공백 전부 제거
-      - 소문자(영문 대비)
-      - 특수문자 제거(한글/영문/숫자만 남김)
-      - 괄호/점/중점/하이픈/슬래시 등 섞여도 안정적으로 매칭
     ========================== */
     function normalizeForSearch(value){
       if (value === null || value === undefined) return "";
       let s = String(value);
-
-      // 유니코드 정규화(호환문자 등)
       if (s.normalize) s = s.normalize("NFKC");
-
       s = s.trim().toLowerCase();
-
-      // 공백류 전체 제거
       s = s.replace(/[\s\u00A0]+/g, "");
-
-      // 특수문자 제거: 한글/영문/숫자만 남김
-      // (예: "홍길동(故)" -> "홍길동", "HONG GIL-DONG" -> "honggildong")
       s = s.replace(/[^0-9a-z\u3131-\u318E\uAC00-\uD7A3]/g, "");
-
       return s;
     }
 
-    // 안전장치: 너무 짧은 입력(1글자)일 때 과도한 결과 방지하고 싶으면 여기서 제한 가능
     function isSearchKeywordValid(raw){
       const norm = normalizeForSearch(raw);
-      return norm.length >= 2; // 필요 없으면 1로 바꿔도 됨
+      return norm.length >= 2;
     }
 
     function setMode(mode){
@@ -768,11 +780,6 @@
       if (!isInDialog) this.close();
     });
 
-    /* =========================
-      ✅ 검색: 정규화 기반 includes
-      - "홍 길동", "홍길동(故)", "HONG-GIL DONG" 같은 입력도 매칭 가능
-      - 표시(테이블/모달)는 원래 데이터 그대로 유지
-    ========================== */
     function searchMemorial(keyword){
       const k = normalizeForSearch(keyword);
       return excelDataMemorial
@@ -780,7 +787,6 @@
           const rawName = row[MEM_FIELDS.name];
           if (!rawName) return false;
           if (row[MEM_FIELDS.returned]) return false;
-
           const rowNorm = normalizeForSearch(rawName);
           return rowNorm.includes(k);
         })
@@ -802,7 +808,6 @@
         .filter(row => {
           const rawName = row[NAT_FIELDS.name];
           if (!rawName) return false;
-
           const rowNorm = normalizeForSearch(rawName);
           return rowNorm.includes(k);
         })
@@ -877,7 +882,6 @@
 
       if (!keyword) return;
 
-      /* ✅ 너무 짧은 검색어 제한(원치 않으면 isSearchKeywordValid 자체를 지워도 됨) */
       if (!isSearchKeywordValid(keyword)){
         resultDiv.style.display = "block";
         resultDiv.innerHTML = `<div class="no-result">검색어는 2글자 이상 입력해 주세요.</div>`;
@@ -912,6 +916,42 @@
       resultDiv.innerHTML = "";
       lastFound = [];
     }
+
+    /* =========================
+      ✅ 로고: 스크롤 시 자연스럽게 사라짐
+      - 아래로 스크롤: 숨김
+      - 위로 스크롤: 다시 표시
+      - 맨 위/아주 조금 스크롤: 표시 유지
+    ========================== */
+    (function(){
+      const logo = document.getElementById("footerLogo");
+      if (!logo) return;
+
+      let lastY = window.scrollY || 0;
+      let ticking = false;
+
+      function update(){
+        const y = window.scrollY || 0;
+        const down = y > lastY;
+
+        if (y < 10){
+          logo.classList.remove("is-hidden");
+        } else if (down){
+          logo.classList.add("is-hidden");
+        } else {
+          logo.classList.remove("is-hidden");
+        }
+
+        lastY = y;
+        ticking = false;
+      }
+
+      window.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      }, { passive: true });
+    })();
   </script>
 </body>
 </html>
