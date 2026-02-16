@@ -30,6 +30,13 @@
       padding-bottom: 110px;
     }
 
+    /* ✅ PC에서만 배경을 아래로 약 2cm(≈76px) 이동 */
+    @media (min-width: 769px){
+      body{
+        background-position: center calc(50% + 76px);
+      }
+    }
+
     main{
       width: min(1080px, 100%);
       background: rgba(255,255,255,0.90);
@@ -164,7 +171,7 @@
       letter-spacing: -0.2px;
     }
 
-    /* ✅ hover 색 변화 */
+    /* hover 색 변화 */
     .btn-search:hover{
       background: linear-gradient(180deg, #2f97ff, #0f5ab3);
       box-shadow: 0 14px 34px rgba(21, 101, 192, 0.34);
@@ -386,7 +393,7 @@
       margin: 6px 0;
     }
 
-    /* ✅ 출력 전용: 하단 로고(평소 숨김) */
+    /* 출력 전용: 하단 로고(평소 숨김) */
     .print-footer{
       display: none;
     }
@@ -395,7 +402,7 @@
       .btn-print { display: inline-block; }
     }
 
-    /* ✅ 모바일: 메인창 위치 + 로고 축소 */
+    /* 모바일: 메인창 위치 + 로고 축소 */
     @media (max-width: 480px){
       body{
         padding: 12px;
@@ -435,7 +442,7 @@
       }
     }
 
-    /* ✅ 하단 로고: 검색결과보다 뒤 + 스크롤 시 자연스럽게 숨김 */
+    /* 하단 로고: 검색결과보다 뒤 + 스크롤 시 자연스럽게 숨김 */
     .footer-logo{
       position: fixed;
       bottom: 18px;
@@ -465,7 +472,7 @@
     }
 
     /* =========================
-       ✅ 8cm(80mm) 감열지 출력 설정
+       8cm(80mm) 감열지 출력 설정
        - 폭 80mm
        - 정보 사이 희미한 가로줄
        - 하단 로고 출력
@@ -488,7 +495,6 @@
       body * { visibility: hidden; }
       .detail-modal, .detail-modal * { visibility: visible; }
 
-      /* 화면 하단 고정 로고는 인쇄에서 숨김 */
       .footer-logo{ display: none !important; }
 
       .detail-modal{
@@ -533,14 +539,12 @@
       .info-value{ font-size: 12.5pt; color: #000; }
       .info-value.mono{ word-break: break-word; }
 
-      /* 정보 사이 희미한 가로줄 */
       .divider{
         margin: 1.6mm 0;
         height: 1px;
         background: rgba(0,0,0,0.18);
       }
 
-      /* ✅ 인쇄 하단 로고 */
       .print-footer{
         display: block;
         margin-top: 4mm;
@@ -635,7 +639,6 @@
         <div class="info-value" id="modalDate"></div>
       </div>
 
-      <!-- ✅ 출력 하단 로고(평소 숨김, 인쇄에서만 보임) -->
       <div class="print-footer" aria-hidden="true">
         <img src="ulsan_logo.png" alt="울산시설공단 로고">
       </div>
@@ -671,14 +674,6 @@
     let loadPromiseNature = null;
     let lastFound = [];
 
-    /* =========================
-      ✅ 실서비스용 검색 정규화
-      - trim
-      - 공백 제거
-      - 소문자
-      - 특수문자 제거(한글/영문/숫자만)
-      - 유니코드 정규화(NFKC)
-    ========================== */
     function normalizeForSearch(value){
       if (value === null || value === undefined) return "";
       let s = String(value);
@@ -962,7 +957,7 @@
       lastFound = [];
     }
 
-    /* ✅ 로고: 스크롤 시 자연스럽게 사라짐 */
+    /* 로고: 스크롤 시 자연스럽게 사라짐 */
     (function(){
       const logo = document.getElementById("footerLogo");
       if (!logo) return;
