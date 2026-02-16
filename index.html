@@ -137,7 +137,6 @@
       box-shadow: 0 10px 26px rgba(25,118,210,0.18);
     }
 
-    /* ✅ 버튼: 텍스트만(아이콘 제거), 큼직한 확인/조회 스타일 */
     .btn-search{
       height: 64px;
       padding: 0 22px;
@@ -207,7 +206,7 @@
       white-space: nowrap;
     }
 
-    /* ✅ 모바일에서 ... 축약 금지 + 가로 스크롤 */
+    /* ✅ 모바일 포함: 가로 스크롤 + 항목 폭 자동 최소화 */
     .table-wrapper{
       max-height: 520px;
       overflow-y: auto;
@@ -217,9 +216,9 @@
 
     table{
       border-collapse: collapse;
-      width: max-content;
-      min-width: 100%;
-      table-layout: auto;
+      width: max-content;  /* 내용 길이만큼만 */
+      min-width: 100%;     /* 화면보다 작으면 100%로 */
+      table-layout: auto;  /* 자동 폭 */
     }
 
     th, td{
@@ -229,9 +228,10 @@
       font-weight: 800;
       text-align: center;
 
-      white-space: nowrap;
-      overflow: visible;
+      white-space: nowrap;   /* 줄바꿈 안함 */
+      overflow: visible;     /* ... 제거 */
       text-overflow: clip;
+      width: 1%;             /* ✅ 각 컬럼 폭을 내용 기준으로 최소화(핵심) */
     }
 
     th{
@@ -248,11 +248,7 @@
       cursor: pointer;
       transition: background 0.12s ease;
     }
-    tbody tr:hover{
-      background: rgba(227, 242, 253, 0.65);
-    }
-
-    /* ✅ 선택 고정 강조 제거(요청사항) - selected 관련 스타일 없음 */
+    tbody tr:hover{ background: rgba(227, 242, 253, 0.65); }
 
     .col-loc{
       font-family: "Malgun Gothic", "맑은 고딕", monospace;
@@ -401,17 +397,9 @@
       }
 
       th, td{ font-size: 14px; padding: 12px 10px; }
-
-      /* 모바일에서 가로 스크롤을 확실히 유도(필요 시 값 조절) */
-      table{ min-width: 720px; }
     }
 
-    /* ==========================
-       ✅ 라벨 프린터(가로 12cm) 인쇄 스타일
-       - 모달 내용만 출력
-       - 용지 폭: 120mm
-       - 높이는 내용에 맞게 자동(브라우저/프린터에 따라 다름)
-       ========================== */
+    /* ✅ 라벨 프린터(가로 12cm) 인쇄 스타일: 모달만 출력 */
     @media print {
       @page {
         size: 120mm auto;
@@ -428,7 +416,6 @@
       }
 
       body * { visibility: hidden; }
-
       .detail-modal, .detail-modal * { visibility: visible; }
 
       .detail-modal{
@@ -479,7 +466,6 @@
         color: #000;
       }
 
-      /* 라벨 폭에서 줄바꿈이 필요할 경우 대비 */
       .info-value.mono{
         word-break: break-word;
       }
@@ -588,12 +574,10 @@
     };
 
     let currentMode = 'all';
-
     let excelDataMemorial = [];
     let excelDataNature = [];
     let loadPromiseMemorial = null;
     let loadPromiseNature = null;
-
     let lastFound = [];
 
     function setMode(mode){
@@ -662,13 +646,8 @@
       return String(raw);
     }
 
-    function normalizeNatureNoForModal(raw){
-      if (!raw) return "";
-      const s = String(raw).trim();
-      return s.split("-").map(p => p.trim()).filter(Boolean).join(" - ");
-    }
-
-    function normalizeNatureNoForTable(raw){
+    /* ✅ 모달도 '잔디장-1-1-001' 형태로 표시(요청사항) */
+    function normalizeNatureNo(raw){
       if (!raw) return "";
       const s = String(raw).trim();
       return s.split("-").map(p => p.trim()).filter(Boolean).join("-");
@@ -695,7 +674,7 @@
 
     function openModal(record) {
       document.getElementById("modalName").textContent = record.name || "";
-      document.getElementById("modalLoc").textContent = record.locationModal || record.location || "";
+      document.getElementById("modalLoc").textContent = record.location || "";
       document.getElementById("modalApplicant").textContent = record.applicant || "";
       document.getElementById("modalDate").textContent = record.date || "";
 
@@ -766,8 +745,7 @@
             type: 'nature',
             typeLabel: '자연장지',
             name: row[NAT_FIELDS.name] || "",
-            location: normalizeNatureNoForTable(raw),      // 테이블: 잔디장-1-5-001
-            locationModal: normalizeNatureNoForModal(raw), // 모달: 잔디장 - 1 - 5 - 001
+            location: normalizeNatureNo(raw),   // ✅ 테이블/모달 동일: 잔디장-1-1-001
             applicant: maskName(row[NAT_FIELDS.applicant]),
             date: row[NAT_FIELDS.date] || "",
             locationLabel: "안장번호",
