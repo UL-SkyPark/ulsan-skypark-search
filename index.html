@@ -51,9 +51,41 @@
       }
     }
 
+    /* 공통 로고 (PC/모바일 위치는 미디어쿼리에서 조정) */
+    .global-logo{
+      position:fixed;
+      z-index:100;
+      cursor:pointer;
+    }
+
+    /* PC: 좌측 상단 */
+    @media screen and (min-width:769px){
+      .global-logo{
+        top:16px;
+        left:18px;
+      }
+      .global-logo img{
+        height:72px;
+        width:auto;
+      }
+    }
+
+    /* 모바일: 상단 중앙 */
+    @media screen and (max-width:768px){
+      .global-logo{
+        top:14px;
+        left:50%;
+        transform:translateX(-50%);
+      }
+      .global-logo img{
+        height:56px;
+        width:auto;
+      }
+    }
+
     main{
-      width:min(1080px, 100%);
-      background:rgba(255,255,255,0.80);
+      width:min(1080px, 90%);
+      background:rgba(255,255,255,0.92);
       border:1px solid rgba(31,58,90,0.10);
       border-radius:18px;
       box-shadow:0 18px 55px rgba(15,23,42,0.12);
@@ -66,7 +98,7 @@
     .header{
       padding:26px 26px 14px;
       border-bottom:1px solid rgba(15,23,42,0.08);
-      background:linear-gradient(180deg, rgba(255,255,255,0.30), rgba(250,252,255,0.30));
+      background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,252,255,0.92));
     }
 
     .title{
@@ -232,7 +264,6 @@
       color:#0f172a;
     }
 
-    /* 공통 기본 스타일 */
     .result-sub{
       font-size:13px;
       font-weight:800;
@@ -244,7 +275,6 @@
       margin-left:auto;
     }
 
-    /* PC 버전에서 한 줄 + 폰트 크게 */
     @media screen and (min-width:1024px){
       .result-sub{
         white-space:nowrap;
@@ -583,6 +613,11 @@
 </head>
 
 <body>
+  <!-- PC: 좌측 상단 / 모바일: 상단 중앙 로고 -->
+  <div class="global-logo" onclick="goHome()" aria-label="울산하늘공원 초기화면으로 이동">
+    <img src="ulsan_logo1.png" alt="울산하늘공원 로고">
+  </div>
+
   <main>
     <div class="header">
       <div class="title">울산하늘공원 고인 검색</div>
@@ -607,7 +642,7 @@
             type="text"
             id="keyword"
             name="keyword"
-            placeholder="고인명을 입력해주세요.  예) 홍길동"
+            placeholder="고인명을 입력해주세요. 예)홍길동"
             required
             autocomplete="off"
           />
@@ -615,7 +650,7 @@
         <button class="btn-search" type="submit">확인/조회</button>
       </form>
 
-      <div class="hint">※ 검색 결과는 좌우로 스크롤해 정보를 확인할 수 있습니다.</div>
+      <div class="hint">※ 검색 결과는 좌우로 스크롤하여 전체 정보를 확인할 수 있습니다.</div>
 
       <div id="result"></div>
     </div>
@@ -867,7 +902,7 @@
         })
         .map(row => ({
           type:'memorial',
-          // typeLabel:'추모의집',
+          // typeLabel 생략 → 모달에 '구분/추모의집' 안 보이게
           name:row[MEM_FIELDS.name] || "",
           location:normalizeRoom(row[MEM_FIELDS.loc] || ""),
           applicant:maskName(row[MEM_FIELDS.applicant]),
@@ -914,7 +949,7 @@
           ? '전체'
           : (currentMode === 'memorial' ? '추모의집' : '자연장지')
         } 검색 결과 ${records.length}건`;
-      const titleRight = `결과를 선택하면<br>상세 정보가 표시됩니다.`;
+      const titleRight = `결과를 선택하면 상세 정보가 표시됩니다.`;
 
       let html = `
         <div class="result-head">
@@ -994,6 +1029,13 @@
       resultDiv.style.display = "none";
       resultDiv.innerHTML = "";
       lastFound = [];
+    }
+
+    // 로고 클릭 시: 검색어/결과만 초기화 + 화면 상단으로
+    function goHome(){
+      document.getElementById("keyword").value = "";
+      resetResultOnly();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     (function(){
