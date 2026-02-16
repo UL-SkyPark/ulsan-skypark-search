@@ -12,7 +12,6 @@
       min-height: 100vh;
       text-align: center;
 
-      /* ✅ 배경 오버레이(현재 값 유지: 0.40) */
       background-image:
         linear-gradient(rgba(245,247,250,0.40), rgba(245,247,250,0.40)),
         url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
@@ -26,7 +25,6 @@
       align-items: center;
       padding: 22px;
 
-      /* ✅ 로고가 겹치지 않도록 여유(데스크탑) */
       padding-bottom: 110px;
     }
 
@@ -39,7 +37,7 @@
       overflow: hidden;
 
       position: relative;
-      z-index: 20; /* ✅ 로고보다 위 */
+      z-index: 20; /* 로고보다 위 */
     }
 
     .header{
@@ -385,18 +383,23 @@
       margin: 6px 0;
     }
 
+    /* ✅ 출력 전용: 하단 로고(평소 숨김) */
+    .print-footer{
+      display: none;
+    }
+
     @media (min-width: 769px){
       .btn-print { display: inline-block; }
     }
 
-    /* ✅ 모바일: 메인창 너무 위에 뜨는 문제 해결 + 로고 축소 */
+    /* ✅ 모바일: 메인창 위치 + 로고 축소 */
     @media (max-width: 480px){
       body{
         padding: 12px;
-        padding-bottom: 80px;   /* 로고 공간 줄임 */
-        justify-content: flex-start; /* 중앙정렬 해제 */
+        padding-bottom: 80px;
+        justify-content: flex-start;
         align-items: center;
-        padding-top: 40px;      /* 위쪽 여백 확보 */
+        padding-top: 40px;
       }
 
       main{ background: rgba(255,255,255,0.80); }
@@ -421,17 +424,15 @@
 
       th, td{ font-size: 14px; padding: 12px 10px; }
 
-      .footer-logo{
-        bottom: 10px;
-      }
+      .footer-logo{ bottom: 10px; }
       .footer-logo img{
-        height: 60px;      /* ✅ 모바일 로고 축소 */
+        height: 60px;
         max-width: 160px;
         opacity: 0.85;
       }
     }
 
-    /* ✅ 하단 로고: 검색결과보다 뒤 + 그림자 진하게 */
+    /* ✅ 하단 로고: 검색결과보다 뒤 + 스크롤 시 자연스럽게 숨김 */
     .footer-logo{
       position: fixed;
       bottom: 18px;
@@ -439,15 +440,13 @@
       transform: translateX(-50%);
       text-align: center;
       opacity: 0.92;
-      z-index: 5;            /* main(20)보다 낮게 */
+      z-index: 5;
       pointer-events: none;
 
-      /* ✅ 스크롤 시 자연스럽게 사라지게(기본 표시) */
       transition: opacity 0.35s ease, transform 0.35s ease;
       will-change: opacity, transform;
     }
 
-    /* ✅ 숨김 상태(스크롤 내릴 때 적용) */
     .footer-logo.is-hidden{
       opacity: 0;
       transform: translateX(-50%) translateY(12px);
@@ -462,6 +461,7 @@
       filter: drop-shadow(0 12px 32px rgba(0,0,0,0.34));
     }
 
+    /* ✅ 라벨 프린터(가로 12cm) 인쇄 스타일: 모달만 출력 */
     @media print {
       @page { size: 120mm auto; margin: 4mm; }
 
@@ -476,6 +476,8 @@
 
       body * { visibility: hidden; }
       .detail-modal, .detail-modal * { visibility: visible; }
+
+      /* 화면 하단 고정 로고는 인쇄에서 숨김 */
       .footer-logo{ display: none !important; }
 
       .detail-modal{
@@ -496,29 +498,53 @@
 
       .modal-actions{ display: none !important; }
 
+      /* ✅ 인쇄 제목: 요청 문구로 고정 + 중앙 정렬 */
       .modal-header{
-        padding: 0 0 4mm 0;
-        border-bottom: 1px solid #ddd;
+        padding: 0 0 3mm 0;
+        border-bottom: 1px solid rgba(0,0,0,0.25);
+        text-align: center;
       }
 
       .modal-title{
         font-size: 16pt;
         color: #000;
         font-weight: 900;
+        letter-spacing: -0.2px;
       }
 
       .modal-body{ padding: 4mm 0 0 0; }
 
       .info-grid{
         grid-template-columns: 22mm 1fr;
-        gap: 3mm 4mm;
+        gap: 2.6mm 4mm; /* 살짝 촘촘하게 */
       }
 
       .info-label{ font-size: 10.5pt; color: #444; }
       .info-value{ font-size: 14pt; color: #000; }
       .info-value.mono{ word-break: break-word; }
 
-      .divider{ margin: 2mm 0; background: #e5e5e5; }
+      /* ✅ 요청: 정보들 사이 희미한 가로줄(조금 더 또렷하게) */
+      .divider{
+        margin: 1.8mm 0;
+        height: 1px;
+        background: rgba(0,0,0,0.18);
+      }
+
+      /* ✅ 인쇄 하단 로고 출력 */
+      .print-footer{
+        display: block;
+        margin-top: 5mm;
+        padding-top: 3mm;
+        border-top: 1px solid rgba(0,0,0,0.18);
+        text-align: center;
+      }
+      .print-footer img{
+        height: 18mm;      /* 라벨프린터 기준 적당한 크기 */
+        max-width: 70mm;
+        width: auto;
+        opacity: 0.95;
+        filter: none;      /* 인쇄는 또렷하게 */
+      }
     }
   </style>
 </head>
@@ -564,7 +590,8 @@
   <dialog id="detailModal" class="detail-modal">
     <div class="modal-header">
       <div class="modal-title-row">
-        <div class="modal-title">고인 위치 안내</div>
+        <!-- ✅ 요청: 인쇄물 제목도 이 문구로 -->
+        <div class="modal-title">울산하늘공원 고인 위치 안내</div>
         <div class="modal-actions">
           <button type="button" class="btn-print" onclick="window.print()">출력</button>
           <button type="button" class="btn-close" onclick="document.getElementById('detailModal').close()">닫기</button>
@@ -596,6 +623,11 @@
 
         <div class="info-label" id="labelDate">안치일자</div>
         <div class="info-value" id="modalDate"></div>
+      </div>
+
+      <!-- ✅ 출력 하단 로고(평소 숨김, 인쇄에서만 보임) -->
+      <div class="print-footer" aria-hidden="true">
+        <img src="ulsan_logo.png" alt="울산시설공단 로고">
       </div>
     </div>
   </dialog>
@@ -629,9 +661,6 @@
     let loadPromiseNature = null;
     let lastFound = [];
 
-    /* =========================
-      ✅ 실서비스용 검색 정규화
-    ========================== */
     function normalizeForSearch(value){
       if (value === null || value === undefined) return "";
       let s = String(value);
@@ -787,8 +816,7 @@
           const rawName = row[MEM_FIELDS.name];
           if (!rawName) return false;
           if (row[MEM_FIELDS.returned]) return false;
-          const rowNorm = normalizeForSearch(rawName);
-          return rowNorm.includes(k);
+          return normalizeForSearch(rawName).includes(k);
         })
         .map(row => ({
           type: 'memorial',
@@ -808,8 +836,7 @@
         .filter(row => {
           const rawName = row[NAT_FIELDS.name];
           if (!rawName) return false;
-          const rowNorm = normalizeForSearch(rawName);
-          return rowNorm.includes(k);
+          return normalizeForSearch(rawName).includes(k);
         })
         .map(row => {
           const raw = row[NAT_FIELDS.loc] || "";
@@ -917,12 +944,7 @@
       lastFound = [];
     }
 
-    /* =========================
-      ✅ 로고: 스크롤 시 자연스럽게 사라짐
-      - 아래로 스크롤: 숨김
-      - 위로 스크롤: 다시 표시
-      - 맨 위/아주 조금 스크롤: 표시 유지
-    ========================== */
+    /* ✅ 로고: 스크롤 시 자연스럽게 사라짐 */
     (function(){
       const logo = document.getElementById("footerLogo");
       if (!logo) return;
