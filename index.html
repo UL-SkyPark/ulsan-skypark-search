@@ -39,7 +39,7 @@
       align-items:center;
       padding:22px;
       padding-bottom:110px;
-      padding-top:40px;
+      padding-top:60px; /* 로고 자리 확보 */
     }
 
     @media (max-width:768px){
@@ -47,8 +47,47 @@
         background-size:auto 100%, auto 100%;
         background-position:top center, top center;
         align-items:flex-start;
-        padding-top:40px;
+        padding-top:70px; /* 모바일 상단 로고 높이만큼 여백 */
       }
+    }
+
+    /* ===== 상단 로고 ===== */
+    .global-logo{
+      position:fixed;
+      z-index:10;       /* main(20)보다 낮게: 본문이 위, 로고는 살짝 뒤 */
+      cursor:pointer;
+      transition:opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    /* PC: 좌측 상단 */
+    @media screen and (min-width:769px){
+      .global-logo{
+        top:14px;
+        left:18px;
+        transform:none;
+      }
+      .global-logo img{
+        height:70px;
+        width:auto;
+      }
+    }
+
+    /* 모바일: 상단 중앙 */
+    @media screen and (max-width:768px){
+      .global-logo{
+        top:12px;
+        left:50%;
+        transform:translateX(-50%);
+      }
+      .global-logo img{
+        height:56px;
+        width:auto;
+      }
+    }
+
+    .global-logo.is-hidden{
+      opacity:0;
+      transform:translateX(-50%) translateY(-14px);
     }
 
     main{
@@ -232,7 +271,6 @@
       color:#0f172a;
     }
 
-    /* 공통 기본 스타일 */
     .result-sub{
       font-size:13px;
       font-weight:800;
@@ -244,7 +282,6 @@
       margin-left:auto;
     }
 
-    /* PC 버전에서 한 줄 + 폰트 크게 */
     @media screen and (min-width:1024px){
       .result-sub{
         white-space:nowrap;
@@ -425,7 +462,7 @@
       body{
         padding:12px;
         padding-bottom:80px;
-        padding-top:40px;
+        padding-top:70px;
       }
 
       main{ background:rgba(255,255,255,0.85); }
@@ -449,13 +486,6 @@
       }
 
       th,td{ font-size:14px; padding:12px 10px; }
-
-      .footer-logo{ bottom:10px; }
-      .footer-logo img{
-        height:60px;
-        max-width:160px;
-        opacity:0.85;
-      }
     }
 
     .footer-logo{
@@ -503,7 +533,7 @@
       body *{ visibility:hidden; }
       .detail-modal,.detail-modal *{ visibility:visible; }
 
-      .footer-logo{ display:none !important; }
+      .footer-logo, .global-logo{ display:none !important; }
 
       .detail-modal{
         position:absolute;
@@ -583,6 +613,11 @@
 </head>
 
 <body>
+  <!-- PC: 좌측 상단 / 모바일: 상단 중앙 로고 -->
+  <div class="global-logo" id="globalLogo" onclick="goHome()" aria-label="울산하늘공원 초기화면으로 이동">
+    <img src="ulsan_logo1.png" alt="울산하늘공원 로고">
+  </div>
+
   <main>
     <div class="header">
       <div class="title">울산하늘공원 고인 검색</div>
@@ -996,8 +1031,17 @@
       lastFound = [];
     }
 
+    // 로고 클릭 시: 검색어/결과만 초기화 + 화면 상단으로
+    function goHome(){
+      document.getElementById("keyword").value = "";
+      resetResultOnly();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // 스크롤 시 상단 로고와 하단 로고 자연스럽게 숨김
     (function(){
       const bottomLogo = document.getElementById("footerLogo");
+      const topLogo = document.getElementById("globalLogo");
       let lastY = window.scrollY || 0;
       let ticking = false;
 
@@ -1005,17 +1049,24 @@
         const y = window.scrollY || 0;
         const down = y > lastY;
 
-        if (!bottomLogo){
-          ticking = false;
-          return;
+        if (bottomLogo){
+          if (y < 10){
+            bottomLogo.classList.remove("is-hidden");
+          } else if (down){
+            bottomLogo.classList.add("is-hidden");
+          } else{
+            bottomLogo.classList.remove("is-hidden");
+          }
         }
 
-        if (y < 10){
-          bottomLogo.classList.remove("is-hidden");
-        } else if (down){
-          bottomLogo.classList.add("is-hidden");
-        } else{
-          bottomLogo.classList.remove("is-hidden");
+        if (topLogo){
+          if (y < 10){
+            topLogo.classList.remove("is-hidden");
+          } else if (down){
+            topLogo.classList.add("is-hidden");
+          } else{
+            topLogo.classList.remove("is-hidden");
+          }
         }
 
         lastY = y;
