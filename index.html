@@ -856,24 +856,25 @@
       return { name:"고인명", loc:"위치번호", applicant:"신청자", date:"안치일자" };
     }
 
-    function openModal(record){
-      document.getElementById("modalName").textContent = record.name || "";
-      document.getElementById("modalLoc").textContent = record.location || "";
-      document.getElementById("modalApplicant").textContent = record.applicant || "";
-      document.getElementById("modalDate").textContent = record.date || "";
+function openModal(record){
+  document.getElementById("modalName").textContent = record.name || "";
+  document.getElementById("modalLoc").textContent = record.location || "";
+  document.getElementById("modalApplicant").textContent = record.applicant || "";
+  document.getElementById("modalDate").textContent = record.date || "";
 
-      document.getElementById("labelLoc").textContent = record.locationLabel || "위치번호";
-      document.getElementById("labelDate").textContent = record.dateLabel || "일자";
+  document.getElementById("labelLoc").textContent = record.locationLabel || "위치번호";
+  document.getElementById("labelDate").textContent = record.dateLabel || "일자";
 
-      const showType = (currentMode === 'all' && record.typeLabel);
-      document.getElementById("labelType").style.display = showType ? "block" : "none";
-      document.getElementById("modalType").style.display = showType ? "block" : "none";
-      document.getElementById("dividerAfterType").style.display = showType ? "block" : "none";
-      if (showType) document.getElementById("modalType").textContent = record.typeLabel;
+  // ★ 시설명 표시 조건 수정: typeLabel이 있으면 항상 표기
+  const showType = !!record.typeLabel;
+  document.getElementById("labelType").style.display = showType ? "block" : "none";
+  document.getElementById("modalType").style.display = showType ? "block" : "none";
+  document.getElementById("dividerAfterType").style.display = showType ? "block" : "none";
+  if (showType) document.getElementById("modalType").textContent = record.typeLabel;
 
-      const modal = document.getElementById("detailModal");
-      modal.showModal();
-    }
+  const modal = document.getElementById("detailModal");
+  modal.showModal();
+}
 
     function bindTableClick(){
       const table = document.querySelector("#result table");
@@ -905,49 +906,51 @@
       }
     });
 
-    function searchMemorial(keyword){
-      const k = normalizeForSearch(keyword);
-      return excelDataMemorial
-        .filter(row => {
-          const rawName = row[MEM_FIELDS.name];
-          if (!rawName) return false;
-          if (row[MEM_FIELDS.returned]) return false;
-          return normalizeForSearch(rawName).includes(k);
-        })
-        .map(row => ({
-          type:'memorial',
-          typeLabel:'추모의집',
-          name:row[MEM_FIELDS.name] || "",
-          location:normalizeRoom(row[MEM_FIELDS.loc] || ""),
-          applicant:maskName(row[MEM_FIELDS.applicant]),
-          date:row[MEM_FIELDS.date] || "",
-          locationLabel:"봉안번호",
-          dateLabel:"안치일자"
-        }));
-    }
+function searchMemorial(keyword){
+  const k = normalizeForSearch(keyword);
+  return excelDataMemorial
+    .filter(row => {
+      const rawName = row[MEM_FIELDS.name];
+      if (!rawName) return false;
+      if (row[MEM_FIELDS.returned]) return false;
+      return normalizeForSearch(rawName).includes(k);
+    })
+    .map(row => ({
+      type: 'memorial',
+      // 시설명: 추모의집
+      typeLabel: '추모의집',
+      name: row[MEM_FIELDS.name] || "",
+      location: normalizeRoom(row[MEM_FIELDS.loc] || ""),
+      applicant: maskName(row[MEM_FIELDS.applicant]),
+      date: row[MEM_FIELDS.date] || "",
+      locationLabel: "봉안번호",
+      dateLabel: "안치일자"
+    }));
+}
 
-    function searchNature(keyword){
-      const k = normalizeForSearch(keyword);
-      return excelDataNature
-        .filter(row => {
-          const rawName = row[NAT_FIELDS.name];
-          if (!rawName) return false;
-          return normalizeForSearch(rawName).includes(k);
-        })
-        .map(row => {
-          const raw = row[NAT_FIELDS.loc] || "";
-          return {
-            type:'nature',
-            typeLabel:'자연장지',
-            name:row[NAT_FIELDS.name] || "",
-            location:normalizeNatureNo(raw),
-            applicant:maskName(row[NAT_FIELDS.applicant]),
-            date:row[NAT_FIELDS.date] || "",
-            locationLabel:"안장번호",
-            dateLabel:"안장일자"
-          };
-        });
-    }
+function searchNature(keyword){
+  const k = normalizeForSearch(keyword);
+  return excelDataNature
+    .filter(row => {
+      const rawName = row[NAT_FIELDS.name];
+      if (!rawName) return false;
+      return normalizeForSearch(rawName).includes(k);
+    })
+    .map(row => {
+      const raw = row[NAT_FIELDS.loc] || "";
+      return {
+        type: 'nature',
+        // 시설명: 자연장지
+        typeLabel: '자연장지',
+        name: row[NAT_FIELDS.name] || "",
+        location: normalizeNatureNo(raw),
+        applicant: maskName(row[NAT_FIELDS.applicant]),
+        date: row[NAT_FIELDS.date] || "",
+        locationLabel: "안장번호",
+        dateLabel: "안장일자"
+      };
+    });
+}
 
     function renderResults(records, keyword){
       const resultDiv = document.getElementById("result");
