@@ -12,6 +12,7 @@
       min-height: 100vh;
       text-align: center;
 
+      /* 배경 오버레이(배경 더 잘 보이도록 투명도 조절) */
       background-image:
         linear-gradient(rgba(245,247,250,0.40), rgba(245,247,250,0.40)),
         url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
@@ -25,6 +26,7 @@
       align-items: center;
       padding: 22px;
 
+      /* 하단 고정 로고와 겹침 방지 */
       padding-bottom: 110px;
     }
 
@@ -162,6 +164,7 @@
       letter-spacing: -0.2px;
     }
 
+    /* ✅ hover 색 변화 */
     .btn-search:hover{
       background: linear-gradient(180deg, #2f97ff, #0f5ab3);
       box-shadow: 0 14px 34px rgba(21, 101, 192, 0.34);
@@ -461,12 +464,20 @@
       filter: drop-shadow(0 12px 32px rgba(0,0,0,0.34));
     }
 
-    /* ✅ 라벨 프린터(가로 12cm) 인쇄 스타일: 모달만 출력 */
+    /* =========================
+       ✅ 8cm(80mm) 감열지 출력 설정
+       - 폭 80mm
+       - 정보 사이 희미한 가로줄
+       - 하단 로고 출력
+    ========================== */
     @media print {
-      @page { size: 120mm auto; margin: 4mm; }
+      @page {
+        size: 80mm auto;
+        margin: 3mm;
+      }
 
       html, body {
-        width: 120mm;
+        width: 80mm;
         height: auto;
         margin: 0;
         padding: 0;
@@ -485,8 +496,8 @@
         top: 0;
         left: 0;
         transform: none;
-        width: 120mm;
-        max-width: 120mm;
+        width: 80mm;
+        max-width: 80mm;
         height: auto;
         max-height: none;
         overflow: visible;
@@ -498,52 +509,52 @@
 
       .modal-actions{ display: none !important; }
 
-      /* ✅ 인쇄 제목: 요청 문구로 고정 + 중앙 정렬 */
       .modal-header{
-        padding: 0 0 3mm 0;
+        padding: 0 0 2.5mm 0;
         border-bottom: 1px solid rgba(0,0,0,0.25);
         text-align: center;
       }
 
       .modal-title{
-        font-size: 16pt;
+        font-size: 13pt;
         color: #000;
         font-weight: 900;
         letter-spacing: -0.2px;
       }
 
-      .modal-body{ padding: 4mm 0 0 0; }
+      .modal-body{ padding: 3mm 0 0 0; }
 
       .info-grid{
-        grid-template-columns: 22mm 1fr;
-        gap: 2.6mm 4mm; /* 살짝 촘촘하게 */
+        grid-template-columns: 18mm 1fr;
+        gap: 2.2mm 3mm;
       }
 
-      .info-label{ font-size: 10.5pt; color: #444; }
-      .info-value{ font-size: 14pt; color: #000; }
+      .info-label{ font-size: 9.5pt; color: #444; }
+      .info-value{ font-size: 12.5pt; color: #000; }
       .info-value.mono{ word-break: break-word; }
 
-      /* ✅ 요청: 정보들 사이 희미한 가로줄(조금 더 또렷하게) */
+      /* 정보 사이 희미한 가로줄 */
       .divider{
-        margin: 1.8mm 0;
+        margin: 1.6mm 0;
         height: 1px;
         background: rgba(0,0,0,0.18);
       }
 
-      /* ✅ 인쇄 하단 로고 출력 */
+      /* ✅ 인쇄 하단 로고 */
       .print-footer{
         display: block;
-        margin-top: 5mm;
-        padding-top: 3mm;
+        margin-top: 4mm;
+        padding-top: 2.5mm;
         border-top: 1px solid rgba(0,0,0,0.18);
         text-align: center;
       }
+
       .print-footer img{
-        height: 18mm;      /* 라벨프린터 기준 적당한 크기 */
-        max-width: 70mm;
+        height: 12mm;
+        max-width: 60mm;
         width: auto;
         opacity: 0.95;
-        filter: none;      /* 인쇄는 또렷하게 */
+        filter: none;
       }
     }
   </style>
@@ -590,7 +601,6 @@
   <dialog id="detailModal" class="detail-modal">
     <div class="modal-header">
       <div class="modal-title-row">
-        <!-- ✅ 요청: 인쇄물 제목도 이 문구로 -->
         <div class="modal-title">울산하늘공원 고인 위치 안내</div>
         <div class="modal-actions">
           <button type="button" class="btn-print" onclick="window.print()">출력</button>
@@ -661,6 +671,14 @@
     let loadPromiseNature = null;
     let lastFound = [];
 
+    /* =========================
+      ✅ 실서비스용 검색 정규화
+      - trim
+      - 공백 제거
+      - 소문자
+      - 특수문자 제거(한글/영문/숫자만)
+      - 유니코드 정규화(NFKC)
+    ========================== */
     function normalizeForSearch(value){
       if (value === null || value === undefined) return "";
       let s = String(value);
