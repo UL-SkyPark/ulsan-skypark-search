@@ -12,7 +12,6 @@
       min-height: 100vh;
       text-align: center;
 
-      /* ✅ 배경이 더 잘 보이도록 오버레이 투명도 낮춤(0.88 -> 0.55) */
       background-image:
         linear-gradient(rgba(245,247,250,0.55), rgba(245,247,250,0.55)),
         url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
@@ -111,15 +110,7 @@
       grid-template-columns: 1fr auto;
       gap: 12px;
       align-items: center;
-      margin-top: 2px;
-    }
-
-    .input-label{
-      text-align: left;
-      font-weight: 900;
-      color: #1f3a5a;
-      font-size: 16px;
-      margin: 10px 0 8px;
+      margin-top: 6px;
     }
 
     input[type="text"]{
@@ -136,6 +127,11 @@
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
+    input[type="text"]::placeholder{
+      color: rgba(51, 65, 85, 0.55);
+      font-weight: 800;
+    }
+
     input[type="text"]:focus{
       border-color: rgba(25, 118, 210, 0.55);
       box-shadow: 0 10px 26px rgba(25,118,210,0.18);
@@ -143,7 +139,7 @@
 
     .btn-search{
       height: 64px;
-      padding: 0 26px;
+      padding: 0 22px;
       border: none;
       border-radius: 14px;
       cursor: pointer;
@@ -151,14 +147,29 @@
       font-weight: 900;
       color: #ffffff;
       background: linear-gradient(180deg, #1e88e5, #1565c0);
-      box-shadow: 0 10px 26px rgba(21, 101, 192, 0.28);
-      transition: transform 0.08s ease, box-shadow 0.15s ease;
+      box-shadow: 0 12px 28px rgba(21, 101, 192, 0.30);
+      transition: transform 0.08s ease, box-shadow 0.15s ease, filter 0.15s ease;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 220px;
+      letter-spacing: -0.2px;
+    }
+
+    .btn-search::before{
+      content: "✓";
+      font-size: 22px;
+      line-height: 1;
+      opacity: 0.95;
+      transform: translateY(-1px);
     }
 
     .btn-search:active{
       transform: translateY(1px);
-      box-shadow: 0 6px 18px rgba(21, 101, 192, 0.22);
+      box-shadow: 0 8px 20px rgba(21, 101, 192, 0.24);
+      filter: brightness(0.98);
     }
 
     .hint{
@@ -206,14 +217,20 @@
 
     .table-wrapper{
       max-height: 520px;
-      overflow: auto;
+      overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+
+      /* ✅ 가로 스크롤 항상 가능 */
+      overflow-x: auto;
     }
 
     table{
-      width: 100%;
       border-collapse: collapse;
-      table-layout: fixed;
+
+      /* ✅ 모바일에서 줄이지 않고 가로로 밀리게 */
+      width: max-content;
+      min-width: 100%;
+      table-layout: auto;
     }
 
     th, td{
@@ -222,9 +239,11 @@
       font-size: 18px;
       font-weight: 800;
       text-align: center;
+
+      /* ✅ ... 축약 금지 */
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      overflow: visible;
+      text-overflow: clip;
     }
 
     th{
@@ -242,6 +261,13 @@
       transition: background 0.12s ease;
     }
     tbody tr:hover{ background: rgba(227, 242, 253, 0.65); }
+
+    tbody tr.selected{
+      background: rgba(25,118,210,0.16) !important;
+      outline: 2px solid rgba(25,118,210,0.35);
+      outline-offset: -2px;
+    }
+    tbody tr.selected td{ font-weight: 900; }
 
     .col-loc{
       font-family: "Malgun Gothic", "맑은 고딕", monospace;
@@ -367,11 +393,10 @@
       .btn-print { display: inline-block; }
     }
 
-    /* ✅ 모바일에서 자연장지 안장번호가 길지 않게: " - " 제거해서 잔디장-1-5-001 형태 유지 */
     @media (max-width: 480px){
       body{ padding: 12px; }
-
       main{ background: rgba(255,255,255,0.86); }
+
       .header{ padding: 20px 18px 12px; }
       .title{ font-size: 26px; }
 
@@ -380,16 +405,21 @@
       .tab-btn.active::after{ left: 22%; right: 22%; height: 5px; bottom: 7px; }
 
       .content{ padding: 14px 18px 18px; background: rgba(255,255,255,0.90); }
-      .search-box{ grid-template-columns: 1fr; }
-      .btn-search{ width: 100%; }
+      .search-box{ grid-template-columns: 1fr; gap: 10px; }
+
+      .btn-search{
+        width: 100%;
+        min-width: 0;
+        height: 70px;
+        font-size: 22px;
+        border-radius: 16px;
+      }
+      .btn-search::before{ font-size: 24px; }
 
       th, td{ font-size: 14px; padding: 12px 10px; }
 
-      /* 자연장지일 때 안장번호 열에 더 공간 주기(모바일) */
-      .is-nature th:nth-child(2), .is-nature td:nth-child(2){ width: 46% !important; }
-      .is-nature th:nth-child(1), .is-nature td:nth-child(1){ width: 18% !important; }
-      .is-nature th:nth-child(3), .is-nature td:nth-child(3){ width: 16% !important; }
-      .is-nature th:nth-child(4), .is-nature td:nth-child(4){ width: 20% !important; }
+      /* ✅ 모바일에서는 열을 더 넉넉히(스크롤로 전부 보기) */
+      table{ min-width: 720px; } /* 필요하면 640~900 사이로 조절 */
     }
   </style>
 </head>
@@ -398,7 +428,7 @@
   <main>
     <div class="header">
       <div class="title">울산하늘공원 고인 검색</div>
-      <div class="subnote">고인명을 입력한 뒤 검색을 눌러주세요.</div>
+      <div class="subnote">고인명을 입력한 뒤 확인/조회를 눌러주세요.</div>
 
       <div class="tabs" role="tablist" aria-label="검색 구분">
         <button type="button" class="tab-btn active" data-mode="all" onclick="setMode('all')">전체</button>
@@ -408,16 +438,21 @@
     </div>
 
     <div class="content">
-      <div class="input-label">고인명</div>
-
       <form id="searchForm" class="search-box">
         <div class="input-wrap">
-          <input type="text" id="keyword" name="keyword" placeholder="예) 홍길동" required autocomplete="off" />
+          <input
+            type="text"
+            id="keyword"
+            name="keyword"
+            placeholder="고인명을 입력해주세요. 예)홍길동"
+            required
+            autocomplete="off"
+          />
         </div>
-        <button class="btn-search" type="submit">검색</button>
+        <button class="btn-search" type="submit">확인/조회</button>
       </form>
 
-      <div class="hint">※ 검색 결과 행을 누르면 상세 정보가 표시됩니다.</div>
+      <div class="hint">※ 검색 결과는 좌우로 스크롤하여 전체 정보를 확인할 수 있습니다.</div>
 
       <div id="result"></div>
     </div>
@@ -557,16 +592,15 @@
       return String(raw);
     }
 
-    /* ✅ PC/모달은 보기 좋게 " - "로, 모바일 테이블은 원문 하이픈 형태로 */
     function normalizeNatureNoForModal(raw){
       if (!raw) return "";
       const s = String(raw).trim();
       return s.split("-").map(p => p.trim()).filter(Boolean).join(" - ");
     }
+
     function normalizeNatureNoForTable(raw){
       if (!raw) return "";
       const s = String(raw).trim();
-      // 공백 하이픈 형태가 들어와도 "잔디장-1-5-001"로 정리
       return s.split("-").map(p => p.trim()).filter(Boolean).join("-");
     }
 
@@ -607,6 +641,13 @@
       document.getElementById("detailModal").showModal();
     }
 
+    function setSelectedRow(tr){
+      const tbody = tr.closest("tbody");
+      if (!tbody) return;
+      tbody.querySelectorAll("tr.selected").forEach(r => r.classList.remove("selected"));
+      tr.classList.add("selected");
+    }
+
     function bindTableClick() {
       const table = document.querySelector("#result table");
       if (!table) return;
@@ -614,9 +655,13 @@
       table.addEventListener("click", function(e) {
         const tr = e.target.closest("tr[data-idx]");
         if (!tr) return;
+
+        setSelectedRow(tr);
+
         const idx = Number(tr.dataset.idx);
         const rec = lastFound[idx];
         if (!rec) return;
+
         openModal(rec);
       });
     }
@@ -625,7 +670,7 @@
       const rect = this.getBoundingClientRect();
       const isInDialog =
         rect.top <= e.clientY && e.clientY <= rect.bottom &&
-        rect.left <= e.clientX && e.clientX <= rect.right;
+        rect.left <= e.clientX && e.clientY <= rect.bottom;
       if (!isInDialog) this.close();
     });
 
@@ -660,9 +705,7 @@
             type: 'nature',
             typeLabel: '자연장지',
             name: row[NAT_FIELDS.name] || "",
-            /* ✅ 테이블 표출은 "잔디장-1-5-001" 형태(공백 없이) */
             location: normalizeNatureNoForTable(raw),
-            /* ✅ 모달은 보기 좋게 " - " 형태(유지하고 싶으면) */
             locationModal: normalizeNatureNoForModal(raw),
             applicant: maskName(row[NAT_FIELDS.applicant]),
             date: row[NAT_FIELDS.date] || "",
@@ -684,22 +727,19 @@
       const titleLeft = `${(currentMode==='all'?'전체':(currentMode==='memorial'?'추모의집':'자연장지'))} 검색 결과 ${records.length}건`;
       const titleRight = `행을 누르면 상세 정보`;
 
-      /* ✅ 자연장지일 때 모바일 열비율 조정용 클래스 부여 */
-      const tableClass = (currentMode === 'nature') ? 'is-nature' : '';
-
       let html = `
         <div class="result-head">
           <div class="result-title">${titleLeft}</div>
           <div class="result-sub">${titleRight}</div>
         </div>
         <div class="table-wrapper">
-          <table class="${tableClass}">
+          <table>
             <thead>
               <tr>
-                <th style="width:20%">${h.name}</th>
-                <th style="width:35%">${h.loc}</th>
-                <th style="width:20%">${h.applicant}</th>
-                <th style="width:25%">${h.date}</th>
+                <th>${h.name}</th>
+                <th>${h.loc}</th>
+                <th>${h.applicant}</th>
+                <th>${h.date}</th>
               </tr>
             </thead>
             <tbody>
@@ -709,7 +749,7 @@
         html += `
           <tr data-idx="${idx}">
             <td>${rec.name}</td>
-            <td class="col-loc" title="${rec.location}">${rec.location}</td>
+            <td class="col-loc">${rec.location}</td>
             <td>${rec.applicant}</td>
             <td>${rec.date}</td>
           </tr>
@@ -718,7 +758,11 @@
 
       html += `</tbody></table></div>`;
       resultDiv.innerHTML = html;
+
       bindTableClick();
+
+      const firstRow = resultDiv.querySelector("tbody tr[data-idx='0']");
+      if (firstRow) firstRow.classList.add("selected");
     }
 
     document.getElementById("searchForm").addEventListener("submit", async function(event) {
