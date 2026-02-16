@@ -12,20 +12,26 @@
       min-height: 100vh;
       text-align: center;
 
-      /* ✅ 최종 생성된 배경 이미지 적용 */
+      /* ✅ 오버레이(1) + 배경이미지(2) 레이어 분리 */
       background-image:
         linear-gradient(rgba(245,247,250,0.40), rgba(245,247,250,0.40)),
-        url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/6314a8ff-3830-4c2e-a55b-fd420905ec04.png');
+        url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
 
       background-size: cover, cover;
       background-repeat: no-repeat, no-repeat;
+
+      /* ✅ 기본은 둘 다 center */
       background-position: center, center;
+
+      /* 레이어별로 고정 */
       background-attachment: fixed, fixed;
 
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 22px;
+
+      /* 하단 고정 로고와 겹침 방지 */
       padding-bottom: 110px;
     }
 
@@ -43,8 +49,9 @@
       border-radius: 18px;
       box-shadow: 0 18px 55px rgba(15, 23, 42, 0.12);
       overflow: hidden;
+
       position: relative;
-      z-index: 20;
+      z-index: 20; /* 로고보다 위 */
     }
 
     .header{
@@ -447,6 +454,7 @@
       opacity: 0.92;
       z-index: 5;
       pointer-events: none;
+
       transition: opacity 0.35s ease, transform 0.35s ease;
       will-change: opacity, transform;
     }
@@ -467,6 +475,7 @@
 
     /* =========================
        8cm(80mm) 감열지 출력 설정
+       - 폰트 조금 키움(줄바꿈 최소화 위해 라벨폭 축소)
     ========================== */
     @media print {
       @page {
@@ -512,6 +521,7 @@
         text-align: center;
       }
 
+      /* ✅ 제목 폰트 업 */
       .modal-title{
         font-size: 15pt;
         color: #000;
@@ -521,11 +531,13 @@
 
       .modal-body{ padding: 3mm 0 0 0; }
 
+      /* ✅ 라벨폭 살짝 줄여서 값이 줄바꿈 안 나게 버팀 */
       .info-grid{
         grid-template-columns: 16mm 1fr;
         gap: 2.0mm 2.6mm;
       }
 
+      /* ✅ 라벨/값 폰트 업 */
       .info-label{
         font-size: 11pt;
         color: #444;
@@ -538,6 +550,7 @@
       }
       .info-value.mono{ word-break: break-word; }
 
+      /* ✅ 구분선 조금 더 은은하게 */
       .divider{
         margin: 1.6mm 0;
         height: 1px;
@@ -870,7 +883,7 @@
       const h = getHeaderLabels(currentMode);
 
       if (!records || records.length === 0){
-        resultDiv.innerHTML = `<div class="no-result">'${keyword}'에 대한 검색 결과가 없습니다.</div>`;
+        resultDiv.innerHTML = `<div class="no-result">‘${keyword}’에 대한 검색 결과가 없습니다.</div>`;
         return;
       }
 
