@@ -404,16 +404,6 @@
       th, td{ font-size: 14px; padding: 12px 10px; }
     }
 
-      .mobile-only{
-        display: none;
-    }
-
-@media (max-width: 480px){
-  .mobile-only{
-    display: block;
-      }
-    }
-
     /* ✅ 라벨 프린터(가로 12cm) 인쇄 스타일: 모달만 출력 */
     @media print {
       @page {
@@ -521,7 +511,7 @@
         <button class="btn-search" type="submit">확인/조회</button>
       </form>
 
-      <div class="hint mobile-only">※ 검색 결과는 좌우로 스크롤하여 전체 정보를 확인할 수 있습니다.</div>
+      <div class="hint">※ 검색 결과는 좌우로 스크롤하여 전체 정보를 확인할 수 있습니다.</div>
 
       <div id="result"></div>
     </div>
