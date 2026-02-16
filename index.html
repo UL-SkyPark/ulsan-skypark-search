@@ -615,7 +615,7 @@
 
   .print-footer img{
     content:url("ulsan_logo1.png");
-    height:14mm;          /* 기존보다 조금 크게 */
+    height:12mm;  
     max-width:65mm;
     width:auto;
     opacity:0.98;
@@ -696,12 +696,12 @@
 
         <div class="divider"></div>
 
-        <div class="info-label" id="labelType" style="display:none;">구분</div>
+        <div class="info-label" id="labelType" style="display:none;">시설명</div>
         <div class="info-value" id="modalType" style="display:none;"></div>
 
         <div class="divider" id="dividerAfterType" style="display:none;"></div>
 
-        <div class="info-label" id="labelLoc">봉안실</div>
+        <div class="info-label" id="labelLoc">봉안번호</div>
         <div class="info-value mono" id="modalLoc"></div>
 
         <div class="divider"></div>
@@ -851,7 +851,7 @@
         return { name:"고인명", loc:"안장번호", applicant:"신청자", date:"안장일자" };
       }
       if (mode === 'memorial'){
-        return { name:"고인명", loc:"봉안실", applicant:"신청자", date:"안치일자" };
+        return { name:"고인명", loc:"봉안번호", applicant:"신청자", date:"안치일자" };
       }
       return { name:"고인명", loc:"위치번호", applicant:"신청자", date:"안치일자" };
     }
@@ -921,7 +921,7 @@
           location:normalizeRoom(row[MEM_FIELDS.loc] || ""),
           applicant:maskName(row[MEM_FIELDS.applicant]),
           date:row[MEM_FIELDS.date] || "",
-          locationLabel:"봉안실",
+          locationLabel:"봉안번호",
           dateLabel:"안치일자"
         }));
     }
