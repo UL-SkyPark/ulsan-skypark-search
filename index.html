@@ -12,9 +12,9 @@
       min-height: 100vh;
       text-align: center;
 
-      /* 배경 유지 + 가독성용 오버레이 */
+      /* ✅ 배경이 더 잘 보이도록 오버레이 투명도 낮춤(0.88 -> 0.55) */
       background-image:
-        linear-gradient(rgba(245,247,250,0.88), rgba(245,247,250,0.88)),
+        linear-gradient(rgba(245,247,250,0.55), rgba(245,247,250,0.55)),
         url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/ddc34a29-edb7-477f-afa3-d0fc7c1dfd68.png');
       background-size: cover;
       background-position: center;
@@ -27,10 +27,9 @@
       padding: 22px;
     }
 
-    /* ===== 키오스크 카드 ===== */
     main{
       width: min(1080px, 100%);
-      background: rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.88);
       border: 1px solid rgba(31,58,90,0.10);
       border-radius: 18px;
       box-shadow: 0 18px 55px rgba(15, 23, 42, 0.12);
@@ -40,7 +39,7 @@
     .header{
       padding: 26px 26px 14px;
       border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(250,252,255,1));
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,252,255,0.92));
     }
 
     .title{
@@ -58,11 +57,9 @@
       font-weight: 700;
     }
 
-    /* ===== 탭(키오스크 스타일) ===== */
     .tabs{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0;
       padding: 0 26px;
       margin-top: 16px;
     }
@@ -84,17 +81,11 @@
       transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .tab-btn + .tab-btn{
-      border-left: none;
-    }
+    .tab-btn + .tab-btn{ border-left: none; }
+    .tab-btn:hover{ background: rgba(226, 232, 240, 1); }
 
-    .tab-btn:hover{
-      background: rgba(226, 232, 240, 1);
-    }
-
-    /* 선택 탭: 하단 파란 밑줄 + 흰 바탕 */
     .tab-btn.active{
-      background: #ffffff;
+      background: rgba(255,255,255,0.98);
       color: #0d47a1;
       z-index: 2;
     }
@@ -109,25 +100,18 @@
       background: #1976D2;
     }
 
-    /* ===== 본문 ===== */
     .content{
       padding: 18px 26px 26px;
-      background: #ffffff;
+      background: rgba(255,255,255,0.92);
       border-top: 1px solid rgba(15, 23, 42, 0.08);
     }
 
-    /* 키오스크 입력영역 */
     .search-box{
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 12px;
       align-items: center;
       margin-top: 2px;
-    }
-
-    .input-wrap{
-      position: relative;
-      width: 100%;
     }
 
     .input-label{
@@ -146,7 +130,7 @@
       font-weight: 800;
       border-radius: 14px;
       border: 2px solid rgba(15, 23, 42, 0.12);
-      background: #ffffff;
+      background: rgba(255,255,255,0.98);
       outline: none;
       box-shadow: 0 6px 18px rgba(15,23,42,0.06);
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -177,7 +161,6 @@
       box-shadow: 0 6px 18px rgba(21, 101, 192, 0.22);
     }
 
-    /* 안내 문구(필요시) */
     .hint{
       margin-top: 12px;
       text-align: left;
@@ -186,13 +169,12 @@
       font-weight: 700;
     }
 
-    /* 결과 영역 */
     #result{
       display: none;
       margin-top: 16px;
       border-radius: 14px;
       border: 1px solid rgba(15, 23, 42, 0.10);
-      background: #ffffff;
+      background: rgba(255,255,255,0.95);
       box-shadow: 0 12px 34px rgba(15, 23, 42, 0.10);
       overflow: hidden;
       text-align: left;
@@ -241,30 +223,25 @@
       font-weight: 800;
       text-align: center;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     th{
       position: sticky;
       top: 0;
-      background: #ffffff;
+      background: rgba(255,255,255,0.98);
       z-index: 5;
       font-weight: 900;
       color: #1f3a5a;
       border-bottom: 2px solid rgba(25,118,210,0.25);
     }
 
-    td{
-      color: #0f172a;
-    }
-
     tbody tr{
       cursor: pointer;
       transition: background 0.12s ease;
     }
-
-    tbody tr:hover{
-      background: rgba(227, 242, 253, 0.65);
-    }
+    tbody tr:hover{ background: rgba(227, 242, 253, 0.65); }
 
     .col-loc{
       font-family: "Malgun Gothic", "맑은 고딕", monospace;
@@ -386,15 +363,15 @@
       margin: 6px 0;
     }
 
-    /* PC에서만 출력 버튼 */
     @media (min-width: 769px){
       .btn-print { display: inline-block; }
     }
 
-    /* 모바일 키오스크 대응 */
+    /* ✅ 모바일에서 자연장지 안장번호가 길지 않게: " - " 제거해서 잔디장-1-5-001 형태 유지 */
     @media (max-width: 480px){
       body{ padding: 12px; }
 
+      main{ background: rgba(255,255,255,0.86); }
       .header{ padding: 20px 18px 12px; }
       .title{ font-size: 26px; }
 
@@ -402,11 +379,17 @@
       .tab-btn{ font-size: 15px; padding: 14px 8px; }
       .tab-btn.active::after{ left: 22%; right: 22%; height: 5px; bottom: 7px; }
 
-      .content{ padding: 14px 18px 18px; }
+      .content{ padding: 14px 18px 18px; background: rgba(255,255,255,0.90); }
       .search-box{ grid-template-columns: 1fr; }
       .btn-search{ width: 100%; }
 
       th, td{ font-size: 14px; padding: 12px 10px; }
+
+      /* 자연장지일 때 안장번호 열에 더 공간 주기(모바일) */
+      .is-nature th:nth-child(2), .is-nature td:nth-child(2){ width: 46% !important; }
+      .is-nature th:nth-child(1), .is-nature td:nth-child(1){ width: 18% !important; }
+      .is-nature th:nth-child(3), .is-nature td:nth-child(3){ width: 16% !important; }
+      .is-nature th:nth-child(4), .is-nature td:nth-child(4){ width: 20% !important; }
     }
   </style>
 </head>
@@ -417,7 +400,6 @@
       <div class="title">울산하늘공원 고인 검색</div>
       <div class="subnote">고인명을 입력한 뒤 검색을 눌러주세요.</div>
 
-      <!-- 제목과 검색창 사이 탭 -->
       <div class="tabs" role="tablist" aria-label="검색 구분">
         <button type="button" class="tab-btn active" data-mode="all" onclick="setMode('all')">전체</button>
         <button type="button" class="tab-btn" data-mode="memorial" onclick="setMode('memorial')">추모의집</button>
@@ -441,7 +423,6 @@
     </div>
   </main>
 
-  <!-- 상세 모달 -->
   <dialog id="detailModal" class="detail-modal">
     <div class="modal-header">
       <div class="modal-title-row">
@@ -483,12 +464,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
-    /* =========================
-       데이터 소스 / 컬럼 매핑
-       ========================= */
     const SOURCES = {
-      memorial: 'data/deceased_data.xlsx',  // 추모의집
-      nature:   'data/nature_data.xlsx'     // 자연장지
+      memorial: 'data/deceased_data.xlsx',
+      nature:   'data/nature_data.xlsx'
     };
 
     const MEM_FIELDS = {
@@ -499,7 +477,6 @@
       returned: "반환일자"
     };
 
-    // 자연장지 엑셀 컬럼: 사망자명 / 자연장번호 / 신청자명 / 안치일자
     const NAT_FIELDS = {
       name: "사망자명",
       loc: "자연장번호",
@@ -507,16 +484,11 @@
       date: "안치일자"
     };
 
-    /* =========================
-       상태 / 캐시 / 지연 로딩
-       ========================= */
     let currentMode = 'all';
-
     let excelDataMemorial = [];
     let excelDataNature = [];
     let loadPromiseMemorial = null;
     let loadPromiseNature = null;
-
     let lastFound = [];
 
     function setMode(mode){
@@ -558,32 +530,21 @@
       await loadPromiseNature;
     }
 
-    // 검색 시점 지연 로딩
     async function ensureDataForSearch(mode){
       if (mode === 'memorial'){
         await ensureMemorialLoaded();
-        return { partialFail: [] };
+        return;
       }
       if (mode === 'nature'){
         await ensureNatureLoaded();
-        return { partialFail: [] };
+        return;
       }
-
-      const partialFail = [];
-      await Promise.all([
-        ensureMemorialLoaded().catch(() => partialFail.push('추모의집')),
-        ensureNatureLoaded().catch(() => partialFail.push('자연장지'))
-      ]);
-
+      await Promise.all([ensureMemorialLoaded(), ensureNatureLoaded()]);
       if (excelDataMemorial.length === 0 && excelDataNature.length === 0){
         throw new Error('전체 데이터 로딩 실패');
       }
-      return { partialFail };
     }
 
-    /* =========================
-       유틸
-       ========================= */
     function normalizeRoom(raw) {
       if (!raw) return "";
       const s = String(raw).replace(/\s+/g, "");
@@ -596,11 +557,17 @@
       return String(raw);
     }
 
-    // 자연장번호: "잔디장-1-1-001" → "잔디장 - 1 - 1 - 001"
-    function normalizeNatureNo(raw){
+    /* ✅ PC/모달은 보기 좋게 " - "로, 모바일 테이블은 원문 하이픈 형태로 */
+    function normalizeNatureNoForModal(raw){
       if (!raw) return "";
       const s = String(raw).trim();
       return s.split("-").map(p => p.trim()).filter(Boolean).join(" - ");
+    }
+    function normalizeNatureNoForTable(raw){
+      if (!raw) return "";
+      const s = String(raw).trim();
+      // 공백 하이픈 형태가 들어와도 "잔디장-1-5-001"로 정리
+      return s.split("-").map(p => p.trim()).filter(Boolean).join("-");
     }
 
     function maskName(name) {
@@ -624,7 +591,7 @@
 
     function openModal(record) {
       document.getElementById("modalName").textContent = record.name || "";
-      document.getElementById("modalLoc").textContent = record.location || "";
+      document.getElementById("modalLoc").textContent = record.locationModal || record.location || "";
       document.getElementById("modalApplicant").textContent = record.applicant || "";
       document.getElementById("modalDate").textContent = record.date || "";
 
@@ -647,11 +614,9 @@
       table.addEventListener("click", function(e) {
         const tr = e.target.closest("tr[data-idx]");
         if (!tr) return;
-
         const idx = Number(tr.dataset.idx);
         const rec = lastFound[idx];
         if (!rec) return;
-
         openModal(rec);
       });
     }
@@ -664,9 +629,6 @@
       if (!isInDialog) this.close();
     });
 
-    /* =========================
-       검색
-       ========================= */
     function searchMemorial(keyword){
       return excelDataMemorial
         .filter(row =>
@@ -692,16 +654,22 @@
           row[NAT_FIELDS.name] &&
           String(row[NAT_FIELDS.name]).includes(keyword)
         )
-        .map(row => ({
-          type: 'nature',
-          typeLabel: '자연장지',
-          name: row[NAT_FIELDS.name] || "",
-          location: normalizeNatureNo(row[NAT_FIELDS.loc] || ""),
-          applicant: maskName(row[NAT_FIELDS.applicant]),
-          date: row[NAT_FIELDS.date] || "",
-          locationLabel: "안장번호",
-          dateLabel: "안장일자"
-        }));
+        .map(row => {
+          const raw = row[NAT_FIELDS.loc] || "";
+          return {
+            type: 'nature',
+            typeLabel: '자연장지',
+            name: row[NAT_FIELDS.name] || "",
+            /* ✅ 테이블 표출은 "잔디장-1-5-001" 형태(공백 없이) */
+            location: normalizeNatureNoForTable(raw),
+            /* ✅ 모달은 보기 좋게 " - " 형태(유지하고 싶으면) */
+            locationModal: normalizeNatureNoForModal(raw),
+            applicant: maskName(row[NAT_FIELDS.applicant]),
+            date: row[NAT_FIELDS.date] || "",
+            locationLabel: "안장번호",
+            dateLabel: "안장일자"
+          };
+        });
     }
 
     function renderResults(records, keyword){
@@ -716,13 +684,16 @@
       const titleLeft = `${(currentMode==='all'?'전체':(currentMode==='memorial'?'추모의집':'자연장지'))} 검색 결과 ${records.length}건`;
       const titleRight = `행을 누르면 상세 정보`;
 
+      /* ✅ 자연장지일 때 모바일 열비율 조정용 클래스 부여 */
+      const tableClass = (currentMode === 'nature') ? 'is-nature' : '';
+
       let html = `
         <div class="result-head">
           <div class="result-title">${titleLeft}</div>
           <div class="result-sub">${titleRight}</div>
         </div>
         <div class="table-wrapper">
-          <table>
+          <table class="${tableClass}">
             <thead>
               <tr>
                 <th style="width:20%">${h.name}</th>
@@ -738,7 +709,7 @@
         html += `
           <tr data-idx="${idx}">
             <td>${rec.name}</td>
-            <td class="col-loc">${rec.location}</td>
+            <td class="col-loc" title="${rec.location}">${rec.location}</td>
             <td>${rec.applicant}</td>
             <td>${rec.date}</td>
           </tr>
@@ -755,7 +726,6 @@
 
       const keyword = document.getElementById("keyword").value.trim();
       const resultDiv = document.getElementById("result");
-
       if (!keyword) return;
 
       resultDiv.style.display = "block";
@@ -786,9 +756,6 @@
       resultDiv.innerHTML = "";
       lastFound = [];
     }
-
-    // 첫 화면용 리셋(요청 시에만 쓰고 싶으면 버튼 추가 가능)
-    // function resetView(){ ... }
   </script>
 </body>
 </html>
