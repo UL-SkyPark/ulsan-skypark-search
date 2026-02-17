@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <title>추모의집 봉안현황 조회</title>
+
+  <style>
+    :root{
+      --page-bg: #f6f2ec;
+      --panel-bg: #fbf8f4;
+      --panel-border: #e3dbd1;
+      --text: #2f2a25;
+      --muted: #6c5f56;
+
+      --cell-w: 58px;
+      --cell-h: 48px;
+      --cell-border: #d8cfc6;
+
+      --bg-empty: #f1ede8;
+      --bg-used:  #e9e3dc;
+      --bg-ret:   #f1ede8;
+
+      --next-red: #b43a3a;
+      --next-red-strong: #9b2525;
+
+      --badge-bg: rgba(247, 214, 120, 0.18);
+      --badge-border: rgba(223, 175, 70, 0.18);
+    }
+
+    body{
+      margin:16px;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+    }
+
+    /* ✅ 제목 다시 표시 */
+    h1{
+      margin: 0 0 10px;
+      font-size: 22px;
+      font-weight: 950;
+      letter-spacing: .2px;
+      line-height: 1.15;
+    }
+
+    .panel{
+      padding:12px;
+      border:1px solid var(--panel-border);
+      border-radius:14px;
+      background: var(--panel-bg);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+      margin-bottom: 10px;
+    }
+    .panel.sticky{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(6px);
+      padding-top: calc(10px + env(safe-area-inset-top, 0px));
+      padding-bottom: 10px;
+    }
+
+    .panel-top{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    /* ✅ 다음 봉안 예정: 가로로 나란히 + 상하폭 최소 */
+    .next-wrap{
+      display:none;
+      flex: 1 1 680px;
+      max-width: 980px;
+
+      padding:8px 10px;
+      border:1px solid rgba(180,58,58,0.22);
+      background: rgba(180,58,58,0.06);
+      border-radius: 14px;
+      user-select:none;
+
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width: 320px;
+    }
+    .next-head{
+      font-weight: 950;
+      font-size: 12px;
+      letter-spacing: .15px;
+      color: rgba(155,37,37,0.88);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .next-head::before{
+      content:"";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--next-red);
+      opacity: .9;
+      flex: 0 0 auto;
+    }
+
+    .next-rows{
+      display:grid;
+      grid-template-columns: 1fr 1fr; /* ✅ 부부/개인 나란히 */
+      gap:8px;
+    }
+
+    .next-line{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:nowrap;
+
+      padding:7px 9px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.62);
+      border:1px solid rgba(180,58,58,0.14);
+
+      min-height: 40px;
+      overflow:hidden;
+    }
+    .next-label{
+      font-weight: 950;
+      color: var(--next-red-strong);
+      white-space: nowrap;
+      flex: 0 0 auto;
+      font-size: 13px;
+    }
+    .next-text{
+      font-weight: 950;
+      font-size: 14px;
+      color: #6b1f1f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .2px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      flex: 1 1 auto;
+    }
+    .next-move-btn{
+      border:1px solid rgba(180,58,58,0.28);
+      background: rgba(255,255,255,0.84);
+      color: var(--next-red-strong);
+      border-radius: 999px;
+      padding:9px 10px;
+      cursor:pointer;
+      font-weight: 950;
+      white-space: nowrap;
+      min-height: 34px;
+      flex: 0 0 auto;
+      touch-action: manipulation;
+    }
+    .next-move-btn:hover{ background: rgba(255,255,255,0.98); }
+    .next-move-btn:disabled{ opacity: .45; cursor: not-allowed; }
+
+    .search{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      margin-left:auto;
+      flex-wrap:wrap;
+    }
+    .search input{
+      width: 200px;
+      max-width: 56vw;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border:1px solid var(--panel-border);
+      background:#fff;
+      font-size: 16px; /* ✅ 모바일 확대 방지 */
+      color: var(--text);
+      outline: none;
+    }
+    .search input::placeholder{ color:#9a8f86; }
+
+    button{
+      border: 1px solid var(--panel-border);
+      background: #fff;
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      color: var(--text);
+      font-size: 15px;
+      white-space: nowrap;
+      min-height: 40px;
+      touch-action: manipulation;
+    }
+    button:hover{ background:#f4f0eb; }
+
+    .tabs{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap:8px;
+      margin-top: 10px;
+    }
+    .tab-btn{
+      width:100%;
+      padding: 10px 10px;
+      border-radius: 999px;
+      border:1px solid var(--panel-border);
+      background:#fff;
+      cursor:pointer;
+      font-weight: 950;
+      color:#3a332e;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-align:center;
+      min-height: 42px;
+    }
+    .tab-btn.active{
+      background:#f1ede8;
+      border-color:#d8cfc6;
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.03) inset;
+    }
+    .tab-dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--next-red);
+      display:inline-block;
+      opacity: .82;
+      flex: 0 0 auto;
+    }
+
+    .room-btns{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .room-btn{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border:1px solid var(--panel-border);
+      background:#fff;
+      cursor:pointer;
+      font-weight: 950;
+      color:#3a332e;
+      min-height: 40px;
+    }
+    .room-btn.active{
+      background:#efe8df;
+      border-color:#d8cfc6;
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.03) inset;
+    }
+    .room-btn.next-room{
+      color: var(--next-red-strong);
+      border-color: rgba(180,58,58,0.26);
+      background: rgba(180,58,58,0.05);
+    }
+
+    .legend{
+      display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+      margin: 8px 0 10px;
+      padding: 12px;
+      border:1px solid var(--panel-border);
+      border-radius:14px;
+      background: var(--panel-bg);
+    }
+    .legend-item{ display:inline-flex; align-items:center; gap:8px; font-size: 13px; color: var(--text); }
+    .legend-icon{
+      width:20px; height:20px;
+      object-fit: contain;
+      opacity: .58;
+      filter: saturate(.72) contrast(.95) brightness(.98);
+    }
+    .legend-box{
+      width:20px; height:20px;
+      border-radius:8px;
+      border:1px solid var(--cell-border);
+      background: var(--bg-empty);
+      box-sizing:border-box;
+    }
+
+    .msg{
+      margin: 8px 0 10px;
+      font-size: 12px;
+      color: var(--muted);
+      display:none;
+    }
+    .msg.error{ color:#b00020; }
+
+    .scroll-x{
+      overflow-x:auto;
+      padding-bottom: 10px;
+      position: relative;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    .room{ display:flex; flex-direction:column; }
+
+    .row{
+      display:flex;
+      gap:0;
+      align-items:stretch;
+      position: relative;
+    }
+
+    /* ✅ 단 라벨 sticky 안정(특히 열 많은 실) */
+    .dan-label{
+      width: 58px;
+      flex: 0 0 auto;
+
+      position: sticky;
+      left: 0;
+      z-index: 9999;
+
+      background: var(--page-bg);
+      border-right: 1px solid rgba(0,0,0,0.06);
+
+      align-self: stretch;
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-end;
+
+      padding: 8px 8px 0 0;
+      font-weight: 950;
+      color: #3b352f;
+      font-size: 13px;
+      box-shadow: 6px 0 10px rgba(0,0,0,0.03);
+      box-sizing: border-box;
+      min-height: calc(var(--cell-h) + 6px);
+    }
+
+    .grid{
+      display:grid;
+      gap: 5px;
+      padding: 1px 0;
+    }
+
+    .niche{
+      width: var(--cell-w);
+      height: var(--cell-h);
+      border: 1px solid var(--cell-border);
+      border-radius: 11px;
+      box-sizing: border-box;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      overflow:hidden;
+      user-select:none;
+      position: relative;
+    }
+
+    .empty{ background: var(--bg-empty); cursor: default; }
+    .returned{ background: var(--bg-ret); cursor: default; }
+    .used{ background: var(--bg-used); cursor: pointer; }
+    .used:hover { outline: 2px solid rgba(0,0,0,0.09); outline-offset: 0px; }
+
+    /* ✅ 마지막 열 “빈칸”용 (그리드 깨짐 방지) */
+    .blank{
+      background: transparent;
+      border-color: transparent;
+    }
+    .blank .niche-top,
+    .blank .niche-no{ display:none; }
+
+    .niche-top{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 5px 5px 0 5px;
+      min-height: 24px;
+    }
+
+    .icon-bg{
+      width: 26px; height: 26px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-sizing:border-box;
+    }
+    .icon-bg.used{
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+    }
+
+    .state-icon{
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      opacity: .56;
+      filter: saturate(.70) contrast(.95) brightness(1.0);
+      -webkit-user-drag: none;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .niche-no{
+      flex: 0 0 auto;
+      font-size: 12px;
+      line-height: 14px;
+      padding: 3px 5px 4px;
+      text-align:center;
+      border-top: 1px solid rgba(0,0,0,0.10);
+      background: rgba(255,255,255,0.64);
+      color:#2b2520;
+      letter-spacing: 0.2px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .next-slot{
+      outline: 3px solid var(--next-red);
+      outline-offset: -3px;
+    }
+
+    /* ✅ 검색 이동 후 붉은 강조 */
+    @keyframes flashRed {
+      0%   { box-shadow: 0 0 0 0 rgba(180,58,58,0.00); outline: 0px solid rgba(180,58,58,0.00); transform: scale(1); }
+      20%  { box-shadow: 0 0 0 6px rgba(180,58,58,0.20); outline: 4px solid rgba(180,58,58,0.95); transform: scale(1.02); }
+      55%  { box-shadow: 0 0 0 10px rgba(180,58,58,0.14); outline: 4px solid rgba(180,58,58,0.90); transform: scale(1.02); }
+      100% { box-shadow: 0 0 0 0 rgba(180,58,58,0.00); outline: 0px solid rgba(180,58,58,0.00); transform: scale(1); }
+    }
+    .flash { animation: flashRed 1.15s ease-in-out 0s 2; }
+
+    .modal-backdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,0.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index: 9999;
+    }
+    .modal{
+      width:min(380px, 92vw);
+      background:#fff;
+      border-radius:16px;
+      border:1px solid var(--panel-border);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      overflow:hidden;
+    }
+    .modal-header{
+      padding:14px 14px;
+      border-bottom:1px solid #eee;
+      background: #faf7f2;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+    }
+    .modal-title{ font-weight:900; font-size:20px; letter-spacing:0.2px; }
+    .modal-close{
+      border:1px solid var(--panel-border);
+      background:#fff;
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-size:14px;
+    }
+    .modal-body{
+      padding:14px;
+      font-size:18px;
+      color:#1f1b17;
+      max-height: min(420px, 72vh);
+      overflow:auto;
+    }
+    .kv{
+      display:grid;
+      grid-template-columns: 86px 1fr;
+      gap:12px 12px;
+      align-items:start;
+    }
+    .k{ color: var(--muted); font-weight:900; font-size:14px; padding-top:2px; }
+    .v{ font-weight:900; font-size:18px; white-space: pre-wrap; word-break: break-word; }
+    .list { margin:0; padding-left: 18px; }
+    .list li { margin: 6px 0; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-variant-numeric: tabular-nums; }
+
+    /* ✅ 모바일: 다음 봉안(2칸→1칸) */
+    @media (max-width: 520px){
+      body{ margin:10px; }
+      h1{ font-size: 20px; margin-bottom: 8px; }
+      .panel{ padding:10px; }
+      .tabs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .search input{ width: 170px; max-width: 60vw; }
+      .next-rows{ grid-template-columns: 1fr; } /* ✅ 모바일에서는 세로 */
+      :root{ --cell-w: 54px; --cell-h: 46px; }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+
+<body>
+  <h1>추모의집 봉안현황 조회</h1>
+
+  <div class="panel sticky" id="topPanel">
+    <div class="panel-top">
+      <div id="nextWrap" class="next-wrap" aria-label="다음 봉안 예정">
+        <div class="next-head">다음 봉안 예정</div>
+
+        <div class="next-rows">
+          <div class="next-line">
+            <span class="next-label">부부단:</span>
+            <span class="next-text" id="nextCoupleText">—</span>
+            <button id="nextCoupleMoveBtn" class="next-move-btn" type="button">이동</button>
+          </div>
+
+          <div class="next-line">
+            <span class="next-label">개인단:</span>
+            <span class="next-text" id="nextPersonalText">—</span>
+            <button id="nextPersonalMoveBtn" class="next-move-btn" type="button">이동</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="search">
+        <input id="searchInput" type="text" inputmode="numeric" placeholder="안치번호(2~5자리)" />
+        <button id="searchBtn" type="button">이동</button>
+        <button id="reloadBtn" type="button">새로고침</button>
+      </div>
+    </div>
+
+    <div id="tabBar" class="tabs"></div>
+    <div id="roomBtns" class="room-btns"></div>
+  </div>
+
+  <div class="legend" id="legend"></div>
+  <div id="msg" class="msg"></div>
+
+  <div class="scroll-x" id="scrollX">
+    <div id="room" class="room"></div>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">상세</div>
+        <button class="modal-close" id="modalCloseBtn">닫기</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const EXCEL_URL = "./data/bongan.xlsx";
+
+    const ICONS = {
+      single: "./images/solo.png",
+      couple: "./images/couple.png",
+      returned: "./images/arrow.png"
+    };
+
+    const STARTS = {
+      "01실": 1,    "02실": 217,  "03실": 433,  "04실": 649,  "05실": 865,
+      "06실": 1081, "07실": 1279, "08실": 1477, "09실": 1693,
+
+      "10실": 2062,  "11실": 2449,  "12실": 2836,  "13실": 3223,  "14실": 3610,
+      "15실": 3997,  "16실": 4384,  "17실": 4771,  "18실": 5158,  "19실": 5545,
+      "20실": 5932,  "21실": 6319,  "22실": 6706,  "23실": 7093,  "24실": 7480,
+      "25실": 7867,  "26실": 8254,  "27실": 8641,  "28실": 9028,  "29실": 9415,
+      "30실": 9802,  "31실": 10189, "32실": 10576, "33실": 10963, "34실": 11350,
+      "35실": 11737, "36실": 12394, "37실": 12642, "38실": 12930, "39실": 13202,
+      "40실": 13474, "41실": 13762, "42실": 14034, "43실": 14306, "44실": 14594,
+      "45실": 14866, "46실": 15138, "47실": 15410, "48실": 15570, "49실": 15954,
+      "50실": 16338, "51실": 16722, "52실": 17066, "53실": 17426, "54실": 17786,
+      "55실": 18146, "56실": 18506, "57실": 18866, "58실": 19570, "59실": 19890,
+      "60실": 20394, "61실": 21078, "62실": 21726
+    };
+    const END_OVERRIDE = { "62실": 22193 };
+
+    const $ = (id) => document.getElementById(id);
+    function pad5(n){ return String(n).padStart(5,"0"); }
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    }
+    function setMsg(text, kind="info"){
+      const el = $("msg");
+      if (!text){
+        el.textContent = "";
+        el.style.display = "none";
+        el.classList.remove("error");
+        return;
+      }
+      el.textContent = text;
+      el.style.display = "block";
+      el.classList.toggle("error", kind === "error");
+    }
+    function roomStr(n){ return String(n).padStart(2,"0") + "실"; }
+    function roomsRange(a,b){ const out=[]; for(let i=a;i<=b;i++) out.push(roomStr(i)); return out; }
+
+    // ===== ROOM_CFG =====
+    const itemsByStart = Object.entries(STARTS)
+      .map(([room, start]) => ({ room, start, roomNum: parseInt(room.replace("실",""),10) }))
+      .sort((a,b)=>a.start-b.start);
+
+    const ROOM_CFG = {};
+    const tmp = [];
+    for (let i=0; i<itemsByStart.length; i++){
+      const cur = itemsByStart[i];
+      const next = itemsByStart[i+1];
+      let end = next ? (next.start - 1) : (END_OVERRIDE[cur.room] ?? (cur.start + 215));
+      const count = end - cur.start + 1;
+
+      const div8 = (count % 8 === 0);
+      const div9 = (count % 9 === 0);
+
+      let dans = null;
+      if (cur.roomNum <= 9) dans = 9;
+      else if (div9 && !div8) dans = 9;
+      else if (div8 && !div9) dans = 8;
+      else if (div8 && div9) dans = null;
+
+      tmp.push({ ...cur, end, count, dans });
+    }
+    function nearestFixedDans(idx, dir){
+      for (let j = idx + dir; j >= 0 && j < tmp.length; j += dir){
+        if (tmp[j].dans) return tmp[j].dans;
+      }
+      return null;
+    }
+    for (let i=0; i<tmp.length; i++){
+      if (!tmp[i].dans){
+        const prev = nearestFixedDans(i, -1);
+        const next = nearestFixedDans(i, +1);
+        tmp[i].dans = (prev && next && prev === next) ? prev : (prev || next || 9);
+      }
+
+      /* ✅ 핵심 수정: cols를 무조건 정수로(35실 같은 “열 많은 방”에서 그리드 깨짐 방지) */
+      const cols = Math.ceil(tmp[i].count / tmp[i].dans);
+
+      ROOM_CFG[tmp[i].room] = {
+        room: tmp[i].room,
+        roomNum: tmp[i].roomNum,
+        start: tmp[i].start,
+        end: tmp[i].end,
+        count: tmp[i].count,
+        dans: tmp[i].dans,
+        cols
+      };
+    }
+    const ROOM_LIST = Object.values(ROOM_CFG).sort((a,b)=>a.start-b.start);
+
+    // ===== 탭 =====
+    const COUPLE_ROOMS = roomsRange(1,9);
+    const PERSONAL1_ROOMS = [...roomsRange(10,18), roomStr(61), roomStr(62)];
+    const PERSONAL2A_ROOMS = roomsRange(19,38);
+    const PERSONAL2B_ROOMS = roomsRange(39,60);
+
+    const TAB_DEFS = [
+      { id:"couple", label:"부부단", rooms: COUPLE_ROOMS },
+      { id:"p1", label:"개인단 1층", rooms: PERSONAL1_ROOMS },
+      { id:"p2a", label:"개인단 2층(19~38)", rooms: PERSONAL2A_ROOMS },
+      { id:"p2b", label:"개인단 2층(39~59)", rooms: PERSONAL2B_ROOMS.filter(r => (parseInt(r,10) <= 59)) }
+    ];
+    const TAB_ROOM_SETS = Object.fromEntries(TAB_DEFS.map(t => [t.id, new Set(t.rooms)]));
+
+    function tabForRoom(room){
+      const n = ROOM_CFG[room]?.roomNum ?? 0;
+      if (n <= 9) return "couple";
+      if (TAB_ROOM_SETS.p1.has(room)) return "p1";
+      if (TAB_ROOM_SETS.p2a.has(room)) return "p2a";
+      if (TAB_ROOM_SETS.p2b.has(room)) return "p2b";
+      return "p1";
+    }
+
+    // ===== 데이터 =====
+    const infoByRoom = {};
+    for (const room of Object.keys(ROOM_CFG)) infoByRoom[room] = {};
+
+    let activeTabId = "couple";
+    let currentRoom = "01실";
+
+    let nextCouple = null;
+    let nextPersonal = null;
+
+    // ===== 범례 =====
+    function buildLegend(){
+      $("legend").innerHTML = `
+        <span class="legend-item"><span class="legend-box" aria-hidden="true"></span><b>사용가능</b></span>
+        <span class="legend-item"><img class="legend-icon" src="${ICONS.single}" alt="개인단"><b>개인단</b></span>
+        <span class="legend-item"><img class="legend-icon" src="${ICONS.couple}" alt="부부단"><b>부부단</b></span>
+        <span class="legend-item"><img class="legend-icon" src="${ICONS.returned}" alt="반출"><b>반출</b></span>
+        <span class="legend-item">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--next-red);border-radius:8px;"></span>
+          <b>다음자리</b>
+        </span>
+      `;
+    }
+
+    // ===== UI =====
+    function renderTabs(){
+      const bar = $("tabBar");
+      bar.innerHTML = "";
+      for (const t of TAB_DEFS){
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "tab-btn" + (t.id === activeTabId ? " active" : "");
+
+        const hasDot =
+          (nextCouple?.room && TAB_ROOM_SETS[t.id]?.has(nextCouple.room)) ||
+          (nextPersonal?.room && TAB_ROOM_SETS[t.id]?.has(nextPersonal.room));
+
+        btn.innerHTML = `${escapeHtml(t.label)}${hasDot ? ' <span class="tab-dot"></span>' : ''}`;
+        btn.addEventListener("click", () => setTab(t.id));
+        bar.appendChild(btn);
+      }
+    }
+
+    function renderRoomButtons(){
+      const wrap = $("roomBtns");
+      wrap.innerHTML = "";
+
+      const tab = TAB_DEFS.find(x => x.id === activeTabId);
+      const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
+
+      for (const room of rooms){
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "room-btn" + (room === currentRoom ? " active" : "");
+
+        if (room === nextCouple?.room || room === nextPersonal?.room){
+          btn.classList.add("next-room");
+        }
+
+        btn.textContent = room;
+        btn.addEventListener("click", () => setRoom(room, true));
+        wrap.appendChild(btn);
+      }
+    }
+
+    function setTab(tabId){
+      if (!TAB_DEFS.some(t => t.id === tabId)) return;
+      activeTabId = tabId;
+
+      const tab = TAB_DEFS.find(t => t.id === activeTabId);
+      const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
+
+      if (!rooms.includes(currentRoom)){
+        const first = rooms[0];
+        if (first) { setRoom(first, true, { skipTabSync:true }); return; }
+      }
+
+      renderTabs();
+      renderRoomButtons();
+      renderRoom(true);
+      saveState();
+    }
+
+    function setRoom(room, scrollNext, opts = {}){
+      if (!ROOM_CFG[room]) return;
+
+      if (!opts.skipTabSync){
+        const needTab = tabForRoom(room);
+        if (needTab !== activeTabId) activeTabId = needTab;
+      }
+
+      currentRoom = room;
+
+      renderTabs();
+      renderRoomButtons();
+      renderRoom(!!scrollNext);
+
+      saveState();
+    }
+
+    function saveState(){
+      try{
+        localStorage.setItem("memorial_ui_state", JSON.stringify({ tab: activeTabId, room: currentRoom }));
+      }catch(e){}
+    }
+    function restoreState(){
+      try{
+        const raw = localStorage.getItem("memorial_ui_state");
+        if (!raw) return;
+        const s = JSON.parse(raw);
+        if (s?.tab && TAB_DEFS.some(t=>t.id===s.tab)) activeTabId = s.tab;
+        if (s?.room && ROOM_CFG[s.room]) currentRoom = s.room;
+      }catch(e){}
+    }
+
+    function danOfNo(cfg, noStr){
+      const n = parseInt(noStr, 10);
+      if (!Number.isFinite(n)) return null;
+      if (n < cfg.start || n > cfg.end) return null;
+      const idx = n - cfg.start;
+      const r = idx % cfg.dans;
+      return cfg.dans - r;
+    }
+
+    function findNextAvailableNo(cfg){
+      for (let n = cfg.start; n <= cfg.end; n++){
+        const noStr = pad5(n);
+        const rec = infoByRoom[cfg.room][noStr];
+        if (rec?.returned) continue;
+        if (rec?.status === "used") continue;
+        return noStr;
+      }
+      return null;
+    }
+
+    function scrollNextSlotIntoCenter(){
+      const el = document.querySelector(`.niche.next-slot[data-room="${currentRoom}"]`);
+      if (!el) return;
+      el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
+    }
+
+    function isCoupleRoom(room){ return (ROOM_CFG[room]?.roomNum ?? 99) <= 9; }
+
+    function iconHtml(cfg, returned, used){
+      if (returned){
+        return `<div class="icon-bg"><img class="state-icon" src="${ICONS.returned}" alt="반출"></div>`;
+      }
+      if (!used) return ``;
+
+      const src = isCoupleRoom(cfg.room) ? ICONS.couple : ICONS.single;
+      const alt = isCoupleRoom(cfg.room) ? "부부단" : "개인단";
+      return `<div class="icon-bg used"><img class="state-icon" src="${src}" alt="${alt}"></div>`;
+    }
+
+    function renderRoom(autoScrollNext){
+      const cfg = ROOM_CFG[currentRoom];
+      if (!cfg) return;
+
+      setMsg("");
+
+      const host = $("room");
+      host.innerHTML = "";
+
+      const nextNo = findNextAvailableNo(cfg);
+
+      for (let r=0; r<cfg.dans; r++){
+        const dan = cfg.dans - r;
+
+        const row = document.createElement("div");
+        row.className = "row";
+
+        const label = document.createElement("div");
+        label.className = "dan-label";
+        label.textContent = `${dan}단`;
+        row.appendChild(label);
+
+        const grid = document.createElement("div");
+        grid.className = "grid";
+        grid.style.gridTemplateColumns = `repeat(${cfg.cols}, var(--cell-w))`;
+
+        for (let c=0; c<cfg.cols; c++){
+          const idx = c * cfg.dans + r;
+          const num = cfg.start + idx;
+
+          /* ✅ end 초과는 “빈칸”으로 채워 그리드 끝까지 유지(35실 문제 해결 포인트) */
+          if (num > cfg.end){
+            const blank = document.createElement("div");
+            blank.className = "niche blank";
+            grid.appendChild(blank);
+            continue;
+          }
+
+          const noStr = pad5(num);
+          const rec = infoByRoom[cfg.room][noStr];
+
+          const returned = !!rec?.returned;
+          const used = (rec?.status === "used");
+
+          const niche = document.createElement("div");
+          niche.dataset.no = noStr;
+          niche.dataset.room = cfg.room;
+
+          if (returned) niche.className = "niche returned";
+          else if (used) niche.className = "niche used";
+          else niche.className = "niche empty";
+
+          const top = document.createElement("div");
+          top.className = "niche-top";
+          top.innerHTML = iconHtml(cfg, returned, used);
+          niche.appendChild(top);
+
+          if (nextNo && noStr === nextNo) niche.classList.add("next-slot");
+
+          const no = document.createElement("div");
+          no.className = "niche-no";
+          no.textContent = noStr;
+          niche.appendChild(no);
+
+          if (used){
+            niche.addEventListener("click", () => openModal(cfg.room, noStr, dan));
+          }
+
+          grid.appendChild(niche);
+        }
+
+        row.appendChild(grid);
+        host.appendChild(row);
+      }
+
+      if (autoScrollNext){
+        requestAnimationFrame(() => scrollNextSlotIntoCenter());
+      }
+    }
+
+    // ===== 다음 봉안 UI =====
+    function computeNextForRooms(rooms){
+      let best = null;
+      for (const room of rooms){
+        const cfg = ROOM_CFG[room];
+        if (!cfg) continue;
+        const no = findNextAvailableNo(cfg);
+        if (!no) continue;
+        const num = parseInt(no, 10);
+        if (!best || num < best.num) best = { room, no, num };
+      }
+      return best;
+    }
+
+    function updateNextUI(){
+      nextCouple = computeNextForRooms(COUPLE_ROOMS);
+
+      const allPersonal = [...PERSONAL1_ROOMS, ...PERSONAL2A_ROOMS, ...PERSONAL2B_ROOMS]
+        .filter(r => ROOM_CFG[r] && (ROOM_CFG[r].roomNum <= 59 || r === "61실" || r === "62실"));
+      nextPersonal = computeNextForRooms(allPersonal);
+
+      const wrap = $("nextWrap");
+      const cText = $("nextCoupleText");
+      const pText = $("nextPersonalText");
+      const cBtn = $("nextCoupleMoveBtn");
+      const pBtn = $("nextPersonalMoveBtn");
+
+      const hasAny = !!nextCouple || !!nextPersonal;
+      wrap.style.display = hasAny ? "flex" : "none";
+      if (!hasAny) return;
+
+      if (nextCouple){
+        const cfg = ROOM_CFG[nextCouple.room];
+        const dan = danOfNo(cfg, nextCouple.no);
+        cText.textContent = `${nextCouple.room} ${nextCouple.no} (${dan}단)`;
+        cBtn.disabled = false;
+      } else {
+        cText.textContent = "—";
+        cBtn.disabled = true;
+      }
+
+      if (nextPersonal){
+        const cfg = ROOM_CFG[nextPersonal.room];
+        const dan = danOfNo(cfg, nextPersonal.no);
+        pText.textContent = `${nextPersonal.room} ${nextPersonal.no} (${dan}단)`;
+        pBtn.disabled = false;
+      } else {
+        pText.textContent = "—";
+        pBtn.disabled = true;
+      }
+    }
+
+    $("nextCoupleMoveBtn").addEventListener("click", () => {
+      if (!nextCouple) return;
+      setRoom(nextCouple.room, false);
+      requestAnimationFrame(() => focusCell(nextCouple.room, nextCouple.no));
+    });
+    $("nextPersonalMoveBtn").addEventListener("click", () => {
+      if (!nextPersonal) return;
+      setRoom(nextPersonal.room, false);
+      requestAnimationFrame(() => focusCell(nextPersonal.room, nextPersonal.no));
+    });
+
+    // ===== 엑셀 파싱 =====
+    function guessHeaderRow(aoa){
+      for (let r=0; r<Math.min(10, aoa.length); r++){
+        const s = (aoa[r]||[]).map(x => String(x||"").trim());
+        if (s.includes("봉안번호") && s.includes("반환일자")) return r;
+      }
+      return 0;
+    }
+    function buildIndexFromHeader(headerRow){
+      const idx = { "안치일자":-1, "봉안번호":-1, "사망자명":-1, "신청자명":-1, "반환일자":-1 };
+      headerRow.forEach((h,i) => { const key = String(h||"").trim(); if (key in idx) idx[key] = i; });
+      return idx;
+    }
+    function extractNo5(text){
+      if (!text) return null;
+      const m = String(text).trim().match(/(\d{5})\s*$/);
+      return m ? m[1] : null;
+    }
+    function extractRoomToken(text){
+      const s = String(text || "").trim();
+      const parts = s.split("-").map(x => x.trim()).filter(Boolean);
+      for (const p of parts){
+        if (/^\d{2}실$/.test(p) && ROOM_CFG[p]) return p;
+      }
+      return null;
+    }
+    function pushUnique(arr, value){
+      const v = String(value ?? "").trim();
+      if (!v) return;
+      if (!arr.includes(v)) arr.push(v);
+    }
+    function isBlank(v){
+      const s = String(v ?? "").trim();
+      return s === "" || s === "-" || s === "0";
+    }
+    function ensureUsed(room, no5, burialNoStr){
+      const old = infoByRoom[room][no5];
+      const rec = {
+        status:"used",
+        returned:false,
+        burialNo: burialNoStr,
+        deceasedNames: (old?.deceasedNames || []),
+        burialDatesRaw: (old?.burialDatesRaw || [])
+      };
+      infoByRoom[room][no5] = rec;
+      return rec;
+    }
+    function markReturned(room, no5){
+      const cur = infoByRoom[room][no5];
+      if (cur && cur.status === "used") return;
+      infoByRoom[room][no5] = { status:"empty", returned:true };
+    }
+
+    function applyExcel(aoa){
+      for (const room of Object.keys(infoByRoom)) infoByRoom[room] = {};
+
+      if (!aoa || aoa.length === 0) { setMsg("엑셀 비어있음", "error"); return; }
+      setMsg("");
+
+      const headerRowIndex = guessHeaderRow(aoa);
+      const header = aoa[headerRowIndex] || [];
+      const idx = buildIndexFromHeader(header);
+      const hasHeader = idx["봉안번호"] !== -1;
+
+      const iBurial = hasHeader ? idx["안치일자"] : 0;
+      const iNo     = hasHeader ? idx["봉안번호"] : 1;
+      const iDead   = hasHeader ? idx["사망자명"] : 2;
+      const iRet    = hasHeader ? idx["반환일자"] : 4;
+
+      const startRow = hasHeader ? headerRowIndex + 1 : headerRowIndex;
+
+      for (let r=startRow; r<aoa.length; r++){
+        const row = aoa[r] || [];
+        const burialNoStr = String(row[iNo] ?? "").trim();
+        if (!burialNoStr) continue;
+
+        const room = extractRoomToken(burialNoStr);
+        if (!room) continue;
+
+        const no5 = extractNo5(burialNoStr);
+        if (!no5) continue;
+
+        const n = parseInt(no5, 10);
+        const cfg = ROOM_CFG[room];
+        if (!cfg || n < cfg.start || n > cfg.end) continue;
+
+        const returned = !isBlank(row[iRet]);
+        if (returned){
+          markReturned(room, no5);
+          continue;
+        }
+
+        const rec = ensureUsed(room, no5, burialNoStr);
+        pushUnique(rec.deceasedNames, row[iDead]);
+
+        const bd = row[iBurial];
+        if (!isBlank(bd)) rec.burialDatesRaw.push(bd);
+      }
+
+      updateNextUI();
+      renderTabs();
+      renderRoomButtons();
+      renderRoom(true);
+      saveState();
+    }
+
+    async function loadExcelFromUrl(){
+      try{
+        setMsg("");
+        const res = await fetch(EXCEL_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error("fetch fail");
+        const buf = await res.arrayBuffer();
+        const wb = XLSX.read(buf, { type:"array" });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const aoa = XLSX.utils.sheet_to_json(ws, { header:1, defval:"" });
+        applyExcel(aoa);
+      } catch(err){
+        setMsg("엑셀 로딩 실패", "error");
+      }
+    }
+
+    // ===== 모달(사용기간) =====
+    function parseExcelDate(v){
+      if (v instanceof Date && !isNaN(v.getTime())) return v;
+      if (typeof v === "number" && isFinite(v)) {
+        const ms = (v - 25569) * 86400 * 1000;
+        const d = new Date(ms);
+        return isNaN(d.getTime()) ? null : d;
+      }
+      const s = String(v ?? "").trim();
+      if (!s) return null;
+      const m = s.match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})/);
+      if (m) {
+        const y = parseInt(m[1],10);
+        const mo = parseInt(m[2],10);
+        const da = parseInt(m[3],10);
+        const d = new Date(y, mo-1, da);
+        return isNaN(d.getTime()) ? null : d;
+      }
+      const d = new Date(s);
+      return isNaN(d.getTime()) ? null : d;
+    }
+    function fmtDate(d){
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,"0");
+      const da = String(d.getDate()).padStart(2,"0");
+      return `${y}-${m}-${da}`;
+    }
+    function addYearsMinusOneDay(d, years){
+      const x = new Date(d.getTime());
+      x.setFullYear(x.getFullYear() + years);
+      x.setDate(x.getDate() - 1);
+      return x;
+    }
+
+    function openModal(room, noStr, dan){
+      const rec = infoByRoom[room]?.[noStr];
+      if (!rec || rec.status !== "used") return;
+
+      $("modalTitle").textContent = `${room} ${dan}단 ${noStr}`;
+
+      const bn = rec.burialNo || "";
+      const deceased = (rec.deceasedNames && rec.deceasedNames.length)
+        ? `<ul class="list">${rec.deceasedNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
+        : "";
+
+      let startDate = null;
+      for (const raw of (rec.burialDatesRaw || [])){
+        const d = parseExcelDate(raw);
+        if (!d) continue;
+        if (!startDate || d.getTime() < startDate.getTime()) startDate = d;
+      }
+      const periodText = startDate
+        ? `<div class="mono">${fmtDate(startDate)} ~ ${fmtDate(addYearsMinusOneDay(startDate, 15))}</div>`
+        : `<div class="mono">—</div>`;
+
+      $("modalBody").innerHTML = `
+        <div class="kv">
+          <div class="k">봉안번호</div><div class="v">${escapeHtml(bn)}</div>
+          <div class="k">사망자명</div><div class="v">${deceased}</div>
+          <div class="k">사용기간</div><div class="v">${periodText}</div>
+        </div>
+      `;
+
+      $("modalBackdrop").style.display = "flex";
+    }
+
+    function closeModal(){ $("modalBackdrop").style.display = "none"; }
+    $("modalCloseBtn").addEventListener("click", closeModal);
+    $("modalBackdrop").addEventListener("click", (e) => { if (e.target.id === "modalBackdrop") closeModal(); });
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+    // ===== 안치번호 검색(이동만) =====
+    function findRoomByNo(noStr){
+      const n = parseInt(noStr, 10);
+      if (!Number.isFinite(n)) return null;
+      for (const cfg of ROOM_LIST){
+        if (n >= cfg.start && n <= cfg.end) return cfg.room;
+      }
+      return null;
+    }
+
+    function focusCell(room, noStr){
+      const el = document.querySelector(`.niche[data-room="${room}"][data-no="${noStr}"]`);
+      if (!el) return;
+      el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    }
+
+    function onSearchMove(){
+      setMsg("");
+      const raw = ($("searchInput").value || "").trim();
+      if (!raw) return;
+
+      const compact = raw.replace(/\s+/g, "");
+      const digits = compact.replace(/\D/g, "");
+      if (digits.length !== compact.length){
+        setMsg("숫자만 입력해 주세요.", "error");
+        return;
+      }
+      if (digits.length < 2 || digits.length > 5){
+        setMsg("안치번호는 2~5자리로 입력해 주세요.", "error");
+        return;
+      }
+
+      const noStr = digits.padStart(5,"0");
+      const room = findRoomByNo(noStr);
+      if (!room){
+        setMsg("해당 번호를 찾을 수 없습니다.", "error");
+        return;
+      }
+
+      setRoom(room, false);
+      requestAnimationFrame(() => focusCell(room, noStr));
+    }
+
+    $("searchBtn").addEventListener("click", onSearchMove);
+    $("searchInput").addEventListener("keydown", (e) => { if (e.key === "Enter") onSearchMove(); });
+    $("reloadBtn").addEventListener("click", loadExcelFromUrl);
+
+    // ===== start =====
+    restoreState();
+    buildLegend();
+    renderTabs();
+    renderRoomButtons();
+    renderRoom(false);
+    loadExcelFromUrl();
+  </script>
+</body>
+</html>
