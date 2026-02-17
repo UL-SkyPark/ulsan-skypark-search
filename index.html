@@ -23,6 +23,8 @@
       font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",Arial,sans-serif;
       min-height:100vh;
       text-align:center;
+
+      /* (요청) 배경 유지: 지금 코드 그대로 */
       background-image:
         linear-gradient(
           rgba(255,255,255,0.55),
@@ -33,6 +35,7 @@
       background-size:cover, cover;
       background-repeat:no-repeat, no-repeat;
       background-attachment:scroll, scroll;
+
       display:flex;
       flex-direction:column;
       justify-content:center;
@@ -54,7 +57,7 @@
     /* ===== 상단 로고 ===== */
     .global-logo{
       position:fixed;
-      z-index:10;       /* main(20)보다 낮게: 본문이 위, 로고는 살짝 뒤 */
+      z-index:10; /* main(20)보다 낮게: 본문이 위, 로고는 살짝 뒤 */
       cursor:pointer;
       transition:opacity 0.35s ease, transform 0.35s ease;
     }
@@ -515,115 +518,111 @@
       filter:drop-shadow(0 12px 32px rgba(0,0,0,0.34));
     }
 
-@media print{
-  @page{
-    size:80mm auto;
-    margin:2mm 3mm 0 3mm;
-  }
+    @media print{
+      @page{
+        size:80mm auto;
+        margin:2mm 3mm 0 3mm;
+      }
 
-  html,body{
-    width:80mm;
-    height:auto;
-    margin:0;
-    padding:0;
-    background:#fff !important;
-    display:block;
-  }
+      html,body{
+        width:80mm;
+        height:auto;
+        margin:0;
+        padding:0;
+        background:#fff !important;
+        display:block;
+      }
 
-   /* 모달만 보이게 */
-  body *{ visibility:hidden; }
-  .detail-modal, .detail
+      /* 모달만 보이게 */
+      body *{ visibility:hidden; }
+      .detail-modal, .detail-modal *{ visibility:visible; }
 
-  .footer-logo, .global-logo{ display:none !important; }
+      .footer-logo, .global-logo{ display:none !important; }
 
-  /* 모달을 1장에 딱 맞게 정리 */
- .detail-modal{
-    position:absolute;
-    top:0;
-    left:0;
-    transform:none;
-    width:80mm;
-    max-width:80mm;
-    height:auto;
-    max-height:none;
-    overflow:visible;
-    border-radius:0;
-    box-shadow:none;
-    border:none;
-    background:#fff;
-    padding:0;
-    margin:0;
-  }
+      /* 모달을 1장에 딱 맞게 정리 */
+      .detail-modal{
+        position:absolute;
+        top:0;
+        left:0;
+        transform:none;
+        width:80mm;
+        max-width:80mm;
+        height:auto;
+        max-height:none;
+        overflow:visible;
+        border-radius:0;
+        box-shadow:none;
+        border:none;
+        background:#fff;
+        padding:0;
+        margin:0;
+      }
 
-  .modal-actions{ display:none !important; }
+      .modal-actions{ display:none !important; }
 
-  .modal-header{
-    padding:1.5mm 0 2mm 0;
-    border-bottom:0.4mm solid #333;
-    text-align:center;
-  }
+      .modal-header{
+        padding:1.5mm 0 2mm 0;
+        border-bottom:0.4mm solid #333;
+        text-align:center;
+      }
 
-  /* 제목 글자 더 진하게, 조금 크게 */
-.modal-title{
-  font-size:16pt;
-  color:#000;
-  font-weight:900;
-  letter-spacing:-0.2px;
-  text-align:center;      /* 가운데 정렬 추가 */
-  margin:0 auto;
-}
+      .modal-title{
+        font-size:16pt;
+        color:#000;
+        font-weight:900;
+        letter-spacing:-0.2px;
+        text-align:center;
+        margin:0 auto;
+      }
 
-  .modal-body{
-    padding:2mm 0 1mm 0;  /* 하단 패딩 줄임 */
-  }
+      .modal-body{
+        padding:2mm 0 1mm 0;
+      }
 
-  .info-grid{
-    grid-template-columns:17mm 1fr;
-    gap:2.0mm 3.0mm;
-  }
+      .info-grid{
+        grid-template-columns:17mm 1fr;
+        gap:2.0mm 3.0mm;
+      }
 
-  .info-label{
-    font-size:11pt;
-    color:#333;
-    line-height:1.2;
-  }
+      .info-label{
+        font-size:11pt;
+        color:#333;
+        line-height:1.2;
+      }
 
-  /* 내용 글자 가독성 ↑ (조금 크게, 줄간격 약간 넓게) */
-  .info-value{
-    font-size:15pt;
-    color:#000;
-    line-height:1.25;
-  }
+      .info-value{
+        font-size:15pt;
+        color:#000;
+        line-height:1.25;
+      }
 
-  .info-value.mono{
-    word-break:break-word;
-  }
+      .info-value.mono{
+        word-break:break-word;
+      }
 
-  .divider{
-    margin:2mm 0 1.5mm 0;
-    height:0.3mm;
-    background:rgba(0,0,0,0.20);
-  }
+      .divider{
+        margin:2mm 0 1.5mm 0;
+        height:0.3mm;
+        background:rgba(0,0,0,0.20);
+      }
 
-  /* 하단 로고: ulsan_logo1.png 사용, 크기 약간 키움 */
-  .print-footer{
-    display:block;
-    margin-top:3mm;
-    padding-top:2mm;
-    border-top:0.3mm solid rgba(0,0,0,0.25);
-    text-align:center;
-  }
+      .print-footer{
+        display:block;
+        margin-top:3mm;
+        padding-top:2mm;
+        border-top:0.3mm solid rgba(0,0,0,0.25);
+        text-align:center;
+      }
 
-  .print-footer img{
-    content:url("ulsan_logo1.png");
-    height:12mm;  
-    max-width:65mm;
-    width:auto;
-    opacity:0.98;
-    filter:none;
-  }
-}
-
+      .print-footer img{
+        content:url("ulsan_logo1.png");
+        height:12mm;
+        max-width:65mm;
+        width:auto;
+        opacity:0.98;
+        filter:none;
+      }
+    }
   </style>
 </head>
 
@@ -857,25 +856,40 @@
       return { name:"고인명", loc:"위치번호", applicant:"신청자", date:"안치일자" };
     }
 
-function openModal(record){
-  document.getElementById("modalName").textContent = record.name || "";
-  document.getElementById("modalLoc").textContent = record.location || "";
-  document.getElementById("modalApplicant").textContent = record.applicant || "";
-  document.getElementById("modalDate").textContent = record.date || "";
+    /* =========================
+      ✅ (요청 반영) 추모의집 봉안번호로 시설명 자동 판별
+      - 봉안번호가 "1추모의집-"로 시작 => "제1추모의집"
+      - 봉안번호가 "2추모의집-"로 시작 => "제2추모의집"
+      - 그 외 => "추모의집"
+    ========================== */
+    function getMemorialTypeLabelFromLoc(rawLoc){
+      const s = String(rawLoc || "").trim();
 
-  document.getElementById("labelLoc").textContent = record.locationLabel || "위치번호";
-  document.getElementById("labelDate").textContent = record.dateLabel || "일자";
+      // "1추모의집-" / "2추모의집-" + 하이픈 없이 들어온 경우까지 커버
+      if (/^1\s*추모의집\s*-/.test(s) || /^1\s*추모의집/.test(s)) return "제1추모의집";
+      if (/^2\s*추모의집\s*-/.test(s) || /^2\s*추모의집/.test(s)) return "제2추모의집";
 
-  // ★ 시설명 표시 조건 수정: typeLabel이 있으면 항상 표기
-  const showType = !!record.typeLabel;
-  document.getElementById("labelType").style.display = showType ? "block" : "none";
-  document.getElementById("modalType").style.display = showType ? "block" : "none";
-  document.getElementById("dividerAfterType").style.display = showType ? "block" : "none";
-  if (showType) document.getElementById("modalType").textContent = record.typeLabel;
+      return "추모의집";
+    }
 
-  const modal = document.getElementById("detailModal");
-  modal.showModal();
-}
+    function openModal(record){
+      document.getElementById("modalName").textContent = record.name || "";
+      document.getElementById("modalLoc").textContent = record.location || "";
+      document.getElementById("modalApplicant").textContent = record.applicant || "";
+      document.getElementById("modalDate").textContent = record.date || "";
+
+      document.getElementById("labelLoc").textContent = record.locationLabel || "위치번호";
+      document.getElementById("labelDate").textContent = record.dateLabel || "일자";
+
+      // 시설명 표시: typeLabel이 있으면 항상 표기
+      const showType = !!record.typeLabel;
+      document.getElementById("labelType").style.display = showType ? "block" : "none";
+      document.getElementById("modalType").style.display = showType ? "block" : "none";
+      document.getElementById("dividerAfterType").style.display = showType ? "block" : "none";
+      if (showType) document.getElementById("modalType").textContent = record.typeLabel;
+
+      document.getElementById("detailModal").showModal();
+    }
 
     function bindTableClick(){
       const table = document.querySelector("#result table");
@@ -907,51 +921,49 @@ function openModal(record){
       }
     });
 
-function searchMemorial(keyword){
-  const k = normalizeForSearch(keyword);
-  return excelDataMemorial
-    .filter(row => {
-      const rawName = row[MEM_FIELDS.name];
-      if (!rawName) return false;
-      if (row[MEM_FIELDS.returned]) return false;
-      return normalizeForSearch(rawName).includes(k);
-    })
-    .map(row => ({
-      type: 'memorial',
-      // 시설명: 추모의집
-      typeLabel: '추모의집',
-      name: row[MEM_FIELDS.name] || "",
-      location: normalizeRoom(row[MEM_FIELDS.loc] || ""),
-      applicant: maskName(row[MEM_FIELDS.applicant]),
-      date: row[MEM_FIELDS.date] || "",
-      locationLabel: "봉안번호",
-      dateLabel: "안치일자"
-    }));
-}
+    function searchMemorial(keyword){
+      const k = normalizeForSearch(keyword);
+      return excelDataMemorial
+        .filter(row => {
+          const rawName = row[MEM_FIELDS.name];
+          if (!rawName) return false;
+          if (row[MEM_FIELDS.returned]) return false;
+          return normalizeForSearch(rawName).includes(k);
+        })
+        .map(row => ({
+          type: 'memorial',
+          typeLabel: getMemorialTypeLabelFromLoc(row[MEM_FIELDS.loc]), // ✅ 제1/제2 자동
+          name: row[MEM_FIELDS.name] || "",
+          location: normalizeRoom(row[MEM_FIELDS.loc] || ""),
+          applicant: maskName(row[MEM_FIELDS.applicant]),
+          date: row[MEM_FIELDS.date] || "",
+          locationLabel: "봉안번호",
+          dateLabel: "안치일자"
+        }));
+    }
 
-function searchNature(keyword){
-  const k = normalizeForSearch(keyword);
-  return excelDataNature
-    .filter(row => {
-      const rawName = row[NAT_FIELDS.name];
-      if (!rawName) return false;
-      return normalizeForSearch(rawName).includes(k);
-    })
-    .map(row => {
-      const raw = row[NAT_FIELDS.loc] || "";
-      return {
-        type: 'nature',
-        // 시설명: 자연장지
-        typeLabel: '자연장지',
-        name: row[NAT_FIELDS.name] || "",
-        location: normalizeNatureNo(raw),
-        applicant: maskName(row[NAT_FIELDS.applicant]),
-        date: row[NAT_FIELDS.date] || "",
-        locationLabel: "안장번호",
-        dateLabel: "안장일자"
-      };
-    });
-}
+    function searchNature(keyword){
+      const k = normalizeForSearch(keyword);
+      return excelDataNature
+        .filter(row => {
+          const rawName = row[NAT_FIELDS.name];
+          if (!rawName) return false;
+          return normalizeForSearch(rawName).includes(k);
+        })
+        .map(row => {
+          const raw = row[NAT_FIELDS.loc] || "";
+          return {
+            type: 'nature',
+            typeLabel: '자연장지',
+            name: row[NAT_FIELDS.name] || "",
+            location: normalizeNatureNo(raw),
+            applicant: maskName(row[NAT_FIELDS.applicant]),
+            date: row[NAT_FIELDS.date] || "",
+            locationLabel: "안장번호",
+            dateLabel: "안장일자"
+          };
+        });
+    }
 
     function renderResults(records, keyword){
       const resultDiv = document.getElementById("result");
