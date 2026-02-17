@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <title>추모의집 봉안 현황</title>
-  <!-- 파비콘 설정 -->
   <link rel="icon" type="image/x-icon" href="./images/symbol.png">
-  <!-- 애플 기기용 아이콘 -->
   <link rel="apple-touch-icon" href="./images/symbol.png">
 
   <style>
@@ -28,7 +26,6 @@
       --next-red: #b43a3a;
       --next-red-strong: #9b2525;
 
-      /* 아이콘 배경색 */
       --badge-mint: #e0f5f0;
       --badge-mint-border: #b5ddd0;
       --badge-lavender: #ece6fa;
@@ -176,8 +173,8 @@
       flex-wrap:wrap;
     }
     .search input{
-      width: 200px;
-      max-width: 56vw;
+      width: 340px;
+      max-width: 70vw;
       padding: 10px 10px;
       border-radius: 12px;
       border:1px solid var(--panel-border);
@@ -229,14 +226,6 @@
       border-color:#d8cfc6;
       box-shadow: 0 0 0 2px rgba(0,0,0,0.03) inset;
     }
-    .tab-dot{
-      width: 8px; height: 8px;
-      border-radius: 999px;
-      background: var(--next-red);
-      display:inline-block;
-      opacity: .82;
-      flex: 0 0 auto;
-    }
 
     .room-btns{
       display:flex;
@@ -257,7 +246,6 @@
       min-height: 40px;
     }
 
-    /* 현재 선택된 방: 강조 (체크 표시는 제거됨) */
     .room-btn.active{
       background:#e3ddd3;
       border-color:#9b8670;
@@ -265,7 +253,6 @@
       color:#2b241e;
     }
 
-    /* 다음 봉안 예정 방: 은은한 중립 톤 */
     .room-btn.next-room{
       color:#333843;
       border-color:#c2c7d5;
@@ -282,7 +269,6 @@
     }
     .legend-item{ display:inline-flex; align-items:center; gap:8px; font-size: 13px; color: var(--text); }
     
-    /* 아이콘 스타일 (범례/안치단 공통) */
     .icon-bg{
       width: 26px; height: 26px;
       border-radius: 999px;
@@ -293,12 +279,10 @@
     }
     .icon-bg.used{ box-sizing: border-box; }
     
-    /* 개인단: 민트 */
     .icon-bg.used.single{
       background: var(--badge-mint);
       border: 1px solid var(--badge-mint-border);
     }
-    /* 부부단: 라벤더 */
     .icon-bg.used.couple{
       background: var(--badge-lavender);
       border: 1px solid var(--badge-lavender-border);
@@ -330,6 +314,47 @@
     }
     .msg.error{ color:#b00020; }
 
+    /* 검색 결과 드롭다운 */
+    .search-results{
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 4px;
+      background: #fff;
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      max-height: 320px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+    }
+    .search-results.show{ display: block; }
+    .search-result-item{
+      padding: 10px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s;
+    }
+    .search-result-item:hover{
+      background: #f9f6f2;
+    }
+    .search-result-item:last-child{
+      border-bottom: none;
+    }
+    .search-result-name{
+      font-weight: 900;
+      font-size: 15px;
+      color: #2f2a25;
+      margin-bottom: 4px;
+    }
+    .search-result-detail{
+      font-size: 13px;
+      color: #6c5f56;
+      font-family: ui-monospace, monospace;
+    }
+
     .scroll-x{
       overflow-x:auto;
       padding-bottom: 10px;
@@ -346,7 +371,6 @@
       position: relative;
     }
 
-    /* 단 라벨: 중앙 정렬 */
     .dan-label{
       width: 58px;
       flex: 0 0 auto;
@@ -356,7 +380,7 @@
       background: var(--page-bg);
       border-right: 1px solid rgba(0,0,0,0.06);
       display:flex;
-      align-items:center; /* 수직 중앙 */
+      align-items:center;
       justify-content:flex-end;
       padding: 0 8px 0 0;
       font-weight: 950;
@@ -369,7 +393,7 @@
 
     .grid{
       display:grid;
-      column-gap: 8px; /* 가로 간격 넓힘 */
+      column-gap: 8px;
       row-gap: 5px;
       padding: 1px 0;
     }
@@ -377,7 +401,7 @@
     .niche{
       width: var(--cell-w);
       height: var(--cell-h);
-      border: 2px solid var(--cell-border); /* 두꺼운 테두리 */
+      border: 2px solid var(--cell-border);
       border-radius: 11px;
       box-sizing: border-box;
       display:flex;
@@ -447,7 +471,7 @@
       z-index: 9999;
     }
     .modal{
-      width:min(380px, 92vw);
+      width:min(320px, 88vw);
       background:#fff;
       border-radius:16px;
       border:1px solid var(--panel-border);
@@ -479,12 +503,12 @@
     }
     .kv{
       display:grid;
-      grid-template-columns: 86px 1fr;
-      gap:12px 12px;
+      grid-template-columns: 80px 1fr;
+      gap:12px 10px;
       align-items:start;
     }
     .k{ color: var(--muted); font-weight:900; font-size:14px; padding-top:2px; }
-    .v{ font-weight:900; font-size:18px; white-space: pre-wrap; word-break: break-word; }
+    .v{ font-weight:900; font-size:17px; white-space: pre-wrap; word-break: break-word; line-height:1.5; }
     .list { margin:0; padding-left: 18px; }
     .list li { margin: 6px 0; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-variant-numeric: tabular-nums; }
@@ -494,7 +518,7 @@
       h1{ font-size: 20px; margin-bottom: 8px; }
       .panel{ padding:10px; }
       .tabs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .search input{ width: 170px; max-width: 60vw; }
+      .search input{ width: 260px; max-width: 68vw; }
       .next-rows{ grid-template-columns: 1fr; }
       :root{ --cell-w: 54px; --cell-h: 46px; }
     }
@@ -526,9 +550,10 @@
         </div>
       </div>
 
-      <div class="search">
-        <input id="searchInput" type="text" inputmode="numeric" placeholder="안치번호(2~5자리)" />
-        <button id="searchBtn" type="button">이동</button>
+      <div class="search" style="position:relative;">
+        <input id="searchInput" type="text" placeholder="안치번호(2~5자리), 고인명을 입력해주세요." autocomplete="off" />
+        <div id="searchResults" class="search-results"></div>
+        <button id="searchBtn" type="button">검색</button>
         <button id="reloadBtn" type="button">새로고침</button>
       </div>
     </div>
@@ -684,7 +709,6 @@
     let nextCouple = null;
     let nextPersonal = null;
 
-    // JS로 범례 생성 시에도 "icon-bg" 클래스를 그대로 사용하여 모양 통일
     function buildLegend(){
       $("legend").innerHTML = `
         <span class="legend-item">
@@ -723,12 +747,7 @@
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "tab-btn" + (t.id === activeTabId ? " active" : "");
-
-        const hasDot =
-          (nextCouple?.room && TAB_ROOM_SETS[t.id]?.has(nextCouple.room)) ||
-          (nextPersonal?.room && TAB_ROOM_SETS[t.id]?.has(nextPersonal.room));
-
-        btn.innerHTML = `${escapeHtml(t.label)}${hasDot ? ' <span class="tab-dot"></span>' : ''}`;
+        btn.textContent = t.label;
         btn.addEventListener("click", () => setTab(t.id));
         bar.appendChild(btn);
       }
@@ -1030,6 +1049,7 @@
         returned:false,
         burialNo: burialNoStr,
         deceasedNames: (old?.deceasedNames || []),
+        applicantNames: (old?.applicantNames || []),
         burialDatesRaw: (old?.burialDatesRaw || [])
       };
       infoByRoom[room][no5] = rec;
@@ -1055,6 +1075,7 @@
       const iBurial = hasHeader ? idx["안치일자"] : 0;
       const iNo     = hasHeader ? idx["봉안번호"] : 1;
       const iDead   = hasHeader ? idx["사망자명"] : 2;
+      const iApplicant = hasHeader ? idx["신청자명"] : 3;
       const iRet    = hasHeader ? idx["반환일자"] : 4;
 
       const startRow = hasHeader ? headerRowIndex + 1 : headerRowIndex;
@@ -1082,6 +1103,7 @@
 
         const rec = ensureUsed(room, no5, burialNoStr);
         pushUnique(rec.deceasedNames, row[iDead]);
+        pushUnique(rec.applicantNames, row[iApplicant]);
 
         const bd = row[iBurial];
         if (!isBlank(bd)) rec.burialDatesRaw.push(bd);
@@ -1148,10 +1170,13 @@
 
       $("modalTitle").textContent = `${room} ${dan}단 ${noStr}`;
 
-      const bn = rec.burialNo || "";
       const deceased = (rec.deceasedNames && rec.deceasedNames.length)
         ? `<ul class="list">${rec.deceasedNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
-        : "";
+        : "—";
+
+      const applicant = (rec.applicantNames && rec.applicantNames.length)
+        ? `<ul class="list">${rec.applicantNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
+        : "—";
 
       let startDate = null;
       for (const raw of (rec.burialDatesRaw || [])){
@@ -1160,13 +1185,13 @@
         if (!startDate || d.getTime() < startDate.getTime()) startDate = d;
       }
       const periodText = startDate
-        ? `<div class="mono">${fmtDate(startDate)} ~ ${fmtDate(addYearsMinusOneDay(startDate, 15))}</div>`
+        ? `<div class="mono">${fmtDate(startDate)}<br>~ ${fmtDate(addYearsMinusOneDay(startDate, 15))}</div>`
         : `<div class="mono">—</div>`;
 
       $("modalBody").innerHTML = `
         <div class="kv">
-          <div class="k">봉안번호</div><div class="v">${escapeHtml(bn)}</div>
-          <div class="k">사망자명</div><div class="v">${deceased}</div>
+          <div class="k">고인명</div><div class="v">${deceased}</div>
+          <div class="k">신청자</div><div class="v">${applicant}</div>
           <div class="k">사용기간</div><div class="v">${periodText}</div>
         </div>
       `;
@@ -1195,35 +1220,126 @@
       el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     }
 
-    function onSearchMove(){
+    // 검색 기능 강화
+    function normalizeText(text){
+      return String(text || "").trim().replace(/\s+/g, "").toLowerCase();
+    }
+
+    function searchByName(query){
+      const normalized = normalizeText(query);
+      if (normalized.length < 2) return [];
+
+      const results = [];
+      for (const room of Object.keys(infoByRoom)){
+        for (const [noStr, rec] of Object.entries(infoByRoom[room])){
+          if (rec.status !== "used") continue;
+          
+          for (const name of (rec.deceasedNames || [])){
+            const normName = normalizeText(name);
+            if (normName.includes(normalized)){
+              const cfg = ROOM_CFG[room];
+              const dan = danOfNo(cfg, noStr);
+              results.push({
+                room,
+                noStr,
+                dan,
+                name,
+                burialNo: rec.burialNo || ""
+              });
+              break;
+            }
+          }
+        }
+      }
+      return results;
+    }
+
+    function showSearchResults(results){
+      const container = $("searchResults");
+      if (!results || results.length === 0){
+        container.classList.remove("show");
+        return;
+      }
+
+      container.innerHTML = results.map((r, idx) => `
+        <div class="search-result-item" data-idx="${idx}">
+          <div class="search-result-name">${escapeHtml(r.name)}</div>
+          <div class="search-result-detail">${r.room} ${r.dan}단 ${r.noStr}</div>
+        </div>
+      `).join("");
+
+      container.classList.add("show");
+
+      container.querySelectorAll(".search-result-item").forEach((el, idx) => {
+        el.addEventListener("click", () => {
+          const result = results[idx];
+          container.classList.remove("show");
+          $("searchInput").value = "";
+          
+          setRoom(result.room, false);
+          requestAnimationFrame(() => {
+            focusCell(result.room, result.noStr);
+            setTimeout(() => openModal(result.room, result.noStr, result.dan), 600);
+          });
+        });
+      });
+    }
+
+    function onSearch(){
       setMsg("");
       const raw = ($("searchInput").value || "").trim();
       if (!raw) return;
 
       const compact = raw.replace(/\s+/g, "");
       const digits = compact.replace(/\D/g, "");
-      if (digits.length !== compact.length){
-        setMsg("숫자만 입력해 주세요.", "error");
-        return;
-      }
-      if (digits.length < 2 || digits.length > 5){
-        setMsg("안치번호는 2~5자리로 입력해 주세요.", "error");
+
+      if (digits.length >= 2 && digits.length <= 5 && digits.length === compact.length){
+        const noStr = digits.padStart(5,"0");
+        const room = findRoomByNo(noStr);
+        if (!room){
+          setMsg("해당 번호를 찾을 수 없습니다.", "error");
+          return;
+        }
+
+        $("searchResults").classList.remove("show");
+        setRoom(room, false);
+        requestAnimationFrame(() => focusCell(room, noStr));
         return;
       }
 
-      const noStr = digits.padStart(5,"0");
-      const room = findRoomByNo(noStr);
-      if (!room){
-        setMsg("해당 번호를 찾을 수 없습니다.", "error");
-        return;
+      if (raw.length >= 2){
+        const results = searchByName(raw);
+        if (results.length === 0){
+          setMsg("검색 결과가 없습니다.", "error");
+          $("searchResults").classList.remove("show");
+        } else {
+          setMsg("");
+          showSearchResults(results);
+        }
+      } else {
+        setMsg("고인명은 2자 이상 입력해 주세요.", "error");
       }
-
-      setRoom(room, false);
-      requestAnimationFrame(() => focusCell(room, noStr));
     }
 
-    $("searchBtn").addEventListener("click", onSearchMove);
-    $("searchInput").addEventListener("keydown", (e) => { if (e.key === "Enter") onSearchMove(); });
+    $("searchBtn").addEventListener("click", onSearch);
+    $("searchInput").addEventListener("keydown", (e) => { 
+      if (e.key === "Enter") onSearch(); 
+    });
+
+    $("searchInput").addEventListener("input", () => {
+      const val = ($("searchInput").value || "").trim();
+      if (val.length === 0){
+        $("searchResults").classList.remove("show");
+        setMsg("");
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".search")){
+        $("searchResults").classList.remove("show");
+      }
+    });
+
     $("reloadBtn").addEventListener("click", loadExcelFromUrl);
 
     restoreState();
