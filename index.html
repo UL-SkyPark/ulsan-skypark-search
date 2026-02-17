@@ -97,6 +97,42 @@
       transform:translateX(-50%) translateY(-14px);
     }
 
+    /* ===== 오른쪽 상단 room.html 버튼 ===== */
+    .room-link-btn{
+      position:fixed;
+      top:16px;
+      right:18px;
+      z-index:25;
+      padding:10px 16px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.85);
+      color:#ffffff;
+      font-size:14px;
+      font-weight:800;
+      text-decoration:none;
+      box-shadow:0 8px 22px rgba(15,23,42,0.35);
+      transition:background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+    }
+
+    .room-link-btn:hover{
+      background:rgba(15,23,42,0.95);
+      box-shadow:0 10px 26px rgba(15,23,42,0.40);
+    }
+
+    .room-link-btn:active{
+      transform:translateY(1px);
+      box-shadow:0 6px 18px rgba(15,23,42,0.32);
+    }
+
+    @media (max-width:768px){
+      .room-link-btn{
+        top:62px;
+        right:14px;
+        font-size:13px;
+        padding:8px 14px;
+      }
+    }
+
     main{
       width:min(1080px, 100%);
       background:rgba(255,255,255,0.30);
@@ -537,13 +573,11 @@
         display:block;
       }
 
-      /* 모달만 보이게 */
       body *{ visibility:hidden; }
       .detail-modal, .detail-modal *{ visibility:visible; }
 
-      .footer-logo, .global-logo{ display:none !important; }
+      .footer-logo, .global-logo, .room-link-btn{ display:none !important; }
 
-      /* 모달을 1장에 딱 맞게 정리 */
       .detail-modal{
         position:absolute;
         top:0;
@@ -635,6 +669,9 @@
   <div class="global-logo" id="globalLogo" onclick="goHome()" aria-label="울산하늘공원 초기화면으로 이동">
     <img src="./images/ulsan_logo1.png" alt="울산하늘공원 로고">
   </div>
+
+  <!-- 오른쪽 상단 room.html 버튼 -->
+  <a href="room.html" class="room-link-btn">봉안실 안내</a>
 
   <main>
     <div class="header">
@@ -769,11 +806,6 @@
       return norm.length >= 2;
     }
 
-    /* =========================
-      ✅ QR/링크용: URL에서 mode 읽기
-      - ?mode=memorial / ?mode=nature / ?mode=all
-      - (보너스) #memorial / #nature 해시도 지원
-    ========================== */
     function getModeFromUrl(){
       const params = new URLSearchParams(window.location.search);
       const m1 = (params.get("mode") || "").toLowerCase();
@@ -800,10 +832,8 @@
       });
       resetResultOnly();
 
-      // 탭 바뀔 때 주소도 같이 바뀌게(QR/공유 편하게)
       updateUrlMode(mode);
 
-      // 포커스
       const input = document.getElementById("keyword");
       if (input) input.focus();
     }
@@ -890,16 +920,9 @@
       return { name:"고인명", loc:"위치번호", applicant:"신청자", date:"안치일자" };
     }
 
-    /* =========================
-      ✅ 추모의집 봉안번호로 시설명 자동 판별
-      - 봉안번호가 "1추모의집-"로 시작 => "제1추모의집"
-      - 봉안번호가 "2추모의집-"로 시작 => "제2추모의집"
-      - 그 외 => "추모의집"
-    ========================== */
     function getMemorialTypeLabelFromLoc(rawLoc){
       const s = String(rawLoc || "").trim();
 
-      // "1추모의집-" / "2추모의집-" + 하이픈 없이 들어온 경우까지 커버
       if (/^1\s*추모의집\s*-/.test(s) || /^1\s*추모의집/.test(s)) return "제1추모의집";
       if (/^2\s*추모의집\s*-/.test(s) || /^2\s*추모의집/.test(s)) return "제2추모의집";
 
@@ -915,7 +938,6 @@
       document.getElementById("labelLoc").textContent = record.locationLabel || "위치번호";
       document.getElementById("labelDate").textContent = record.dateLabel || "일자";
 
-      // 시설명 표시: typeLabel이 있으면 항상 표기
       const showType = !!record.typeLabel;
       document.getElementById("labelType").style.display = showType ? "block" : "none";
       document.getElementById("modalType").style.display = showType ? "block" : "none";
@@ -966,7 +988,7 @@
         })
         .map(row => ({
           type: 'memorial',
-          typeLabel: getMemorialTypeLabelFromLoc(row[MEM_FIELDS.loc]), // ✅ 제1/제2 자동
+          typeLabel: getMemorialTypeLabelFromLoc(row[MEM_FIELDS.loc]),
           name: row[MEM_FIELDS.name] || "",
           location: normalizeRoom(row[MEM_FIELDS.loc] || ""),
           applicant: maskName(row[MEM_FIELDS.applicant]),
@@ -1004,7 +1026,7 @@
       const h = getHeaderLabels(currentMode);
 
       if (!records || records.length === 0){
-        resultDiv.innerHTML = `<div class="no-result">‘${keyword}’에 대한 검색 결과가 없습니다.</div>`;
+        resultDiv.innerHTML = `<div class="no-result">'${keyword}'에 대한 검색 결과가 없습니다.</div>`;
         return;
       }
 
@@ -1095,29 +1117,22 @@
       lastFound = [];
     }
 
-    // 로고 클릭 시: 검색어/결과만 초기화 + 화면 상단으로
     function goHome(){
       document.getElementById("keyword").value = "";
       resetResultOnly();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    /* =========================
-      ✅ 페이지 최초 진입 시 mode 자동 선택 + 입력 포커스
-      - QR 스캔 후 바로 입력 가능
-    ========================== */
     document.addEventListener("DOMContentLoaded", () => {
       const initMode = getModeFromUrl();
       setMode(initMode);
 
-      // 모바일에서 포커스가 가끔 늦게 먹는 경우 대비
       setTimeout(() => {
         const input = document.getElementById("keyword");
         if (input) input.focus();
       }, 150);
     });
 
-    // 스크롤 시 상단 로고와 하단 로고 자연스럽게 숨김
     (function(){
       const bottomLogo = document.getElementById("footerLogo");
       const topLogo = document.getElementById("globalLogo");
