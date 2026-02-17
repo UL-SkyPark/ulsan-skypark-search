@@ -769,13 +769,43 @@
       return norm.length >= 2;
     }
 
+    /* =========================
+      ✅ QR/링크용: URL에서 mode 읽기
+      - ?mode=memorial / ?mode=nature / ?mode=all
+      - (보너스) #memorial / #nature 해시도 지원
+    ========================== */
+    function getModeFromUrl(){
+      const params = new URLSearchParams(window.location.search);
+      const m1 = (params.get("mode") || "").toLowerCase();
+
+      const h = (location.hash || "").replace("#","").toLowerCase();
+      const m2 = h;
+
+      const m = m1 || m2;
+      if (["all","memorial","nature"].includes(m)) return m;
+      return "all";
+    }
+
+    function updateUrlMode(mode){
+      const url = new URL(window.location.href);
+      if (mode === "all") url.searchParams.delete("mode");
+      else url.searchParams.set("mode", mode);
+      history.replaceState(null, "", url.toString());
+    }
+
     function setMode(mode){
       currentMode = mode;
       document.querySelectorAll(".tab-btn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.mode === mode);
       });
       resetResultOnly();
-      document.getElementById("keyword").focus();
+
+      // 탭 바뀔 때 주소도 같이 바뀌게(QR/공유 편하게)
+      updateUrlMode(mode);
+
+      // 포커스
+      const input = document.getElementById("keyword");
+      if (input) input.focus();
     }
 
     async function fetchExcel(url){
@@ -861,7 +891,7 @@
     }
 
     /* =========================
-      ✅ (요청 반영) 추모의집 봉안번호로 시설명 자동 판별
+      ✅ 추모의집 봉안번호로 시설명 자동 판별
       - 봉안번호가 "1추모의집-"로 시작 => "제1추모의집"
       - 봉안번호가 "2추모의집-"로 시작 => "제2추모의집"
       - 그 외 => "추모의집"
@@ -1071,6 +1101,21 @@
       resetResultOnly();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
+    /* =========================
+      ✅ 페이지 최초 진입 시 mode 자동 선택 + 입력 포커스
+      - QR 스캔 후 바로 입력 가능
+    ========================== */
+    document.addEventListener("DOMContentLoaded", () => {
+      const initMode = getModeFromUrl();
+      setMode(initMode);
+
+      // 모바일에서 포커스가 가끔 늦게 먹는 경우 대비
+      setTimeout(() => {
+        const input = document.getElementById("keyword");
+        if (input) input.focus();
+      }, 150);
+    });
 
     // 스크롤 시 상단 로고와 하단 로고 자연스럽게 숨김
     (function(){
