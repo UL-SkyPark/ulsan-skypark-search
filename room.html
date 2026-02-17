@@ -19,17 +19,25 @@
 
       --cell-w: 58px;
       --cell-h: 48px;
-      --cell-border: #d8cfc6;
+      --cell-border: #d0c6bb;
 
-      --bg-empty: #f1ede8;
+      --bg-empty: #f3f1ed;
       --bg-used:  #e9e3dc;
       --bg-ret:   #f1ede8;
 
       --next-red: #b43a3a;
       --next-red-strong: #9b2525;
 
+      /* 기존 배지색 + 새 색상 */
       --badge-bg: rgba(247, 214, 120, 0.18);
       --badge-border: rgba(223, 175, 70, 0.18);
+
+      --badge-mint: #e0f5f0;
+      --badge-mint-border: #b5ddd0;
+      --badge-lavender: #ece6fa;
+      --badge-lavender-border: #c7bedf;
+
+      --plus-color: #b8b8bf;
     }
 
     body{
@@ -39,7 +47,6 @@
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
     }
 
-    /* ✅ 제목 다시 표시 */
     h1{
       margin: 0 0 10px;
       font-size: 22px;
@@ -72,7 +79,6 @@
       flex-wrap:wrap;
     }
 
-    /* ✅ 다음 봉안 예정: 가로로 나란히 + 상하폭 최소 */
     .next-wrap{
       display:none;
       flex: 1 1 680px;
@@ -112,7 +118,7 @@
 
     .next-rows{
       display:grid;
-      grid-template-columns: 1fr 1fr; /* ✅ 부부/개인 나란히 */
+      grid-template-columns: 1fr 1fr;
       gap:8px;
     }
 
@@ -179,7 +185,7 @@
       border-radius: 12px;
       border:1px solid var(--panel-border);
       background:#fff;
-      font-size: 16px; /* ✅ 모바일 확대 방지 */
+      font-size: 16px;
       color: var(--text);
       outline: none;
     }
@@ -244,7 +250,7 @@
       border-top: 1px solid rgba(0,0,0,0.06);
     }
     .room-btn{
-      padding: 8px 10px;
+      padding: 8px 12px;
       border-radius: 12px;
       border:1px solid var(--panel-border);
       background:#fff;
@@ -252,16 +258,33 @@
       font-weight: 950;
       color:#3a332e;
       min-height: 40px;
+      position: relative;
     }
+
+    /* 현재 선택된 방: 강조 + check.png */
     .room-btn.active{
-      background:#efe8df;
-      border-color:#d8cfc6;
-      box-shadow: 0 0 0 2px rgba(0,0,0,0.03) inset;
+      background:#e3ddd3;
+      border-color:#9b8670;
+      box-shadow: 0 0 0 2px rgba(155,134,112,0.45);
+      color:#2b241e;
     }
+    .room-btn.active::after{
+      content:"";
+      position:absolute;
+      top:4px;
+      right:6px;
+      width:16px;
+      height:16px;
+      background-image:url("./images/check.png");
+      background-repeat:no-repeat;
+      background-size:contain;
+    }
+
+    /* 다음 봉안 예정 방: 붉은색 제거, 은은한 중립 톤 */
     .room-btn.next-room{
-      color: var(--next-red-strong);
-      border-color: rgba(180,58,58,0.26);
-      background: rgba(180,58,58,0.05);
+      color:#333843;
+      border-color:#c2c7d5;
+      background:#f4f5f9;
     }
 
     .legend{
@@ -311,7 +334,7 @@
       position: relative;
     }
 
-    /* ✅ 단 라벨 sticky 안정(특히 열 많은 실) */
+    /* 단 라벨: 안치단 높이 중앙 정렬 */
     .dan-label{
       width: 58px;
       flex: 0 0 auto;
@@ -323,12 +346,11 @@
       background: var(--page-bg);
       border-right: 1px solid rgba(0,0,0,0.06);
 
-      align-self: stretch;
       display:flex;
-      align-items:flex-start;
+      align-items:center;
       justify-content:flex-end;
 
-      padding: 8px 8px 0 0;
+      padding: 0 8px 0 0;
       font-weight: 950;
       color: #3b352f;
       font-size: 13px;
@@ -339,14 +361,16 @@
 
     .grid{
       display:grid;
-      gap: 5px;
+      /* 가로 간격 조금 넓게 */
+      column-gap: 8px;
+      row-gap: 5px;
       padding: 1px 0;
     }
 
     .niche{
       width: var(--cell-w);
       height: var(--cell-h);
-      border: 1px solid var(--cell-border);
+      border: 2px solid var(--cell-border);
       border-radius: 11px;
       box-sizing: border-box;
       display:flex;
@@ -362,7 +386,6 @@
     .used{ background: var(--bg-used); cursor: pointer; }
     .used:hover { outline: 2px solid rgba(0,0,0,0.09); outline-offset: 0px; }
 
-    /* ✅ 마지막 열 “빈칸”용 (그리드 깨짐 방지) */
     .blank{
       background: transparent;
       border-color: transparent;
@@ -387,8 +410,17 @@
       box-sizing:border-box;
     }
     .icon-bg.used{
-      background: var(--badge-bg);
-      border: 1px solid var(--badge-border);
+      box-sizing: border-box;
+    }
+    /* 개인단: 민트 */
+    .icon-bg.used.single{
+      background: var(--badge-mint);
+      border: 1px solid var(--badge-mint-border);
+    }
+    /* 부부단: 라벤더 */
+    .icon-bg.used.couple{
+      background: var(--badge-lavender);
+      border: 1px solid var(--badge-lavender-border);
     }
 
     .state-icon{
@@ -400,6 +432,17 @@
       -webkit-user-drag: none;
       user-select: none;
       pointer-events: none;
+    }
+
+    /* 사용가능 자리 + 표시 */
+    .niche-plus{
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 700;
+      color: var(--plus-color);
+    }
+    .empty .niche-top{
+      justify-content: center;
     }
 
     .niche-no{
@@ -422,7 +465,6 @@
       outline-offset: -3px;
     }
 
-    /* ✅ 검색 이동 후 붉은 강조 */
     @keyframes flashRed {
       0%   { box-shadow: 0 0 0 0 rgba(180,58,58,0.00); outline: 0px solid rgba(180,58,58,0.00); transform: scale(1); }
       20%  { box-shadow: 0 0 0 6px rgba(180,58,58,0.20); outline: 4px solid rgba(180,58,58,0.95); transform: scale(1.02); }
@@ -483,14 +525,13 @@
     .list li { margin: 6px 0; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-variant-numeric: tabular-nums; }
 
-    /* ✅ 모바일: 다음 봉안(2칸→1칸) */
     @media (max-width: 520px){
       body{ margin:10px; }
       h1{ font-size: 20px; margin-bottom: 8px; }
       .panel{ padding:10px; }
       .tabs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .search input{ width: 170px; max-width: 60vw; }
-      .next-rows{ grid-template-columns: 1fr; } /* ✅ 모바일에서는 세로 */
+      .next-rows{ grid-template-columns: 1fr; }
       :root{ --cell-w: 54px; --cell-h: 46px; }
     }
   </style>
@@ -598,7 +639,6 @@
     function roomStr(n){ return String(n).padStart(2,"0") + "실"; }
     function roomsRange(a,b){ const out=[]; for(let i=a;i<=b;i++) out.push(roomStr(i)); return out; }
 
-    // ===== ROOM_CFG =====
     const itemsByStart = Object.entries(STARTS)
       .map(([room, start]) => ({ room, start, roomNum: parseInt(room.replace("실",""),10) }))
       .sort((a,b)=>a.start-b.start);
@@ -635,7 +675,6 @@
         tmp[i].dans = (prev && next && prev === next) ? prev : (prev || next || 9);
       }
 
-      /* ✅ 핵심 수정: cols를 무조건 정수로(35실 같은 “열 많은 방”에서 그리드 깨짐 방지) */
       const cols = Math.ceil(tmp[i].count / tmp[i].dans);
 
       ROOM_CFG[tmp[i].room] = {
@@ -650,7 +689,6 @@
     }
     const ROOM_LIST = Object.values(ROOM_CFG).sort((a,b)=>a.start-b.start);
 
-    // ===== 탭 =====
     const COUPLE_ROOMS = roomsRange(1,9);
     const PERSONAL1_ROOMS = [...roomsRange(10,18), roomStr(61), roomStr(62)];
     const PERSONAL2A_ROOMS = roomsRange(19,38);
@@ -673,7 +711,6 @@
       return "p1";
     }
 
-    // ===== 데이터 =====
     const infoByRoom = {};
     for (const room of Object.keys(ROOM_CFG)) infoByRoom[room] = {};
 
@@ -683,10 +720,9 @@
     let nextCouple = null;
     let nextPersonal = null;
 
-    // ===== 범례 =====
     function buildLegend(){
       $("legend").innerHTML = `
-        <span class="legend-item"><span class="legend-box" aria-hidden="true"></span><b>사용가능</b></span>
+        <span class="legend-item"><span class="legend-box" aria-hidden="true"></span><b>사용가능 (+)</b></span>
         <span class="legend-item"><img class="legend-icon" src="${ICONS.single}" alt="개인단"><b>개인단</b></span>
         <span class="legend-item"><img class="legend-icon" src="${ICONS.couple}" alt="부부단"><b>부부단</b></span>
         <span class="legend-item"><img class="legend-icon" src="${ICONS.returned}" alt="반출"><b>반출</b></span>
@@ -697,7 +733,6 @@
       `;
     }
 
-    // ===== UI =====
     function renderTabs(){
       const bar = $("tabBar");
       bar.innerHTML = "";
@@ -820,11 +855,14 @@
       if (returned){
         return `<div class="icon-bg"><img class="state-icon" src="${ICONS.returned}" alt="반출"></div>`;
       }
-      if (!used) return ``;
-
-      const src = isCoupleRoom(cfg.room) ? ICONS.couple : ICONS.single;
-      const alt = isCoupleRoom(cfg.room) ? "부부단" : "개인단";
-      return `<div class="icon-bg used"><img class="state-icon" src="${src}" alt="${alt}"></div>`;
+      if (used){
+        const isCouple = isCoupleRoom(cfg.room);
+        const src = isCouple ? ICONS.couple : ICONS.single;
+        const alt = isCouple ? "부부단" : "개인단";
+        const bgClass = isCouple ? "couple" : "single";
+        return `<div class="icon-bg used ${bgClass}"><img class="state-icon" src="${src}" alt="${alt}"></div>`;
+      }
+      return `<div class="niche-plus">+</div>`;
     }
 
     function renderRoom(autoScrollNext){
@@ -857,7 +895,6 @@
           const idx = c * cfg.dans + r;
           const num = cfg.start + idx;
 
-          /* ✅ end 초과는 “빈칸”으로 채워 그리드 끝까지 유지(35실 문제 해결 포인트) */
           if (num > cfg.end){
             const blank = document.createElement("div");
             blank.className = "niche blank";
@@ -907,7 +944,6 @@
       }
     }
 
-    // ===== 다음 봉안 UI =====
     function computeNextForRooms(rooms){
       let best = null;
       for (const room of rooms){
@@ -970,7 +1006,6 @@
       requestAnimationFrame(() => focusCell(nextPersonal.room, nextPersonal.no));
     });
 
-    // ===== 엑셀 파싱 =====
     function guessHeaderRow(aoa){
       for (let r=0; r<Math.min(10, aoa.length); r++){
         const s = (aoa[r]||[]).map(x => String(x||"").trim());
@@ -1091,7 +1126,6 @@
       }
     }
 
-    // ===== 모달(사용기간) =====
     function parseExcelDate(v){
       if (v instanceof Date && !isNaN(v.getTime())) return v;
       if (typeof v === "number" && isFinite(v)) {
@@ -1162,7 +1196,6 @@
     $("modalBackdrop").addEventListener("click", (e) => { if (e.target.id === "modalBackdrop") closeModal(); });
     window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
 
-    // ===== 안치번호 검색(이동만) =====
     function findRoomByNo(noStr){
       const n = parseInt(noStr, 10);
       if (!Number.isFinite(n)) return null;
@@ -1210,7 +1243,6 @@
     $("searchInput").addEventListener("keydown", (e) => { if (e.key === "Enter") onSearchMove(); });
     $("reloadBtn").addEventListener("click", loadExcelFromUrl);
 
-    // ===== start =====
     restoreState();
     buildLegend();
     renderTabs();
