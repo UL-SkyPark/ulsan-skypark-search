@@ -28,10 +28,7 @@
       --next-red: #b43a3a;
       --next-red-strong: #9b2525;
 
-      /* 기존 배지색 + 새 색상 */
-      --badge-bg: rgba(247, 214, 120, 0.18);
-      --badge-border: rgba(223, 175, 70, 0.18);
-
+      /* 아이콘 배경색 */
       --badge-mint: #e0f5f0;
       --badge-mint-border: #b5ddd0;
       --badge-lavender: #ece6fa;
@@ -258,29 +255,17 @@
       font-weight: 950;
       color:#3a332e;
       min-height: 40px;
-      position: relative;
     }
 
-    /* 현재 선택된 방: 강조 + check.png */
+    /* 현재 선택된 방: 강조 (체크 표시는 제거됨) */
     .room-btn.active{
       background:#e3ddd3;
       border-color:#9b8670;
       box-shadow: 0 0 0 2px rgba(155,134,112,0.45);
       color:#2b241e;
     }
-    .room-btn.active::after{
-      content:"";
-      position:absolute;
-      top:4px;
-      right:6px;
-      width:16px;
-      height:16px;
-      background-image:url("./images/check.png");
-      background-repeat:no-repeat;
-      background-size:contain;
-    }
 
-    /* 다음 봉안 예정 방: 붉은색 제거, 은은한 중립 톤 */
+    /* 다음 봉안 예정 방: 은은한 중립 톤 */
     .room-btn.next-room{
       color:#333843;
       border-color:#c2c7d5;
@@ -296,18 +281,45 @@
       background: var(--panel-bg);
     }
     .legend-item{ display:inline-flex; align-items:center; gap:8px; font-size: 13px; color: var(--text); }
-    .legend-icon{
-      width:20px; height:20px;
-      object-fit: contain;
-      opacity: .58;
-      filter: saturate(.72) contrast(.95) brightness(.98);
-    }
-    .legend-box{
-      width:20px; height:20px;
-      border-radius:8px;
-      border:1px solid var(--cell-border);
-      background: var(--bg-empty);
+    
+    /* 아이콘 스타일 (범례/안치단 공통) */
+    .icon-bg{
+      width: 26px; height: 26px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       box-sizing:border-box;
+    }
+    .icon-bg.used{ box-sizing: border-box; }
+    
+    /* 개인단: 민트 */
+    .icon-bg.used.single{
+      background: var(--badge-mint);
+      border: 1px solid var(--badge-mint-border);
+    }
+    /* 부부단: 라벤더 */
+    .icon-bg.used.couple{
+      background: var(--badge-lavender);
+      border: 1px solid var(--badge-lavender-border);
+    }
+
+    .state-icon{
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      opacity: .56;
+      filter: saturate(.70) contrast(.95) brightness(1.0);
+      -webkit-user-drag: none;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .niche-plus{
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 700;
+      color: var(--plus-color);
     }
 
     .msg{
@@ -334,22 +346,18 @@
       position: relative;
     }
 
-    /* 단 라벨: 안치단 높이 중앙 정렬 */
+    /* 단 라벨: 중앙 정렬 */
     .dan-label{
       width: 58px;
       flex: 0 0 auto;
-
       position: sticky;
       left: 0;
       z-index: 9999;
-
       background: var(--page-bg);
       border-right: 1px solid rgba(0,0,0,0.06);
-
       display:flex;
-      align-items:center;
+      align-items:center; /* 수직 중앙 */
       justify-content:flex-end;
-
       padding: 0 8px 0 0;
       font-weight: 950;
       color: #3b352f;
@@ -361,8 +369,7 @@
 
     .grid{
       display:grid;
-      /* 가로 간격 조금 넓게 */
-      column-gap: 8px;
+      column-gap: 8px; /* 가로 간격 넓힘 */
       row-gap: 5px;
       padding: 1px 0;
     }
@@ -370,7 +377,7 @@
     .niche{
       width: var(--cell-w);
       height: var(--cell-h);
-      border: 2px solid var(--cell-border);
+      border: 2px solid var(--cell-border); /* 두꺼운 테두리 */
       border-radius: 11px;
       box-sizing: border-box;
       display:flex;
@@ -385,6 +392,7 @@
     .returned{ background: var(--bg-ret); cursor: default; }
     .used{ background: var(--bg-used); cursor: pointer; }
     .used:hover { outline: 2px solid rgba(0,0,0,0.09); outline-offset: 0px; }
+    .empty .niche-top{ justify-content: center; }
 
     .blank{
       background: transparent;
@@ -399,50 +407,6 @@
       justify-content:center;
       padding: 5px 5px 0 5px;
       min-height: 24px;
-    }
-
-    .icon-bg{
-      width: 26px; height: 26px;
-      border-radius: 999px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-sizing:border-box;
-    }
-    .icon-bg.used{
-      box-sizing: border-box;
-    }
-    /* 개인단: 민트 */
-    .icon-bg.used.single{
-      background: var(--badge-mint);
-      border: 1px solid var(--badge-mint-border);
-    }
-    /* 부부단: 라벤더 */
-    .icon-bg.used.couple{
-      background: var(--badge-lavender);
-      border: 1px solid var(--badge-lavender-border);
-    }
-
-    .state-icon{
-      width: 20px;
-      height: 20px;
-      object-fit: contain;
-      opacity: .56;
-      filter: saturate(.70) contrast(.95) brightness(1.0);
-      -webkit-user-drag: none;
-      user-select: none;
-      pointer-events: none;
-    }
-
-    /* 사용가능 자리 + 표시 */
-    .niche-plus{
-      font-size: 18px;
-      line-height: 1;
-      font-weight: 700;
-      color: var(--plus-color);
-    }
-    .empty .niche-top{
-      justify-content: center;
     }
 
     .niche-no{
@@ -720,12 +684,31 @@
     let nextCouple = null;
     let nextPersonal = null;
 
+    // JS로 범례 생성 시에도 "icon-bg" 클래스를 그대로 사용하여 모양 통일
     function buildLegend(){
       $("legend").innerHTML = `
-        <span class="legend-item"><span class="legend-box" aria-hidden="true"></span><b>사용가능 (+)</b></span>
-        <span class="legend-item"><img class="legend-icon" src="${ICONS.single}" alt="개인단"><b>개인단</b></span>
-        <span class="legend-item"><img class="legend-icon" src="${ICONS.couple}" alt="부부단"><b>부부단</b></span>
-        <span class="legend-item"><img class="legend-icon" src="${ICONS.returned}" alt="반출"><b>반출</b></span>
+        <span class="legend-item">
+          <div class="niche-plus" style="font-size:16px; width:20px; text-align:center;">+</div>
+          <b>사용가능</b>
+        </span>
+        <span class="legend-item">
+          <div class="icon-bg used single" style="width:26px; height:26px;">
+            <img class="state-icon" src="${ICONS.single}" alt="개인단">
+          </div>
+          <b>개인단</b>
+        </span>
+        <span class="legend-item">
+          <div class="icon-bg used couple" style="width:26px; height:26px;">
+            <img class="state-icon" src="${ICONS.couple}" alt="부부단">
+          </div>
+          <b>부부단</b>
+        </span>
+        <span class="legend-item">
+          <div class="icon-bg" style="width:26px; height:26px;">
+            <img class="state-icon" src="${ICONS.returned}" alt="반출">
+          </div>
+          <b>반출</b>
+        </span>
         <span class="legend-item">
           <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--next-red);border-radius:8px;"></span>
           <b>다음자리</b>
