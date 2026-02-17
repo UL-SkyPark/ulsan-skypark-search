@@ -3,60 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-  <title>추모의집 봉안현황 조회</title>
-
+  <title>추모의집 봉안 현황</title>
+  <!-- 파비콘 설정 -->
+  <link rel="icon" type="image/x-icon" href="./images/symbol.png">
+  <!-- 애플 기기용 아이콘 -->
+  <link rel="apple-touch-icon" href="./images/symbol.png">
   <style>
     :root{
-      --page-bg: #f6f2ec;
-      --panel-bg: #fbf8f4;
-      --panel-border: #e3dbd1;
-      --text: #2f2a25;
-      --muted: #6c5f56;
+      /* ===== Pastel Blue Theme ===== */
+      --page-bg: #eef6ff;
+      --panel-bg: rgba(255,255,255,0.78);
+      --panel-border: rgba(140, 190, 235, 0.45);
+      --text: #1f2f44;
+      --muted: rgba(31,47,68,0.70);
 
       --cell-w: 58px;
       --cell-h: 48px;
-      --cell-border: #d8cfc6;
+      --cell-border: rgba(125, 170, 214, 0.55);
 
-      --bg-empty: #f1ede8;
-      --bg-used:  #e9e3dc;
-      --bg-ret:   #f1ede8;
+      --bg-empty: rgba(233, 246, 255, 0.95);
+      --bg-used:  rgba(220, 239, 255, 0.82);
+      --bg-ret:   rgba(234, 245, 255, 0.88);
 
-      --next-red: #b43a3a;
-      --next-red-strong: #9b2525;
+      /* 기존 변수명을 유지하되 색상만 “푸른 계열”로 변경 */
+      --next-red: #5aa9e6;               /* 포인트 블루 */
+      --next-red-strong: #2d6da8;        /* 진한 블루 */
 
-      --badge-bg: rgba(247, 214, 120, 0.18);
-      --badge-border: rgba(223, 175, 70, 0.18);
+      /* 아이콘 원형(used) 배경/테두리 */
+      --badge-bg: rgba(190, 230, 255, 0.55);
+      --badge-border: rgba(120, 185, 235, 0.35);
+
+      /* 버튼/배지 톤 */
+      --btn-bg: rgba(255,255,255,0.92);
+      --btn-bg-hover: rgba(230, 246, 255, 0.95);
+      --btn-border: rgba(120, 185, 235, 0.45);
+
+      /* 현재 선택 배지 */
+      --cr-bg1: rgba(208, 238, 255, 0.95);
+      --cr-bg2: rgba(176, 221, 255, 0.92);
+      --cr-border: rgba(90, 169, 230, 0.35);
+      --cr-text: #15324a;
+
+      --shadow-soft: 0 10px 28px rgba(30, 80, 130, 0.12);
     }
 
     body{
       margin:16px;
-      background: var(--page-bg);
+      background: radial-gradient(circle at 20% 10%, rgba(195, 233, 255, 0.70), rgba(238, 246, 255, 1) 50%, rgba(233, 248, 255, 1) 100%);
       color: var(--text);
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
     }
 
-    /* ✅ 제목 다시 표시 */
     h1{
       margin: 0 0 10px;
       font-size: 22px;
       font-weight: 950;
       letter-spacing: .2px;
       line-height: 1.15;
+      color: #163650;
     }
 
     .panel{
       padding:12px;
       border:1px solid var(--panel-border);
-      border-radius:14px;
+      border-radius:16px;
       background: var(--panel-bg);
-      box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+      box-shadow: var(--shadow-soft);
       margin-bottom: 10px;
+      backdrop-filter: blur(10px);
     }
     .panel.sticky{
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(6px);
       padding-top: calc(10px + env(safe-area-inset-top, 0px));
       padding-bottom: 10px;
     }
@@ -64,51 +83,58 @@
     .panel-top{
       display:flex;
       gap:10px;
-      align-items:center;
+      align-items:stretch;
       flex-wrap:wrap;
     }
 
-    /* ✅ 다음 봉안 예정: 가로로 나란히 + 상하폭 최소 */
+    /* ===== 다음 봉안 예정 (항상 보이게) ===== */
     .next-wrap{
-      display:none;
-      flex: 1 1 680px;
-      max-width: 980px;
+      /* ✅ 기본은 항상 보이도록 */
+      display:grid;
+      flex: 0 1 440px;             /* ✅ 가로 폭: 기존 대비 절반 느낌 */
+      width: min(440px, 100%);
+      max-width: 440px;
 
-      padding:8px 10px;
-      border:1px solid rgba(180,58,58,0.22);
-      background: rgba(180,58,58,0.06);
-      border-radius: 14px;
+      padding:8px 10px;            /* ✅ 세로폭 최소화 */
+      border:1px solid rgba(90, 169, 230, 0.35);
+      background: rgba(210, 240, 255, 0.55);
+      border-radius: 16px;
       user-select:none;
 
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      min-width: 320px;
+      grid-template-columns: 132px 1fr;
+      align-items:center;
+      gap:10px;
+
+      box-shadow: 0 10px 26px rgba(90, 169, 230, 0.14);
     }
     .next-head{
       font-weight: 950;
-      font-size: 12px;
+      font-size: 16px;             /* ✅ 더 크게 */
       letter-spacing: .15px;
-      color: rgba(155,37,37,0.88);
+      color: rgba(45, 109, 168, 0.95);
       display:flex;
       align-items:center;
       gap:8px;
       white-space: nowrap;
-      line-height: 1;
+      line-height: 1.05;
+      margin:0;
     }
     .next-head::before{
       content:"";
-      width: 7px;
-      height: 7px;
+      width: 9px;
+      height: 9px;
       border-radius: 999px;
       background: var(--next-red);
-      opacity: .9;
+      opacity: .95;
       flex: 0 0 auto;
+      box-shadow:
+        0 0 0 6px rgba(90, 169, 230, 0.12),
+        0 0 18px rgba(90, 169, 230, 0.25);
     }
 
     .next-rows{
       display:grid;
-      grid-template-columns: 1fr 1fr; /* ✅ 부부/개인 나란히 */
+      grid-template-columns: 1fr 1fr;
       gap:8px;
     }
 
@@ -118,12 +144,12 @@
       gap:8px;
       flex-wrap:nowrap;
 
-      padding:7px 9px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.62);
-      border:1px solid rgba(180,58,58,0.14);
+      padding:6px 8px;             /* ✅ 세로폭 축소 */
+      border-radius: 14px;
+      background: rgba(255,255,255,0.78);
+      border:1px solid rgba(120, 185, 235, 0.28);
 
-      min-height: 40px;
+      min-height: 34px;            /* ✅ 최소화 */
       overflow:hidden;
     }
     .next-label{
@@ -131,12 +157,12 @@
       color: var(--next-red-strong);
       white-space: nowrap;
       flex: 0 0 auto;
-      font-size: 13px;
+      font-size: 14px;             /* ✅ 더 크게 */
     }
     .next-text{
       font-weight: 950;
-      font-size: 14px;
-      color: #6b1f1f;
+      font-size: 16px;             /* ✅ 더 크게 */
+      color: #1f4f79;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-variant-numeric: tabular-nums;
       letter-spacing: .2px;
@@ -146,21 +172,23 @@
       flex: 1 1 auto;
     }
     .next-move-btn{
-      border:1px solid rgba(180,58,58,0.28);
-      background: rgba(255,255,255,0.84);
-      color: var(--next-red-strong);
+      border:1px solid rgba(90, 169, 230, 0.38);
+      background: rgba(232, 248, 255, 0.95);
+      color: rgba(26, 88, 145, 0.95);
       border-radius: 999px;
-      padding:9px 10px;
+      padding:8px 10px;
       cursor:pointer;
       font-weight: 950;
       white-space: nowrap;
       min-height: 34px;
       flex: 0 0 auto;
       touch-action: manipulation;
+      box-shadow: 0 6px 16px rgba(90, 169, 230, 0.14);
     }
     .next-move-btn:hover{ background: rgba(255,255,255,0.98); }
     .next-move-btn:disabled{ opacity: .45; cursor: not-allowed; }
 
+    /* ===== 검색 ===== */
     .search{
       display:flex;
       gap:6px;
@@ -172,29 +200,37 @@
       width: 200px;
       max-width: 56vw;
       padding: 10px 10px;
-      border-radius: 12px;
-      border:1px solid var(--panel-border);
+      border-radius: 14px;
+      border:1px solid var(--btn-border);
       background:#fff;
-      font-size: 16px; /* ✅ 모바일 확대 방지 */
+      font-size: 16px;
       color: var(--text);
       outline: none;
+      box-shadow: 0 8px 18px rgba(30, 80, 130, 0.08);
     }
-    .search input::placeholder{ color:#9a8f86; }
+    .search input:focus{
+      border-color: rgba(90, 169, 230, 0.65);
+      box-shadow: 0 10px 22px rgba(90, 169, 230, 0.18);
+    }
+    .search input::placeholder{ color: rgba(31,47,68,0.45); font-weight: 800; }
 
     button{
-      border: 1px solid var(--panel-border);
-      background: #fff;
+      border: 1px solid var(--btn-border);
+      background: var(--btn-bg);
       padding: 10px 12px;
-      border-radius: 12px;
+      border-radius: 14px;
       cursor:pointer;
       color: var(--text);
       font-size: 15px;
       white-space: nowrap;
       min-height: 40px;
       touch-action: manipulation;
+      box-shadow: 0 8px 18px rgba(30, 80, 130, 0.08);
     }
-    button:hover{ background:#f4f0eb; }
+    button:hover{ background: var(--btn-bg-hover); }
+    button:active{ transform: translateY(1px); }
 
+    /* ===== 탭 ===== */
     .tabs{
       display:grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -205,75 +241,177 @@
       width:100%;
       padding: 10px 10px;
       border-radius: 999px;
-      border:1px solid var(--panel-border);
-      background:#fff;
+      border:1px solid var(--btn-border);
+      background: rgba(255,255,255,0.92);
       cursor:pointer;
       font-weight: 950;
-      color:#3a332e;
+      color:#1f3d57;
       display:flex;
       align-items:center;
       justify-content:center;
       gap:8px;
       text-align:center;
       min-height: 42px;
+      box-shadow: 0 8px 18px rgba(30, 80, 130, 0.08);
     }
     .tab-btn.active{
-      background:#f1ede8;
-      border-color:#d8cfc6;
-      box-shadow: 0 0 0 2px rgba(0,0,0,0.03) inset;
+      background: rgba(210, 240, 255, 0.72);
+      border-color: rgba(90, 169, 230, 0.55);
+      box-shadow:
+        0 0 0 2px rgba(90,169,230,0.10) inset,
+        0 12px 26px rgba(90,169,230,0.12);
     }
     .tab-dot{
-      width: 8px; height: 8px;
+      width: 9px; height: 9px;
       border-radius: 999px;
       background: var(--next-red);
       display:inline-block;
-      opacity: .82;
+      opacity: .9;
       flex: 0 0 auto;
+      box-shadow: 0 0 0 6px rgba(90, 169, 230, 0.10);
     }
 
+    /* ===== 방 버튼 ===== */
     .room-btns{
       display:flex;
       gap:6px;
       flex-wrap:wrap;
       margin-top: 10px;
       padding-top: 10px;
-      border-top: 1px solid rgba(0,0,0,0.06);
+      border-top: 1px solid rgba(31,47,68,0.08);
     }
     .room-btn{
       padding: 8px 10px;
-      border-radius: 12px;
-      border:1px solid var(--panel-border);
-      background:#fff;
+      border-radius: 14px;
+      border:1px solid var(--btn-border);
+      background: rgba(255,255,255,0.92);
       cursor:pointer;
       font-weight: 950;
-      color:#3a332e;
+      color:#1f3d57;
       min-height: 40px;
-    }
-    .room-btn.active{
-      background:#efe8df;
-      border-color:#d8cfc6;
-      box-shadow: 0 0 0 2px rgba(0,0,0,0.03) inset;
-    }
-    .room-btn.next-room{
-      color: var(--next-red-strong);
-      border-color: rgba(180,58,58,0.26);
-      background: rgba(180,58,58,0.05);
+      position: relative;
+      box-shadow: 0 8px 18px rgba(30, 80, 130, 0.08);
     }
 
-    .legend{
-      display:flex; flex-wrap:wrap; gap:14px; align-items:center;
-      margin: 8px 0 10px;
-      padding: 12px;
-      border:1px solid var(--panel-border);
-      border-radius:14px;
-      background: var(--panel-bg);
+    /* ✅ 현재 선택 방: 더 잘 보이게(파스텔 블루) */
+    .room-btn.active{
+      background: linear-gradient(180deg, rgba(208, 238, 255, 0.98), rgba(176, 221, 255, 0.92));
+      color:#123552;
+      border-color: rgba(90, 169, 230, 0.75);
+      box-shadow:
+        0 14px 30px rgba(90, 169, 230, 0.18),
+        0 0 0 3px rgba(90, 169, 230, 0.10) inset;
+      transform: translateY(-1px);
     }
-    .legend-item{ display:inline-flex; align-items:center; gap:8px; font-size: 13px; color: var(--text); }
+    .room-btn.active::after{
+      content:"현재";
+      position:absolute;
+      top:-8px;
+      right:-8px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 950;
+      background: rgba(90, 169, 230, 0.95);
+      color:#fff;
+      border: 2px solid rgba(255,255,255,0.92);
+      box-shadow:
+        0 10px 18px rgba(90,169,230,0.20),
+        0 0 0 6px rgba(90,169,230,0.10);
+      letter-spacing: .1px;
+    }
+
+    .room-btn.next-room{
+      color: rgba(26, 88, 145, 0.98);
+      border-color: rgba(90, 169, 230, 0.55);
+      background: rgba(210, 240, 255, 0.55);
+    }
+
+    /* ===== 범례(스티키 패널 안) + 현재 선택 배지(범례 맨 앞) ===== */
+    .legend{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(31,47,68,0.08);
+    }
+
+    .current-room{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--cr-border);
+      background: linear-gradient(180deg, var(--cr-bg1), var(--cr-bg2));
+      color: var(--cr-text);
+      box-shadow:
+        0 14px 30px rgba(90, 169, 230, 0.16),
+        0 0 0 3px rgba(90, 169, 230, 0.08) inset;
+      user-select:none;
+      white-space: nowrap;
+    }
+    .cr-chip{
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%,
+          rgba(255,255,255,0.95) 0%,
+          rgba(190, 230, 255, 0.75) 35%,
+          rgba(190, 230, 255, 0.18) 70%,
+          rgba(190, 230, 255, 0.00) 100%);
+      border: 1px solid rgba(90, 169, 230, 0.28);
+      box-shadow:
+        0 0 0 6px rgba(90, 169, 230, 0.10),
+        0 0 18px rgba(90, 169, 230, 0.20);
+      flex: 0 0 auto;
+    }
+    .cr-label{
+      font-size: 12px;
+      font-weight: 950;
+      opacity: .88;
+      line-height: 1;
+    }
+    .cr-value{
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: .2px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+      margin-left: 6px;
+    }
+    .cr-sub{
+      font-size: 12px;
+      font-weight: 900;
+      opacity: .85;
+      margin-left: 8px;
+    }
+
+    .legend-item{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size: 13px;
+      color: rgba(31,47,68,0.88);
+
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(120, 185, 235, 0.30);
+      background: rgba(255,255,255,0.62);
+      box-shadow: 0 10px 22px rgba(30, 80, 130, 0.06);
+      white-space: nowrap;
+    }
     .legend-icon{
       width:20px; height:20px;
       object-fit: contain;
-      opacity: .58;
-      filter: saturate(.72) contrast(.95) brightness(.98);
+      opacity: .70;
+      filter: saturate(.80) contrast(.98) brightness(1.02);
     }
     .legend-box{
       width:20px; height:20px;
@@ -307,7 +445,6 @@
       position: relative;
     }
 
-    /* ✅ 단 라벨 sticky 안정(특히 열 많은 실) */
     .dan-label{
       width: 58px;
       flex: 0 0 auto;
@@ -316,8 +453,8 @@
       left: 0;
       z-index: 9999;
 
-      background: var(--page-bg);
-      border-right: 1px solid rgba(0,0,0,0.06);
+      background: rgba(238, 246, 255, 0.96);
+      border-right: 1px solid rgba(31,47,68,0.06);
 
       align-self: stretch;
       display:flex;
@@ -326,9 +463,10 @@
 
       padding: 8px 8px 0 0;
       font-weight: 950;
-      color: #3b352f;
+      color: rgba(22, 54, 80, 0.88);
       font-size: 13px;
-      box-shadow: 6px 0 10px rgba(0,0,0,0.03);
+
+      box-shadow: 10px 0 18px rgba(30, 80, 130, 0.06);
       box-sizing: border-box;
       min-height: calc(var(--cell-h) + 6px);
     }
@@ -343,7 +481,7 @@
       width: var(--cell-w);
       height: var(--cell-h);
       border: 1px solid var(--cell-border);
-      border-radius: 11px;
+      border-radius: 12px;
       box-sizing: border-box;
       display:flex;
       flex-direction:column;
@@ -351,14 +489,14 @@
       overflow:hidden;
       user-select:none;
       position: relative;
+      backdrop-filter: blur(2px);
     }
 
     .empty{ background: var(--bg-empty); cursor: default; }
     .returned{ background: var(--bg-ret); cursor: default; }
     .used{ background: var(--bg-used); cursor: pointer; }
-    .used:hover { outline: 2px solid rgba(0,0,0,0.09); outline-offset: 0px; }
+    .used:hover { outline: 2px solid rgba(90,169,230,0.22); outline-offset: 0px; }
 
-    /* ✅ 마지막 열 “빈칸”용 (그리드 깨짐 방지) */
     .blank{
       background: transparent;
       border-color: transparent;
@@ -374,6 +512,7 @@
       min-height: 24px;
     }
 
+    /* ===== 아이콘 뒤 원형(파스텔 블루 + 은은한 퍼짐) ===== */
     .icon-bg{
       width: 26px; height: 26px;
       border-radius: 999px;
@@ -383,16 +522,25 @@
       box-sizing:border-box;
     }
     .icon-bg.used{
-      background: var(--badge-bg);
+      background:
+        radial-gradient(circle at 30% 30%,
+          rgba(255,255,255,0.96) 0%,
+          rgba(190, 230, 255, 0.80) 32%,
+          rgba(170, 220, 255, 0.35) 58%,
+          rgba(170, 220, 255, 0.00) 100%);
       border: 1px solid var(--badge-border);
+      box-shadow:
+        0 0 0 7px rgba(90,169,230,0.10),
+        0 0 18px rgba(90,169,230,0.20),
+        0 10px 22px rgba(30, 80, 130, 0.10);
     }
 
     .state-icon{
       width: 20px;
       height: 20px;
       object-fit: contain;
-      opacity: .56;
-      filter: saturate(.70) contrast(.95) brightness(1.0);
+      opacity: .72;
+      filter: saturate(.90) contrast(.98) brightness(1.05);
       -webkit-user-drag: none;
       user-select: none;
       pointer-events: none;
@@ -404,9 +552,9 @@
       line-height: 14px;
       padding: 3px 5px 4px;
       text-align:center;
-      border-top: 1px solid rgba(0,0,0,0.10);
-      background: rgba(255,255,255,0.64);
-      color:#2b2520;
+      border-top: 1px solid rgba(31,47,68,0.10);
+      background: rgba(255,255,255,0.70);
+      color:#14324b;
       letter-spacing: 0.2px;
       font-weight: 900;
       font-variant-numeric: tabular-nums;
@@ -416,44 +564,45 @@
     .next-slot{
       outline: 3px solid var(--next-red);
       outline-offset: -3px;
+      box-shadow: 0 0 0 8px rgba(90,169,230,0.10);
     }
 
-    /* ✅ 검색 이동 후 붉은 강조 */
-    @keyframes flashRed {
-      0%   { box-shadow: 0 0 0 0 rgba(180,58,58,0.00); outline: 0px solid rgba(180,58,58,0.00); transform: scale(1); }
-      20%  { box-shadow: 0 0 0 6px rgba(180,58,58,0.20); outline: 4px solid rgba(180,58,58,0.95); transform: scale(1.02); }
-      55%  { box-shadow: 0 0 0 10px rgba(180,58,58,0.14); outline: 4px solid rgba(180,58,58,0.90); transform: scale(1.02); }
-      100% { box-shadow: 0 0 0 0 rgba(180,58,58,0.00); outline: 0px solid rgba(180,58,58,0.00); transform: scale(1); }
+    @keyframes flashBlue {
+      0%   { box-shadow: 0 0 0 0 rgba(90,169,230,0.00); outline: 0px solid rgba(90,169,230,0.00); transform: scale(1); }
+      20%  { box-shadow: 0 0 0 7px rgba(90,169,230,0.18); outline: 4px solid rgba(90,169,230,0.90); transform: scale(1.02); }
+      55%  { box-shadow: 0 0 0 12px rgba(90,169,230,0.12); outline: 4px solid rgba(90,169,230,0.85); transform: scale(1.02); }
+      100% { box-shadow: 0 0 0 0 rgba(90,169,230,0.00); outline: 0px solid rgba(90,169,230,0.00); transform: scale(1); }
     }
-    .flash { animation: flashRed 1.15s ease-in-out 0s 2; }
+    .flash { animation: flashBlue 1.15s ease-in-out 0s 2; }
 
     .modal-backdrop{
       position:fixed; inset:0;
-      background: rgba(0,0,0,0.45);
+      background: rgba(10, 25, 40, 0.40);
       display:none;
       align-items:center;
       justify-content:center;
       padding:16px;
       z-index: 9999;
+      backdrop-filter: blur(6px);
     }
     .modal{
       width:min(380px, 92vw);
-      background:#fff;
+      background: rgba(255,255,255,0.96);
       border-radius:16px;
-      border:1px solid var(--panel-border);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      border:1px solid rgba(120,185,235,0.40);
+      box-shadow: 0 22px 60px rgba(15, 40, 70, 0.22);
       overflow:hidden;
     }
     .modal-header{
       padding:14px 14px;
-      border-bottom:1px solid #eee;
-      background: #faf7f2;
+      border-bottom:1px solid rgba(31,47,68,0.10);
+      background: rgba(210, 240, 255, 0.55);
       display:flex; align-items:center; justify-content:space-between;
       gap:10px;
     }
-    .modal-title{ font-weight:900; font-size:20px; letter-spacing:0.2px; }
+    .modal-title{ font-weight:900; font-size:20px; letter-spacing:0.2px; color:#163650; }
     .modal-close{
-      border:1px solid var(--panel-border);
+      border:1px solid rgba(120,185,235,0.45);
       background:#fff;
       border-radius:12px;
       padding:8px 10px;
@@ -463,7 +612,7 @@
     .modal-body{
       padding:14px;
       font-size:18px;
-      color:#1f1b17;
+      color:#12324b;
       max-height: min(420px, 72vh);
       overflow:auto;
     }
@@ -473,21 +622,35 @@
       gap:12px 12px;
       align-items:start;
     }
-    .k{ color: var(--muted); font-weight:900; font-size:14px; padding-top:2px; }
+    .k{ color: rgba(31,47,68,0.70); font-weight:900; font-size:14px; padding-top:2px; }
     .v{ font-weight:900; font-size:18px; white-space: pre-wrap; word-break: break-word; }
     .list { margin:0; padding-left: 18px; }
     .list li { margin: 6px 0; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-variant-numeric: tabular-nums; }
 
-    /* ✅ 모바일: 다음 봉안(2칸→1칸) */
+    /* ✅ 모바일 */
     @media (max-width: 520px){
       body{ margin:10px; }
       h1{ font-size: 20px; margin-bottom: 8px; }
       .panel{ padding:10px; }
       .tabs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .search input{ width: 170px; max-width: 60vw; }
-      .next-rows{ grid-template-columns: 1fr; } /* ✅ 모바일에서는 세로 */
+
+      .next-wrap{
+        grid-template-columns: 1fr;
+        gap:8px;
+        width: 100%;
+        max-width: 100%;
+        flex-basis: 100%;
+      }
+      .next-rows{ grid-template-columns: 1fr; }
+
       :root{ --cell-w: 54px; --cell-h: 46px; }
+
+      .current-room{
+        width: 100%;
+        justify-content:flex-start;
+      }
     }
   </style>
 
@@ -495,7 +658,7 @@
 </head>
 
 <body>
-  <h1>추모의집 봉안현황 조회</h1>
+  <h1>추모의집 봉안 현황</h1>
 
   <div class="panel sticky" id="topPanel">
     <div class="panel-top">
@@ -526,9 +689,27 @@
 
     <div id="tabBar" class="tabs"></div>
     <div id="roomBtns" class="room-btns"></div>
+
+    <!-- ✅ 현재 선택 배지를 “개인단/부부단/반출 등 아이콘 설명(범례)” 앞쪽에 배치 -->
+    <div class="legend" id="legend">
+      <div class="current-room" id="currentRoomBadge" aria-label="현재 선택된 봉안실">
+        <span class="cr-chip" aria-hidden="true"></span>
+        <span class="cr-label">현재 선택</span>
+        <span class="cr-value" id="currentRoomText">01실</span>
+        <span class="cr-sub" id="currentRoomSub">부부단</span>
+      </div>
+
+      <span class="legend-item"><span class="legend-box" aria-hidden="true"></span><b>사용가능</b></span>
+      <span class="legend-item"><img class="legend-icon" src="./images/solo.png" alt="개인단"><b>개인단</b></span>
+      <span class="legend-item"><img class="legend-icon" src="./images/couple.png" alt="부부단"><b>부부단</b></span>
+      <span class="legend-item"><img class="legend-icon" src="./images/arrow.png" alt="반출"><b>반출</b></span>
+      <span class="legend-item">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--next-red);border-radius:8px;box-shadow:0 0 0 7px rgba(90,169,230,0.10);" aria-hidden="true"></span>
+        <b>다음자리</b>
+      </span>
+    </div>
   </div>
 
-  <div class="legend" id="legend"></div>
   <div id="msg" class="msg"></div>
 
   <div class="scroll-x" id="scrollX">
@@ -631,7 +812,6 @@
         tmp[i].dans = (prev && next && prev === next) ? prev : (prev || next || 9);
       }
 
-      /* ✅ 핵심 수정: cols를 무조건 정수로(35실 같은 “열 많은 방”에서 그리드 깨짐 방지) */
       const cols = Math.ceil(tmp[i].count / tmp[i].dans);
 
       ROOM_CFG[tmp[i].room] = {
@@ -679,18 +859,14 @@
     let nextCouple = null;
     let nextPersonal = null;
 
-    // ===== 범례 =====
-    function buildLegend(){
-      $("legend").innerHTML = `
-        <span class="legend-item"><span class="legend-box" aria-hidden="true"></span><b>사용가능</b></span>
-        <span class="legend-item"><img class="legend-icon" src="${ICONS.single}" alt="개인단"><b>개인단</b></span>
-        <span class="legend-item"><img class="legend-icon" src="${ICONS.couple}" alt="부부단"><b>부부단</b></span>
-        <span class="legend-item"><img class="legend-icon" src="${ICONS.returned}" alt="반출"><b>반출</b></span>
-        <span class="legend-item">
-          <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--next-red);border-radius:8px;"></span>
-          <b>다음자리</b>
-        </span>
-      `;
+    function updateCurrentRoomBadge(){
+      const roomText = $("currentRoomText");
+      const roomSub = $("currentRoomSub");
+      if (roomText) roomText.textContent = currentRoom;
+
+      const tId = tabForRoom(currentRoom);
+      const tLabel = (TAB_DEFS.find(t => t.id === tId)?.label) || "";
+      if (roomSub) roomSub.textContent = tLabel;
     }
 
     // ===== UI =====
@@ -749,6 +925,7 @@
       renderTabs();
       renderRoomButtons();
       renderRoom(true);
+      updateCurrentRoomBadge();
       saveState();
     }
 
@@ -765,6 +942,7 @@
       renderTabs();
       renderRoomButtons();
       renderRoom(!!scrollNext);
+      updateCurrentRoomBadge();
 
       saveState();
     }
@@ -814,7 +992,7 @@
 
     function iconHtml(cfg, returned, used){
       if (returned){
-        return `<div class="icon-bg"><img class="state-icon" src="${ICONS.returned}" alt="반출"></div>`;
+        return `<div class="icon-bg used"><img class="state-icon" src="${ICONS.returned}" alt="반출"></div>`;
       }
       if (!used) return ``;
 
@@ -853,7 +1031,6 @@
           const idx = c * cfg.dans + r;
           const num = cfg.start + idx;
 
-          /* ✅ end 초과는 “빈칸”으로 채워 그리드 끝까지 유지(35실 문제 해결 포인트) */
           if (num > cfg.end){
             const blank = document.createElement("div");
             blank.className = "niche blank";
@@ -903,7 +1080,7 @@
       }
     }
 
-    // ===== 다음 봉안 UI =====
+    // ===== 다음 봉안 UI (항상 표시) =====
     function computeNextForRooms(rooms){
       let best = null;
       for (const room of rooms){
@@ -924,15 +1101,10 @@
         .filter(r => ROOM_CFG[r] && (ROOM_CFG[r].roomNum <= 59 || r === "61실" || r === "62실"));
       nextPersonal = computeNextForRooms(allPersonal);
 
-      const wrap = $("nextWrap");
       const cText = $("nextCoupleText");
       const pText = $("nextPersonalText");
       const cBtn = $("nextCoupleMoveBtn");
       const pBtn = $("nextPersonalMoveBtn");
-
-      const hasAny = !!nextCouple || !!nextPersonal;
-      wrap.style.display = hasAny ? "flex" : "none";
-      if (!hasAny) return;
 
       if (nextCouple){
         const cfg = ROOM_CFG[nextCouple.room];
@@ -953,6 +1125,9 @@
         pText.textContent = "—";
         pBtn.disabled = true;
       }
+
+      renderTabs();
+      renderRoomButtons();
     }
 
     $("nextCoupleMoveBtn").addEventListener("click", () => {
@@ -1022,7 +1197,12 @@
     function applyExcel(aoa){
       for (const room of Object.keys(infoByRoom)) infoByRoom[room] = {};
 
-      if (!aoa || aoa.length === 0) { setMsg("엑셀 비어있음", "error"); return; }
+      if (!aoa || aoa.length === 0) {
+        setMsg("엑셀이 비어있습니다.", "error");
+        updateNextUI();
+        renderRoom(true);
+        return;
+      }
       setMsg("");
 
       const headerRowIndex = guessHeaderRow(aoa);
@@ -1066,9 +1246,8 @@
       }
 
       updateNextUI();
-      renderTabs();
-      renderRoomButtons();
       renderRoom(true);
+      updateCurrentRoomBadge();
       saveState();
     }
 
@@ -1083,7 +1262,10 @@
         const aoa = XLSX.utils.sheet_to_json(ws, { header:1, defval:"" });
         applyExcel(aoa);
       } catch(err){
-        setMsg("엑셀 로딩 실패", "error");
+        setMsg("엑셀 로딩 실패 (파일 경로/권한 확인)", "error");
+        updateNextUI();       // ✅ 실패해도 “다음 봉안 예정”은 유지
+        renderRoom(true);
+        updateCurrentRoomBadge();
       }
     }
 
@@ -1208,10 +1390,14 @@
 
     // ===== start =====
     restoreState();
-    buildLegend();
+    updateCurrentRoomBadge();  // 초기 표시
     renderTabs();
     renderRoomButtons();
     renderRoom(false);
+
+    // “다음 봉안 예정”은 항상 보이므로 초기값 세팅
+    updateNextUI();
+
     loadExcelFromUrl();
   </script>
 </body>
