@@ -537,7 +537,7 @@
   .footer-logo, .global-logo{ display:none !important; }
 
   /* 모달을 1장에 딱 맞게 정리 */
-  .detail-modal{
+ .detail-modal{
     position:absolute;
     top:0;
     left:0;
@@ -552,26 +552,29 @@
     border:none;
     background:#fff;
     padding:0;
+    margin:0;
   }
 
   .modal-actions{ display:none !important; }
 
   .modal-header{
-    padding:1mm 0 2mm 0;
-    border-bottom:0.3mm solid rgba(0,0,0,0.45);
+    padding:1.5mm 0 2mm 0;
+    border-bottom:0.4mm solid #333;
     text-align:center;
   }
 
   /* 제목 글자 더 진하게, 조금 크게 */
-  .modal-title{
-    font-size:16pt;
-    color:#000;
-    font-weight:900;
-    letter-spacing:-0.2px;
-  }
+.modal-title{
+  font-size:16pt;
+  color:#000;
+  font-weight:900;
+  letter-spacing:-0.2px;
+  text-align:center;      /* 가운데 정렬 추가 */
+  margin:0 auto;
+}
 
   .modal-body{
-    padding:2.5mm 0 0 0;
+    padding:2mm 0 1mm 0;  /* 하단 패딩 줄임 */
   }
 
   .info-grid{
