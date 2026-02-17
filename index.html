@@ -842,8 +842,8 @@
       if (!name) return "";
       const trimmed = String(name).substring(0, 3);
       if (trimmed.length === 1) return trimmed;
-      if (trimmed.length === 2) return trimmed[0] + "*";
-      if (trimmed.length === 3) return trimmed[0] + "*" + trimmed[2];
+      if (trimmed.length === 2) return trimmed[0] + "○";
+      if (trimmed.length === 3) return trimmed[0] + "○" + trimmed[2];
       return trimmed;
     }
 
