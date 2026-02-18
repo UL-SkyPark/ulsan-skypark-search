@@ -87,7 +87,7 @@
     .btn-save:hover { background-color: #219150; }
     .btn:disabled { background-color: #ccc; cursor: not-allowed; }
 
-    /* ✅ A1만 보이는 문제의 핵심: overflow hidden 제거 */
+    /* ✅ A1만 보이는 문제 해결: overflow hidden 금지 */
     #hotContainer {
       width: 100%;
       height: 600px;
@@ -120,24 +120,44 @@
       padding: 2px 6px;
       border-radius: 6px;
     }
+
+    .mini {
+      font-size: 12px;
+      color: #666;
+      margin-top: 6px;
+      line-height: 1.35;
+    }
+    .file-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #f3f3f3;
+      border: 1px solid #e4e4e4;
+      font-size: 12px;
+      margin-left: 6px;
+      color: #333;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>봉안 데이터 관리자 (웹 편집)</h1>
+    <h1>
+      봉안 데이터 관리자 (웹 편집)
+      <span id="currentFileBadge" class="file-badge">-</span>
+    </h1>
 
     <div class="config-box">
       <div class="form-group">
-        <label>GitHub ID</label>
-        <input type="text" id="owner" placeholder="예: hong-gildong" />
+        <label>GitHub ID (owner)</label>
+        <input type="text" id="owner" placeholder="예: ul-skypark" />
       </div>
       <div class="form-group">
-        <label>저장소 이름</label>
-        <input type="text" id="repo" placeholder="예: memorial-data" />
+        <label>저장소 이름 (repo)</label>
+        <input type="text" id="repo" placeholder="예: ulsan-skypark-search" />
       </div>
 
-      <!-- ✅ 파일 선택을 쉽게 -->
+      <!-- ✅ 파일 선택 쉽게: 2개 고정 + 직접 입력 -->
       <div class="form-group">
         <label>편집할 파일 선택</label>
         <select id="fileSelect" onchange="onFileSelectChange()">
@@ -148,18 +168,22 @@
       </div>
 
       <div class="form-group">
-        <label>파일 경로</label>
+        <label>파일 경로 (repo 기준)</label>
         <input type="text" id="path" value="data/deceased_data.xlsx" />
+        <div class="mini">예: <code>data/deceased_data.xlsx</code></div>
       </div>
 
+      <!-- ✅ 브랜치는 main 고정(요청사항) -->
       <div class="form-group">
-        <label>브랜치(선택)</label>
-        <input type="text" id="branch" placeholder="예: main (비우면 기본 브랜치)" />
+        <label>브랜치</label>
+        <input type="text" id="branch" value="main" readonly />
+        <div class="mini">현재 페이지는 main 브랜치 기준으로 동작</div>
       </div>
 
       <div class="form-group">
         <label>Access Token</label>
         <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" />
+        <div class="mini">토큰은 로컬 저장됨(브라우저). 공유/노출 주의</div>
       </div>
     </div>
 
@@ -172,7 +196,7 @@
     <div id="hotContainer"></div>
 
     <div class="hint">
-      팁) GitHub 파일 주소에 <code>blob/main</code> 같은 건 넣지 말고, 저장소 기준 경로만 넣으면 돼.
+      GitHub 파일 주소에 <code>blob/main</code> 같은 건 넣지 말고, 저장소 기준 경로만 넣으면 돼.
       예: <code>data/deceased_data.xlsx</code>
     </div>
   </div>
@@ -182,21 +206,27 @@
     let currentSha = "";
     let isDirty = false;
 
-    const LS_KEYS = ['gh_owner', 'gh_repo', 'gh_path', 'gh_token', 'gh_branch', 'gh_fileSelect'];
+    // main 고정
+    const BRANCH = "main";
+
+    // 편의: 저장된 기본값 (원하면 여기 owner/repo 기본값 박아도 됨)
+    // const DEFAULT_OWNER = "ul-skypark";
+    // const DEFAULT_REPO  = "ulsan-skypark-search";
 
     window.onload = () => {
-      // 설정값 불러오기
+      // 로컬 저장값 불러오기
       const savedOwner = localStorage.getItem('gh_owner');
       const savedRepo  = localStorage.getItem('gh_repo');
       const savedPath  = localStorage.getItem('gh_path');
       const savedToken = localStorage.getItem('gh_token');
-      const savedBranch = localStorage.getItem('gh_branch');
       const savedFileSelect = localStorage.getItem('gh_fileSelect');
 
       if (savedOwner) document.getElementById('owner').value = savedOwner;
       if (savedRepo)  document.getElementById('repo').value  = savedRepo;
       if (savedToken) document.getElementById('token').value = savedToken;
-      if (savedBranch) document.getElementById('branch').value = savedBranch;
+
+      // 브랜치 고정
+      document.getElementById('branch').value = BRANCH;
 
       if (savedFileSelect) {
         document.getElementById('fileSelect').value = savedFileSelect;
@@ -209,8 +239,16 @@
       } else if (savedPath) {
         document.getElementById('path').value = savedPath;
       }
+
       onFileSelectChange(true);
+      updateCurrentFileBadge();
     };
+
+    function updateCurrentFileBadge() {
+      const badge = document.getElementById('currentFileBadge');
+      const path = document.getElementById('path').value.trim();
+      badge.textContent = path ? path : "-";
+    }
 
     function onFileSelectChange(isInit = false) {
       const sel = document.getElementById('fileSelect').value;
@@ -226,6 +264,7 @@
 
       localStorage.setItem('gh_fileSelect', sel);
       localStorage.setItem('gh_path', pathInput.value.trim());
+      updateCurrentFileBadge();
     }
 
     function showStatus(msg, type) {
@@ -242,7 +281,7 @@
       document.getElementById('saveBtn').disabled = !enabled;
     }
 
-    // base64 -> Uint8Array (GitHub content 줄바꿈 제거)
+    // base64(content) -> Uint8Array (줄바꿈 제거)
     function base64ToUint8Array(base64) {
       const clean = base64.replace(/\s/g, '');
       const binaryString = atob(clean);
@@ -252,10 +291,10 @@
       return bytes;
     }
 
-    // Uint8Array -> base64 (대용량 안정 chunk)
+    // Uint8Array -> base64 (대용량도 안전하게 chunk 처리)
     function uint8ArrayToBase64(u8) {
       let binary = '';
-      const chunkSize = 0x8000;
+      const chunkSize = 0x8000; // 32KB
       for (let i = 0; i < u8.length; i += chunkSize) {
         const chunk = u8.subarray(i, i + chunkSize);
         binary += String.fromCharCode.apply(null, chunk);
@@ -268,22 +307,19 @@
       const repo  = document.getElementById('repo').value.trim();
       const path  = document.getElementById('path').value.trim();
       const token = document.getElementById('token').value.trim();
-      const branch = document.getElementById('branch').value.trim(); // optional
-      return { owner, repo, path, token, branch };
+      return { owner, repo, path, token, branch: BRANCH };
     }
 
-    function saveInputsToLocalStorage({owner, repo, path, token, branch}) {
+    function saveInputsToLocalStorage({owner, repo, path, token}) {
       localStorage.setItem('gh_owner', owner);
       localStorage.setItem('gh_repo', repo);
       localStorage.setItem('gh_path', path);
       localStorage.setItem('gh_token', token);
-      localStorage.setItem('gh_branch', branch);
     }
 
     function buildContentsUrl(owner, repo, path, branch) {
-      let url = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}`;
-      if (branch) url += `?ref=${encodeURIComponent(branch)}`;
-      return url;
+      // branch main 고정으로 ref 붙여서 확실히
+      return `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(branch)}`;
     }
 
     async function loadFile() {
@@ -294,7 +330,8 @@
         return;
       }
 
-      saveInputsToLocalStorage({owner, repo, path, token, branch});
+      saveInputsToLocalStorage({owner, repo, path, token});
+      updateCurrentFileBadge();
 
       showStatus('GitHub에서 파일 불러오는 중...', 'loading');
       document.getElementById('loadBtn').disabled = true;
@@ -317,29 +354,44 @@
 
         const data = await res.json();
 
-        // 폴더면 배열로 옴
+        // 폴더면 배열
         if (Array.isArray(data)) {
           throw new Error(
-            "현재 경로는 '폴더'로 인식됐어.\n" +
-            "파일 경로를 정확히 .xlsx까지 입력해줘.\n\n" +
-            `예) data/deceased_data.xlsx 또는 data/nature_data.xlsx`
+            "현재 경로가 폴더로 인식됐어.\n" +
+            "반드시 .xlsx까지 포함한 파일 경로로 입력해줘.\n\n" +
+            "예) data/deceased_data.xlsx"
           );
         }
 
-        if (!data.content) {
+        currentSha = data.sha || "";
+
+        // ✅ 핵심: content가 없으면 download_url로 ArrayBuffer 로드
+        let fileBytes = null;
+
+        if (data.content) {
+          fileBytes = base64ToUint8Array(data.content);
+        } else if (data.download_url) {
+          const fileRes = await fetch(data.download_url, {
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Accept": "application/octet-stream"
+            }
+          });
+          if (!fileRes.ok) {
+            const txt = await fileRes.text();
+            throw new Error(`다운로드 URL로 로드 실패 (${fileRes.status})\n${txt}`);
+          }
+          const buf = await fileRes.arrayBuffer();
+          fileBytes = new Uint8Array(buf);
+        } else {
           throw new Error(
-            "GitHub 응답에 파일 content가 없어.\n" +
-            "1) 경로가 파일이 맞는지\n" +
-            "2) 브랜치(main/master 등)가 맞는지\n" +
-            "3) 토큰 권한(repo)이 있는지 확인해줘."
+            "GitHub 응답에 content/download_url이 없어.\n" +
+            "경로/권한/브랜치를 확인해줘."
           );
         }
 
-        currentSha = data.sha;
-
-        const bytes = base64ToUint8Array(data.content);
-
-        const wb = XLSX.read(bytes, { type: 'array' });
+        // 엑셀 파싱
+        const wb = XLSX.read(fileBytes, { type: 'array' });
         const ws = wb.Sheets[wb.SheetNames[0]];
         const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
 
@@ -359,14 +411,15 @@
       const container = document.getElementById('hotContainer');
       container.innerHTML = '';
 
-      const headers = (aoa && aoa.length > 0) ? aoa[0] : [];
+      // 첫 행을 헤더로 사용 (헤더는 편집에서 제외)
+      const headers  = (aoa && aoa.length > 0) ? aoa[0] : [];
       const bodyData = (aoa && aoa.length > 1) ? aoa.slice(1) : [];
 
       hot = new Handsontable(container, {
         data: bodyData,
         rowHeaders: true,
         colHeaders: headers,
-        height: 600,            // ✅ 레이아웃 꼬임 방지
+        height: 600,        // ✅ 레이아웃 꼬임 방지
         width: '100%',
         stretchH: 'all',
         licenseKey: 'non-commercial-and-evaluation',
@@ -383,7 +436,7 @@
         }
       });
 
-      // ✅ 초기 렌더링/치수 계산 안정화 (A1만 보이는 현상 방지)
+      // ✅ A1만 보이는 현상 방지
       setTimeout(() => {
         if (hot) {
           hot.render();
@@ -426,12 +479,13 @@
         const bytes = new Uint8Array(wbOut);
         const contentBase64 = uint8ArrayToBase64(bytes);
 
-        let apiUrl = buildContentsUrl(owner, repo, path, branch);
+        const apiUrl = buildContentsUrl(owner, repo, path, branch);
 
         const putBody = {
           message: `Update data via Admin Page: ${new Date().toISOString()}`,
           content: contentBase64,
-          sha: currentSha
+          sha: currentSha,
+          branch: branch
         };
 
         const res = await fetch(apiUrl, {
@@ -450,7 +504,7 @@
         }
 
         const resData = await res.json();
-        currentSha = resData.content.sha;
+        currentSha = resData.content?.sha || currentSha;
         isDirty = false;
 
         showStatus('성공적으로 저장되었습니다! (반영까지 1~2분 소요)', 'success');
