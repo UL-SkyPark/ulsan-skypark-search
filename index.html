@@ -14,7 +14,7 @@
   <!-- 웹폰트 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -24,7 +24,7 @@
       --tertiary: #9ca3af;
       --accent: #8b8378;
       --accent-light: #b5ada0;
-      --bg-primary: rgba(252, 252, 252, 0.65);
+      --bg-primary: rgba(252, 252, 252, 0.70);
       --bg-secondary: rgba(255, 255, 255, 0.88);
       --card-bg: rgba(255, 255, 255, 0.92);
       --text-primary: #2d3748;
@@ -65,10 +65,10 @@
       right: 0;
       bottom: 0;
       background: linear-gradient(180deg, 
-        rgba(252, 252, 252, 0.65) 0%, 
-        rgba(248, 248, 248, 0.60) 30%,
-        rgba(250, 250, 250, 0.62) 70%, 
-        rgba(245, 245, 245, 0.68) 100%);
+        rgba(252, 252, 252, 0.70) 0%, 
+        rgba(248, 248, 248, 0.68) 30%,
+        rgba(250, 250, 250, 0.68) 70%, 
+        rgba(245, 245, 245, 0.70) 100%);
       z-index: -1;
     }
 
@@ -81,14 +81,14 @@
     /* 헤더 영역 */
     .header {
       text-align: center;
-      padding: 70px 24px 50px;
+      padding: 60px 24px 50px;
       background: var(--bg-primary);
       border-bottom: 1px solid var(--border-light);
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
     }
 
     .logo {
-      margin-bottom: 40px;
+      margin-bottom: 35px;
       animation: fadeInDown 1s ease-out;
     }
 
@@ -138,59 +138,61 @@
 
     /* 메인 콘텐츠 */
     .main-content {
-      padding: 70px 24px;
+      padding: 60px 24px;
     }
 
     /* 공지사항 배너 */
     .notice-banner {
-      max-width: 900px;
-      margin: 0 auto 50px;
-      padding: 24px 32px;
+      max-width: 1000px;
+      margin: 0 auto 45px;
+      padding: 28px 36px;
       background: rgba(255, 255, 255, 0.95);
       border: 1.5px solid rgba(139, 131, 120, 0.3);
       border-left: 4px solid var(--accent);
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
       animation: fadeInUp 1s ease-out 0.8s both;
     }
 
     .notice-banner .notice-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      font-weight: 600;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-weight: 700;
       color: var(--primary);
-      font-size: 16px;
+      font-size: 18px;
     }
 
     .notice-banner .notice-content {
       color: var(--text-primary);
-      font-size: 14.5px;
+      font-size: 16px;
       line-height: 1.8;
-      padding-left: 28px;
+      padding-left: 32px;
+      font-weight: 500;
     }
 
-    .notice-banner .notice-content strong {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .notice-banner .notice-item {
-      margin-bottom: 10px;
-    }
-
-    .notice-banner .notice-item:last-child {
-      margin-bottom: 0;
+    /* 버튼 그리드 */
+    .buttons-section {
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     .buttons-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-      max-width: 950px;
-      margin: 0 auto 70px;
+      gap: 28px;
+      margin-bottom: 28px;
       animation: fadeInUp 1s ease-out 1s both;
+    }
+
+    .buttons-grid-bottom {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      max-width: 700px;
+      margin: 0 auto 60px;
+      animation: fadeInUp 1s ease-out 1.2s both;
     }
 
     .circle-btn {
@@ -204,8 +206,8 @@
       border-radius: 50%;
       text-decoration: none;
       color: var(--text-primary);
-      font-size: clamp(16px, 2vw, 19px);
-      font-weight: 500;
+      font-size: clamp(15px, 1.9vw, 18px);
+      font-weight: 600;
       padding: 35px 24px;
       box-shadow: var(--shadow-soft);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -238,7 +240,7 @@
     }
 
     .circle-btn .icon {
-      font-size: clamp(36px, 4.5vw, 50px);
+      font-size: clamp(38px, 4.5vw, 50px);
       margin-bottom: 16px;
       position: relative;
       z-index: 1;
@@ -264,7 +266,7 @@
       border-radius: 20px;
       box-shadow: var(--shadow-soft);
       border: 1px solid var(--border-light);
-      animation: fadeInUp 1s ease-out 1.2s both;
+      animation: fadeInUp 1s ease-out 1.4s both;
     }
 
     .info-section h2 {
@@ -359,56 +361,6 @@
       margin-bottom: 8px;
     }
 
-    /* 장례식장 링크 박스 */
-    .funeral-link-box {
-      max-width: 950px;
-      margin: 0 auto 70px;
-      animation: fadeInUp 1s ease-out 1.3s both;
-    }
-
-    .funeral-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      padding: 22px 36px;
-      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 255, 255, 0.85) 100%);
-      border: 1.5px solid var(--accent-light);
-      border-radius: 16px;
-      text-decoration: none;
-      color: var(--primary);
-      font-size: clamp(15px, 2vw, 17px);
-      font-weight: 500;
-      box-shadow: var(--shadow-subtle);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      letter-spacing: -0.2px;
-    }
-
-    .funeral-link:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-soft);
-      border-color: var(--accent);
-      background: linear-gradient(135deg, #ffffff 0%, var(--card-bg) 100%);
-    }
-
-    .funeral-link::before {
-      content: '🏛️';
-      font-size: 26px;
-      opacity: 0.9;
-    }
-
-    .funeral-link::after {
-      content: '→';
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--accent);
-      transition: transform 0.3s ease;
-    }
-
-    .funeral-link:hover::after {
-      transform: translateX(5px);
-    }
-
     /* 찾아오시는 길 */
     .map-section {
       max-width: 950px;
@@ -418,7 +370,7 @@
       border-radius: 20px;
       box-shadow: var(--shadow-soft);
       border: 1px solid var(--border-light);
-      animation: fadeInUp 1s ease-out 1.4s both;
+      animation: fadeInUp 1s ease-out 1.6s both;
     }
 
     .map-section h2 {
@@ -634,16 +586,34 @@
     }
 
     /* 반응형 디자인 */
+    @media (max-width: 1024px) {
+      .buttons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 600px;
+        margin: 0 auto 28px;
+      }
+
+      .buttons-grid .circle-btn:last-child {
+        grid-column: 1 / -1;
+        max-width: 280px;
+        margin: 0 auto;
+      }
+
+      .buttons-grid-bottom {
+        max-width: 600px;
+      }
+    }
+
     @media (max-width: 768px) {
       body::before {
         background: linear-gradient(180deg, 
-          rgba(252, 252, 252, 0.72) 0%, 
-          rgba(248, 248, 248, 0.68) 50%, 
-          rgba(245, 245, 245, 0.72) 100%);
+          rgba(252, 252, 252, 0.75) 0%, 
+          rgba(248, 248, 248, 0.72) 50%, 
+          rgba(245, 245, 245, 0.75) 100%);
       }
 
       .header {
-        padding: 50px 20px 35px;
+        padding: 45px 20px 35px;
       }
 
       .logo img {
@@ -656,51 +626,60 @@
       }
 
       .main-content {
-        padding: 50px 20px;
+        padding: 45px 20px;
       }
 
       .notice-banner {
-        margin-bottom: 40px;
-        padding: 20px 24px;
+        margin-bottom: 35px;
+        padding: 22px 26px;
+      }
+
+      .notice-banner .notice-header {
+        font-size: 16px;
       }
 
       .notice-banner .notice-content {
         padding-left: 0;
-        margin-top: 8px;
-        font-size: 14px;
+        margin-top: 10px;
+        font-size: 15px;
+      }
+
+      .buttons-grid,
+      .buttons-grid-bottom {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .buttons-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
-        max-width: 340px;
-        margin-bottom: 55px;
+        margin-bottom: 24px;
+      }
+
+      .buttons-grid-bottom {
+        margin-bottom: 50px;
+      }
+
+      .buttons-grid .circle-btn:last-child {
+        grid-column: auto;
+        max-width: 100%;
       }
 
       .circle-btn {
-        max-width: 340px;
+        max-width: 320px;
         margin: 0 auto;
       }
 
       .info-section,
       .map-section {
         padding: 40px 24px;
-        margin-bottom: 55px;
+        margin-bottom: 50px;
       }
 
       .info-grid {
         grid-template-columns: 1fr;
         gap: 20px;
-      }
-
-      .funeral-link-box {
-        margin-bottom: 55px;
-        padding: 0 10px;
-      }
-
-      .funeral-link {
-        padding: 20px 28px;
-        font-size: 15px;
       }
 
       .map-info {
@@ -734,12 +713,20 @@
         font-size: 15px;
       }
 
+      .notice-banner .notice-header {
+        font-size: 15px;
+      }
+
+      .notice-banner .notice-content {
+        font-size: 14px;
+      }
+
       .circle-btn .icon {
-        font-size: 38px;
+        font-size: 36px;
       }
 
       .circle-btn .text {
-        font-size: 16px;
+        font-size: 15px;
       }
 
       .info-item .label {
@@ -756,7 +743,8 @@
       .admin-link,
       .scroll-to-top,
       .footer-links,
-      .notice-banner {
+      .notice-banner,
+      .memorial-quote {
         display: none;
       }
 
@@ -767,7 +755,7 @@
         page-break-inside: avoid;
       }
 
-      .buttons-grid {
+      .buttons-section {
         page-break-inside: avoid;
       }
     }
@@ -799,7 +787,7 @@
     <div class="logo">
       <img src="./images/ulsan_logo1.png" alt="울산하늘공원 로고">
     </div>
-    <h1 class="main-title">"삼가 고인의 명복을 빕니다."</h1>
+    <h1 class="main-title">삼가 고인의 명복을 빕니다.</h1>
     <p class="sub-title">한분 한분 정성을 다해 모시겠습니다.</p>
     
     <div class="memorial-quote">
@@ -816,34 +804,45 @@
       <div class="notice-banner">
         <div class="notice-header">
           <span>📢</span>
-          <span>공지사항</span>
+          <span>안내사항</span>
         </div>
         <div class="notice-content">
-          <div class="notice-item">
-            <strong>동절기 화장예약 집중기간</strong> 중 울산시민 3일장 화장 확대 운영을 시행하고 있습니다.
-          </div>
-          <div class="notice-item" style="margin-top: 12px;">
-            설날 및 추석 당일에는 승화원이 휴무입니다. 자세한 사항은 전화 문의 바랍니다. (☎ 052-255-3800)
-          </div>
+          본 페이지는 고인 검색 및 추모의집 안치 현황 안내를 위한 임시 운영 페이지입니다.
         </div>
       </div>
       
       <!-- 버튼 영역 -->
-      <div class="buttons-grid">
-        <a href="search.html" class="circle-btn" aria-label="울산하늘공원 고인 검색">
-          <span class="icon">🔍</span>
-          <span class="text">울산하늘공원<br>고인 검색</span>
-        </a>
+      <div class="buttons-section">
+        <!-- 상단 버튼 3개 -->
+        <div class="buttons-grid">
+          <a href="search.html" class="circle-btn" aria-label="울산하늘공원 고인 검색">
+            <span class="icon">🔍</span>
+            <span class="text">울산하늘공원<br>고인 검색</span>
+          </a>
 
-        <a href="https://www.15774129.go.kr/new/esky_p/esky_index.do" class="circle-btn" target="_blank" rel="noopener noreferrer" aria-label="온라인 화장예약">
-          <span class="icon">📅</span>
-          <span class="text">온라인<br>화장예약</span>
-        </a>
+          <a href="https://www.15774129.go.kr/new/esky_p/esky_index.do" class="circle-btn" target="_blank" rel="noopener noreferrer" aria-label="온라인 화장예약">
+            <span class="icon">📅</span>
+            <span class="text">온라인<br>화장예약</span>
+          </a>
 
-        <a href="room.html" class="circle-btn" aria-label="추모의집 봉안 현황">
-          <span class="icon">🏛️</span>
-          <span class="text">추모의집<br>봉안 현황</span>
-        </a>
+          <a href="room.html" class="circle-btn" aria-label="추모의집 봉안 현황">
+            <span class="icon">🏛️</span>
+            <span class="text">추모의집<br>안치 현황</span>
+          </a>
+        </div>
+
+        <!-- 하단 버튼 2개 -->
+        <div class="buttons-grid-bottom">
+          <a href="https://www.uic.or.kr/skypark/main/mainPage.do" class="circle-btn" target="_blank" rel="noopener noreferrer" aria-label="울산하늘공원 홈페이지">
+            <span class="icon">🌐</span>
+            <span class="text">울산하늘공원<br>홈페이지</span>
+          </a>
+
+          <a href="https://www.ulsanskypark.com/" class="circle-btn" target="_blank" rel="noopener noreferrer" aria-label="울산하늘공원 장례식장">
+            <span class="icon">🏥</span>
+            <span class="text">울산하늘공원<br>장례식장(주)</span>
+          </a>
+        </div>
       </div>
 
       <!-- 시설 운영 안내 -->
@@ -880,13 +879,6 @@
           <strong>052-255-3800</strong>
         </div>
       </section>
-
-      <!-- 울산하늘공원 링크 -->
-      <div class="funeral-link-box">
-        <a href="https://www.uic.or.kr/skypark/main/mainPage.do" class="funeral-link" target="_blank" rel="noopener noreferrer">
-          울산하늘공원 홈페이지 바로가기
-        </a>
-      </div>
 
       <!-- 찾아오시는 길 -->
       <section class="map-section" id="location">
@@ -936,6 +928,8 @@
       <a href="tel:052-255-3800">📞 전화 문의</a>
       <span style="color: #cbd5e1;">|</span>
       <a href="https://www.uic.or.kr/skypark/main/mainPage.do" target="_blank" rel="noopener noreferrer">울산하늘공원</a>
+      <span style="color: #cbd5e1;">|</span>
+      <a href="https://www.ulsanskypark.com/" target="_blank" rel="noopener noreferrer">장례식장</a>
       <span style="color: #cbd5e1;">|</span>
       <a href="#operating-hours">시설 운영 안내</a>
       <span style="color: #cbd5e1;">|</span>
@@ -1030,7 +1024,7 @@
       console.log('울산하늘공원 페이지 로드 완료');
       
       // 접근성: 키보드 네비게이션 지원
-      document.querySelectorAll('.circle-btn, .funeral-link').forEach(btn => {
+      document.querySelectorAll('.circle-btn').forEach(btn => {
         btn.addEventListener('keydown', function(e) {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -1038,11 +1032,6 @@
           }
         });
       });
-    });
-
-    // 인쇄 전 처리
-    window.addEventListener('beforeprint', function() {
-      console.log('페이지 인쇄 준비');
     });
   </script>
 </body>
