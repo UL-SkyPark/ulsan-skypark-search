@@ -235,28 +235,36 @@
       padding-top: 10px;
       border-top: 1px solid rgba(0,0,0,0.06);
     }
-    .room-btn{
-      padding: 8px 12px;
-      border-radius: 12px;
-      border:1px solid var(--panel-border);
-      background:#fff;
-      cursor:pointer;
-      font-weight: 950;
-      color:#3a332e;
-      min-height: 40px;
-    }
+ .room-btn {
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+  background: #fff; /* 모든 버튼 흰색 배경으로 통일 */
+  cursor: pointer;
+  font-weight: 950;
+  color: #3a332e;
+  min-height: 40px;
+  transition: all 0.2s ease;
+}
 
-    .room-btn.active{
-      background:#e3ddd3;
-      border-color:#9b8670;
-      box-shadow: 0 0 0 2px rgba(155,134,112,0.45);
-      color:#2b241e;
-    }
+/* 마우스 올렸을 때 */
+.room-btn:hover {
+  background: #f4f0eb;
+}
 
-    .room-btn.next-room{
-      color:#333843;
-      border-color:#c2c7d5;
-      background:#f4f5f9;
+/* [중요] 현재 선택된 방 강조 (09실, 62실 포함 모든 방 동일) */
+.room-btn.active {
+  background: #e3ddd3 !important; /* 강제 적용 */
+  border-color: #9b8670 !important;
+  box-shadow: 0 0 0 2px rgba(155, 134, 112, 0.45);
+  color: #2b241e !important;
+}
+
+/* 다음 봉안 예정실 (09실, 62실 등) - 붉은색/파란색 제거하고 테두리만 살짝 강조 */
+.room-btn.next-room {
+  border-color: #c2c7d5; /* 테두리만 은은하게 차이 둠 */
+  background: #fff;      /* 배경은 일반 버튼과 동일하게 */
+  color: #333843;
     }
 
     .legend{
@@ -753,27 +761,29 @@
       }
     }
 
-    function renderRoomButtons(){
-      const wrap = $("roomBtns");
-      wrap.innerHTML = "";
+function renderRoomButtons() {
+  const wrap = $("roomBtns");
+  wrap.innerHTML = "";
 
-      const tab = TAB_DEFS.find(x => x.id === activeTabId);
-      const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
+  const tab = TAB_DEFS.find(x => x.id === activeTabId);
+  const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
 
-      for (const room of rooms){
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "room-btn" + (room === currentRoom ? " active" : "");
+  for (const room of rooms) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    // 현재 선택된 방(currentRoom)과 일치하면 무조건 active 클래스 부여
+    btn.className = "room-btn" + (room === currentRoom ? " active" : "");
 
-        if (room === nextCouple?.room || room === nextPersonal?.room){
-          btn.classList.add("next-room");
-        }
-
-        btn.textContent = room;
-        btn.addEventListener("click", () => setRoom(room, true));
-        wrap.appendChild(btn);
-      }
+    // 다음 봉안 예정지가 포함된 방인 경우 표시 (스타일은 CSS에서 제어)
+    if (room === nextCouple?.room || room === nextPersonal?.room) {
+      btn.classList.add("next-room");
     }
+
+    btn.textContent = room;
+    btn.addEventListener("click", () => setRoom(room, true));
+    wrap.appendChild(btn);
+  }
+}
 
     function setTab(tabId){
       if (!TAB_DEFS.some(t => t.id === tabId)) return;
