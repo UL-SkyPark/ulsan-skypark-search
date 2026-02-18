@@ -19,25 +19,26 @@
 
   <style>
     :root{
-      --bg:#f6f8ff;
+      /* Warm Yellow (Soft) Theme */
+      --bg:#fffaf0;              /* warm ivory */
       --panel:#ffffff;
       --text:#0f172a;
-      --muted:#64748b;
-      --line:#e7ecff;
+      --muted:#6b7280;
+      --line:#f2e6c7;
 
-      --primary:#7aa7ff;
-      --primary-h:#6a97f2;
-      --accent:#a8d8ff;
+      --primary:#f2c94c;         /* soft amber */
+      --primary-h:#e9b93a;
+      --accent:#ffe9a6;
 
-      --success:#5ccf9b;
-      --success-h:#4fbe8c;
+      --success:#47c997;
+      --success-h:#3db987;
 
-      --ghost:#f3f6ff;
-      --ghost-h:#e9efff;
+      --ghost:#fff4dc;
+      --ghost-h:#ffefc6;
 
       --danger:#b42318;
 
-      --shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+      --shadow: 0 16px 44px rgba(15, 23, 42, 0.10);
       --radius:16px;
     }
 
@@ -45,7 +46,10 @@
     body{
       margin:0;
       padding:22px;
-      background: radial-gradient(1200px 600px at 50% -220px, rgba(122,167,255,0.18), rgba(0,0,0,0)) , var(--bg);
+      background:
+        radial-gradient(1200px 600px at 50% -220px, rgba(242,201,76,0.22), rgba(0,0,0,0)),
+        radial-gradient(900px 520px at 10% 10%, rgba(255,233,166,0.25), rgba(0,0,0,0)),
+        var(--bg);
       color:var(--text);
       font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       display:flex;
@@ -71,7 +75,7 @@
       justify-content:space-between;
       gap:12px;
       border-bottom:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(122,167,255,0.10), rgba(255,255,255,1));
+      background: linear-gradient(180deg, rgba(242,201,76,0.18), rgba(255,255,255,1));
     }
     .header-left{
       display:flex;
@@ -102,9 +106,9 @@
       border-radius:999px;
       font-size:14px;
       font-weight:850;
-      color:#0f172a;
-      background:#f0f5ff;
-      border:1px solid #d9e5ff;
+      color:#3b2f13;
+      background:#fff6da;
+      border:1px solid #f2e1b2;
       white-space:nowrap;
     }
     .badge b{ font-weight:950; }
@@ -129,8 +133,8 @@
       justify-content:center;
     }
     .seg-wrap{
-      background:#eef5ff;
-      border:1px solid #d9e5ff;
+      background:#fff6dc;
+      border:1px solid #f2e1b2;
       border-radius:999px;
       padding:5px;
       display:inline-flex;
@@ -145,15 +149,19 @@
       border-radius:999px;
       font-weight:950;
       font-size:18px; /* 크게 */
-      color:#1f2a44;
+      color:#2b1f09;
       transition:0.18s;
       min-width:160px;
     }
+    .seg-btn:disabled{
+      opacity:0.55;
+      cursor:not-allowed;
+    }
     .seg-btn.active{
-      background: linear-gradient(180deg, rgba(168,216,255,0.95), rgba(122,167,255,0.80));
-      color:#0b1b3a;
-      box-shadow: 0 10px 20px rgba(122,167,255,0.25);
-      border:1px solid rgba(122,167,255,0.35);
+      background: linear-gradient(180deg, rgba(255,233,166,0.98), rgba(242,201,76,0.88));
+      color:#2b1f09;
+      box-shadow: 0 10px 20px rgba(242,201,76,0.28);
+      border:1px solid rgba(242,201,76,0.40);
     }
 
     /* Sections */
@@ -207,8 +215,8 @@
       transition:0.15s;
     }
     .form-group input:focus{
-      border-color:#c6d7ff;
-      box-shadow:0 0 0 5px rgba(122,167,255,0.16);
+      border-color:#f2d68b;
+      box-shadow:0 0 0 5px rgba(242,201,76,0.20);
     }
 
     .toolbar{
@@ -235,29 +243,60 @@
       gap:8px;
     }
     .btn:disabled{ opacity:0.55; cursor:not-allowed; }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn:active{ transform: translateY(0px); }
+    .btn:focus-visible{
+      outline:none;
+      box-shadow:0 0 0 5px rgba(242,201,76,0.22);
+    }
 
     .btn-primary{
-      background: linear-gradient(180deg, rgba(190,225,255,0.95), rgba(122,167,255,0.78));
-      color:#0b1b3a;
-      border-color: rgba(122,167,255,0.30);
-      box-shadow: 0 10px 18px rgba(122,167,255,0.18);
+      background: linear-gradient(180deg, rgba(255,241,194,0.98), rgba(242,201,76,0.88));
+      color:#2b1f09;
+      border-color: rgba(242,201,76,0.45);
+      box-shadow: 0 10px 18px rgba(242,201,76,0.20);
     }
-    .btn-primary:hover{ filter:brightness(0.985); }
+    .btn-primary:hover{ filter:brightness(0.99); }
 
     .btn-ghost{
       background:var(--ghost);
-      border-color:#dbe6ff;
-      color:#0f172a;
+      border-color:#f2e1b2;
+      color:#2b1f09;
     }
     .btn-ghost:hover{ background:var(--ghost-h); }
 
     .btn-success{
-      background: linear-gradient(180deg, rgba(190,255,231,0.92), rgba(92,207,155,0.82));
+      background: linear-gradient(180deg, rgba(205,255,237,0.96), rgba(71,201,151,0.86));
       color:#0b2a1c;
-      border-color: rgba(92,207,155,0.28);
-      box-shadow: 0 10px 18px rgba(92,207,155,0.14);
+      border-color: rgba(71,201,151,0.30);
+      box-shadow: 0 10px 18px rgba(71,201,151,0.16);
     }
-    .btn-success:hover{ filter:brightness(0.985); }
+    .btn-success:hover{ filter:brightness(0.99); }
+
+    /* Token input UX */
+    .input-with-btn{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .icon-btn{
+      border:1px solid #f2e1b2;
+      background:#fff6da;
+      color:#2b1f09;
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:950;
+      cursor:pointer;
+      transition:0.15s;
+      white-space:nowrap;
+    }
+    .icon-btn:hover{ background:#ffefc6; transform: translateY(-1px); }
+    .field-help{
+      margin-top:8px;
+      font-size:13px;
+      color:var(--muted);
+      font-weight:800;
+    }
 
     /* Load hint (no box, polite, thin, big) */
     .load-hint{
@@ -265,7 +304,7 @@
       margin-right:10px;
       font-size:19px;
       font-weight:420;
-      color:#9b1c1c;
+      color:#8a5a12;
       letter-spacing:-0.2px;
       align-items:center;
       gap:8px;
@@ -288,26 +327,31 @@
       animation: blinkPulse 1.2s infinite;
     }
     @keyframes blinkPulse{
-      0%{ transform:translateY(0); box-shadow: 0 10px 18px rgba(122,167,255,0.18); }
-      50%{ transform:translateY(-1px); box-shadow: 0 14px 26px rgba(122,167,255,0.30); }
-      100%{ transform:translateY(0); box-shadow: 0 10px 18px rgba(122,167,255,0.18); }
+      0%{ transform:translateY(0); box-shadow: 0 10px 18px rgba(242,201,76,0.20); }
+      50%{ transform:translateY(-1px); box-shadow: 0 14px 26px rgba(242,201,76,0.32); }
+      100%{ transform:translateY(0); box-shadow: 0 10px 18px rgba(242,201,76,0.20); }
     }
 
-    /* Status */
+    /* Status (sticky toast) */
     .status{
       display:none;
+      position: sticky;
+      top: 12px;
+      z-index: 50;
       margin:10px 0 12px;
       padding:12px 14px;
       border-radius:16px;
       border:1px solid var(--line);
-      background:#fff;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
       color:#111827;
       white-space:pre-wrap;
       font-size:16px;
+      cursor:pointer;
     }
     .status.success{ border-color:#c7f3dd; background:#effdf7; color:#14532d; }
     .status.error{ border-color:#fecdd3; background:#fff1f2; color:#7f1d1d; }
-    .status.loading{ background:#f6f8ff; color:#334155; }
+    .status.loading{ background:#fff7e1; color:#4b5563; }
 
     .pill{
       display:inline-block;
@@ -316,8 +360,8 @@
       font-size:14px;
       font-weight:900;
       border:1px solid var(--line);
-      background:#f7faff;
-      color:#0f172a;
+      background:#fff7e1;
+      color:#2b1f09;
     }
 
     table.q{
@@ -337,9 +381,10 @@
       vertical-align:middle;
     }
     table.q th{
-      background:#f7faff;
+      background:#fff7e1;
       font-weight:950;
     }
+    table.q tr:nth-child(even) td{ background: rgba(255,233,166,0.10); }
     table.q tr:last-child td{ border-bottom:none; }
     .danger{ color:var(--danger); font-weight:900; }
 
@@ -356,7 +401,7 @@
 
     /* Grid row highlight */
     .hot-row-highlight{
-      background: rgba(122,167,255,0.20) !important;
+      background: rgba(242,201,76,0.22) !important;
     }
 
     /* Modal */
@@ -386,7 +431,7 @@
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      background: linear-gradient(180deg, rgba(122,167,255,0.10), #fff);
+      background: linear-gradient(180deg, rgba(242,201,76,0.14), #fff);
     }
     .modal-title{
       font-size:17px;
@@ -406,6 +451,12 @@
       display:flex;
       justify-content:flex-end;
       gap:10px;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .blink, .load-hint .arrow{ animation:none !important; }
+      .btn:hover{ transform:none; }
+      .icon-btn:hover{ transform:none; }
     }
   </style>
 </head>
@@ -452,9 +503,15 @@
             <label>Repository</label>
             <input type="text" id="repo" placeholder="예: ulsan-skypark-search" />
           </div>
+
+          <!-- 토큰 입력 UX 개선 -->
           <div class="form-group">
             <label>Access Token</label>
-            <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" />
+            <div class="input-with-btn">
+              <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" />
+              <button type="button" class="icon-btn" onclick="toggleToken()">보기</button>
+            </div>
+            <div class="field-help">fine-grained token이면 Contents 권한(읽기/쓰기) 확인해줘.</div>
           </div>
         </div>
 
@@ -468,7 +525,7 @@
       </div>
 
       <!-- 상태 -->
-      <div id="statusMsg" class="status"></div>
+      <div id="statusMsg" class="status" title="클릭하면 닫혀요"></div>
 
       <!-- 일괄등록 -->
       <div class="box">
@@ -601,7 +658,31 @@
       // 로드 전 상태로 시작
       setLoaded(false);
       updateTopBadges(false, savedLoadedAt || "");
+
+      // Enter로 바로 불러오기
+      ["owner","repo","token"].forEach(id=>{
+        const el = document.getElementById(id);
+        el?.addEventListener("keydown", (e)=>{
+          if(e.key === "Enter") loadFile();
+        });
+      });
+
+      // 상태 메시지 클릭하면 닫기
+      document.getElementById("statusMsg")?.addEventListener("click", ()=>{
+        const el = document.getElementById("statusMsg");
+        el.style.display = "none";
+      });
     };
+
+    function toggleToken(){
+      const input = document.getElementById("token");
+      const btn = document.querySelector(".icon-btn");
+      if(!input || !btn) return;
+
+      const isPw = input.type === "password";
+      input.type = isPw ? "text" : "password";
+      btn.textContent = isPw ? "가리기" : "보기";
+    }
 
     // ===== 날짜/시간 =====
     function pad2(n){ return String(n).padStart(2,"0"); }
@@ -664,7 +745,7 @@
     // ===== 공용 상태 =====
     function showStatus(msg, type) {
       const el = document.getElementById("statusMsg");
-      el.textContent = msg;
+      el.textContent = msg + (type === "loading" ? "\n(클릭하면 닫힘)" : "");
       el.className = "status " + type;
       el.style.display = "block";
       if (type === "success") setTimeout(() => (el.style.display = "none"), 2200);
@@ -682,6 +763,10 @@
 
       document.getElementById("saveReturnBtn").disabled = b || !hot || fileKey !== "deceased" || returnQueue.length === 0;
       document.getElementById("clearReturnBtn").disabled = b || fileKey !== "deceased" || returnQueue.length === 0;
+
+      // 대상 버튼 잠금(작업 중 실수 방지)
+      document.getElementById("btnDeceased").disabled = b;
+      document.getElementById("btnNature").disabled = b;
     }
 
     function enableBulkButton(enable) {
@@ -993,6 +1078,9 @@
         updateTopBadges(true, loadedAtText);
 
         showStatus("로드가 완료되었습니다.", "success");
+
+        // 로드 성공 후 그리드로 부드럽게 이동
+        document.getElementById("hotContainer")?.scrollIntoView({ behavior:"smooth", block:"start" });
       } catch (e) {
         enableBulkButton(false);
         setLoaded(false);
@@ -1186,7 +1274,6 @@
         renderAllQueues();
         renderImportLog();
 
-        // 업로드 반영 후: 저장하면 그리드에서 변경분이 하이라이트됨(저장 시점에 실제 데이터 변경)
         showStatus(`업로드 반영이 완료되었습니다.\n신규 ${addedNew}건 / 반환 ${addedRet}건 / 제외 ${skipped}건`, "success");
       } catch (e) {
         showStatus(e.message || String(e), "error");
@@ -1344,7 +1431,7 @@
         const batchSet = new Set();
 
         // 하이라이트 인덱스 준비(추가될 행은 append됨)
-        highlightGlobalIdx = new Set(); // 저장 작업마다 갱신(최근 변경분만 강조)
+        highlightGlobalIdx = new Set();
         const startLen = allRows.length;
 
         for (let i=0; i<newQueue.length; i++) {
@@ -1362,14 +1449,12 @@
           row[idxAp] = q.applicant;
           allRows.push(row);
 
-          // 전역 인덱스(추가된 행)
           highlightGlobalIdx.add(startLen + i);
         }
 
         const merged = [headers, ...allRows];
         await putToGitHub(merged, `Append ${newQueue.length} new rows: ${new Date().toISOString()}`);
 
-        // 그리드 갱신 + 하이라이트
         refreshGridOnly();
 
         newQueue = [];
@@ -1416,7 +1501,6 @@
           if (match.hasReturn) throw new Error(`이미 반환이 등록되어 있습니다: ${q.no} / ${q.deceased} / ${q.applicant}`);
           allRows[match.rowIndex][match.idxReturn] = q.returnDate;
 
-          // 업데이트된 행 하이라이트
           highlightGlobalIdx.add(match.rowIndex);
         }
 
