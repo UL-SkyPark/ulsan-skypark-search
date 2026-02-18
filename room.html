@@ -235,36 +235,25 @@
       padding-top: 10px;
       border-top: 1px solid rgba(0,0,0,0.06);
     }
- .room-btn {
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--panel-border);
-  background: #fff; /* 모든 버튼 흰색 배경으로 통일 */
-  cursor: pointer;
-  font-weight: 950;
-  color: #3a332e;
-  min-height: 40px;
-  transition: all 0.2s ease;
-}
 
-/* 마우스 올렸을 때 */
-.room-btn:hover {
-  background: #f4f0eb;
-}
-
-/* [중요] 현재 선택된 방 강조 (09실, 62실 포함 모든 방 동일) */
-.room-btn.active {
-  background: #e3ddd3 !important; /* 강제 적용 */
-  border-color: #9b8670 !important;
-  box-shadow: 0 0 0 2px rgba(155, 134, 112, 0.45);
-  color: #2b241e !important;
-}
-
-/* 다음 봉안 예정실 (09실, 62실 등) - 붉은색/파란색 제거하고 테두리만 살짝 강조 */
-.room-btn.next-room {
-  border-color: #c2c7d5; /* 테두리만 은은하게 차이 둠 */
-  background: #fff;      /* 배경은 일반 버튼과 동일하게 */
-  color: #333843;
+    /* ✅ 실 버튼 통일(09실/62실 포함) */
+    .room-btn{
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--panel-border);
+      background: #fff;
+      cursor: pointer;
+      font-weight: 950;
+      color: #3a332e;
+      min-height: 40px;
+      transition: all 0.2s ease;
+    }
+    .room-btn:hover { background: #f4f0eb; }
+    .room-btn.active{
+      background: #e3ddd3 !important;
+      border-color: #9b8670 !important;
+      box-shadow: 0 0 0 2px rgba(155, 134, 112, 0.45);
+      color: #2b241e !important;
     }
 
     .legend{
@@ -276,7 +265,7 @@
       background: var(--panel-bg);
     }
     .legend-item{ display:inline-flex; align-items:center; gap:8px; font-size: 13px; color: var(--text); }
-    
+
     .icon-bg{
       width: 26px; height: 26px;
       border-radius: 999px;
@@ -286,7 +275,7 @@
       box-sizing:border-box;
     }
     .icon-bg.used{ box-sizing: border-box; }
-    
+
     .icon-bg.used.single{
       background: var(--badge-mint);
       border: 1px solid var(--badge-mint-border);
@@ -345,12 +334,8 @@
       border-bottom: 1px solid #f0f0f0;
       transition: background 0.15s;
     }
-    .search-result-item:hover{
-      background: #f9f6f2;
-    }
-    .search-result-item:last-child{
-      border-bottom: none;
-    }
+    .search-result-item:hover{ background: #f9f6f2; }
+    .search-result-item:last-child{ border-bottom: none; }
     .search-result-name{
       font-weight: 900;
       font-size: 15px;
@@ -363,13 +348,20 @@
       font-family: ui-monospace, monospace;
     }
 
+    /* ✅ 붉은색 깜빡임(Flash) 위쪽 잘림 방지 */
     .scroll-x{
       overflow-x:auto;
+      overflow-y: visible;          /* 세로로 퍼지는 outline/box-shadow 잘림 방지 */
+      padding-top: 12px;            /* 9단(맨 위)이 너무 붙지 않게 여유 */
       padding-bottom: 10px;
       position: relative;
       -webkit-overflow-scrolling: touch;
       scroll-behavior: smooth;
     }
+    #room{
+      padding-top: 4px;             /* 추가 미세 여유(선택) */
+    }
+
     .room{ display:flex; flex-direction:column; }
 
     .row{
@@ -418,6 +410,9 @@
       overflow:hidden;
       user-select:none;
       position: relative;
+
+      /* ✅ 스티키 패널 아래로 포커스가 좀 더 내려오게(가려짐 완화) */
+      scroll-margin-top: 180px;
     }
 
     .empty{ background: var(--bg-empty); cursor: default; }
@@ -461,6 +456,7 @@
       outline-offset: -3px;
     }
 
+    /* 깜빡임 애니메이션(유지) */
     @keyframes flashRed {
       0%   { box-shadow: 0 0 0 0 rgba(180,58,58,0.00); outline: 0px solid rgba(180,58,58,0.00); transform: scale(1); }
       20%  { box-shadow: 0 0 0 6px rgba(180,58,58,0.20); outline: 4px solid rgba(180,58,58,0.95); transform: scale(1.02); }
@@ -689,18 +685,14 @@
   const COUPLE_ROOMS = roomsRange(1,9);
   const PERSONAL1_ROOMS = [...roomsRange(10,18), roomStr(61), roomStr(62)];
 
-  // ✅ 변경: 2층 범위 재배정 (19~39) / (40~60)
+  // 2층 범위 재배정
   const PERSONAL2A_ROOMS = roomsRange(19,39);
   const PERSONAL2B_ROOMS = roomsRange(40,60);
 
   const TAB_DEFS = [
     { id:"couple", label:"부부단", rooms: COUPLE_ROOMS },
     { id:"p1", label:"개인단 1층", rooms: PERSONAL1_ROOMS },
-
-    // ✅ 변경: 라벨 및 범위 수정
     { id:"p2a", label:"개인단 2층(19~39)", rooms: PERSONAL2A_ROOMS },
-
-    // ✅ 변경: 60실 제외하던 filter 제거 + 라벨 수정
     { id:"p2b", label:"개인단 2층(40~60)", rooms: PERSONAL2B_ROOMS }
   ];
   const TAB_ROOM_SETS = Object.fromEntries(TAB_DEFS.map(t => [t.id, new Set(t.rooms)]));
@@ -767,6 +759,7 @@
     }
   }
 
+  /* ✅ 변경: next-room 표시 제거(09실/62실도 동일하게) */
   function renderRoomButtons() {
     const wrap = $("roomBtns");
     wrap.innerHTML = "";
@@ -777,14 +770,7 @@
     for (const room of rooms) {
       const btn = document.createElement("button");
       btn.type = "button";
-      // 현재 선택된 방(currentRoom)과 일치하면 무조건 active 클래스 부여
       btn.className = "room-btn" + (room === currentRoom ? " active" : "");
-
-      // 다음 봉안 예정지가 포함된 방인 경우 표시 (스타일은 CSS에서 제어)
-      if (room === nextCouple?.room || room === nextPersonal?.room) {
-        btn.classList.add("next-room");
-      }
-
       btn.textContent = room;
       btn.addEventListener("click", () => setRoom(room, true));
       wrap.appendChild(btn);
@@ -979,7 +965,6 @@
     nextCouple = computeNextForRooms(COUPLE_ROOMS);
 
     const allPersonal = [...PERSONAL1_ROOMS, ...PERSONAL2A_ROOMS, ...PERSONAL2B_ROOMS]
-      // ✅ 변경: 60실도 next 계산에 포함되도록 <= 60
       .filter(r => ROOM_CFG[r] && (ROOM_CFG[r].roomNum <= 60 || r === "61실" || r === "62실"));
 
     nextPersonal = computeNextForRooms(allPersonal);
@@ -1361,9 +1346,6 @@
   $("reloadBtn").addEventListener("click", loadExcelFromUrl);
 
   restoreState();
-
-  // (선택) 저장된 탭/방이 범위 변경으로 어긋나는 경우 탭을 방에 맞춰 자동 보정하고 싶으면 아래 줄을 활성화하세요.
-  // activeTabId = tabForRoom(currentRoom);
 
   buildLegend();
   renderTabs();
