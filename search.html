@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>울산하늘공원 고인 검색</title>
+  <!-- 파비콘 설정 -->
+  <link rel="icon" type="image/x-icon" href="./images/symbol.png">
+  <!-- 애플 기기용 아이콘 -->
+  <link rel="apple-touch-icon" href="./images/symbol.png">
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box; }
+
+    .sr-only{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",Arial,sans-serif;
+      min-height:100vh;
+      text-align:center;
+
+      /* (요청) 배경 유지: 지금 코드 그대로 */
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,0.55),
+          rgba(255,255,255,0.70)
+        ),
+        url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/92cb8bcc-4430-4edc-b1cf-8dd3dbbffb9d.png');
+      background-position:top center, top center;
+      background-size:cover, cover;
+      background-repeat:no-repeat, no-repeat;
+      background-attachment:scroll, scroll;
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      padding:22px;
+      padding-bottom:110px;
+      padding-top:60px; /* 로고 자리 확보 */
+    }
+
+    @media (max-width:768px){
+      body{
+        background-size:auto 100%, auto 100%;
+        background-position:top center, top center;
+        align-items:flex-start;
+        padding-top:70px; /* 모바일 상단 로고 높이만큼 여백 */
+      }
+    }
+
+    /* ===== 상단 로고 ===== */
+    .global-logo{
+      position:fixed;
+      z-index:10; /* main(20)보다 낮게: 본문이 위, 로고는 살짝 뒤 */
+      cursor:pointer;
+      transition:opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    /* PC: 좌측 상단 */
+    @media screen and (min-width:769px){
+      .global-logo{
+        top:14px;
+        left:18px;
+        transform:none;
+      }
+      .global-logo img{
+        height:70px;
+        width:auto;
+      }
+    }
+
+    /* 모바일: 상단 중앙 */
+    @media screen and (max-width:768px){
+      .global-logo{
+        top:12px;
+        left:50%;
+        transform:translateX(-50%);
+      }
+      .global-logo img{
+        height:56px;
+        width:auto;
+      }
+    }
+
+    .global-logo.is-hidden{
+      opacity:0;
+      transform:translateX(-50%) translateY(-14px);
+    }
+
+    main{
+      width:min(1080px, 100%);
+      background:rgba(255,255,255,0.30);
+      border:1px solid rgba(31,58,90,0.10);
+      border-radius:18px;
+      box-shadow:0 18px 55px rgba(15,23,42,0.12);
+      overflow:hidden;
+      position:relative;
+      z-index:20;
+      margin-top:0;
+    }
+
+    .header{
+      padding:26px 26px 14px;
+      border-bottom:1px solid rgba(15,23,42,0.08);
+      background:linear-gradient(180deg, rgba(255,255,255,0.60), rgba(250,252,255,0.30));
+    }
+
+    .title{
+      font-size:38px;
+      font-weight:900;
+      color:#12335a;
+      letter-spacing:-1px;
+      line-height:1.15;
+    }
+
+    .subnote{
+      margin-top:10px;
+      font-size:15px;
+      color:rgba(18,51,90,0.75);
+      font-weight:700;
+    }
+
+    .tabs{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      padding:0 26px;
+      margin-top:16px;
+    }
+
+    .tab-btn{
+      appearance:none;
+      border:none;
+      background:rgba(241,245,249,1);
+      color:#334155;
+      cursor:pointer;
+      padding:16px 10px;
+      font-size:18px;
+      font-weight:900;
+      position:relative;
+      border-top-left-radius:12px;
+      border-top-right-radius:12px;
+      border:1px solid rgba(15,23,42,0.10);
+      border-bottom:none;
+      transition:background 0.15s ease, color 0.15s ease;
+    }
+
+    .tab-btn + .tab-btn{ border-left:none; }
+    .tab-btn:hover{ background:rgba(226,232,240,1); }
+
+    .tab-btn.active{
+      background:rgba(255,255,255,0.98);
+      color:#0d47a1;
+      z-index:2;
+    }
+    .tab-btn.active::after{
+      content:"";
+      position:absolute;
+      left:18%;
+      right:18%;
+      bottom:8px;
+      height:5px;
+      border-radius:999px;
+      background:#1976D2;
+    }
+
+    .content{
+      padding:18px 26px 26px;
+      background:rgba(255,255,255,0.90);
+      border-top:1px solid rgba(15,23,42,0.08);
+    }
+
+    .search-box{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      margin-top:6px;
+    }
+
+    input[type="text"]{
+      width:100%;
+      height:64px;
+      padding:0 18px;
+      font-size:20px;
+      font-weight:800;
+      border-radius:14px;
+      border:2px solid rgba(15,23,42,0.12);
+      background:rgba(255,255,255,0.98);
+      outline:none;
+      box-shadow:0 6px 18px rgba(15,23,42,0.06);
+      transition:border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input[type="text"]::placeholder{
+      color:rgba(51,65,85,0.55);
+      font-weight:800;
+    }
+
+    input[type="text"]:focus{
+      border-color:rgba(25,118,210,0.55);
+      box-shadow:0 10px 26px rgba(25,118,210,0.18);
+    }
+
+    .btn-search{
+      height:64px;
+      padding:0 22px;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      font-size:20px;
+      font-weight:900;
+      color:#ffffff;
+      background:linear-gradient(180deg, #1e88e5, #1565c0);
+      box-shadow:0 12px 28px rgba(21,101,192,0.30);
+      transition:transform 0.08s ease, box-shadow 0.15s ease, filter 0.15s ease, background 0.15s ease;
+      white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:220px;
+      letter-spacing:-0.2px;
+    }
+
+    .btn-search:hover{
+      background:linear-gradient(180deg, #2f97ff, #0f5ab3);
+      box-shadow:0 14px 34px rgba(21,101,192,0.34);
+      filter:brightness(1.02);
+    }
+
+    .btn-search:active{
+      transform:translateY(1px);
+      box-shadow:0 8px 20px rgba(21,101,192,0.24);
+      filter:brightness(0.98);
+    }
+
+    .hint{
+      margin-top:12px;
+      text-align:left;
+      font-size:14px;
+      color:rgba(51,65,85,0.85);
+      font-weight:700;
+    }
+
+    #result{
+      display:none;
+      margin-top:16px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,0.10);
+      background:rgba(255,255,255,0.95);
+      box-shadow:0 12px 34px rgba(15,23,42,0.10);
+      overflow:hidden;
+      text-align:left;
+    }
+
+    .result-head{
+      padding:14px 16px;
+      background:rgba(241,245,249,1);
+      border-bottom:1px solid rgba(15,23,42,0.08);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .result-title{
+      font-size:16px;
+      font-weight:900;
+      color:#0f172a;
+    }
+
+    .result-sub{
+      font-size:13px;
+      font-weight:800;
+      color:rgba(51,65,85,0.85);
+      text-align:left;
+      white-space:normal;
+      line-height:1.3;
+      display:inline-block;
+      margin-left:auto;
+    }
+
+    @media screen and (min-width:1024px){
+      .result-sub{
+        white-space:nowrap;
+        font-size:16px;
+        line-height:1.6;
+      }
+    }
+
+    .table-wrapper{
+      max-height:520px;
+      overflow-y:auto;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    table{
+      border-collapse:collapse;
+      width:max-content;
+      min-width:100%;
+      table-layout:auto;
+    }
+
+    th, td{
+      border-bottom:1px solid rgba(15,23,42,0.08);
+      padding:14px 14px;
+      font-size:18px;
+      font-weight:800;
+      text-align:center;
+      white-space:nowrap;
+      overflow:visible;
+      text-overflow:clip;
+      width:1%;
+    }
+
+    th{
+      position:sticky;
+      top:0;
+      background:rgba(255,255,255,0.98);
+      z-index:5;
+      font-weight:900;
+      color:#1f3a5a;
+      border-bottom:2px solid rgba(25,118,210,0.25);
+    }
+
+    tbody tr{
+      cursor:pointer;
+      transition:background 0.12s ease;
+    }
+    tbody tr:hover{ background:rgba(227,242,253,0.65); }
+
+    .col-loc{
+      font-family:"Malgun Gothic","맑은 고딕",monospace;
+      letter-spacing:0px;
+    }
+
+    .loading{
+      padding:22px 16px;
+      font-size:16px;
+      font-weight:900;
+      color:#1565c0;
+    }
+
+    .no-result{
+      padding:26px 16px;
+      font-size:16px;
+      font-weight:900;
+      color:rgba(51,65,85,0.9);
+      line-height:1.6;
+    }
+
+    .detail-modal{
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      width:min(560px,92vw);
+      max-height:85vh;
+      overflow:auto;
+      border:none;
+      border-radius:16px;
+      padding:0;
+      box-shadow:0 22px 70px rgba(0,0,0,0.42);
+      background:#fff;
+      z-index:1000;
+    }
+
+    .detail-modal::backdrop{ background:rgba(0,0,0,0.55); }
+
+    .modal-header{
+      padding:18px 20px 14px;
+      background:#ffffff;
+      border-bottom:1px solid rgba(15,23,42,0.08);
+    }
+
+    .modal-title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .modal-title{
+      font-size:20px;
+      font-weight:900;
+      color:#12335a;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:8px;
+    }
+
+    .btn-print,.btn-close{
+      padding:10px 14px;
+      border:1px solid rgba(15,23,42,0.14);
+      background:#fff;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:14px;
+    }
+
+    .btn-print{
+      background:#1976D2;
+      color:#fff;
+      border-color:#1565c0;
+      display:none;
+    }
+
+    .btn-close:hover{ background:rgba(241,245,249,1); }
+    .btn-print:hover{ background:#1565c0; }
+
+    .modal-body{
+      padding:18px 22px 22px;
+      text-align:left;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:92px 1fr;
+      gap:14px 16px;
+      align-items:baseline;
+    }
+
+    .info-label{
+      font-size:14px;
+      font-weight:900;
+      color:rgba(51,65,85,0.85);
+      padding-top:6px;
+    }
+
+    .info-value{
+      font-size:20px;
+      font-weight:900;
+      color:#0f172a;
+      line-height:1.35;
+      word-break:break-word;
+    }
+
+    .info-value.mono{
+      font-family:"Malgun Gothic","맑은 고딕",monospace;
+    }
+
+    .divider{
+      grid-column:1 / -1;
+      height:1px;
+      background:rgba(15,23,42,0.08);
+      margin:6px 0;
+    }
+
+    .print-footer{ display:none; }
+
+    @media (min-width:769px){
+      .btn-print{ display:inline-block; }
+    }
+
+    @media (max-width:480px){
+      body{
+        padding:12px;
+        padding-bottom:80px;
+        padding-top:70px;
+      }
+
+      main{ background:rgba(255,255,255,0.85); }
+
+      .header{ padding:20px 18px 12px; }
+      .title{ font-size:26px; }
+
+      .tabs{ padding:0 18px; }
+      .tab-btn{ font-size:15px; padding:14px 8px; }
+      .tab-btn.active::after{ left:22%; right:22%; height:5px; bottom:7px; }
+
+      .content{ padding:14px 18px 18px; background:rgba(255,255,255,0.90); }
+      .search-box{ grid-template-columns:1fr; gap:10px; }
+
+      .btn-search{
+        width:100%;
+        min-width:0;
+        height:70px;
+        font-size:22px;
+        border-radius:16px;
+      }
+
+      th,td{ font-size:14px; padding:12px 10px; }
+    }
+
+    .footer-logo{
+      position:fixed;
+      bottom:18px;
+      left:50%;
+      transform:translateX(-50%);
+      text-align:center;
+      opacity:0.92;
+      z-index:5;
+      pointer-events:none;
+      transition:opacity 0.35s ease, transform 0.35s ease;
+      will-change:opacity, transform;
+    }
+
+    .footer-logo.is-hidden{
+      opacity:0;
+      transform:translateX(-50%) translateY(12px);
+    }
+
+    .footer-logo img{
+      height:100px;
+      max-width:260px;
+      width:auto;
+      display:block;
+      margin:0 auto;
+      filter:drop-shadow(0 12px 32px rgba(0,0,0,0.34));
+    }
+
+    @media print{
+      @page{
+        size:80mm auto;
+        margin:2mm 3mm 0 3mm;
+      }
+
+      html,body{
+        width:80mm;
+        height:auto;
+        margin:0;
+        padding:0;
+        background:#fff !important;
+        display:block;
+      }
+
+      /* 모달만 보이게 */
+      body *{ visibility:hidden; }
+      .detail-modal, .detail-modal *{ visibility:visible; }
+
+      .footer-logo, .global-logo{ display:none !important; }
+
+      /* 모달을 1장에 딱 맞게 정리 */
+      .detail-modal{
+        position:absolute;
+        top:0;
+        left:0;
+        transform:none;
+        width:80mm;
+        max-width:80mm;
+        height:auto;
+        max-height:none;
+        overflow:visible;
+        border-radius:0;
+        box-shadow:none;
+        border:none;
+        background:#fff;
+        padding:0;
+        margin:0;
+      }
+
+      .modal-actions{ display:none !important; }
+
+      .modal-header{
+        padding:1.5mm 0 2mm 0;
+        border-bottom:0.4mm solid #333;
+        text-align:center;
+      }
+
+      .modal-title{
+        font-size:16pt;
+        color:#000;
+        font-weight:900;
+        letter-spacing:-0.2px;
+        text-align:center;
+        margin:0 auto;
+      }
+
+      .modal-body{
+        padding:2mm 0 1mm 0;
+      }
+
+      .info-grid{
+        grid-template-columns:17mm 1fr;
+        gap:2.0mm 3.0mm;
+      }
+
+      .info-label{
+        font-size:11pt;
+        color:#333;
+        line-height:1.2;
+      }
+
+      .info-value{
+        font-size:15pt;
+        color:#000;
+        line-height:1.25;
+      }
+
+      .info-value.mono{
+        word-break:break-word;
+      }
+
+      .divider{
+        margin:2mm 0 1.5mm 0;
+        height:0.3mm;
+        background:rgba(0,0,0,0.20);
+      }
+
+      .print-footer{
+        display:block;
+        margin-top:3mm;
+        padding-top:2mm;
+        border-top:0.3mm solid rgba(0,0,0,0.25);
+        text-align:center;
+      }
+
+      .print-footer img{
+        content:url("./images/ulsan_logo1.png");
+        height:12mm;
+        max-width:65mm;
+        width:auto;
+        opacity:0.98;
+        filter:none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- PC: 좌측 상단 / 모바일: 상단 중앙 로고 -->
+  <div class="global-logo" id="globalLogo" onclick="goHome()" aria-label="울산하늘공원 초기화면으로 이동">
+    <img src="./images/ulsan_logo1.png" alt="울산하늘공원 로고">
+  </div>
+
+  <main>
+    <div class="header">
+      <div class="title">울산하늘공원 고인 검색</div>
+      <div class="subnote">고인명을 입력한 뒤 확인/조회를 눌러주세요.</div>
+
+      <div class="tabs" role="tablist" aria-label="검색 구분">
+        <button type="button" class="tab-btn active" data-mode="all" onclick="setMode('all')">전체</button>
+        <button type="button" class="tab-btn" data-mode="memorial" onclick="setMode('memorial')">추모의집</button>
+        <button type="button" class="tab-btn" data-mode="nature" onclick="setMode('nature')">자연장지</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <form
+        id="searchForm"
+        class="search-box"
+        aria-label="울산하늘공원 고인 검색 폼"
+      >
+        <div class="input-wrap">
+          <label for="keyword" class="sr-only">고인명 입력</label>
+          <input
+            type="text"
+            id="keyword"
+            name="keyword"
+            placeholder="고인명을 입력해주세요. 예)홍길동"
+            required
+            autocomplete="off"
+          />
+        </div>
+        <button class="btn-search" type="submit">확인/조회</button>
+      </form>
+
+      <div class="hint">※ 검색 결과는 좌우 스크롤로 확인할 수 있습니다.</div>
+
+      <div id="result"></div>
+    </div>
+  </main>
+
+  <div class="footer-logo" id="footerLogo" aria-hidden="true">
+    <img src="./images/ulsan_logo.png" alt="울산시설공단 로고">
+  </div>
+
+  <dialog
+    id="detailModal"
+    class="detail-modal"
+    aria-labelledby="detailModalTitle"
+  >
+    <div class="modal-header">
+      <div class="modal-title-row">
+        <div class="modal-title" id="detailModalTitle">울산하늘공원 고인 위치 안내</div>
+        <div class="modal-actions">
+          <button type="button" class="btn-print" onclick="window.print()">출력</button>
+          <button type="button" class="btn-close" onclick="document.getElementById('detailModal').close()">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="info-grid">
+        <div class="info-label">고인명</div>
+        <div class="info-value" id="modalName"></div>
+
+        <div class="divider"></div>
+
+        <div class="info-label" id="labelType" style="display:none;">시설명</div>
+        <div class="info-value" id="modalType" style="display:none;"></div>
+
+        <div class="divider" id="dividerAfterType" style="display:none;"></div>
+
+        <div class="info-label" id="labelLoc">봉안번호</div>
+        <div class="info-value mono" id="modalLoc"></div>
+
+        <div class="divider"></div>
+
+        <div class="info-label">신청자</div>
+        <div class="info-value" id="modalApplicant"></div>
+
+        <div class="divider"></div>
+
+        <div class="info-label" id="labelDate">안치일자</div>
+        <div class="info-value" id="modalDate"></div>
+      </div>
+
+      <div class="print-footer" aria-hidden="true">
+        <img src="./images/ulsan_logo.png" alt="울산시설공단 로고">
+      </div>
+    </div>
+  </dialog>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script>
+    const SOURCES = {
+      memorial: 'data/deceased_data.xlsx',
+      nature:   'data/nature_data.xlsx'
+    };
+
+    const MEM_FIELDS = {
+      name: "사망자명",
+      loc: "봉안번호",
+      applicant: "신청자명",
+      date: "안치일자",
+      returned: "반환일자"
+    };
+
+    const NAT_FIELDS = {
+      name: "사망자명",
+      loc: "자연장번호",
+      applicant: "신청자명",
+      date: "안치일자"
+    };
+
+    let currentMode = 'all';
+    let excelDataMemorial = [];
+    let excelDataNature = [];
+    let loadPromiseMemorial = null;
+    let loadPromiseNature = null;
+    let lastFound = [];
+
+    function normalizeForSearch(value){
+      if (value === null || value === undefined) return "";
+      let s = String(value);
+      if (s.normalize) s = s.normalize("NFKC");
+      s = s.trim().toLowerCase();
+      s = s.replace(/[\s\u00A0]+/g, "");
+      s = s.replace(/[^0-9a-z\u3131-\u318E\uAC00-\uD7A3]/g, "");
+      return s;
+    }
+
+    function isSearchKeywordValid(raw){
+      const norm = normalizeForSearch(raw);
+      return norm.length >= 2;
+    }
+
+    /* =========================
+      ✅ QR/링크용: URL에서 mode 읽기
+      - ?mode=memorial / ?mode=nature / ?mode=all
+      - (보너스) #memorial / #nature 해시도 지원
+    ========================== */
+    function getModeFromUrl(){
+      const params = new URLSearchParams(window.location.search);
+      const m1 = (params.get("mode") || "").toLowerCase();
+
+      const h = (location.hash || "").replace("#","").toLowerCase();
+      const m2 = h;
+
+      const m = m1 || m2;
+      if (["all","memorial","nature"].includes(m)) return m;
+      return "all";
+    }
+
+    function updateUrlMode(mode){
+      const url = new URL(window.location.href);
+      if (mode === "all") url.searchParams.delete("mode");
+      else url.searchParams.set("mode", mode);
+      history.replaceState(null, "", url.toString());
+    }
+
+    function setMode(mode){
+      currentMode = mode;
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.mode === mode);
+      });
+      resetResultOnly();
+
+      // 탭 바뀔 때 주소도 같이 바뀌게(QR/공유 편하게)
+      updateUrlMode(mode);
+
+      // 포커스
+      const input = document.getElementById("keyword");
+      if (input) input.focus();
+    }
+
+    async function fetchExcel(url){
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다: ' + url);
+
+      const arrayBuffer = await response.arrayBuffer();
+      const workbook = XLSX.read(arrayBuffer, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      return XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    }
+
+    async function ensureMemorialLoaded(){
+      if (excelDataMemorial.length > 0) return;
+      if (!loadPromiseMemorial){
+        loadPromiseMemorial = fetchExcel(SOURCES.memorial)
+          .then(data => { excelDataMemorial = data; })
+          .finally(() => { loadPromiseMemorial = null; });
+      }
+      await loadPromiseMemorial;
+    }
+
+    async function ensureNatureLoaded(){
+      if (excelDataNature.length > 0) return;
+      if (!loadPromiseNature){
+        loadPromiseNature = fetchExcel(SOURCES.nature)
+          .then(data => { excelDataNature = data; })
+          .finally(() => { loadPromiseNature = null; });
+      }
+      await loadPromiseNature;
+    }
+
+    async function ensureDataForSearch(mode){
+      if (mode === 'memorial'){
+        await ensureMemorialLoaded();
+        return;
+      }
+      if (mode === 'nature'){
+        await ensureNatureLoaded();
+        return;
+      }
+      await Promise.all([ensureMemorialLoaded(), ensureNatureLoaded()]);
+      if (excelDataMemorial.length === 0 && excelDataNature.length === 0){
+        throw new Error('전체 데이터 로딩에 실패했습니다.');
+      }
+    }
+
+    function normalizeRoom(raw){
+      if (!raw) return "";
+      const s = String(raw).replace(/\s+/g, "");
+      const exact = s.match(/^(\d{2})실(\d{5})$/);
+      if (exact) return `${exact[1]}실 ${exact[2]}`;
+      const room = s.match(/(\d{2})실/);
+      const digits = s.replace(/\D/g, "");
+      const last5 = digits.slice(-5);
+      if (room && last5.length === 5) return `${room[1]}실 ${last5}`;
+      return String(raw);
+    }
+
+    function normalizeNatureNo(raw){
+      if (!raw) return "";
+      const s = String(raw).trim();
+      return s.split("-").map(p => p.trim()).filter(Boolean).join("-");
+    }
+
+    function maskName(name){
+      if (!name) return "";
+      const trimmed = String(name).substring(0, 3);
+      if (trimmed.length === 1) return trimmed;
+      if (trimmed.length === 2) return trimmed[0] + "○";
+      if (trimmed.length === 3) return trimmed[0] + "○" + trimmed[2];
+      return trimmed;
+    }
+
+    function getHeaderLabels(mode){
+      if (mode === 'nature'){
+        return { name:"고인명", loc:"안장번호", applicant:"신청자", date:"안장일자" };
+      }
+      if (mode === 'memorial'){
+        return { name:"고인명", loc:"봉안번호", applicant:"신청자", date:"안치일자" };
+      }
+      return { name:"고인명", loc:"위치번호", applicant:"신청자", date:"안치일자" };
+    }
+
+    /* =========================
+      ✅ 추모의집 봉안번호로 시설명 자동 판별
+      - 봉안번호가 "1추모의집-"로 시작 => "제1추모의집"
+      - 봉안번호가 "2추모의집-"로 시작 => "제2추모의집"
+      - 그 외 => "추모의집"
+    ========================== */
+    function getMemorialTypeLabelFromLoc(rawLoc){
+      const s = String(rawLoc || "").trim();
+
+      // "1추모의집-" / "2추모의집-" + 하이픈 없이 들어온 경우까지 커버
+      if (/^1\s*추모의집\s*-/.test(s) || /^1\s*추모의집/.test(s)) return "제1추모의집";
+      if (/^2\s*추모의집\s*-/.test(s) || /^2\s*추모의집/.test(s)) return "제2추모의집";
+
+      return "추모의집";
+    }
+
+    function openModal(record){
+      document.getElementById("modalName").textContent = record.name || "";
+      document.getElementById("modalLoc").textContent = record.location || "";
+      document.getElementById("modalApplicant").textContent = record.applicant || "";
+      document.getElementById("modalDate").textContent = record.date || "";
+
+      document.getElementById("labelLoc").textContent = record.locationLabel || "위치번호";
+      document.getElementById("labelDate").textContent = record.dateLabel || "일자";
+
+      // 시설명 표시: typeLabel이 있으면 항상 표기
+      const showType = !!record.typeLabel;
+      document.getElementById("labelType").style.display = showType ? "block" : "none";
+      document.getElementById("modalType").style.display = showType ? "block" : "none";
+      document.getElementById("dividerAfterType").style.display = showType ? "block" : "none";
+      if (showType) document.getElementById("modalType").textContent = record.typeLabel;
+
+      document.getElementById("detailModal").showModal();
+    }
+
+    function bindTableClick(){
+      const table = document.querySelector("#result table");
+      if (!table) return;
+
+      table.addEventListener("click", function(e){
+        const tr = e.target.closest("tr[data-idx]");
+        if (!tr) return;
+
+        const idx = Number(tr.dataset.idx);
+        const rec = lastFound[idx];
+        if (!rec) return;
+
+        openModal(rec);
+      });
+    }
+
+    document.getElementById("detailModal").addEventListener("click", function(e){
+      if (e.target === this){
+        this.close();
+      }
+    });
+
+    document.addEventListener("keydown", function(e){
+      const modal = document.getElementById("detailModal");
+      if (e.key === "Escape" && modal.open){
+        e.preventDefault();
+        modal.close();
+      }
+    });
+
+    function searchMemorial(keyword){
+      const k = normalizeForSearch(keyword);
+      return excelDataMemorial
+        .filter(row => {
+          const rawName = row[MEM_FIELDS.name];
+          if (!rawName) return false;
+          if (row[MEM_FIELDS.returned]) return false;
+          return normalizeForSearch(rawName).includes(k);
+        })
+        .map(row => ({
+          type: 'memorial',
+          typeLabel: getMemorialTypeLabelFromLoc(row[MEM_FIELDS.loc]), // ✅ 제1/제2 자동
+          name: row[MEM_FIELDS.name] || "",
+          location: normalizeRoom(row[MEM_FIELDS.loc] || ""),
+          applicant: maskName(row[MEM_FIELDS.applicant]),
+          date: row[MEM_FIELDS.date] || "",
+          locationLabel: "봉안번호",
+          dateLabel: "안치일자"
+        }));
+    }
+
+    function searchNature(keyword){
+      const k = normalizeForSearch(keyword);
+      return excelDataNature
+        .filter(row => {
+          const rawName = row[NAT_FIELDS.name];
+          if (!rawName) return false;
+          return normalizeForSearch(rawName).includes(k);
+        })
+        .map(row => {
+          const raw = row[NAT_FIELDS.loc] || "";
+          return {
+            type: 'nature',
+            typeLabel: '자연장지',
+            name: row[NAT_FIELDS.name] || "",
+            location: normalizeNatureNo(raw),
+            applicant: maskName(row[NAT_FIELDS.applicant]),
+            date: row[NAT_FIELDS.date] || "",
+            locationLabel: "안장번호",
+            dateLabel: "안장일자"
+          };
+        });
+    }
+
+    function renderResults(records, keyword){
+      const resultDiv = document.getElementById("result");
+      const h = getHeaderLabels(currentMode);
+
+      if (!records || records.length === 0){
+        resultDiv.innerHTML = `<div class="no-result">‘${keyword}’에 대한 검색 결과가 없습니다.</div>`;
+        return;
+      }
+
+      const titleLeft =
+        `${currentMode === 'all'
+          ? '전체'
+          : (currentMode === 'memorial' ? '추모의집' : '자연장지')
+        } 검색 결과 ${records.length}건`;
+      const titleRight = `결과를 선택하면<br>상세 정보가 표시됩니다.`;
+
+      let html = `
+        <div class="result-head">
+          <div class="result-title">${titleLeft}</div>
+          <div class="result-sub">${titleRight}</div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>${h.name}</th>
+                <th>${h.loc}</th>
+                <th>${h.applicant}</th>
+                <th>${h.date}</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      records.forEach((rec, idx) => {
+        html += `
+          <tr data-idx="${idx}">
+            <td>${rec.name}</td>
+            <td class="col-loc">${rec.location}</td>
+            <td>${rec.applicant}</td>
+            <td>${rec.date}</td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table></div>`;
+      resultDiv.innerHTML = html;
+
+      bindTableClick();
+    }
+
+    document.getElementById("searchForm").addEventListener("submit", async function(event){
+      event.preventDefault();
+
+      const keywordRaw = document.getElementById("keyword").value;
+      const keyword = (keywordRaw || "").trim();
+      const resultDiv = document.getElementById("result");
+
+      if (!keyword) return;
+
+      if (!isSearchKeywordValid(keyword)){
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `<div class="no-result">검색어는 2글자 이상 입력해 주세요.</div>`;
+        return;
+      }
+
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = `<div class="loading">데이터를 불러오고 있습니다...</div>`;
+
+      try{
+        await ensureDataForSearch(currentMode);
+      }catch(err){
+        resultDiv.innerHTML = `<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>`;
+        return;
+      }
+
+      let found = [];
+      if (currentMode === 'memorial') found = searchMemorial(keyword);
+      else if (currentMode === 'nature') found = searchNature(keyword);
+      else{
+        if (excelDataMemorial.length > 0) found.push(...searchMemorial(keyword));
+        if (excelDataNature.length > 0) found.push(...searchNature(keyword));
+      }
+
+      lastFound = found;
+      resultDiv.style.display = "block";
+      renderResults(found, keyword);
+    });
+
+    function resetResultOnly(){
+      const resultDiv = document.getElementById("result");
+      resultDiv.style.display = "none";
+      resultDiv.innerHTML = "";
+      lastFound = [];
+    }
+
+    // 로고 클릭 시: 검색어/결과만 초기화 + 화면 상단으로
+    function goHome(){
+      document.getElementById("keyword").value = "";
+      resetResultOnly();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* =========================
+      ✅ 페이지 최초 진입 시 mode 자동 선택 + 입력 포커스
+      - QR 스캔 후 바로 입력 가능
+    ========================== */
+    document.addEventListener("DOMContentLoaded", () => {
+      const initMode = getModeFromUrl();
+      setMode(initMode);
+
+      // 모바일에서 포커스가 가끔 늦게 먹는 경우 대비
+      setTimeout(() => {
+        const input = document.getElementById("keyword");
+        if (input) input.focus();
+      }, 150);
+    });
+
+    // 스크롤 시 상단 로고와 하단 로고 자연스럽게 숨김
+    (function(){
+      const bottomLogo = document.getElementById("footerLogo");
+      const topLogo = document.getElementById("globalLogo");
+      let lastY = window.scrollY || 0;
+      let ticking = false;
+
+      function update(){
+        const y = window.scrollY || 0;
+        const down = y > lastY;
+
+        if (bottomLogo){
+          if (y < 10){
+            bottomLogo.classList.remove("is-hidden");
+          } else if (down){
+            bottomLogo.classList.add("is-hidden");
+          } else{
+            bottomLogo.classList.remove("is-hidden");
+          }
+        }
+
+        if (topLogo){
+          if (y < 10){
+            topLogo.classList.remove("is-hidden");
+          } else if (down){
+            topLogo.classList.add("is-hidden");
+          } else{
+            topLogo.classList.remove("is-hidden");
+          }
+        }
+
+        lastY = y;
+        ticking = false;
+      }
+
+      window.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      }, { passive:true });
+    })();
+  </script>
+</body>
+</html>
