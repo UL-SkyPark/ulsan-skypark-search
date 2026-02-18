@@ -8,201 +8,700 @@
 
   <!-- 파비콘 설정 -->
   <link rel="icon" type="image/x-icon" href="./images/symbol.png">
-  <!-- 애플 기기용 아이콘 -->
   <link rel="apple-touch-icon" href="./images/symbol.png">
+
+  <!-- 웹폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #f3f5f7;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --line: #e5e7eb;
-      --shadow: 0 10px 26px rgba(15, 23, 42, .08);
-      --radius: 18px;
-      --accent: #0b4aa2;
-      --accent-soft: rgba(11, 74, 162, .06);
+      --primary: #2c3e50;
+      --secondary: #5a6c7d;
+      --accent: #8b7355;
+      --accent-light: #a89080;
+      --bg-overlay: rgba(255, 255, 255, 0.75);
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --text-dark: #2c3e50;
+      --text-muted: #6b7280;
+      --border: rgba(203, 213, 225, 0.6);
+      --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 15px 50px rgba(0, 0, 0, 0.12);
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-      color:var(--text);
-      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 60%, #eef2f6 100%);
+    * { 
+      box-sizing: border-box; 
+      margin: 0;
+      padding: 0;
     }
 
-    .wrap{
-      min-height:100%;
-      display:grid;
-      place-items:center;
-      padding: 28px 18px;
+    html, body { 
+      height: 100%; 
+      scroll-behavior: smooth;
     }
 
-    .panel{
-      width: min(1050px, 100%);
-      background: var(--card);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
+    body {
+      font-family: "Malgun Gothic", "맑은 고딕", system-ui, -apple-system, sans-serif;
+      color: var(--text-dark);
+      line-height: 1.6;
+      background: #f5f5f5 url('./images/background.jpg') center/cover fixed;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.75) 0%, 
+        rgba(245, 245, 245, 0.70) 50%, 
+        rgba(240, 240, 240, 0.75) 100%);
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* 헤더 영역 */
+    .header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: var(--bg-overlay);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .logo {
+      margin-bottom: 35px;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .logo img {
+      max-width: 300px;
+      height: auto;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+    }
+
+    .main-title {
+      font-family: 'Noto Serif KR', '바탕', serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 18px;
+      letter-spacing: -0.5px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .sub-title {
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      font-size: clamp(15px, 2.5vw, 19px);
+      color: var(--text-muted);
+      font-weight: 400;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+
+    /* 메인 콘텐츠 */
+    .main-content {
+      padding: 60px 20px;
+    }
+
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 900px;
+      margin: 0 auto 60px;
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+
+    .circle-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-size: clamp(16px, 2.2vw, 20px);
+      font-weight: 700;
+      padding: 30px 20px;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
       overflow: hidden;
     }
 
-    .topbar{
-      padding: 18px 22px;
-      border-bottom: 1px solid var(--line);
+    .circle-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(139, 115, 85, 0.08);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
     }
 
-    .header-row{
-      display:flex;
-      align-items:center;
-      gap:18px;
-      flex-wrap:wrap;
+    .circle-btn:hover::before {
+      width: 100%;
+      height: 100%;
     }
 
-    .logo img{
-      width: 130px;
-      height:auto;
+    .circle-btn:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent);
     }
 
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
+    .circle-btn .icon {
+      font-size: clamp(32px, 4vw, 48px);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
     }
 
-    .brand .org{
-      font-size:13px;
-      color:var(--muted);
+    .circle-btn .text {
+      text-align: center;
+      line-height: 1.4;
+      position: relative;
+      z-index: 1;
+      word-break: keep-all;
     }
 
-    .brand .title{
-      font-size: clamp(20px, 2.2vw, 26px);
-      font-weight:900;
+    /* 운영시간 안내 */
+    .info-section {
+      max-width: 900px;
+      margin: 0 auto 30px;
+      padding: 45px 40px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border);
+      animation: fadeInUp 0.8s ease-out 0.8s both;
     }
 
-    .contact{
-      margin-left:auto;
-      font-size:13px;
-      color:var(--muted);
+    .info-section h2 {
+      font-size: clamp(22px, 3vw, 28px);
+      color: var(--primary);
+      margin-bottom: 32px;
+      text-align: center;
+      font-weight: 700;
     }
 
-    /* 운영시간 박스 */
-    .hours-box{
-      margin-top:14px;
-      padding:14px 16px;
-      background: var(--accent-soft);
-      border: 1px solid #dbeafe;
-      border-radius:12px;
-      font-size:13px;
-      line-height:1.6;
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 28px;
     }
 
-    .hours-box strong{
-      color:var(--accent);
-      font-weight:700;
+    .info-item {
+      padding: 28px 24px;
+      background: linear-gradient(135deg, rgba(245, 247, 250, 0.9) 0%, rgba(240, 242, 245, 0.7) 100%);
+      border-radius: 14px;
+      border-left: 4px solid var(--accent);
+      transition: all 0.3s ease;
     }
 
-    .content{
-      padding: 26px 22px 30px;
+    .info-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      border-left-width: 5px;
     }
 
-    .hint{
-      text-align:center;
-      color:var(--muted);
-      font-size:14px;
-      margin-bottom:18px;
+    .info-item .label {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-size: clamp(18px, 2vw, 20px);
+      letter-spacing: -0.3px;
     }
 
-    .actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
+    .info-item .time {
+      color: var(--secondary);
+      font-size: clamp(14px, 1.5vw, 16px);
+      line-height: 1.7;
     }
 
-    .btn{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      min-height:130px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:#fff;
-      text-decoration:none;
-      font-weight:900;
-      font-size:clamp(18px,2.2vw,24px);
-      color:var(--text);
-      box-shadow:0 8px 18px rgba(15,23,42,.06);
-      transition:.15s ease;
+    .info-item .time small {
+      display: block;
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--text-muted);
     }
 
-    .btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 14px 28px rgba(15,23,42,.10);
-      border-color:#cbd5e1;
+    .contact-info {
+      text-align: center;
+      padding: 20px;
+      background: rgba(139, 115, 85, 0.06);
+      border-radius: 12px;
+      font-size: 16px;
+      color: var(--secondary);
     }
 
-    .admin{
-      position:fixed;
-      right:14px;
-      bottom:12px;
-      font-size:12px;
-      color:var(--muted);
-      text-decoration:none;
+    .contact-info strong {
+      color: var(--primary);
+      font-size: 22px;
+      letter-spacing: 0.5px;
     }
 
-    @media(max-width:720px){
-      .actions{ grid-template-columns:1fr; }
-      .contact{ margin-left:0; }
+    /* 장례식장 링크 박스 */
+    .funeral-link-box {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      animation: fadeInUp 0.8s ease-out 0.9s both;
+    }
+
+    .funeral-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 20px 30px;
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 255, 255, 0.85) 100%);
+      border: 2px solid var(--accent-light);
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--primary);
+      font-size: clamp(15px, 2vw, 17px);
+      font-weight: 600;
+      box-shadow: 0 4px 16px rgba(139, 115, 85, 0.12);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .funeral-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(139, 115, 85, 0.20);
+      border-color: var(--accent);
+      background: linear-gradient(135deg, #ffffff 0%, var(--card-bg) 100%);
+    }
+
+    .funeral-link::before {
+      content: '🏛️';
+      font-size: 24px;
+    }
+
+    .funeral-link::after {
+      content: '→';
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      transition: transform 0.3s ease;
+    }
+
+    .funeral-link:hover::after {
+      transform: translateX(4px);
+    }
+
+    /* 찾아오시는 길 */
+    .map-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 45px 40px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border);
+      animation: fadeInUp 0.8s ease-out 1s both;
+    }
+
+    .map-section h2 {
+      font-size: clamp(22px, 3vw, 28px);
+      color: var(--primary);
+      margin-bottom: 28px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .map-container {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      line-height: 0;
+    }
+
+    .map-container > div {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    .map-container img.map {
+      width: 100% !important;
+      height: auto !important;
+      display: block;
+    }
+
+    /* 푸터 */
+    .footer {
+      text-align: center;
+      padding: 45px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 70px;
+      background: var(--bg-overlay);
+    }
+
+    .footer p {
+      margin: 6px 0;
+    }
+
+    .footer-links {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* 관리자 링크 */
+    .admin-link {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 12px 20px;
+      background: rgba(44, 62, 80, 0.92);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+      transition: all 0.3s ease;
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+
+    .admin-link:hover {
+      background: rgba(44, 62, 80, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 애니메이션 */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+      body::before {
+        background: linear-gradient(180deg, 
+          rgba(255, 255, 255, 0.82) 0%, 
+          rgba(245, 245, 245, 0.78) 50%, 
+          rgba(240, 240, 240, 0.82) 100%);
+      }
+
+      .header {
+        padding: 40px 20px 30px;
+      }
+
+      .logo img {
+        max-width: 220px;
+      }
+
+      .main-content {
+        padding: 40px 20px;
+      }
+
+      .buttons-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        max-width: 320px;
+        margin-bottom: 50px;
+      }
+
+      .circle-btn {
+        max-width: 320px;
+        margin: 0 auto;
+      }
+
+      .info-section,
+      .map-section {
+        padding: 35px 24px;
+        margin-bottom: 50px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .funeral-link-box {
+        margin-bottom: 50px;
+        padding: 0 10px;
+      }
+
+      .funeral-link {
+        padding: 18px 24px;
+        font-size: 15px;
+      }
+
+      /* 모바일에서 관리자 링크 숨김 */
+      .admin-link {
+        display: none;
+      }
+
+      .footer {
+        margin-top: 50px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 24px;
+      }
+
+      .sub-title {
+        font-size: 14px;
+      }
+
+      .circle-btn .icon {
+        font-size: 36px;
+      }
+
+      .circle-btn .text {
+        font-size: 16px;
+      }
+
+      .info-item .label {
+        font-size: 17px;
+      }
+    }
+
+    /* 인쇄 최적화 */
+    @media print {
+      body::before {
+        display: none;
+      }
+
+      .admin-link,
+      .footer-links {
+        display: none;
+      }
+
+      .map-section,
+      .info-section {
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
     }
   </style>
 </head>
 
 <body>
-  <main class="wrap">
-    <section class="panel">
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="logo">
+      <img src="./images/logo.gif" alt="울산하늘공원 로고">
+    </div>
+    <h1 class="main-title">삼가 고인의 명복을 빕니다.</h1>
+    <p class="sub-title">한분 한분 정성을 다해 모시겠습니다.</p>
+  </header>
 
-      <div class="topbar">
-        <div class="header-row">
-          <div class="logo">
-            <img src="./images/ulsan_logo1.png" alt="울산시설공단 로고">
-          </div>
+  <!-- 메인 콘텐츠 -->
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- 버튼 영역 -->
+      <div class="buttons-grid">
+        <a href="search.html" class="circle-btn">
+          <span class="icon">🔍</span>
+          <span class="text">울산하늘공원<br>고인 검색</span>
+        </a>
 
-          <div class="brand">
-            <div class="org">울산시설공단 · 울산하늘공원</div>
-            <div class="title">고인 안내</div>
-          </div>
+        <a href="https://www.15774129.go.kr/new/esky_p/esky_index.do" class="circle-btn" target="_blank" rel="noopener noreferrer">
+          <span class="icon">📅</span>
+          <span class="text">온라인<br>화장예약</span>
+        </a>
 
-          <div class="contact">
-            문의전화 052-255-3800
-          </div>
-        </div>
-
-        <!-- 시설별 운영시간 -->
-        <div class="hours-box">
-          <div><strong>🔥 승화원</strong> 07:00 ~ 16:00 (설날·추석 휴무)</div>
-          <div><strong>🏢 장례식장</strong> 24시간 운영</div>
-          <div><strong>🌼 추모의 집</strong> 09:00 ~ 18:00 / 접수 07:00 ~ 16:00</div>
-          <div><strong>🌳 자연장지</strong> 09:00 ~ 18:00 / 접수 07:00 ~ 16:00</div>
-        </div>
+        <a href="room.html" class="circle-btn">
+          <span class="icon">🏛️</span>
+          <span class="text">추모의집<br>봉안 현황</span>
+        </a>
       </div>
 
-      <div class="content">
-        <p class="hint">원하시는 서비스를 선택해 주세요.</p>
+      <!-- 시설 운영 안내 -->
+      <section class="info-section">
+        <h2>시설 운영 안내</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="label">승화원</div>
+            <div class="time">
+              07:00 ~ 16:00
+              <small>(설날·추석 휴무)</small>
+            </div>
+          </div>
 
-        <div class="actions">
-          <a class="btn" href="search.html">고인 검색</a>
-          <a class="btn" href="room.html">추모의집 봉안 현황</a>
+          <div class="info-item">
+            <div class="label">추모의 집</div>
+            <div class="time">
+              운영 09:00 ~ 18:00<br>
+              접수 07:00 ~ 16:00
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="label">자연장지</div>
+            <div class="time">
+              운영 09:00 ~ 18:00<br>
+              접수 07:00 ~ 16:00
+            </div>
+          </div>
         </div>
+
+        <div class="contact-info">
+          문의전화 <strong>052-255-3800</strong>
+        </div>
+      </section>
+
+      <!-- 장례식장 링크 -->
+      <div class="funeral-link-box">
+        <a href="https://ulsanskypark.com/" class="funeral-link" target="_blank" rel="noopener noreferrer">
+          울산하늘공원 장례식장(주) 홈페이지 바로가기
+        </a>
       </div>
 
-    </section>
+      <!-- 찾아오시는 길 -->
+      <section class="map-section">
+        <h2>찾아오시는 길</h2>
+        <div class="map-container">
+          <div style="font:normal normal 400 12px/normal dotum, sans-serif; color:#333; position:relative">
+            <div style="height: 360px;">
+              <a href="https://map.kakao.com/?urlX=984180.0000003946&urlY=553567.0000000123&itemId=1112611176&q=%EC%9A%B8%EC%82%B0%ED%95%98%EB%8A%98%EA%B3%B5%EC%9B%90&srcid=1112611176&map_type=TYPE_MAP&from=roughmap" target="_blank">
+                <img class="map" src="http://t1.daumcdn.net/roughmap/imgmap/6a3e9f6c35a03426e2dd72dcb8cfa343289ea2cea99396007245355f7eba17b3" alt="울산하늘공원 지도" style="border:1px solid #ccc;">
+              </a>
+            </div>
+            <div style="overflow: hidden; padding: 7px 11px; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 0px 0px 2px 2px; background-color: rgb(249, 249, 249);">
+              <a href="https://map.kakao.com" target="_blank" style="float: left;">
+                <img src="//t1.daumcdn.net/localimg/localimages/07/2018/pc/common/logo_kakaomap.png" width="72" height="16" alt="카카오맵" style="display:block;width:72px;height:16px">
+              </a>
+              <div style="float: right; position: relative; top: 1px; font-size: 11px;">
+                <a target="_blank" href="https://map.kakao.com/?from=roughmap&srcid=1112611176&confirmid=1112611176&q=%EC%9A%B8%EC%82%B0%ED%95%98%EB%8A%98%EA%B3%B5%EC%9B%90&rv=on" style="float:left;height:15px;padding-top:1px;line-height:15px;color:#000;text-decoration: none;">로드뷰</a>
+                <span style="width: 1px;padding: 0;margin: 0 8px 0 9px;height: 11px;vertical-align: top;position: relative;top: 2px;border-left: 1px solid #d0d0d0;float: left;"></span>
+                <a target="_blank" href="https://map.kakao.com/?from=roughmap&eName=%EC%9A%B8%EC%82%B0%ED%95%98%EB%8A%98%EA%B3%B5%EC%9B%90&eX=984180.0000003946&eY=553567.0000000123" style="float:left;height:15px;padding-top:1px;line-height:15px;color:#000;text-decoration: none;">길찾기</a>
+                <span style="width: 1px;padding: 0;margin: 0 8px 0 9px;height: 11px;vertical-align: top;position: relative;top: 2px;border-left: 1px solid #d0d0d0;float: left;"></span>
+                <a target="_blank" href="https://map.kakao.com?map_type=TYPE_MAP&from=roughmap&srcid=1112611176&itemId=1112611176&q=%EC%9A%B8%EC%82%B0%ED%95%98%EB%8A%98%EA%B3%B5%EC%9B%90&urlX=984180.0000003946&urlY=553567.0000000123" style="float:left;height:15px;padding-top:1px;line-height:15px;color:#000;text-decoration: none;">지도 크게 보기</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <a class="admin" href="admin.html">관리자 페이지</a>
-
+    </div>
   </main>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <p><strong>울산광역시 시설공단 울산하늘공원</strong></p>
+    <p style="margin-top: 8px;">울산광역시 울주군 언양읍 반천리 산43-1</p>
+    <div class="footer-links">
+      <a href="tel:052-255-3800">📞 052-255-3800</a>
+      <span style="color: #cbd5e1;">|</span>
+      <a href="https://ulsanskypark.com/" target="_blank" rel="noopener noreferrer">장례식장 홈페이지</a>
+    </div>
+    <p style="margin-top: 16px; font-size: 12px; color: #94a3b8;">Copyright © Ulsan Facilities Corporation. All rights reserved.</p>
+  </footer>
+
+  <!-- 관리자 링크 (데스크톱만 표시) -->
+  <a href="#" class="admin-link" onclick="adminAccess(event)" aria-label="관리자 페이지">🔐 관리자</a>
+
+  <!-- 관리자 인증 및 기능 스크립트 -->
+  <script>
+    // 관리자 인증
+    function adminAccess(event) {
+      event.preventDefault();
+      
+      const password = prompt('관리자 비밀번호를 입력하세요:');
+      
+      if (password === null) {
+        return;
+      }
+      
+      if (password === 'a1234567!@') {
+        window.location.href = 'admin.html';
+      } else {
+        alert('비밀번호가 올바르지 않습니다.');
+      }
+    }
+
+    // 부드러운 스크롤
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        e.preventDefault();
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // 외부 링크 확인 (선택사항)
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        // 외부 링크 추적이나 확인 로직을 추가할 수 있습니다
+      });
+    });
+
+    // 페이지 로드 완료 시
+    window.addEventListener('load', function() {
+      // 로딩 완료 후 추가 초기화 작업
+      console.log('울산하늘공원 페이지 로드 완료');
+    });
+
+    // 이미지 로드 에러 처리
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('error', function() {
+        console.warn('이미지 로드 실패:', this.src);
+        // 대체 이미지나 플레이스홀더 표시 가능
+      });
+    });
+  </script>
 </body>
 </html>
