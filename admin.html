@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>울산하늘공원 데이터 관리자 (웹 편집)</title>
+  <title>울산하늘공원 데이터 관리자 (추가 전용)</title>
 
   <!-- Handsontable -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
@@ -31,75 +31,67 @@
       width: 100%;
       max-width: 1200px;
     }
-    h1 {
-      margin: 0 0 18px;
-      font-size: 22px;
-      color: #3a332e;
-      text-align: center;
-    }
+    h1 { margin: 0 0 14px; font-size: 22px; color: #3a332e; text-align: center; }
 
-    .config-box {
-      background: #fafafa;
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #eee;
+    .row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 10px;
       margin-bottom: 12px;
     }
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      font-size: 13px;
-      margin-bottom: 4px;
-      color: #555;
+    .box {
+      background: #fafafa;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #eee;
     }
+    .form-group label { display:block; font-weight:700; font-size:13px; margin-bottom:4px; color:#555; }
     .form-group input, .form-group select {
       width: 100%;
-      padding: 8px;
+      padding: 9px;
       border: 1px solid #dcdcdc;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 14px;
       box-sizing: border-box;
       background: #fff;
     }
+    .mini { font-size: 12px; color:#777; margin-top:6px; line-height:1.35; }
 
     .toolbar {
-      display: flex;
-      gap: 10px;
-      margin: 10px 0 10px;
-      justify-content: flex-end;
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
       flex-wrap: wrap;
+      margin-top: 10px;
     }
     .btn {
-      padding: 10px 18px;
+      padding: 10px 16px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       transition: 0.2s;
     }
-    .btn-load { background-color: #3a332e; color: #fff; }
-    .btn-load:hover { background-color: #524a42; }
-    .btn-save { background-color: #27ae60; color: #fff; }
-    .btn-save:hover { background-color: #219150; }
-    .btn:disabled { background-color: #ccc; cursor: not-allowed; }
+    .btn-load { background:#3a332e; color:#fff; }
+    .btn-load:hover { background:#524a42; }
+    .btn-add { background:#1f7aec; color:#fff; }
+    .btn-add:hover { background:#1966c6; }
+    .btn:disabled { background:#ccc; cursor:not-allowed; }
 
-    /* ✅ A1만 보이는 문제 해결 */
     #hotContainer {
       width: 100%;
-      height: 600px;
-      overflow: auto;
+      height: 620px;
+      overflow: auto; /* A1만 보이는 문제 방지 */
       border: 1px solid #dcdcdc;
-      border-radius: 4px;
+      border-radius: 8px;
+      background: #fff;
     }
 
     .status {
-      margin-top: 10px;
+      margin: 10px 0 12px;
       padding: 10px;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 14px;
       text-align: center;
       display: none;
@@ -110,51 +102,93 @@
     .status.loading { background: #f0f0f0; color: #555; }
 
     .hint {
-      margin-top: 8px;
+      margin-top: 10px;
       font-size: 12px;
       color: #777;
-      line-height: 1.4;
+      line-height: 1.45;
     }
-    .hint code {
-      background: #f3f3f3;
-      padding: 2px 6px;
-      border-radius: 6px;
-    }
+    .hint code { background:#f3f3f3; padding:2px 6px; border-radius:6px; }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>봉안 데이터 관리자 (웹 편집)</h1>
+    <h1>봉안/자연장 데이터 관리자 (추가 전용)</h1>
 
-    <div class="config-box">
-      <div class="form-group">
-        <label>GitHub Owner</label>
-        <input type="text" id="owner" placeholder="예: UL-SkyPark" />
+    <div class="row">
+      <div class="box">
+        <div class="row" style="margin:0;">
+          <div class="form-group">
+            <label>GitHub Owner</label>
+            <input type="text" id="owner" placeholder="예: UL-SkyPark" />
+          </div>
+          <div class="form-group">
+            <label>Repository</label>
+            <input type="text" id="repo" placeholder="예: ulsan-skypark-search" />
+          </div>
+          <div class="form-group">
+            <label>대상 파일</label>
+            <select id="fileSelect" onchange="onFileChange()">
+              <option value="deceased">봉안/고인 데이터 (deceased_data.xlsx)</option>
+              <option value="nature">자연장 데이터 (nature_data.xlsx)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Access Token</label>
+            <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" />
+          </div>
+        </div>
+
+        <div class="mini">
+          * 불러오기 후 아래 입력폼으로만 추가 가능(그리드는 읽기전용)<br/>
+          * 브랜치는 <b>main 고정</b>
+        </div>
+
+        <div class="toolbar">
+          <button id="loadBtn" class="btn btn-load" onclick="loadFile()">엑셀 불러오기</button>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Repository</label>
-        <input type="text" id="repo" placeholder="예: ulsan-skypark-search" />
-      </div>
+      <div class="box">
+        <div id="formTitle" style="font-weight:900; margin-bottom:10px; color:#3a332e;">추가 입력 (봉안)</div>
 
-      <div class="form-group">
-        <label>편집할 파일</label>
-        <select id="fileSelect">
-          <option value="data/deceased_data.xlsx">봉안/고인 데이터 (deceased_data.xlsx)</option>
-          <option value="data/nature_data.xlsx">자연장 데이터 (nature_data.xlsx)</option>
-        </select>
-      </div>
+        <div class="row" style="margin-bottom:10px;">
+          <div class="form-group">
+            <label id="lblDateIn">안치일자</label>
+            <input type="text" id="f_inDate" placeholder="예: 2026-02-18 / 20260218 / 2026.2.18" />
+          </div>
 
-      <div class="form-group">
-        <label>Access Token</label>
-        <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" />
-      </div>
-    </div>
+          <div class="form-group">
+            <label id="lblNo">봉안번호</label>
+            <input type="text" id="f_no" placeholder="예: A-101" />
+          </div>
 
-    <div class="toolbar">
-      <button id="loadBtn" class="btn btn-load" onclick="loadFile()">엑셀 불러오기</button>
-      <button id="saveBtn" class="btn btn-save" onclick="saveFile()" disabled>변경사항 저장하기</button>
+          <div class="form-group">
+            <label>사망자명</label>
+            <input type="text" id="f_deceased" placeholder="예: 홍길동" />
+          </div>
+
+          <div class="form-group">
+            <label>신청자명</label>
+            <input type="text" id="f_applicant" placeholder="예: 김철수" />
+          </div>
+        </div>
+
+        <div class="row" id="returnRow" style="margin:0; display:grid;">
+          <div class="form-group">
+            <label>반환일자</label>
+            <input type="text" id="f_returnDate" placeholder="없으면 비워도 됨 (예: 2026-03-01)" />
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <button id="addSaveBtn" class="btn btn-add" onclick="addAndSave()" disabled>추가하고 바로 저장</button>
+        </div>
+
+        <div class="mini">
+          ✅ 번호 중복 체크 후 추가됨 / 날짜는 자동으로 <b>YYYY-MM-DD</b>로 정리됨
+        </div>
+      </div>
     </div>
 
     <div id="statusMsg" class="status"></div>
@@ -167,97 +201,148 @@
   </div>
 
   <script>
-    let hot = null;
-    let currentSha = "";
-    let isDirty = false;
-
-    // ✅ 브랜치 고정
+    // ===== 설정 =====
     const BRANCH = "main";
-
-    window.onload = () => {
-      const savedOwner = localStorage.getItem('gh_owner');
-      const savedRepo  = localStorage.getItem('gh_repo');
-      const savedToken = localStorage.getItem('gh_token');
-      const savedFile  = localStorage.getItem('gh_file');
-
-      if (savedOwner) document.getElementById('owner').value = savedOwner;
-      if (savedRepo)  document.getElementById('repo').value  = savedRepo;
-      if (savedToken) document.getElementById('token').value = savedToken;
-      if (savedFile)  document.getElementById('fileSelect').value = savedFile;
+    const FILES = {
+      deceased: "data/deceased_data.xlsx",
+      nature: "data/nature_data.xlsx"
     };
 
-    function showStatus(msg, type) {
-      const el = document.getElementById('statusMsg');
-      el.textContent = msg;
-      el.className = 'status ' + type;
-      el.style.display = 'block';
-      if (type === 'success') setTimeout(() => (el.style.display = 'none'), 3000);
-    }
+    // ===== 상태 =====
+    let hot = null;
+    let currentSha = "";
+    let currentHeaders = [];
+    let currentFileKey = "deceased"; // deceased | nature
+    let isBusy = false;
 
-    function setSaveEnabled(enabled) {
-      document.getElementById('saveBtn').disabled = !enabled;
-    }
+    window.onload = () => {
+      const savedOwner = localStorage.getItem("gh_owner");
+      const savedRepo  = localStorage.getItem("gh_repo");
+      const savedToken = localStorage.getItem("gh_token");
+      const savedFileKey = localStorage.getItem("gh_file_key");
 
-    // base64(content) -> Uint8Array (줄바꿈 제거)
-    function base64ToUint8Array(base64) {
-      const clean = base64.replace(/\s/g, '');
-      const binaryString = atob(clean);
-      const len = binaryString.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
-      return bytes;
-    }
-
-    // Uint8Array -> base64 (대용량도 안전하게 chunk 처리)
-    function uint8ArrayToBase64(u8) {
-      let binary = '';
-      const chunkSize = 0x8000;
-      for (let i = 0; i < u8.length; i += chunkSize) {
-        const chunk = u8.subarray(i, i + chunkSize);
-        binary += String.fromCharCode.apply(null, chunk);
+      if (savedOwner) document.getElementById("owner").value = savedOwner;
+      if (savedRepo) document.getElementById("repo").value = savedRepo;
+      if (savedToken) document.getElementById("token").value = savedToken;
+      if (savedFileKey && FILES[savedFileKey]) {
+        document.getElementById("fileSelect").value = savedFileKey;
+        currentFileKey = savedFileKey;
       }
-      return btoa(binary);
+      onFileChange();
+    };
+
+    function onFileChange() {
+      currentFileKey = document.getElementById("fileSelect").value;
+
+      const isDeceased = currentFileKey === "deceased";
+      document.getElementById("formTitle").textContent = isDeceased ? "추가 입력 (봉안)" : "추가 입력 (자연장)";
+      document.getElementById("lblNo").textContent = isDeceased ? "봉안번호" : "자연장번호";
+      document.getElementById("returnRow").style.display = isDeceased ? "grid" : "none";
+
+      // 입력값 일부 정리
+      document.getElementById("f_no").value = "";
+      document.getElementById("f_deceased").value = "";
+      document.getElementById("f_applicant").value = "";
+      document.getElementById("f_inDate").value = "";
+      const ret = document.getElementById("f_returnDate");
+      if (ret) ret.value = "";
+
+      localStorage.setItem("gh_file_key", currentFileKey);
+    }
+
+    function showStatus(msg, type) {
+      const el = document.getElementById("statusMsg");
+      el.textContent = msg;
+      el.className = "status " + type;
+      el.style.display = "block";
+      if (type === "success") setTimeout(() => (el.style.display = "none"), 2500);
+    }
+
+    function setBusy(b) {
+      isBusy = b;
+      document.getElementById("loadBtn").disabled = b;
+      document.getElementById("addSaveBtn").disabled = b || !hot;
     }
 
     function getInputs() {
-      const owner = document.getElementById('owner').value.trim();
-      const repo  = document.getElementById('repo').value.trim();
-      const token = document.getElementById('token').value.trim();
-      const path  = document.getElementById('fileSelect').value; // ✅ 숨김: select값이 곧 path
+      const owner = document.getElementById("owner").value.trim();
+      const repo  = document.getElementById("repo").value.trim();
+      const token = document.getElementById("token").value.trim();
+      const path = FILES[currentFileKey];
       return { owner, repo, token, path, branch: BRANCH };
     }
 
-    function saveInputsToLocalStorage({owner, repo, token, path}) {
-      localStorage.setItem('gh_owner', owner);
-      localStorage.setItem('gh_repo', repo);
-      localStorage.setItem('gh_token', token);
-      localStorage.setItem('gh_file', path);
+    function saveInputsToLocalStorage({owner, repo, token}) {
+      localStorage.setItem("gh_owner", owner);
+      localStorage.setItem("gh_repo", repo);
+      localStorage.setItem("gh_token", token);
     }
 
     function buildContentsUrl(owner, repo, path, branch) {
       return `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(branch)}`;
     }
 
-    // ✅ 큰 파일도 안정적으로: JSON 메타 조회 후 RAW 바이너리로 다운로드
+    // ===== 유틸: 헤더 찾기 =====
+    function norm(s) {
+      return String(s ?? "").replace(/\s+/g, "").toLowerCase();
+    }
+
+    function findHeaderIndex(headers, candidates) {
+      const h = headers.map(norm);
+      for (const cand of candidates) {
+        const idx = h.indexOf(norm(cand));
+        if (idx !== -1) return idx;
+      }
+      return -1;
+    }
+
+    // ===== 유틸: 날짜 정규화 =====
+    // 입력 예: 2026-2-1 / 2026.02.01 / 20260201 / 2026/2/1
+    function normalizeDate(input) {
+      const raw = String(input ?? "").trim();
+      if (!raw) return "";
+
+      // 숫자만 8자리 (YYYYMMDD)
+      const onlyNum = raw.replace(/[^0-9]/g, "");
+      if (onlyNum.length === 8) {
+        const y = onlyNum.slice(0,4);
+        const m = onlyNum.slice(4,6);
+        const d = onlyNum.slice(6,8);
+        return `${y}-${m}-${d}`;
+      }
+
+      // 구분자 기반
+      const cleaned = raw.replace(/\./g, "-").replace(/\//g, "-");
+      const parts = cleaned.split("-").map(p => p.trim()).filter(Boolean);
+      if (parts.length >= 3) {
+        let [y,m,d] = parts;
+        if (y.length === 2) y = "20" + y; // 2자리 연도 보정(필요 시)
+        m = String(parseInt(m,10)).padStart(2,"0");
+        d = String(parseInt(d,10)).padStart(2,"0");
+        if (!/^\d{4}$/.test(y) || m === "NaN" || d === "NaN") return "";
+        return `${y}-${m}-${d}`;
+      }
+
+      return "";
+    }
+
+    // ===== 엑셀 로드: 메타(JSON) 조회 후 RAW로 바이너리 받아오기 =====
     async function loadFile() {
       const { owner, repo, token, path, branch } = getInputs();
-
       if (!owner || !repo || !token) {
-        showStatus('Owner / Repo / Token을 입력해주세요.', 'error');
+        showStatus("Owner / Repo / Token을 입력해줘.", "error");
         return;
       }
 
-      saveInputsToLocalStorage({owner, repo, token, path});
+      saveInputsToLocalStorage({owner, repo, token});
 
-      showStatus('GitHub에서 파일 불러오는 중...', 'loading');
-      document.getElementById('loadBtn').disabled = true;
-      setSaveEnabled(false);
-      isDirty = false;
+      setBusy(true);
+      showStatus("GitHub에서 파일 불러오는 중...", "loading");
 
       try {
         const apiUrl = buildContentsUrl(owner, repo, path, branch);
 
-        // 1) 메타(JSON) 조회 (sha 확보)
+        // 1) 메타(JSON) 조회
         const metaRes = await fetch(apiUrl, {
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -271,159 +356,270 @@
         }
 
         const meta = await metaRes.json();
-
-        if (Array.isArray(meta)) {
-          throw new Error("경로가 파일이 아니라 폴더로 인식됐어.");
-        }
+        if (Array.isArray(meta)) throw new Error("경로가 파일이 아니라 폴더로 인식됐어.");
 
         currentSha = meta.sha || "";
 
-        let fileBytes = null;
-
-        // 2-A) content 있으면 base64로 처리 (작은 파일)
-        if (meta.content) {
-          fileBytes = base64ToUint8Array(meta.content);
-        } else {
-          // 2-B) ✅ content 없으면 RAW 바이너리로 받기 (봉안엑셀 케이스)
-          const rawRes = await fetch(apiUrl, {
-            headers: {
-              "Authorization": `Bearer ${token}`,
-              "Accept": "application/vnd.github.raw"
-            }
-          });
-
-          if (!rawRes.ok) {
-            const txt = await rawRes.text();
-            throw new Error(`RAW 다운로드 실패 (${rawRes.status})\n${txt}`);
+        // 2) RAW 다운로드
+        const rawRes = await fetch(apiUrl, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/vnd.github.raw"
           }
+        });
 
-          const buf = await rawRes.arrayBuffer();
-          fileBytes = new Uint8Array(buf);
+        if (!rawRes.ok) {
+          const txt = await rawRes.text();
+          throw new Error(`RAW 다운로드 실패 (${rawRes.status})\n${txt}`);
         }
 
-        // 3) 엑셀 파싱
-        const wb = XLSX.read(fileBytes, { type: 'array' });
+        const ctype = (rawRes.headers.get("content-type") || "").toLowerCase();
+        if (ctype.includes("application/json")) {
+          const txt = await rawRes.text();
+          throw new Error(`엑셀 대신 JSON이 내려왔어(권한/토큰 문제일 가능성 큼)\n\n${txt}`);
+        }
+
+        const buf = await rawRes.arrayBuffer();
+        const bytes = new Uint8Array(buf);
+
+        // 3) 파싱
+        const wb = XLSX.read(bytes, { type: "array" });
         const ws = wb.Sheets[wb.SheetNames[0]];
         const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
 
         initGrid(aoa);
 
-        showStatus('파일 로드 완료! 데이터를 수정하세요.', 'success');
-        setSaveEnabled(false);
+        showStatus("로드 완료! 입력폼으로 추가해줘.", "success");
+        document.getElementById("addSaveBtn").disabled = false;
 
-      } catch (err) {
-        showStatus(err.message || String(err), 'error');
+      } catch (e) {
+        showStatus(e.message || String(e), "error");
       } finally {
-        document.getElementById('loadBtn').disabled = false;
+        setBusy(false);
       }
     }
 
+    // ===== 그리드: 읽기전용 =====
     function initGrid(aoa) {
-      const container = document.getElementById('hotContainer');
-      container.innerHTML = '';
+      const container = document.getElementById("hotContainer");
+      container.innerHTML = "";
 
-      // 첫 행을 헤더로 사용 (헤더는 편집 제외)
-      const headers  = (aoa && aoa.length > 0) ? aoa[0] : [];
+      currentHeaders = (aoa && aoa.length > 0) ? aoa[0].map(h => String(h ?? "").trim()) : [];
       const bodyData = (aoa && aoa.length > 1) ? aoa.slice(1) : [];
 
       hot = new Handsontable(container, {
         data: bodyData,
         rowHeaders: true,
-        colHeaders: headers,
-        height: 600,
-        width: '100%',
-        stretchH: 'all',
-        licenseKey: 'non-commercial-and-evaluation',
-        contextMenu: true,
+        colHeaders: currentHeaders,
+        height: 620,
+        width: "100%",
+        stretchH: "all",
+        licenseKey: "non-commercial-and-evaluation",
+
+        // ✅ 편집 잠금(추가만 가능)
+        readOnly: true,
+        contextMenu: false,
         manualColumnResize: true,
         manualRowResize: true,
         filters: true,
-        dropdownMenu: true,
-        afterChange: (changes, source) => {
-          if (!changes) return;
-          if (source === 'loadData') return;
-          isDirty = true;
-          setSaveEnabled(true);
-        }
+        dropdownMenu: true
       });
 
-      // ✅ A1만 보이는 현상 방지
+      // A1만 보이는 현상 방지
       setTimeout(() => {
-        if (hot) {
-          hot.render();
-          hot.refreshDimensions();
-        }
+        hot.render();
+        hot.refreshDimensions();
       }, 0);
     }
 
-    async function saveFile() {
-      if (!hot) return;
+    // ===== 봉안 반환일자 컬럼 없으면 자동 생성 =====
+    function ensureReturnDateColumnIfNeeded() {
+      if (currentFileKey !== "deceased") return;
 
-      const { owner, repo, token, path, branch } = getInputs();
+      const idx = findHeaderIndex(currentHeaders, ["반환일자", "반환 일자", "반환일"]);
+      if (idx !== -1) return;
 
-      if (!owner || !repo || !token) {
-        showStatus('Owner / Repo / Token이 누락됐어.', 'error');
-        return;
+      // 컬럼 추가
+      hot.alter("insert_col_end", 1);
+      currentHeaders.push("반환일자");
+      hot.updateSettings({ colHeaders: currentHeaders });
+
+      // 기존 모든 행의 새 컬럼 값은 공백으로 자동(Handsontable이 undefined로 둠)
+    }
+
+    // ===== 중복 체크(번호) =====
+    function isDuplicateNumber(noValue) {
+      const val = norm(noValue);
+      if (!val) return false;
+
+      const isDeceased = currentFileKey === "deceased";
+      const noIdx = isDeceased
+        ? findHeaderIndex(currentHeaders, ["봉안번호", "봉안 번호", "봉안no", "봉안No"])
+        : findHeaderIndex(currentHeaders, ["자연장번호", "자연장 번호", "자연장no", "자연장No"]);
+
+      if (noIdx === -1) {
+        throw new Error((isDeceased ? "봉안번호" : "자연장번호") + " 헤더를 엑셀에서 찾을 수 없어.");
       }
 
-      if (!isDirty) {
-        showStatus('변경된 내용이 없어.', 'success');
+      const rows = hot.getData(); // body rows
+      for (let r = 0; r < rows.length; r++) {
+        if (norm(rows[r][noIdx]) === val) return true;
+      }
+      return false;
+    }
+
+    // ===== 추가 + 저장(원클릭) =====
+    async function addAndSave() {
+      if (!hot) {
+        showStatus("먼저 엑셀을 불러와야 해.", "error");
         return;
       }
-
-      if (!confirm("정말 수정사항을 GitHub에 저장하시겠습니까?")) return;
-
-      showStatus('GitHub에 저장 중...', 'loading');
-      setSaveEnabled(false);
+      if (isBusy) return;
 
       try {
-        const apiUrl = buildContentsUrl(owner, repo, path, branch);
+        setBusy(true);
 
-        // 헤더 + 본문 합쳐서 저장
-        const headers = hot.getColHeader();
-        const body = hot.getData();
-        const merged = [headers, ...body];
+        const isDeceased = currentFileKey === "deceased";
 
-        const newWs = XLSX.utils.aoa_to_sheet(merged);
-        const newWb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(newWb, newWs, "Sheet1");
+        // 입력값
+        const inDateRaw = document.getElementById("f_inDate").value.trim();
+        const noRaw = document.getElementById("f_no").value.trim();
+        const deceased = document.getElementById("f_deceased").value.trim();
+        const applicant = document.getElementById("f_applicant").value.trim();
+        const returnDateRaw = isDeceased ? document.getElementById("f_returnDate").value.trim() : "";
 
-        const wbOut = XLSX.write(newWb, { bookType: 'xlsx', type: 'array' });
-        const bytes = new Uint8Array(wbOut);
-        const contentBase64 = uint8ArrayToBase64(bytes);
-
-        const putBody = {
-          message: `Update data via Admin Page: ${new Date().toISOString()}`,
-          content: contentBase64,
-          sha: currentSha,
-          branch: branch
-        };
-
-        const res = await fetch(apiUrl, {
-          method: "PUT",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/vnd.github+json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(putBody)
-        });
-
-        if (!res.ok) {
-          const txt = await res.text();
-          throw new Error(`저장 실패 (${res.status})\n${txt}`);
+        if (!inDateRaw || !noRaw || !deceased || !applicant) {
+          showStatus("필수 항목을 다 입력해줘(안치일자/번호/사망자명/신청자명).", "error");
+          return;
         }
 
-        const resData = await res.json();
-        currentSha = resData.content?.sha || currentSha;
-        isDirty = false;
+        const inDate = normalizeDate(inDateRaw);
+        if (!inDate) {
+          showStatus("안치일자 형식이 이상해. 예) 2026-02-18 / 20260218 / 2026.2.18", "error");
+          return;
+        }
 
-        showStatus('성공적으로 저장되었습니다! (반영까지 1~2분 소요)', 'success');
+        let returnDate = "";
+        if (isDeceased && returnDateRaw) {
+          returnDate = normalizeDate(returnDateRaw);
+          if (!returnDate) {
+            showStatus("반환일자 형식이 이상해. 예) 2026-03-01 / 20260301", "error");
+            return;
+          }
+        }
 
-      } catch (err) {
-        showStatus(err.message || String(err), 'error');
-        setSaveEnabled(true);
+        // 봉안: 반환일자 컬럼 없으면 생성
+        ensureReturnDateColumnIfNeeded();
+
+        // 중복 체크
+        if (isDuplicateNumber(noRaw)) {
+          showStatus((isDeceased ? "봉안번호" : "자연장번호") + "가 이미 존재해(중복).", "error");
+          return;
+        }
+
+        // 헤더 인덱스 찾기
+        const idxInDate = findHeaderIndex(currentHeaders, ["안치일자", "안치 일자", "안치일"]);
+        const idxNo = isDeceased
+          ? findHeaderIndex(currentHeaders, ["봉안번호", "봉안 번호", "봉안no", "봉안No"])
+          : findHeaderIndex(currentHeaders, ["자연장번호", "자연장 번호", "자연장no", "자연장No"]);
+        const idxDece = findHeaderIndex(currentHeaders, ["사망자명", "고인명", "고인", "사망자"]);
+        const idxAppl = findHeaderIndex(currentHeaders, ["신청자명", "신청자", "사용자명", "계약자명"]);
+        const idxReturn = isDeceased ? findHeaderIndex(currentHeaders, ["반환일자", "반환 일자", "반환일"]) : -1;
+
+        const missing = [];
+        if (idxInDate === -1) missing.push("안치일자");
+        if (idxNo === -1) missing.push(isDeceased ? "봉안번호" : "자연장번호");
+        if (idxDece === -1) missing.push("사망자명");
+        if (idxAppl === -1) missing.push("신청자명");
+        if (isDeceased && idxReturn === -1) missing.push("반환일자");
+
+        if (missing.length) {
+          showStatus("엑셀 헤더를 못 찾았어: " + missing.join(", "), "error");
+          return;
+        }
+
+        // 맨 아래 행 추가 (readOnly여도 programmatic alter/set은 가능)
+        const lastRowIndex = hot.countRows() - 1;
+        hot.alter("insert_row_below", Math.max(lastRowIndex, 0));
+        const newRow = hot.countRows() - 1;
+
+        // 값 세팅
+        hot.setDataAtCell(newRow, idxInDate, inDate, "program");
+        hot.setDataAtCell(newRow, idxNo, noRaw, "program");
+        hot.setDataAtCell(newRow, idxDece, deceased, "program");
+        hot.setDataAtCell(newRow, idxAppl, applicant, "program");
+        if (isDeceased) hot.setDataAtCell(newRow, idxReturn, returnDate, "program");
+
+        // 저장까지 한 번에
+        showStatus("추가 완료. GitHub에 저장 중...", "loading");
+        await saveFileInternal();
+
+        // 입력칸 일부 초기화(연속 입력 편의)
+        document.getElementById("f_no").value = "";
+        document.getElementById("f_deceased").value = "";
+        document.getElementById("f_applicant").value = "";
+        if (isDeceased) document.getElementById("f_returnDate").value = "";
+
+        showStatus("추가 + 저장 완료!", "success");
+
+      } catch (e) {
+        showStatus(e.message || String(e), "error");
+      } finally {
+        setBusy(false);
       }
+    }
+
+    // ===== 저장 내부(확인창 없음) =====
+    async function saveFileInternal() {
+      const { owner, repo, token, path, branch } = getInputs();
+
+      const apiUrl = buildContentsUrl(owner, repo, path, branch);
+
+      // 헤더 + 본문 합쳐서 xlsx 생성
+      const headers = currentHeaders;
+      const body = hot.getData();
+      const merged = [headers, ...body];
+
+      const ws = XLSX.utils.aoa_to_sheet(merged);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+      const wbOut = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+      const bytes = new Uint8Array(wbOut);
+
+      // Uint8Array -> base64 (chunk)
+      let binary = "";
+      const chunkSize = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        const chunk = bytes.subarray(i, i + chunkSize);
+        binary += String.fromCharCode.apply(null, chunk);
+      }
+      const contentBase64 = btoa(binary);
+
+      const putBody = {
+        message: `Append row via Admin Page: ${new Date().toISOString()}`,
+        content: contentBase64,
+        sha: currentSha,
+        branch: branch
+      };
+
+      const res = await fetch(apiUrl, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(putBody)
+      });
+
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(`저장 실패 (${res.status})\n${txt}`);
+      }
+
+      const resData = await res.json();
+      currentSha = resData.content?.sha || currentSha;
     }
   </script>
 </body>
