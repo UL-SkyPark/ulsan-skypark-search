@@ -890,21 +890,36 @@
       return { name:"고인명", loc:"위치번호", applicant:"신청자", date:"안치일자" };
     }
 
-    /* =========================
-      ✅ 추모의집 봉안번호로 시설명 자동 판별
-      - 봉안번호가 "1추모의집-"로 시작 => "제1추모의집"
-      - 봉안번호가 "2추모의집-"로 시작 => "제2추모의집"
-      - 그 외 => "추모의집"
-    ========================== */
-    function getMemorialTypeLabelFromLoc(rawLoc){
-      const s = String(rawLoc || "").trim();
+  /* =========================
+  ✅ 추모의집 봉안번호로 시설명+층수 자동 판별
+  - 봉안번호가 "1추모의집-"로 시작 => "제1추모의집"
+  - 봉안번호가 "2추모의집-"로 시작 => "제2추모의집"
+  - 층수: 1-18실,61+ = 1층 / 19-60실 = 2층
+========================== */
+function getMemorialTypeLabelFromLoc(rawLoc){
+  const s = String(rawLoc || "").trim();
+  
+  // 제1/제2추모의집 판단
+  let facility = "추모의집";
+  if (/^1\s*추모의집\s*-/.test(s) || /^1\s*추모의집/.test(s)) facility = "제1추모의집";
+  if (/^2\s*추모의집\s*-/.test(s) || /^2\s*추모의집/.test(s)) facility = "제2추모의집";
 
-      // "1추모의집-" / "2추모의집-" + 하이픈 없이 들어온 경우까지 커버
-      if (/^1\s*추모의집\s*-/.test(s) || /^1\s*추모의집/.test(s)) return "제1추모의집";
-      if (/^2\s*추모의집\s*-/.test(s) || /^2\s*추모의집/.test(s)) return "제2추모의집";
-
-      return "추모의집";
-    }
+  // 실 번호 추출 (숫자 2자리)
+  const roomMatch = s.match(/(\d{2})실/);
+  if (!roomMatch) return facility; // 실 번호 없으면 시설명만
+  
+  const roomNum = parseInt(roomMatch[1], 10);
+  
+  // 층수 판단
+  let floor = "";
+  if ((roomNum >= 1 && roomNum <= 18) || roomNum >= 61) {
+    floor = " (1층)";
+  } else if (roomNum >= 19 && roomNum <= 60) {
+    floor = " (2층)";
+  }
+  
+  return facility + floor;
+}
 
     function openModal(record){
       document.getElementById("modalName").textContent = record.name || "";
