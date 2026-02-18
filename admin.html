@@ -323,89 +323,88 @@
     }
 
     async function loadFile() {
-      const { owner, repo, path, token, branch } = getInputs();
+  const { owner, repo, path, token, branch } = getInputs(); // branch는 main 고정이었지
 
-      if (!owner || !repo || !path || !token) {
-        showStatus('모든 설정값(Owner/Repo/Path/Token)을 입력해주세요.', 'error');
-        return;
+  if (!owner || !repo || !path || !token) {
+    showStatus('모든 설정값(Owner/Repo/Path/Token)을 입력해주세요.', 'error');
+    return;
+  }
+
+  saveInputsToLocalStorage({owner, repo, path, token});
+  updateCurrentFileBadge();
+
+  showStatus('GitHub에서 파일 불러오는 중...', 'loading');
+  document.getElementById('loadBtn').disabled = true;
+  setSaveEnabled(false);
+  isDirty = false;
+
+  try {
+    const apiUrl = buildContentsUrl(owner, repo, path, branch);
+
+    // 1) 먼저 JSON으로 sha 확보 (+ 작은 파일이면 content로도 바로 처리 가능)
+    const metaRes = await fetch(apiUrl, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/vnd.github+json"
       }
+    });
 
-      saveInputsToLocalStorage({owner, repo, path, token});
-      updateCurrentFileBadge();
-
-      showStatus('GitHub에서 파일 불러오는 중...', 'loading');
-      document.getElementById('loadBtn').disabled = true;
-      setSaveEnabled(false);
-      isDirty = false;
-
-      try {
-        const apiUrl = buildContentsUrl(owner, repo, path, branch);
-        const res = await fetch(apiUrl, {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/vnd.github+json"
-          }
-        });
-
-        if (!res.ok) {
-          const txt = await res.text();
-          throw new Error(`불러오기 실패 (${res.status})\n${txt}`);
-        }
-
-        const data = await res.json();
-
-        // 폴더면 배열
-        if (Array.isArray(data)) {
-          throw new Error(
-            "현재 경로가 폴더로 인식됐어.\n" +
-            "반드시 .xlsx까지 포함한 파일 경로로 입력해줘.\n\n" +
-            "예) data/deceased_data.xlsx"
-          );
-        }
-
-        currentSha = data.sha || "";
-
-        // ✅ 핵심: content가 없으면 download_url로 ArrayBuffer 로드
-        let fileBytes = null;
-
-        if (data.content) {
-          fileBytes = base64ToUint8Array(data.content);
-        } else if (data.download_url) {
-          const fileRes = await fetch(data.download_url, {
-            headers: {
-              "Authorization": `Bearer ${token}`,
-              "Accept": "application/octet-stream"
-            }
-          });
-          if (!fileRes.ok) {
-            const txt = await fileRes.text();
-            throw new Error(`다운로드 URL로 로드 실패 (${fileRes.status})\n${txt}`);
-          }
-          const buf = await fileRes.arrayBuffer();
-          fileBytes = new Uint8Array(buf);
-        } else {
-          throw new Error(
-            "GitHub 응답에 content/download_url이 없어.\n" +
-            "경로/권한/브랜치를 확인해줘."
-          );
-        }
-
-        // 엑셀 파싱
-        const wb = XLSX.read(fileBytes, { type: 'array' });
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
-
-        initGrid(aoa);
-
-        showStatus('파일 로드 완료! 데이터를 수정하세요.', 'success');
-        setSaveEnabled(false);
-
-      } catch (err) {
-        showStatus(err.message, 'error');
-      } finally {
-        document.getElementById('loadBtn').disabled = false;
-      }
+    if (!metaRes.ok) {
+      const txt = await metaRes.text();
+      throw new Error(`메타 조회 실패 (${metaRes.status})\n${txt}`);
     }
+
+    const data = await metaRes.json();
+
+    if (Array.isArray(data)) {
+      throw new Error(
+        "현재 경로가 폴더로 인식됐어.\n" +
+        "반드시 .xlsx까지 포함한 파일 경로로 입력해줘.\n" +
+        "예) data/deceased_data.xlsx"
+      );
+    }
+
+    currentSha = data.sha || "";
+
+    let fileBytes = null;
+
+    // 2-A) content가 있으면 base64로 처리(작은 파일)
+    if (data.content) {
+      fileBytes = base64ToUint8Array(data.content);
+    } else {
+      // 2-B) content가 없으면: 같은 apiUrl로 RAW 바이너리 직접 받기(큰 파일/안정)
+      const rawRes = await fetch(apiUrl, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github.raw"
+        }
+      });
+
+      if (!rawRes.ok) {
+        const txt = await rawRes.text();
+        throw new Error(`RAW 다운로드 실패 (${rawRes.status})\n${txt}`);
+      }
+
+      const buf = await rawRes.arrayBuffer();
+      fileBytes = new Uint8Array(buf);
+    }
+
+    // 3) 엑셀 파싱
+    const wb = XLSX.read(fileBytes, { type: 'array' });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
+
+    initGrid(aoa);
+
+    showStatus('파일 로드 완료! 데이터를 수정하세요.', 'success');
+    setSaveEnabled(false);
+
+  } catch (err) {
+    showStatus(err.message, 'error');
+  } finally {
+    document.getElementById('loadBtn').disabled = false;
+  }
+}
 
     function initGrid(aoa) {
       const container = document.getElementById('hotContainer');
