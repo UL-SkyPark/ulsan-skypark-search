@@ -44,7 +44,7 @@
       border-radius: 8px;
       border: 1px solid #eee;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 10px;
       margin-bottom: 12px;
     }
@@ -87,7 +87,7 @@
     .btn-save:hover { background-color: #219150; }
     .btn:disabled { background-color: #ccc; cursor: not-allowed; }
 
-    /* ✅ A1만 보이는 문제 해결: overflow hidden 금지 */
+    /* ✅ A1만 보이는 문제 해결 */
     #hotContainer {
       width: 100%;
       height: 600px;
@@ -120,69 +120,35 @@
       padding: 2px 6px;
       border-radius: 6px;
     }
-
-    .mini {
-      font-size: 12px;
-      color: #666;
-      margin-top: 6px;
-      line-height: 1.35;
-    }
-    .file-badge {
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #f3f3f3;
-      border: 1px solid #e4e4e4;
-      font-size: 12px;
-      margin-left: 6px;
-      color: #333;
-    }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>
-      봉안 데이터 관리자 (웹 편집)
-      <span id="currentFileBadge" class="file-badge">-</span>
-    </h1>
+    <h1>봉안 데이터 관리자 (웹 편집)</h1>
 
     <div class="config-box">
       <div class="form-group">
-        <label>GitHub ID (owner)</label>
-        <input type="text" id="owner" placeholder="예: ul-skypark" />
+        <label>GitHub Owner</label>
+        <input type="text" id="owner" placeholder="예: UL-SkyPark" />
       </div>
 
       <div class="form-group">
-        <label>저장소 이름 (repo)</label>
+        <label>Repository</label>
         <input type="text" id="repo" placeholder="예: ulsan-skypark-search" />
       </div>
 
       <div class="form-group">
-        <label>편집할 파일 선택</label>
-        <select id="fileSelect" onchange="onFileSelectChange()">
-          <option value="data/deceased_data.xlsx">data/deceased_data.xlsx (봉안/고인 데이터)</option>
-          <option value="data/nature_data.xlsx">data/nature_data.xlsx (자연장 데이터)</option>
-          <option value="custom">직접 입력</option>
+        <label>편집할 파일</label>
+        <select id="fileSelect">
+          <option value="data/deceased_data.xlsx">봉안/고인 데이터 (deceased_data.xlsx)</option>
+          <option value="data/nature_data.xlsx">자연장 데이터 (nature_data.xlsx)</option>
         </select>
-      </div>
-
-      <div class="form-group">
-        <label>파일 경로 (repo 기준)</label>
-        <input type="text" id="path" value="data/deceased_data.xlsx" />
-        <div class="mini">예: <code>data/deceased_data.xlsx</code></div>
-      </div>
-
-      <div class="form-group">
-        <label>브랜치</label>
-        <input type="text" id="branch" value="main" readonly />
-        <div class="mini">main 브랜치 기준(고정)</div>
       </div>
 
       <div class="form-group">
         <label>Access Token</label>
         <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" />
-        <div class="mini">토큰은 브라우저 로컬에 저장됨(노출 주의)</div>
       </div>
     </div>
 
@@ -195,8 +161,8 @@
     <div id="hotContainer"></div>
 
     <div class="hint">
-      <b>중요:</b> 이 페이지는 <code>file://</code>로 열면 CORS 때문에 실패할 수 있어.
-      가능하면 GitHub Pages 또는 로컬 서버(<code>http://localhost</code>)로 열어줘.
+      <b>주의:</b> 파일 더블클릭(<code>file://</code>)으로 열면 CORS로 실패할 수 있어.
+      GitHub Pages 또는 로컬 서버(<code>http://localhost</code>)로 열어줘.
     </div>
   </div>
 
@@ -205,67 +171,27 @@
     let currentSha = "";
     let isDirty = false;
 
+    // ✅ 브랜치 고정
     const BRANCH = "main";
 
     window.onload = () => {
       const savedOwner = localStorage.getItem('gh_owner');
       const savedRepo  = localStorage.getItem('gh_repo');
-      const savedPath  = localStorage.getItem('gh_path');
       const savedToken = localStorage.getItem('gh_token');
-      const savedFileSelect = localStorage.getItem('gh_fileSelect');
+      const savedFile  = localStorage.getItem('gh_file');
 
       if (savedOwner) document.getElementById('owner').value = savedOwner;
       if (savedRepo)  document.getElementById('repo').value  = savedRepo;
       if (savedToken) document.getElementById('token').value = savedToken;
-
-      document.getElementById('branch').value = BRANCH;
-
-      if (savedFileSelect) {
-        document.getElementById('fileSelect').value = savedFileSelect;
-      }
-
-      const sel = document.getElementById('fileSelect').value;
-      if (sel !== 'custom') {
-        document.getElementById('path').value = sel;
-      } else if (savedPath) {
-        document.getElementById('path').value = savedPath;
-      }
-
-      onFileSelectChange(true);
-      updateCurrentFileBadge();
+      if (savedFile)  document.getElementById('fileSelect').value = savedFile;
     };
-
-    function updateCurrentFileBadge() {
-      const badge = document.getElementById('currentFileBadge');
-      const path = document.getElementById('path').value.trim();
-      badge.textContent = path ? path : "-";
-    }
-
-    function onFileSelectChange(isInit = false) {
-      const sel = document.getElementById('fileSelect').value;
-      const pathInput = document.getElementById('path');
-
-      if (sel === 'custom') {
-        pathInput.disabled = false;
-        if (!isInit) pathInput.focus();
-      } else {
-        pathInput.value = sel;
-        pathInput.disabled = true;
-      }
-
-      localStorage.setItem('gh_fileSelect', sel);
-      localStorage.setItem('gh_path', pathInput.value.trim());
-      updateCurrentFileBadge();
-    }
 
     function showStatus(msg, type) {
       const el = document.getElementById('statusMsg');
       el.textContent = msg;
       el.className = 'status ' + type;
       el.style.display = 'block';
-      if (type === 'success') {
-        setTimeout(() => { el.style.display = 'none'; }, 3000);
-      }
+      if (type === 'success') setTimeout(() => (el.style.display = 'none'), 3000);
     }
 
     function setSaveEnabled(enabled) {
@@ -285,7 +211,7 @@
     // Uint8Array -> base64 (대용량도 안전하게 chunk 처리)
     function uint8ArrayToBase64(u8) {
       let binary = '';
-      const chunkSize = 0x8000; // 32KB
+      const chunkSize = 0x8000;
       for (let i = 0; i < u8.length; i += chunkSize) {
         const chunk = u8.subarray(i, i + chunkSize);
         binary += String.fromCharCode.apply(null, chunk);
@@ -296,36 +222,32 @@
     function getInputs() {
       const owner = document.getElementById('owner').value.trim();
       const repo  = document.getElementById('repo').value.trim();
-      const path  = document.getElementById('path').value.trim();
       const token = document.getElementById('token').value.trim();
-      return { owner, repo, path, token, branch: BRANCH };
+      const path  = document.getElementById('fileSelect').value; // ✅ 숨김: select값이 곧 path
+      return { owner, repo, token, path, branch: BRANCH };
     }
 
-    function saveInputsToLocalStorage({owner, repo, path, token}) {
+    function saveInputsToLocalStorage({owner, repo, token, path}) {
       localStorage.setItem('gh_owner', owner);
       localStorage.setItem('gh_repo', repo);
-      localStorage.setItem('gh_path', path);
       localStorage.setItem('gh_token', token);
+      localStorage.setItem('gh_file', path);
     }
 
     function buildContentsUrl(owner, repo, path, branch) {
-      // branch(main) 고정 ref 포함
       return `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(branch)}`;
     }
 
-    // ✅ 핵심: 큰 파일도 안정적으로 로드하기 위해
-    // 1) 메타(JSON)로 sha 확보
-    // 2) content 없으면 같은 URL을 Accept: application/vnd.github.raw 로 바이너리 다운로드
+    // ✅ 큰 파일도 안정적으로: JSON 메타 조회 후 RAW 바이너리로 다운로드
     async function loadFile() {
-      const { owner, repo, path, token, branch } = getInputs();
+      const { owner, repo, token, path, branch } = getInputs();
 
-      if (!owner || !repo || !path || !token) {
-        showStatus('모든 설정값(Owner/Repo/Path/Token)을 입력해주세요.', 'error');
+      if (!owner || !repo || !token) {
+        showStatus('Owner / Repo / Token을 입력해주세요.', 'error');
         return;
       }
 
-      saveInputsToLocalStorage({owner, repo, path, token});
-      updateCurrentFileBadge();
+      saveInputsToLocalStorage({owner, repo, token, path});
 
       showStatus('GitHub에서 파일 불러오는 중...', 'loading');
       document.getElementById('loadBtn').disabled = true;
@@ -335,7 +257,7 @@
       try {
         const apiUrl = buildContentsUrl(owner, repo, path, branch);
 
-        // 1) 메타 조회(JSON)
+        // 1) 메타(JSON) 조회 (sha 확보)
         const metaRes = await fetch(apiUrl, {
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -348,25 +270,21 @@
           throw new Error(`메타 조회 실패 (${metaRes.status})\n${txt}`);
         }
 
-        const data = await metaRes.json();
+        const meta = await metaRes.json();
 
-        if (Array.isArray(data)) {
-          throw new Error(
-            "현재 경로가 폴더로 인식됐어.\n" +
-            "반드시 .xlsx까지 포함한 파일 경로로 입력해줘.\n\n" +
-            "예) data/deceased_data.xlsx"
-          );
+        if (Array.isArray(meta)) {
+          throw new Error("경로가 파일이 아니라 폴더로 인식됐어.");
         }
 
-        currentSha = data.sha || "";
+        currentSha = meta.sha || "";
 
         let fileBytes = null;
 
-        // 2-A) 작은 파일: content(base64)로 처리
-        if (data.content) {
-          fileBytes = base64ToUint8Array(data.content);
+        // 2-A) content 있으면 base64로 처리 (작은 파일)
+        if (meta.content) {
+          fileBytes = base64ToUint8Array(meta.content);
         } else {
-          // 2-B) 큰 파일: 같은 apiUrl을 RAW로 받아서 처리 (CORS 안정 + private도 OK)
+          // 2-B) ✅ content 없으면 RAW 바이너리로 받기 (봉안엑셀 케이스)
           const rawRes = await fetch(apiUrl, {
             headers: {
               "Authorization": `Bearer ${token}`,
@@ -404,7 +322,7 @@
       const container = document.getElementById('hotContainer');
       container.innerHTML = '';
 
-      // 첫 행을 헤더로 사용 (헤더는 편집에서 제외)
+      // 첫 행을 헤더로 사용 (헤더는 편집 제외)
       const headers  = (aoa && aoa.length > 0) ? aoa[0] : [];
       const bodyData = (aoa && aoa.length > 1) ? aoa.slice(1) : [];
 
@@ -441,10 +359,10 @@
     async function saveFile() {
       if (!hot) return;
 
-      const { owner, repo, path, token, branch } = getInputs();
+      const { owner, repo, token, path, branch } = getInputs();
 
-      if (!owner || !repo || !path || !token) {
-        showStatus('설정값(Owner/Repo/Path/Token)이 누락됐어.', 'error');
+      if (!owner || !repo || !token) {
+        showStatus('Owner / Repo / Token이 누락됐어.', 'error');
         return;
       }
 
@@ -459,7 +377,9 @@
       setSaveEnabled(false);
 
       try {
-        // 헤더 + 본문 합쳐서 다시 저장
+        const apiUrl = buildContentsUrl(owner, repo, path, branch);
+
+        // 헤더 + 본문 합쳐서 저장
         const headers = hot.getColHeader();
         const body = hot.getData();
         const merged = [headers, ...body];
@@ -471,8 +391,6 @@
         const wbOut = XLSX.write(newWb, { bookType: 'xlsx', type: 'array' });
         const bytes = new Uint8Array(wbOut);
         const contentBase64 = uint8ArrayToBase64(bytes);
-
-        const apiUrl = buildContentsUrl(owner, repo, path, branch);
 
         const putBody = {
           message: `Update data via Admin Page: ${new Date().toISOString()}`,
