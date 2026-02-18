@@ -517,7 +517,7 @@
 
         <div class="toolbar">
           <div id="loadHint" class="load-hint">
-            불러온 정보가 없습니다. 먼저 ‘불러오기’를 눌러주세요.
+            먼저 ‘불러오기’를 눌러주세요.
             <span class="arrow">→</span>
           </div>
           <button id="loadBtn" class="btn btn-primary" onclick="loadFile()">불러오기</button>
@@ -920,7 +920,7 @@
       if (!hot){
         showLoadHint(true);
         setLoaded(false);
-        showStatus("불러온 정보가 없습니다. 먼저 ‘불러오기’를 눌러주세요.", "error");
+        showStatus("먼저 ‘불러오기’를 눌러주세요.", "error");
         return;
       }
       if (kind === "new"){
@@ -1138,7 +1138,7 @@
       if (!hot) {
         showLoadHint(true);
         setLoaded(false);
-        showStatus("불러온 정보가 없습니다. 먼저 ‘불러오기’를 눌러주세요.", "error");
+        showStatus("먼저 ‘불러오기’를 눌러주세요.", "error");
         return;
       }
       if (isBusy) return;
@@ -1400,7 +1400,7 @@
 
     // ===== 저장: 신규 =====
     async function saveNewQueue(){
-      if (!hot) { showStatus("불러온 정보가 없습니다. 먼저 ‘불러오기’를 눌러주세요.", "error"); showLoadHint(true); setLoaded(false); return; }
+      if (!hot) { showStatus("먼저 ‘불러오기’를 눌러주세요.", "error"); showLoadHint(true); setLoaded(false); return; }
       if (newQueue.length === 0) { showStatus("신규 대기목록이 비어 있습니다.", "error"); return; }
 
       const { owner, repo, token } = getInputs();
@@ -1469,7 +1469,7 @@
 
     // ===== 저장: 반환 =====
     async function saveReturnQueue(){
-      if (!hot) { showStatus("불러온 정보가 없습니다. 먼저 ‘불러오기’를 눌러주세요.", "error"); showLoadHint(true); setLoaded(false); return; }
+      if (!hot) { showStatus("먼저 ‘불러오기’를 눌러주세요.", "error"); showLoadHint(true); setLoaded(false); return; }
       if (fileKey !== "deceased") { showStatus("반환 저장은 추모의집에서만 가능합니다.", "error"); return; }
       if (returnQueue.length === 0) { showStatus("반환 대기목록이 비어 있습니다.", "error"); return; }
 
