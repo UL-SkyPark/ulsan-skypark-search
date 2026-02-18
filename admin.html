@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>울산하늘공원 데이터 관리자 (웹 편집)</title>
-  
+
   <!-- Handsontable (엑셀 편집 UI) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
@@ -32,7 +32,7 @@
       max-width: 1200px;
     }
     h1 { margin-top: 0; font-size: 22px; color: #3a332e; text-align: center; margin-bottom: 20px; }
-    
+
     .config-box {
       background: #fafafa;
       padding: 15px;
@@ -45,7 +45,7 @@
     }
     .form-group label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #555; }
     .form-group input { width: 100%; padding: 8px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
-    
+
     .toolbar {
       display: flex;
       gap: 10px;
@@ -122,14 +122,14 @@
   </div>
 
   <script>
-    let hot; // Handsontable 인스턴스
-    let currentSha = ""; // 파일 덮어쓰기용 SHA 값
+    let hot;               // Handsontable 인스턴스
+    let currentSha = "";   // 파일 덮어쓰기용 SHA 값
+    let isDirty = false;   // 변경 여부
 
     window.onload = () => {
-      // 설정값 불러오기
       ['gh_owner', 'gh_repo', 'gh_path', 'gh_token'].forEach(key => {
         const val = localStorage.getItem(key);
-        if(val) document.getElementById(key.replace('gh_', '')).value = val;
+        if (val) document.getElementById(key.replace('gh_', '')).value = val;
       });
     };
 
@@ -138,18 +138,42 @@
       el.textContent = msg;
       el.className = 'status ' + type;
       el.style.display = 'block';
-      
-      // 성공 메시지는 3초 후 사라짐
-      if(type === 'success') {
+
+      if (type === 'success') {
         setTimeout(() => { el.style.display = 'none'; }, 3000);
       }
     }
 
-    // 1. GitHub에서 엑셀 파일 다운로드 및 파싱
+    function setSaveEnabled(enabled) {
+      document.getElementById('saveBtn').disabled = !enabled;
+    }
+
+    // base64(content) -> Uint8Array (줄바꿈 제거 포함)
+    function base64ToUint8Array(base64) {
+      const clean = base64.replace(/\s/g, ''); // GitHub content는 줄바꿈이 섞일 수 있음
+      const binaryString = atob(clean);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
+      return bytes;
+    }
+
+    // Uint8Array -> base64 (대용량도 안전하게 chunk 처리)
+    function uint8ArrayToBase64(u8) {
+      let binary = '';
+      const chunkSize = 0x8000; // 32KB
+      for (let i = 0; i < u8.length; i += chunkSize) {
+        const chunk = u8.subarray(i, i + chunkSize);
+        binary += String.fromCharCode.apply(null, chunk);
+      }
+      return btoa(binary);
+    }
+
+    // 1) GitHub에서 엑셀 파일 다운로드 및 파싱
     async function loadFile() {
       const owner = document.getElementById('owner').value.trim();
-      const repo = document.getElementById('repo').value.trim();
-      const path = document.getElementById('path').value.trim();
+      const repo  = document.getElementById('repo').value.trim();
+      const path  = document.getElementById('path').value.trim();
       const token = document.getElementById('token').value.trim();
 
       if (!owner || !repo || !path || !token) {
@@ -157,7 +181,6 @@
         return;
       }
 
-      // 설정값 저장
       localStorage.setItem('gh_owner', owner);
       localStorage.setItem('gh_repo', repo);
       localStorage.setItem('gh_path', path);
@@ -165,39 +188,41 @@
 
       showStatus('GitHub에서 파일 불러오는 중...', 'loading');
       document.getElementById('loadBtn').disabled = true;
+      setSaveEnabled(false);
+      isDirty = false;
 
       try {
-        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}`;
         const res = await fetch(apiUrl, {
           headers: {
-            "Authorization": `token ${token}`,
-            "Accept": "application/vnd.github.v3+json"
+            "Authorization": `Bearer ${token}`, // token 방식보다 Bearer가 더 안전/호환
+            "Accept": "application/vnd.github+json"
           }
         });
 
-        if (!res.ok) throw new Error("파일을 찾을 수 없거나 권한이 없습니다.");
-        
-        const data = await res.json();
-        currentSha = data.sha; // 나중에 저장할 때 필요
-
-        // Base64 -> ArrayBuffer 변환
-        const binaryString = atob(data.content);
-        const len = binaryString.length;
-        const bytes = new Uint8Array(len);
-        for (let i = 0; i < len; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
+        if (!res.ok) {
+          const errTxt = await res.text();
+          throw new Error(`파일을 찾을 수 없거나 권한이 없습니다. (${res.status}) ${errTxt}`);
         }
+
+        const data = await res.json();
+        if (!data.content) throw new Error("GitHub 응답에 파일 content가 없습니다(폴더를 지정했거나 파일이 아님).");
+
+        currentSha = data.sha;
+
+        // base64 -> bytes
+        const bytes = base64ToUint8Array(data.content);
 
         // 엑셀 파싱
         const wb = XLSX.read(bytes, { type: 'array' });
         const ws = wb.Sheets[wb.SheetNames[0]];
-        const jsonData = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
+        const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
 
-        // Handsontable 초기화
-        initGrid(jsonData);
+        initGrid(aoa);
 
         showStatus('파일 로드 완료! 데이터를 수정하세요.', 'success');
-        document.getElementById('saveBtn').disabled = false;
+        // 변경이 실제로 생길 때만 저장 버튼 활성화되게 할 거라 여기서는 OFF 유지
+        setSaveEnabled(false);
 
       } catch (err) {
         showStatus('불러오기 실패: ' + err.message, 'error');
@@ -206,62 +231,81 @@
       }
     }
 
-    // 2. 그리드(Handsontable) 초기화
-    function initGrid(data) {
+    // 2) 그리드 초기화 (1행을 헤더로 사용 + 헤더 고정)
+    function initGrid(aoa) {
       const container = document.getElementById('hotContainer');
-      container.innerHTML = ''; // 초기화
+      container.innerHTML = '';
+
+      const headers = (aoa && aoa.length > 0) ? aoa[0] : [];
+      const bodyData = (aoa && aoa.length > 1) ? aoa.slice(1) : [];
 
       hot = new Handsontable(container, {
-        data: data,
+        data: bodyData,
         rowHeaders: true,
-        colHeaders: true, // 첫 줄을 헤더로 사용하려면 true 대신 data[0] 활용 가능
+        colHeaders: headers,
+        fixedRowsTop: 0,
         height: '100%',
         width: '100%',
         licenseKey: 'non-commercial-and-evaluation',
-        contextMenu: true, // 우클릭 메뉴 (행 추가/삭제 등)
+        contextMenu: true,
         manualColumnResize: true,
         manualRowResize: true,
         filters: true,
-        dropdownMenu: true
+        dropdownMenu: true,
+        stretchH: 'all',
+        afterChange: (changes, source) => {
+          if (!changes) return;
+          if (source === 'loadData') return;
+          isDirty = true;
+          setSaveEnabled(true);
+        }
       });
+
+      // 헤더(첫 줄)는 편집 대상이 아니므로 Grid 위에 고정하고 싶다면:
+      //  - 지금은 colHeaders로 빼서 헤더 편집을 막는 형태
     }
 
-    // 3. 수정된 데이터 GitHub에 저장
+    // 3) 수정된 데이터 GitHub에 저장
     async function saveFile() {
       if (!hot) return;
+
       const owner = document.getElementById('owner').value.trim();
-      const repo = document.getElementById('repo').value.trim();
-      const path = document.getElementById('path').value.trim();
+      const repo  = document.getElementById('repo').value.trim();
+      const path  = document.getElementById('path').value.trim();
       const token = document.getElementById('token').value.trim();
+
+      if (!owner || !repo || !path || !token) {
+        showStatus('설정값이 누락되었습니다.', 'error');
+        return;
+      }
+
+      if (!isDirty) {
+        showStatus('변경된 내용이 없습니다.', 'success');
+        return;
+      }
 
       if (!confirm("정말 수정사항을 GitHub에 저장하시겠습니까?")) return;
 
       showStatus('GitHub에 저장 중...', 'loading');
-      document.getElementById('saveBtn').disabled = true;
+      setSaveEnabled(false);
 
       try {
-        // 그리드 데이터 -> 엑셀 바이너리 변환
-        const newData = hot.getData();
-        const newWs = XLSX.utils.aoa_to_sheet(newData);
+        // 저장 시에는 헤더+데이터를 다시 합쳐서 엑셀로 만듦
+        const headers = hot.getColHeader();
+        const body = hot.getData();
+        const merged = [headers, ...body];
+
+        const newWs = XLSX.utils.aoa_to_sheet(merged);
         const newWb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(newWb, newWs, "Sheet1");
-        
-        // ArrayBuffer 생성
-        const wbOut = XLSX.write(newWb, { bookType: 'xlsx', type: 'array' });
-        
-        // ArrayBuffer -> Base64 변환 (GitHub API용)
-        let binary = '';
-        const bytes = new Uint8Array(wbOut);
-        const len = bytes.byteLength;
-        for (let i = 0; i < len; i++) {
-          binary += String.fromCharCode(bytes[i]);
-        }
-        const contentBase64 = btoa(binary);
 
-        // GitHub API PUT 요청
-        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+        const wbOut = XLSX.write(newWb, { bookType: 'xlsx', type: 'array' });
+        const bytes = new Uint8Array(wbOut);
+        const contentBase64 = uint8ArrayToBase64(bytes);
+
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}`;
         const putBody = {
-          message: `Update data via Admin Page: ${new Date().toLocaleString()}`,
+          message: `Update data via Admin Page: ${new Date().toISOString()}`,
           content: contentBase64,
           sha: currentSha
         };
@@ -269,26 +313,28 @@
         const res = await fetch(apiUrl, {
           method: "PUT",
           headers: {
-            "Authorization": `token ${token}`,
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/vnd.github+json",
             "Content-Type": "application/json"
           },
           body: JSON.stringify(putBody)
         });
 
         if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.message);
+          const errTxt = await res.text();
+          throw new Error(`저장 실패 (${res.status}): ${errTxt}`);
         }
 
         const resData = await res.json();
-        currentSha = resData.content.sha; // 새 SHA로 업데이트
+        currentSha = resData.content.sha;
 
+        isDirty = false;
         showStatus('성공적으로 저장되었습니다! (반영까지 1~2분 소요)', 'success');
 
       } catch (err) {
         showStatus('저장 실패: ' + err.message, 'error');
-      } finally {
-        document.getElementById('saveBtn').disabled = false;
+        // 실패했으면 저장 버튼 다시 켜주기
+        setSaveEnabled(true);
       }
     }
   </script>
