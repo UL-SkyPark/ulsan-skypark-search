@@ -587,777 +587,789 @@
     </div>
   </div>
 
-  <script>
-    const EXCEL_URL = "./data/deceased_data.xlsx";
+<script>
+  const EXCEL_URL = "./data/deceased_data.xlsx";
 
-    const ICONS = {
-      single: "./images/solo.png",
-      couple: "./images/couple.png",
-      returned: "./images/arrow.png"
-    };
+  const ICONS = {
+    single: "./images/solo.png",
+    couple: "./images/couple.png",
+    returned: "./images/arrow.png"
+  };
 
-    const STARTS = {
-      "01실": 1,    "02실": 217,  "03실": 433,  "04실": 649,  "05실": 865,
-      "06실": 1081, "07실": 1279, "08실": 1477, "09실": 1693,
+  const STARTS = {
+    "01실": 1,    "02실": 217,  "03실": 433,  "04실": 649,  "05실": 865,
+    "06실": 1081, "07실": 1279, "08실": 1477, "09실": 1693,
 
-      "10실": 2062,  "11실": 2449,  "12실": 2836,  "13실": 3223,  "14실": 3610,
-      "15실": 3997,  "16실": 4384,  "17실": 4771,  "18실": 5158,  "19실": 5545,
-      "20실": 5932,  "21실": 6319,  "22실": 6706,  "23실": 7093,  "24실": 7480,
-      "25실": 7867,  "26실": 8254,  "27실": 8641,  "28실": 9028,  "29실": 9415,
-      "30실": 9802,  "31실": 10189, "32실": 10576, "33실": 10963, "34실": 11350,
-      "35실": 11737, "36실": 12394, "37실": 12642, "38실": 12930, "39실": 13202,
-      "40실": 13474, "41실": 13762, "42실": 14034, "43실": 14306, "44실": 14594,
-      "45실": 14866, "46실": 15138, "47실": 15410, "48실": 15570, "49실": 15954,
-      "50실": 16338, "51실": 16722, "52실": 17066, "53실": 17426, "54실": 17786,
-      "55실": 18146, "56실": 18506, "57실": 18866, "58실": 19570, "59실": 19890,
-      "60실": 20394, "61실": 21078, "62실": 21726
-    };
-    const END_OVERRIDE = { "62실": 22193 };
+    "10실": 2062,  "11실": 2449,  "12실": 2836,  "13실": 3223,  "14실": 3610,
+    "15실": 3997,  "16실": 4384,  "17실": 4771,  "18실": 5158,  "19실": 5545,
+    "20실": 5932,  "21실": 6319,  "22실": 6706,  "23실": 7093,  "24실": 7480,
+    "25실": 7867,  "26실": 8254,  "27실": 8641,  "28실": 9028,  "29실": 9415,
+    "30실": 9802,  "31실": 10189, "32실": 10576, "33실": 10963, "34실": 11350,
+    "35실": 11737, "36실": 12394, "37실": 12642, "38실": 12930, "39실": 13202,
+    "40실": 13474, "41실": 13762, "42실": 14034, "43실": 14306, "44실": 14594,
+    "45실": 14866, "46실": 15138, "47실": 15410, "48실": 15570, "49실": 15954,
+    "50실": 16338, "51실": 16722, "52실": 17066, "53실": 17426, "54실": 17786,
+    "55실": 18146, "56실": 18506, "57실": 18866, "58실": 19570, "59실": 19890,
+    "60실": 20394, "61실": 21078, "62실": 21726
+  };
+  const END_OVERRIDE = { "62실": 22193 };
 
-    const $ = (id) => document.getElementById(id);
-    function pad5(n){ return String(n).padStart(5,"0"); }
-    function escapeHtml(s){
-      return String(s ?? "")
-        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-    }
-    function setMsg(text, kind="info"){
-      const el = $("msg");
-      if (!text){
-        el.textContent = "";
-        el.style.display = "none";
-        el.classList.remove("error");
-        return;
-      }
-      el.textContent = text;
-      el.style.display = "block";
-      el.classList.toggle("error", kind === "error");
-    }
-    function roomStr(n){ return String(n).padStart(2,"0") + "실"; }
-    function roomsRange(a,b){ const out=[]; for(let i=a;i<=b;i++) out.push(roomStr(i)); return out; }
-
-    const itemsByStart = Object.entries(STARTS)
-      .map(([room, start]) => ({ room, start, roomNum: parseInt(room.replace("실",""),10) }))
-      .sort((a,b)=>a.start-b.start);
-
-    const ROOM_CFG = {};
-    const tmp = [];
-    for (let i=0; i<itemsByStart.length; i++){
-      const cur = itemsByStart[i];
-      const next = itemsByStart[i+1];
-      let end = next ? (next.start - 1) : (END_OVERRIDE[cur.room] ?? (cur.start + 215));
-      const count = end - cur.start + 1;
-
-      const div8 = (count % 8 === 0);
-      const div9 = (count % 9 === 0);
-
-      let dans = null;
-      if (cur.roomNum <= 9) dans = 9;
-      else if (div9 && !div8) dans = 9;
-      else if (div8 && !div9) dans = 8;
-      else if (div8 && div9) dans = null;
-
-      tmp.push({ ...cur, end, count, dans });
-    }
-    function nearestFixedDans(idx, dir){
-      for (let j = idx + dir; j >= 0 && j < tmp.length; j += dir){
-        if (tmp[j].dans) return tmp[j].dans;
-      }
-      return null;
-    }
-    for (let i=0; i<tmp.length; i++){
-      if (!tmp[i].dans){
-        const prev = nearestFixedDans(i, -1);
-        const next = nearestFixedDans(i, +1);
-        tmp[i].dans = (prev && next && prev === next) ? prev : (prev || next || 9);
-      }
-
-      const cols = Math.ceil(tmp[i].count / tmp[i].dans);
-
-      ROOM_CFG[tmp[i].room] = {
-        room: tmp[i].room,
-        roomNum: tmp[i].roomNum,
-        start: tmp[i].start,
-        end: tmp[i].end,
-        count: tmp[i].count,
-        dans: tmp[i].dans,
-        cols
-      };
-    }
-    const ROOM_LIST = Object.values(ROOM_CFG).sort((a,b)=>a.start-b.start);
-
-    const COUPLE_ROOMS = roomsRange(1,9);
-    const PERSONAL1_ROOMS = [...roomsRange(10,18), roomStr(61), roomStr(62)];
-    const PERSONAL2A_ROOMS = roomsRange(19,38);
-    const PERSONAL2B_ROOMS = roomsRange(39,60);
-
-    const TAB_DEFS = [
-      { id:"couple", label:"부부단", rooms: COUPLE_ROOMS },
-      { id:"p1", label:"개인단 1층", rooms: PERSONAL1_ROOMS },
-      { id:"p2a", label:"개인단 2층(19~38)", rooms: PERSONAL2A_ROOMS },
-      { id:"p2b", label:"개인단 2층(39~59)", rooms: PERSONAL2B_ROOMS.filter(r => (parseInt(r,10) <= 59)) }
-    ];
-    const TAB_ROOM_SETS = Object.fromEntries(TAB_DEFS.map(t => [t.id, new Set(t.rooms)]));
-
-    function tabForRoom(room){
-      const n = ROOM_CFG[room]?.roomNum ?? 0;
-      if (n <= 9) return "couple";
-      if (TAB_ROOM_SETS.p1.has(room)) return "p1";
-      if (TAB_ROOM_SETS.p2a.has(room)) return "p2a";
-      if (TAB_ROOM_SETS.p2b.has(room)) return "p2b";
-      return "p1";
-    }
-
-    const infoByRoom = {};
-    for (const room of Object.keys(ROOM_CFG)) infoByRoom[room] = {};
-
-    let activeTabId = "couple";
-    let currentRoom = "01실";
-
-    let nextCouple = null;
-    let nextPersonal = null;
-
-    function buildLegend(){
-      $("legend").innerHTML = `
-        <span class="legend-item">
-          <div class="niche-plus" style="font-size:16px; width:20px; text-align:center;">+</div>
-          <b>사용가능</b>
-        </span>
-        <span class="legend-item">
-          <div class="icon-bg used single" style="width:26px; height:26px;">
-            <img class="state-icon" src="${ICONS.single}" alt="개인단">
-          </div>
-          <b>개인단</b>
-        </span>
-        <span class="legend-item">
-          <div class="icon-bg used couple" style="width:26px; height:26px;">
-            <img class="state-icon" src="${ICONS.couple}" alt="부부단">
-          </div>
-          <b>부부단</b>
-        </span>
-        <span class="legend-item">
-          <div class="icon-bg" style="width:26px; height:26px;">
-            <img class="state-icon" src="${ICONS.returned}" alt="반출">
-          </div>
-          <b>반출</b>
-        </span>
-        <span class="legend-item">
-          <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--next-red);border-radius:8px;"></span>
-          <b>다음자리</b>
-        </span>
-      `;
-    }
-
-    function renderTabs(){
-      const bar = $("tabBar");
-      bar.innerHTML = "";
-      for (const t of TAB_DEFS){
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "tab-btn" + (t.id === activeTabId ? " active" : "");
-        btn.textContent = t.label;
-        btn.addEventListener("click", () => setTab(t.id));
-        bar.appendChild(btn);
-      }
-    }
-
-function renderRoomButtons() {
-  const wrap = $("roomBtns");
-  wrap.innerHTML = "";
-
-  const tab = TAB_DEFS.find(x => x.id === activeTabId);
-  const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
-
-  for (const room of rooms) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    // 현재 선택된 방(currentRoom)과 일치하면 무조건 active 클래스 부여
-    btn.className = "room-btn" + (room === currentRoom ? " active" : "");
-
-    // 다음 봉안 예정지가 포함된 방인 경우 표시 (스타일은 CSS에서 제어)
-    if (room === nextCouple?.room || room === nextPersonal?.room) {
-      btn.classList.add("next-room");
-    }
-
-    btn.textContent = room;
-    btn.addEventListener("click", () => setRoom(room, true));
-    wrap.appendChild(btn);
+  const $ = (id) => document.getElementById(id);
+  function pad5(n){ return String(n).padStart(5,"0"); }
+  function escapeHtml(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
   }
-}
+  function setMsg(text, kind="info"){
+    const el = $("msg");
+    if (!text){
+      el.textContent = "";
+      el.style.display = "none";
+      el.classList.remove("error");
+      return;
+    }
+    el.textContent = text;
+    el.style.display = "block";
+    el.classList.toggle("error", kind === "error");
+  }
+  function roomStr(n){ return String(n).padStart(2,"0") + "실"; }
+  function roomsRange(a,b){ const out=[]; for(let i=a;i<=b;i++) out.push(roomStr(i)); return out; }
 
-    function setTab(tabId){
-      if (!TAB_DEFS.some(t => t.id === tabId)) return;
-      activeTabId = tabId;
+  const itemsByStart = Object.entries(STARTS)
+    .map(([room, start]) => ({ room, start, roomNum: parseInt(room.replace("실",""),10) }))
+    .sort((a,b)=>a.start-b.start);
 
-      const tab = TAB_DEFS.find(t => t.id === activeTabId);
-      const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
+  const ROOM_CFG = {};
+  const tmp = [];
+  for (let i=0; i<itemsByStart.length; i++){
+    const cur = itemsByStart[i];
+    const next = itemsByStart[i+1];
+    let end = next ? (next.start - 1) : (END_OVERRIDE[cur.room] ?? (cur.start + 215));
+    const count = end - cur.start + 1;
 
-      if (!rooms.includes(currentRoom)){
-        const first = rooms[0];
-        if (first) { setRoom(first, true, { skipTabSync:true }); return; }
+    const div8 = (count % 8 === 0);
+    const div9 = (count % 9 === 0);
+
+    let dans = null;
+    if (cur.roomNum <= 9) dans = 9;
+    else if (div9 && !div8) dans = 9;
+    else if (div8 && !div9) dans = 8;
+    else if (div8 && div9) dans = null;
+
+    tmp.push({ ...cur, end, count, dans });
+  }
+  function nearestFixedDans(idx, dir){
+    for (let j = idx + dir; j >= 0 && j < tmp.length; j += dir){
+      if (tmp[j].dans) return tmp[j].dans;
+    }
+    return null;
+  }
+  for (let i=0; i<tmp.length; i++){
+    if (!tmp[i].dans){
+      const prev = nearestFixedDans(i, -1);
+      const next = nearestFixedDans(i, +1);
+      tmp[i].dans = (prev && next && prev === next) ? prev : (prev || next || 9);
+    }
+
+    const cols = Math.ceil(tmp[i].count / tmp[i].dans);
+
+    ROOM_CFG[tmp[i].room] = {
+      room: tmp[i].room,
+      roomNum: tmp[i].roomNum,
+      start: tmp[i].start,
+      end: tmp[i].end,
+      count: tmp[i].count,
+      dans: tmp[i].dans,
+      cols
+    };
+  }
+  const ROOM_LIST = Object.values(ROOM_CFG).sort((a,b)=>a.start-b.start);
+
+  const COUPLE_ROOMS = roomsRange(1,9);
+  const PERSONAL1_ROOMS = [...roomsRange(10,18), roomStr(61), roomStr(62)];
+
+  // ✅ 변경: 2층 범위 재배정 (19~39) / (40~60)
+  const PERSONAL2A_ROOMS = roomsRange(19,39);
+  const PERSONAL2B_ROOMS = roomsRange(40,60);
+
+  const TAB_DEFS = [
+    { id:"couple", label:"부부단", rooms: COUPLE_ROOMS },
+    { id:"p1", label:"개인단 1층", rooms: PERSONAL1_ROOMS },
+
+    // ✅ 변경: 라벨 및 범위 수정
+    { id:"p2a", label:"개인단 2층(19~39)", rooms: PERSONAL2A_ROOMS },
+
+    // ✅ 변경: 60실 제외하던 filter 제거 + 라벨 수정
+    { id:"p2b", label:"개인단 2층(40~60)", rooms: PERSONAL2B_ROOMS }
+  ];
+  const TAB_ROOM_SETS = Object.fromEntries(TAB_DEFS.map(t => [t.id, new Set(t.rooms)]));
+
+  function tabForRoom(room){
+    const n = ROOM_CFG[room]?.roomNum ?? 0;
+    if (n <= 9) return "couple";
+    if (TAB_ROOM_SETS.p1.has(room)) return "p1";
+    if (TAB_ROOM_SETS.p2a.has(room)) return "p2a";
+    if (TAB_ROOM_SETS.p2b.has(room)) return "p2b";
+    return "p1";
+  }
+
+  const infoByRoom = {};
+  for (const room of Object.keys(ROOM_CFG)) infoByRoom[room] = {};
+
+  let activeTabId = "couple";
+  let currentRoom = "01실";
+
+  let nextCouple = null;
+  let nextPersonal = null;
+
+  function buildLegend(){
+    $("legend").innerHTML = `
+      <span class="legend-item">
+        <div class="niche-plus" style="font-size:16px; width:20px; text-align:center;">+</div>
+        <b>사용가능</b>
+      </span>
+      <span class="legend-item">
+        <div class="icon-bg used single" style="width:26px; height:26px;">
+          <img class="state-icon" src="${ICONS.single}" alt="개인단">
+        </div>
+        <b>개인단</b>
+      </span>
+      <span class="legend-item">
+        <div class="icon-bg used couple" style="width:26px; height:26px;">
+          <img class="state-icon" src="${ICONS.couple}" alt="부부단">
+        </div>
+        <b>부부단</b>
+      </span>
+      <span class="legend-item">
+        <div class="icon-bg" style="width:26px; height:26px;">
+          <img class="state-icon" src="${ICONS.returned}" alt="반출">
+        </div>
+        <b>반출</b>
+      </span>
+      <span class="legend-item">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--next-red);border-radius:8px;"></span>
+        <b>다음자리</b>
+      </span>
+    `;
+  }
+
+  function renderTabs(){
+    const bar = $("tabBar");
+    bar.innerHTML = "";
+    for (const t of TAB_DEFS){
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "tab-btn" + (t.id === activeTabId ? " active" : "");
+      btn.textContent = t.label;
+      btn.addEventListener("click", () => setTab(t.id));
+      bar.appendChild(btn);
+    }
+  }
+
+  function renderRoomButtons() {
+    const wrap = $("roomBtns");
+    wrap.innerHTML = "";
+
+    const tab = TAB_DEFS.find(x => x.id === activeTabId);
+    const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
+
+    for (const room of rooms) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      // 현재 선택된 방(currentRoom)과 일치하면 무조건 active 클래스 부여
+      btn.className = "room-btn" + (room === currentRoom ? " active" : "");
+
+      // 다음 봉안 예정지가 포함된 방인 경우 표시 (스타일은 CSS에서 제어)
+      if (room === nextCouple?.room || room === nextPersonal?.room) {
+        btn.classList.add("next-room");
       }
 
-      renderTabs();
-      renderRoomButtons();
-      renderRoom(true);
-      saveState();
+      btn.textContent = room;
+      btn.addEventListener("click", () => setRoom(room, true));
+      wrap.appendChild(btn);
+    }
+  }
+
+  function setTab(tabId){
+    if (!TAB_DEFS.some(t => t.id === tabId)) return;
+    activeTabId = tabId;
+
+    const tab = TAB_DEFS.find(t => t.id === activeTabId);
+    const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
+
+    if (!rooms.includes(currentRoom)){
+      const first = rooms[0];
+      if (first) { setRoom(first, true, { skipTabSync:true }); return; }
     }
 
-    function setRoom(room, scrollNext, opts = {}){
-      if (!ROOM_CFG[room]) return;
+    renderTabs();
+    renderRoomButtons();
+    renderRoom(true);
+    saveState();
+  }
 
-      if (!opts.skipTabSync){
-        const needTab = tabForRoom(room);
-        if (needTab !== activeTabId) activeTabId = needTab;
-      }
+  function setRoom(room, scrollNext, opts = {}){
+    if (!ROOM_CFG[room]) return;
 
-      currentRoom = room;
-
-      renderTabs();
-      renderRoomButtons();
-      renderRoom(!!scrollNext);
-
-      saveState();
+    if (!opts.skipTabSync){
+      const needTab = tabForRoom(room);
+      if (needTab !== activeTabId) activeTabId = needTab;
     }
 
-    function saveState(){
-      try{
-        localStorage.setItem("memorial_ui_state", JSON.stringify({ tab: activeTabId, room: currentRoom }));
-      }catch(e){}
+    currentRoom = room;
+
+    renderTabs();
+    renderRoomButtons();
+    renderRoom(!!scrollNext);
+
+    saveState();
+  }
+
+  function saveState(){
+    try{
+      localStorage.setItem("memorial_ui_state", JSON.stringify({ tab: activeTabId, room: currentRoom }));
+    }catch(e){}
+  }
+  function restoreState(){
+    try{
+      const raw = localStorage.getItem("memorial_ui_state");
+      if (!raw) return;
+      const s = JSON.parse(raw);
+      if (s?.tab && TAB_DEFS.some(t=>t.id===s.tab)) activeTabId = s.tab;
+      if (s?.room && ROOM_CFG[s.room]) currentRoom = s.room;
+    }catch(e){}
+  }
+
+  function danOfNo(cfg, noStr){
+    const n = parseInt(noStr, 10);
+    if (!Number.isFinite(n)) return null;
+    if (n < cfg.start || n > cfg.end) return null;
+    const idx = n - cfg.start;
+    const r = idx % cfg.dans;
+    return cfg.dans - r;
+  }
+
+  function findNextAvailableNo(cfg){
+    for (let n = cfg.start; n <= cfg.end; n++){
+      const noStr = pad5(n);
+      const rec = infoByRoom[cfg.room][noStr];
+      if (rec?.returned) continue;
+      if (rec?.status === "used") continue;
+      return noStr;
     }
-    function restoreState(){
-      try{
-        const raw = localStorage.getItem("memorial_ui_state");
-        if (!raw) return;
-        const s = JSON.parse(raw);
-        if (s?.tab && TAB_DEFS.some(t=>t.id===s.tab)) activeTabId = s.tab;
-        if (s?.room && ROOM_CFG[s.room]) currentRoom = s.room;
-      }catch(e){}
+    return null;
+  }
+
+  function scrollNextSlotIntoCenter(){
+    const el = document.querySelector(`.niche.next-slot[data-room="${currentRoom}"]`);
+    if (!el) return;
+    el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
+  }
+
+  function isCoupleRoom(room){ return (ROOM_CFG[room]?.roomNum ?? 99) <= 9; }
+
+  function iconHtml(cfg, returned, used){
+    if (returned){
+      return `<div class="icon-bg"><img class="state-icon" src="${ICONS.returned}" alt="반출"></div>`;
     }
-
-    function danOfNo(cfg, noStr){
-      const n = parseInt(noStr, 10);
-      if (!Number.isFinite(n)) return null;
-      if (n < cfg.start || n > cfg.end) return null;
-      const idx = n - cfg.start;
-      const r = idx % cfg.dans;
-      return cfg.dans - r;
+    if (used){
+      const isCouple = isCoupleRoom(cfg.room);
+      const src = isCouple ? ICONS.couple : ICONS.single;
+      const alt = isCouple ? "부부단" : "개인단";
+      const bgClass = isCouple ? "couple" : "single";
+      return `<div class="icon-bg used ${bgClass}"><img class="state-icon" src="${src}" alt="${alt}"></div>`;
     }
+    return `<div class="niche-plus">+</div>`;
+  }
 
-    function findNextAvailableNo(cfg){
-      for (let n = cfg.start; n <= cfg.end; n++){
-        const noStr = pad5(n);
-        const rec = infoByRoom[cfg.room][noStr];
-        if (rec?.returned) continue;
-        if (rec?.status === "used") continue;
-        return noStr;
-      }
-      return null;
-    }
+  function renderRoom(autoScrollNext){
+    const cfg = ROOM_CFG[currentRoom];
+    if (!cfg) return;
 
-    function scrollNextSlotIntoCenter(){
-      const el = document.querySelector(`.niche.next-slot[data-room="${currentRoom}"]`);
-      if (!el) return;
-      el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
-    }
+    setMsg("");
 
-    function isCoupleRoom(room){ return (ROOM_CFG[room]?.roomNum ?? 99) <= 9; }
+    const host = $("room");
+    host.innerHTML = "";
 
-    function iconHtml(cfg, returned, used){
-      if (returned){
-        return `<div class="icon-bg"><img class="state-icon" src="${ICONS.returned}" alt="반출"></div>`;
-      }
-      if (used){
-        const isCouple = isCoupleRoom(cfg.room);
-        const src = isCouple ? ICONS.couple : ICONS.single;
-        const alt = isCouple ? "부부단" : "개인단";
-        const bgClass = isCouple ? "couple" : "single";
-        return `<div class="icon-bg used ${bgClass}"><img class="state-icon" src="${src}" alt="${alt}"></div>`;
-      }
-      return `<div class="niche-plus">+</div>`;
-    }
+    const nextNo = findNextAvailableNo(cfg);
 
-    function renderRoom(autoScrollNext){
-      const cfg = ROOM_CFG[currentRoom];
-      if (!cfg) return;
+    for (let r=0; r<cfg.dans; r++){
+      const dan = cfg.dans - r;
 
-      setMsg("");
+      const row = document.createElement("div");
+      row.className = "row";
 
-      const host = $("room");
-      host.innerHTML = "";
+      const label = document.createElement("div");
+      label.className = "dan-label";
+      label.textContent = `${dan}단`;
+      row.appendChild(label);
 
-      const nextNo = findNextAvailableNo(cfg);
+      const grid = document.createElement("div");
+      grid.className = "grid";
+      grid.style.gridTemplateColumns = `repeat(${cfg.cols}, var(--cell-w))`;
 
-      for (let r=0; r<cfg.dans; r++){
-        const dan = cfg.dans - r;
+      for (let c=0; c<cfg.cols; c++){
+        const idx = c * cfg.dans + r;
+        const num = cfg.start + idx;
 
-        const row = document.createElement("div");
-        row.className = "row";
-
-        const label = document.createElement("div");
-        label.className = "dan-label";
-        label.textContent = `${dan}단`;
-        row.appendChild(label);
-
-        const grid = document.createElement("div");
-        grid.className = "grid";
-        grid.style.gridTemplateColumns = `repeat(${cfg.cols}, var(--cell-w))`;
-
-        for (let c=0; c<cfg.cols; c++){
-          const idx = c * cfg.dans + r;
-          const num = cfg.start + idx;
-
-          if (num > cfg.end){
-            const blank = document.createElement("div");
-            blank.className = "niche blank";
-            grid.appendChild(blank);
-            continue;
-          }
-
-          const noStr = pad5(num);
-          const rec = infoByRoom[cfg.room][noStr];
-
-          const returned = !!rec?.returned;
-          const used = (rec?.status === "used");
-
-          const niche = document.createElement("div");
-          niche.dataset.no = noStr;
-          niche.dataset.room = cfg.room;
-
-          if (returned) niche.className = "niche returned";
-          else if (used) niche.className = "niche used";
-          else niche.className = "niche empty";
-
-          const top = document.createElement("div");
-          top.className = "niche-top";
-          top.innerHTML = iconHtml(cfg, returned, used);
-          niche.appendChild(top);
-
-          if (nextNo && noStr === nextNo) niche.classList.add("next-slot");
-
-          const no = document.createElement("div");
-          no.className = "niche-no";
-          no.textContent = noStr;
-          niche.appendChild(no);
-
-          if (used){
-            niche.addEventListener("click", () => openModal(cfg.room, noStr, dan));
-          }
-
-          grid.appendChild(niche);
-        }
-
-        row.appendChild(grid);
-        host.appendChild(row);
-      }
-
-      if (autoScrollNext){
-        requestAnimationFrame(() => scrollNextSlotIntoCenter());
-      }
-    }
-
-    function computeNextForRooms(rooms){
-      let best = null;
-      for (const room of rooms){
-        const cfg = ROOM_CFG[room];
-        if (!cfg) continue;
-        const no = findNextAvailableNo(cfg);
-        if (!no) continue;
-        const num = parseInt(no, 10);
-        if (!best || num < best.num) best = { room, no, num };
-      }
-      return best;
-    }
-
-    function updateNextUI(){
-      nextCouple = computeNextForRooms(COUPLE_ROOMS);
-
-      const allPersonal = [...PERSONAL1_ROOMS, ...PERSONAL2A_ROOMS, ...PERSONAL2B_ROOMS]
-        .filter(r => ROOM_CFG[r] && (ROOM_CFG[r].roomNum <= 59 || r === "61실" || r === "62실"));
-      nextPersonal = computeNextForRooms(allPersonal);
-
-      const wrap = $("nextWrap");
-      const cText = $("nextCoupleText");
-      const pText = $("nextPersonalText");
-      const cBtn = $("nextCoupleMoveBtn");
-      const pBtn = $("nextPersonalMoveBtn");
-
-      const hasAny = !!nextCouple || !!nextPersonal;
-      wrap.style.display = hasAny ? "flex" : "none";
-      if (!hasAny) return;
-
-      if (nextCouple){
-        const cfg = ROOM_CFG[nextCouple.room];
-        const dan = danOfNo(cfg, nextCouple.no);
-        cText.textContent = `${nextCouple.room} ${nextCouple.no} (${dan}단)`;
-        cBtn.disabled = false;
-      } else {
-        cText.textContent = "—";
-        cBtn.disabled = true;
-      }
-
-      if (nextPersonal){
-        const cfg = ROOM_CFG[nextPersonal.room];
-        const dan = danOfNo(cfg, nextPersonal.no);
-        pText.textContent = `${nextPersonal.room} ${nextPersonal.no} (${dan}단)`;
-        pBtn.disabled = false;
-      } else {
-        pText.textContent = "—";
-        pBtn.disabled = true;
-      }
-    }
-
-    $("nextCoupleMoveBtn").addEventListener("click", () => {
-      if (!nextCouple) return;
-      setRoom(nextCouple.room, false);
-      requestAnimationFrame(() => focusCell(nextCouple.room, nextCouple.no));
-    });
-    $("nextPersonalMoveBtn").addEventListener("click", () => {
-      if (!nextPersonal) return;
-      setRoom(nextPersonal.room, false);
-      requestAnimationFrame(() => focusCell(nextPersonal.room, nextPersonal.no));
-    });
-
-    function guessHeaderRow(aoa){
-      for (let r=0; r<Math.min(10, aoa.length); r++){
-        const s = (aoa[r]||[]).map(x => String(x||"").trim());
-        if (s.includes("봉안번호") && s.includes("반환일자")) return r;
-      }
-      return 0;
-    }
-    function buildIndexFromHeader(headerRow){
-      const idx = { "안치일자":-1, "봉안번호":-1, "사망자명":-1, "신청자명":-1, "반환일자":-1 };
-      headerRow.forEach((h,i) => { const key = String(h||"").trim(); if (key in idx) idx[key] = i; });
-      return idx;
-    }
-    function extractNo5(text){
-      if (!text) return null;
-      const m = String(text).trim().match(/(\d{5})\s*$/);
-      return m ? m[1] : null;
-    }
-    function extractRoomToken(text){
-      const s = String(text || "").trim();
-      const parts = s.split("-").map(x => x.trim()).filter(Boolean);
-      for (const p of parts){
-        if (/^\d{2}실$/.test(p) && ROOM_CFG[p]) return p;
-      }
-      return null;
-    }
-    function pushUnique(arr, value){
-      const v = String(value ?? "").trim();
-      if (!v) return;
-      if (!arr.includes(v)) arr.push(v);
-    }
-    function isBlank(v){
-      const s = String(v ?? "").trim();
-      return s === "" || s === "-" || s === "0";
-    }
-    function ensureUsed(room, no5, burialNoStr){
-      const old = infoByRoom[room][no5];
-      const rec = {
-        status:"used",
-        returned:false,
-        burialNo: burialNoStr,
-        deceasedNames: (old?.deceasedNames || []),
-        applicantNames: (old?.applicantNames || []),
-        burialDatesRaw: (old?.burialDatesRaw || [])
-      };
-      infoByRoom[room][no5] = rec;
-      return rec;
-    }
-    function markReturned(room, no5){
-      const cur = infoByRoom[room][no5];
-      if (cur && cur.status === "used") return;
-      infoByRoom[room][no5] = { status:"empty", returned:true };
-    }
-
-    function applyExcel(aoa){
-      for (const room of Object.keys(infoByRoom)) infoByRoom[room] = {};
-
-      if (!aoa || aoa.length === 0) { setMsg("엑셀 비어있음", "error"); return; }
-      setMsg("");
-
-      const headerRowIndex = guessHeaderRow(aoa);
-      const header = aoa[headerRowIndex] || [];
-      const idx = buildIndexFromHeader(header);
-      const hasHeader = idx["봉안번호"] !== -1;
-
-      const iBurial = hasHeader ? idx["안치일자"] : 0;
-      const iNo     = hasHeader ? idx["봉안번호"] : 1;
-      const iDead   = hasHeader ? idx["사망자명"] : 2;
-      const iApplicant = hasHeader ? idx["신청자명"] : 3;
-      const iRet    = hasHeader ? idx["반환일자"] : 4;
-
-      const startRow = hasHeader ? headerRowIndex + 1 : headerRowIndex;
-
-      for (let r=startRow; r<aoa.length; r++){
-        const row = aoa[r] || [];
-        const burialNoStr = String(row[iNo] ?? "").trim();
-        if (!burialNoStr) continue;
-
-        const room = extractRoomToken(burialNoStr);
-        if (!room) continue;
-
-        const no5 = extractNo5(burialNoStr);
-        if (!no5) continue;
-
-        const n = parseInt(no5, 10);
-        const cfg = ROOM_CFG[room];
-        if (!cfg || n < cfg.start || n > cfg.end) continue;
-
-        const returned = !isBlank(row[iRet]);
-        if (returned){
-          markReturned(room, no5);
+        if (num > cfg.end){
+          const blank = document.createElement("div");
+          blank.className = "niche blank";
+          grid.appendChild(blank);
           continue;
         }
 
-        const rec = ensureUsed(room, no5, burialNoStr);
-        pushUnique(rec.deceasedNames, row[iDead]);
-        pushUnique(rec.applicantNames, row[iApplicant]);
+        const noStr = pad5(num);
+        const rec = infoByRoom[cfg.room][noStr];
 
-        const bd = row[iBurial];
-        if (!isBlank(bd)) rec.burialDatesRaw.push(bd);
+        const returned = !!rec?.returned;
+        const used = (rec?.status === "used");
+
+        const niche = document.createElement("div");
+        niche.dataset.no = noStr;
+        niche.dataset.room = cfg.room;
+
+        if (returned) niche.className = "niche returned";
+        else if (used) niche.className = "niche used";
+        else niche.className = "niche empty";
+
+        const top = document.createElement("div");
+        top.className = "niche-top";
+        top.innerHTML = iconHtml(cfg, returned, used);
+        niche.appendChild(top);
+
+        if (nextNo && noStr === nextNo) niche.classList.add("next-slot");
+
+        const no = document.createElement("div");
+        no.className = "niche-no";
+        no.textContent = noStr;
+        niche.appendChild(no);
+
+        if (used){
+          niche.addEventListener("click", () => openModal(cfg.room, noStr, dan));
+        }
+
+        grid.appendChild(niche);
       }
 
-      updateNextUI();
-      renderTabs();
-      renderRoomButtons();
-      renderRoom(true);
-      saveState();
+      row.appendChild(grid);
+      host.appendChild(row);
     }
 
-    async function loadExcelFromUrl(){
-      try{
-        setMsg("");
-        const res = await fetch(EXCEL_URL, { cache: "no-store" });
-        if (!res.ok) throw new Error("fetch fail");
-        const buf = await res.arrayBuffer();
-        const wb = XLSX.read(buf, { type:"array" });
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const aoa = XLSX.utils.sheet_to_json(ws, { header:1, defval:"" });
-        applyExcel(aoa);
-      } catch(err){
-        setMsg("엑셀 로딩 실패", "error");
-      }
+    if (autoScrollNext){
+      requestAnimationFrame(() => scrollNextSlotIntoCenter());
+    }
+  }
+
+  function computeNextForRooms(rooms){
+    let best = null;
+    for (const room of rooms){
+      const cfg = ROOM_CFG[room];
+      if (!cfg) continue;
+      const no = findNextAvailableNo(cfg);
+      if (!no) continue;
+      const num = parseInt(no, 10);
+      if (!best || num < best.num) best = { room, no, num };
+    }
+    return best;
+  }
+
+  function updateNextUI(){
+    nextCouple = computeNextForRooms(COUPLE_ROOMS);
+
+    const allPersonal = [...PERSONAL1_ROOMS, ...PERSONAL2A_ROOMS, ...PERSONAL2B_ROOMS]
+      // ✅ 변경: 60실도 next 계산에 포함되도록 <= 60
+      .filter(r => ROOM_CFG[r] && (ROOM_CFG[r].roomNum <= 60 || r === "61실" || r === "62실"));
+
+    nextPersonal = computeNextForRooms(allPersonal);
+
+    const wrap = $("nextWrap");
+    const cText = $("nextCoupleText");
+    const pText = $("nextPersonalText");
+    const cBtn = $("nextCoupleMoveBtn");
+    const pBtn = $("nextPersonalMoveBtn");
+
+    const hasAny = !!nextCouple || !!nextPersonal;
+    wrap.style.display = hasAny ? "flex" : "none";
+    if (!hasAny) return;
+
+    if (nextCouple){
+      const cfg = ROOM_CFG[nextCouple.room];
+      const dan = danOfNo(cfg, nextCouple.no);
+      cText.textContent = `${nextCouple.room} ${nextCouple.no} (${dan}단)`;
+      cBtn.disabled = false;
+    } else {
+      cText.textContent = "—";
+      cBtn.disabled = true;
     }
 
-    function parseExcelDate(v){
-      if (v instanceof Date && !isNaN(v.getTime())) return v;
-      if (typeof v === "number" && isFinite(v)) {
-        const ms = (v - 25569) * 86400 * 1000;
-        const d = new Date(ms);
-        return isNaN(d.getTime()) ? null : d;
+    if (nextPersonal){
+      const cfg = ROOM_CFG[nextPersonal.room];
+      const dan = danOfNo(cfg, nextPersonal.no);
+      pText.textContent = `${nextPersonal.room} ${nextPersonal.no} (${dan}단)`;
+      pBtn.disabled = false;
+    } else {
+      pText.textContent = "—";
+      pBtn.disabled = true;
+    }
+  }
+
+  $("nextCoupleMoveBtn").addEventListener("click", () => {
+    if (!nextCouple) return;
+    setRoom(nextCouple.room, false);
+    requestAnimationFrame(() => focusCell(nextCouple.room, nextCouple.no));
+  });
+  $("nextPersonalMoveBtn").addEventListener("click", () => {
+    if (!nextPersonal) return;
+    setRoom(nextPersonal.room, false);
+    requestAnimationFrame(() => focusCell(nextPersonal.room, nextPersonal.no));
+  });
+
+  function guessHeaderRow(aoa){
+    for (let r=0; r<Math.min(10, aoa.length); r++){
+      const s = (aoa[r]||[]).map(x => String(x||"").trim());
+      if (s.includes("봉안번호") && s.includes("반환일자")) return r;
+    }
+    return 0;
+  }
+  function buildIndexFromHeader(headerRow){
+    const idx = { "안치일자":-1, "봉안번호":-1, "사망자명":-1, "신청자명":-1, "반환일자":-1 };
+    headerRow.forEach((h,i) => { const key = String(h||"").trim(); if (key in idx) idx[key] = i; });
+    return idx;
+  }
+  function extractNo5(text){
+    if (!text) return null;
+    const m = String(text).trim().match(/(\d{5})\s*$/);
+    return m ? m[1] : null;
+  }
+  function extractRoomToken(text){
+    const s = String(text || "").trim();
+    const parts = s.split("-").map(x => x.trim()).filter(Boolean);
+    for (const p of parts){
+      if (/^\d{2}실$/.test(p) && ROOM_CFG[p]) return p;
+    }
+    return null;
+  }
+  function pushUnique(arr, value){
+    const v = String(value ?? "").trim();
+    if (!v) return;
+    if (!arr.includes(v)) arr.push(v);
+  }
+  function isBlank(v){
+    const s = String(v ?? "").trim();
+    return s === "" || s === "-" || s === "0";
+  }
+  function ensureUsed(room, no5, burialNoStr){
+    const old = infoByRoom[room][no5];
+    const rec = {
+      status:"used",
+      returned:false,
+      burialNo: burialNoStr,
+      deceasedNames: (old?.deceasedNames || []),
+      applicantNames: (old?.applicantNames || []),
+      burialDatesRaw: (old?.burialDatesRaw || [])
+    };
+    infoByRoom[room][no5] = rec;
+    return rec;
+  }
+  function markReturned(room, no5){
+    const cur = infoByRoom[room][no5];
+    if (cur && cur.status === "used") return;
+    infoByRoom[room][no5] = { status:"empty", returned:true };
+  }
+
+  function applyExcel(aoa){
+    for (const room of Object.keys(infoByRoom)) infoByRoom[room] = {};
+
+    if (!aoa || aoa.length === 0) { setMsg("엑셀 비어있음", "error"); return; }
+    setMsg("");
+
+    const headerRowIndex = guessHeaderRow(aoa);
+    const header = aoa[headerRowIndex] || [];
+    const idx = buildIndexFromHeader(header);
+    const hasHeader = idx["봉안번호"] !== -1;
+
+    const iBurial = hasHeader ? idx["안치일자"] : 0;
+    const iNo     = hasHeader ? idx["봉안번호"] : 1;
+    const iDead   = hasHeader ? idx["사망자명"] : 2;
+    const iApplicant = hasHeader ? idx["신청자명"] : 3;
+    const iRet    = hasHeader ? idx["반환일자"] : 4;
+
+    const startRow = hasHeader ? headerRowIndex + 1 : headerRowIndex;
+
+    for (let r=startRow; r<aoa.length; r++){
+      const row = aoa[r] || [];
+      const burialNoStr = String(row[iNo] ?? "").trim();
+      if (!burialNoStr) continue;
+
+      const room = extractRoomToken(burialNoStr);
+      if (!room) continue;
+
+      const no5 = extractNo5(burialNoStr);
+      if (!no5) continue;
+
+      const n = parseInt(no5, 10);
+      const cfg = ROOM_CFG[room];
+      if (!cfg || n < cfg.start || n > cfg.end) continue;
+
+      const returned = !isBlank(row[iRet]);
+      if (returned){
+        markReturned(room, no5);
+        continue;
       }
-      const s = String(v ?? "").trim();
-      if (!s) return null;
-      const m = s.match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})/);
-      if (m) {
-        const y = parseInt(m[1],10);
-        const mo = parseInt(m[2],10);
-        const da = parseInt(m[3],10);
-        const d = new Date(y, mo-1, da);
-        return isNaN(d.getTime()) ? null : d;
-      }
-      const d = new Date(s);
+
+      const rec = ensureUsed(room, no5, burialNoStr);
+      pushUnique(rec.deceasedNames, row[iDead]);
+      pushUnique(rec.applicantNames, row[iApplicant]);
+
+      const bd = row[iBurial];
+      if (!isBlank(bd)) rec.burialDatesRaw.push(bd);
+    }
+
+    updateNextUI();
+    renderTabs();
+    renderRoomButtons();
+    renderRoom(true);
+    saveState();
+  }
+
+  async function loadExcelFromUrl(){
+    try{
+      setMsg("");
+      const res = await fetch(EXCEL_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error("fetch fail");
+      const buf = await res.arrayBuffer();
+      const wb = XLSX.read(buf, { type:"array" });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const aoa = XLSX.utils.sheet_to_json(ws, { header:1, defval:"" });
+      applyExcel(aoa);
+    } catch(err){
+      setMsg("엑셀 로딩 실패", "error");
+    }
+  }
+
+  function parseExcelDate(v){
+    if (v instanceof Date && !isNaN(v.getTime())) return v;
+    if (typeof v === "number" && isFinite(v)) {
+      const ms = (v - 25569) * 86400 * 1000;
+      const d = new Date(ms);
       return isNaN(d.getTime()) ? null : d;
     }
-    function fmtDate(d){
-      const y = d.getFullYear();
-      const m = String(d.getMonth()+1).padStart(2,"0");
-      const da = String(d.getDate()).padStart(2,"0");
-      return `${y}-${m}-${da}`;
+    const s = String(v ?? "").trim();
+    if (!s) return null;
+    const m = s.match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})/);
+    if (m) {
+      const y = parseInt(m[1],10);
+      const mo = parseInt(m[2],10);
+      const da = parseInt(m[3],10);
+      const d = new Date(y, mo-1, da);
+      return isNaN(d.getTime()) ? null : d;
     }
-    function addYearsMinusOneDay(d, years){
-      const x = new Date(d.getTime());
-      x.setFullYear(x.getFullYear() + years);
-      x.setDate(x.getDate() - 1);
-      return x;
+    const d = new Date(s);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function fmtDate(d){
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const da = String(d.getDate()).padStart(2,"0");
+    return `${y}-${m}-${da}`;
+  }
+  function addYearsMinusOneDay(d, years){
+    const x = new Date(d.getTime());
+    x.setFullYear(x.getFullYear() + years);
+    x.setDate(x.getDate() - 1);
+    return x;
+  }
+
+  function openModal(room, noStr, dan){
+    const rec = infoByRoom[room]?.[noStr];
+    if (!rec || rec.status !== "used") return;
+
+    $("modalTitle").textContent = `${room} ${dan}단 ${noStr}`;
+
+    const deceased = (rec.deceasedNames && rec.deceasedNames.length)
+      ? `<ul class="list">${rec.deceasedNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
+      : "—";
+
+    const applicant = (rec.applicantNames && rec.applicantNames.length)
+      ? `<ul class="list">${rec.applicantNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
+      : "—";
+
+    let startDate = null;
+    for (const raw of (rec.burialDatesRaw || [])){
+      const d = parseExcelDate(raw);
+      if (!d) continue;
+      if (!startDate || d.getTime() < startDate.getTime()) startDate = d;
     }
+    const periodText = startDate
+      ? `<div class="mono">${fmtDate(startDate)}<br>~ ${fmtDate(addYearsMinusOneDay(startDate, 15))}</div>`
+      : `<div class="mono">—</div>`;
 
-    function openModal(room, noStr, dan){
-      const rec = infoByRoom[room]?.[noStr];
-      if (!rec || rec.status !== "used") return;
+    $("modalBody").innerHTML = `
+      <div class="kv">
+        <div class="k">고인명</div><div class="v">${deceased}</div>
+        <div class="k">신청자</div><div class="v">${applicant}</div>
+        <div class="k">사용기간</div><div class="v">${periodText}</div>
+      </div>
+    `;
 
-      $("modalTitle").textContent = `${room} ${dan}단 ${noStr}`;
+    $("modalBackdrop").style.display = "flex";
+  }
 
-      const deceased = (rec.deceasedNames && rec.deceasedNames.length)
-        ? `<ul class="list">${rec.deceasedNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
-        : "—";
+  function closeModal(){ $("modalBackdrop").style.display = "none"; }
+  $("modalCloseBtn").addEventListener("click", closeModal);
+  $("modalBackdrop").addEventListener("click", (e) => { if (e.target.id === "modalBackdrop") closeModal(); });
+  window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
 
-      const applicant = (rec.applicantNames && rec.applicantNames.length)
-        ? `<ul class="list">${rec.applicantNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
-        : "—";
-
-      let startDate = null;
-      for (const raw of (rec.burialDatesRaw || [])){
-        const d = parseExcelDate(raw);
-        if (!d) continue;
-        if (!startDate || d.getTime() < startDate.getTime()) startDate = d;
-      }
-      const periodText = startDate
-        ? `<div class="mono">${fmtDate(startDate)}<br>~ ${fmtDate(addYearsMinusOneDay(startDate, 15))}</div>`
-        : `<div class="mono">—</div>`;
-
-      $("modalBody").innerHTML = `
-        <div class="kv">
-          <div class="k">고인명</div><div class="v">${deceased}</div>
-          <div class="k">신청자</div><div class="v">${applicant}</div>
-          <div class="k">사용기간</div><div class="v">${periodText}</div>
-        </div>
-      `;
-
-      $("modalBackdrop").style.display = "flex";
+  function findRoomByNo(noStr){
+    const n = parseInt(noStr, 10);
+    if (!Number.isFinite(n)) return null;
+    for (const cfg of ROOM_LIST){
+      if (n >= cfg.start && n <= cfg.end) return cfg.room;
     }
+    return null;
+  }
 
-    function closeModal(){ $("modalBackdrop").style.display = "none"; }
-    $("modalCloseBtn").addEventListener("click", closeModal);
-    $("modalBackdrop").addEventListener("click", (e) => { if (e.target.id === "modalBackdrop") closeModal(); });
-    window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+  function focusCell(room, noStr){
+    const el = document.querySelector(`.niche[data-room="${room}"][data-no="${noStr}"]`);
+    if (!el) return;
+    el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
+    el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+  }
 
-    function findRoomByNo(noStr){
-      const n = parseInt(noStr, 10);
-      if (!Number.isFinite(n)) return null;
-      for (const cfg of ROOM_LIST){
-        if (n >= cfg.start && n <= cfg.end) return cfg.room;
-      }
-      return null;
-    }
+  // 검색 기능 강화
+  function normalizeText(text){
+    return String(text || "").trim().replace(/\s+/g, "").toLowerCase();
+  }
 
-    function focusCell(room, noStr){
-      const el = document.querySelector(`.niche[data-room="${room}"][data-no="${noStr}"]`);
-      if (!el) return;
-      el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
-      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
-    }
+  function searchByName(query){
+    const normalized = normalizeText(query);
+    if (normalized.length < 2) return [];
 
-    // 검색 기능 강화
-    function normalizeText(text){
-      return String(text || "").trim().replace(/\s+/g, "").toLowerCase();
-    }
+    const results = [];
+    for (const room of Object.keys(infoByRoom)){
+      for (const [noStr, rec] of Object.entries(infoByRoom[room])){
+        if (rec.status !== "used") continue;
 
-    function searchByName(query){
-      const normalized = normalizeText(query);
-      if (normalized.length < 2) return [];
-
-      const results = [];
-      for (const room of Object.keys(infoByRoom)){
-        for (const [noStr, rec] of Object.entries(infoByRoom[room])){
-          if (rec.status !== "used") continue;
-          
-          for (const name of (rec.deceasedNames || [])){
-            const normName = normalizeText(name);
-            if (normName.includes(normalized)){
-              const cfg = ROOM_CFG[room];
-              const dan = danOfNo(cfg, noStr);
-              results.push({
-                room,
-                noStr,
-                dan,
-                name,
-                burialNo: rec.burialNo || ""
-              });
-              break;
-            }
+        for (const name of (rec.deceasedNames || [])){
+          const normName = normalizeText(name);
+          if (normName.includes(normalized)){
+            const cfg = ROOM_CFG[room];
+            const dan = danOfNo(cfg, noStr);
+            results.push({
+              room,
+              noStr,
+              dan,
+              name,
+              burialNo: rec.burialNo || ""
+            });
+            break;
           }
         }
       }
-      return results;
+    }
+    return results;
+  }
+
+  function showSearchResults(results){
+    const container = $("searchResults");
+    if (!results || results.length === 0){
+      container.classList.remove("show");
+      return;
     }
 
-    function showSearchResults(results){
-      const container = $("searchResults");
-      if (!results || results.length === 0){
+    container.innerHTML = results.map((r, idx) => `
+      <div class="search-result-item" data-idx="${idx}">
+        <div class="search-result-name">${escapeHtml(r.name)}</div>
+        <div class="search-result-detail">${r.room} ${r.dan}단 ${r.noStr}</div>
+      </div>
+    `).join("");
+
+    container.classList.add("show");
+
+    container.querySelectorAll(".search-result-item").forEach((el, idx) => {
+      el.addEventListener("click", () => {
+        const result = results[idx];
         container.classList.remove("show");
-        return;
-      }
+        $("searchInput").value = "";
 
-      container.innerHTML = results.map((r, idx) => `
-        <div class="search-result-item" data-idx="${idx}">
-          <div class="search-result-name">${escapeHtml(r.name)}</div>
-          <div class="search-result-detail">${r.room} ${r.dan}단 ${r.noStr}</div>
-        </div>
-      `).join("");
-
-      container.classList.add("show");
-
-      container.querySelectorAll(".search-result-item").forEach((el, idx) => {
-        el.addEventListener("click", () => {
-          const result = results[idx];
-          container.classList.remove("show");
-          $("searchInput").value = "";
-          
-          setRoom(result.room, false);
-          requestAnimationFrame(() => {
-            focusCell(result.room, result.noStr);
-            setTimeout(() => openModal(result.room, result.noStr, result.dan), 600);
-          });
+        setRoom(result.room, false);
+        requestAnimationFrame(() => {
+          focusCell(result.room, result.noStr);
+          setTimeout(() => openModal(result.room, result.noStr, result.dan), 600);
         });
       });
-    }
+    });
+  }
 
-    function onSearch(){
-      setMsg("");
-      const raw = ($("searchInput").value || "").trim();
-      if (!raw) return;
+  function onSearch(){
+    setMsg("");
+    const raw = ($("searchInput").value || "").trim();
+    if (!raw) return;
 
-      const compact = raw.replace(/\s+/g, "");
-      const digits = compact.replace(/\D/g, "");
+    const compact = raw.replace(/\s+/g, "");
+    const digits = compact.replace(/\D/g, "");
 
-      if (digits.length >= 2 && digits.length <= 5 && digits.length === compact.length){
-        const noStr = digits.padStart(5,"0");
-        const room = findRoomByNo(noStr);
-        if (!room){
-          setMsg("해당 번호를 찾을 수 없습니다.", "error");
-          return;
-        }
-
-        $("searchResults").classList.remove("show");
-        setRoom(room, false);
-        requestAnimationFrame(() => focusCell(room, noStr));
+    if (digits.length >= 2 && digits.length <= 5 && digits.length === compact.length){
+      const noStr = digits.padStart(5,"0");
+      const room = findRoomByNo(noStr);
+      if (!room){
+        setMsg("해당 번호를 찾을 수 없습니다.", "error");
         return;
       }
 
-      if (raw.length >= 2){
-        const results = searchByName(raw);
-        if (results.length === 0){
-          setMsg("검색 결과가 없습니다.", "error");
-          $("searchResults").classList.remove("show");
-        } else {
-          setMsg("");
-          showSearchResults(results);
-        }
-      } else {
-        setMsg("고인명은 2자 이상 입력해 주세요.", "error");
-      }
+      $("searchResults").classList.remove("show");
+      setRoom(room, false);
+      requestAnimationFrame(() => focusCell(room, noStr));
+      return;
     }
 
-    $("searchBtn").addEventListener("click", onSearch);
-    $("searchInput").addEventListener("keydown", (e) => { 
-      if (e.key === "Enter") onSearch(); 
-    });
-
-    $("searchInput").addEventListener("input", () => {
-      const val = ($("searchInput").value || "").trim();
-      if (val.length === 0){
+    if (raw.length >= 2){
+      const results = searchByName(raw);
+      if (results.length === 0){
+        setMsg("검색 결과가 없습니다.", "error");
         $("searchResults").classList.remove("show");
+      } else {
         setMsg("");
+        showSearchResults(results);
       }
-    });
+    } else {
+      setMsg("고인명은 2자 이상 입력해 주세요.", "error");
+    }
+  }
 
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".search")){
-        $("searchResults").classList.remove("show");
-      }
-    });
+  $("searchBtn").addEventListener("click", onSearch);
+  $("searchInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") onSearch();
+  });
 
-    $("reloadBtn").addEventListener("click", loadExcelFromUrl);
+  $("searchInput").addEventListener("input", () => {
+    const val = ($("searchInput").value || "").trim();
+    if (val.length === 0){
+      $("searchResults").classList.remove("show");
+      setMsg("");
+    }
+  });
 
-    restoreState();
-    buildLegend();
-    renderTabs();
-    renderRoomButtons();
-    renderRoom(false);
-    loadExcelFromUrl();
-  </script>
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".search")){
+      $("searchResults").classList.remove("show");
+    }
+  });
+
+  $("reloadBtn").addEventListener("click", loadExcelFromUrl);
+
+  restoreState();
+
+  // (선택) 저장된 탭/방이 범위 변경으로 어긋나는 경우 탭을 방에 맞춰 자동 보정하고 싶으면 아래 줄을 활성화하세요.
+  // activeTabId = tabForRoom(currentRoom);
+
+  buildLegend();
+  renderTabs();
+  renderRoomButtons();
+  renderRoom(false);
+  loadExcelFromUrl();
+</script>
 </body>
 </html>
