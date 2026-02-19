@@ -32,8 +32,9 @@
 
       --plus-color: #b8b8bf;
 
-      /* ✅ 모바일에서 손잡이 높이 */
-      --handle-h: 18px;
+      /* ✅ 모바일 손잡이 높이(텍스트 포함) */
+      --handle-h: 34px;
+
       /* ✅ 모바일 접힘 애니메이션용(충분히 크게) */
       --panel-maxh: 1200px;
     }
@@ -521,31 +522,46 @@
        ✅ 모바일 전용: 손잡이 + 상단패널 완전 접힘(레이아웃 공간도 0)
        ========================= */
 
+    /* (1) 손잡이 CSS: 막대 + 텍스트 */
     .collapse-handle{
       display:none;
       position: sticky;
       top: 0;
       z-index: 80;
+
       height: calc(var(--handle-h) + env(safe-area-inset-top, 0px));
       padding-top: env(safe-area-inset-top, 0px);
+
       margin: 0 0 8px;
       border-radius: 999px;
       border: 1px solid rgba(0,0,0,0.08);
       background: rgba(251,248,244,0.92);
       backdrop-filter: blur(6px);
       box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+
       cursor: pointer;
       touch-action: manipulation;
       user-select: none;
+
       align-items:center;
       justify-content:center;
+      gap:10px;
+
+      font-weight: 900;
+      color: rgba(47,42,37,0.82);
+      font-size: 12px;
     }
-    .collapse-handle::before{
-      content:"";
-      width: 54px;
+    .collapse-handle .handle-pill{
+      width: 46px;
       height: 4px;
       border-radius: 999px;
       background: rgba(0,0,0,0.18);
+      flex: 0 0 auto;
+    }
+    .collapse-handle .handle-text{
+      line-height: 1;
+      white-space: nowrap;
+      flex: 0 0 auto;
     }
 
     @media (max-width: 520px){
@@ -597,8 +613,11 @@
 <body>
   <h1>추모의집 봉안 현황</h1>
 
-  <!-- ✅ 모바일에서만 사용: 손잡이 -->
-  <div id="collapseHandle" class="collapse-handle" aria-label="상단 패널 펼치기/접기"></div>
+  <!-- (2) 손잡이 HTML: 막대 + 문구 -->
+  <div id="collapseHandle" class="collapse-handle" aria-label="상단 패널 펼치기/접기">
+    <span class="handle-pill" aria-hidden="true"></span>
+    <span id="handleText" class="handle-text">메뉴 열기 ▾</span>
+  </div>
 
   <div class="panel sticky" id="topPanel">
     <div class="panel-top">
@@ -885,7 +904,6 @@
     renderRoomButtons();
     renderRoom(!!scrollNext);
     saveState();
-    requestAnimationFrame(updateScrollerHeight);
   }
 
   function saveState(){
@@ -1255,8 +1273,8 @@
       const aoa = XLSX.utils.sheet_to_json(ws, { header:1, defval:"" });
       applyExcel(aoa);
     } catch(err){
-      setMsg("엑셀 로딩 실패", "error");
       console.error(err);
+      setMsg("엑셀 로딩 실패", "error");
     }
   }
 
@@ -1452,6 +1470,12 @@
     const msg = $("msg");
     if (!panel || !handle || !legend) return;
 
+    // (3) 문구 토글: 메뉴 열기/닫기
+    const ht = $("handleText");
+    if (ht){
+      ht.textContent = UI.collapsed ? "메뉴 열기 ▾" : "메뉴 닫기 ▴";
+    }
+
     if (!isMobileWidth()){
       UI.collapsed = false;
       panel.classList.remove("is-collapsed");
@@ -1465,6 +1489,7 @@
     handle.style.display = "flex";
     panel.classList.toggle("is-collapsed", UI.collapsed);
 
+    // 접힌 상태면 아래 화면을 더 넓게 쓰도록 숨김
     legend.style.display = UI.collapsed ? "none" : "";
     if (msg) msg.style.display = UI.collapsed ? "none" : (msg.textContent ? "block" : "none");
 
@@ -1510,7 +1535,7 @@
 
     function applyByWidth(){
       if (isMobileWidth()){
-        setCollapsed(false);   // ✅ 모바일 기본 접힘
+        setCollapsed(false);   // ✅ 모바일 기본 펼침
       } else {
         setCollapsed(false);  // ✅ PC 기본 펼침
       }
