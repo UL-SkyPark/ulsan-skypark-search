@@ -124,7 +124,7 @@
 
     .content{ padding:14px 16px 16px; }
 
-    /* ✅ 상단 2개 박스 동일 크기(폭) */
+    /* ✅ 상단 2개 박스 동일 폭 + 높이 맞춤(align stretch) */
     .top-panels{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -269,24 +269,25 @@
     }
     .icon-btn:hover{ background:#f9fafb; }
 
+    /* ✅ “먼저 불러오기” 안내(붉은색) */
     .load-hint{
       display:none;
       font-size:13px;
-      font-weight:800;
-      color:#374151;
+      font-weight:900;
+      color: var(--danger);
       padding:8px 10px;
-      border:1px dashed #cbd5e1;
-      background:#f8fafc;
+      border:1px dashed #fecdd3;
+      background:#fff1f2;
       border-radius: var(--radius-sm);
       white-space:nowrap;
     }
 
-    /* ✅ 화살표 + 깜빡임 */
+    /* ✅ 화살표 + 깜빡임(붉은색) */
     .blink-arrow{
       display:inline-block;
       margin-left:8px;
       font-weight:900;
-      color: var(--primary);
+      color: var(--danger);
       animation: blinkNudge 1s infinite;
     }
     @keyframes blinkNudge{
@@ -580,6 +581,47 @@
     table.q tr:last-child td{ border-bottom:0; }
     table.q th:last-child, table.q td:last-child{ border-right:0; }
     .danger{ color:var(--danger); font-weight:900; white-space:pre-wrap; }
+
+    /* ✅ 두 박스의 버튼줄(toolbar)을 바닥에 붙여서 같은 높이로 정렬 */
+    .top-panels .box .toolbar{
+      margin-top: auto;
+    }
+
+    /* ✅ 일괄등록 박스: 파일 목록 박스를 버튼 바로 위까지 확장 */
+    .bulk-box{ min-height:0; }
+    .bulk-box .form-group{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+    .bulk-box .file-panel{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+    .bulk-box #selectedFiles{
+      flex:1;
+      min-height:260px;
+      overflow:auto;
+    }
+
+    /* ✅ 일괄등록 안내문(필드헬프) 폰트 크게 + 글머리 기호 */
+    .bulk-box .field-help{
+      margin-top:10px;
+      font-size:14px;
+      font-weight:900;
+      color:#374151;
+      line-height:1.5;
+    }
+    .bulk-box .field-help ul{
+      margin:0;
+      padding-left:18px;
+    }
+    .bulk-box .field-help li{
+      margin:4px 0;
+    }
   </style>
 </head>
 
@@ -603,14 +645,13 @@
 
     <div class="content">
 
-      <!-- ✅ 상단 2단 배치 -->
       <div class="top-panels">
 
         <!-- GitHub 설정 -->
         <div class="box">
           <div class="box-title">
             <span>GitHub 설정</span>
-            <span class="hint-mini">추모의집/자연장지 데이터를 불러온 후 반영을 진행합니다</span>
+            <!-- ✅ 요청: 이 문구 삭제 -->
           </div>
 
           <div class="row">
@@ -655,8 +696,8 @@
           </div>
         </div>
 
-        <!-- 일괄등록 -->
-        <div class="box">
+        <!-- ✅ 일괄등록 -->
+        <div class="box bulk-box">
           <div class="box-title">
             <span>일괄등록</span>
           </div>
@@ -678,13 +719,18 @@
               </div>
 
               <div id="selectedFiles" class="muted">선택된 파일 없음</div>
+
+              <!-- ✅ 요청: 폰트 크게 + 글머리 기호 -->
               <div class="field-help">
-                파일을 이 박스에 끌어다 놓으셔도 추가됩니다.<br>
-                일부 파일만 제외하려면 각 파일의 ×를 눌러 주세요.
+                <ul>
+                  <li>파일을 이 박스에 끌어다 놓으셔도 추가됩니다.</li>
+                  <li>일부 파일만 제외하려면 각 파일의 ×를 눌러 주세요.</li>
+                </ul>
               </div>
             </div>
           </div>
 
+          <!-- ✅ 요청: 버튼을 박스 하단(왼쪽 버튼줄과 같은 높이)으로 -->
           <div class="toolbar">
             <button class="btn btn-primary" id="bulkBtn" onclick="confirmAndImportBulkExcelAutoSave()" disabled>일괄등록</button>
           </div>
@@ -1203,7 +1249,7 @@
       if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
     });
 
-    // ✅ 일괄등록 클릭 시 모달 확인(취소 가능)
+    // ✅ 일괄등록 클릭 시 모달 확인
     function confirmAndImportBulkExcelAutoSave(){
       if (!isLoaded) {
         showLoadHint(true);
@@ -1413,9 +1459,7 @@
       return !!(noRaw || deceased || applicant || inDateRaw || returnRaw);
     }
 
-    // ✅ 자연장지 업로드 2번행(예시행) 스킵 + 구조행 스킵
     function shouldSkipStructuralRow(templateType, idx, lastIdx, rowObj){
-      // 자연장지 예시행: 번호 없음 + 사망자 '이름' + 신청자 '이름' => 무조건 무시
       if (templateType === "nature") {
         const noRaw = String(getCellByHeader(rowObj, ["자연장번호","자연장 번호","번호","관리번호","봉안번호","봉안 번호"])).trim();
         const deceased = String(getCellByHeader(rowObj, ["사망자명","고인명","고인","사망자"])).trim();
@@ -1763,9 +1807,6 @@
           nature:   { headers: ds("nature").headers.slice(),   rows: ds("nature").rows.map(r=>r.slice()),   highlight: new Set() }
         };
 
-        // ✅ 추모의집 신규 중복 처리:
-        // - 동일 번호가 '사용중(반환일자 없음)'이면 신규 금지
-        // - 동일 번호가 전부 '반환됨(반환일자 있음)' 상태면 신규 허용
         const applyAdds = (key) => {
           if (!adds[key].length) return 0;
 
@@ -1790,7 +1831,6 @@
 
           if (missing.length) throw new Error(`[${ds(key).label}] 헤더를 찾을 수 없습니다: ${missing.join(", ")}`);
 
-          // 번호 상태 맵
           const noStatus = new Map();
           if (key === "deceased") {
             for (const row of rows) {
@@ -1838,7 +1878,6 @@
                 });
                 continue;
               }
-              // hasActive=false => 전부 반환된 상태 => 재사용 신규 허용
             }
 
             const row = new Array(headers.length).fill("");
@@ -1851,7 +1890,6 @@
             next[key].highlight.add(rows.length - 1);
             added++;
 
-            // 신규로 추가한 행은 사용중 상태로 갱신
             if (key === "deceased") {
               const prev = noStatus.get(vv) || { hasActive: false, hasReturned: false };
               noStatus.set(vv, { hasActive: true, hasReturned: prev.hasReturned });
@@ -1956,7 +1994,6 @@
 
         renderGridForCurrentTarget();
 
-        // 상단 배지/그리드 메타 갱신
         const inputs = getInputs();
         const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
         updateTopBadges(true, loadedAtText, loadedFilesText, inputs.branch);
