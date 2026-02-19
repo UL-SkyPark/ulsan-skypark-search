@@ -124,7 +124,7 @@
 
     .content{ padding:14px 16px 16px; }
 
-    /* ✅ 상단 2개 박스 동일 폭 + 높이 맞춤(align stretch) */
+    /* 상단 2개 박스 동일 폭 + 높이 맞춤 */
     .top-panels{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -160,11 +160,6 @@
       color:#111827;
       font-size:15px;
     }
-    .hint-mini{
-      font-size:13px;
-      font-weight:700;
-      color:var(--muted);
-    }
 
     .row{
       display:grid;
@@ -194,8 +189,6 @@
       border-color:#9bb9dd;
       box-shadow:0 0 0 3px rgba(47,111,178,0.14);
     }
-
-    .input-with-btn{ display:flex; gap:8px; align-items:center; }
 
     .field-help{
       margin-top:6px;
@@ -269,20 +262,17 @@
     }
     .icon-btn:hover{ background:#f9fafb; }
 
-    /* ✅ “먼저 불러오기” 안내(붉은색) */
+    /* “먼저 불러오기” 안내 */
     .load-hint{
       display:none;
       font-size:13px;
       font-weight:900;
       color: var(--danger);
-      padding:8px 10px;
-      border:1px dashed #fecdd3;
-      background:#fff1f2;
-      border-radius: var(--radius-sm);
+      padding:0;
+      border:0;
+      background:transparent;
       white-space:nowrap;
     }
-
-    /* ✅ 화살표 + 깜빡임(붉은색) */
     .blink-arrow{
       display:inline-block;
       margin-left:8px;
@@ -321,7 +311,6 @@
       padding:10px;
       transition:0.12s;
     }
-    /* ✅ 드래그 앤 드롭 UX */
     .file-panel.drop-ready{
       outline: 2px dashed rgba(47,111,178,0.35);
       outline-offset: 2px;
@@ -582,12 +571,10 @@
     table.q th:last-child, table.q td:last-child{ border-right:0; }
     .danger{ color:var(--danger); font-weight:900; white-space:pre-wrap; }
 
-    /* ✅ 두 박스의 버튼줄(toolbar)을 바닥에 붙여서 같은 높이로 정렬 */
-    .top-panels .box .toolbar{
-      margin-top: auto;
-    }
+    /* 상단 2박스 버튼줄 바닥정렬 */
+    .top-panels .box .toolbar{ margin-top:auto; }
 
-    /* ✅ 일괄등록 박스: 파일 목록 박스를 버튼 바로 위까지 확장 */
+    /* 일괄등록 박스 확장 */
     .bulk-box{ min-height:0; }
     .bulk-box .form-group{
       flex:1;
@@ -600,14 +587,13 @@
       display:flex;
       flex-direction:column;
       min-height:0;
+      margin-bottom: 14px;
     }
     .bulk-box #selectedFiles{
       flex:1;
       min-height:260px;
       overflow:auto;
     }
-
-    /* ✅ 일괄등록 안내문(필드헬프) 폰트 크게 + 글머리 기호 */
     .bulk-box .field-help{
       margin-top:10px;
       font-size:14px;
@@ -619,9 +605,68 @@
       margin:0;
       padding-left:18px;
     }
-    .bulk-box .field-help li{
-      margin:4px 0;
+    .bulk-box .field-help li{ margin:4px 0; }
+    .bulk-box .toolbar{ margin-top: 18px; }
+
+    /* ✅ Access Token: 입력줄 반응형 + 토큰 저장옵션(라벨 1줄 + 안내문 아래) */
+    .token-row{
+      display:grid;
+      grid-template-columns: 1fr auto auto;
+      gap:8px;
+      align-items:center;
     }
+    @media (max-width: 560px){
+      .token-row{ grid-template-columns: 1fr 1fr; }
+      .token-row input{ grid-column: 1 / -1; }
+    }
+.token-persist{
+  margin-top:10px;
+  display:flex;
+  align-items:flex-start; /* 왼쪽 정렬 */
+}
+
+/* 체크박스 + 문구(한 줄) */
+.token-persist .token-check{
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  cursor:pointer;
+  width: fit-content;   /* 라벨이 화면 끝까지 안 먹게 */
+  max-width:100%;
+  margin:0;
+  padding:0;
+}
+
+/* 체크박스 살짝 보정(원하면 유지) */
+.token-persist .token-check input{ transform: translateY(1px); }
+
+/* '이 브라우저에...' + '※ ...' 한 줄 고정 */
+.token-persist .token-label{
+  display:inline-flex;
+  align-items:baseline;
+  gap:10px;
+  white-space:nowrap;
+}
+
+/* 안내문 스타일(한 줄 안에서 작게/흐리게) */
+.token-persist .token-inline-note{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+  line-height:1.35;
+}
+
+/* 아래 help 블록은 그대로 둬도 됨 */
+.token-help{ margin-top:10px; }
+.token-help .help-line{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  margin-top:6px;
+}
+.token-help .help-line:first-child{ margin-top:0; }
+
   </style>
 </head>
 
@@ -651,7 +696,6 @@
         <div class="box">
           <div class="box-title">
             <span>GitHub 설정</span>
-            <!-- ✅ 요청: 이 문구 삭제 -->
           </div>
 
           <div class="row">
@@ -663,26 +707,33 @@
               <label>Repository</label>
               <input type="text" id="repo" placeholder="예: ulsan-skypark-search" autocomplete="off" />
             </div>
+
             <div class="form-group">
               <label>Branch</label>
+              <!-- ✅ “불러오는 파일” 박스 완전 제거 -->
               <input type="text" id="branch" placeholder="예: main" autocomplete="off" />
-              <div class="field-help">
-                <span class="pill">안내</span>기본값은 <b>main</b>입니다. 운영 브랜치가 다르면 여기에서 변경해 주세요.
-              </div>
             </div>
 
+            <!-- ✅ Access Token 섹션(통째 완성본) -->
             <div class="form-group" style="grid-column: 1 / -1;">
               <label>Access Token</label>
-              <div class="input-with-btn">
+
+              <div class="token-row">
                 <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" autocomplete="off" />
                 <button type="button" class="icon-btn" id="tokenToggleBtn" onclick="toggleToken()">보기</button>
                 <button type="button" class="icon-btn" id="clearTokenBtn" onclick="clearSavedToken()" title="브라우저에 저장된 토큰만 삭제합니다">
                   저장토큰 삭제
                 </button>
               </div>
-              <div class="field-help">
-                <span class="pill">권한</span>fine-grained token이면 <b>Contents</b> 권한(읽기/쓰기)을 확인해 주세요.<br>
-                <span class="pill">보안</span>토큰은 이 브라우저(localStorage)에 저장됩니다. 공용 PC에서는 저장토큰 삭제를 눌러 주세요.
+
+              <div class="token-persist">
+                <label class="token-check">
+                  <input type="checkbox" id="tokenPersist" checked />
+                  <span class="token-label">
+                    이 브라우저에 토큰 저장
+                    <span class="token-inline-note">※ 체크 해제 시(권장: 공용 PC) 브라우저를 닫으면 토큰이 사라집니다.</span>
+                  </span>
+                </label>
               </div>
             </div>
           </div>
@@ -696,16 +747,14 @@
           </div>
         </div>
 
-        <!-- ✅ 일괄등록 -->
+        <!-- 일괄등록 -->
         <div class="box bulk-box">
           <div class="box-title">
             <span>일괄등록</span>
           </div>
 
           <div class="form-group">
-            <label>일괄등록 엑셀 파일</label>
-
-            <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" />
+            <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" aria-label="일괄등록 엑셀 파일 선택" />
 
             <div class="file-panel" id="fileDropZone" title="이 박스에 파일을 끌어다 놓으시면 추가됩니다">
               <div class="file-panel-head">
@@ -720,7 +769,6 @@
 
               <div id="selectedFiles" class="muted">선택된 파일 없음</div>
 
-              <!-- ✅ 요청: 폰트 크게 + 글머리 기호 -->
               <div class="field-help">
                 <ul>
                   <li>파일을 이 박스에 끌어다 놓으셔도 추가됩니다.</li>
@@ -730,7 +778,6 @@
             </div>
           </div>
 
-          <!-- ✅ 요청: 버튼을 박스 하단(왼쪽 버튼줄과 같은 높이)으로 -->
           <div class="toolbar">
             <button class="btn btn-primary" id="bulkBtn" onclick="confirmAndImportBulkExcelAutoSave()" disabled>일괄등록</button>
           </div>
@@ -761,7 +808,6 @@
     <div class="modal">
       <div class="modal-head">
         <div class="modal-title" id="logModalTitle">일괄등록 실패 로그</div>
-        <button class="btn btn-ghost" style="padding:8px 10px; min-height:32px;" onclick="closeLogModal()">닫기</button>
       </div>
       <div class="modal-body" id="logModalBody"></div>
       <div class="modal-foot">
@@ -775,7 +821,6 @@
     <div class="modal" style="max-width:520px;">
       <div class="modal-head">
         <div class="modal-title">일괄등록 확인</div>
-        <button class="btn btn-ghost" style="padding:8px 10px; min-height:32px;" onclick="confirmBulkCancel()">닫기</button>
       </div>
       <div class="modal-body" id="confirmModalBody">
         일괄등록을 진행 하시겠습니까?<br>
@@ -803,10 +848,8 @@
     let isLoaded = false;
     let loadedAtText = "";
 
-    // ✅ 업로드 파일 상태(삭제 가능한 리스트로 직접 관리)
+    // 업로드 파일 상태
     let selectedFiles = []; // [{id, file}]
-
-    // 실패 로그(모달 전용)
     let importFailLog = [];
 
     const DETECT_HINT = [
@@ -817,7 +860,7 @@
       " - '추모의집' 또는 '00실' 포함 → 추모의집",
       " - '잔디장/수목장/자연장' 포함 또는 '이름-숫자-숫자-4자리' 형태 → 자연장지",
       " - 끝자리 숫자 5자리 → 추모의집 / 4자리 → 자연장지(보조)"
-    ].join("\n");
+    ].join("\\n");
 
     // 데이터셋(2개 파일 동시 관리)
     const DATASETS = {
@@ -842,19 +885,35 @@
     };
     const ds = (k = fileKey) => DATASETS[k];
 
+    // ✅ 토큰 저장 옵션: 저장소 선택
+    function isTokenPersistEnabled(){
+      return document.getElementById("tokenPersist")?.checked ?? true;
+    }
+    function tokenStore(){
+      return isTokenPersistEnabled() ? localStorage : sessionStorage;
+    }
+
     window.onload = () => {
-      const savedOwner = localStorage.getItem("gh_owner");
-      const savedRepo  = localStorage.getItem("gh_repo");
-      const savedBranch= localStorage.getItem("gh_branch");
-      const savedToken = localStorage.getItem("gh_token");
+      const savedOwner  = localStorage.getItem("gh_owner");
+      const savedRepo   = localStorage.getItem("gh_repo");
+      const savedBranch = localStorage.getItem("gh_branch");
       const savedTarget = localStorage.getItem("gh_target");
       const savedLoadedAt = localStorage.getItem("gh_loaded_at");
+
+      // 저장 옵션(기본: 체크 true)
+      const savedPersist = localStorage.getItem("gh_token_persist");
+      const persist = (savedPersist === null) ? true : (savedPersist === "1");
+      const persistEl = document.getElementById("tokenPersist");
+      if (persistEl) persistEl.checked = persist;
 
       if (savedOwner) document.getElementById("owner").value = savedOwner;
       if (savedRepo)  document.getElementById("repo").value  = savedRepo;
       document.getElementById("branch").value = savedBranch || "main";
-      if (savedToken) document.getElementById("token").value = savedToken;
       if (savedTarget === "nature") fileKey = "nature";
+
+      // 토큰 읽기(옵션에 따라 store 변경)
+      const savedToken = (persist ? localStorage : sessionStorage).getItem("gh_token");
+      if (savedToken) document.getElementById("token").value = savedToken;
 
       selectTarget(fileKey, true);
       setLoaded(false);
@@ -872,6 +931,34 @@
         el.style.display = "none";
       });
 
+      // 토큰 저장 옵션 변경 시 즉시 반영
+      document.getElementById("tokenPersist")?.addEventListener("change", (e)=>{
+        const persistNow = e.target.checked;
+        localStorage.setItem("gh_token_persist", persistNow ? "1" : "0");
+
+        const tokenVal = document.getElementById("token")?.value?.trim() || "";
+        if (persistNow){
+          if (tokenVal) localStorage.setItem("gh_token", tokenVal);
+          sessionStorage.removeItem("gh_token");
+        } else {
+          if (tokenVal) sessionStorage.setItem("gh_token", tokenVal);
+          localStorage.removeItem("gh_token");
+        }
+      });
+
+      // 토큰 입력 변경 시(저장옵션 기준으로) 저장값 최신화
+      document.getElementById("token")?.addEventListener("input", ()=>{
+        const v = document.getElementById("token")?.value?.trim() || "";
+        if (!v) return;
+        if (isTokenPersistEnabled()){
+          localStorage.setItem("gh_token", v);
+          sessionStorage.removeItem("gh_token");
+        } else {
+          sessionStorage.setItem("gh_token", v);
+          localStorage.removeItem("gh_token");
+        }
+      });
+
       document.getElementById("bulkFile")?.addEventListener("change", (e) => {
         const input = e.target;
         const files = Array.from(input.files || []);
@@ -884,7 +971,7 @@
         updateBulkButtonState();
       });
 
-      // ✅ 드래그 앤 드롭
+      // 드래그 앤 드롭
       const dz = document.getElementById("fileDropZone");
       if (dz){
         const stop = (e)=>{ e.preventDefault(); e.stopPropagation(); };
@@ -930,19 +1017,27 @@
 
     function clearSavedToken(){
       localStorage.removeItem("gh_token");
+      sessionStorage.removeItem("gh_token");
       const t = document.getElementById("token");
       if (t) t.value = "";
       showStatus("저장된 토큰을 삭제하였습니다(이 브라우저).", "success");
     }
 
     function resetAllSettings(){
-      ["gh_owner","gh_repo","gh_branch","gh_token","gh_target","gh_loaded_at"].forEach(k=>localStorage.removeItem(k));
+      ["gh_owner","gh_repo","gh_branch","gh_target","gh_loaded_at","gh_token_persist"].forEach(k=>localStorage.removeItem(k));
+      localStorage.removeItem("gh_token");
+      sessionStorage.removeItem("gh_token");
+
       ["owner","repo","token"].forEach(id=>{
         const el = document.getElementById(id);
         if (el) el.value = "";
       });
       const b = document.getElementById("branch");
       if (b) b.value = "main";
+
+      const persistEl = document.getElementById("tokenPersist");
+      if (persistEl) persistEl.checked = true;
+
       fileKey = "deceased";
       selectTarget(fileKey, true);
       setLoaded(false);
@@ -1137,7 +1232,7 @@
         document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시`;
       }
 
-      if (isLoaded) renderGridForCurrentTarget(false);
+      if (isLoaded) renderGridForCurrentTarget();
 
       if (!isInit && isLoaded) {
         const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
@@ -1153,11 +1248,21 @@
       return { owner, repo, token, branch };
     }
 
-    function saveInputsToLocalStorage({owner, repo, token, branch}) {
+    // ✅ 저장옵션에 따라 토큰 저장소 분기
+    function saveInputsToStorage({owner, repo, token, branch}) {
+      const persist = isTokenPersistEnabled();
       localStorage.setItem("gh_owner", owner);
       localStorage.setItem("gh_repo", repo);
       localStorage.setItem("gh_branch", branch || "main");
-      localStorage.setItem("gh_token", token);
+      localStorage.setItem("gh_token_persist", persist ? "1" : "0");
+
+      if (persist){
+        localStorage.setItem("gh_token", token);
+        sessionStorage.removeItem("gh_token");
+      } else {
+        sessionStorage.setItem("gh_token", token);
+        localStorage.removeItem("gh_token");
+      }
     }
 
     function buildContentsUrl(owner, repo, path, branch) {
@@ -1230,7 +1335,7 @@
       if (isLoaded) showStatus("선택 파일 목록이 초기화되었습니다.", "success");
     }
 
-    // ✅ 모달: 일괄등록 확인
+    // 모달: 일괄등록 확인
     function openConfirmModal(){
       document.getElementById("confirmModalBackdrop").style.display = "flex";
     }
@@ -1249,7 +1354,6 @@
       if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
     });
 
-    // ✅ 일괄등록 클릭 시 모달 확인
     function confirmAndImportBulkExcelAutoSave(){
       if (!isLoaded) {
         showLoadHint(true);
@@ -1302,6 +1406,7 @@
       d.headers = (aoa && aoa.length > 0) ? aoa[0].map(h => String(h ?? "").trim()) : [];
       d.rows = (aoa && aoa.length > 1) ? aoa.slice(1) : [];
 
+      // 추모의집은 반환일자 컬럼 보장
       if (key === "deceased") {
         const idxReturn = findHeaderIndex(d.headers, ["반환일자","반환 일자","반환일"]);
         if (idxReturn === -1) d.headers.push("반환일자");
@@ -1361,7 +1466,9 @@
         return;
       }
 
-      saveInputsToLocalStorage({owner, repo, token, branch});
+      // ✅ 저장옵션 반영 저장
+      saveInputsToStorage({owner, repo, token, branch});
+
       setBusy(true);
       showStatus("추모의집/자연장지 데이터를 불러오는 중입니다...", "loading");
 
@@ -1455,7 +1562,6 @@
       const applicant = String(getCellByHeader(rowObj, ["신청자명","신청자","사용자명","계약자명"])).trim();
       const inDateRaw = String(getCellByHeader(rowObj, ["안치일자","안치 일자","안치일"])).trim();
       const returnRaw = String(getCellByHeader(rowObj, ["반환일자","반환 일자","반환일"])).trim();
-
       return !!(noRaw || deceased || applicant || inDateRaw || returnRaw);
     }
 
@@ -1572,8 +1678,7 @@
 
     function renderLogModalBody(){
       const body = document.getElementById("logModalBody");
-      const sectionsHtml = buildFailLogSectionsByFile();
-      body.innerHTML = sectionsHtml;
+      body.innerHTML = buildFailLogSectionsByFile();
     }
 
     function buildFailLogSectionsByFile(){
