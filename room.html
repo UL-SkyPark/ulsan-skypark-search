@@ -32,7 +32,7 @@
 
       --plus-color: #b8b8bf;
 
-      /* ✅ 상단 패널 축소 후 남기는 손잡이 높이 */
+      /* ✅ 모바일에서 상단 패널 접힌 뒤 남기는 손잡이 높이 */
       --handle-h: 18px;
     }
 
@@ -113,6 +113,7 @@
       flex: 0 0 auto;
     }
 
+    /* ✅ next-line + 안내문을 한 줄로 */
     .next-rows{
       display:flex;
       align-items:stretch;
@@ -517,24 +518,17 @@
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-variant-numeric: tabular-nums; }
 
     /* =========================
-       ✅ 상단 패널 완전 축소(손잡이만 남김) + 하단 풀스크린
+       ✅ 모바일 전용: 상단 패널은 “기본 접힘(손잡이만)” / PC는 원래 그대로
        ========================= */
 
-    /* 상단 패널 트랜지션 */
-    #topPanel{
-      transition: transform .22s ease, border-radius .22s ease, box-shadow .22s ease, padding .22s ease;
-      transform-origin: top center;
-      will-change: transform;
-    }
-
-    /* ✅ 손잡이(핸들) */
+    /* ✅ 손잡이: 기본은 숨김(PC 포함) */
     .collapse-handle{
       display:none;
       position: sticky;
       top: 0;
       z-index: 60;
       height: var(--handle-h);
-      margin: -6px 0 8px;
+      margin: 0 0 8px;
       border-radius: 999px;
       border: 1px solid rgba(0,0,0,0.08);
       background: rgba(251,248,244,0.92);
@@ -543,7 +537,6 @@
       cursor: pointer;
       touch-action: manipulation;
       user-select: none;
-      display:flex;
       align-items:center;
       justify-content:center;
     }
@@ -553,6 +546,12 @@
       height: 4px;
       border-radius: 999px;
       background: rgba(0,0,0,0.18);
+    }
+
+    /* ✅ 상단 패널 애니메이션(모바일에서만 사용) */
+    #topPanel{
+      transform-origin: top center;
+      will-change: transform;
     }
 
     @media (max-width: 520px){
@@ -567,24 +566,29 @@
       .next-rows{ flex-direction:column; }
       .next-note{ flex: 1 1 auto; }
 
-      /* ✅ 모바일에서 아래 봉안단 영역이 세로 스크롤 담당 */
+      /* ✅ 모바일에서 하단(봉안단) 영역이 세로 스크롤 담당 */
       .scroll-x{
         overflow-y: auto;
         padding-top: 6px;
       }
 
-      /* ✅ 축소 상태: 상단 패널은 시각적으로 “거의 0”로 숨김 */
-      #topPanel.is-collapsed{
-        transform: translateY(calc(-100% + var(--handle-h))) scaleY(0.02);
-        box-shadow: none;
-        border-radius: 999px;
-        padding-top: calc(0px + env(safe-area-inset-top, 0px));
-        padding-bottom: 0px;
+      /* ✅ 모바일에서 손잡이는 항상 표시 */
+      .collapse-handle{
+        display:flex;
       }
 
-      /* ✅ 축소 상태에서 손잡이는 보여주기 */
-      .collapse-handle{ display:flex; }
-      .collapse-handle.is-hidden{ display:none; }
+      /* ✅ 접힌 상태: 상단 패널은 화면 밖으로 밀어 올리고, 손잡이만 남김 */
+      #topPanel.is-collapsed{
+        transition: transform .22s ease, box-shadow .22s ease, border-radius .22s ease;
+        transform: translateY(calc(-100% + var(--handle-h)));
+        box-shadow: none;
+        border-radius: 999px;
+      }
+
+      /* ✅ 펼친 상태는 원래대로(필요시 애니메이션) */
+      #topPanel{
+        transition: transform .22s ease, box-shadow .22s ease, border-radius .22s ease;
+      }
     }
   </style>
 
@@ -594,8 +598,8 @@
 <body>
   <h1>추모의집 봉안 현황</h1>
 
-  <!-- ✅ 손잡이(상단 패널이 접힌 상태에서도 보임) -->
-  <div id="collapseHandle" class="collapse-handle" aria-label="상단 패널 펼치기"></div>
+  <!-- ✅ 모바일에서만 의미있음: 손잡이(탭하면 패널 토글) -->
+  <div id="collapseHandle" class="collapse-handle" aria-label="상단 패널 펼치기/접기"></div>
 
   <div class="panel sticky" id="topPanel">
     <div class="panel-top">
@@ -933,7 +937,7 @@
   }
 
   function scrollNextSlotIntoCenter(){
-    const el = document.querySelector(`.niche.next-slot[data-room="${currentRoom}"]`);
+    const el = document.querySelector(\`.niche.next-slot[data-room="\${currentRoom}"]\`);
     if (!el) return;
     el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
   }
@@ -956,12 +960,12 @@
 
       const label = document.createElement("div");
       label.className = "dan-label";
-      label.textContent = `${dan}단`;
+      label.textContent = \`\${dan}단\`;
       row.appendChild(label);
 
       const grid = document.createElement("div");
       grid.className = "grid";
-      grid.style.gridTemplateColumns = `repeat(${cfg.cols}, var(--cell-w))`;
+      grid.style.gridTemplateColumns = \`repeat(\${cfg.cols}, var(--cell-w))\`;
 
       for (let c=0; c<cfg.cols; c++){
         const idx = c * cfg.dans + r;
@@ -1038,7 +1042,7 @@
     if (hasAny){
       const cfg = ROOM_CFG[nextCouple.room];
       const dan = danOfNo(cfg, nextCouple.no);
-      cText.textContent = `${nextCouple.room} ${nextCouple.no} (${dan}단)`;
+      cText.textContent = \`\${nextCouple.room} \${nextCouple.no} (\${dan}단)\`;
       cBtn.disabled = false;
     }
 
@@ -1113,7 +1117,7 @@
     const y = d.getFullYear();
     const m = String(d.getMonth()+1).padStart(2,"0");
     const da = String(d.getDate()).padStart(2,"0");
-    return `${y}-${m}-${da}`;
+    return \`\${y}-\${m}-\${da}\`;
   }
   function addYearsMinusOneDay(d, years){
     const x = new Date(d.getTime());
@@ -1164,7 +1168,7 @@
       const d = parseExcelDate(burialRaw);
       const ms = d ? d.getTime() : null;
 
-      const key = `${room}|${no5}`;
+      const key = \`\${room}|\${no5}\`;
       if (!bucket[key]) bucket[key] = [];
       bucket[key].push({
         seq: seq++,
@@ -1426,12 +1430,10 @@
   $("reloadBtn").addEventListener("click", loadExcelFromUrl);
 
   /* =========================
-     ✅ 모바일: 상단 완전 접기/펼치기 + 하단 풀스크린
+     ✅ 핵심: 모바일에서만 “기본 접힘”, PC는 그대로
      ========================= */
 
-  const UI = {
-    collapsed: false
-  };
+  const UI = { collapsed: false };
 
   function isMobileWidth(){
     return window.matchMedia && window.matchMedia("(max-width: 520px)").matches;
@@ -1443,109 +1445,97 @@
 
   function setCollapsed(v){
     UI.collapsed = !!v;
+
     const panel = $("topPanel");
     const handle = $("collapseHandle");
-    if (!panel || !handle) return;
+    const legend = $("legend");
+    const msg = $("msg");
+    if (!panel || !handle || !legend) return;
 
+    if (!isMobileWidth()){
+      // ✅ PC: 원래대로(접기 해제)
+      UI.collapsed = false;
+      panel.classList.remove("is-collapsed");
+      handle.style.display = "none";
+      legend.style.display = "";
+      if (msg) msg.style.display = (msg.textContent ? "block" : "none");
+      requestAnimationFrame(updateScrollerHeight);
+      return;
+    }
+
+    // ✅ 모바일: 손잡이는 항상 보이고, 패널 토글
+    handle.style.display = "flex";
     panel.classList.toggle("is-collapsed", UI.collapsed);
 
-    // 손잡이는: 모바일에서만, 그리고 패널이 접혔을 때만 노출
-    if (isMobileWidth()){
-      handle.classList.toggle("is-hidden", !UI.collapsed);
-    } else {
-      handle.classList.add("is-hidden");
-      panel.classList.remove("is-collapsed");
-      UI.collapsed = false;
-    }
+    // ✅ 접힌 상태에서는 범례/메시지 숨겨서 하단을 최대한 확보
+    legend.style.display = UI.collapsed ? "none" : "";
+    if (msg) msg.style.display = UI.collapsed ? "none" : (msg.textContent ? "block" : "none");
 
     requestAnimationFrame(updateScrollerHeight);
   }
 
   function updateScrollerHeight(){
     const scroller = $("scrollX");
-    const topPanel = $("topPanel");
+    const panel = $("topPanel");
+    const handle = $("collapseHandle");
     const legend = $("legend");
     const msg = $("msg");
-    const handle = $("collapseHandle");
-    if (!scroller || !topPanel || !legend || !handle) return;
+    if (!scroller || !panel || !handle || !legend) return;
 
+    // PC는 기존 흐름(바디 스크롤 + 가로 스크롤) 유지
     if (!isMobileWidth()){
       scroller.style.maxHeight = "";
       scroller.style.overflowY = "visible";
       return;
     }
 
+    // 모바일은 봉안단 영역이 세로 스크롤 담당
     scroller.style.overflowY = "auto";
 
     const vh = getViewportHeight();
 
-    // 접힌 상태면 topPanel을 거의 제외하고, 손잡이만큼만 차감
-    const topH = UI.collapsed ? (handle.getBoundingClientRect().height + 8) : topPanel.getBoundingClientRect().height;
-    const legendH = UI.collapsed ? 0 : legend.getBoundingClientRect().height; // ✅ 접히면 범례도 위로 끌어올리고 싶으면 0
+    // 접힘이면 손잡이만 차감, 펼침이면 상단패널 높이 차감
+    const topH = UI.collapsed
+      ? (handle.getBoundingClientRect().height + 10)
+      : panel.getBoundingClientRect().height;
+
+    const legendH = (UI.collapsed ? 0 : legend.getBoundingClientRect().height);
     const msgH = (!UI.collapsed && msg && msg.style.display !== "none") ? msg.getBoundingClientRect().height : 0;
 
-    // 여유(패딩/마진/안전값)
     const extra = 12;
-
     const maxH = Math.max(260, Math.floor(vh - topH - legendH - msgH - extra));
     scroller.style.maxHeight = maxH + "px";
-
-    // ✅ 접힌 상태에서는 범례/메시지도 숨겨서 하단 풀스크린 느낌 강화
-    legend.style.display = UI.collapsed ? "none" : "";
-    if (msg) msg.style.display = UI.collapsed ? "none" : (msg.textContent ? "block" : "none");
   }
 
-  // ✅ 스크롤 방향 감지: 아래로 내리면 접고, 위로 올리면 펼치기
-  (function initAutoCollapse(){
+  (function initMobileOnlyCollapse(){
     const scroller = $("scrollX");
-    const panel = $("topPanel");
     const handle = $("collapseHandle");
-    if (!scroller || !panel || !handle) return;
+    if (!scroller || !handle) return;
 
-    let lastY = 0;
-    let ticking = false;
-
-    function onScroll(){
+    // ✅ 손잡이 탭하면 토글(모바일에서만)
+    handle.addEventListener("click", () => {
       if (!isMobileWidth()) return;
-      if (ticking) return;
-      ticking = true;
-
-      requestAnimationFrame(() => {
-        const y = scroller.scrollTop || 0;
-        const dy = y - lastY;
-
-        // 아래로 조금만 움직이면 접기, 위로 크게 움직이면 펼치기
-        if (!UI.collapsed && y > 24 && dy > 6){
-          setCollapsed(true);
-        } else if (UI.collapsed && dy < -10){
-          setCollapsed(false);
-        }
-
-        lastY = y;
-        ticking = false;
-      });
-    }
-
-    scroller.addEventListener("scroll", onScroll, { passive: true });
-
-    // 손잡이 탭하면 펼치기
-    handle.addEventListener("click", () => setCollapsed(false));
-
-    // 뷰포트 변화 대응
-    window.addEventListener("resize", () => requestAnimationFrame(updateScrollerHeight), { passive: true });
-    if (window.visualViewport){
-      window.visualViewport.addEventListener("resize", () => requestAnimationFrame(updateScrollerHeight), { passive: true });
-    }
-
-    // panel 내용 변화 대응
-    const mo = new MutationObserver(() => requestAnimationFrame(updateScrollerHeight));
-    mo.observe(panel, { childList:true, subtree:true, attributes:true });
-
-    // 초기: 모바일에서 기본은 펼친 상태
-    requestAnimationFrame(() => {
-      setCollapsed(false);
-      updateScrollerHeight();
+      setCollapsed(!UI.collapsed);
     });
+
+    // ✅ 화면 크기 바뀔 때(PC<->모바일) 자동 적용
+    function applyByWidth(){
+      if (isMobileWidth()){
+        // 모바일은 “기본 접힘” (요구사항)
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+      requestAnimationFrame(updateScrollerHeight);
+    }
+
+    window.addEventListener("resize", () => requestAnimationFrame(applyByWidth), { passive: true });
+    if (window.visualViewport){
+      window.visualViewport.addEventListener("resize", () => requestAnimationFrame(applyByWidth), { passive: true });
+    }
+
+    // 초기 적용
+    requestAnimationFrame(applyByWidth);
   })();
 
   restoreState();
