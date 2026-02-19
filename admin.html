@@ -237,7 +237,6 @@
     }
     .icon-btn:hover{ background:#f9fafb; }
 
-    /* 불러오기 안내문구: 버튼 바로 앞 */
     .load-hint{
       display:none;
       font-size:13px;
@@ -269,7 +268,6 @@
     .status.error{ border-color:#fecdd3; background:#fff1f2; color:#7f1d1d; }
     .status.loading{ background:#f8fafc; color:#374151; }
 
-    /* File panel (버튼+목록 통합) */
     .file-panel{
       border:1px solid var(--line-soft);
       background:#fafafa;
@@ -354,7 +352,6 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
-    /* 삭제(X) 버튼 */
     .x-btn{
       border:1px solid var(--line);
       background:#fff;
@@ -374,7 +371,6 @@
 
     .muted{ color:var(--muted); font-weight:800; }
 
-    /* Grid Head tabs */
     .grid-head{
       display:flex;
       align-items:flex-end;
@@ -428,7 +424,6 @@
     }
     .hot-row-highlight{ background: rgba(47,111,178,0.12) !important; }
 
-    /* Failure Log Modal */
     .modal-backdrop{
       position:fixed;
       inset:0;
@@ -598,10 +593,8 @@
         <div class="form-group">
           <label>업로드 엑셀 파일</label>
 
-          <!-- 실제 input은 숨김 -->
           <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" />
 
-          <!-- 버튼 + 목록 통합 패널 -->
           <div class="file-panel">
             <div class="file-panel-head">
               <div class="file-panel-title">
@@ -735,14 +728,13 @@
         el.style.display = "none";
       });
 
-      // 파일 선택: 누적 추가
       document.getElementById("bulkFile")?.addEventListener("change", (e) => {
         const input = e.target;
         const files = Array.from(input.files || []);
         if (!files.length) return;
 
         addSelectedFiles(files);
-        input.value = ""; // 같은 파일 다시 선택 가능하게
+        input.value = "";
 
         renderSelectedFiles();
         updateBulkButtonState();
@@ -762,7 +754,6 @@
       btn.textContent = isPw ? "가리기" : "보기";
     }
 
-    // ===== 날짜/시간 =====
     function pad2(n){ return String(n).padStart(2,"0"); }
     function formatLoadedAt(d){
       const yyyy = d.getFullYear();
@@ -773,7 +764,6 @@
       return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
     }
 
-    // ===== 유틸 =====
     function norm(s) {
       return String(s ?? "")
         .replace(/\s+/g, "")
@@ -860,7 +850,6 @@
         : ["자연장번호","자연장 번호","자연장no","자연장No","번호","관리번호"];
     }
 
-    // ===== 공용 상태 =====
     function showStatus(msg, type) {
       const el = document.getElementById("statusMsg");
       el.textContent = msg + (type === "loading" ? "\n(클릭하면 닫힘)" : "");
@@ -881,7 +870,6 @@
       updateBulkButtonState();
     }
 
-    // ===== 로드 상태 UI =====
     function setLoaded(v){
       isLoaded = v;
       document.getElementById("afterLoad").style.display = v ? "block" : "none";
@@ -930,7 +918,6 @@
       bFiles.classList.remove("hidden");
     }
 
-    // ===== 탭 변경 =====
     function selectTarget(target, isInit=false) {
       fileKey = target;
       localStorage.setItem("gh_target", fileKey);
@@ -944,7 +931,6 @@
       if (!isInit && isLoaded) updateTopBadges(true, loadedAtText, "추모의집/자연장지 데이터");
     }
 
-    // ===== 입력값 =====
     function getInputs() {
       const owner = document.getElementById("owner").value.trim();
       const repo  = document.getElementById("repo").value.trim();
@@ -962,7 +948,6 @@
       return `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(branch)}`;
     }
 
-    // ===== 업로드 파일 리스트(누적 + 삭제) =====
     function makeFileId(file){
       return `${file.name}__${file.size}__${file.lastModified}`;
     }
@@ -1016,15 +1001,12 @@
       box.innerHTML = `<ul class="file-list">${items}</ul>`;
     }
 
-    // ===== 업로드 버튼 활성 조건 =====
     function updateBulkButtonState(){
       const btn = document.getElementById("bulkBtn");
       if (!btn) return;
-
       btn.disabled = (!isLoaded || isBusy || selectedFiles.length === 0);
     }
 
-    // ===== 업로드 초기화 =====
     function resetBulkUpload(){
       selectedFiles = [];
       renderSelectedFiles();
@@ -1032,7 +1014,6 @@
       showStatus("업로드 파일 목록이 초기화되었습니다.", "success");
     }
 
-    // ===== GitHub fetch (xlsx) =====
     async function fetchXlsxFromGitHub({owner, repo, token, branch}, path){
       const apiUrl = buildContentsUrl(owner, repo, path, branch);
 
@@ -1068,7 +1049,6 @@
       d.headers = (aoa && aoa.length > 0) ? aoa[0].map(h => String(h ?? "").trim()) : [];
       d.rows = (aoa && aoa.length > 1) ? aoa.slice(1) : [];
 
-      // 추모의집: 반환일자 컬럼 없으면 생성
       if (key === "deceased") {
         const idxReturn = findHeaderIndex(d.headers, ["반환일자","반환 일자","반환일"]);
         if (idxReturn === -1) d.headers.push("반환일자");
@@ -1079,7 +1059,6 @@
       d.loaded = true;
     }
 
-    // ===== 그리드 =====
     function renderGridForCurrentTarget(){
       const cur = ds(fileKey);
       const container = document.getElementById("hotContainer");
@@ -1119,7 +1098,6 @@
       setTimeout(() => { hot.render(); hot.refreshDimensions(); }, 0);
     }
 
-    // ===== 불러오기(추모의집/자연장지 데이터) =====
     async function loadAllFiles() {
       const inputs = getInputs();
       const { owner, repo, token } = inputs;
@@ -1168,7 +1146,7 @@
         showStatus("로드 완료.", "success");
 
         document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 20건 표시`;
-        renderGridForCurrentTarget(); // ✅ 스크롤 이동 없음
+        renderGridForCurrentTarget();
 
       } catch (e) {
         setLoaded(false);
@@ -1178,7 +1156,6 @@
       }
     }
 
-    // ===== 번호 패턴으로 대상 판별 =====
     function detectTargetByNo(noRaw){
       const s = String(noRaw ?? "").trim();
       if (!s) return null;
@@ -1198,7 +1175,6 @@
       return null;
     }
 
-    // ===== 업로드 파일 템플릿(헤더 기반) 추정 =====
     function detectTemplateTypeByHeaders(rowsObj){
       const keys = new Set();
       for (const r of rowsObj || []){
@@ -1213,7 +1189,6 @@
       return "unknown";
     }
 
-    // 의미 있는 데이터가 있는지(예외행 판단용)
     function isMeaningfulRow(rowObj){
       const noRaw = String(getCellByHeader(rowObj, ["봉안번호","봉안 번호","자연장번호","자연장 번호","번호","관리번호"])).trim();
       const deceased = String(getCellByHeader(rowObj, ["사망자명","고인명","고인","사망자"])).trim();
@@ -1224,15 +1199,14 @@
       return !!(noRaw || deceased || applicant || inDateRaw || returnRaw);
     }
 
-    // 예외행 스킵 규칙(자연장지: 2번/마지막, 추모의집: 마지막)
     function shouldSkipStructuralRow(templateType, idx, lastIdx, rowObj){
       const meaningful = isMeaningfulRow(rowObj);
       if (!meaningful){
         if (templateType === "nature"){
-          if (idx === 0) return true;       // 2번행
-          if (idx === lastIdx) return true; // 마지막
+          if (idx === 0) return true;
+          if (idx === lastIdx) return true;
         } else if (templateType === "deceased"){
-          if (idx === lastIdx) return true; // 마지막
+          if (idx === lastIdx) return true;
         } else {
           if (idx === 0 || idx === lastIdx) return true;
         }
@@ -1241,7 +1215,6 @@
       return false;
     }
 
-    // ===== 반환: 완전일치 찾기(추모의집) =====
     function findExactMatchRowDeceased(noVal, deceasedVal, applicantVal, rowsOverride=null, headersOverride=null) {
       const d = ds("deceased");
       const rows = rowsOverride || d.rows;
@@ -1271,7 +1244,6 @@
       return { found:false };
     }
 
-    // ===== 저장: GitHub PUT =====
     async function putToGitHub(targetKey, mergedAoa, message) {
       const inputs = getInputs();
       const { owner, repo, token, branch } = inputs;
@@ -1308,7 +1280,6 @@
       d.sha = resData.content?.sha || d.sha;
     }
 
-    // ===== 실패 모달(파일별 섹션 정렬) =====
     function openLogModal(title){
       document.getElementById("logModalTitle").textContent = title;
       document.getElementById("logModalBackdrop").style.display = "flex";
@@ -1328,7 +1299,6 @@
       return Number.isFinite(n) ? n : 999999999;
     }
 
-    // ✅ 모달 상단 검색(필터) 기능 제거: 본문은 섹션만 출력
     function renderLogModalBody(){
       const body = document.getElementById("logModalBody");
       const sectionsHtml = buildFailLogSectionsByFile();
@@ -1341,8 +1311,6 @@
       }
 
       const list = importFailLog.slice();
-
-      // ✅ 파일별 그룹핑 + 파일 내부 엑셀행 오름차순
       const groups = new Map();
       for (const item of list){
         const key = String(item.file || "-");
@@ -1402,7 +1370,7 @@
       return html;
     }
 
-    // ===== 업로드 반영: 자동 분류 + 즉시 저장(대기목록 없음) =====
+    // ===== 업로드 반영: 자동 분류 + 즉시 저장 =====
     async function importBulkExcelAutoSave() {
       if (!isLoaded) {
         showLoadHint(true);
@@ -1433,7 +1401,6 @@
         for (const item of selectedFiles){
           const file = item.file;
 
-          // 확장자 간단 체크(사전검증 삭제 대신 여기서만)
           const lower = (file.name || "").toLowerCase();
           if (!(lower.endsWith(".xlsx") || lower.endsWith(".xls"))){
             importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"확장자가 .xlsx/.xls가 아닙니다." });
@@ -1472,11 +1439,9 @@
 
           for (let i = 0; i < rowsObj.length; i++) {
             const r = rowsObj[i];
-            const rowNo = i + 2; // sheet_to_json 특성상 데이터는 2행부터
+            const rowNo = i + 2;
 
-            // 예외행 스킵(로그에도 안 남김)
             if (shouldSkipStructuralRow(templateType, i, lastIndex, r)) continue;
-
             processed++;
 
             const noRaw = String(getCellByHeader(r, ["봉안번호","봉안 번호","자연장번호","자연장 번호","번호","관리번호"])).trim();
@@ -1566,14 +1531,15 @@
           return;
         }
 
-        // 로컬 적용용 복사본
         const next = {
           deceased: { headers: ds("deceased").headers.slice(), rows: ds("deceased").rows.map(r=>r.slice()), highlight: new Set() },
           nature:   { headers: ds("nature").headers.slice(),   rows: ds("nature").rows.map(r=>r.slice()),   highlight: new Set() }
         };
 
+        // ✅ 변경 핵심: 추모의집 신규 중복 처리 시, "반환일자 있음"이면 재사용 허용
         const applyAdds = (key) => {
           if (!adds[key].length) return 0;
+
           const headers = next[key].headers;
           const rows = next[key].rows;
 
@@ -1587,12 +1553,34 @@
           if (idxNo === -1) missing.push(key === "deceased" ? "봉안번호" : "자연장번호");
           if (idxDe === -1) missing.push("사망자명");
           if (idxAp === -1) missing.push("신청자명");
+
+          // 추모의집 재사용 판정용 반환일자 인덱스
+          const idxReturn = (key === "deceased")
+            ? findHeaderIndex(headers, ["반환일자","반환 일자","반환일"])
+            : -1;
+          if (key === "deceased" && idxReturn === -1) missing.push("반환일자");
+
           if (missing.length) throw new Error(`[${ds(key).label}] 헤더를 찾을 수 없습니다: ${missing.join(", ")}`);
 
-          const existSet = new Set();
-          for (const row of rows){
-            const vv = norm(row[idxNo]);
-            if (vv) existSet.add(vv);
+          // ✅ 번호별로 "반환일자 존재 여부"를 빠르게 조회하기 위한 맵
+          // - deceased: 번호 -> hasReturned(true/false)
+          // - nature:   번호 -> true(존재)만 체크
+          const noStatus = new Map();
+
+          if (key === "deceased"){
+            for (const row of rows){
+              const vv = norm(row[idxNo]);
+              if (!vv) continue;
+              const hasRet = String(row[idxReturn] ?? "").trim() !== "";
+              // 동일 번호가 여러 번 있을 수 있으니, 하나라도 반환이면 true로
+              if (!noStatus.has(vv)) noStatus.set(vv, hasRet);
+              else noStatus.set(vv, noStatus.get(vv) || hasRet);
+            }
+          } else {
+            for (const row of rows){
+              const vv = norm(row[idxNo]);
+              if (vv) noStatus.set(vv, true);
+            }
           }
 
           let added = 0;
@@ -1600,16 +1588,31 @@
           for (const q of adds[key]){
             const vv = norm(q.no);
 
-            if (existSet.has(vv)){
-              importFailLog.push({
-                file:q.file, rowNo:q.rowNo,
-                target:ds(key).label, kind:"신규",
-                no:q.no, deceased:q.deceased, applicant:q.applicant,
-                reason:"해당 대상 파일의 기존 번호와 중복됩니다."
-              });
-              continue;
+            if (noStatus.has(vv)){
+              // nature: 기존 존재면 무조건 중복 실패
+              if (key !== "deceased"){
+                importFailLog.push({
+                  file:q.file, rowNo:q.rowNo,
+                  target:ds(key).label, kind:"신규",
+                  no:q.no, deceased:q.deceased, applicant:q.applicant,
+                  reason:"해당 대상 파일의 기존 번호와 중복됩니다."
+                });
+                continue;
+              }
+
+              // deceased: 기존 존재하지만, "반환일자 있음"이면 재사용 허용
+              const hasReturned = !!noStatus.get(vv);
+              if (!hasReturned){
+                importFailLog.push({
+                  file:q.file, rowNo:q.rowNo,
+                  target:ds(key).label, kind:"신규",
+                  no:q.no, deceased:q.deceased, applicant:q.applicant,
+                  reason:"해당 봉안번호는 현재 사용중입니다(반환일자 없음)."
+                });
+                continue;
+              }
+              // 반환일자 있으면: 재사용 자리로 신규 행 추가 허용(그대로 진행)
             }
-            existSet.add(vv);
 
             const row = new Array(headers.length).fill("");
             row[idxInDate] = q.inDate;
@@ -1620,6 +1623,11 @@
             rows.push(row);
             next[key].highlight.add(rows.length - 1);
             added++;
+
+            // 신규로 추가한 행은 반환일자 없음(사용중) 상태가 되므로,
+            // 이후 같은 실행 내에서 또 같은 번호가 나오면 중복 처리되도록 업데이트
+            if (key === "deceased") noStatus.set(vv, false);
+            else noStatus.set(vv, true);
           }
 
           return added;
@@ -1707,7 +1715,6 @@
           return;
         }
 
-        // 로컬 반영 + 하이라이트
         if (needSaveDe){
           ds("deceased").rows = next.deceased.rows;
           ds("deceased").highlight = next.deceased.highlight;
