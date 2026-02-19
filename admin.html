@@ -17,99 +17,97 @@
 
   <style>
     :root{
-      /* Pastel Warm (Down-toned) */
-      --bg:#fbfaf7;
+      --bg:#f6f7f9;
       --panel:#ffffff;
-      --text:#0f172a;
+      --text:#111827;
       --muted:#6b7280;
-      --line:#ece7dd;
 
-      --primary:#f3d6a1;
-      --primary-h:#eac88b;
-      --accent:#fff2d6;
+      --line:#d1d5db;
+      --line-soft:#e5e7eb;
 
-      --success:#63cdb0;
-      --success-h:#55bfA3;
+      --primary:#2f6fb2;
+      --primary-h:#285f98;
 
-      --ghost:#fdf3e6;
-      --ghost-h:#f7ead7;
-
+      --success:#0f766e;
+      --warn:#b45309;
       --danger:#b42318;
 
-      --shadow: 0 14px 38px rgba(15, 23, 42, 0.08);
-      --radius:16px;
+      --shadow: 0 6px 14px rgba(17, 24, 39, 0.08);
+      --radius:6px;
+      --radius-sm:4px;
+
+      --header:#eef2f7;
     }
 
     *{ box-sizing:border-box; }
     body{
       margin:0;
-      padding:22px;
-      background:
-        radial-gradient(1200px 600px at 50% -240px, rgba(243,214,161,0.14), rgba(0,0,0,0)),
-        radial-gradient(900px 520px at 12% 12%, rgba(255,242,214,0.20), rgba(0,0,0,0)),
-        var(--bg);
+      padding:18px;
+      background: var(--bg);
       color:var(--text);
-      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       display:flex;
       justify-content:center;
-      font-size:16px;
+      font-size:15px;
     }
 
     .container{
       width:100%;
-      max-width:1280px;
+      max-width:1320px;
       background:var(--panel);
       border:1px solid var(--line);
-      border-radius:20px;
-      box-shadow:var(--shadow);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       overflow:hidden;
     }
 
     .header{
-      padding:18px 20px;
+      padding:14px 16px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
       border-bottom:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(243,214,161,0.12), rgba(255,255,255,1));
+      background: var(--header);
     }
     .header-left{
       display:flex;
       flex-direction:column;
-      gap:10px;
+      gap:8px;
       min-width:0;
     }
     .title{
-      font-size:28px;
-      font-weight:950;
-      letter-spacing:-0.4px;
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:-0.2px;
       margin:0;
-      line-height:1.1;
+      line-height:1.15;
     }
 
-    .badges{
+    .meta-line{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
       align-items:center;
-      min-height:34px;
+      min-height:24px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:700;
     }
-    .badge{
+    .meta-item{
       display:inline-flex;
+      gap:6px;
       align-items:center;
-      gap:8px;
-      padding:9px 13px;
-      border-radius:999px;
-      font-size:14px;
-      font-weight:850;
-      color:#3b2f13;
-      background:#f7f2e8;
-      border:1px solid #e8e1d2;
+      padding:3px 8px;
+      border:1px solid var(--line-soft);
+      background:#fff;
+      border-radius: var(--radius-sm);
+      color:#374151;
       white-space:nowrap;
     }
-    .badge b{ font-weight:950; }
-    .badge.hidden{ display:none !important; }
+    .meta-item b{ font-weight:900; }
+    .hidden{ display:none !important; }
 
     .header-right{
       display:flex;
@@ -118,314 +116,422 @@
       flex-shrink:0;
     }
     .logo{
-      height:44px;
+      height:38px;
       width:auto;
       display:block;
+      filter: saturate(0.95) contrast(0.98);
     }
 
-    .content{ padding:16px 18px 18px; }
+    .content{ padding:14px 16px 16px; }
 
     .box{
       background:#fff;
       border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:16px;
-      margin-bottom:14px;
+      border-radius: var(--radius);
+      padding:14px;
+      margin-bottom:12px;
     }
+
     .box-title{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
-      font-weight:950;
-      margin-bottom:12px;
-      color:#0f172a;
-      font-size:17px;
+      font-weight:900;
+      margin-bottom:10px;
+      color:#111827;
+      font-size:15px;
     }
     .hint-mini{
-      font-size:14px;
-      font-weight:850;
+      font-size:13px;
+      font-weight:700;
       color:var(--muted);
     }
 
     .row{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:12px;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:10px;
       margin:0;
     }
+
     .form-group label{
       display:block;
-      font-weight:900;
-      font-size:14px;
-      margin-bottom:8px;
-      color:#334155;
+      font-weight:800;
+      font-size:13px;
+      margin-bottom:6px;
+      color:#374151;
     }
     .form-group input{
       width:100%;
-      padding:13px 12px;
+      padding:10px 10px;
       border:1px solid var(--line);
-      border-radius:14px;
+      border-radius: var(--radius-sm);
       background:#fff;
-      font-size:16px;
+      font-size:14px;
       outline:none;
-      transition:0.15s;
+      transition:0.12s;
     }
     .form-group input:focus{
-      border-color:#e8d9bf;
-      box-shadow:0 0 0 5px rgba(243,214,161,0.16);
+      border-color:#9bb9dd;
+      box-shadow:0 0 0 3px rgba(47,111,178,0.14);
+    }
+
+    .input-with-btn{ display:flex; gap:8px; align-items:center; }
+
+    .field-help{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
     }
 
     .toolbar{
-      margin-top:12px;
+      margin-top:10px;
       display:flex;
       align-items:center;
       justify-content:flex-end;
-      gap:10px;
+      gap:8px;
       flex-wrap:wrap;
-      position:relative;
     }
 
     .btn{
-      border:1px solid transparent;
-      padding:12px 16px;
-      border-radius:14px;
-      font-size:16px;
-      font-weight:950;
+      border:1px solid var(--line);
+      padding:9px 12px;
+      border-radius: var(--radius-sm);
+      font-size:14px;
+      font-weight:800;
       cursor:pointer;
-      transition:0.15s;
+      transition:0.12s;
       display:inline-flex;
       align-items:center;
       gap:8px;
+      background:#fff;
+      color:#111827;
+      min-height:36px;
     }
     .btn:disabled{ opacity:0.55; cursor:not-allowed; }
-    .btn:hover{ transform: translateY(-1px); }
-    .btn:active{ transform: translateY(0px); }
-    .btn:focus-visible{
-      outline:none;
-      box-shadow:0 0 0 5px rgba(243,214,161,0.18);
-    }
+    .btn:hover{ background:#f9fafb; }
+    .btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(47,111,178,0.14); }
 
     .btn-primary{
-      background: linear-gradient(180deg, rgba(255,247,231,0.98), rgba(243,214,161,0.88));
-      color:#2b1f09;
-      border-color: rgba(234,200,139,0.40);
-      box-shadow: 0 10px 16px rgba(243,214,161,0.14);
+      background: var(--primary);
+      border-color: var(--primary);
+      color:#fff;
     }
+    .btn-primary:hover{ background: var(--primary-h); border-color: var(--primary-h); }
 
-    .btn-ghost{
-      background:var(--ghost);
-      border-color:#e8e1d2;
-      color:#2b1f09;
-    }
+    .btn-ghost{ background:#fff; border-color: var(--line); color:#111827; }
 
-    .input-with-btn{
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
     .icon-btn{
-      border:1px solid #e8e1d2;
-      background:#f7f2e8;
-      color:#2b1f09;
-      padding:12px 14px;
-      border-radius:14px;
-      font-weight:950;
-      cursor:pointer;
-      transition:0.15s;
-      white-space:nowrap;
-    }
-    .icon-btn:hover{ background:#f1ebdf; transform: translateY(-1px); }
-    .field-help{
-      margin-top:8px;
-      font-size:13px;
-      color:var(--muted);
+      border:1px solid var(--line);
+      background:#fff;
+      color:#111827;
+      padding:9px 10px;
+      border-radius: var(--radius-sm);
       font-weight:800;
+      cursor:pointer;
+      transition:0.12s;
+      white-space:nowrap;
+      min-height:36px;
     }
+    .icon-btn:hover{ background:#f9fafb; }
 
+    /* 불러오기 안내문구: 버튼 바로 앞 */
     .load-hint{
       display:none;
-      margin-right:10px;
-      font-size:18px;
-      font-weight:430;
-      color:#7a5a26;
-      letter-spacing:-0.2px;
-      align-items:center;
-      gap:8px;
+      font-size:13px;
+      font-weight:800;
+      color:#374151;
+      padding:8px 10px;
+      border:1px dashed #cbd5e1;
+      background:#f8fafc;
+      border-radius: var(--radius-sm);
       white-space:nowrap;
-    }
-    .load-hint .arrow{
-      font-size:20px;
-      font-weight:900;
-      animation: arrowMove 1s infinite;
-      display:inline-block;
-    }
-    @keyframes arrowMove{
-      0%{ transform:translateX(0); opacity:0.55; }
-      50%{ transform:translateX(7px); opacity:1; }
-      100%{ transform:translateX(0); opacity:0.55; }
-    }
-
-    .blink{ animation: blinkPulse 1.2s infinite; }
-    @keyframes blinkPulse{
-      0%{ transform:translateY(0); box-shadow: 0 10px 16px rgba(243,214,161,0.14); }
-      50%{ transform:translateY(-1px); box-shadow: 0 14px 22px rgba(243,214,161,0.20); }
-      100%{ transform:translateY(0); box-shadow: 0 10px 16px rgba(243,214,161,0.14); }
     }
 
     .status{
       display:none;
       position: sticky;
-      top: 12px;
+      top: 10px;
       z-index: 50;
       margin:10px 0 12px;
-      padding:12px 14px;
-      border-radius:16px;
+      padding:10px 12px;
+      border-radius: var(--radius-sm);
       border:1px solid var(--line);
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(6px);
+      background:#fff;
       color:#111827;
       white-space:pre-wrap;
-      font-size:16px;
+      font-size:14px;
       cursor:pointer;
     }
-    .status.success{ border-color:#c7f3dd; background:#effdf7; color:#14532d; }
+    .status.success{ border-color:#99f6e4; background:#f0fdfa; color:#134e4a; }
     .status.error{ border-color:#fecdd3; background:#fff1f2; color:#7f1d1d; }
-    .status.loading{ background:#fbf4e6; color:#4b5563; }
+    .status.loading{ background:#f8fafc; color:#374151; }
 
-    /* Grid box head: tabs at top-left */
-    .grid-head{
+    /* File panel (버튼+목록 통합) */
+    .file-panel{
+      border:1px solid var(--line-soft);
+      background:#fafafa;
+      border-radius: var(--radius-sm);
+      padding:10px;
+    }
+    .file-panel-head{
       display:flex;
       align-items:center;
       justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .file-panel-title{
+      font-size:13px;
+      font-weight:900;
+      color:#111827;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .count{
+      font-weight:900;
+      color:#111827;
+      background:#fff;
+      border:1px solid var(--line-soft);
+      padding:2px 8px;
+      border-radius: var(--radius-sm);
+      white-space:nowrap;
+      font-size:12px;
+    }
+    .file-panel-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .file-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .file-list li{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      align-items:center;
+      gap:10px;
+      padding:7px 8px;
+      background:#fff;
+      border:1px solid var(--line-soft);
+      border-radius: var(--radius-sm);
+      font-size:13px;
+      color:#111827;
+    }
+    .file-left{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .file-name{
+      font-weight:900;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .file-sub{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:800;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .mono{
+      font-variant-numeric: tabular-nums;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    /* 삭제(X) 버튼 */
+    .x-btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:#374151;
+      width:28px;
+      height:28px;
+      border-radius: var(--radius-sm);
+      cursor:pointer;
+      font-weight:900;
+      line-height:1;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    .x-btn:hover{ background:#f9fafb; }
+
+    .muted{ color:var(--muted); font-weight:800; }
+
+    /* Grid Head tabs */
+    .grid-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
       gap:12px;
       margin-bottom:10px;
+      border-bottom:1px solid var(--line);
+      padding-bottom:8px;
     }
     .tabs{
       display:inline-flex;
-      background:#f7f2e8;
-      border:1px solid #e8e1d2;
-      border-radius:999px;
-      padding:4px;
-      gap:4px;
-      box-shadow: inset 0 1px 0 rgba(15,23,42,0.03);
+      gap:0;
+      border:1px solid var(--line);
+      border-bottom:0;
+      background:#fff;
     }
     .tab-btn{
       border:0;
-      background:transparent;
+      background:#f9fafb;
       cursor:pointer;
-      padding:10px 14px;
-      border-radius:999px;
-      font-weight:950;
-      font-size:15px;
-      color:#2b1f09;
-      transition:0.18s;
-      min-width:120px;
+      padding:9px 14px;
+      font-weight:900;
+      font-size:13px;
+      color:#374151;
+      border-right:1px solid var(--line);
+      border-radius:0;
+      min-width:110px;
     }
+    .tab-btn:last-child{ border-right:0; }
     .tab-btn:disabled{ opacity:0.55; cursor:not-allowed; }
     .tab-btn.active{
-      background: linear-gradient(180deg, rgba(255,242,214,0.98), rgba(243,214,161,0.88));
-      box-shadow: 0 10px 16px rgba(243,214,161,0.12);
-      border:1px solid rgba(234,200,139,0.40);
+      background:#fff;
+      color:#111827;
+      border-bottom:2px solid #fff;
     }
     .grid-meta{
-      font-size:13px;
+      font-size:12px;
       color:var(--muted);
-      font-weight:850;
+      font-weight:900;
       white-space:nowrap;
+      padding-bottom:2px;
     }
 
     #hotContainer{
       width:100%;
       height:560px;
       border:1px solid var(--line);
-      border-radius:16px;
+      border-radius: var(--radius);
       overflow:hidden;
       background:#fff;
     }
-    .hot-row-highlight{
-      background: rgba(243,214,161,0.26) !important;
-    }
+    .hot-row-highlight{ background: rgba(47,111,178,0.12) !important; }
 
-    /* Modal (failure log) */
+    /* Failure Log Modal */
     .modal-backdrop{
       position:fixed;
       inset:0;
-      background: rgba(2,6,23,0.38);
+      background: rgba(17, 24, 39, 0.45);
       display:none;
       align-items:center;
       justify-content:center;
-      padding:18px;
+      padding:16px;
       z-index:9999;
     }
     .modal{
       width:100%;
-      max-width:1080px;
+      max-width:1200px;
       background:#fff;
-      border-radius:20px;
+      border-radius: var(--radius);
       border:1px solid var(--line);
-      box-shadow: 0 22px 70px rgba(2,6,23,0.30);
+      box-shadow: 0 18px 60px rgba(17, 24, 39, 0.35);
       overflow:hidden;
     }
     .modal-head{
-      padding:14px 16px;
+      padding:12px 14px;
       border-bottom:1px solid var(--line);
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      background: linear-gradient(180deg, rgba(243,214,161,0.10), #fff);
+      background:#f8fafc;
     }
     .modal-title{
-      font-size:17px;
-      font-weight:950;
+      font-size:14px;
+      font-weight:900;
       margin:0;
+      color:#111827;
     }
     .modal-body{
-      padding:14px 16px;
-      color:#0f172a;
-      font-size:15px;
+      padding:12px 14px;
+      color:#111827;
+      font-size:13px;
       line-height:1.5;
-      max-height:70vh;
+      max-height:72vh;
       overflow:auto;
     }
     .modal-foot{
-      padding:14px 16px;
+      padding:12px 14px;
       border-top:1px solid var(--line);
       display:flex;
       justify-content:flex-end;
+      gap:8px;
+      background:#fafafa;
+    }
+
+    .file-section{
+      margin-top:12px;
+      border:1px solid var(--line);
+      border-radius: var(--radius-sm);
+      overflow:hidden;
+      background:#fff;
+    }
+    .file-section-head{
+      padding:10px 12px;
+      background:#f3f4f6;
+      border-bottom:1px solid var(--line-soft);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
       gap:10px;
+      font-weight:900;
+      color:#111827;
+      font-size:13px;
+    }
+    .file-section-head .mini{
+      font-size:12px;
+      color:#374151;
+      font-weight:900;
+      background:#fff;
+      border:1px solid var(--line-soft);
+      padding:2px 8px;
+      border-radius: var(--radius-sm);
+      white-space:nowrap;
     }
 
     table.q{
       width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      overflow:hidden;
-      border:1px solid var(--line);
-      border-radius:16px;
+      border-collapse:collapse;
+      border:0;
       background:#fff;
+      font-size:13px;
     }
     table.q th, table.q td{
-      border-bottom:1px solid var(--line);
-      padding:10px 12px;
-      font-size:14px;
+      border-bottom:1px solid var(--line-soft);
+      border-right:1px solid var(--line-soft);
+      padding:8px 10px;
       text-align:left;
-      vertical-align:middle;
+      vertical-align:top;
     }
     table.q th{
-      background:#f7f2e8;
-      font-weight:950;
+      background:#fafafa;
+      font-weight:900;
+      color:#374151;
     }
-    table.q tr:nth-child(even) td{ background: rgba(255,242,214,0.22); }
-    table.q tr:last-child td{ border-bottom:none; }
-    .danger{ color:var(--danger); font-weight:900; }
-
-    @media (prefers-reduced-motion: reduce){
-      .blink, .load-hint .arrow{ animation:none !important; }
-      .btn:hover{ transform:none; }
-      .icon-btn:hover{ transform:none; }
-    }
+    table.q tr:last-child td{ border-bottom:0; }
+    table.q th:last-child, table.q td:last-child{ border-right:0; }
+    .danger{ color:var(--danger); font-weight:900; white-space:pre-wrap; }
   </style>
 </head>
 
@@ -434,11 +540,11 @@
     <div class="header">
       <div class="header-left">
         <h1 class="title">울산하늘공원 데이터 관리자</h1>
-        <div class="badges">
-          <span id="badgeOwner" class="badge hidden">Owner: <b>-</b></span>
-          <span id="badgeRepo"  class="badge hidden">Repo: <b>-</b></span>
-          <span id="badgeLoadedAt" class="badge hidden">마지막 로드: <b>-</b></span>
-          <span id="badgeLoadedFiles" class="badge hidden">로드 파일: <b>-</b></span>
+        <div class="meta-line">
+          <span id="badgeOwner" class="meta-item hidden">Owner: <b>-</b></span>
+          <span id="badgeRepo"  class="meta-item hidden">Repo: <b>-</b></span>
+          <span id="badgeLoadedAt" class="meta-item hidden">마지막 로드: <b>-</b></span>
+          <span id="badgeLoadedFiles" class="meta-item hidden">로드: <b>-</b></span>
         </div>
       </div>
       <div class="header-right">
@@ -451,7 +557,7 @@
       <div class="box">
         <div class="box-title">
           <span>GitHub 설정</span>
-          <span class="hint-mini">‘불러오기’는 추모의집/자연장지 모두 로드</span>
+          <span class="hint-mini">추모의집/자연장지 데이터를 로드한 뒤 업로드 반영</span>
         </div>
 
         <div class="row">
@@ -474,10 +580,7 @@
         </div>
 
         <div class="toolbar">
-          <div id="loadHint" class="load-hint">
-            먼저 [불러오기]를 눌러주세요.
-            <span class="arrow">→</span>
-          </div>
+          <div id="loadHint" class="load-hint">먼저 ‘불러오기’를 눌러주세요.</div>
           <button id="loadBtn" class="btn btn-primary" onclick="loadAllFiles()">불러오기</button>
         </div>
       </div>
@@ -489,24 +592,38 @@
       <div class="box">
         <div class="box-title">
           <span>일괄등록</span>
-          <span class="hint-mini">업로드 반영 = 자동 분류 + 즉시 저장</span>
+          <span class="hint-mini">업로드 반영 = 자동 분류 + 즉시 저장(추모의집/자연장지)</span>
         </div>
 
-        <div class="row">
-          <div class="form-group">
-            <label>업로드 엑셀 선택(여러 개 가능)</label>
-            <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple />
-            <div class="field-help">여러 파일을 동시에 선택하면 모두 합쳐서 자동 분류/저장됩니다.</div>
+        <div class="form-group">
+          <label>업로드 엑셀 파일</label>
+
+          <!-- 실제 input은 숨김 -->
+          <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" />
+
+          <!-- 버튼 + 목록 통합 패널 -->
+          <div class="file-panel">
+            <div class="file-panel-head">
+              <div class="file-panel-title">
+                선택 파일 <span class="count" id="selectedFileCount">0</span>
+              </div>
+              <div class="file-panel-actions">
+                <button class="btn btn-ghost" id="pickFilesBtn" type="button" onclick="triggerFilePick()" disabled>파일 추가</button>
+                <button class="btn btn-ghost" id="bulkResetBtn" type="button" onclick="resetBulkUpload()" disabled>초기화</button>
+              </div>
+            </div>
+
+            <div id="selectedFiles" class="muted">선택된 파일 없음</div>
+            <div class="field-help">여러 번 추가 가능. 일부만 제외하려면 각 파일의 ×를 눌러줘.</div>
           </div>
         </div>
 
         <div class="toolbar">
-          <button class="btn btn-ghost" id="bulkResetBtn" onclick="resetBulkUpload()" disabled>업로드 초기화</button>
           <button class="btn btn-primary" id="bulkBtn" onclick="importBulkExcelAutoSave()" disabled>업로드 반영</button>
         </div>
       </div>
 
-      <!-- 그리드(불러온 엑셀) -->
+      <!-- 그리드(불러온 데이터) -->
       <div id="afterLoad" class="box" style="display:none;">
         <div class="grid-head">
           <div class="tabs" aria-label="대상 탭">
@@ -526,7 +643,7 @@
     <div class="modal">
       <div class="modal-head">
         <div class="modal-title" id="logModalTitle">업로드 실패 로그</div>
-        <button class="btn btn-ghost" style="padding:8px 12px;" onclick="closeLogModal()">닫기</button>
+        <button class="btn btn-ghost" style="padding:8px 10px; min-height:32px;" onclick="closeLogModal()">닫기</button>
       </div>
       <div class="modal-body" id="logModalBody"></div>
       <div class="modal-foot">
@@ -551,14 +668,16 @@
     let isLoaded = false;
     let loadedAtText = "";
 
+    // ✅ 업로드 파일 상태(삭제 가능한 리스트로 직접 관리)
+    let selectedFiles = []; // [{id, file}]
+
     // 실패 로그(모달 전용)
     let importFailLog = [];
 
-    // 판별 실패 힌트(사유에 포함)
     const DETECT_HINT = [
       "힌트(번호 규칙):",
-      " - 추모의집: '...추모의집-62실-개인단-21908' (실/추모의집 포함, 끝 5자리 숫자)",
-      " - 자연장지: '잔디장-2-9-0108' (잔디장/수목장/자연장 등 포함, 끝 4자리 숫자)",
+      " - 추모의집: '...추모의집-62실-개인단-21908'",
+      " - 자연장지: '잔디장-2-9-0108'",
       "판별 규칙(요약):",
       " - '추모의집' 또는 '00실' 포함 → 추모의집",
       " - '잔디장/수목장/자연장' 포함 또는 '이름-숫자-숫자-4자리' 형태 → 자연장지",
@@ -615,6 +734,22 @@
         const el = document.getElementById("statusMsg");
         el.style.display = "none";
       });
+
+      // 파일 선택: 누적 추가
+      document.getElementById("bulkFile")?.addEventListener("change", (e) => {
+        const input = e.target;
+        const files = Array.from(input.files || []);
+        if (!files.length) return;
+
+        addSelectedFiles(files);
+        input.value = ""; // 같은 파일 다시 선택 가능하게
+
+        renderSelectedFiles();
+        updateBulkButtonState();
+      });
+
+      renderSelectedFiles();
+      updateBulkButtonState();
     };
 
     function toggleToken(){
@@ -638,21 +773,127 @@
       return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
     }
 
+    // ===== 유틸 =====
+    function norm(s) {
+      return String(s ?? "")
+        .replace(/\s+/g, "")
+        .replace(/[–—]/g, "-")
+        .toLowerCase();
+    }
+    function escapeHtml(s) {
+      return String(s ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+    function escapeHtmlWithBr(s){
+      return escapeHtml(s).replaceAll("\n","<br>");
+    }
+    function formatBytes(bytes){
+      const n = Number(bytes || 0);
+      if (!isFinite(n) || n <= 0) return "0 B";
+      const units = ["B","KB","MB","GB"];
+      let v = n, i = 0;
+      while (v >= 1024 && i < units.length - 1){
+        v = v / 1024;
+        i++;
+      }
+      const fixed = (i === 0) ? String(Math.round(v)) : v.toFixed(1);
+      return `${fixed} ${units[i]}`;
+    }
+
+    function normalizeDate(input) {
+      const raw = String(input ?? "").trim();
+      if (!raw) return "";
+      const onlyNum = raw.replace(/[^0-9]/g, "");
+      if (onlyNum.length === 8) {
+        const y = onlyNum.slice(0,4), m = onlyNum.slice(4,6), d = onlyNum.slice(6,8);
+        return `${y}-${m}-${d}`;
+      }
+      const cleaned = raw.replace(/\./g, "-").replace(/\//g, "-");
+      const parts = cleaned.split("-").map(p => p.trim()).filter(Boolean);
+      if (parts.length >= 3) {
+        let [y,m,d] = parts;
+        if (y.length === 2) y = "20" + y;
+        m = String(parseInt(m,10)).padStart(2,"0");
+        d = String(parseInt(d,10)).padStart(2,"0");
+        if (!/^\d{4}$/.test(y) || m === "NaN" || d === "NaN") return "";
+        return `${y}-${m}-${d}`;
+      }
+      return "";
+    }
+
+    function findHeaderIndex(hs, candidates) {
+      const list = hs.map(norm);
+      for (const cand of candidates) {
+        const idx = list.indexOf(norm(cand));
+        if (idx !== -1) return idx;
+      }
+      return -1;
+    }
+
+    function uint8ArrayToBase64(u8) {
+      let binary = "";
+      const chunkSize = 0x8000;
+      for (let i = 0; i < u8.length; i += chunkSize) {
+        const chunk = u8.subarray(i, i + chunkSize);
+        binary += String.fromCharCode.apply(null, chunk);
+      }
+      return btoa(binary);
+    }
+
+    function getCellByHeader(rowObj, candidates) {
+      const keys = Object.keys(rowObj || {});
+      const map = new Map(keys.map(k => [norm(k), k]));
+      for (const c of candidates) {
+        const key = map.get(norm(c));
+        if (key !== undefined) return rowObj[key];
+      }
+      return "";
+    }
+
+    function noHeaderCandidatesFor(key){
+      return (key === "deceased")
+        ? ["봉안번호","봉안 번호","봉안no","봉안No","번호","관리번호"]
+        : ["자연장번호","자연장 번호","자연장no","자연장No","번호","관리번호"];
+    }
+
+    // ===== 공용 상태 =====
+    function showStatus(msg, type) {
+      const el = document.getElementById("statusMsg");
+      el.textContent = msg + (type === "loading" ? "\n(클릭하면 닫힘)" : "");
+      el.className = "status " + type;
+      el.style.display = "block";
+      if (type === "success") setTimeout(() => (el.style.display = "none"), 2500);
+    }
+
+    function setBusy(b) {
+      isBusy = b;
+      document.getElementById("loadBtn").disabled = b;
+      document.getElementById("bulkResetBtn").disabled = b || !isLoaded;
+      document.getElementById("pickFilesBtn").disabled = b || !isLoaded;
+
+      document.getElementById("tabDeceased").disabled = b || !isLoaded;
+      document.getElementById("tabNature").disabled = b || !isLoaded;
+
+      updateBulkButtonState();
+    }
+
     // ===== 로드 상태 UI =====
     function setLoaded(v){
       isLoaded = v;
       document.getElementById("afterLoad").style.display = v ? "block" : "none";
       showLoadHint(!v);
 
-      const loadBtn = document.getElementById("loadBtn");
-      loadBtn.classList.toggle("blink", !v);
-
-      document.getElementById("bulkResetBtn").disabled = !v;
-      document.getElementById("bulkBtn").disabled = !v || isBusy;
+      document.getElementById("bulkResetBtn").disabled = !v || isBusy;
+      document.getElementById("pickFilesBtn").disabled = !v || isBusy;
 
       document.getElementById("tabDeceased").disabled = !v || isBusy;
       document.getElementById("tabNature").disabled = !v || isBusy;
 
+      updateBulkButtonState();
       setBusy(isBusy);
     }
 
@@ -689,25 +930,6 @@
       bFiles.classList.remove("hidden");
     }
 
-    // ===== 상태 =====
-    function showStatus(msg, type) {
-      const el = document.getElementById("statusMsg");
-      el.textContent = msg + (type === "loading" ? "\n(클릭하면 닫힘)" : "");
-      el.className = "status " + type;
-      el.style.display = "block";
-      if (type === "success") setTimeout(() => (el.style.display = "none"), 2400);
-    }
-
-    function setBusy(b) {
-      isBusy = b;
-      document.getElementById("loadBtn").disabled = b;
-      document.getElementById("bulkBtn").disabled = b || !isLoaded;
-      document.getElementById("bulkResetBtn").disabled = b || !isLoaded;
-
-      document.getElementById("tabDeceased").disabled = b || !isLoaded;
-      document.getElementById("tabNature").disabled = b || !isLoaded;
-    }
-
     // ===== 탭 변경 =====
     function selectTarget(target, isInit=false) {
       fileKey = target;
@@ -716,11 +938,10 @@
       document.getElementById("tabDeceased").classList.toggle("active", fileKey === "deceased");
       document.getElementById("tabNature").classList.toggle("active", fileKey === "nature");
 
-      const meta = document.getElementById("gridMeta");
-      meta.textContent = `${ds(fileKey).label} · 최근 20건 표시`;
+      document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 20건 표시`;
 
       if (isLoaded) renderGridForCurrentTarget(false);
-      if (!isInit && isLoaded) updateTopBadges(true, loadedAtText, "추모의집 + 자연장지");
+      if (!isInit && isLoaded) updateTopBadges(true, loadedAtText, "추모의집/자연장지 데이터");
     }
 
     // ===== 입력값 =====
@@ -728,7 +949,7 @@
       const owner = document.getElementById("owner").value.trim();
       const repo  = document.getElementById("repo").value.trim();
       const token = document.getElementById("token").value.trim();
-      return { owner, repo, token, branch: BRANCH };
+      return { owner, repo, token, branch: "main" };
     }
 
     function saveInputsToLocalStorage({owner, repo, token}) {
@@ -741,133 +962,74 @@
       return `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(branch)}`;
     }
 
-    // ===== 유틸 =====
-    function norm(s) {
-      return String(s ?? "")
-        .replace(/\s+/g, "")
-        .replace(/[–—]/g, "-")
-        .toLowerCase();
-    }
-    function escapeHtml(s) {
-      return String(s ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-    function escapeHtmlWithBr(s){
-      return escapeHtml(s).replaceAll("\n","<br>");
-    }
-    function normalizeDate(input) {
-      const raw = String(input ?? "").trim();
-      if (!raw) return "";
-      const onlyNum = raw.replace(/[^0-9]/g, "");
-      if (onlyNum.length === 8) {
-        const y = onlyNum.slice(0,4), m = onlyNum.slice(4,6), d = onlyNum.slice(6,8);
-        return `${y}-${m}-${d}`;
-      }
-      const cleaned = raw.replace(/\./g, "-").replace(/\//g, "-");
-      const parts = cleaned.split("-").map(p => p.trim()).filter(Boolean);
-      if (parts.length >= 3) {
-        let [y,m,d] = parts;
-        if (y.length === 2) y = "20" + y;
-        m = String(parseInt(m,10)).padStart(2,"0");
-        d = String(parseInt(d,10)).padStart(2,"0");
-        if (!/^\d{4}$/.test(y) || m === "NaN" || d === "NaN") return "";
-        return `${y}-${m}-${d}`;
-      }
-      return "";
-    }
-    function findHeaderIndex(hs, candidates) {
-      const list = hs.map(norm);
-      for (const cand of candidates) {
-        const idx = list.indexOf(norm(cand));
-        if (idx !== -1) return idx;
-      }
-      return -1;
-    }
-    function uint8ArrayToBase64(u8) {
-      let binary = "";
-      const chunkSize = 0x8000;
-      for (let i = 0; i < u8.length; i += chunkSize) {
-        const chunk = u8.subarray(i, i + chunkSize);
-        binary += String.fromCharCode.apply(null, chunk);
-      }
-      return btoa(binary);
-    }
-    function getCellByHeader(rowObj, candidates) {
-      const keys = Object.keys(rowObj || {});
-      const map = new Map(keys.map(k => [norm(k), k]));
-      for (const c of candidates) {
-        const key = map.get(norm(c));
-        if (key !== undefined) return rowObj[key];
-      }
-      return "";
-    }
-    function isRowEffectivelyEmpty(rowObj){
-      if (!rowObj) return true;
-      const vals = Object.values(rowObj);
-      if (!vals.length) return true;
-      return vals.every(v => String(v ?? "").trim() === "");
+    // ===== 업로드 파일 리스트(누적 + 삭제) =====
+    function makeFileId(file){
+      return `${file.name}__${file.size}__${file.lastModified}`;
     }
 
-    function noHeaderCandidatesFor(key){
-      return (key === "deceased")
-        ? ["봉안번호","봉안 번호","봉안no","봉안No","번호","관리번호"]
-        : ["자연장번호","자연장 번호","자연장no","자연장No","번호","관리번호"];
+    function triggerFilePick(){
+      if (!isLoaded || isBusy) return;
+      document.getElementById("bulkFile")?.click();
+    }
+
+    function addSelectedFiles(files){
+      const exist = new Set(selectedFiles.map(x => x.id));
+      for (const f of files){
+        const id = makeFileId(f);
+        if (exist.has(id)) continue;
+        selectedFiles.push({ id, file: f });
+        exist.add(id);
+      }
+    }
+
+    function removeSelectedFile(id){
+      selectedFiles = selectedFiles.filter(x => x.id !== id);
+      renderSelectedFiles();
+      updateBulkButtonState();
+    }
+
+    function renderSelectedFiles(){
+      const box = document.getElementById("selectedFiles");
+      const cnt = document.getElementById("selectedFileCount");
+      cnt.textContent = String(selectedFiles.length);
+
+      if (!selectedFiles.length){
+        box.innerHTML = `<span class="muted">선택된 파일 없음</span>`;
+        return;
+      }
+
+      const items = selectedFiles.map(({id, file}) => {
+        return `
+          <li>
+            <div class="file-left">
+              <div class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</div>
+              <div class="file-sub">
+                <span class="mono">${escapeHtml(formatBytes(file.size))}</span>
+                <span class="mono">${escapeHtml(new Date(file.lastModified).toLocaleString())}</span>
+              </div>
+            </div>
+            <button class="x-btn" type="button" title="목록에서 제거" onclick="removeSelectedFile('${id}')">×</button>
+          </li>
+        `;
+      }).join("");
+
+      box.innerHTML = `<ul class="file-list">${items}</ul>`;
+    }
+
+    // ===== 업로드 버튼 활성 조건 =====
+    function updateBulkButtonState(){
+      const btn = document.getElementById("bulkBtn");
+      if (!btn) return;
+
+      btn.disabled = (!isLoaded || isBusy || selectedFiles.length === 0);
     }
 
     // ===== 업로드 초기화 =====
     function resetBulkUpload(){
-      const input = document.getElementById("bulkFile");
-      if (input) input.value = "";
-      showStatus("업로드 파일 선택이 초기화되었습니다.", "success");
-    }
-
-    // ===== 모달(실패 로그) =====
-    function openLogModal(title, html){
-      document.getElementById("logModalTitle").textContent = title;
-      document.getElementById("logModalBody").innerHTML = html;
-      document.getElementById("logModalBackdrop").style.display = "flex";
-    }
-    function closeLogModal(){
-      document.getElementById("logModalBackdrop").style.display = "none";
-    }
-    document.getElementById("logModalBackdrop")?.addEventListener("click", (e) => {
-      if (e.target.id === "logModalBackdrop") closeLogModal();
-    });
-
-    function buildFailLogTable(){
-      if (!importFailLog.length){
-        return `<div style="color:var(--muted); font-weight:850;">실패 로그가 없습니다.</div>`;
-      }
-
-      let html = `<table class="q"><thead><tr>
-        <th style="width:160px;">파일</th>
-        <th style="width:90px;">엑셀행</th>
-        <th style="width:120px;">대상</th>
-        <th style="width:90px;">구분</th>
-        <th>번호</th>
-        <th>사망자명</th>
-        <th>신청자명</th>
-        <th>사유</th>
-      </tr></thead><tbody>`;
-
-      for (const l of importFailLog){
-        html += `<tr>
-          <td><b>${escapeHtml(l.file || "-")}</b></td>
-          <td>${escapeHtml(l.rowNo)}</td>
-          <td><b>${escapeHtml(l.target || "-")}</b></td>
-          <td>${escapeHtml(l.kind || "-")}</td>
-          <td><b>${escapeHtml(l.no || "")}</b></td>
-          <td>${escapeHtml(l.deceased || "")}</td>
-          <td>${escapeHtml(l.applicant || "")}</td>
-          <td class="danger">${escapeHtmlWithBr(l.reason || "")}</td>
-        </tr>`;
-      }
-      html += `</tbody></table>`;
-      return html;
+      selectedFiles = [];
+      renderSelectedFiles();
+      updateBulkButtonState();
+      showStatus("업로드 파일 목록이 초기화되었습니다.", "success");
     }
 
     // ===== GitHub fetch (xlsx) =====
@@ -918,7 +1080,7 @@
     }
 
     // ===== 그리드 =====
-    function renderGridForCurrentTarget(scrollInto=false){
+    function renderGridForCurrentTarget(){
       const cur = ds(fileKey);
       const container = document.getElementById("hotContainer");
       container.innerHTML = "";
@@ -955,10 +1117,9 @@
       });
 
       setTimeout(() => { hot.render(); hot.refreshDimensions(); }, 0);
-      if (scrollInto) container.scrollIntoView({ behavior:"smooth", block:"start" });
     }
 
-    // ===== 불러오기(2개 파일) =====
+    // ===== 불러오기(추모의집/자연장지 데이터) =====
     async function loadAllFiles() {
       const inputs = getInputs();
       const { owner, repo, token } = inputs;
@@ -970,7 +1131,7 @@
 
       saveInputsToLocalStorage({owner, repo, token});
       setBusy(true);
-      showStatus("추모의집/자연장지 데이터 불러오는 중...", "loading");
+      showStatus("추모의집/자연장지 데이터를 불러오는 중...", "loading");
 
       try {
         DATASETS.deceased.loaded = false;
@@ -1003,12 +1164,11 @@
         localStorage.setItem("gh_loaded_at", loadedAtText);
 
         setLoaded(true);
-        updateTopBadges(true, loadedAtText, "추모의집 + 자연장지");
+        updateTopBadges(true, loadedAtText, "추모의집/자연장지 데이터");
         showStatus("로드 완료.", "success");
 
-        const meta = document.getElementById("gridMeta");
-        meta.textContent = `${ds(fileKey).label} · 최근 20건 표시`;
-        renderGridForCurrentTarget(true);
+        document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 20건 표시`;
+        renderGridForCurrentTarget(); // ✅ 스크롤 이동 없음
 
       } catch (e) {
         setLoaded(false);
@@ -1023,42 +1183,61 @@
       const s = String(noRaw ?? "").trim();
       if (!s) return null;
 
-      // 1) 명시 키워드
       if (s.includes("추모의집")) return "deceased";
       if (s.includes("잔디장") || s.includes("수목장") || s.includes("자연장")) return "nature";
 
-      // 2) 'xx실' 패턴
       if (/-\d{1,3}실-/.test(s) || /\b\d{1,3}실\b/.test(s) || /\d{1,3}실/.test(s)) return "deceased";
-
-      // 3) 자연장 예시 형태(이름-숫자-숫자-4자리)
       if (/^[^-]+-\d+-\d+-\d{4}$/.test(s)) return "nature";
 
-      // 4) 끝자리 숫자 길이(보조)
       const m = s.match(/(\d+)\s*$/);
       if (m){
         const len = m[1].length;
         if (len === 5) return "deceased";
         if (len === 4) return "nature";
       }
-
       return null;
     }
 
-    // ===== 중복 체크 =====
-    function isDuplicateNoInExcel(targetKey, noVal, rowsOverride=null, headersOverride=null) {
-      const d = ds(targetKey);
-      const rows = rowsOverride || d.rows;
-      const headers = headersOverride || d.headers;
-
-      const v = norm(noVal);
-      if (!v) return false;
-
-      const idxNo = findHeaderIndex(headers, noHeaderCandidatesFor(targetKey));
-      if (idxNo === -1) throw new Error((targetKey === "deceased" ? "봉안번호" : "자연장번호") + " 헤더를 찾을 수 없습니다.");
-
-      for (const row of rows) {
-        if (norm(row[idxNo]) === v) return true;
+    // ===== 업로드 파일 템플릿(헤더 기반) 추정 =====
+    function detectTemplateTypeByHeaders(rowsObj){
+      const keys = new Set();
+      for (const r of rowsObj || []){
+        Object.keys(r || {}).forEach(k => keys.add(norm(k)));
+        if (keys.size > 30) break;
       }
+      const hasDe = ["봉안번호","봉안 번호","봉안no","봉안No"].some(x => keys.has(norm(x)));
+      const hasNa = ["자연장번호","자연장 번호","자연장no","자연장No"].some(x => keys.has(norm(x)));
+      if (hasDe && !hasNa) return "deceased";
+      if (hasNa && !hasDe) return "nature";
+      if (hasDe && hasNa) return "mixed";
+      return "unknown";
+    }
+
+    // 의미 있는 데이터가 있는지(예외행 판단용)
+    function isMeaningfulRow(rowObj){
+      const noRaw = String(getCellByHeader(rowObj, ["봉안번호","봉안 번호","자연장번호","자연장 번호","번호","관리번호"])).trim();
+      const deceased = String(getCellByHeader(rowObj, ["사망자명","고인명","고인","사망자"])).trim();
+      const applicant = String(getCellByHeader(rowObj, ["신청자명","신청자","사용자명","계약자명"])).trim();
+      const inDateRaw = String(getCellByHeader(rowObj, ["안치일자","안치 일자","안치일"])).trim();
+      const returnRaw = String(getCellByHeader(rowObj, ["반환일자","반환 일자","반환일"])).trim();
+
+      return !!(noRaw || deceased || applicant || inDateRaw || returnRaw);
+    }
+
+    // 예외행 스킵 규칙(자연장지: 2번/마지막, 추모의집: 마지막)
+    function shouldSkipStructuralRow(templateType, idx, lastIdx, rowObj){
+      const meaningful = isMeaningfulRow(rowObj);
+      if (!meaningful){
+        if (templateType === "nature"){
+          if (idx === 0) return true;       // 2번행
+          if (idx === lastIdx) return true; // 마지막
+        } else if (templateType === "deceased"){
+          if (idx === lastIdx) return true; // 마지막
+        } else {
+          if (idx === 0 || idx === lastIdx) return true;
+        }
+      }
+      if (!meaningful) return true;
       return false;
     }
 
@@ -1098,7 +1277,7 @@
       const { owner, repo, token, branch } = inputs;
       const d = ds(targetKey);
 
-      const apiUrl = buildContentsUrl(owner, repo, d.path, branch);
+      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(d.path)}?ref=${encodeURIComponent(branch)}`;
 
       const ws = XLSX.utils.aoa_to_sheet(mergedAoa);
       const wb = XLSX.utils.book_new();
@@ -1129,19 +1308,112 @@
       d.sha = resData.content?.sha || d.sha;
     }
 
+    // ===== 실패 모달(파일별 섹션 정렬) =====
+    function openLogModal(title){
+      document.getElementById("logModalTitle").textContent = title;
+      document.getElementById("logModalBackdrop").style.display = "flex";
+      renderLogModalBody();
+    }
+
+    function closeLogModal(){
+      document.getElementById("logModalBackdrop").style.display = "none";
+    }
+
+    document.getElementById("logModalBackdrop")?.addEventListener("click", (e) => {
+      if (e.target.id === "logModalBackdrop") closeLogModal();
+    });
+
+    function parseRowNo(v){
+      const n = parseInt(String(v ?? "").replace(/[^0-9]/g,""), 10);
+      return Number.isFinite(n) ? n : 999999999;
+    }
+
+    // ✅ 모달 상단 검색(필터) 기능 제거: 본문은 섹션만 출력
+    function renderLogModalBody(){
+      const body = document.getElementById("logModalBody");
+      const sectionsHtml = buildFailLogSectionsByFile();
+      body.innerHTML = sectionsHtml;
+    }
+
+    function buildFailLogSectionsByFile(){
+      if (!importFailLog.length){
+        return `<div class="muted">실패 로그가 없습니다.</div>`;
+      }
+
+      const list = importFailLog.slice();
+
+      // ✅ 파일별 그룹핑 + 파일 내부 엑셀행 오름차순
+      const groups = new Map();
+      for (const item of list){
+        const key = String(item.file || "-");
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(item);
+      }
+
+      const fileNames = Array.from(groups.keys()).sort((a,b)=>a.localeCompare(b,"ko"));
+
+      let html = "";
+      for (const fn of fileNames){
+        const arr = groups.get(fn);
+        arr.sort((a,b)=>parseRowNo(a.rowNo) - parseRowNo(b.rowNo));
+
+        html += `
+          <div class="file-section">
+            <div class="file-section-head">
+              <div>${escapeHtml(fn)}</div>
+              <div class="mini">${arr.length}건</div>
+            </div>
+            <table class="q">
+              <thead>
+                <tr>
+                  <th style="width:80px;">행</th>
+                  <th style="width:90px;">대상</th>
+                  <th style="width:70px;">구분</th>
+                  <th style="width:220px;">번호</th>
+                  <th style="width:120px;">사망자명</th>
+                  <th style="width:120px;">신청자명</th>
+                  <th>사유</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        for (const l of arr){
+          html += `
+            <tr>
+              <td>${escapeHtml(l.rowNo)}</td>
+              <td><b>${escapeHtml(l.target || "-")}</b></td>
+              <td>${escapeHtml(l.kind || "-")}</td>
+              <td><b>${escapeHtml(l.no || "")}</b></td>
+              <td>${escapeHtml(l.deceased || "")}</td>
+              <td>${escapeHtml(l.applicant || "")}</td>
+              <td class="danger">${escapeHtmlWithBr(l.reason || "")}</td>
+            </tr>
+          `;
+        }
+
+        html += `
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      return html;
+    }
+
     // ===== 업로드 반영: 자동 분류 + 즉시 저장(대기목록 없음) =====
     async function importBulkExcelAutoSave() {
       if (!isLoaded) {
         showLoadHint(true);
         setLoaded(false);
-        showStatus("먼저 [불러오기]를 눌러주세요.", "error");
+        showStatus("먼저 ‘불러오기’를 눌러주세요.", "error");
         return;
       }
       if (isBusy) return;
 
-      const input = document.getElementById("bulkFile");
-      if (!input || !input.files || input.files.length === 0) {
-        showStatus("업로드할 엑셀 파일을 선택해 주세요.", "error");
+      if (!selectedFiles.length){
+        showStatus("업로드할 파일을 추가해 주세요.", "error");
         return;
       }
 
@@ -1149,41 +1421,61 @@
       showStatus("업로드 분석 → 자동 분류 → 즉시 저장 중...", "loading");
 
       try {
-        // 실패 로그 초기화(이번 업로드 기준)
         importFailLog = [];
+        const adds = { deceased: [], nature: [] };
+        const rets = [];
 
-        // 변경분 수집
-        const adds = { deceased: [], nature: [] }; // 신규 append
-        const rets = []; // 추모의집 반환
-
-        // 업로드 내부 중복 방지(여러 파일 합산)
         const uploadNoSet = { deceased: new Set(), nature: new Set() };
         const uploadRetKeySet = new Set();
 
         let processed = 0;
 
-        // ✅ 여러 파일 처리
-        const files = Array.from(input.files);
+        for (const item of selectedFiles){
+          const file = item.file;
 
-        for (const file of files){
-          const buf = await file.arrayBuffer();
-          const wb = XLSX.read(new Uint8Array(buf), { type: "array" });
-
-          const ws = wb.Sheets[wb.SheetNames[0]];
-          const rowsObj = XLSX.utils.sheet_to_json(ws, { defval: "" });
-
-          if (!rowsObj || rowsObj.length === 0){
-            // 파일 자체가 비었으면 로그에만 남김(원하면 스킵 가능)
-            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"업로드 엑셀에 데이터가 없습니다." });
+          // 확장자 간단 체크(사전검증 삭제 대신 여기서만)
+          const lower = (file.name || "").toLowerCase();
+          if (!(lower.endsWith(".xlsx") || lower.endsWith(".xls"))){
+            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"확장자가 .xlsx/.xls가 아닙니다." });
             continue;
           }
 
+          let wb;
+          try {
+            const buf = await file.arrayBuffer();
+            wb = XLSX.read(new Uint8Array(buf), { type: "array" });
+          } catch (e) {
+            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"파일 읽기 실패(손상?)" });
+            continue;
+          }
+
+          if (!wb || !wb.SheetNames || wb.SheetNames.length === 0){
+            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"시트가 없습니다." });
+            continue;
+          }
+
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          if (!ws){
+            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"첫 시트 접근 실패" });
+            continue;
+          }
+
+          const rowsObj = XLSX.utils.sheet_to_json(ws, { defval: "" });
+
+          if (!rowsObj || rowsObj.length === 0){
+            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"데이터가 없습니다(빈 시트)." });
+            continue;
+          }
+
+          const templateType = detectTemplateTypeByHeaders(rowsObj);
+          const lastIndex = rowsObj.length - 1;
+
           for (let i = 0; i < rowsObj.length; i++) {
             const r = rowsObj[i];
-            const rowNo = i + 2; // 헤더 1행 가정
+            const rowNo = i + 2; // sheet_to_json 특성상 데이터는 2행부터
 
-            // ✅ "항상 비어있는 줄" 예외 처리: 빈 행은 그냥 스킵(로그도 안 남김)
-            if (isRowEffectivelyEmpty(r)) continue;
+            // 예외행 스킵(로그에도 안 남김)
+            if (shouldSkipStructuralRow(templateType, i, lastIndex, r)) continue;
 
             processed++;
 
@@ -1217,7 +1509,6 @@
             const isReturn = !!String(returnRaw).trim();
             const kind = isReturn ? "반환" : "신규";
 
-            // 반환
             if (isReturn){
               if (targetKey !== "deceased"){
                 importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"자연장지는 반환 처리가 불가합니다." });
@@ -1235,7 +1526,7 @@
 
               const key3 = norm(noRaw) + "|" + norm(deceased) + "|" + norm(applicant);
               if (uploadRetKeySet.has(key3)){
-                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"업로드 파일 내 반환 항목 중복(번호/사망자/신청자)." });
+                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"업로드 파일(전체) 내 반환 항목 중복(번호/사망자/신청자)." });
                 continue;
               }
               uploadRetKeySet.add(key3);
@@ -1271,17 +1562,16 @@
         }
 
         if (processed === 0){
-          showStatus("업로드 파일에 처리할 데이터가 없습니다(빈 행만 존재).", "error");
+          showStatus("업로드 파일에 처리할 데이터가 없습니다(예외/빈 행만 존재).", "error");
           return;
         }
 
-        // ===== 변경 적용(로컬 복사본) =====
+        // 로컬 적용용 복사본
         const next = {
           deceased: { headers: ds("deceased").headers.slice(), rows: ds("deceased").rows.map(r=>r.slice()), highlight: new Set() },
           nature:   { headers: ds("nature").headers.slice(),   rows: ds("nature").rows.map(r=>r.slice()),   highlight: new Set() }
         };
 
-        // 신규 append 적용
         const applyAdds = (key) => {
           if (!adds[key].length) return 0;
           const headers = next[key].headers;
@@ -1299,7 +1589,6 @@
           if (idxAp === -1) missing.push("신청자명");
           if (missing.length) throw new Error(`[${ds(key).label}] 헤더를 찾을 수 없습니다: ${missing.join(", ")}`);
 
-          // 저장 직전 중복(기존 파일 기준)
           const existSet = new Set();
           for (const row of rows){
             const vv = norm(row[idxNo]);
@@ -1336,7 +1625,6 @@
           return added;
         };
 
-        // 반환 적용(추모의집)
         const applyReturns = () => {
           if (!rets.length) return 0;
 
@@ -1345,7 +1633,15 @@
 
           let applied = 0;
 
+          const keySet = new Set();
           for (const q of rets){
+            const k = norm(q.no) + "|" + norm(q.deceased) + "|" + norm(q.applicant);
+            if (keySet.has(k)){
+              importFailLog.push({ file:q.file, rowNo:q.rowNo, target:"추모의집", kind:"반환", no:q.no, deceased:q.deceased, applicant:q.applicant, reason:"업로드 내 반환 항목 중복(번호/사망자/신청자)." });
+              continue;
+            }
+            keySet.add(k);
+
             let match;
             try {
               match = findExactMatchRowDeceased(q.no, q.deceased, q.applicant, rows, headers);
@@ -1381,12 +1677,11 @@
         if (!needSaveDe && !needSaveNa){
           showStatus("저장할 항목이 없습니다. (모두 실패/중복/판별실패)", "error");
           if (importFailLog.length){
-            openLogModal("업로드 실패 로그", buildFailLogTable());
+            openLogModal("업로드 실패 로그");
           }
           return;
         }
 
-        // ===== GitHub 저장(2개 파일) =====
         const saveErrors = [];
 
         try {
@@ -1412,7 +1707,7 @@
           return;
         }
 
-        // ===== 로컬 반영 + 하이라이트 =====
+        // 로컬 반영 + 하이라이트
         if (needSaveDe){
           ds("deceased").rows = next.deceased.rows;
           ds("deceased").highlight = next.deceased.highlight;
@@ -1422,7 +1717,7 @@
           ds("nature").highlight = next.nature.highlight;
         }
 
-        renderGridForCurrentTarget(false);
+        renderGridForCurrentTarget();
 
         const msg =
           `업로드 저장 완료\n` +
@@ -1432,7 +1727,7 @@
         showStatus(msg, "success");
 
         if (importFailLog.length){
-          openLogModal("업로드 실패 로그", buildFailLogTable());
+          openLogModal("업로드 실패 로그");
         }
 
       } catch (e) {
