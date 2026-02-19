@@ -124,6 +124,19 @@
 
     .content{ padding:14px 16px 16px; }
 
+    /* ✅ 상단 2개 박스(깃허브 설정/일괄등록) 가로 배치 */
+    .top-panels{
+      display:grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap:12px;
+      align-items:start;
+      margin-bottom:12px;
+    }
+    .top-panels .box{ margin-bottom:0; }
+    @media (max-width: 980px){
+      .top-panels{ grid-template-columns: 1fr; }
+    }
+
     .box{
       background:#fff;
       border:1px solid var(--line);
@@ -150,7 +163,7 @@
 
     .row{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
       gap:10px;
       margin:0;
     }
@@ -184,6 +197,20 @@
       font-size:12px;
       color:var(--muted);
       font-weight:700;
+      line-height:1.35;
+    }
+    .field-help .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid var(--line-soft);
+      background:#fff;
+      color:#374151;
+      font-weight:900;
+      margin-right:6px;
+      white-space:nowrap;
     }
 
     .toolbar{
@@ -273,7 +300,15 @@
       background:#fafafa;
       border-radius: var(--radius-sm);
       padding:10px;
+      transition:0.12s;
     }
+    /* ✅ 드래그 앤 드롭 UX */
+    .file-panel.drop-ready{
+      outline: 2px dashed rgba(47,111,178,0.35);
+      outline-offset: 2px;
+      background: #f3f7ff;
+    }
+
     .file-panel-head{
       display:flex;
       align-items:center;
@@ -408,7 +443,7 @@
     }
     .grid-meta{
       font-size:12px;
-      color:var(--muted);
+      color:#374151;
       font-weight:900;
       white-space:nowrap;
       padding-bottom:2px;
@@ -538,6 +573,7 @@
         <div class="meta-line">
           <span id="badgeOwner" class="meta-item hidden">Owner: <b>-</b></span>
           <span id="badgeRepo"  class="meta-item hidden">Repo: <b>-</b></span>
+          <span id="badgeBranch" class="meta-item hidden">Branch: <b>-</b></span>
           <span id="badgeLoadedAt" class="meta-item hidden">마지막 로드: <b>-</b></span>
           <span id="badgeLoadedFiles" class="meta-item hidden">로드: <b>-</b></span>
         </div>
@@ -548,73 +584,100 @@
     </div>
 
     <div class="content">
-      <!-- GitHub 설정 -->
-      <div class="box">
-        <div class="box-title">
-          <span>GitHub 설정</span>
-          <span class="hint-mini">추모의집/자연장지 데이터를 로드한 뒤 업로드 반영</span>
-        </div>
 
-        <div class="row">
-          <div class="form-group">
-            <label>GitHub Owner</label>
-            <input type="text" id="owner" placeholder="예: UL-SkyPark" />
+      <!-- ✅ 상단 2단 배치 -->
+      <div class="top-panels">
+
+        <!-- GitHub 설정 -->
+        <div class="box">
+          <div class="box-title">
+            <span>GitHub 설정</span>
+            <span class="hint-mini">추모의집/자연장지 데이터를 불러온 후 등록 반영을 진행합니다</span>
           </div>
-          <div class="form-group">
-            <label>Repository</label>
-            <input type="text" id="repo" placeholder="예: ulsan-skypark-search" />
-          </div>
-          <div class="form-group">
-            <label>Access Token</label>
-            <div class="input-with-btn">
-              <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" />
-              <button type="button" class="icon-btn" onclick="toggleToken()">보기</button>
+
+          <div class="row">
+            <div class="form-group">
+              <label>GitHub Owner</label>
+              <input type="text" id="owner" placeholder="예: UL-SkyPark" autocomplete="off" />
             </div>
-            <div class="field-help">fine-grained token이면 Contents 권한(읽기/쓰기) 확인해줘.</div>
-          </div>
-        </div>
-
-        <div class="toolbar">
-          <div id="loadHint" class="load-hint">먼저 ‘불러오기’를 눌러주세요.</div>
-          <button id="loadBtn" class="btn btn-primary" onclick="loadAllFiles()">불러오기</button>
-        </div>
-      </div>
-
-      <!-- 상태 -->
-      <div id="statusMsg" class="status" title="클릭하면 닫혀요"></div>
-
-      <!-- 일괄등록 -->
-      <div class="box">
-        <div class="box-title">
-          <span>일괄등록</span>
-          <span class="hint-mini">업로드 반영 = 자동 분류 + 즉시 저장(추모의집/자연장지)</span>
-        </div>
-
-        <div class="form-group">
-          <label>업로드 엑셀 파일</label>
-
-          <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" />
-
-          <div class="file-panel">
-            <div class="file-panel-head">
-              <div class="file-panel-title">
-                선택 파일 <span class="count" id="selectedFileCount">0</span>
-              </div>
-              <div class="file-panel-actions">
-                <button class="btn btn-ghost" id="pickFilesBtn" type="button" onclick="triggerFilePick()" disabled>파일 추가</button>
-                <button class="btn btn-ghost" id="bulkResetBtn" type="button" onclick="resetBulkUpload()" disabled>초기화</button>
+            <div class="form-group">
+              <label>Repository</label>
+              <input type="text" id="repo" placeholder="예: ulsan-skypark-search" autocomplete="off" />
+            </div>
+            <div class="form-group">
+              <label>Branch</label>
+              <input type="text" id="branch" placeholder="예: main" autocomplete="off" />
+              <div class="field-help">
+                <span class="pill">안내</span>기본값은 <b>main</b>입니다. 운영 브랜치가 다르면 여기에서 변경해 주세요.
               </div>
             </div>
 
-            <div id="selectedFiles" class="muted">선택된 파일 없음</div>
-            <div class="field-help">여러 번 추가 가능. 일부만 제외하려면 각 파일의 ×를 눌러줘.</div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label>Access Token</label>
+              <div class="input-with-btn">
+                <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" autocomplete="off" />
+                <button type="button" class="icon-btn" id="tokenToggleBtn" onclick="toggleToken()">보기</button>
+                <button type="button" class="icon-btn" id="clearTokenBtn" onclick="clearSavedToken()" title="브라우저에 저장된 토큰만 삭제합니다">
+                  저장토큰 삭제
+                </button>
+              </div>
+              <div class="field-help">
+                <span class="pill">권한</span>fine-grained token이면 <b>Contents</b> 권한(읽기/쓰기)을 확인해 주세요.<br>
+                <span class="pill">보안</span>토큰은 이 브라우저(localStorage)에 저장됩니다. 공용 PC에서는 저장토큰 삭제를 눌러 주세요.
+              </div>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div id="loadHint" class="load-hint">먼저 ‘불러오기’를 눌러 주세요.</div>
+            <button id="resetAllBtn" class="btn btn-ghost" type="button" onclick="resetAllSettings()" title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
+              설정 초기화
+            </button>
+            <button id="loadBtn" class="btn btn-primary" onclick="loadAllFiles()">불러오기</button>
           </div>
         </div>
 
-        <div class="toolbar">
-          <button class="btn btn-primary" id="bulkBtn" onclick="importBulkExcelAutoSave()" disabled>업로드 반영</button>
+        <!-- 일괄등록 -->
+        <div class="box">
+          <div class="box-title">
+            <span>일괄등록</span>
+            <span class="hint-mini">등록 반영 = 자동 분류 + 즉시 저장</span>
+          </div>
+
+          <div class="form-group">
+            <label>등록 반영 엑셀 파일</label>
+
+            <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" />
+
+            <div class="file-panel" id="fileDropZone" title="이 박스에 파일을 끌어다 놓으시면 추가됩니다">
+              <div class="file-panel-head">
+                <div class="file-panel-title">
+                  선택 파일 <span class="count" id="selectedFileCount">0</span>
+                </div>
+                <div class="file-panel-actions">
+                  <button class="btn btn-ghost" id="pickFilesBtn" type="button" onclick="triggerFilePick()" disabled>파일 추가</button>
+                  <button class="btn btn-ghost" id="bulkResetBtn" type="button" onclick="resetBulkUpload()" disabled>초기화</button>
+                </div>
+              </div>
+
+              <div id="selectedFiles" class="muted">선택된 파일 없음</div>
+              <div class="field-help">
+                여러 번 추가할 수 있습니다. 일부 파일만 제외하려면 각 파일의 ×를 눌러 주세요.<br>
+                <span class="pill">드래그</span>파일을 이 박스에 끌어다 놓으셔도 추가됩니다.
+              </div>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <!-- ✅ 버튼명 변경 + 확인 팝업 래퍼 함수 연결 -->
+            <button class="btn btn-primary" id="bulkBtn" onclick="confirmAndImportBulkExcelAutoSave()" disabled>등록 반영</button>
+          </div>
         </div>
+
       </div>
+
+      <!-- 상태 (전체 폭) -->
+      <div id="statusMsg" class="status" role="status" aria-live="polite" title="클릭하시면 닫힙니다"></div>
 
       <!-- 그리드(불러온 데이터) -->
       <div id="afterLoad" class="box" style="display:none;">
@@ -635,7 +698,7 @@
   <div id="logModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-head">
-        <div class="modal-title" id="logModalTitle">업로드 실패 로그</div>
+        <div class="modal-title" id="logModalTitle">등록 반영 실패 로그</div>
         <button class="btn btn-ghost" style="padding:8px 10px; min-height:32px;" onclick="closeLogModal()">닫기</button>
       </div>
       <div class="modal-body" id="logModalBody"></div>
@@ -647,7 +710,6 @@
 
   <script>
     // ===== 설정 =====
-    const BRANCH = "main";
     const FILES = {
       deceased: "data/deceased_data.xlsx",
       nature: "data/nature_data.xlsx"
@@ -703,20 +765,22 @@
     window.onload = () => {
       const savedOwner = localStorage.getItem("gh_owner");
       const savedRepo  = localStorage.getItem("gh_repo");
+      const savedBranch= localStorage.getItem("gh_branch");
       const savedToken = localStorage.getItem("gh_token");
       const savedTarget = localStorage.getItem("gh_target");
       const savedLoadedAt = localStorage.getItem("gh_loaded_at");
 
       if (savedOwner) document.getElementById("owner").value = savedOwner;
       if (savedRepo)  document.getElementById("repo").value  = savedRepo;
+      document.getElementById("branch").value = savedBranch || "main";
       if (savedToken) document.getElementById("token").value = savedToken;
       if (savedTarget === "nature") fileKey = "nature";
 
       selectTarget(fileKey, true);
       setLoaded(false);
-      updateTopBadges(false, savedLoadedAt || "", "");
+      updateTopBadges(false, savedLoadedAt || "", "", document.getElementById("branch").value.trim() || "main");
 
-      ["owner","repo","token"].forEach(id=>{
+      ["owner","repo","token","branch"].forEach(id=>{
         const el = document.getElementById(id);
         el?.addEventListener("keydown", (e)=>{
           if(e.key === "Enter") loadAllFiles();
@@ -740,18 +804,71 @@
         updateBulkButtonState();
       });
 
+      // ✅ 드래그 앤 드롭
+      const dz = document.getElementById("fileDropZone");
+      if (dz){
+        const stop = (e)=>{ e.preventDefault(); e.stopPropagation(); };
+        ["dragenter","dragover"].forEach(evt=>{
+          dz.addEventListener(evt, (e)=>{
+            stop(e);
+            if (!isLoaded || isBusy) return;
+            dz.classList.add("drop-ready");
+          });
+        });
+        ["dragleave","drop"].forEach(evt=>{
+          dz.addEventListener(evt, (e)=>{
+            stop(e);
+            dz.classList.remove("drop-ready");
+          });
+        });
+        dz.addEventListener("drop", (e)=>{
+          if (!isLoaded || isBusy) return;
+          const files = Array.from(e.dataTransfer?.files || []).filter(f=>{
+            const lower = (f.name || "").toLowerCase();
+            return lower.endsWith(".xlsx") || lower.endsWith(".xls");
+          });
+          if (!files.length) return;
+          addSelectedFiles(files);
+          renderSelectedFiles();
+          updateBulkButtonState();
+        });
+      }
+
       renderSelectedFiles();
       updateBulkButtonState();
     };
 
     function toggleToken(){
       const input = document.getElementById("token");
-      const btn = document.querySelector(".icon-btn");
+      const btn = document.getElementById("tokenToggleBtn");
       if(!input || !btn) return;
 
       const isPw = input.type === "password";
       input.type = isPw ? "text" : "password";
       btn.textContent = isPw ? "가리기" : "보기";
+    }
+
+    function clearSavedToken(){
+      localStorage.removeItem("gh_token");
+      const t = document.getElementById("token");
+      if (t) t.value = "";
+      showStatus("저장된 토큰을 삭제하였습니다(이 브라우저).", "success");
+    }
+
+    function resetAllSettings(){
+      ["gh_owner","gh_repo","gh_branch","gh_token","gh_target","gh_loaded_at"].forEach(k=>localStorage.removeItem(k));
+      ["owner","repo","token"].forEach(id=>{
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+      const b = document.getElementById("branch");
+      if (b) b.value = "main";
+      fileKey = "deceased";
+      selectTarget(fileKey, true);
+      setLoaded(false);
+      updateTopBadges(false, "", "", "main");
+      resetBulkUpload();
+      showStatus("설정이 초기화되었습니다.", "success");
     }
 
     function pad2(n){ return String(n).padStart(2,"0"); }
@@ -852,7 +969,7 @@
 
     function showStatus(msg, type) {
       const el = document.getElementById("statusMsg");
-      el.textContent = msg + (type === "loading" ? "\n(클릭하면 닫힘)" : "");
+      el.textContent = (msg || "") + "\n(클릭하시면 닫힙니다)";
       el.className = "status " + type;
       el.style.display = "block";
       if (type === "success") setTimeout(() => (el.style.display = "none"), 2500);
@@ -861,6 +978,8 @@
     function setBusy(b) {
       isBusy = b;
       document.getElementById("loadBtn").disabled = b;
+      document.getElementById("resetAllBtn").disabled = b;
+
       document.getElementById("bulkResetBtn").disabled = b || !isLoaded;
       document.getElementById("pickFilesBtn").disabled = b || !isLoaded;
 
@@ -890,18 +1009,21 @@
       el.style.display = show ? "inline-flex" : "none";
     }
 
-    function updateTopBadges(show, loadedAt, loadedFilesText){
+    function updateTopBadges(show, loadedAt, loadedFilesText, branchText){
       const owner = document.getElementById("owner").value.trim();
       const repo  = document.getElementById("repo").value.trim();
+      const branch= branchText || document.getElementById("branch").value.trim() || "main";
 
       const bOwner = document.getElementById("badgeOwner");
       const bRepo  = document.getElementById("badgeRepo");
+      const bBranch= document.getElementById("badgeBranch");
       const bLoaded= document.getElementById("badgeLoadedAt");
       const bFiles = document.getElementById("badgeLoadedFiles");
 
       if (!show){
         bOwner.classList.add("hidden");
         bRepo.classList.add("hidden");
+        bBranch.classList.add("hidden");
         bLoaded.classList.add("hidden");
         bFiles.classList.add("hidden");
         return;
@@ -909,11 +1031,13 @@
 
       bOwner.querySelector("b").textContent = owner || "-";
       bRepo.querySelector("b").textContent  = repo  || "-";
+      bBranch.querySelector("b").textContent = branch || "-";
       bLoaded.querySelector("b").textContent = loadedAt || "-";
       bFiles.querySelector("b").textContent  = loadedFilesText || "-";
 
       bOwner.classList.remove("hidden");
       bRepo.classList.remove("hidden");
+      bBranch.classList.remove("hidden");
       bLoaded.classList.remove("hidden");
       bFiles.classList.remove("hidden");
     }
@@ -925,22 +1049,34 @@
       document.getElementById("tabDeceased").classList.toggle("active", fileKey === "deceased");
       document.getElementById("tabNature").classList.toggle("active", fileKey === "nature");
 
-      document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 20건 표시`;
+      if (isLoaded) {
+        const total = ds(fileKey).rows.length;
+        document.getElementById("gridMeta").textContent =
+          `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
+      } else {
+        document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시`;
+      }
 
       if (isLoaded) renderGridForCurrentTarget(false);
-      if (!isInit && isLoaded) updateTopBadges(true, loadedAtText, "추모의집/자연장지 데이터");
+
+      if (!isInit && isLoaded) {
+        const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
+        updateTopBadges(true, loadedAtText, loadedFilesText, document.getElementById("branch").value.trim() || "main");
+      }
     }
 
     function getInputs() {
       const owner = document.getElementById("owner").value.trim();
       const repo  = document.getElementById("repo").value.trim();
       const token = document.getElementById("token").value.trim();
-      return { owner, repo, token, branch: "main" };
+      const branch = (document.getElementById("branch").value.trim() || "main");
+      return { owner, repo, token, branch };
     }
 
-    function saveInputsToLocalStorage({owner, repo, token}) {
+    function saveInputsToLocalStorage({owner, repo, token, branch}) {
       localStorage.setItem("gh_owner", owner);
       localStorage.setItem("gh_repo", repo);
+      localStorage.setItem("gh_branch", branch || "main");
       localStorage.setItem("gh_token", token);
     }
 
@@ -1011,7 +1147,36 @@
       selectedFiles = [];
       renderSelectedFiles();
       updateBulkButtonState();
-      showStatus("업로드 파일 목록이 초기화되었습니다.", "success");
+      if (isLoaded) showStatus("선택 파일 목록이 초기화되었습니다.", "success");
+    }
+
+    // ✅ 등록 반영 클릭 시 확인 팝업(취소 가능)
+    function confirmAndImportBulkExcelAutoSave(){
+      if (!isLoaded) {
+        showLoadHint(true);
+        setLoaded(false);
+        showStatus("먼저 ‘불러오기’를 눌러 주세요.", "error");
+        return;
+      }
+      if (isBusy) return;
+
+      if (!selectedFiles.length){
+        showStatus("등록 반영할 파일을 추가해 주세요.", "error");
+        return;
+      }
+
+      const ok = window.confirm(
+        "등록 반영을 진행하시겠습니까?\n\n" +
+        "선택하신 엑셀 파일을 분석하여 추모의집/자연장지 데이터에 즉시 저장합니다.\n" +
+        "계속 진행하시려면 [확인], 취소하시려면 [취소]를 선택해 주세요."
+      );
+
+      if (!ok){
+        showStatus("등록 반영이 취소되었습니다.", "success");
+        return;
+      }
+
+      importBulkExcelAutoSave();
     }
 
     async function fetchXlsxFromGitHub({owner, repo, token, branch}, path){
@@ -1100,16 +1265,17 @@
 
     async function loadAllFiles() {
       const inputs = getInputs();
-      const { owner, repo, token } = inputs;
+      const { owner, repo, token, branch } = inputs;
+
       if (!owner || !repo || !token) {
         showStatus("Owner / Repo / Token을 모두 입력해 주세요.", "error");
         setLoaded(false);
         return;
       }
 
-      saveInputsToLocalStorage({owner, repo, token});
+      saveInputsToLocalStorage({owner, repo, token, branch});
       setBusy(true);
-      showStatus("추모의집/자연장지 데이터를 불러오는 중...", "loading");
+      showStatus("추모의집/자연장지 데이터를 불러오는 중입니다...", "loading");
 
       try {
         DATASETS.deceased.loaded = false;
@@ -1134,7 +1300,7 @@
 
         if (errors.length){
           setLoaded(false);
-          throw new Error("로드 실패:\n" + errors.join("\n\n"));
+          throw new Error("로드에 실패하였습니다:\n" + errors.join("\n\n"));
         }
 
         const now = new Date();
@@ -1142,10 +1308,16 @@
         localStorage.setItem("gh_loaded_at", loadedAtText);
 
         setLoaded(true);
-        updateTopBadges(true, loadedAtText, "추모의집/자연장지 데이터");
-        showStatus("로드 완료.", "success");
 
-        document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 20건 표시`;
+        const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
+        updateTopBadges(true, loadedAtText, loadedFilesText, branch);
+
+        showStatus("로드가 완료되었습니다.", "success");
+
+        const total = ds(fileKey).rows.length;
+        document.getElementById("gridMeta").textContent =
+          `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
+
         renderGridForCurrentTarget();
 
       } catch (e) {
@@ -1199,8 +1371,21 @@
       return !!(noRaw || deceased || applicant || inDateRaw || returnRaw);
     }
 
+    // ✅ 자연장지 업로드 2번행(예시행) 스킵 + 구조행 스킵
     function shouldSkipStructuralRow(templateType, idx, lastIdx, rowObj){
+      // 자연장지 예시행: 번호 없음 + 사망자 '이름' + 신청자 '이름' => 무조건 무시
+      if (templateType === "nature") {
+        const noRaw = String(getCellByHeader(rowObj, ["자연장번호","자연장 번호","번호","관리번호","봉안번호","봉안 번호"])).trim();
+        const deceased = String(getCellByHeader(rowObj, ["사망자명","고인명","고인","사망자"])).trim();
+        const applicant = String(getCellByHeader(rowObj, ["신청자명","신청자","사용자명","계약자명"])).trim();
+
+        if (!noRaw && norm(deceased) === norm("이름") && norm(applicant) === norm("이름")) {
+          return true;
+        }
+      }
+
       const meaningful = isMeaningfulRow(rowObj);
+
       if (!meaningful){
         if (templateType === "nature"){
           if (idx === 0) return true;
@@ -1213,6 +1398,15 @@
       }
       if (!meaningful) return true;
       return false;
+    }
+
+    function findHeaderIndex(hs, candidates) {
+      const list = hs.map(norm);
+      for (const cand of candidates) {
+        const idx = list.indexOf(norm(cand));
+        if (idx !== -1) return idx;
+      }
+      return -1;
     }
 
     function findExactMatchRowDeceased(noVal, deceasedVal, applicantVal, rowsOverride=null, headersOverride=null) {
@@ -1370,23 +1564,23 @@
       return html;
     }
 
-    // ===== 업로드 반영: 자동 분류 + 즉시 저장 =====
+    // ===== 등록 반영: 자동 분류 + 즉시 저장 =====
     async function importBulkExcelAutoSave() {
       if (!isLoaded) {
         showLoadHint(true);
         setLoaded(false);
-        showStatus("먼저 ‘불러오기’를 눌러주세요.", "error");
+        showStatus("먼저 ‘불러오기’를 눌러 주세요.", "error");
         return;
       }
       if (isBusy) return;
 
       if (!selectedFiles.length){
-        showStatus("업로드할 파일을 추가해 주세요.", "error");
+        showStatus("등록 반영할 파일을 추가해 주세요.", "error");
         return;
       }
 
       setBusy(true);
-      showStatus("업로드 분석 → 자동 분류 → 즉시 저장 중...", "loading");
+      showStatus("등록 반영 준비(분석) → 자동 분류 → 즉시 저장 중입니다...", "loading");
 
       try {
         importFailLog = [];
@@ -1412,7 +1606,7 @@
             const buf = await file.arrayBuffer();
             wb = XLSX.read(new Uint8Array(buf), { type: "array" });
           } catch (e) {
-            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"파일 읽기 실패(손상?)" });
+            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"파일 읽기에 실패하였습니다(손상 가능)." });
             continue;
           }
 
@@ -1423,7 +1617,7 @@
 
           const ws = wb.Sheets[wb.SheetNames[0]];
           if (!ws){
-            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"첫 시트 접근 실패" });
+            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"첫 시트 접근에 실패하였습니다." });
             continue;
           }
 
@@ -1465,7 +1659,7 @@
                 no:noRaw,
                 deceased,
                 applicant,
-                reason: "번호 패턴으로 대상(추모의집/자연장지) 판별에 실패했습니다.\n" + DETECT_HINT
+                reason: "번호 패턴으로 대상(추모의집/자연장지) 판별에 실패하였습니다.\n" + DETECT_HINT
               });
               continue;
             }
@@ -1480,7 +1674,7 @@
                 continue;
               }
               if (!deceased || !applicant){
-                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"필수값 누락(사망자명/신청자명)으로 반환 처리 불가." });
+                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"필수값 누락(사망자명/신청자명)으로 반환 처리 불가합니다." });
                 continue;
               }
               const returnDate = normalizeDate(returnRaw);
@@ -1491,7 +1685,7 @@
 
               const key3 = norm(noRaw) + "|" + norm(deceased) + "|" + norm(applicant);
               if (uploadRetKeySet.has(key3)){
-                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"업로드 파일(전체) 내 반환 항목 중복(번호/사망자/신청자)." });
+                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"업로드 파일(전체) 내 반환 항목이 중복되었습니다(번호/사망자/신청자)." });
                 continue;
               }
               uploadRetKeySet.add(key3);
@@ -1517,7 +1711,7 @@
 
             const vNo = norm(noRaw);
             if (uploadNoSet[targetKey].has(vNo)){
-              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"업로드 파일(전체) 내 동일 번호 중복." });
+              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"업로드 파일(전체) 내 동일 번호가 중복되었습니다." });
               continue;
             }
             uploadNoSet[targetKey].add(vNo);
@@ -1527,7 +1721,7 @@
         }
 
         if (processed === 0){
-          showStatus("업로드 파일에 처리할 데이터가 없습니다(예외/빈 행만 존재).", "error");
+          showStatus("등록 반영할 데이터가 없습니다(예외/빈 행만 존재).", "error");
           return;
         }
 
@@ -1536,7 +1730,9 @@
           nature:   { headers: ds("nature").headers.slice(),   rows: ds("nature").rows.map(r=>r.slice()),   highlight: new Set() }
         };
 
-        // ✅ 변경 핵심: 추모의집 신규 중복 처리 시, "반환일자 있음"이면 재사용 허용
+        // ✅ 추모의집 신규 중복 처리:
+        // - 동일 번호가 '사용중(반환일자 없음)'이면 신규 금지
+        // - 동일 번호가 전부 '반환됨(반환일자 있음)' 상태면 신규 허용
         const applyAdds = (key) => {
           if (!adds[key].length) return 0;
 
@@ -1554,7 +1750,6 @@
           if (idxDe === -1) missing.push("사망자명");
           if (idxAp === -1) missing.push("신청자명");
 
-          // 추모의집 재사용 판정용 반환일자 인덱스
           const idxReturn = (key === "deceased")
             ? findHeaderIndex(headers, ["반환일자","반환 일자","반환일"])
             : -1;
@@ -1562,24 +1757,25 @@
 
           if (missing.length) throw new Error(`[${ds(key).label}] 헤더를 찾을 수 없습니다: ${missing.join(", ")}`);
 
-          // ✅ 번호별로 "반환일자 존재 여부"를 빠르게 조회하기 위한 맵
-          // - deceased: 번호 -> hasReturned(true/false)
-          // - nature:   번호 -> true(존재)만 체크
+          // 번호 상태 맵
           const noStatus = new Map();
-
-          if (key === "deceased"){
-            for (const row of rows){
+          if (key === "deceased") {
+            for (const row of rows) {
               const vv = norm(row[idxNo]);
               if (!vv) continue;
+
               const hasRet = String(row[idxReturn] ?? "").trim() !== "";
-              // 동일 번호가 여러 번 있을 수 있으니, 하나라도 반환이면 true로
-              if (!noStatus.has(vv)) noStatus.set(vv, hasRet);
-              else noStatus.set(vv, noStatus.get(vv) || hasRet);
+              const cur = noStatus.get(vv) || { hasActive: false, hasReturned: false };
+
+              if (hasRet) cur.hasReturned = true;
+              else cur.hasActive = true;
+
+              noStatus.set(vv, cur);
             }
           } else {
-            for (const row of rows){
+            for (const row of rows) {
               const vv = norm(row[idxNo]);
-              if (vv) noStatus.set(vv, true);
+              if (vv) noStatus.set(vv, { hasActive: true, hasReturned: false });
             }
           }
 
@@ -1589,7 +1785,6 @@
             const vv = norm(q.no);
 
             if (noStatus.has(vv)){
-              // nature: 기존 존재면 무조건 중복 실패
               if (key !== "deceased"){
                 importFailLog.push({
                   file:q.file, rowNo:q.rowNo,
@@ -1600,18 +1795,17 @@
                 continue;
               }
 
-              // deceased: 기존 존재하지만, "반환일자 있음"이면 재사용 허용
-              const hasReturned = !!noStatus.get(vv);
-              if (!hasReturned){
+              const st = noStatus.get(vv);
+              if (st.hasActive){
                 importFailLog.push({
                   file:q.file, rowNo:q.rowNo,
                   target:ds(key).label, kind:"신규",
                   no:q.no, deceased:q.deceased, applicant:q.applicant,
-                  reason:"해당 봉안번호는 현재 사용중입니다(반환일자 없음)."
+                  reason:"해당 봉안번호는 현재 사용 중입니다(반환일자 없음)."
                 });
                 continue;
               }
-              // 반환일자 있으면: 재사용 자리로 신규 행 추가 허용(그대로 진행)
+              // hasActive=false => 전부 반환된 상태 => 재사용 신규 허용
             }
 
             const row = new Array(headers.length).fill("");
@@ -1624,10 +1818,13 @@
             next[key].highlight.add(rows.length - 1);
             added++;
 
-            // 신규로 추가한 행은 반환일자 없음(사용중) 상태가 되므로,
-            // 이후 같은 실행 내에서 또 같은 번호가 나오면 중복 처리되도록 업데이트
-            if (key === "deceased") noStatus.set(vv, false);
-            else noStatus.set(vv, true);
+            // 신규로 추가한 행은 사용중 상태로 갱신
+            if (key === "deceased") {
+              const prev = noStatus.get(vv) || { hasActive: false, hasReturned: false };
+              noStatus.set(vv, { hasActive: true, hasReturned: prev.hasReturned });
+            } else {
+              noStatus.set(vv, { hasActive: true, hasReturned: false });
+            }
           }
 
           return added;
@@ -1645,7 +1842,7 @@
           for (const q of rets){
             const k = norm(q.no) + "|" + norm(q.deceased) + "|" + norm(q.applicant);
             if (keySet.has(k)){
-              importFailLog.push({ file:q.file, rowNo:q.rowNo, target:"추모의집", kind:"반환", no:q.no, deceased:q.deceased, applicant:q.applicant, reason:"업로드 내 반환 항목 중복(번호/사망자/신청자)." });
+              importFailLog.push({ file:q.file, rowNo:q.rowNo, target:"추모의집", kind:"반환", no:q.no, deceased:q.deceased, applicant:q.applicant, reason:"업로드 내 반환 항목이 중복되었습니다(번호/사망자/신청자)." });
               continue;
             }
             keySet.add(k);
@@ -1654,7 +1851,7 @@
             try {
               match = findExactMatchRowDeceased(q.no, q.deceased, q.applicant, rows, headers);
             } catch (e) {
-              importFailLog.push({ file:q.file, rowNo:q.rowNo, target:"추모의집", kind:"반환", no:q.no, deceased:q.deceased, applicant:q.applicant, reason:e.message || "헤더 확인 필요" });
+              importFailLog.push({ file:q.file, rowNo:q.rowNo, target:"추모의집", kind:"반환", no:q.no, deceased:q.deceased, applicant:q.applicant, reason:e.message || "헤더 확인이 필요합니다." });
               continue;
             }
 
@@ -1685,7 +1882,7 @@
         if (!needSaveDe && !needSaveNa){
           showStatus("저장할 항목이 없습니다. (모두 실패/중복/판별실패)", "error");
           if (importFailLog.length){
-            openLogModal("업로드 실패 로그");
+            openLogModal("등록 반영 실패 로그");
           }
           return;
         }
@@ -1711,7 +1908,7 @@
         }
 
         if (saveErrors.length){
-          showStatus("저장 중 오류가 발생했습니다.\n" + saveErrors.join("\n\n"), "error");
+          showStatus("저장 중 오류가 발생하였습니다.\n" + saveErrors.join("\n\n"), "error");
           return;
         }
 
@@ -1726,15 +1923,24 @@
 
         renderGridForCurrentTarget();
 
+        // 상단 배지/그리드 메타 갱신
+        const inputs = getInputs();
+        const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
+        updateTopBadges(true, loadedAtText, loadedFilesText, inputs.branch);
+
+        const total = ds(fileKey).rows.length;
+        document.getElementById("gridMeta").textContent =
+          `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
+
         const msg =
-          `업로드 저장 완료\n` +
+          `등록 반영이 완료되었습니다.\n` +
           `추모의집: 신규 ${addedDe} / 반환 ${retDe}\n` +
           `자연장지: 신규 ${addedNa}\n` +
-          (importFailLog.length ? `실패 ${importFailLog.length}건(모달 확인)` : `실패 0건`);
+          (importFailLog.length ? `실패 ${importFailLog.length}건(모달에서 확인해 주세요)` : `실패 0건`);
         showStatus(msg, "success");
 
         if (importFailLog.length){
-          openLogModal("업로드 실패 로그");
+          openLogModal("등록 반영 실패 로그");
         }
 
       } catch (e) {
