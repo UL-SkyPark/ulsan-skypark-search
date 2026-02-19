@@ -72,11 +72,11 @@
       flex-wrap:wrap;
     }
 
-    /* ✅ 다음 봉안 예정(부부단만) - 폭 줄임 */
+    /* ✅ 다음 봉안 예정(부부단만) - 폭/높이 슬림 */
     .next-wrap{
       display:none;
-      flex: 0 1 520px;
-      max-width: 560px;
+      flex: 0 1 560px;
+      max-width: 600px;
 
       padding:8px 10px;
       border:1px solid rgba(180,58,58,0.22);
@@ -110,24 +110,26 @@
       flex: 0 0 auto;
     }
 
+    /* ✅ next-line + 안내문을 한 줄로 */
     .next-rows{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:8px;
+      display:flex;
+      align-items:stretch;
+      gap:10px;
     }
 
     .next-line{
+      flex: 1 1 auto;
       display:flex;
       align-items:center;
       gap:8px;
       flex-wrap:nowrap;
 
-      padding:7px 9px;
+      padding:6px 8px;
       border-radius: 12px;
       background: rgba(255,255,255,0.62);
       border:1px solid rgba(180,58,58,0.14);
 
-      min-height: 40px;
+      min-height: 36px;
       overflow:hidden;
     }
     .next-label{
@@ -135,11 +137,11 @@
       color: var(--next-red-strong);
       white-space: nowrap;
       flex: 0 0 auto;
-      font-size: 20px;
+      font-size: 18px;
     }
     .next-text{
       font-weight: 950;
-      font-size: 20px;
+      font-size: 18px;
       color: #6b1f1f;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-variant-numeric: tabular-nums;
@@ -154,7 +156,7 @@
       background: rgba(255,255,255,0.84);
       color: var(--next-red-strong);
       border-radius: 999px;
-      padding:9px 10px;
+      padding:8px 10px;
       cursor:pointer;
       font-weight: 950;
       white-space: nowrap;
@@ -165,16 +167,20 @@
     .next-move-btn:hover{ background: rgba(255,255,255,0.98); }
     .next-move-btn:disabled{ opacity: .45; cursor: not-allowed; }
 
-    /* ✅ 안내문 */
     .next-note{
-      margin-top: 2px;
-      padding: 8px 10px;
+      flex: 0 0 220px;
+      margin-top: 0;
+      padding: 6px 8px;
       border-radius: 12px;
       background: rgba(255,255,255,0.55);
       border: 1px solid rgba(180,58,58,0.10);
-      font-size: 12px;
+      font-size: 11px;
       color: #6c5f56;
-      line-height: 1.35;
+      line-height: 1.25;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:4px;
     }
     .next-note b{ color: rgba(155,37,37,0.88); }
 
@@ -320,7 +326,6 @@
     }
     .msg.error{ color:#b00020; }
 
-    /* 검색 결과 드롭다운 */
     .search-results{
       position: absolute;
       top: 100%;
@@ -369,12 +374,7 @@
     #room{ padding-top: 4px; }
     .room{ display:flex; flex-direction:column; }
 
-    .row{
-      display:flex;
-      gap:0;
-      align-items:stretch;
-      position: relative;
-    }
+    .row{ display:flex; gap:0; align-items:stretch; position: relative; }
 
     .dan-label{
       width: 58px;
@@ -423,12 +423,8 @@
     .used:hover { outline: 2px solid rgba(0,0,0,0.09); outline-offset: 0px; }
     .empty .niche-top{ justify-content: center; }
 
-    .blank{
-      background: transparent;
-      border-color: transparent;
-    }
-    .blank .niche-top,
-    .blank .niche-no{ display:none; }
+    .blank{ background: transparent; border-color: transparent; }
+    .blank .niche-top, .blank .niche-no{ display:none; }
 
     .niche-top{
       display:flex;
@@ -525,7 +521,10 @@
       .tabs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .search input{ width: 260px; max-width: 68vw; }
       :root{ --cell-w: 54px; --cell-h: 46px; }
-      .next-wrap{ flex-basis: 420px; max-width: 460px; }
+
+      /* 모바일은 다시 세로로 */
+      .next-rows{ flex-direction:column; }
+      .next-note{ flex: 1 1 auto; }
     }
   </style>
 
@@ -537,6 +536,7 @@
 
   <div class="panel sticky" id="topPanel">
     <div class="panel-top">
+
       <!-- ✅ 다음 봉안 예정: 부부단만 -->
       <div id="nextWrap" class="next-wrap" aria-label="부부단 다음 봉안 예정">
         <div class="next-head">부부단 다음 봉안 예정</div>
@@ -547,11 +547,11 @@
             <span class="next-text" id="nextCoupleText">—</span>
             <button id="nextCoupleMoveBtn" class="next-move-btn" type="button">이동</button>
           </div>
-        </div>
 
-        <div class="next-note">
-          <div>• 본 화면은 <b>매일 18시 기준</b>으로 업데이트됩니다.</div>
-          <div>• 실시간 현황 확인은 <b>052-255-3800</b>으로 전화 확인 바랍니다.</div>
+          <div class="next-note">
+            <div>• <b>매일 18시 기준</b> 업데이트</div>
+            <div>• 실시간 확인: <b>052-255-3800</b></div>
+          </div>
         </div>
       </div>
 
@@ -686,6 +686,9 @@
   const PERSONAL2A_ROOMS = roomsRange(19,39);
   const PERSONAL2B_ROOMS = roomsRange(40,60);
 
+  // ✅ 개인단 전체 기준 (탭 공통으로 1개 방만 숨김)
+  const PERSONAL_ALL_ROOMS = [...PERSONAL1_ROOMS, ...PERSONAL2A_ROOMS, ...PERSONAL2B_ROOMS];
+
   const TAB_DEFS = [
     { id:"couple", label:"부부단", rooms: COUPLE_ROOMS },
     { id:"p1", label:"개인단 1층", rooms: PERSONAL1_ROOMS },
@@ -703,26 +706,14 @@
     return "p1";
   }
 
-  // infoByRoom[room][no5] = {
-  //   status:"used"|"empty",
-  //   returned:boolean,              // 내부 판단용(표시 없음)
-  //   burialNo:string,
-  //   deceasedNames:[],
-  //   applicantNames:[],
-  //   burialDatesRaw:[],
-  //   _effectiveDateMs:number
-  // }
   const infoByRoom = {};
   for (const room of Object.keys(ROOM_CFG)) infoByRoom[room] = {};
 
   let activeTabId = "couple";
   let currentRoom = "01실";
 
-  // 부부단 next UI용
   let nextCouple = null;
-
-  // ✅ 개인단 탭별 “다음 봉안 예정 방” (버튼 숨김용)
-  const nextRoomByTab = { p1:null, p2a:null, p2b:null };
+  let nextPersonalRoom = null; // ✅ 개인단 전체 기준 “다음 봉안 예정 방” 1개
 
   function buildLegend(){
     const showNext = (activeTabId === "couple"); // 다음자리 범례는 부부단에서만
@@ -767,11 +758,11 @@
     }
   }
 
-  // ✅ 개인단 탭에서는 “다음 봉안 예정 방” 1개만 버튼 숨김
+  // ✅ 개인단 탭에서는 동일 nextPersonalRoom 버튼만 숨김
   function shouldHideRoomButton(room){
-    if (activeTabId === "p1")  return nextRoomByTab.p1 === room;
-    if (activeTabId === "p2a") return nextRoomByTab.p2a === room;
-    if (activeTabId === "p2b") return nextRoomByTab.p2b === room;
+    if (activeTabId === "p1" || activeTabId === "p2a" || activeTabId === "p2b"){
+      return nextPersonalRoom === room;
+    }
     return false;
   }
 
@@ -800,7 +791,6 @@
 
     buildLegend();
 
-    // 숨김 반영된 rooms 기준으로 currentRoom 보정
     const tab = TAB_DEFS.find(t => t.id === activeTabId);
     const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]).filter(r => !shouldHideRoomButton(r));
 
@@ -858,7 +848,7 @@
 
   function isCoupleRoom(room){ return (ROOM_CFG[room]?.roomNum ?? 99) <= 9; }
 
-  // ✅ 반출(반환)도 여기선 “사용중”과 동일 아이콘 (반출 표시 없음)
+  // ✅ 반환/반출 표시 없음: “사용중”은 항상 부부/개인 아이콘으로만
   function iconHtml(cfg, used){
     if (!used) return `<div class="niche-plus">+</div>`;
 
@@ -874,7 +864,7 @@
     for (let n = cfg.start; n <= cfg.end; n++){
       const noStr = pad5(n);
       const rec = infoByRoom[cfg.room][noStr];
-      if (rec?.status === "used") continue; // 반환도 used로 잡히면 빈자리가 아님(재사용 전/후는 엑셀 로직이 결정)
+      if (rec?.status === "used") continue;
       return noStr;
     }
     return null;
@@ -925,7 +915,7 @@
 
         const noStr = pad5(num);
         const rec = infoByRoom[cfg.room][noStr];
-        const used = (rec?.status === "used"); // 반환도 used로 보여줌(표시 없음)
+        const used = (rec?.status === "used");
 
         const niche = document.createElement("div");
         niche.dataset.no = noStr;
@@ -973,7 +963,6 @@
     return best;
   }
 
-  // ✅ 부부단 next UI + 개인단 탭별 next-room(버튼 숨김용) 업데이트
   function updateNextUI(){
     // 부부단 박스 표시용
     nextCouple = computeNextForRooms(COUPLE_ROOMS);
@@ -991,14 +980,9 @@
       cBtn.disabled = false;
     }
 
-    // 개인단: 탭별 “다음 봉안 예정 방”만 버튼 숨김(표시 UI는 안 함)
-    const p1  = computeNextForRooms(PERSONAL1_ROOMS);
-    const p2a = computeNextForRooms(PERSONAL2A_ROOMS);
-    const p2b = computeNextForRooms(PERSONAL2B_ROOMS);
-
-    nextRoomByTab.p1  = p1 ? p1.room : null;
-    nextRoomByTab.p2a = p2a ? p2a.room : null;
-    nextRoomByTab.p2b = p2b ? p2b.room : null;
+    // ✅ 개인단 전체 기준으로 1개 방만 산정(버튼 숨김)
+    const pAll = computeNextForRooms(PERSONAL_ALL_ROOMS);
+    nextPersonalRoom = pAll ? pAll.room : null;
   }
 
   $("nextCoupleMoveBtn").addEventListener("click", () => {
@@ -1075,7 +1059,9 @@
     return x;
   }
 
-  // ✅ 중복 봉안번호 처리(반환일자 없는 중복 = 재사용/재안치)
+  // ✅ 중복 봉안번호 처리:
+  // - 동일 봉안번호에 “반환일자 없는 행”이 있으면 최신 미반환 = 현재 사용중
+  // - 미반환이 없고 반환만 있으면 최신 반환 = 반환 전 사용자 정보(표시는 사용중처럼)
   function applyExcel(aoa){
     for (const room of Object.keys(infoByRoom)) infoByRoom[room] = {};
 
@@ -1095,7 +1081,7 @@
 
     const startRow = hasHeader ? headerRowIndex + 1 : headerRowIndex;
 
-    const bucket = {}; // key: `${room}|${no5}` -> entries[]
+    const bucket = {};
     let seq = 0;
 
     for (let r=startRow; r<aoa.length; r++){
@@ -1113,7 +1099,7 @@
       const cfg = ROOM_CFG[room];
       if (!cfg || n < cfg.start || n > cfg.end) continue;
 
-      const returned = !isBlank(row[iRet]); // 반환일자 있으면 반환 기록
+      const returned = !isBlank(row[iRet]);
       const burialRaw = row[iBurial];
       const d = parseExcelDate(burialRaw);
       const ms = d ? d.getTime() : null;
@@ -1134,10 +1120,7 @@
     }
 
     function sortKey(e){
-      return {
-        ms: e.burialDateMs != null ? e.burialDateMs : -Infinity,
-        seq: e.seq
-      };
+      return { ms: e.burialDateMs != null ? e.burialDateMs : -Infinity, seq: e.seq };
     }
 
     for (const [key, entries] of Object.entries(bucket)){
@@ -1146,8 +1129,8 @@
       const actives = entries.filter(e => !e.returned);
       const returns = entries.filter(e => e.returned);
 
-      let chosen = null;
       let chosenIsReturned = false;
+      let pool = null;
 
       if (actives.length > 0){
         actives.sort((a,b)=>{
@@ -1155,7 +1138,7 @@
           if (ka.ms !== kb.ms) return ka.ms - kb.ms;
           return ka.seq - kb.seq;
         });
-        chosen = actives[actives.length - 1]; // 최신 미반환
+        pool = actives;
         chosenIsReturned = false;
       } else if (returns.length > 0){
         returns.sort((a,b)=>{
@@ -1163,24 +1146,23 @@
           if (ka.ms !== kb.ms) return ka.ms - kb.ms;
           return ka.seq - kb.seq;
         });
-        chosen = returns[returns.length - 1]; // 최신 반환(=반환 전 정보)
+        pool = returns;
         chosenIsReturned = true;
       } else {
         continue;
       }
 
       const [room, no5] = key.split("|");
+
       const rec = {
-        status: "used", // 반환이어도 화면상 사용중으로 보이게(아이콘 동일)
-        returned: chosenIsReturned,
-        burialNo: chosen.burialNo || "",
+        status: "used",          // 반환이어도 화면상 사용중처럼
+        returned: chosenIsReturned, // 내부 판단(검색 제외용)
+        burialNo: (pool[pool.length - 1]?.burialNo || ""),
         deceasedNames: [],
         applicantNames: [],
-        burialDatesRaw: [],
-        _effectiveDateMs: chosen.burialDateMs != null ? chosen.burialDateMs : Date.now()
+        burialDatesRaw: []
       };
 
-      const pool = chosenIsReturned ? returns : actives;
       for (const e of pool){
         pushUnique(rec.deceasedNames, e.deceasedName);
         pushUnique(rec.applicantNames, e.applicantName);
@@ -1190,9 +1172,7 @@
       infoByRoom[room][no5] = rec;
     }
 
-    // ✅ next 계산(부부단 박스 + 개인단 “다음 방 버튼 숨김”)
     updateNextUI();
-
     buildLegend();
     renderTabs();
     renderRoomButtons();
@@ -1229,7 +1209,6 @@
       ? `<ul class="list">${rec.applicantNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
       : "—";
 
-    // ✅ 반환 자리면 “반환 전 사용자 정보”가 pool에서 들어오도록 이미 구성됨
     let startDate = null;
     for (const raw of (rec.burialDatesRaw || [])){
       const d = parseExcelDate(raw);
@@ -1276,7 +1255,7 @@
     return String(text || "").trim().replace(/\s+/g, "").toLowerCase();
   }
 
-  // ✅ 이름 검색: 반환(재사용 전) 기록은 결과에서 제외(원하면 이 줄 빼면 포함됨)
+  // ✅ 이름 검색: 반환(재사용 전) 기록은 결과에서 제외
   function searchByName(query){
     const normalized = normalizeText(query);
     if (normalized.length < 2) return [];
@@ -1292,12 +1271,7 @@
           if (normName.includes(normalized)){
             const cfg = ROOM_CFG[room];
             const dan = danOfNo(cfg, noStr);
-            results.push({
-              room,
-              noStr,
-              dan,
-              name
-            });
+            results.push({ room, noStr, dan, name });
             break;
           }
         }
@@ -1352,7 +1326,6 @@
         setMsg("해당 번호를 찾을 수 없습니다.", "error");
         return;
       }
-
       $("searchResults").classList.remove("show");
       setRoom(room, false);
       requestAnimationFrame(() => focusCell(room, noStr));
@@ -1374,9 +1347,7 @@
   }
 
   $("searchBtn").addEventListener("click", onSearch);
-  $("searchInput").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") onSearch();
-  });
+  $("searchInput").addEventListener("keydown", (e) => { if (e.key === "Enter") onSearch(); });
 
   $("searchInput").addEventListener("input", () => {
     const val = ($("searchInput").value || "").trim();
