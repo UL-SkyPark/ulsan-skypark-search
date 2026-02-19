@@ -451,7 +451,7 @@
       <div class="box">
         <div class="box-title">
           <span>GitHub 설정</span>
-          <span class="hint-mini">‘불러오기’는 2개 파일(추모의집/자연장지)을 모두 로드</span>
+          <span class="hint-mini">‘불러오기’는 추모의집/자연장지 모두 로드</span>
         </div>
 
         <div class="row">
@@ -475,7 +475,7 @@
 
         <div class="toolbar">
           <div id="loadHint" class="load-hint">
-            먼저 ‘불러오기(2개 파일)’를 눌러주세요.
+            먼저 [불러오기]를 눌러주세요.
             <span class="arrow">→</span>
           </div>
           <button id="loadBtn" class="btn btn-primary" onclick="loadAllFiles()">불러오기</button>
@@ -489,7 +489,7 @@
       <div class="box">
         <div class="box-title">
           <span>일괄등록</span>
-          <span class="hint-mini">업로드 반영 = 자동 분류 + 즉시 저장(2개 파일)</span>
+          <span class="hint-mini">업로드 반영 = 자동 분류 + 즉시 저장</span>
         </div>
 
         <div class="row">
@@ -970,7 +970,7 @@
 
       saveInputsToLocalStorage({owner, repo, token});
       setBusy(true);
-      showStatus("2개 파일(추모의집/자연장지)을 불러오는 중...", "loading");
+      showStatus("추모의집/자연장지 데이터 불러오는 중...", "loading");
 
       try {
         DATASETS.deceased.loaded = false;
@@ -1004,7 +1004,7 @@
 
         setLoaded(true);
         updateTopBadges(true, loadedAtText, "추모의집 + 자연장지");
-        showStatus("로드 완료. (2개 파일)", "success");
+        showStatus("로드 완료.", "success");
 
         const meta = document.getElementById("gridMeta");
         meta.textContent = `${ds(fileKey).label} · 최근 20건 표시`;
@@ -1134,7 +1134,7 @@
       if (!isLoaded) {
         showLoadHint(true);
         setLoaded(false);
-        showStatus("먼저 ‘불러오기(2개 파일)’를 눌러주세요.", "error");
+        showStatus("먼저 [불러오기]를 눌러주세요.", "error");
         return;
       }
       if (isBusy) return;
