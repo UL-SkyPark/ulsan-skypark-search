@@ -15,8 +15,11 @@
       --text: #2f2a25;
       --muted: #6c5f56;
 
+      /* ✅ 셀 크기/라벨 폭 (가독성 개선) */
       --cell-w: 58px;
-      --cell-h: 48px;
+      --cell-h: 56px;   /* 기존 48px → 56px */
+      --label-w: 58px;  /* ✅ 단번호(좌측 라벨) 기본 폭 */
+
       --cell-border: #d0c6bb;
 
       --bg-empty: #f3f1ed;
@@ -376,15 +379,24 @@
       scroll-behavior: smooth;
     }
     #room{ padding-top: 4px; }
-    .room{ display:flex; flex-direction:column; }
 
-    .row{ display:flex; gap:0; align-items:stretch; position: relative; }
+    /* ✅ 핵심: 가로 스크롤 폭을 콘텐츠(그리드) 기준으로 잡아서
+       단번호 sticky가 끝까지 유지되게 */
+    .room{ display:flex; flex-direction:column; width: max-content; }
+
+    .row{
+      display:flex; gap:0; align-items:stretch; position: relative;
+      width: max-content; /* ✅ */
+    }
 
     .dan-label{
-      width: 58px;
+      width: var(--label-w); /* ✅ */
       flex: 0 0 auto;
+
+      position: -webkit-sticky; /* ✅ iOS */
       position: sticky;
       left: 0;
+
       z-index: 9999;
       background: var(--page-bg);
       border-right: 1px solid rgba(0,0,0,0.06);
@@ -398,6 +410,11 @@
       box-shadow: 6px 0 10px rgba(0,0,0,0.03);
       box-sizing: border-box;
       min-height: calc(var(--cell-h) + 6px);
+
+      /* ✅ sticky 안정화(사라짐 방지 보조) */
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: transform;
     }
 
     .grid{
@@ -405,6 +422,7 @@
       column-gap: 8px;
       row-gap: 5px;
       padding: 1px 0;
+      width: max-content; /* ✅ */
     }
 
     .niche{
@@ -442,12 +460,12 @@
       flex: 0 0 auto;
       font-size: 12px;
       line-height: 14px;
-      padding: 3px 5px 4px;
+      padding: 3px 6px 4px; /* ✅ 기본도 살짝 여유 */
       text-align:center;
       border-top: 1px solid rgba(0,0,0,0.10);
       background: rgba(255,255,255,0.64);
       color:#2b2520;
-      letter-spacing: 0.2px;
+      letter-spacing: 0.1px; /* ✅ 너무 크면 잘려보임 */
       font-weight: 900;
       font-variant-numeric: tabular-nums;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -522,7 +540,6 @@
        ✅ 모바일 전용: 손잡이 + 상단패널 완전 접힘(레이아웃 공간도 0)
        ========================= */
 
-    /* (1) 손잡이 CSS: 막대 + 텍스트 */
     .collapse-handle{
       display:none;
       position: sticky;
@@ -570,7 +587,20 @@
       .panel{ padding:10px; }
       .tabs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .search input{ width: 260px; max-width: 68vw; }
-      :root{ --cell-w: 54px; --cell-h: 46px; }
+
+      /* ✅ 모바일: 셀 더 큼 + 단번호 라벨 더 넓게(안정성) */
+      :root{
+        --cell-w: 60px;
+        --cell-h: 60px;
+        --label-w: 68px; /* ✅ 요청: 62~68px → 68px로 */
+      }
+
+      /* ✅ 번호 잘림 방지(모바일) */
+      .niche-no{
+        font-size: 13px;
+        letter-spacing: 0;
+        padding: 4px 7px 6px;
+      }
 
       /* 모바일은 다시 세로로 */
       .next-rows{ flex-direction:column; }
@@ -613,7 +643,6 @@
 <body>
   <h1>추모의집 봉안 현황</h1>
 
-  <!-- (2) 손잡이 HTML: 막대 + 문구 -->
   <div id="collapseHandle" class="collapse-handle" aria-label="상단 패널 펼치기/접기">
     <span class="handle-pill" aria-hidden="true"></span>
     <span id="handleText" class="handle-text">메뉴 열기 ▾</span>
@@ -622,7 +651,6 @@
   <div class="panel sticky" id="topPanel">
     <div class="panel-top">
 
-      <!-- ✅ 다음 봉안 예정: 부부단만 -->
       <div id="nextWrap" class="next-wrap" aria-label="부부단 다음 봉안 예정">
         <div class="next-head">부부단 다음 봉안 예정</div>
 
@@ -1447,10 +1475,6 @@
 
   $("reloadBtn").addEventListener("click", loadExcelFromUrl);
 
-  /* =========================
-     ✅ 모바일에서만: 기본 접힘(손잡이만), 손잡이 탭으로 토글
-     ========================= */
-
   const UI = { collapsed: false };
 
   function isMobileWidth(){
@@ -1470,7 +1494,6 @@
     const msg = $("msg");
     if (!panel || !handle || !legend) return;
 
-    // (3) 문구 토글: 메뉴 열기/닫기
     const ht = $("handleText");
     if (ht){
       ht.textContent = UI.collapsed ? "메뉴 열기 ▾" : "메뉴 닫기 ▴";
@@ -1489,7 +1512,6 @@
     handle.style.display = "flex";
     panel.classList.toggle("is-collapsed", UI.collapsed);
 
-    // 접힌 상태면 아래 화면을 더 넓게 쓰도록 숨김
     legend.style.display = UI.collapsed ? "none" : "";
     if (msg) msg.style.display = UI.collapsed ? "none" : (msg.textContent ? "block" : "none");
 
@@ -1535,9 +1557,9 @@
 
     function applyByWidth(){
       if (isMobileWidth()){
-        setCollapsed(false);   // ✅ 모바일 기본 펼침
+        setCollapsed(false);
       } else {
-        setCollapsed(false);  // ✅ PC 기본 펼침
+        setCollapsed(false);
       }
       requestAnimationFrame(updateScrollerHeight);
     }
