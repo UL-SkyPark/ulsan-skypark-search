@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>울산하늘공원 데이터 관리자</title>
+  <title>울산하늘공원 안치 정보 관리</title>
 
   <link rel="icon" type="image/x-icon" href="./images/symbol.png">
   <link rel="apple-touch-icon" href="./images/symbol.png">
@@ -124,15 +124,20 @@
 
     .content{ padding:14px 16px 16px; }
 
-    /* ✅ 상단 2개 박스(깃허브 설정/일괄등록) 가로 배치 */
+    /* ✅ 상단 2개 박스 동일 크기(폭) */
     .top-panels{
       display:grid;
-      grid-template-columns: 1.25fr 0.75fr;
+      grid-template-columns: 1fr 1fr;
       gap:12px;
-      align-items:start;
+      align-items:stretch;
       margin-bottom:12px;
     }
-    .top-panels .box{ margin-bottom:0; }
+    .top-panels .box{
+      margin-bottom:0;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+    }
     @media (max-width: 980px){
       .top-panels{ grid-template-columns: 1fr; }
     }
@@ -274,6 +279,19 @@
       background:#f8fafc;
       border-radius: var(--radius-sm);
       white-space:nowrap;
+    }
+
+    /* ✅ 화살표 + 깜빡임 */
+    .blink-arrow{
+      display:inline-block;
+      margin-left:8px;
+      font-weight:900;
+      color: var(--primary);
+      animation: blinkNudge 1s infinite;
+    }
+    @keyframes blinkNudge{
+      0%, 100% { opacity: .15; transform: translateX(0); }
+      50%      { opacity: 1;   transform: translateX(6px); }
     }
 
     .status{
@@ -569,7 +587,7 @@
   <div class="container">
     <div class="header">
       <div class="header-left">
-        <h1 class="title">울산하늘공원 데이터 관리자</h1>
+        <h1 class="title">울산하늘공원 안치 정보 관리</h1>
         <div class="meta-line">
           <span id="badgeOwner" class="meta-item hidden">Owner: <b>-</b></span>
           <span id="badgeRepo"  class="meta-item hidden">Repo: <b>-</b></span>
@@ -592,7 +610,7 @@
         <div class="box">
           <div class="box-title">
             <span>GitHub 설정</span>
-            <span class="hint-mini">추모의집/자연장지 데이터를 불러온 후 등록 반영을 진행합니다</span>
+            <span class="hint-mini">추모의집/자연장지 데이터를 불러온 후 반영을 진행합니다</span>
           </div>
 
           <div class="row">
@@ -629,7 +647,7 @@
           </div>
 
           <div class="toolbar">
-            <div id="loadHint" class="load-hint">먼저 ‘불러오기’를 눌러 주세요.</div>
+            <div id="loadHint" class="load-hint">먼저 ‘불러오기’를 눌러 주세요.<span class="blink-arrow">➜</span></div>
             <button id="resetAllBtn" class="btn btn-ghost" type="button" onclick="resetAllSettings()" title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
               설정 초기화
             </button>
@@ -641,11 +659,10 @@
         <div class="box">
           <div class="box-title">
             <span>일괄등록</span>
-            <span class="hint-mini">등록 반영 = 자동 분류 + 즉시 저장</span>
           </div>
 
           <div class="form-group">
-            <label>등록 반영 엑셀 파일</label>
+            <label>일괄등록 엑셀 파일</label>
 
             <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" />
 
@@ -662,15 +679,14 @@
 
               <div id="selectedFiles" class="muted">선택된 파일 없음</div>
               <div class="field-help">
-                여러 번 추가할 수 있습니다. 일부 파일만 제외하려면 각 파일의 ×를 눌러 주세요.<br>
-                <span class="pill">드래그</span>파일을 이 박스에 끌어다 놓으셔도 추가됩니다.
+                파일을 이 박스에 끌어다 놓으셔도 추가됩니다.<br>
+                일부 파일만 제외하려면 각 파일의 ×를 눌러 주세요.
               </div>
             </div>
           </div>
 
           <div class="toolbar">
-            <!-- ✅ 버튼명 변경 + 확인 팝업 래퍼 함수 연결 -->
-            <button class="btn btn-primary" id="bulkBtn" onclick="confirmAndImportBulkExcelAutoSave()" disabled>등록 반영</button>
+            <button class="btn btn-primary" id="bulkBtn" onclick="confirmAndImportBulkExcelAutoSave()" disabled>일괄등록</button>
           </div>
         </div>
 
@@ -698,12 +714,30 @@
   <div id="logModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-head">
-        <div class="modal-title" id="logModalTitle">등록 반영 실패 로그</div>
+        <div class="modal-title" id="logModalTitle">일괄등록 실패 로그</div>
         <button class="btn btn-ghost" style="padding:8px 10px; min-height:32px;" onclick="closeLogModal()">닫기</button>
       </div>
       <div class="modal-body" id="logModalBody"></div>
       <div class="modal-foot">
         <button class="btn btn-primary" onclick="closeLogModal()">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Modal (일괄등록 확인) -->
+  <div id="confirmModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal" style="max-width:520px;">
+      <div class="modal-head">
+        <div class="modal-title">일괄등록 확인</div>
+        <button class="btn btn-ghost" style="padding:8px 10px; min-height:32px;" onclick="confirmBulkCancel()">닫기</button>
+      </div>
+      <div class="modal-body" id="confirmModalBody">
+        일괄등록을 진행 하시겠습니까?<br>
+        계속 하시려면 [확인], 취소하시려면 [취소]를 선택해 주세요.
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-ghost" onclick="confirmBulkCancel()">취소</button>
+        <button class="btn btn-primary" onclick="confirmBulkOk()">확인</button>
       </div>
     </div>
   </div>
@@ -1150,7 +1184,26 @@
       if (isLoaded) showStatus("선택 파일 목록이 초기화되었습니다.", "success");
     }
 
-    // ✅ 등록 반영 클릭 시 확인 팝업(취소 가능)
+    // ✅ 모달: 일괄등록 확인
+    function openConfirmModal(){
+      document.getElementById("confirmModalBackdrop").style.display = "flex";
+    }
+    function closeConfirmModal(){
+      document.getElementById("confirmModalBackdrop").style.display = "none";
+    }
+    function confirmBulkOk(){
+      closeConfirmModal();
+      importBulkExcelAutoSave();
+    }
+    function confirmBulkCancel(){
+      closeConfirmModal();
+      showStatus("일괄등록이 취소되었습니다.", "success");
+    }
+    document.getElementById("confirmModalBackdrop")?.addEventListener("click", (e) => {
+      if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
+    });
+
+    // ✅ 일괄등록 클릭 시 모달 확인(취소 가능)
     function confirmAndImportBulkExcelAutoSave(){
       if (!isLoaded) {
         showLoadHint(true);
@@ -1161,22 +1214,11 @@
       if (isBusy) return;
 
       if (!selectedFiles.length){
-        showStatus("등록 반영할 파일을 추가해 주세요.", "error");
+        showStatus("일괄등록할 파일을 추가해 주세요.", "error");
         return;
       }
 
-      const ok = window.confirm(
-        "등록 반영을 진행하시겠습니까?\n\n" +
-        "선택하신 엑셀 파일을 분석하여 추모의집/자연장지 데이터에 즉시 저장합니다.\n" +
-        "계속 진행하시려면 [확인], 취소하시려면 [취소]를 선택해 주세요."
-      );
-
-      if (!ok){
-        showStatus("등록 반영이 취소되었습니다.", "success");
-        return;
-      }
-
-      importBulkExcelAutoSave();
+      openConfirmModal();
     }
 
     async function fetchXlsxFromGitHub({owner, repo, token, branch}, path){
@@ -1400,15 +1442,6 @@
       return false;
     }
 
-    function findHeaderIndex(hs, candidates) {
-      const list = hs.map(norm);
-      for (const cand of candidates) {
-        const idx = list.indexOf(norm(cand));
-        if (idx !== -1) return idx;
-      }
-      return -1;
-    }
-
     function findExactMatchRowDeceased(noVal, deceasedVal, applicantVal, rowsOverride=null, headersOverride=null) {
       const d = ds("deceased");
       const rows = rowsOverride || d.rows;
@@ -1564,7 +1597,7 @@
       return html;
     }
 
-    // ===== 등록 반영: 자동 분류 + 즉시 저장 =====
+    // ===== 일괄등록: 자동 분류 + 즉시 저장 =====
     async function importBulkExcelAutoSave() {
       if (!isLoaded) {
         showLoadHint(true);
@@ -1575,12 +1608,12 @@
       if (isBusy) return;
 
       if (!selectedFiles.length){
-        showStatus("등록 반영할 파일을 추가해 주세요.", "error");
+        showStatus("일괄등록할 파일을 추가해 주세요.", "error");
         return;
       }
 
       setBusy(true);
-      showStatus("등록 반영 준비(분석) → 자동 분류 → 즉시 저장 중입니다...", "loading");
+      showStatus("일괄등록 준비(분석) → 자동 분류 → 즉시 저장 중입니다...", "loading");
 
       try {
         importFailLog = [];
@@ -1721,7 +1754,7 @@
         }
 
         if (processed === 0){
-          showStatus("등록 반영할 데이터가 없습니다(예외/빈 행만 존재).", "error");
+          showStatus("일괄등록할 데이터가 없습니다(예외/빈 행만 존재).", "error");
           return;
         }
 
@@ -1882,7 +1915,7 @@
         if (!needSaveDe && !needSaveNa){
           showStatus("저장할 항목이 없습니다. (모두 실패/중복/판별실패)", "error");
           if (importFailLog.length){
-            openLogModal("등록 반영 실패 로그");
+            openLogModal("일괄등록 실패 로그");
           }
           return;
         }
@@ -1892,7 +1925,7 @@
         try {
           if (needSaveDe){
             const merged = [next.deceased.headers, ...next.deceased.rows];
-            await putToGitHub("deceased", merged, `Auto upload save (deceased) new:${addedDe} return:${retDe} ${new Date().toISOString()}`);
+            await putToGitHub("deceased", merged, `Auto bulk save (deceased) new:${addedDe} return:${retDe} ${new Date().toISOString()}`);
           }
         } catch (e) {
           saveErrors.push(e.message || String(e));
@@ -1901,7 +1934,7 @@
         try {
           if (needSaveNa){
             const merged = [next.nature.headers, ...next.nature.rows];
-            await putToGitHub("nature", merged, `Auto upload save (nature) new:${addedNa} ${new Date().toISOString()}`);
+            await putToGitHub("nature", merged, `Auto bulk save (nature) new:${addedNa} ${new Date().toISOString()}`);
           }
         } catch (e) {
           saveErrors.push(e.message || String(e));
@@ -1933,14 +1966,14 @@
           `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
 
         const msg =
-          `등록 반영이 완료되었습니다.\n` +
+          `일괄등록이 완료되었습니다.\n` +
           `추모의집: 신규 ${addedDe} / 반환 ${retDe}\n` +
           `자연장지: 신규 ${addedNa}\n` +
           (importFailLog.length ? `실패 ${importFailLog.length}건(모달에서 확인해 주세요)` : `실패 0건`);
         showStatus(msg, "success");
 
         if (importFailLog.length){
-          openLogModal("등록 반영 실패 로그");
+          openLogModal("일괄등록 실패 로그");
         }
 
       } catch (e) {
