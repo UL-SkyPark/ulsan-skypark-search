@@ -619,54 +619,53 @@
       .token-row{ grid-template-columns: 1fr 1fr; }
       .token-row input{ grid-column: 1 / -1; }
     }
-.token-persist{
-  margin-top:10px;
-  display:flex;
-  align-items:flex-start; /* 왼쪽 정렬 */
-}
+    .token-persist{
+      margin-top:10px;
+      display:flex;
+      align-items:flex-start; /* 왼쪽 정렬 */
+    }
 
-/* 체크박스 + 문구(한 줄) */
-.token-persist .token-check{
-  display:inline-flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:8px;
-  cursor:pointer;
-  width: fit-content;   /* 라벨이 화면 끝까지 안 먹게 */
-  max-width:100%;
-  margin:0;
-  padding:0;
-}
+    /* 체크박스 + 문구(한 줄) */
+    .token-persist .token-check{
+      display:inline-flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:8px;
+      cursor:pointer;
+      width: fit-content;   /* 라벨이 화면 끝까지 안 먹게 */
+      max-width:100%;
+      margin:0;
+      padding:0;
+    }
 
-/* 체크박스 살짝 보정(원하면 유지) */
-.token-persist .token-check input{ transform: translateY(1px); }
+    /* 체크박스 살짝 보정(원하면 유지) */
+    .token-persist .token-check input{ transform: translateY(1px); }
 
-/* '이 브라우저에...' + '※ ...' 한 줄 고정 */
-.token-persist .token-label{
-  display:inline-flex;
-  align-items:baseline;
-  gap:10px;
-  white-space:nowrap;
-}
+    /* '이 브라우저에...' + '※ ...' 한 줄 고정 */
+    .token-persist .token-label{
+      display:inline-flex;
+      align-items:baseline;
+      gap:10px;
+      white-space:nowrap;
+    }
 
-/* 안내문 스타일(한 줄 안에서 작게/흐리게) */
-.token-persist .token-inline-note{
-  font-size:12px;
-  font-weight:800;
-  color:var(--muted);
-  line-height:1.35;
-}
+    /* 안내문 스타일(한 줄 안에서 작게/흐리게) */
+    .token-persist .token-inline-note{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      line-height:1.35;
+    }
 
-/* 아래 help 블록은 그대로 둬도 됨 */
-.token-help{ margin-top:10px; }
-.token-help .help-line{
-  display:flex;
-  align-items:flex-start;
-  gap:8px;
-  margin-top:6px;
-}
-.token-help .help-line:first-child{ margin-top:0; }
-
+    /* 아래 help 블록은 그대로 둬도 됨 */
+    .token-help{ margin-top:10px; }
+    .token-help .help-line{
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      margin-top:6px;
+    }
+    .token-help .help-line:first-child{ margin-top:0; }
   </style>
 </head>
 
@@ -696,6 +695,13 @@
         <div class="box">
           <div class="box-title">
             <span>GitHub 설정</span>
+
+            <!-- ✅ 설정 초기화 버튼: 우측 상단으로 이동 -->
+            <button id="resetAllBtn" class="btn btn-ghost" type="button"
+                    onclick="resetAllSettings()"
+                    title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
+              설정 초기화
+            </button>
           </div>
 
           <div class="row">
@@ -740,9 +746,9 @@
 
           <div class="toolbar">
             <div id="loadHint" class="load-hint">먼저 ‘불러오기’를 눌러 주세요.<span class="blink-arrow">➜</span></div>
-            <button id="resetAllBtn" class="btn btn-ghost" type="button" onclick="resetAllSettings()" title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
-              설정 초기화
-            </button>
+
+            <!-- ✅ 여기 있던 설정 초기화 버튼은 제거됨 -->
+
             <button id="loadBtn" class="btn btn-primary" onclick="loadAllFiles()">불러오기</button>
           </div>
         </div>
@@ -1140,6 +1146,12 @@
       return (key === "deceased")
         ? ["봉안번호","봉안 번호","봉안no","봉안No","번호","관리번호"]
         : ["자연장번호","자연장 번호","자연장no","자연장No","번호","관리번호"];
+    }
+
+    // ✅ "구분" 칸이 "부부단"인지 판정(첨부파일 기준)
+    function coupleFlagFromRow(rowObj){
+      const v = String(getCellByHeader(rowObj, ["구분","구 분","단구분","단 구분"])).trim();
+      return norm(v).includes(norm("부부단"));
     }
 
     function showStatus(msg, type) {
@@ -1769,7 +1781,10 @@
         const adds = { deceased: [], nature: [] };
         const rets = [];
 
-        const uploadNoSet = { deceased: new Set(), nature: new Set() };
+        // ✅ 업로드 내 동일 번호 허용(부부단 2명) 반영: Set → Map(count/max)
+        const uploadNoCount = { deceased: new Map(), nature: new Map() };
+        const uploadNoMax   = { deceased: new Map(), nature: new Map() };
+
         const uploadRetKeySet = new Set();
 
         let processed = 0;
@@ -1891,14 +1906,29 @@
               continue;
             }
 
+            // ✅ 구분칸 "부부단"이면 동일 번호 2명까지 허용(첨부파일 기준)
+            const isCouple = coupleFlagFromRow(r);
             const vNo = norm(noRaw);
-            if (uploadNoSet[targetKey].has(vNo)){
-              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"업로드 파일(전체) 내 동일 번호가 중복되었습니다." });
+
+            const prevMax = uploadNoMax[targetKey].get(vNo) ?? 1;
+            const maxAllowed = isCouple ? Math.max(prevMax, 2) : prevMax;
+            uploadNoMax[targetKey].set(vNo, maxAllowed);
+
+            const curCnt = uploadNoCount[targetKey].get(vNo) ?? 0;
+            if (curCnt + 1 > maxAllowed){
+              importFailLog.push({
+                file:file.name, rowNo, target:targetLabel, kind:"신규",
+                no:noRaw, deceased, applicant,
+                reason: (maxAllowed === 2)
+                  ? "업로드 파일(전체) 내 동일 번호가 2건을 초과했습니다(부부단 허용 2건)."
+                  : "업로드 파일(전체) 내 동일 번호가 중복되었습니다."
+              });
               continue;
             }
-            uploadNoSet[targetKey].add(vNo);
+            uploadNoCount[targetKey].set(vNo, curCnt + 1);
 
-            adds[targetKey].push({ file:file.name, rowNo, inDate, no:noRaw, deceased, applicant });
+            // ✅ adds에 isCouple 포함(아래 applyAdds에서 최종 허용인원 계산에 사용)
+            adds[targetKey].push({ file:file.name, rowNo, inDate, no:noRaw, deceased, applicant, isCouple });
           }
         }
 
@@ -1936,24 +1966,25 @@
 
           if (missing.length) throw new Error(`[${ds(key).label}] 헤더를 찾을 수 없습니다: ${missing.join(", ")}`);
 
-          const noStatus = new Map();
+          // ✅ 번호별 "현재 사용중(반환일자 없음)" 인원 수 집계
+          const activeCount = new Map();
+
           if (key === "deceased") {
             for (const row of rows) {
               const vv = norm(row[idxNo]);
               if (!vv) continue;
 
               const hasRet = String(row[idxReturn] ?? "").trim() !== "";
-              const cur = noStatus.get(vv) || { hasActive: false, hasReturned: false };
+              if (hasRet) continue; // 반환된 건은 active 아님
 
-              if (hasRet) cur.hasReturned = true;
-              else cur.hasActive = true;
-
-              noStatus.set(vv, cur);
+              activeCount.set(vv, (activeCount.get(vv) ?? 0) + 1);
             }
           } else {
+            // 자연장지는 반환 개념이 없으므로 기존 데이터도 active로 카운트
             for (const row of rows) {
               const vv = norm(row[idxNo]);
-              if (vv) noStatus.set(vv, { hasActive: true, hasReturned: false });
+              if (!vv) continue;
+              activeCount.set(vv, (activeCount.get(vv) ?? 0) + 1);
             }
           }
 
@@ -1962,27 +1993,21 @@
           for (const q of adds[key]){
             const vv = norm(q.no);
 
-            if (noStatus.has(vv)){
-              if (key !== "deceased"){
-                importFailLog.push({
-                  file:q.file, rowNo:q.rowNo,
-                  target:ds(key).label, kind:"신규",
-                  no:q.no, deceased:q.deceased, applicant:q.applicant,
-                  reason:"해당 대상 파일의 기존 번호와 중복됩니다."
-                });
-                continue;
-              }
+            // ✅ 첨부파일 기준: 부부단이면 2, 아니면 1
+            // (같은 번호가 여러 파일에 걸쳐있어도 uploadNoMax에 이미 2로 올라가 있음)
+            const maxAllowed = (uploadNoMax[key].get(vv) ?? (q.isCouple ? 2 : 1));
+            const curActive = activeCount.get(vv) ?? 0;
 
-              const st = noStatus.get(vv);
-              if (st.hasActive){
-                importFailLog.push({
-                  file:q.file, rowNo:q.rowNo,
-                  target:ds(key).label, kind:"신규",
-                  no:q.no, deceased:q.deceased, applicant:q.applicant,
-                  reason:"해당 봉안번호는 현재 사용 중입니다(반환일자 없음)."
-                });
-                continue;
-              }
+            if (curActive + 1 > maxAllowed){
+              importFailLog.push({
+                file:q.file, rowNo:q.rowNo,
+                target:ds(key).label, kind:"신규",
+                no:q.no, deceased:q.deceased, applicant:q.applicant,
+                reason: (maxAllowed === 2)
+                  ? "해당 번호는 현재 사용중 2건까지 허용되며(부부단), 이미 2건이 사용 중입니다."
+                  : "해당 대상 파일의 기존 번호와 중복됩니다(1건만 허용)."
+              });
+              continue;
             }
 
             const row = new Array(headers.length).fill("");
@@ -1995,12 +2020,8 @@
             next[key].highlight.add(rows.length - 1);
             added++;
 
-            if (key === "deceased") {
-              const prev = noStatus.get(vv) || { hasActive: false, hasReturned: false };
-              noStatus.set(vv, { hasActive: true, hasReturned: prev.hasReturned });
-            } else {
-              noStatus.set(vv, { hasActive: true, hasReturned: false });
-            }
+            // ✅ 사용중 카운트 증가
+            activeCount.set(vv, curActive + 1);
           }
 
           return added;
