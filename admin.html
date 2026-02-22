@@ -8,11 +8,9 @@
   <link rel="icon" type="image/x-icon" href="./images/symbol.png">
   <link rel="apple-touch-icon" href="./images/symbol.png">
 
-  <!-- Handsontable -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
 
-  <!-- XLSX -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
@@ -28,13 +26,11 @@
       --primary:#2f6fb2;
       --primary-h:#285f98;
 
-      --success:#0f766e;
-      --warn:#b45309;
       --danger:#b42318;
 
       --shadow: 0 6px 14px rgba(17, 24, 39, 0.08);
-      --radius:6px;
-      --radius-sm:4px;
+      --radius:8px;
+      --radius-sm:6px;
 
       --header:#eef2f7;
     }
@@ -49,7 +45,7 @@
         Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       display:flex;
       justify-content:center;
-      font-size:15px;
+      font-size:16px;
     }
 
     .container{
@@ -78,14 +74,12 @@
       min-width:0;
     }
     .title{
-      font-size:20px;
+      font-size:22px;
       font-weight:900;
       letter-spacing:-0.2px;
       margin:0;
       line-height:1.15;
     }
-
-    /* ✅ 제목 아래 메타 정보는 숨김 처리 */
     .meta-line{ display:none !important; }
 
     .header-right{
@@ -95,7 +89,7 @@
       flex-shrink:0;
     }
     .logo{
-      height:36px;
+      height:38px;
       width:auto;
       display:block;
       filter: saturate(0.95) contrast(0.98);
@@ -103,7 +97,6 @@
 
     .content{ padding:12px 16px 14px; }
 
-    /* 상단 2개 박스 동일 폭 + 높이 맞춤 */
     .top-panels{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -121,14 +114,13 @@
       border-radius: var(--radius);
       padding:12px;
       margin-bottom:10px;
-    }
-
-    /* ✅ 상단 박스(로드정보/일괄등록) 높이 줄이기 */
-    .top-panels .box{
-      margin-bottom:0;
       display:flex;
       flex-direction:column;
-      min-height: 210px; /* 줄임 */
+    }
+
+    .top-panels .box{
+      margin-bottom:0;
+      min-height: 190px;
     }
 
     .box-title{
@@ -139,7 +131,7 @@
       font-weight:900;
       margin-bottom:10px;
       color:#111827;
-      font-size:15px;
+      font-size:16px;
     }
 
     .row{
@@ -151,18 +143,18 @@
 
     .form-group label{
       display:block;
-      font-weight:800;
-      font-size:13px;
+      font-weight:900;
+      font-size:14px;
       margin-bottom:6px;
       color:#374151;
     }
     .form-group input, .form-group select{
       width:100%;
-      padding:9px 10px;
+      padding:10px 11px;
       border:1px solid var(--line);
       border-radius: var(--radius-sm);
       background:#fff;
-      font-size:14px;
+      font-size:15px;
       outline:none;
       transition:0.12s;
     }
@@ -172,11 +164,11 @@
     }
 
     .field-help{
-      margin-top:8px;
-      font-size:12px;
+      margin-top:10px;
+      font-size:13px;
       color:var(--muted);
-      font-weight:700;
-      line-height:1.35;
+      font-weight:800;
+      line-height:1.45;
     }
 
     .toolbar{
@@ -190,10 +182,10 @@
 
     .btn{
       border:1px solid var(--line);
-      padding:9px 12px;
+      padding:10px 13px;
       border-radius: var(--radius-sm);
-      font-size:14px;
-      font-weight:800;
+      font-size:15px;
+      font-weight:900;
       cursor:pointer;
       transition:0.12s;
       display:inline-flex;
@@ -201,7 +193,7 @@
       gap:8px;
       background:#fff;
       color:#111827;
-      min-height:36px;
+      min-height:38px;
     }
     .btn:disabled{ opacity:0.55; cursor:not-allowed; }
     .btn:hover{ background:#f9fafb; }
@@ -220,13 +212,14 @@
       border:1px solid var(--line);
       background:#fff;
       color:#111827;
-      padding:9px 10px;
+      padding:10px 11px;
       border-radius: var(--radius-sm);
-      font-weight:800;
+      font-weight:900;
       cursor:pointer;
       transition:0.12s;
       white-space:nowrap;
-      min-height:36px;
+      min-height:38px;
+      font-size:15px;
     }
     .icon-btn:hover{ background:#f9fafb; }
 
@@ -236,13 +229,13 @@
       top: 10px;
       z-index: 50;
       margin:10px 0 10px;
-      padding:10px 12px;
+      padding:12px 12px;
       border-radius: var(--radius-sm);
       border:1px solid var(--line);
       background:#fff;
       color:#111827;
       white-space:pre-wrap;
-      font-size:14px;
+      font-size:15px;
       cursor:pointer;
     }
     .status.success{ border-color:#99f6e4; background:#f0fdfa; color:#134e4a; }
@@ -253,8 +246,13 @@
       border:1px solid var(--line-soft);
       background:#fafafa;
       border-radius: var(--radius-sm);
-      padding:9px;
+      padding:10px;
       transition:0.12s;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      flex:1;
+      min-height:120px;
     }
     .file-panel.drop-ready{
       outline: 2px dashed rgba(47,111,178,0.35);
@@ -262,102 +260,45 @@
       background: #f3f7ff;
     }
 
-    .file-panel-head{
+    .file-panel-top{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      margin-bottom:8px;
-    }
-    .file-panel-title{
-      font-size:13px;
-      font-weight:900;
-      color:#111827;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
+      flex-wrap:wrap;
     }
     .count{
       font-weight:900;
       color:#111827;
       background:#fff;
       border:1px solid var(--line-soft);
-      padding:2px 8px;
+      padding:3px 10px;
       border-radius: var(--radius-sm);
       white-space:nowrap;
-      font-size:12px;
-    }
-    .file-panel-actions{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
+      font-size:13px;
     }
 
-    .file-list{
-      list-style:none;
-      padding:0;
-      margin:0;
+    .drop-hint{
+      flex:1;
       display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-    .file-list li{
-      display:grid;
-      grid-template-columns: 1fr auto;
       align-items:center;
-      gap:10px;
-      padding:7px 8px;
-      background:#fff;
-      border:1px solid var(--line-soft);
+      justify-content:center;
+      text-align:center;
+      padding:12px;
+      border:1px dashed var(--line);
       border-radius: var(--radius-sm);
-      font-size:13px;
-      color:#111827;
-    }
-    .file-left{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      min-width:0;
-    }
-    .file-name{
+      background:#fff;
       font-weight:900;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
+      color:#374151;
+      font-size:15px;
+      min-height:70px;
     }
-    .file-sub{
-      font-size:12px;
-      color:var(--muted);
-      font-weight:800;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+
+    .muted{ color:var(--muted); font-weight:800; }
     .mono{
       font-variant-numeric: tabular-nums;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
-
-    .x-btn{
-      border:1px solid var(--line);
-      background:#fff;
-      color:#374151;
-      width:28px;
-      height:28px;
-      border-radius: var(--radius-sm);
-      cursor:pointer;
-      font-weight:900;
-      line-height:1;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      flex-shrink:0;
-    }
-    .x-btn:hover{ background:#f9fafb; }
-
-    .muted{ color:var(--muted); font-weight:800; }
 
     .grid-head{
       display:flex;
@@ -375,18 +316,20 @@
       border:1px solid var(--line);
       border-bottom:0;
       background:#fff;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      overflow:hidden;
     }
     .tab-btn{
       border:0;
       background:#f9fafb;
       cursor:pointer;
-      padding:9px 14px;
+      padding:10px 16px;
       font-weight:900;
-      font-size:13px;
+      font-size:14px;
       color:#374151;
       border-right:1px solid var(--line);
       border-radius:0;
-      min-width:110px;
+      min-width:120px;
     }
     .tab-btn:last-child{ border-right:0; }
     .tab-btn:disabled{ opacity:0.55; cursor:not-allowed; }
@@ -401,28 +344,23 @@
       align-items:flex-end;
       gap:10px;
       flex-wrap:wrap;
+      margin-left:auto;
     }
     .grid-meta{
-      font-size:12px;
+      font-size:13px;
       color:#374151;
       font-weight:900;
       white-space:nowrap;
       padding-bottom:2px;
     }
-    .grid-limit{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      white-space:nowrap;
-      font-size:12px;
-      font-weight:900;
-      color:#374151;
-    }
-    .grid-limit select{
+    .grid-right select{
       width:auto;
-      padding:7px 10px;
-      font-size:13px;
+      padding:8px 10px;
+      font-size:14px;
       font-weight:900;
+      border:1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background:#fff;
     }
 
     #hotContainer{
@@ -435,7 +373,6 @@
     }
     .hot-row-highlight{ background: rgba(47,111,178,0.12) !important; }
 
-    /* ✅ 로그인/설정 모달 */
     .modal-backdrop{
       position:fixed;
       inset:0;
@@ -465,7 +402,7 @@
       background:#f8fafc;
     }
     .modal-title{
-      font-size:14px;
+      font-size:15px;
       font-weight:900;
       margin:0;
       color:#111827;
@@ -473,8 +410,8 @@
     .modal-body{
       padding:12px 14px;
       color:#111827;
-      font-size:13px;
-      line-height:1.5;
+      font-size:14px;
+      line-height:1.55;
       max-height:78vh;
       overflow:auto;
     }
@@ -513,22 +450,18 @@
       max-width:100%;
       margin:0;
       padding:0;
+      font-weight:900;
     }
     .token-persist .token-check input{ transform: translateY(1px); }
-    .token-persist .token-label{
-      display:inline-flex;
-      align-items:baseline;
-      gap:10px;
-      white-space:nowrap;
-    }
     .token-persist .token-inline-note{
       font-size:12px;
       font-weight:800;
       color:var(--muted);
-      line-height:1.35;
+      line-height:1.4;
+      margin-left:8px;
+      white-space:nowrap;
     }
 
-    /* ✅ 로그인 실패 메시지(모달 내부) */
     .login-status{
       margin-top:10px;
       padding:10px 10px;
@@ -538,12 +471,12 @@
       font-weight:900;
       white-space:pre-wrap;
       display:none;
+      font-size:14px;
     }
     .login-status.error{ border-color:#fecdd3; background:#fff1f2; color:#7f1d1d; }
     .login-status.loading{ background:#f8fafc; color:#374151; }
     .login-status.success{ border-color:#99f6e4; background:#f0fdfa; color:#134e4a; }
 
-    /* ✅ “접근 차단” 느낌(로드 전) */
     .locked{
       filter: blur(0.6px);
       opacity:0.55;
@@ -553,25 +486,8 @@
 
     .danger{ color:var(--danger); font-weight:900; white-space:pre-wrap; }
 
-    /* 일괄등록 박스 조금 더 타이트 */
-    .bulk-box .file-panel{
-      margin-bottom: 10px;
-    }
-    .bulk-box #selectedFiles{
-      min-height:160px; /* 줄임 */
-      max-height:220px;
-      overflow:auto;
-    }
-    .bulk-box .field-help{
-      margin-top:10px;
-      font-size:13px;
-      font-weight:900;
-      color:#374151;
-      line-height:1.5;
-    }
     .bulk-box .toolbar{ margin-top: 10px; }
 
-    /* 로드 정보 박스 */
     .info-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
@@ -584,18 +500,18 @@
       padding:10px;
     }
     .info-item .k{
-      font-size:12px;
+      font-size:13px;
       font-weight:900;
       color:#374151;
       margin-bottom:6px;
     }
     .info-item .v{
-      font-size:14px;
+      font-size:16px;
       font-weight:900;
       color:#111827;
       word-break:break-word;
     }
-    .info-item .v.mono{ font-size:13px; }
+    .info-item .v.mono{ font-size:15px; }
     .info-actions{
       margin-top:10px;
       display:flex;
@@ -604,7 +520,6 @@
       flex-wrap:wrap;
     }
 
-    /* Failure Log Modal(기존 유지) */
     .file-section{
       margin-top:12px;
       border:1px solid var(--line);
@@ -622,7 +537,7 @@
       gap:10px;
       font-weight:900;
       color:#111827;
-      font-size:13px;
+      font-size:14px;
     }
     .file-section-head .mini{
       font-size:12px;
@@ -639,12 +554,12 @@
       border-collapse:collapse;
       border:0;
       background:#fff;
-      font-size:13px;
+      font-size:14px;
     }
     table.q th, table.q td{
       border-bottom:1px solid var(--line-soft);
       border-right:1px solid var(--line-soft);
-      padding:8px 10px;
+      padding:9px 10px;
       text-align:left;
       vertical-align:top;
     }
@@ -655,6 +570,15 @@
     }
     table.q tr:last-child td{ border-bottom:0; }
     table.q th:last-child, table.q td:last-child{ border-right:0; }
+
+    #confirmModalBody{
+      font-size:18px;
+      font-weight:900;
+      line-height:1.6;
+    }
+    #confirmModalBackdrop .modal-foot{
+      justify-content:center;
+    }
   </style>
 </head>
 
@@ -663,7 +587,6 @@
     <div class="header">
       <div class="header-left">
         <h1 class="title">울산하늘공원 안치 정보 관리</h1>
-        <!-- ✅ 제목 아래 정보는 표시하지 않음 -->
         <div class="meta-line"></div>
       </div>
       <div class="header-right">
@@ -674,13 +597,9 @@
     <div class="content" id="mainContent">
       <div class="top-panels">
 
-        <!-- ✅ GitHub 설정 박스 자리: 로드된 정보 표시 -->
         <div class="box">
           <div class="box-title">
             <span>로드 정보</span>
-            <button class="btn btn-ghost" type="button" onclick="openLoginModal()">
-              GitHub 로그인/설정
-            </button>
           </div>
 
           <div class="info-grid">
@@ -707,39 +626,38 @@
           </div>
 
           <div class="info-actions">
-            <button class="btn btn-ghost" type="button" onclick="resetAllSettings()">
-              설정 초기화
+            <button class="btn btn-ghost" type="button" onclick="openLoginModal()">
+              로그인/설정
             </button>
           </div>
         </div>
 
-        <!-- 일괄등록 -->
         <div class="box bulk-box">
           <div class="box-title">
             <span>일괄등록</span>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="margin-bottom:0;">
             <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" aria-label="일괄등록 엑셀 파일 선택" />
-
             <div class="file-panel" id="fileDropZone" title="이 박스에 파일을 끌어다 놓으시면 추가됩니다">
-              <div class="file-panel-head">
-                <div class="file-panel-title">
+              <div class="file-panel-top">
+                <div style="display:flex; align-items:center; gap:10px; font-weight:900;">
                   선택 파일 <span class="count" id="selectedFileCount">0</span>
                 </div>
-                <div class="file-panel-actions">
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
                   <button class="btn btn-ghost" id="pickFilesBtn" type="button" onclick="triggerFilePick()" disabled>파일 추가</button>
                   <button class="btn btn-ghost" id="bulkResetBtn" type="button" onclick="resetBulkUpload()" disabled>초기화</button>
                 </div>
               </div>
 
-              <div id="selectedFiles" class="muted">선택된 파일 없음</div>
+              <div class="drop-hint" id="dropHint" onclick="triggerFilePick()">
+                여기에 파일을 끌어다 놓거나 클릭해서 선택하세요
+              </div>
 
-              <div class="field-help">
+              <div class="field-help" style="margin-top:0;">
                 <ul style="margin:0; padding-left:18px;">
                   <li>파일을 이 박스에 끌어다 놓으셔도 추가됩니다.</li>
-                  <li>일부 파일만 제외하려면 각 파일의 ×를 눌러 주세요.</li>
-                  <li class="danger">※ 자연장지에도 “부부” 관련 값이 있으면 동일 번호 2건까지 허용됩니다.</li>
+                  <li>초기화 버튼으로 선택 파일을 모두 지울 수 있습니다.</li>
                 </ul>
               </div>
             </div>
@@ -752,10 +670,8 @@
 
       </div>
 
-      <!-- 상태 (전체 폭) -->
       <div id="statusMsg" class="status" role="status" aria-live="polite" title="클릭하시면 닫힙니다"></div>
 
-      <!-- 그리드(불러온 데이터) -->
       <div id="afterLoad" class="box" style="display:none;">
         <div class="grid-head">
           <div class="tabs" aria-label="대상 탭">
@@ -764,15 +680,12 @@
           </div>
 
           <div class="grid-right">
-            <div class="grid-limit">
-              표시건수
-              <select id="gridLimitSelect" onchange="changeGridLimit()">
-                <option value="20">20건</option>
-                <option value="50">50건</option>
-                <option value="100">100건</option>
-              </select>
-            </div>
             <div class="grid-meta" id="gridMeta">최근 20건 표시</div>
+            <select id="gridLimitSelect" onchange="changeGridLimit()">
+              <option value="20">20건</option>
+              <option value="50">50건</option>
+              <option value="100">100건</option>
+            </select>
           </div>
         </div>
 
@@ -781,11 +694,10 @@
     </div>
   </div>
 
-  <!-- ✅ GitHub 로그인/설정 모달 (로드 성공 시 닫힘 / 실패 시 메인 접근 불가) -->
   <div id="loginModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-head">
-        <div class="modal-title">GitHub 로그인/설정</div>
+        <div class="modal-title">로그인/설정</div>
         <button class="btn btn-ghost" type="button" onclick="resetAllSettings()" title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
           설정 초기화
         </button>
@@ -822,10 +734,8 @@
             <div class="token-persist">
               <label class="token-check">
                 <input type="checkbox" id="tokenPersist" checked />
-                <span class="token-label">
-                  이 브라우저에 토큰 저장
-                  <span class="token-inline-note">※ 체크 해제 시(권장: 공용 PC) 브라우저를 닫으면 토큰이 사라집니다.</span>
-                </span>
+                <span>이 브라우저에 토큰 저장</span>
+                <span class="token-inline-note">※ 체크 해제 시 브라우저 종료 시 토큰이 사라집니다.</span>
               </label>
             </div>
 
@@ -844,7 +754,6 @@
     </div>
   </div>
 
-  <!-- Failure Log Modal -->
   <div id="logModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
     <div class="modal" style="max-width:1200px;">
       <div class="modal-head">
@@ -857,7 +766,6 @@
     </div>
   </div>
 
-  <!-- Confirm Modal (일괄등록 확인) -->
   <div id="confirmModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
     <div class="modal" style="max-width:520px;">
       <div class="modal-head">
@@ -868,32 +776,28 @@
         계속 하시려면 [확인], 취소하시려면 [취소]를 선택해 주세요.
       </div>
       <div class="modal-foot">
-        <button class="btn btn-ghost" onclick="confirmBulkCancel()">취소</button>
         <button class="btn btn-primary" onclick="confirmBulkOk()">확인</button>
+        <button class="btn btn-ghost" onclick="confirmBulkCancel()">취소</button>
       </div>
     </div>
   </div>
 
   <script>
-    // ===== 설정 =====
     const FILES = {
-      deceased: "data/deceased_data.xlsx",
-      nature: "data/nature_data.xlsx"
+      deceased: "data/deceased_data.json",
+      nature: "data/nature_data.json"
     };
 
-    // ✅ 표시건수 드롭다운
     const GRID_LIMIT_OPTIONS = [20, 50, 100];
     let GRID_LIMIT = 20;
 
-    // ===== 상태 =====
     let hot = null;
     let fileKey = "deceased";
     let isBusy = false;
     let isLoaded = false;
     let loadedAtText = "";
 
-    // 업로드 파일 상태
-    let selectedFiles = []; // [{id, file}]
+    let selectedFiles = [];
     let importFailLog = [];
 
     const DETECT_HINT = [
@@ -904,9 +808,8 @@
       " - '추모의집' 또는 '00실' 포함 → 추모의집",
       " - '잔디장/수목장/자연장' 포함 또는 '이름-숫자-숫자-4자리' 형태 → 자연장지",
       " - 끝자리 숫자 5자리 → 추모의집 / 4자리 → 자연장지(보조)"
-    ].join("\\n");
+    ].join("\n");
 
-    // 데이터셋(2개 파일 동시 관리)
     const DATASETS = {
       deceased: {
         label: "추모의집",
@@ -916,6 +819,7 @@
         headers: [],
         rows: [],
         highlight: new Set(),
+        jsonFormat: "array_obj"
       },
       nature: {
         label: "자연장지",
@@ -925,11 +829,11 @@
         headers: [],
         rows: [],
         highlight: new Set(),
+        jsonFormat: "array_obj"
       }
     };
     const ds = (k = fileKey) => DATASETS[k];
 
-    // ✅ 토큰 저장 옵션: 저장소 선택
     function isTokenPersistEnabled(){
       return document.getElementById("tokenPersist")?.checked ?? true;
     }
@@ -937,7 +841,6 @@
       return isTokenPersistEnabled() ? localStorage : sessionStorage;
     }
 
-    // ===== 공통 유틸 =====
     function pad2(n){ return String(n).padStart(2,"0"); }
     function formatLoadedAt(d){
       const yyyy = d.getFullYear();
@@ -950,7 +853,7 @@
 
     function norm(s) {
       return String(s ?? "")
-        .replace(/\\s+/g, "")
+        .replace(/\s+/g, "")
         .replace(/[–—]/g, "-")
         .toLowerCase();
     }
@@ -963,19 +866,7 @@
         .replaceAll("'", "&#039;");
     }
     function escapeHtmlWithBr(s){
-      return escapeHtml(s).replaceAll("\\n","<br>");
-    }
-    function formatBytes(bytes){
-      const n = Number(bytes || 0);
-      if (!isFinite(n) || n <= 0) return "0 B";
-      const units = ["B","KB","MB","GB"];
-      let v = n, i = 0;
-      while (v >= 1024 && i < units.length - 1){
-        v = v / 1024;
-        i++;
-      }
-      const fixed = (i === 0) ? String(Math.round(v)) : v.toFixed(1);
-      return `${fixed} ${units[i]}`;
+      return escapeHtml(s).replaceAll("\n","<br>");
     }
 
     function normalizeDate(input) {
@@ -986,14 +877,14 @@
         const y = onlyNum.slice(0,4), m = onlyNum.slice(4,6), d = onlyNum.slice(6,8);
         return `${y}-${m}-${d}`;
       }
-      const cleaned = raw.replace(/\\./g, "-").replace(/\\//g, "-");
+      const cleaned = raw.replace(/\./g, "-").replace(/\//g, "-");
       const parts = cleaned.split("-").map(p => p.trim()).filter(Boolean);
       if (parts.length >= 3) {
         let [y,m,d] = parts;
         if (y.length === 2) y = "20" + y;
         m = String(parseInt(m,10)).padStart(2,"0");
         d = String(parseInt(d,10)).padStart(2,"0");
-        if (!/^\\d{4}$/.test(y) || m === "NaN" || d === "NaN") return "";
+        if (!/^\d{4}$/.test(y) || m === "NaN" || d === "NaN") return "";
         return `${y}-${m}-${d}`;
       }
       return "";
@@ -1018,6 +909,11 @@
       return btoa(binary);
     }
 
+    function utf8ToBase64(str){
+      const bytes = new TextEncoder().encode(str);
+      return uint8ArrayToBase64(bytes);
+    }
+
     function getCellByHeader(rowObj, candidates) {
       const keys = Object.keys(rowObj || {});
       const map = new Map(keys.map(k => [norm(k), k]));
@@ -1034,7 +930,6 @@
         : ["자연장번호","자연장 번호","자연장no","자연장No","번호","관리번호"];
     }
 
-    // ✅ “부부” 판정: 업로드 파일의 여러 칸에서 '부부' 포함 여부로 판단(자연장지 포함)
     function coupleFlagFromRow(rowObj){
       const candidates = [
         ["구분","구 분","단구분","단 구분"],
@@ -1050,19 +945,17 @@
       return norm(all).includes(norm("부부"));
     }
 
-    // ✅ 자연장지 안장구분 값 추출: 업로드 값이 있으면 우선, 없으면 부부판정 기반
     function burialTypeFromRow(rowObj){
       const raw = String(getCellByHeader(rowObj, ["안장구분","안장 구분","안장구분(개인/부부)","안장(구분)","구분","단구분"])).trim();
       const n = norm(raw);
       if (n.includes(norm("부부"))) return "부부장";
       if (n.includes(norm("개인"))) return "개인장";
-      // 값이 없거나 애매하면 coupleFlag로 보조
       return coupleFlagFromRow(rowObj) ? "부부장" : "개인장";
     }
 
     function showStatus(msg, type) {
       const el = document.getElementById("statusMsg");
-      el.textContent = (msg || "") + "\\n(클릭하시면 닫힙니다)";
+      el.textContent = (msg || "") + "\n(클릭하시면 닫힙니다)";
       el.className = "status " + type;
       el.style.display = "block";
       if (type === "success") setTimeout(() => (el.style.display = "none"), 2500);
@@ -1104,7 +997,6 @@
       document.getElementById("tabDeceased").disabled = !v || isBusy;
       document.getElementById("tabNature").disabled = !v || isBusy;
 
-      // ✅ 로드 전 접근 차단(모달 떠있는 동안)
       const main = document.getElementById("mainContent");
       if (main){
         main.classList.toggle("locked", !v);
@@ -1180,7 +1072,6 @@
       setLoaded(false);
       resetBulkUpload();
 
-      // 그리드 제한 초기화
       GRID_LIMIT = 20;
       const sel = document.getElementById("gridLimitSelect");
       if (sel) sel.value = String(GRID_LIMIT);
@@ -1221,12 +1112,8 @@
       document.getElementById("tabNature").classList.toggle("active", fileKey === "nature");
 
       updateGridMeta();
-
       if (isLoaded) renderGridForCurrentTarget();
-
-      if (!isInit && isLoaded) {
-        updateInfoPanel();
-      }
+      if (!isInit && isLoaded) updateInfoPanel();
     }
 
     function getInputs() {
@@ -1237,7 +1124,6 @@
       return { owner, repo, token, branch };
     }
 
-    // ✅ 저장옵션에 따라 토큰 저장소 분기
     function saveInputsToStorage({owner, repo, token, branch}) {
       const persist = isTokenPersistEnabled();
       localStorage.setItem("gh_owner", owner);
@@ -1258,57 +1144,22 @@
       return `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(branch)}`;
     }
 
-    function makeFileId(file){
-      return `${file.name}__${file.size}__${file.lastModified}`;
-    }
-
     function triggerFilePick(){
       if (!isLoaded || isBusy) return;
       document.getElementById("bulkFile")?.click();
     }
 
     function addSelectedFiles(files){
-      const exist = new Set(selectedFiles.map(x => x.id));
       for (const f of files){
-        const id = makeFileId(f);
-        if (exist.has(id)) continue;
-        selectedFiles.push({ id, file: f });
-        exist.add(id);
+        const lower = (f.name || "").toLowerCase();
+        if (!(lower.endsWith(".xlsx") || lower.endsWith(".xls"))) continue;
+        selectedFiles.push(f);
       }
     }
 
-    function removeSelectedFile(id){
-      selectedFiles = selectedFiles.filter(x => x.id !== id);
-      renderSelectedFiles();
-      updateBulkButtonState();
-    }
-
-    function renderSelectedFiles(){
-      const box = document.getElementById("selectedFiles");
+    function renderSelectedFileCount(){
       const cnt = document.getElementById("selectedFileCount");
       cnt.textContent = String(selectedFiles.length);
-
-      if (!selectedFiles.length){
-        box.innerHTML = `<span class="muted">선택된 파일 없음</span>`;
-        return;
-      }
-
-      const items = selectedFiles.map(({id, file}) => {
-        return `
-          <li>
-            <div class="file-left">
-              <div class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</div>
-              <div class="file-sub">
-                <span class="mono">${escapeHtml(formatBytes(file.size))}</span>
-                <span class="mono">${escapeHtml(new Date(file.lastModified).toLocaleString())}</span>
-              </div>
-            </div>
-            <button class="x-btn" type="button" title="목록에서 제거" onclick="removeSelectedFile('${id}')">×</button>
-          </li>
-        `;
-      }).join("");
-
-      box.innerHTML = `<ul class="file-list">${items}</ul>`;
     }
 
     function updateBulkButtonState(){
@@ -1319,11 +1170,10 @@
 
     function resetBulkUpload(){
       selectedFiles = [];
-      renderSelectedFiles();
+      renderSelectedFileCount();
       updateBulkButtonState();
     }
 
-    // 모달: 일괄등록 확인
     function openConfirmModal(){
       document.getElementById("confirmModalBackdrop").style.display = "flex";
     }
@@ -1343,29 +1193,7 @@
       if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
     });
 
-    // ✅ 로그인 모달: 바깥 클릭 방지(실수로 닫히지 않도록) -> 필요하면 아래 주석 해제
-    // document.getElementById("loginModalBackdrop")?.addEventListener("click", (e) => {
-    //   if (e.target.id === "loginModalBackdrop") { /* do nothing */ }
-    // });
-
-    function confirmAndImportBulkExcelAutoSave(){
-      if (!isLoaded) {
-        openLoginModal();
-        showLoginStatus("먼저 불러오기를 완료해 주세요.", "error");
-        showStatus("먼저 ‘불러오기’를 완료해 주세요.", "error");
-        return;
-      }
-      if (isBusy) return;
-
-      if (!selectedFiles.length){
-        showStatus("일괄등록할 파일을 추가해 주세요.", "error");
-        return;
-      }
-
-      openConfirmModal();
-    }
-
-    async function fetchXlsxFromGitHub({owner, repo, token, branch}, path){
+    async function fetchJsonFromGitHub({owner, repo, token, branch}, path){
       const apiUrl = buildContentsUrl(owner, repo, path, branch);
 
       const metaRes = await fetch(apiUrl, {
@@ -1373,7 +1201,7 @@
       });
       if (!metaRes.ok) {
         const txt = await metaRes.text();
-        throw new Error(`메타 조회 실패: ${path} (${metaRes.status})\\n${txt}`);
+        throw new Error(`메타 조회 실패: ${path} (${metaRes.status})\n${txt}`);
       }
       const meta = await metaRes.json();
       if (Array.isArray(meta)) throw new Error(`경로가 폴더로 인식됨: ${path}`);
@@ -1382,37 +1210,72 @@
       const fileRes = await fetch(meta.download_url);
       if (!fileRes.ok) {
         const txt = await fileRes.text();
-        throw new Error(`다운로드 실패: ${path} (${fileRes.status})\\n${txt}`);
+        throw new Error(`다운로드 실패: ${path} (${fileRes.status})\n${txt}`);
       }
 
-      const buf = await fileRes.arrayBuffer();
-      const bytes = new Uint8Array(buf);
-
-      const wb = XLSX.read(bytes, { type: "array" });
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
-
-      return { sha: meta.sha || "", aoa };
+      const json = await fileRes.json();
+      return { sha: meta.sha || "", json };
     }
 
-    function normalizeLoadedDataset(key, aoa){
-      const d = ds(key);
-      d.headers = (aoa && aoa.length > 0) ? aoa[0].map(h => String(h ?? "").trim()) : [];
-      d.rows = (aoa && aoa.length > 1) ? aoa.slice(1) : [];
+    function parseJsonDataset(json){
+      if (Array.isArray(json)){
+        if (!json.length) return { format:"array_obj", headers:[], rows:[] };
+        if (json.length && json.every(x => x && typeof x === "object" && !Array.isArray(x))){
+          const headers = [];
+          const seen = new Set();
+          for (const obj of json){
+            for (const k of Object.keys(obj)){
+              const nk = String(k);
+              if (!seen.has(nk)){
+                seen.add(nk);
+                headers.push(nk);
+              }
+            }
+          }
+          const rows = json.map(obj => headers.map(h => (obj && obj[h] != null) ? obj[h] : ""));
+          return { format:"array_obj", headers, rows };
+        }
+        if (Array.isArray(json[0])){
+          const headers = (json[0] || []).map(h => String(h ?? "").trim());
+          const rows = json.slice(1).map(r => (Array.isArray(r) ? r : []));
+          return { format:"aoa", headers, rows };
+        }
+        return { format:"array_obj", headers:[], rows:[] };
+      }
 
-      // 추모의집은 반환일자 컬럼 보장
+      if (json && typeof json === "object"){
+        if (Array.isArray(json.headers) && Array.isArray(json.rows)){
+          const headers = json.headers.map(h => String(h ?? "").trim());
+          let rows = json.rows;
+          if (rows.length && rows.every(r => r && typeof r === "object" && !Array.isArray(r))){
+            rows = rows.map(obj => headers.map(h => (obj && obj[h] != null) ? obj[h] : ""));
+            return { format:"table_objrows", headers, rows };
+          }
+          rows = rows.map(r => Array.isArray(r) ? r : []);
+          return { format:"table", headers, rows };
+        }
+      }
+
+      return { format:"array_obj", headers:[], rows:[] };
+    }
+
+    function normalizeLoadedDataset(key, json){
+      const d = ds(key);
+      const parsed = parseJsonDataset(json);
+
+      d.jsonFormat = parsed.format;
+      d.headers = parsed.headers || [];
+      d.rows = parsed.rows || [];
+
       if (key === "deceased") {
         const idxReturn = findHeaderIndex(d.headers, ["반환일자","반환 일자","반환일"]);
         if (idxReturn === -1) d.headers.push("반환일자");
       }
-
-      // ✅ 자연장지(잔디장) 관리용: '안장구분' 헤더 보장(개인장/부부장)
       if (key === "nature") {
         const idxBurial = findHeaderIndex(d.headers, ["안장구분","안장 구분"]);
         if (idxBurial === -1) d.headers.push("안장구분");
       }
 
-      // 모든 row 길이 맞춤
       for (const row of d.rows) while (row.length < d.headers.length) row.push("");
 
       d.highlight = new Set();
@@ -1458,7 +1321,6 @@
       setTimeout(() => { hot.render(); hot.refreshDimensions(); }, 0);
     }
 
-    // ✅ (간략) GitHub 에러 요약
     function summarizeLoadError(errText){
       const t = String(errText || "");
       if (t.includes("401")) return "인증 실패(토큰 권한/만료).";
@@ -1480,7 +1342,6 @@
         return;
       }
 
-      // ✅ 저장옵션 반영 저장
       saveInputsToStorage({owner, repo, token, branch});
 
       setBusy(true);
@@ -1491,8 +1352,8 @@
         DATASETS.nature.loaded = false;
 
         const tasks = [
-          fetchXlsxFromGitHub(inputs, DATASETS.deceased.path).then(res => ({ key:"deceased", ...res })),
-          fetchXlsxFromGitHub(inputs, DATASETS.nature.path).then(res => ({ key:"nature", ...res }))
+          fetchJsonFromGitHub(inputs, DATASETS.deceased.path).then(res => ({ key:"deceased", ...res })),
+          fetchJsonFromGitHub(inputs, DATASETS.nature.path).then(res => ({ key:"nature", ...res }))
         ];
 
         const results = await Promise.allSettled(tasks);
@@ -1501,17 +1362,17 @@
         for (const r of results){
           if (r.status === "rejected") errors.push(r.reason?.message || String(r.reason));
           else {
-            const { key, sha, aoa } = r.value;
+            const { key, sha, json } = r.value;
             ds(key).sha = sha;
-            normalizeLoadedDataset(key, aoa);
+            normalizeLoadedDataset(key, json);
           }
         }
 
         if (errors.length){
           setLoaded(false);
-          const detail = errors.join("\\n\\n");
+          const detail = errors.join("\n\n");
           const brief = summarizeLoadError(detail);
-          showLoginStatus(`불러오기 실패: ${brief}\\n\\n(상세)\\n${detail}`, "error");
+          showLoginStatus(`불러오기 실패: ${brief}\n\n(상세)\n${detail}`, "error");
           throw new Error(brief);
         }
 
@@ -1520,20 +1381,15 @@
         localStorage.setItem("gh_loaded_at", loadedAtText);
 
         setLoaded(true);
-
-        // 표시건수 로컬 반영
         updateGridMeta();
         renderGridForCurrentTarget();
 
         updateInfoPanel();
         showLoginStatus("로드가 완료되었습니다.", "success");
         showStatus("로드가 완료되었습니다.", "success");
-
-        // ✅ 성공 시 모달 닫고 접근 허용
         closeLoginModal();
 
       } catch (e) {
-        // ✅ 실패 시 메인 접근 불가 유지(모달 유지)
         setLoaded(false);
         openLoginModal();
         const msg = e?.message || String(e);
@@ -1550,10 +1406,10 @@
       if (s.includes("추모의집")) return "deceased";
       if (s.includes("잔디장") || s.includes("수목장") || s.includes("자연장")) return "nature";
 
-      if (/-\\d{1,3}실-/.test(s) || /\\b\\d{1,3}실\\b/.test(s) || /\\d{1,3}실/.test(s)) return "deceased";
-      if (/^[^-]+-\\d+-\\d+-\\d{4}$/.test(s)) return "nature";
+      if (/-\d{1,3}실-/.test(s) || /\b\d{1,3}실\b/.test(s) || /\d{1,3}실/.test(s)) return "deceased";
+      if (/^[^-]+-\d+-\d+-\d{4}$/.test(s)) return "nature";
 
-      const m = s.match(/(\\d+)\\s*$/);
+      const m = s.match(/(\d+)\s*$/);
       if (m){
         const len = m[1].length;
         if (len === 5) return "deceased";
@@ -1642,20 +1498,32 @@
       return { found:false };
     }
 
-    async function putToGitHub(targetKey, mergedAoa, message) {
+    function buildJsonForSave(targetKey, headers, rows){
+      const format = ds(targetKey).jsonFormat;
+
+      if (format === "table" || format === "table_objrows"){
+        return { headers, rows };
+      }
+
+      const out = [];
+      for (const row of rows){
+        const obj = {};
+        for (let i = 0; i < headers.length; i++){
+          obj[headers[i]] = (row[i] ?? "");
+        }
+        out.push(obj);
+      }
+      return out;
+    }
+
+    async function putJsonToGitHub(targetKey, jsonObj, message) {
       const inputs = getInputs();
       const { owner, repo, token, branch } = inputs;
       const d = ds(targetKey);
 
       const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(d.path)}?ref=${encodeURIComponent(branch)}`;
-
-      const ws = XLSX.utils.aoa_to_sheet(mergedAoa);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-      const wbOut = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-      const bytes = new Uint8Array(wbOut);
-      const contentBase64 = uint8ArrayToBase64(bytes);
+      const jsonText = JSON.stringify(jsonObj, null, 2);
+      const contentBase64 = utf8ToBase64(jsonText);
 
       const putBody = { message, content: contentBase64, sha: d.sha, branch };
 
@@ -1671,7 +1539,7 @@
 
       if (!res.ok) {
         const txt = await res.text();
-        throw new Error(`[${d.label}] 저장 실패 (${res.status})\\n${txt}`);
+        throw new Error(`[${d.label}] 저장 실패 (${res.status})\n${txt}`);
       }
 
       const resData = await res.json();
@@ -1767,7 +1635,6 @@
       return html;
     }
 
-    // ===== 일괄등록: 자동 분류 + 즉시 저장 =====
     async function importBulkExcelAutoSave() {
       if (!isLoaded) {
         openLoginModal();
@@ -1790,17 +1657,13 @@
         const adds = { deceased: [], nature: [] };
         const rets = [];
 
-        // ✅ 업로드 내 동일 번호 허용(부부 2명) 반영
         const uploadNoCount = { deceased: new Map(), nature: new Map() };
         const uploadNoMax   = { deceased: new Map(), nature: new Map() };
-
         const uploadRetKeySet = new Set();
 
         let processed = 0;
 
-        for (const item of selectedFiles){
-          const file = item.file;
-
+        for (const file of selectedFiles){
           const lower = (file.name || "").toLowerCase();
           if (!(lower.endsWith(".xlsx") || lower.endsWith(".xls"))){
             importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"확장자가 .xlsx/.xls가 아닙니다." });
@@ -1865,7 +1728,7 @@
                 no:noRaw,
                 deceased,
                 applicant,
-                reason: "번호 패턴으로 대상(추모의집/자연장지) 판별에 실패하였습니다.\\n" + DETECT_HINT
+                reason: "번호 패턴으로 대상(추모의집/자연장지) 판별에 실패하였습니다.\n" + DETECT_HINT
               });
               continue;
             }
@@ -1900,7 +1763,6 @@
               continue;
             }
 
-            // 신규
             if (!deceased || !applicant){
               importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"필수값이 누락되었습니다(사망자명/신청자명)." });
               continue;
@@ -1915,7 +1777,6 @@
               continue;
             }
 
-            // ✅ 업로드 파일의 '부부' 관련 값이 있으면 동일번호 2건까지 허용 (자연장지 포함)
             const isCouple = coupleFlagFromRow(r);
             const vNo = norm(noRaw);
 
@@ -1929,16 +1790,14 @@
                 file:file.name, rowNo, target:targetLabel, kind:"신규",
                 no:noRaw, deceased, applicant,
                 reason: (maxAllowed === 2)
-                  ? "업로드 파일(전체) 내 동일 번호가 2건을 초과했습니다(부부 허용 2건)."
+                  ? "업로드 파일(전체) 내 동일 번호가 2건을 초과했습니다."
                   : "업로드 파일(전체) 내 동일 번호가 중복되었습니다."
               });
               continue;
             }
             uploadNoCount[targetKey].set(vNo, curCnt + 1);
 
-            // ✅ 자연장지: 안장구분 값(개인장/부부장) 세팅
             const burialType = (targetKey === "nature") ? burialTypeFromRow(r) : "";
-
             adds[targetKey].push({ file:file.name, rowNo, inDate, no:noRaw, deceased, applicant, isCouple, burialType });
           }
         }
@@ -1975,23 +1834,20 @@
             : -1;
           if (key === "deceased" && idxReturn === -1) missing.push("반환일자");
 
-          // ✅ 자연장지: 안장구분 헤더 보장 + 인덱스 확보
           let idxBurial = -1;
           if (key === "nature"){
             idxBurial = findHeaderIndex(headers, ["안장구분","안장 구분"]);
             if (idxBurial === -1){
               headers.push("안장구분");
               idxBurial = headers.length - 1;
-              // 기존 row 길이 맞춤
               for (const r of rows) while (r.length < headers.length) r.push("");
             }
           }
 
           if (missing.length) throw new Error(`[${ds(key).label}] 헤더를 찾을 수 없습니다: ${missing.join(", ")}`);
 
-          // ✅ 번호별 "현재 사용중" 인원 수 집계 + (자연장지) 기존 데이터의 안장구분으로 최대허용(부부=2) 추정
           const activeCount = new Map();
-          const existingMax = new Map(); // nature에서만 사용
+          const existingMax = new Map();
 
           if (key === "deceased") {
             for (const row of rows) {
@@ -2009,7 +1865,6 @@
               if (!vv) continue;
               activeCount.set(vv, (activeCount.get(vv) ?? 0) + 1);
 
-              // ✅ 기존 자연장지 안장구분에 '부부'가 있으면 해당 번호 최대 2로 간주
               if (idxBurial !== -1){
                 const bt = norm(row[idxBurial]);
                 if (bt.includes(norm("부부"))){
@@ -2026,10 +1881,6 @@
           for (const q of adds[key]){
             const vv = norm(q.no);
 
-            // ✅ 최대허용 계산:
-            // - 업로드에서 부부 감지되면 2
-            // - 자연장지: 기존 데이터에서 부부 흔적이 있으면 2
-            // - 그 외 1
             const baseFromUpload = (uploadNoMax[key].get(vv) ?? (q.isCouple ? 2 : 1));
             const baseFromExisting = (key === "nature") ? (existingMax.get(vv) ?? 1) : 1;
             const maxAllowed = Math.max(baseFromUpload, baseFromExisting);
@@ -2041,7 +1892,7 @@
                 target:ds(key).label, kind:"신규",
                 no:q.no, deceased:q.deceased, applicant:q.applicant,
                 reason: (maxAllowed === 2)
-                  ? "해당 번호는 현재 사용중 2건까지 허용되며(부부), 이미 2건이 사용 중입니다."
+                  ? "해당 번호는 현재 사용중 2건까지 허용되며 이미 2건이 사용 중입니다."
                   : "해당 대상 파일의 기존 번호와 중복됩니다(1건만 허용)."
               });
               continue;
@@ -2053,7 +1904,6 @@
             row[idxDe] = q.deceased;
             row[idxAp] = q.applicant;
 
-            // ✅ 자연장지: 안장구분 입력(개인장/부부장)
             if (key === "nature" && idxBurial !== -1){
               row[idxBurial] = q.burialType || (q.isCouple ? "부부장" : "개인장");
             }
@@ -2129,8 +1979,8 @@
 
         try {
           if (needSaveDe){
-            const merged = [next.deceased.headers, ...next.deceased.rows];
-            await putToGitHub("deceased", merged, `Auto bulk save (deceased) new:${addedDe} return:${retDe} ${new Date().toISOString()}`);
+            const jsonOut = buildJsonForSave("deceased", next.deceased.headers, next.deceased.rows);
+            await putJsonToGitHub("deceased", jsonOut, `Auto bulk save (deceased) new:${addedDe} return:${retDe} ${new Date().toISOString()}`);
           }
         } catch (e) {
           saveErrors.push(e.message || String(e));
@@ -2138,15 +1988,15 @@
 
         try {
           if (needSaveNa){
-            const merged = [next.nature.headers, ...next.nature.rows];
-            await putToGitHub("nature", merged, `Auto bulk save (nature) new:${addedNa} ${new Date().toISOString()}`);
+            const jsonOut = buildJsonForSave("nature", next.nature.headers, next.nature.rows);
+            await putJsonToGitHub("nature", jsonOut, `Auto bulk save (nature) new:${addedNa} ${new Date().toISOString()}`);
           }
         } catch (e) {
           saveErrors.push(e.message || String(e));
         }
 
         if (saveErrors.length){
-          showStatus("저장 중 오류가 발생하였습니다.\\n" + saveErrors.join("\\n\\n"), "error");
+          showStatus("저장 중 오류가 발생하였습니다.\n" + saveErrors.join("\n\n"), "error");
           return;
         }
 
@@ -2166,9 +2016,9 @@
         updateInfoPanel();
 
         const msg =
-          `일괄등록이 완료되었습니다.\\n` +
-          `추모의집: 신규 ${addedDe} / 반환 ${retDe}\\n` +
-          `자연장지: 신규 ${addedNa}\\n` +
+          `일괄등록이 완료되었습니다.\n` +
+          `추모의집: 신규 ${addedDe} / 반환 ${retDe}\n` +
+          `자연장지: 신규 ${addedNa}\n` +
           (importFailLog.length ? `실패 ${importFailLog.length}건(모달에서 확인해 주세요)` : `실패 0건`);
         showStatus(msg, "success");
 
@@ -2180,12 +2030,28 @@
         showStatus(e.message || String(e), "error");
       } finally {
         setBusy(false);
+        resetBulkUpload();
       }
     }
 
-    // ===== 초기화/로드 =====
+    function confirmAndImportBulkExcelAutoSave(){
+      if (!isLoaded) {
+        openLoginModal();
+        showLoginStatus("먼저 불러오기를 완료해 주세요.", "error");
+        showStatus("먼저 ‘불러오기’를 완료해 주세요.", "error");
+        return;
+      }
+      if (isBusy) return;
+
+      if (!selectedFiles.length){
+        showStatus("일괄등록할 파일을 추가해 주세요.", "error");
+        return;
+      }
+
+      openConfirmModal();
+    }
+
     window.onload = () => {
-      // 저장값 불러오기
       const savedOwner  = localStorage.getItem("gh_owner");
       const savedRepo   = localStorage.getItem("gh_repo");
       const savedBranch = localStorage.getItem("gh_branch");
@@ -2193,13 +2059,11 @@
       const savedLoadedAt = localStorage.getItem("gh_loaded_at");
       const savedLimit = localStorage.getItem("gh_grid_limit");
 
-      // 표시건수
       const lim = parseInt(savedLimit || "20", 10);
       GRID_LIMIT = GRID_LIMIT_OPTIONS.includes(lim) ? lim : 20;
       const limitSelect = document.getElementById("gridLimitSelect");
       if (limitSelect) limitSelect.value = String(GRID_LIMIT);
 
-      // 저장 옵션(기본: 체크 true)
       const savedPersist = localStorage.getItem("gh_token_persist");
       const persist = (savedPersist === null) ? true : (savedPersist === "1");
       const persistEl = document.getElementById("tokenPersist");
@@ -2210,11 +2074,9 @@
       document.getElementById("branch").value = savedBranch || "main";
       if (savedTarget === "nature") fileKey = "nature";
 
-      // 토큰 읽기(옵션에 따라 store 변경)
       const savedToken = (persist ? localStorage : sessionStorage).getItem("gh_token");
       if (savedToken) document.getElementById("token").value = savedToken;
 
-      // 이벤트
       ["owner","repo","token","branch"].forEach(id=>{
         const el = document.getElementById(id);
         el?.addEventListener("keydown", (e)=>{
@@ -2227,7 +2089,6 @@
         el.style.display = "none";
       });
 
-      // 토큰 저장 옵션 변경 시 즉시 반영
       document.getElementById("tokenPersist")?.addEventListener("change", (e)=>{
         const persistNow = e.target.checked;
         localStorage.setItem("gh_token_persist", persistNow ? "1" : "0");
@@ -2242,7 +2103,6 @@
         }
       });
 
-      // 토큰 입력 변경 시 저장값 최신화
       document.getElementById("token")?.addEventListener("input", ()=>{
         const v = document.getElementById("token")?.value?.trim() || "";
         if (!v) return;
@@ -2255,7 +2115,6 @@
         }
       });
 
-      // 파일 선택
       document.getElementById("bulkFile")?.addEventListener("change", (e) => {
         const input = e.target;
         const files = Array.from(input.files || []);
@@ -2264,11 +2123,10 @@
         addSelectedFiles(files);
         input.value = "";
 
-        renderSelectedFiles();
+        renderSelectedFileCount();
         updateBulkButtonState();
       });
 
-      // 드래그 앤 드롭
       const dz = document.getElementById("fileDropZone");
       if (dz){
         const stop = (e)=>{ e.preventDefault(); e.stopPropagation(); };
@@ -2293,24 +2151,20 @@
           });
           if (!files.length) return;
           addSelectedFiles(files);
-          renderSelectedFiles();
+          renderSelectedFileCount();
           updateBulkButtonState();
         });
       }
 
-      // 초기 렌더
-      renderSelectedFiles();
+      renderSelectedFileCount();
       updateBulkButtonState();
       selectTarget(fileKey, true);
 
-      // 로드 전 잠금 + 로그인 모달 오픈
       setLoaded(false);
 
-      // 로드 정보 패널 업데이트(저장값 표시)
       if (savedLoadedAt) loadedAtText = savedLoadedAt;
       updateInfoPanel();
 
-      // ✅ 항상 로그인 모달을 띄워서 "로그인" 느낌
       openLoginModal();
     };
   </script>
