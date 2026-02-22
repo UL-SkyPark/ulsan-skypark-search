@@ -4,23 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>울산하늘공원 고인 검색</title>
-  <!-- 파비콘 설정 -->
   <link rel="icon" type="image/x-icon" href="./images/symbol.png">
-  <!-- 애플 기기용 아이콘 -->
   <link rel="apple-touch-icon" href="./images/symbol.png">
+
   <style>
+    /* ====== (원본 CSS 그대로) ====== */
     *{ margin:0; padding:0; box-sizing:border-box; }
 
     .sr-only{
-      position:absolute;
-      width:1px;
-      height:1px;
-      padding:0;
-      margin:-1px;
-      overflow:hidden;
-      clip:rect(0,0,0,0);
-      white-space:nowrap;
-      border:0;
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
     }
 
     body{
@@ -28,12 +21,8 @@
       min-height:100vh;
       text-align:center;
 
-      /* (요청) 배경 유지: 지금 코드 그대로 */
       background-image:
-        linear-gradient(
-          rgba(255,255,255,0.55),
-          rgba(255,255,255,0.70)
-        ),
+        linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.70)),
         url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/92cb8bcc-4430-4edc-b1cf-8dd3dbbffb9d.png');
       background-position:top center, top center;
       background-size:cover, cover;
@@ -46,7 +35,7 @@
       align-items:center;
       padding:22px;
       padding-bottom:110px;
-      padding-top:60px; /* 로고 자리 확보 */
+      padding-top:60px;
     }
 
     @media (max-width:768px){
@@ -54,42 +43,25 @@
         background-size:auto 100%, auto 100%;
         background-position:top center, top center;
         align-items:flex-start;
-        padding-top:70px; /* 모바일 상단 로고 높이만큼 여백 */
+        padding-top:70px;
       }
     }
 
-    /* ===== 상단 로고 ===== */
     .global-logo{
       position:fixed;
-      z-index:10; /* main(20)보다 낮게: 본문이 위, 로고는 살짝 뒤 */
+      z-index:10;
       cursor:pointer;
       transition:opacity 0.35s ease, transform 0.35s ease;
     }
 
-    /* PC: 좌측 상단 */
     @media screen and (min-width:769px){
-      .global-logo{
-        top:14px;
-        left:18px;
-        transform:none;
-      }
-      .global-logo img{
-        height:70px;
-        width:auto;
-      }
+      .global-logo{ top:14px; left:18px; transform:none; }
+      .global-logo img{ height:70px; width:auto; }
     }
 
-    /* 모바일: 상단 중앙 */
     @media screen and (max-width:768px){
-      .global-logo{
-        top:12px;
-        left:50%;
-        transform:translateX(-50%);
-      }
-      .global-logo img{
-        height:56px;
-        width:auto;
-      }
+      .global-logo{ top:12px; left:50%; transform:translateX(-50%); }
+      .global-logo img{ height:56px; width:auto; }
     }
 
     .global-logo.is-hidden{
@@ -290,11 +262,7 @@
     }
 
     @media screen and (min-width:1024px){
-      .result-sub{
-        white-space:nowrap;
-        font-size:16px;
-        line-height:1.6;
-      }
+      .result-sub{ white-space:nowrap; font-size:16px; line-height:1.6; }
     }
 
     .table-wrapper{
@@ -396,10 +364,7 @@
       color:#12335a;
     }
 
-    .modal-actions{
-      display:flex;
-      gap:8px;
-    }
+    .modal-actions{ display:flex; gap:8px; }
 
     .btn-print,.btn-close{
       padding:10px 14px;
@@ -421,10 +386,7 @@
     .btn-close:hover{ background:rgba(241,245,249,1); }
     .btn-print:hover{ background:#1565c0; }
 
-    .modal-body{
-      padding:18px 22px 22px;
-      text-align:left;
-    }
+    .modal-body{ padding:18px 22px 22px; text-align:left; }
 
     .info-grid{
       display:grid;
@@ -448,9 +410,7 @@
       word-break:break-word;
     }
 
-    .info-value.mono{
-      font-family:"Malgun Gothic","맑은 고딕",monospace;
-    }
+    .info-value.mono{ font-family:"Malgun Gothic","맑은 고딕",monospace; }
 
     .divider{
       grid-column:1 / -1;
@@ -461,37 +421,19 @@
 
     .print-footer{ display:none; }
 
-    @media (min-width:769px){
-      .btn-print{ display:inline-block; }
-    }
+    @media (min-width:769px){ .btn-print{ display:inline-block; } }
 
     @media (max-width:480px){
-      body{
-        padding:12px;
-        padding-bottom:80px;
-        padding-top:70px;
-      }
-
+      body{ padding:12px; padding-bottom:80px; padding-top:70px; }
       main{ background:rgba(255,255,255,0.85); }
-
       .header{ padding:20px 18px 12px; }
       .title{ font-size:26px; }
-
       .tabs{ padding:0 18px; }
       .tab-btn{ font-size:15px; padding:14px 8px; }
       .tab-btn.active::after{ left:22%; right:22%; height:5px; bottom:7px; }
-
       .content{ padding:14px 18px 18px; background:rgba(255,255,255,0.90); }
       .search-box{ grid-template-columns:1fr; gap:10px; }
-
-      .btn-search{
-        width:100%;
-        min-width:0;
-        height:70px;
-        font-size:22px;
-        border-radius:16px;
-      }
-
+      .btn-search{ width:100%; min-width:0; height:70px; font-size:22px; border-radius:16px; }
       th,td{ font-size:14px; padding:12px 10px; }
     }
 
@@ -523,93 +465,41 @@
     }
 
     @media print{
-      @page{
-        size:80mm auto;
-        margin:2mm 3mm 0 3mm;
-      }
-
+      @page{ size:80mm auto; margin:2mm 3mm 0 3mm; }
       html,body{
-        width:80mm;
-        height:auto;
-        margin:0;
-        padding:0;
-        background:#fff !important;
-        display:block;
+        width:80mm; height:auto; margin:0; padding:0;
+        background:#fff !important; display:block;
       }
-
-      /* 모달만 보이게 */
       body *{ visibility:hidden; }
       .detail-modal, .detail-modal *{ visibility:visible; }
-
       .footer-logo, .global-logo{ display:none !important; }
-
-      /* 모달을 1장에 딱 맞게 정리 */
       .detail-modal{
-        position:absolute;
-        top:0;
-        left:0;
-        transform:none;
-        width:80mm;
-        max-width:80mm;
-        height:auto;
-        max-height:none;
-        overflow:visible;
-        border-radius:0;
-        box-shadow:none;
-        border:none;
-        background:#fff;
-        padding:0;
-        margin:0;
+        position:absolute; top:0; left:0; transform:none;
+        width:80mm; max-width:80mm; height:auto; max-height:none;
+        overflow:visible; border-radius:0; box-shadow:none;
+        border:none; background:#fff; padding:0; margin:0;
       }
-
       .modal-actions{ display:none !important; }
-
       .modal-header{
         padding:1.5mm 0 2mm 0;
         border-bottom:0.4mm solid #333;
         text-align:center;
       }
-
       .modal-title{
-        font-size:16pt;
-        color:#000;
-        font-weight:900;
-        letter-spacing:-0.2px;
-        text-align:center;
+        font-size:16pt; color:#000; font-weight:900;
+        letter-spacing:-0.2px; text-align:center;
         margin:0 auto;
       }
-
-      .modal-body{
-        padding:2mm 0 1mm 0;
-      }
-
-      .info-grid{
-        grid-template-columns:17mm 1fr;
-        gap:2.0mm 3.0mm;
-      }
-
-      .info-label{
-        font-size:11pt;
-        color:#333;
-        line-height:1.2;
-      }
-
-      .info-value{
-        font-size:15pt;
-        color:#000;
-        line-height:1.25;
-      }
-
-      .info-value.mono{
-        word-break:break-word;
-      }
-
+      .modal-body{ padding:2mm 0 1mm 0; }
+      .info-grid{ grid-template-columns:17mm 1fr; gap:2.0mm 3.0mm; }
+      .info-label{ font-size:11pt; color:#333; line-height:1.2; }
+      .info-value{ font-size:15pt; color:#000; line-height:1.25; }
+      .info-value.mono{ word-break:break-word; }
       .divider{
         margin:2mm 0 1.5mm 0;
         height:0.3mm;
         background:rgba(0,0,0,0.20);
       }
-
       .print-footer{
         display:block;
         margin-top:3mm;
@@ -617,7 +507,6 @@
         border-top:0.3mm solid rgba(0,0,0,0.25);
         text-align:center;
       }
-
       .print-footer img{
         content:url("./images/ulsan_logo1.png");
         height:12mm;
@@ -631,7 +520,6 @@
 </head>
 
 <body>
-  <!-- PC: 좌측 상단 / 모바일: 상단 중앙 로고 -->
   <div class="global-logo" id="globalLogo" onclick="goHome()" aria-label="울산하늘공원 초기화면으로 이동">
     <img src="./images/ulsan_logo1.png" alt="울산하늘공원 로고">
   </div>
@@ -649,27 +537,15 @@
     </div>
 
     <div class="content">
-      <form
-        id="searchForm"
-        class="search-box"
-        aria-label="울산하늘공원 고인 검색 폼"
-      >
+      <form id="searchForm" class="search-box" aria-label="울산하늘공원 고인 검색 폼">
         <div class="input-wrap">
           <label for="keyword" class="sr-only">고인명 입력</label>
-          <input
-            type="text"
-            id="keyword"
-            name="keyword"
-            placeholder="고인명을 입력해주세요. 예)홍길동"
-            required
-            autocomplete="off"
-          />
+          <input type="text" id="keyword" name="keyword" placeholder="고인명을 입력해주세요. 예)홍길동" required autocomplete="off" />
         </div>
         <button class="btn-search" type="submit">확인/조회</button>
       </form>
 
       <div class="hint">※ 검색 결과는 좌우 스크롤로 확인할 수 있습니다.</div>
-
       <div id="result"></div>
     </div>
   </main>
@@ -678,11 +554,7 @@
     <img src="./images/ulsan_logo.png" alt="울산시설공단 로고">
   </div>
 
-  <dialog
-    id="detailModal"
-    class="detail-modal"
-    aria-labelledby="detailModalTitle"
-  >
+  <dialog id="detailModal" class="detail-modal" aria-labelledby="detailModalTitle">
     <div class="modal-header">
       <div class="modal-title-row">
         <div class="modal-title" id="detailModalTitle">울산하늘공원 고인 위치 안내</div>
@@ -725,11 +597,15 @@
     </div>
   </dialog>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
+    /* =========================
+      ✅ JSON 로딩 적용 (엑셀/XLSX 제거)
+      - 서버에 data/deceased_data.json, data/nature_data.json 배치
+      - nature_data.json은 { "Sheet1": [ ... ] } 구조도 자동 지원
+    ========================== */
     const SOURCES = {
-      memorial: 'data/deceased_data.xlsx',
-      nature:   'data/nature_data.xlsx'
+      memorial: 'data/deceased_data.json',
+      nature:   'data/nature_data.json'
     };
 
     const MEM_FIELDS = {
@@ -769,18 +645,11 @@
       return norm.length >= 2;
     }
 
-    /* =========================
-      ✅ QR/링크용: URL에서 mode 읽기
-      - ?mode=memorial / ?mode=nature / ?mode=all
-      - (보너스) #memorial / #nature 해시도 지원
-    ========================== */
     function getModeFromUrl(){
       const params = new URLSearchParams(window.location.search);
       const m1 = (params.get("mode") || "").toLowerCase();
-
       const h = (location.hash || "").replace("#","").toLowerCase();
       const m2 = h;
-
       const m = m1 || m2;
       if (["all","memorial","nature"].includes(m)) return m;
       return "all";
@@ -799,30 +668,28 @@
         btn.classList.toggle("active", btn.dataset.mode === mode);
       });
       resetResultOnly();
-
-      // 탭 바뀔 때 주소도 같이 바뀌게(QR/공유 편하게)
       updateUrlMode(mode);
-
-      // 포커스
       const input = document.getElementById("keyword");
       if (input) input.focus();
     }
 
-    async function fetchExcel(url){
-      const response = await fetch(url);
+    /* ===== JSON Fetch ===== */
+    async function fetchJson(url){
+      const response = await fetch(url, { cache: "no-store" });
       if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다: ' + url);
+      const data = await response.json();
 
-      const arrayBuffer = await response.arrayBuffer();
-      const workbook = XLSX.read(arrayBuffer, { type: "array" });
-      const sheetName = workbook.SheetNames[0];
-      return XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+      // nature_data.json처럼 {Sheet1:[...]} 구조 지원
+      if (data && typeof data === "object" && Array.isArray(data.Sheet1)) return data.Sheet1;
+      if (Array.isArray(data)) return data;
+      return [];
     }
 
     async function ensureMemorialLoaded(){
       if (excelDataMemorial.length > 0) return;
       if (!loadPromiseMemorial){
-        loadPromiseMemorial = fetchExcel(SOURCES.memorial)
-          .then(data => { excelDataMemorial = data; })
+        loadPromiseMemorial = fetchJson(SOURCES.memorial)
+          .then(data => { excelDataMemorial = data || []; })
           .finally(() => { loadPromiseMemorial = null; });
       }
       await loadPromiseMemorial;
@@ -831,8 +698,8 @@
     async function ensureNatureLoaded(){
       if (excelDataNature.length > 0) return;
       if (!loadPromiseNature){
-        loadPromiseNature = fetchExcel(SOURCES.nature)
-          .then(data => { excelDataNature = data; })
+        loadPromiseNature = fetchJson(SOURCES.nature)
+          .then(data => { excelDataNature = data || []; })
           .finally(() => { loadPromiseNature = null; });
       }
       await loadPromiseNature;
@@ -890,36 +757,22 @@
       return { name:"고인명", loc:"위치번호", applicant:"신청자", date:"안치일자" };
     }
 
-  /* =========================
-  ✅ 추모의집 봉안번호로 시설명+층수 자동 판별
-  - 봉안번호가 "1추모의집-"로 시작 => "제1추모의집"
-  - 봉안번호가 "2추모의집-"로 시작 => "제2추모의집"
-  - 층수: 1-18실,61+ = 1층 / 19-60실 = 2층
-========================== */
-function getMemorialTypeLabelFromLoc(rawLoc){
-  const s = String(rawLoc || "").trim();
-  
-  // 제1/제2추모의집 판단
-  let facility = "추모의집";
-  if (/^1\s*추모의집\s*-/.test(s) || /^1\s*추모의집/.test(s)) facility = "제1추모의집";
-  if (/^2\s*추모의집\s*-/.test(s) || /^2\s*추모의집/.test(s)) facility = "제2추모의집";
+    function getMemorialTypeLabelFromLoc(rawLoc){
+      const s = String(rawLoc || "").trim();
 
-  // 실 번호 추출 (숫자 2자리)
-  const roomMatch = s.match(/(\d{2})실/);
-  if (!roomMatch) return facility; // 실 번호 없으면 시설명만
-  
-  const roomNum = parseInt(roomMatch[1], 10);
-  
-  // 층수 판단
-  let floor = "";
-  if ((roomNum >= 1 && roomNum <= 18) || roomNum >= 61) {
-    floor = " (1층)";
-  } else if (roomNum >= 19 && roomNum <= 60) {
-    floor = " (2층)";
-  }
-  
-  return facility + floor;
-}
+      let facility = "추모의집";
+      if (/^1\s*추모의집\s*-/.test(s) || /^1\s*추모의집/.test(s)) facility = "제1추모의집";
+      if (/^2\s*추모의집\s*-/.test(s) || /^2\s*추모의집/.test(s)) facility = "제2추모의집";
+
+      const roomMatch = s.match(/(\d{2})실/);
+      if (!roomMatch) return facility;
+
+      const roomNum = parseInt(roomMatch[1], 10);
+      let floor = "";
+      if ((roomNum >= 1 && roomNum <= 18) || roomNum >= 61) floor = " (1층)";
+      else if (roomNum >= 19 && roomNum <= 60) floor = " (2층)";
+      return facility + floor;
+    }
 
     function openModal(record){
       document.getElementById("modalName").textContent = record.name || "";
@@ -930,7 +783,6 @@ function getMemorialTypeLabelFromLoc(rawLoc){
       document.getElementById("labelLoc").textContent = record.locationLabel || "위치번호";
       document.getElementById("labelDate").textContent = record.dateLabel || "일자";
 
-      // 시설명 표시: typeLabel이 있으면 항상 표기
       const showType = !!record.typeLabel;
       document.getElementById("labelType").style.display = showType ? "block" : "none";
       document.getElementById("modalType").style.display = showType ? "block" : "none";
@@ -943,23 +795,18 @@ function getMemorialTypeLabelFromLoc(rawLoc){
     function bindTableClick(){
       const table = document.querySelector("#result table");
       if (!table) return;
-
       table.addEventListener("click", function(e){
         const tr = e.target.closest("tr[data-idx]");
         if (!tr) return;
-
         const idx = Number(tr.dataset.idx);
         const rec = lastFound[idx];
         if (!rec) return;
-
         openModal(rec);
       });
     }
 
     document.getElementById("detailModal").addEventListener("click", function(e){
-      if (e.target === this){
-        this.close();
-      }
+      if (e.target === this) this.close();
     });
 
     document.addEventListener("keydown", function(e){
@@ -976,12 +823,12 @@ function getMemorialTypeLabelFromLoc(rawLoc){
         .filter(row => {
           const rawName = row[MEM_FIELDS.name];
           if (!rawName) return false;
-          if (row[MEM_FIELDS.returned]) return false;
+          if (row[MEM_FIELDS.returned]) return false; // 반환일자 있으면 제외(원본 로직 유지)
           return normalizeForSearch(rawName).includes(k);
         })
         .map(row => ({
           type: 'memorial',
-          typeLabel: getMemorialTypeLabelFromLoc(row[MEM_FIELDS.loc]), // ✅ 제1/제2 자동
+          typeLabel: getMemorialTypeLabelFromLoc(row[MEM_FIELDS.loc]),
           name: row[MEM_FIELDS.name] || "",
           location: normalizeRoom(row[MEM_FIELDS.loc] || ""),
           applicant: maskName(row[MEM_FIELDS.applicant]),
@@ -1061,7 +908,6 @@ function getMemorialTypeLabelFromLoc(rawLoc){
 
       html += `</tbody></table></div>`;
       resultDiv.innerHTML = html;
-
       bindTableClick();
     }
 
@@ -1110,29 +956,21 @@ function getMemorialTypeLabelFromLoc(rawLoc){
       lastFound = [];
     }
 
-    // 로고 클릭 시: 검색어/결과만 초기화 + 화면 상단으로
     function goHome(){
       document.getElementById("keyword").value = "";
       resetResultOnly();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    /* =========================
-      ✅ 페이지 최초 진입 시 mode 자동 선택 + 입력 포커스
-      - QR 스캔 후 바로 입력 가능
-    ========================== */
     document.addEventListener("DOMContentLoaded", () => {
       const initMode = getModeFromUrl();
       setMode(initMode);
-
-      // 모바일에서 포커스가 가끔 늦게 먹는 경우 대비
       setTimeout(() => {
         const input = document.getElementById("keyword");
         if (input) input.focus();
       }, 150);
     });
 
-    // 스크롤 시 상단 로고와 하단 로고 자연스럽게 숨김
     (function(){
       const bottomLogo = document.getElementById("footerLogo");
       const topLogo = document.getElementById("globalLogo");
@@ -1144,23 +982,15 @@ function getMemorialTypeLabelFromLoc(rawLoc){
         const down = y > lastY;
 
         if (bottomLogo){
-          if (y < 10){
-            bottomLogo.classList.remove("is-hidden");
-          } else if (down){
-            bottomLogo.classList.add("is-hidden");
-          } else{
-            bottomLogo.classList.remove("is-hidden");
-          }
+          if (y < 10) bottomLogo.classList.remove("is-hidden");
+          else if (down) bottomLogo.classList.add("is-hidden");
+          else bottomLogo.classList.remove("is-hidden");
         }
 
         if (topLogo){
-          if (y < 10){
-            topLogo.classList.remove("is-hidden");
-          } else if (down){
-            topLogo.classList.add("is-hidden");
-          } else{
-            topLogo.classList.remove("is-hidden");
-          }
+          if (y < 10) topLogo.classList.remove("is-hidden");
+          else if (down) topLogo.classList.add("is-hidden");
+          else topLogo.classList.remove("is-hidden");
         }
 
         lastY = y;
