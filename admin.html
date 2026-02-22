@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
 
-  <!-- XLSX (업로드 엑셀 읽기용) -->
+  <!-- XLSX -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
@@ -85,8 +85,29 @@
       line-height:1.15;
     }
 
-    /* ✅ 상단 제목 아래(meta-line) 숨김 */
-    .meta-line{ display:none !important; }
+    .meta-line{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      min-height:24px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:700;
+    }
+    .meta-item{
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+      padding:3px 8px;
+      border:1px solid var(--line-soft);
+      background:#fff;
+      border-radius: var(--radius-sm);
+      color:#374151;
+      white-space:nowrap;
+    }
+    .meta-item b{ font-weight:900; }
+    .hidden{ display:none !important; }
 
     .header-right{
       display:flex;
@@ -103,12 +124,19 @@
 
     .content{ padding:14px 16px 16px; }
 
+    /* 상단 2개 박스 동일 폭 + 높이 맞춤 */
     .top-panels{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:12px;
       align-items:stretch;
       margin-bottom:12px;
+    }
+    .top-panels .box{
+      margin-bottom:0;
+      height:100%;
+      display:flex;
+      flex-direction:column;
     }
     @media (max-width: 980px){
       .top-panels{ grid-template-columns: 1fr; }
@@ -122,15 +150,6 @@
       margin-bottom:12px;
     }
 
-    /* ✅ 상단 2개 패널: 높이 동일 & 낮게 */
-    .top-panels .box{
-      margin-bottom:0;
-      display:flex;
-      flex-direction:column;
-      height: 360px;              /* ✅ 두 창 동일 높이(낮게) */
-      min-height: 360px;
-    }
-
     .box-title{
       display:flex;
       align-items:center;
@@ -140,7 +159,6 @@
       margin-bottom:10px;
       color:#111827;
       font-size:15px;
-      flex-shrink:0;
     }
 
     .row{
@@ -200,11 +218,7 @@
       justify-content:flex-end;
       gap:8px;
       flex-wrap:wrap;
-      flex-shrink:0;
     }
-
-    /* ✅ 상단 2패널: 내용이 남으면 toolbar가 아래 고정되도록 */
-    .top-panels .box .toolbar{ margin-top:auto; }
 
     .btn{
       border:1px solid var(--line);
@@ -248,6 +262,7 @@
     }
     .icon-btn:hover{ background:#f9fafb; }
 
+    /* “먼저 불러오기” 안내 */
     .load-hint{
       display:none;
       font-size:13px;
@@ -556,40 +571,44 @@
     table.q th:last-child, table.q td:last-child{ border-right:0; }
     .danger{ color:var(--danger); font-weight:900; white-space:pre-wrap; }
 
-    /* =========================================================
-       ✅ 일괄등록 박스: 높이 낮춤 + 버튼이 바로 보이게
-       ========================================================= */
+    /* 상단 2박스 버튼줄 바닥정렬 */
+    .top-panels .box .toolbar{ margin-top:auto; }
+
+    /* 일괄등록 박스 확장 */
     .bulk-box{ min-height:0; }
-
-    /* 기존에 flex:1로 늘리던 구조를 줄여서, 드랍박스 높이 관리 */
     .bulk-box .form-group{
+      flex:1;
       display:flex;
       flex-direction:column;
       min-height:0;
-      flex: 0 0 auto;   /* ✅ 과한 확장 방지 */
     }
-
     .bulk-box .file-panel{
+      flex:1;
       display:flex;
       flex-direction:column;
       min-height:0;
-      margin-bottom: 10px; /* ✅ 여백 줄임 */
+      margin-bottom: 14px;
     }
-
-    /* ✅ 드랍/목록 영역 자체 높이 낮춤 */
     .bulk-box #selectedFiles{
-      min-height: 130px;     /* ✅ 낮게 */
-      max-height: 130px;     /* ✅ 고정 느낌 */
+      flex:1;
+      min-height:260px;
       overflow:auto;
     }
+    .bulk-box .field-help{
+      margin-top:10px;
+      font-size:14px;
+      font-weight:900;
+      color:#374151;
+      line-height:1.5;
+    }
+    .bulk-box .field-help ul{
+      margin:0;
+      padding-left:18px;
+    }
+    .bulk-box .field-help li{ margin:4px 0; }
+    .bulk-box .toolbar{ margin-top: 18px; }
 
-    /* ✅ 도움말(ul) 자체가 높이 많이 먹어서 숨김 */
-    .bulk-box .field-help{ display:none !important; }
-
-    /* 버튼 상단 여백도 줄여서 바로 보이게 */
-    .bulk-box .toolbar{ margin-top: 8px; }
-
-    /* ✅ Access Token */
+    /* ✅ Access Token: 입력줄 반응형 + 토큰 저장옵션(라벨 1줄 + 안내문 아래) */
     .token-row{
       display:grid;
       grid-template-columns: 1fr auto auto;
@@ -603,32 +622,50 @@
     .token-persist{
       margin-top:10px;
       display:flex;
-      align-items:flex-start;
+      align-items:flex-start; /* 왼쪽 정렬 */
     }
+
+    /* 체크박스 + 문구(한 줄) */
     .token-persist .token-check{
       display:inline-flex;
       align-items:center;
       justify-content:flex-start;
       gap:8px;
       cursor:pointer;
-      width: fit-content;
+      width: fit-content;   /* 라벨이 화면 끝까지 안 먹게 */
       max-width:100%;
       margin:0;
       padding:0;
     }
+
+    /* 체크박스 살짝 보정(원하면 유지) */
     .token-persist .token-check input{ transform: translateY(1px); }
+
+    /* '이 브라우저에...' + '※ ...' 한 줄 고정 */
     .token-persist .token-label{
       display:inline-flex;
       align-items:baseline;
       gap:10px;
       white-space:nowrap;
     }
+
+    /* 안내문 스타일(한 줄 안에서 작게/흐리게) */
     .token-persist .token-inline-note{
       font-size:12px;
       font-weight:800;
       color:var(--muted);
       line-height:1.35;
     }
+
+    /* 아래 help 블록은 그대로 둬도 됨 */
+    .token-help{ margin-top:10px; }
+    .token-help .help-line{
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      margin-top:6px;
+    }
+    .token-help .help-line:first-child{ margin-top:0; }
   </style>
 </head>
 
@@ -637,7 +674,13 @@
     <div class="header">
       <div class="header-left">
         <h1 class="title">울산하늘공원 안치 정보 관리</h1>
-        <div class="meta-line"></div>
+        <div class="meta-line">
+          <span id="badgeOwner" class="meta-item hidden">Owner: <b>-</b></span>
+          <span id="badgeRepo"  class="meta-item hidden">Repo: <b>-</b></span>
+          <span id="badgeBranch" class="meta-item hidden">Branch: <b>-</b></span>
+          <span id="badgeLoadedAt" class="meta-item hidden">마지막 로드: <b>-</b></span>
+          <span id="badgeLoadedFiles" class="meta-item hidden">로드: <b>-</b></span>
+        </div>
       </div>
       <div class="header-right">
         <img class="logo" src="./images/ulsan_logo1.png" alt="울산 로고" />
@@ -648,52 +691,69 @@
 
       <div class="top-panels">
 
-        <!-- ✅ 로그인 상태 -->
+        <!-- GitHub 설정 -->
         <div class="box">
           <div class="box-title">
-            <span>로그인 상태</span>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="btn btn-ghost" type="button" onclick="openLoginModal(true)">다시 로그인</button>
-              <button id="resetAllBtn" class="btn btn-ghost" type="button"
-                      onclick="resetAllSettings()"
-                      title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
-                설정 초기화
-              </button>
-            </div>
+            <span>GitHub 설정</span>
+
+            <!-- ✅ 설정 초기화 버튼: 우측 상단으로 이동 -->
+            <button id="resetAllBtn" class="btn btn-ghost" type="button"
+                    onclick="resetAllSettings()"
+                    title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
+              설정 초기화
+            </button>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label>Owner</label>
-              <input type="text" id="infoOwner" readonly value="-" />
+              <label>GitHub Owner</label>
+              <input type="text" id="owner" placeholder="예: UL-SkyPark" autocomplete="off" />
             </div>
             <div class="form-group">
-              <label>Repo</label>
-              <input type="text" id="infoRepo" readonly value="-" />
+              <label>Repository</label>
+              <input type="text" id="repo" placeholder="예: ulsan-skypark-search" autocomplete="off" />
             </div>
+
             <div class="form-group">
               <label>Branch</label>
-              <input type="text" id="infoBranch" readonly value="-" />
+              <!-- ✅ “불러오는 파일” 박스 완전 제거 -->
+              <input type="text" id="branch" placeholder="예: main" autocomplete="off" />
             </div>
-            <div class="form-group">
-              <label>마지막 로드</label>
-              <input type="text" id="infoLoadedAt" readonly value="-" />
-            </div>
+
+            <!-- ✅ Access Token 섹션(통째 완성본) -->
             <div class="form-group" style="grid-column: 1 / -1;">
-              <label>로드 현황</label>
-              <input type="text" id="infoLoadedFiles" readonly value="-" />
-              <div class="field-help">
-                <span class="pill">안내</span> 데이터 사용/일괄등록은 <b>로드 완료 후</b> 활성화됩니다.
+              <label>Access Token</label>
+
+              <div class="token-row">
+                <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" autocomplete="off" />
+                <button type="button" class="icon-btn" id="tokenToggleBtn" onclick="toggleToken()">보기</button>
+                <button type="button" class="icon-btn" id="clearTokenBtn" onclick="clearSavedToken()" title="브라우저에 저장된 토큰만 삭제합니다">
+                  저장토큰 삭제
+                </button>
+              </div>
+
+              <div class="token-persist">
+                <label class="token-check">
+                  <input type="checkbox" id="tokenPersist" checked />
+                  <span class="token-label">
+                    이 브라우저에 토큰 저장
+                    <span class="token-inline-note">※ 체크 해제 시(권장: 공용 PC) 브라우저를 닫으면 토큰이 사라집니다.</span>
+                  </span>
+                </label>
               </div>
             </div>
           </div>
 
           <div class="toolbar">
-            <div id="loadHint" class="load-hint">먼저 ‘로그인(불러오기)’를 진행해 주세요.<span class="blink-arrow">➜</span></div>
+            <div id="loadHint" class="load-hint">먼저 ‘불러오기’를 눌러 주세요.<span class="blink-arrow">➜</span></div>
+
+            <!-- ✅ 여기 있던 설정 초기화 버튼은 제거됨 -->
+
+            <button id="loadBtn" class="btn btn-primary" onclick="loadAllFiles()">불러오기</button>
           </div>
         </div>
 
-        <!-- ✅ 일괄등록 -->
+        <!-- 일괄등록 -->
         <div class="box bulk-box">
           <div class="box-title">
             <span>일괄등록</span>
@@ -715,7 +775,12 @@
 
               <div id="selectedFiles" class="muted">선택된 파일 없음</div>
 
-              <!-- ✅ 요청대로 안내 문구 삭제 -->
+              <div class="field-help">
+                <ul>
+                  <li>파일을 이 박스에 끌어다 놓으셔도 추가됩니다.</li>
+                  <li>일부 파일만 제외하려면 각 파일의 ×를 눌러 주세요.</li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -740,79 +805,6 @@
         </div>
 
         <div id="hotContainer"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ✅ Login Modal (성공 전 닫기 불가) -->
-  <div id="loginModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
-    <div class="modal" style="max-width:720px;">
-      <div class="modal-head">
-        <div class="modal-title">GitHub 로그인(불러오기)</div>
-      </div>
-
-      <div class="modal-body">
-        <div class="row">
-          <div class="form-group">
-            <label>GitHub Owner</label>
-            <input type="text" id="owner" placeholder="예: UL-SkyPark" autocomplete="off" />
-          </div>
-
-          <div class="form-group">
-            <label>Repository</label>
-            <input type="text" id="repo" placeholder="예: ulsan-skypark-search" autocomplete="off" />
-          </div>
-
-          <div class="form-group">
-            <label>Branch</label>
-            <input type="text" id="branch" placeholder="예: main" autocomplete="off" />
-          </div>
-
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <label>Access Token</label>
-
-            <div class="token-row">
-              <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" autocomplete="off" />
-              <button type="button" class="icon-btn" id="tokenToggleBtn" onclick="toggleToken()">보기</button>
-              <button type="button" class="icon-btn" id="clearTokenBtn" onclick="clearSavedToken()" title="브라우저에 저장된 토큰만 삭제합니다">
-                저장토큰 삭제
-              </button>
-            </div>
-
-            <div class="token-persist">
-              <label class="token-check">
-                <input type="checkbox" id="tokenPersist" checked />
-                <span class="token-label">
-                  이 브라우저에 토큰 저장
-                  <span class="token-inline-note">※ 체크 해제 시(권장: 공용 PC) 브라우저를 닫으면 토큰이 사라집니다.</span>
-                </span>
-              </label>
-            </div>
-
-            <!-- ✅ 실패 알림(모달 내부) -->
-            <div id="loginFailMsg" class="status error" style="display:none; margin-top:10px; cursor:default;"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-foot">
-        <button class="btn btn-primary" id="loginLoadBtn" onclick="loadAllFiles()">로그인(불러오기)</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ✅ Upload Result Modal -->
-  <div id="resultModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
-    <div class="modal" style="max-width:560px;">
-      <div class="modal-head">
-        <div class="modal-title" id="resultModalTitle">일괄등록 결과</div>
-      </div>
-      <div class="modal-body" id="resultModalBody"></div>
-      <div class="modal-foot">
-        <button class="btn btn-ghost" id="btnViewFailLog" onclick="openFailLogFromResult()" style="display:none;">
-          실패로그 확인
-        </button>
-        <button class="btn btn-primary" onclick="closeResultModal()">확인</button>
       </div>
     </div>
   </div>
@@ -848,16 +840,10 @@
   </div>
 
   <script>
-    // =========================================================
-    //  ✅ JSON 기반 데이터 관리
-    //    - GitHub에는 data/*.json 저장
-    //    - 업로드 엑셀은 읽어서 내부 합친 뒤 JSON으로 PUT 저장
-    // =========================================================
-
     // ===== 설정 =====
     const FILES = {
-      deceased: "data/deceased_data.json",
-      nature: "data/nature_data.json"
+      deceased: "data/deceased_data.xlsx",
+      nature: "data/nature_data.xlsx"
     };
     const GRID_LIMIT = 20;
 
@@ -884,14 +870,188 @@
 
     // 데이터셋(2개 파일 동시 관리)
     const DATASETS = {
-      deceased: { label: "추모의집", path: FILES.deceased, loaded:false, sha:"", headers:[], rows:[], highlight:new Set() },
-      nature:   { label: "자연장지", path: FILES.nature,   loaded:false, sha:"", headers:[], rows:[], highlight:new Set() },
+      deceased: {
+        label: "추모의집",
+        path: FILES.deceased,
+        loaded: false,
+        sha: "",
+        headers: [],
+        rows: [],
+        highlight: new Set(),
+      },
+      nature: {
+        label: "자연장지",
+        path: FILES.nature,
+        loaded: false,
+        sha: "",
+        headers: [],
+        rows: [],
+        highlight: new Set(),
+      }
     };
     const ds = (k = fileKey) => DATASETS[k];
 
-    // =========================================================
-    //  유틸
-    // =========================================================
+    // ✅ 토큰 저장 옵션: 저장소 선택
+    function isTokenPersistEnabled(){
+      return document.getElementById("tokenPersist")?.checked ?? true;
+    }
+    function tokenStore(){
+      return isTokenPersistEnabled() ? localStorage : sessionStorage;
+    }
+
+    window.onload = () => {
+      const savedOwner  = localStorage.getItem("gh_owner");
+      const savedRepo   = localStorage.getItem("gh_repo");
+      const savedBranch = localStorage.getItem("gh_branch");
+      const savedTarget = localStorage.getItem("gh_target");
+      const savedLoadedAt = localStorage.getItem("gh_loaded_at");
+
+      // 저장 옵션(기본: 체크 true)
+      const savedPersist = localStorage.getItem("gh_token_persist");
+      const persist = (savedPersist === null) ? true : (savedPersist === "1");
+      const persistEl = document.getElementById("tokenPersist");
+      if (persistEl) persistEl.checked = persist;
+
+      if (savedOwner) document.getElementById("owner").value = savedOwner;
+      if (savedRepo)  document.getElementById("repo").value  = savedRepo;
+      document.getElementById("branch").value = savedBranch || "main";
+      if (savedTarget === "nature") fileKey = "nature";
+
+      // 토큰 읽기(옵션에 따라 store 변경)
+      const savedToken = (persist ? localStorage : sessionStorage).getItem("gh_token");
+      if (savedToken) document.getElementById("token").value = savedToken;
+
+      selectTarget(fileKey, true);
+      setLoaded(false);
+      updateTopBadges(false, savedLoadedAt || "", "", document.getElementById("branch").value.trim() || "main");
+
+      ["owner","repo","token","branch"].forEach(id=>{
+        const el = document.getElementById(id);
+        el?.addEventListener("keydown", (e)=>{
+          if(e.key === "Enter") loadAllFiles();
+        });
+      });
+
+      document.getElementById("statusMsg")?.addEventListener("click", ()=>{
+        const el = document.getElementById("statusMsg");
+        el.style.display = "none";
+      });
+
+      // 토큰 저장 옵션 변경 시 즉시 반영
+      document.getElementById("tokenPersist")?.addEventListener("change", (e)=>{
+        const persistNow = e.target.checked;
+        localStorage.setItem("gh_token_persist", persistNow ? "1" : "0");
+
+        const tokenVal = document.getElementById("token")?.value?.trim() || "";
+        if (persistNow){
+          if (tokenVal) localStorage.setItem("gh_token", tokenVal);
+          sessionStorage.removeItem("gh_token");
+        } else {
+          if (tokenVal) sessionStorage.setItem("gh_token", tokenVal);
+          localStorage.removeItem("gh_token");
+        }
+      });
+
+      // 토큰 입력 변경 시(저장옵션 기준으로) 저장값 최신화
+      document.getElementById("token")?.addEventListener("input", ()=>{
+        const v = document.getElementById("token")?.value?.trim() || "";
+        if (!v) return;
+        if (isTokenPersistEnabled()){
+          localStorage.setItem("gh_token", v);
+          sessionStorage.removeItem("gh_token");
+        } else {
+          sessionStorage.setItem("gh_token", v);
+          localStorage.removeItem("gh_token");
+        }
+      });
+
+      document.getElementById("bulkFile")?.addEventListener("change", (e) => {
+        const input = e.target;
+        const files = Array.from(input.files || []);
+        if (!files.length) return;
+
+        addSelectedFiles(files);
+        input.value = "";
+
+        renderSelectedFiles();
+        updateBulkButtonState();
+      });
+
+      // 드래그 앤 드롭
+      const dz = document.getElementById("fileDropZone");
+      if (dz){
+        const stop = (e)=>{ e.preventDefault(); e.stopPropagation(); };
+        ["dragenter","dragover"].forEach(evt=>{
+          dz.addEventListener(evt, (e)=>{
+            stop(e);
+            if (!isLoaded || isBusy) return;
+            dz.classList.add("drop-ready");
+          });
+        });
+        ["dragleave","drop"].forEach(evt=>{
+          dz.addEventListener(evt, (e)=>{
+            stop(e);
+            dz.classList.remove("drop-ready");
+          });
+        });
+        dz.addEventListener("drop", (e)=>{
+          if (!isLoaded || isBusy) return;
+          const files = Array.from(e.dataTransfer?.files || []).filter(f=>{
+            const lower = (f.name || "").toLowerCase();
+            return lower.endsWith(".xlsx") || lower.endsWith(".xls");
+          });
+          if (!files.length) return;
+          addSelectedFiles(files);
+          renderSelectedFiles();
+          updateBulkButtonState();
+        });
+      }
+
+      renderSelectedFiles();
+      updateBulkButtonState();
+    };
+
+    function toggleToken(){
+      const input = document.getElementById("token");
+      const btn = document.getElementById("tokenToggleBtn");
+      if(!input || !btn) return;
+
+      const isPw = input.type === "password";
+      input.type = isPw ? "text" : "password";
+      btn.textContent = isPw ? "가리기" : "보기";
+    }
+
+    function clearSavedToken(){
+      localStorage.removeItem("gh_token");
+      sessionStorage.removeItem("gh_token");
+      const t = document.getElementById("token");
+      if (t) t.value = "";
+      showStatus("저장된 토큰을 삭제하였습니다(이 브라우저).", "success");
+    }
+
+    function resetAllSettings(){
+      ["gh_owner","gh_repo","gh_branch","gh_target","gh_loaded_at","gh_token_persist"].forEach(k=>localStorage.removeItem(k));
+      localStorage.removeItem("gh_token");
+      sessionStorage.removeItem("gh_token");
+
+      ["owner","repo","token"].forEach(id=>{
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+      const b = document.getElementById("branch");
+      if (b) b.value = "main";
+
+      const persistEl = document.getElementById("tokenPersist");
+      if (persistEl) persistEl.checked = true;
+
+      fileKey = "deceased";
+      selectTarget(fileKey, true);
+      setLoaded(false);
+      updateTopBadges(false, "", "", "main");
+      resetBulkUpload();
+      showStatus("설정이 초기화되었습니다.", "success");
+    }
+
     function pad2(n){ return String(n).padStart(2,"0"); }
     function formatLoadedAt(d){
       const yyyy = d.getFullYear();
@@ -901,9 +1061,10 @@
       const mi = pad2(d.getMinutes());
       return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
     }
+
     function norm(s) {
       return String(s ?? "")
-        .replace(/\\s+/g, "")
+        .replace(/\s+/g, "")
         .replace(/[–—]/g, "-")
         .toLowerCase();
     }
@@ -916,17 +1077,21 @@
         .replaceAll("'", "&#039;");
     }
     function escapeHtmlWithBr(s){
-      return escapeHtml(s).replaceAll("\\n","<br>");
+      return escapeHtml(s).replaceAll("\n","<br>");
     }
     function formatBytes(bytes){
       const n = Number(bytes || 0);
       if (!isFinite(n) || n <= 0) return "0 B";
       const units = ["B","KB","MB","GB"];
       let v = n, i = 0;
-      while (v >= 1024 && i < units.length - 1){ v = v / 1024; i++; }
+      while (v >= 1024 && i < units.length - 1){
+        v = v / 1024;
+        i++;
+      }
       const fixed = (i === 0) ? String(Math.round(v)) : v.toFixed(1);
       return `${fixed} ${units[i]}`;
     }
+
     function normalizeDate(input) {
       const raw = String(input ?? "").trim();
       if (!raw) return "";
@@ -935,18 +1100,19 @@
         const y = onlyNum.slice(0,4), m = onlyNum.slice(4,6), d = onlyNum.slice(6,8);
         return `${y}-${m}-${d}`;
       }
-      const cleaned = raw.replace(/\\./g, "-").replace(/\\//g, "-");
+      const cleaned = raw.replace(/\./g, "-").replace(/\//g, "-");
       const parts = cleaned.split("-").map(p => p.trim()).filter(Boolean);
       if (parts.length >= 3) {
         let [y,m,d] = parts;
         if (y.length === 2) y = "20" + y;
         m = String(parseInt(m,10)).padStart(2,"0");
         d = String(parseInt(d,10)).padStart(2,"0");
-        if (!/^\\d{4}$/.test(y) || m === "NaN" || d === "NaN") return "";
+        if (!/^\d{4}$/.test(y) || m === "NaN" || d === "NaN") return "";
         return `${y}-${m}-${d}`;
       }
       return "";
     }
+
     function findHeaderIndex(hs, candidates) {
       const list = hs.map(norm);
       for (const cand of candidates) {
@@ -955,6 +1121,17 @@
       }
       return -1;
     }
+
+    function uint8ArrayToBase64(u8) {
+      let binary = "";
+      const chunkSize = 0x8000;
+      for (let i = 0; i < u8.length; i += chunkSize) {
+        const chunk = u8.subarray(i, i + chunkSize);
+        binary += String.fromCharCode.apply(null, chunk);
+      }
+      return btoa(binary);
+    }
+
     function getCellByHeader(rowObj, candidates) {
       const keys = Object.keys(rowObj || {});
       const map = new Map(keys.map(k => [norm(k), k]));
@@ -964,43 +1141,31 @@
       }
       return "";
     }
+
     function noHeaderCandidatesFor(key){
       return (key === "deceased")
         ? ["봉안번호","봉안 번호","봉안no","봉안No","번호","관리번호"]
-        : ["자연장번호","자연장 번호","자연장no","자연장No","번호","관리번호","안장번호","안장 번호"];
+        : ["자연장번호","자연장 번호","자연장no","자연장No","번호","관리번호"];
     }
 
-    // ✅ 업로드 "같은 행"에 부부/부부단/유사표현(= '부부' 포함)이 있으면 2명 허용
+    // ✅ "구분" 칸이 "부부단"인지 판정(첨부파일 기준)
     function coupleFlagFromRow(rowObj){
-      const v1 = String(getCellByHeader(rowObj, ["구분","구 분","단구분","단 구분","안장구분","안장 구분"])).trim();
-      if (norm(v1).includes(norm("부부"))) return true;
-
-      const allText = Object.entries(rowObj || {})
-        .map(([k,v]) => `${String(k ?? "")}:${String(v ?? "")}`)
-        .join(" ");
-
-      return norm(allText).includes(norm("부부"));
+      const v = String(getCellByHeader(rowObj, ["구분","구 분","단구분","단 구분"])).trim();
+      return norm(v).includes(norm("부부단"));
     }
 
-    // =========================================================
-    //  상태/UX
-    // =========================================================
     function showStatus(msg, type) {
       const el = document.getElementById("statusMsg");
-      el.textContent = (msg || "") + "\\n(클릭하시면 닫힙니다)";
+      el.textContent = (msg || "") + "\n(클릭하시면 닫힙니다)";
       el.className = "status " + type;
       el.style.display = "block";
       if (type === "success") setTimeout(() => (el.style.display = "none"), 2500);
     }
-    document.getElementById("statusMsg")?.addEventListener("click", ()=>{
-      const el = document.getElementById("statusMsg");
-      el.style.display = "none";
-    });
 
     function setBusy(b) {
       isBusy = b;
+      document.getElementById("loadBtn").disabled = b;
       document.getElementById("resetAllBtn").disabled = b;
-      document.getElementById("loginLoadBtn").disabled = b;
 
       document.getElementById("bulkResetBtn").disabled = b || !isLoaded;
       document.getElementById("pickFilesBtn").disabled = b || !isLoaded;
@@ -1031,109 +1196,62 @@
       el.style.display = show ? "inline-flex" : "none";
     }
 
-    // ✅ 좌측 상단(로그인 상태 박스) 갱신
-    function updateLoginInfoBox(show, loadedAt, loadedFilesText, branchText){
-      const owner = document.getElementById("owner")?.value?.trim() || "-";
-      const repo  = document.getElementById("repo")?.value?.trim() || "-";
-      const branch= branchText || document.getElementById("branch")?.value?.trim() || "main";
+    function updateTopBadges(show, loadedAt, loadedFilesText, branchText){
+      const owner = document.getElementById("owner").value.trim();
+      const repo  = document.getElementById("repo").value.trim();
+      const branch= branchText || document.getElementById("branch").value.trim() || "main";
 
-      const setVal = (id, v) => {
-        const el = document.getElementById(id);
-        if (el) el.value = v || "-";
-      };
+      const bOwner = document.getElementById("badgeOwner");
+      const bRepo  = document.getElementById("badgeRepo");
+      const bBranch= document.getElementById("badgeBranch");
+      const bLoaded= document.getElementById("badgeLoadedAt");
+      const bFiles = document.getElementById("badgeLoadedFiles");
 
       if (!show){
-        setVal("infoOwner","-");
-        setVal("infoRepo","-");
-        setVal("infoBranch","-");
-        setVal("infoLoadedAt","-");
-        setVal("infoLoadedFiles","-");
+        bOwner.classList.add("hidden");
+        bRepo.classList.add("hidden");
+        bBranch.classList.add("hidden");
+        bLoaded.classList.add("hidden");
+        bFiles.classList.add("hidden");
         return;
       }
 
-      setVal("infoOwner", owner);
-      setVal("infoRepo", repo);
-      setVal("infoBranch", branch);
-      setVal("infoLoadedAt", loadedAt || "-");
-      setVal("infoLoadedFiles", loadedFilesText || "-");
+      bOwner.querySelector("b").textContent = owner || "-";
+      bRepo.querySelector("b").textContent  = repo  || "-";
+      bBranch.querySelector("b").textContent = branch || "-";
+      bLoaded.querySelector("b").textContent = loadedAt || "-";
+      bFiles.querySelector("b").textContent  = loadedFilesText || "-";
+
+      bOwner.classList.remove("hidden");
+      bRepo.classList.remove("hidden");
+      bBranch.classList.remove("hidden");
+      bLoaded.classList.remove("hidden");
+      bFiles.classList.remove("hidden");
     }
 
-    // =========================================================
-    //  로그인 모달
-    // =========================================================
-    function openLoginModal(force=false){
-      const back = document.getElementById("loginModalBackdrop");
-      if (!back) return;
-      if (force || !isLoaded){
-        back.style.display = "flex";
-        hideLoginFail();
+    function selectTarget(target, isInit=false) {
+      fileKey = target;
+      localStorage.setItem("gh_target", fileKey);
+
+      document.getElementById("tabDeceased").classList.toggle("active", fileKey === "deceased");
+      document.getElementById("tabNature").classList.toggle("active", fileKey === "nature");
+
+      if (isLoaded) {
+        const total = ds(fileKey).rows.length;
+        document.getElementById("gridMeta").textContent =
+          `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
+      } else {
+        document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시`;
+      }
+
+      if (isLoaded) renderGridForCurrentTarget();
+
+      if (!isInit && isLoaded) {
+        const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
+        updateTopBadges(true, loadedAtText, loadedFilesText, document.getElementById("branch").value.trim() || "main");
       }
     }
-    function closeLoginModal(){
-      const back = document.getElementById("loginModalBackdrop");
-      if (!back) return;
-      back.style.display = "none";
-    }
-    function showLoginFail(msg){
-      const el = document.getElementById("loginFailMsg");
-      if (!el) return;
-      el.textContent = msg || "로그인(불러오기)에 실패했습니다.";
-      el.style.display = "block";
-    }
-    function hideLoginFail(){
-      const el = document.getElementById("loginFailMsg");
-      if (!el) return;
-      el.style.display = "none";
-    }
 
-    // 토큰 저장 옵션
-    function isTokenPersistEnabled(){
-      return document.getElementById("tokenPersist")?.checked ?? true;
-    }
-    function toggleToken(){
-      const input = document.getElementById("token");
-      const btn = document.getElementById("tokenToggleBtn");
-      if(!input || !btn) return;
-      const isPw = input.type === "password";
-      input.type = isPw ? "text" : "password";
-      btn.textContent = isPw ? "가리기" : "보기";
-    }
-    function clearSavedToken(){
-      localStorage.removeItem("gh_token");
-      sessionStorage.removeItem("gh_token");
-      const t = document.getElementById("token");
-      if (t) t.value = "";
-      showStatus("저장된 토큰을 삭제하였습니다(이 브라우저).", "success");
-    }
-
-    // =========================================================
-    //  결과 모달(성공/실패)
-    // =========================================================
-    function openResultModal(html, hasFail){
-      const back = document.getElementById("resultModalBackdrop");
-      const body = document.getElementById("resultModalBody");
-      const btn = document.getElementById("btnViewFailLog");
-      if (!back || !body || !btn) return;
-
-      body.innerHTML = html || "";
-      btn.style.display = hasFail ? "inline-flex" : "none";
-      back.style.display = "flex";
-    }
-    function closeResultModal(){
-      const back = document.getElementById("resultModalBackdrop");
-      if (back) back.style.display = "none";
-    }
-    function openFailLogFromResult(){
-      closeResultModal();
-      openLogModal("일괄등록 실패 로그");
-    }
-    document.getElementById("resultModalBackdrop")?.addEventListener("click", (e) => {
-      if (e.target.id === "resultModalBackdrop") closeResultModal();
-    });
-
-    // =========================================================
-    //  저장/로드 입력값 & 스토리지
-    // =========================================================
     function getInputs() {
       const owner = document.getElementById("owner").value.trim();
       const repo  = document.getElementById("repo").value.trim();
@@ -1141,6 +1259,8 @@
       const branch = (document.getElementById("branch").value.trim() || "main");
       return { owner, repo, token, branch };
     }
+
+    // ✅ 저장옵션에 따라 토큰 저장소 분기
     function saveInputsToStorage({owner, repo, token, branch}) {
       const persist = isTokenPersistEnabled();
       localStorage.setItem("gh_owner", owner);
@@ -1157,14 +1277,113 @@
       }
     }
 
-    // =========================================================
-    //  GitHub API (contents)
-    // =========================================================
     function buildContentsUrl(owner, repo, path, branch) {
       return `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(branch)}`;
     }
 
-    async function fetchJsonFromGitHub({owner, repo, token, branch}, path){
+    function makeFileId(file){
+      return `${file.name}__${file.size}__${file.lastModified}`;
+    }
+
+    function triggerFilePick(){
+      if (!isLoaded || isBusy) return;
+      document.getElementById("bulkFile")?.click();
+    }
+
+    function addSelectedFiles(files){
+      const exist = new Set(selectedFiles.map(x => x.id));
+      for (const f of files){
+        const id = makeFileId(f);
+        if (exist.has(id)) continue;
+        selectedFiles.push({ id, file: f });
+        exist.add(id);
+      }
+    }
+
+    function removeSelectedFile(id){
+      selectedFiles = selectedFiles.filter(x => x.id !== id);
+      renderSelectedFiles();
+      updateBulkButtonState();
+    }
+
+    function renderSelectedFiles(){
+      const box = document.getElementById("selectedFiles");
+      const cnt = document.getElementById("selectedFileCount");
+      cnt.textContent = String(selectedFiles.length);
+
+      if (!selectedFiles.length){
+        box.innerHTML = `<span class="muted">선택된 파일 없음</span>`;
+        return;
+      }
+
+      const items = selectedFiles.map(({id, file}) => {
+        return `
+          <li>
+            <div class="file-left">
+              <div class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</div>
+              <div class="file-sub">
+                <span class="mono">${escapeHtml(formatBytes(file.size))}</span>
+                <span class="mono">${escapeHtml(new Date(file.lastModified).toLocaleString())}</span>
+              </div>
+            </div>
+            <button class="x-btn" type="button" title="목록에서 제거" onclick="removeSelectedFile('${id}')">×</button>
+          </li>
+        `;
+      }).join("");
+
+      box.innerHTML = `<ul class="file-list">${items}</ul>`;
+    }
+
+    function updateBulkButtonState(){
+      const btn = document.getElementById("bulkBtn");
+      if (!btn) return;
+      btn.disabled = (!isLoaded || isBusy || selectedFiles.length === 0);
+    }
+
+    function resetBulkUpload(){
+      selectedFiles = [];
+      renderSelectedFiles();
+      updateBulkButtonState();
+      if (isLoaded) showStatus("선택 파일 목록이 초기화되었습니다.", "success");
+    }
+
+    // 모달: 일괄등록 확인
+    function openConfirmModal(){
+      document.getElementById("confirmModalBackdrop").style.display = "flex";
+    }
+    function closeConfirmModal(){
+      document.getElementById("confirmModalBackdrop").style.display = "none";
+    }
+    function confirmBulkOk(){
+      closeConfirmModal();
+      importBulkExcelAutoSave();
+    }
+    function confirmBulkCancel(){
+      closeConfirmModal();
+      showStatus("일괄등록이 취소되었습니다.", "success");
+    }
+    document.getElementById("confirmModalBackdrop")?.addEventListener("click", (e) => {
+      if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
+    });
+
+    function confirmAndImportBulkExcelAutoSave(){
+      if (!isLoaded) {
+        showLoadHint(true);
+        setLoaded(false);
+        showStatus("먼저 ‘불러오기’를 눌러 주세요.", "error");
+        return;
+      }
+      if (isBusy) return;
+
+      if (!selectedFiles.length){
+        showStatus("일괄등록할 파일을 추가해 주세요.", "error");
+        return;
+      }
+
+      openConfirmModal();
+    }
+
+    async function fetchXlsxFromGitHub({owner, repo, token, branch}, path){
       const apiUrl = buildContentsUrl(owner, repo, path, branch);
 
       const metaRes = await fetch(apiUrl, {
@@ -1184,60 +1403,20 @@
         throw new Error(`다운로드 실패: ${path} (${fileRes.status})\n${txt}`);
       }
 
-      const data = await fileRes.json();
-      return { sha: meta.sha || "", data };
+      const buf = await fileRes.arrayBuffer();
+      const bytes = new Uint8Array(buf);
+
+      const wb = XLSX.read(bytes, { type: "array" });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
+
+      return { sha: meta.sha || "", aoa };
     }
 
-    function stringToBase64Utf8(str){
-      const bytes = new TextEncoder().encode(str);
-      let binary = "";
-      const chunkSize = 0x8000;
-      for (let i=0; i<bytes.length; i+=chunkSize){
-        const chunk = bytes.subarray(i, i+chunkSize);
-        binary += String.fromCharCode.apply(null, chunk);
-      }
-      return btoa(binary);
-    }
-
-    async function putJsonToGitHub(targetKey, jsonObj, message) {
-      const inputs = getInputs();
-      const { owner, repo, token, branch } = inputs;
-      const d = ds(targetKey);
-
-      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(d.path)}?ref=${encodeURIComponent(branch)}`;
-
-      const jsonText = JSON.stringify(jsonObj, null, 2);
-      const contentBase64 = stringToBase64Utf8(jsonText);
-
-      const putBody = { message, content: contentBase64, branch };
-      if (d.sha) putBody.sha = d.sha; // ✅ sha가 있을 때만 포함(신규 생성 지원)
-
-      const res = await fetch(apiUrl, {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Accept": "application/vnd.github+json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(putBody)
-      });
-
-      if (!res.ok) {
-        const txt = await res.text();
-        throw new Error(`[${d.label}] 저장 실패 (${res.status})\n${txt}`);
-      }
-
-      const resData = await res.json();
-      d.sha = resData.content?.sha || d.sha;
-    }
-
-    // =========================================================
-    //  JSON 데이터셋 반영
-    // =========================================================
-    function normalizeLoadedDatasetFromJson(key, data){
+    function normalizeLoadedDataset(key, aoa){
       const d = ds(key);
-      d.headers = Array.isArray(data?.headers) ? data.headers.map(x => String(x ?? "").trim()) : [];
-      d.rows    = Array.isArray(data?.rows) ? data.rows : [];
+      d.headers = (aoa && aoa.length > 0) ? aoa[0].map(h => String(h ?? "").trim()) : [];
+      d.rows = (aoa && aoa.length > 1) ? aoa.slice(1) : [];
 
       // 추모의집은 반환일자 컬럼 보장
       if (key === "deceased") {
@@ -1250,9 +1429,6 @@
       d.loaded = true;
     }
 
-    // =========================================================
-    //  Handsontable 렌더
-    // =========================================================
     function renderGridForCurrentTarget(){
       const cur = ds(fileKey);
       const container = document.getElementById("hotContainer");
@@ -1292,59 +1468,29 @@
       setTimeout(() => { hot.render(); hot.refreshDimensions(); }, 0);
     }
 
-    function selectTarget(target, isInit=false) {
-      fileKey = target;
-      localStorage.setItem("gh_target", fileKey);
-
-      document.getElementById("tabDeceased").classList.toggle("active", fileKey === "deceased");
-      document.getElementById("tabNature").classList.toggle("active", fileKey === "nature");
-
-      if (isLoaded) {
-        const total = ds(fileKey).rows.length;
-        document.getElementById("gridMeta").textContent =
-          `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
-      } else {
-        document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시`;
-      }
-
-      if (isLoaded) renderGridForCurrentTarget();
-
-      if (!isInit && isLoaded) {
-        const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
-        updateLoginInfoBox(true, loadedAtText, loadedFilesText, document.getElementById("branch").value.trim() || "main");
-      }
-    }
-
-    // =========================================================
-    //  로드(로그인)
-    // =========================================================
     async function loadAllFiles() {
       const inputs = getInputs();
       const { owner, repo, token, branch } = inputs;
 
-      hideLoginFail();
-
       if (!owner || !repo || !token) {
-        const msg = "Owner / Repo / Token을 모두 입력해 주세요.";
-        showLoginFail(msg);
-        showStatus(msg, "error");
+        showStatus("Owner / Repo / Token을 모두 입력해 주세요.", "error");
         setLoaded(false);
-        openLoginModal(true);
         return;
       }
 
+      // ✅ 저장옵션 반영 저장
       saveInputsToStorage({owner, repo, token, branch});
 
       setBusy(true);
-      showStatus("추모의집/자연장지(JSON) 데이터를 불러오는 중입니다...", "loading");
+      showStatus("추모의집/자연장지 데이터를 불러오는 중입니다...", "loading");
 
       try {
         DATASETS.deceased.loaded = false;
         DATASETS.nature.loaded = false;
 
         const tasks = [
-          fetchJsonFromGitHub(inputs, DATASETS.deceased.path).then(res => ({ key:"deceased", ...res })),
-          fetchJsonFromGitHub(inputs, DATASETS.nature.path).then(res => ({ key:"nature", ...res }))
+          fetchXlsxFromGitHub(inputs, DATASETS.deceased.path).then(res => ({ key:"deceased", ...res })),
+          fetchXlsxFromGitHub(inputs, DATASETS.nature.path).then(res => ({ key:"nature", ...res }))
         ];
 
         const results = await Promise.allSettled(tasks);
@@ -1353,9 +1499,9 @@
         for (const r of results){
           if (r.status === "rejected") errors.push(r.reason?.message || String(r.reason));
           else {
-            const { key, sha, data } = r.value;
+            const { key, sha, aoa } = r.value;
             ds(key).sha = sha;
-            normalizeLoadedDatasetFromJson(key, data);
+            normalizeLoadedDataset(key, aoa);
           }
         }
 
@@ -1371,7 +1517,7 @@
         setLoaded(true);
 
         const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
-        updateLoginInfoBox(true, loadedAtText, loadedFilesText, branch);
+        updateTopBadges(true, loadedAtText, loadedFilesText, branch);
 
         showStatus("로드가 완료되었습니다.", "success");
 
@@ -1381,171 +1527,172 @@
 
         renderGridForCurrentTarget();
 
-        closeLoginModal(); // ✅ 성공 시에만 닫기
-
       } catch (e) {
         setLoaded(false);
-        const msg = e.message || String(e);
-        showStatus(msg, "error");
-        openLoginModal(true);
-        showLoginFail(msg);
+        showStatus(e.message || String(e), "error");
       } finally {
         setBusy(false);
       }
     }
 
-    // =========================================================
-    //  초기화
-    // =========================================================
-    function resetAllSettings(){
-      ["gh_owner","gh_repo","gh_branch","gh_target","gh_loaded_at","gh_token_persist"].forEach(k=>localStorage.removeItem(k));
-      localStorage.removeItem("gh_token");
-      sessionStorage.removeItem("gh_token");
+    function detectTargetByNo(noRaw){
+      const s = String(noRaw ?? "").trim();
+      if (!s) return null;
 
-      ["owner","repo","token"].forEach(id=>{
-        const el = document.getElementById(id);
-        if (el) el.value = "";
+      if (s.includes("추모의집")) return "deceased";
+      if (s.includes("잔디장") || s.includes("수목장") || s.includes("자연장")) return "nature";
+
+      if (/-\d{1,3}실-/.test(s) || /\b\d{1,3}실\b/.test(s) || /\d{1,3}실/.test(s)) return "deceased";
+      if (/^[^-]+-\d+-\d+-\d{4}$/.test(s)) return "nature";
+
+      const m = s.match(/(\d+)\s*$/);
+      if (m){
+        const len = m[1].length;
+        if (len === 5) return "deceased";
+        if (len === 4) return "nature";
+      }
+      return null;
+    }
+
+    function detectTemplateTypeByHeaders(rowsObj){
+      const keys = new Set();
+      for (const r of rowsObj || []){
+        Object.keys(r || {}).forEach(k => keys.add(norm(k)));
+        if (keys.size > 30) break;
+      }
+      const hasDe = ["봉안번호","봉안 번호","봉안no","봉안No"].some(x => keys.has(norm(x)));
+      const hasNa = ["자연장번호","자연장 번호","자연장no","자연장No"].some(x => keys.has(norm(x)));
+      if (hasDe && !hasNa) return "deceased";
+      if (hasNa && !hasDe) return "nature";
+      if (hasDe && hasNa) return "mixed";
+      return "unknown";
+    }
+
+    function isMeaningfulRow(rowObj){
+      const noRaw = String(getCellByHeader(rowObj, ["봉안번호","봉안 번호","자연장번호","자연장 번호","번호","관리번호"])).trim();
+      const deceased = String(getCellByHeader(rowObj, ["사망자명","고인명","고인","사망자"])).trim();
+      const applicant = String(getCellByHeader(rowObj, ["신청자명","신청자","사용자명","계약자명"])).trim();
+      const inDateRaw = String(getCellByHeader(rowObj, ["안치일자","안치 일자","안치일"])).trim();
+      const returnRaw = String(getCellByHeader(rowObj, ["반환일자","반환 일자","반환일"])).trim();
+      return !!(noRaw || deceased || applicant || inDateRaw || returnRaw);
+    }
+
+    function shouldSkipStructuralRow(templateType, idx, lastIdx, rowObj){
+      if (templateType === "nature") {
+        const noRaw = String(getCellByHeader(rowObj, ["자연장번호","자연장 번호","번호","관리번호","봉안번호","봉안 번호"])).trim();
+        const deceased = String(getCellByHeader(rowObj, ["사망자명","고인명","고인","사망자"])).trim();
+        const applicant = String(getCellByHeader(rowObj, ["신청자명","신청자","사용자명","계약자명"])).trim();
+
+        if (!noRaw && norm(deceased) === norm("이름") && norm(applicant) === norm("이름")) {
+          return true;
+        }
+      }
+
+      const meaningful = isMeaningfulRow(rowObj);
+
+      if (!meaningful){
+        if (templateType === "nature"){
+          if (idx === 0) return true;
+          if (idx === lastIdx) return true;
+        } else if (templateType === "deceased"){
+          if (idx === lastIdx) return true;
+        } else {
+          if (idx === 0 || idx === lastIdx) return true;
+        }
+      }
+      if (!meaningful) return true;
+      return false;
+    }
+
+    function findExactMatchRowDeceased(noVal, deceasedVal, applicantVal, rowsOverride=null, headersOverride=null) {
+      const d = ds("deceased");
+      const rows = rowsOverride || d.rows;
+      const headers = headersOverride || d.headers;
+
+      const idxNo = findHeaderIndex(headers, ["봉안번호","봉안 번호","봉안no","봉안No","번호","관리번호"]);
+      const idxDe = findHeaderIndex(headers, ["사망자명","고인명","고인","사망자"]);
+      const idxAp = findHeaderIndex(headers, ["신청자명","신청자","사용자명","계약자명"]);
+      const idxReturn = findHeaderIndex(headers, ["반환일자","반환 일자","반환일"]);
+
+      const missing = [];
+      if (idxNo === -1) missing.push("봉안번호");
+      if (idxDe === -1) missing.push("사망자명");
+      if (idxAp === -1) missing.push("신청자명");
+      if (idxReturn === -1) missing.push("반환일자");
+      if (missing.length) throw new Error("헤더를 찾을 수 없습니다: " + missing.join(", "));
+
+      const noN = norm(noVal), deN = norm(deceasedVal), apN = norm(applicantVal);
+
+      for (let r = 0; r < rows.length; r++) {
+        const row = rows[r];
+        if (norm(row[idxNo]) === noN && norm(row[idxDe]) === deN && norm(row[idxAp]) === apN) {
+          const hasReturn = String(row[idxReturn] ?? "").trim() !== "";
+          return { found:true, rowIndex:r, idxReturn, hasReturn };
+        }
+      }
+      return { found:false };
+    }
+
+    async function putToGitHub(targetKey, mergedAoa, message) {
+      const inputs = getInputs();
+      const { owner, repo, token, branch } = inputs;
+      const d = ds(targetKey);
+
+      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(d.path)}?ref=${encodeURIComponent(branch)}`;
+
+      const ws = XLSX.utils.aoa_to_sheet(mergedAoa);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+      const wbOut = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+      const bytes = new Uint8Array(wbOut);
+      const contentBase64 = uint8ArrayToBase64(bytes);
+
+      const putBody = { message, content: contentBase64, sha: d.sha, branch };
+
+      const res = await fetch(apiUrl, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(putBody)
       });
-      const b = document.getElementById("branch");
-      if (b) b.value = "main";
 
-      const persistEl = document.getElementById("tokenPersist");
-      if (persistEl) persistEl.checked = true;
-
-      fileKey = "deceased";
-      selectTarget(fileKey, true);
-      setLoaded(false);
-
-      updateLoginInfoBox(false, "", "", "main");
-      resetBulkUpload();
-
-      openLoginModal(true);
-      showStatus("설정이 초기화되었습니다.", "success");
-    }
-
-    // =========================================================
-    //  업로드 파일 선택/드롭
-    // =========================================================
-    function makeFileId(file){
-      return `${file.name}__${file.size}__${file.lastModified}`;
-    }
-    function triggerFilePick(){
-      if (!isLoaded || isBusy) return;
-      document.getElementById("bulkFile")?.click();
-    }
-    function addSelectedFiles(files){
-      const exist = new Set(selectedFiles.map(x => x.id));
-      for (const f of files){
-        const id = makeFileId(f);
-        if (exist.has(id)) continue;
-        selectedFiles.push({ id, file: f });
-        exist.add(id);
-      }
-    }
-    function removeSelectedFile(id){
-      selectedFiles = selectedFiles.filter(x => x.id !== id);
-      renderSelectedFiles();
-      updateBulkButtonState();
-    }
-    function renderSelectedFiles(){
-      const box = document.getElementById("selectedFiles");
-      const cnt = document.getElementById("selectedFileCount");
-      cnt.textContent = String(selectedFiles.length);
-
-      if (!selectedFiles.length){
-        box.innerHTML = `<span class="muted">선택된 파일 없음</span>`;
-        return;
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(`[${d.label}] 저장 실패 (${res.status})\n${txt}`);
       }
 
-      const items = selectedFiles.map(({id, file}) => {
-        return `
-          <li>
-            <div class="file-left">
-              <div class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</div>
-              <div class="file-sub">
-                <span class="mono">${escapeHtml(formatBytes(file.size))}</span>
-                <span class="mono">${escapeHtml(new Date(file.lastModified).toLocaleString())}</span>
-              </div>
-            </div>
-            <button class="x-btn" type="button" title="목록에서 제거" onclick="removeSelectedFile('${id}')">×</button>
-          </li>
-        `;
-      }).join("");
-
-      box.innerHTML = `<ul class="file-list">${items}</ul>`;
-    }
-    function updateBulkButtonState(){
-      const btn = document.getElementById("bulkBtn");
-      if (!btn) return;
-      btn.disabled = (!isLoaded || isBusy || selectedFiles.length === 0);
-    }
-    function resetBulkUpload(){
-      selectedFiles = [];
-      renderSelectedFiles();
-      updateBulkButtonState();
-      if (isLoaded) showStatus("선택 파일 목록이 초기화되었습니다.", "success");
+      const resData = await res.json();
+      d.sha = resData.content?.sha || d.sha;
     }
 
-    // =========================================================
-    //  모달: 일괄등록 확인
-    // =========================================================
-    function openConfirmModal(){
-      document.getElementById("confirmModalBackdrop").style.display = "flex";
-    }
-    function closeConfirmModal(){
-      document.getElementById("confirmModalBackdrop").style.display = "none";
-    }
-    function confirmBulkOk(){
-      closeConfirmModal();
-      importBulkExcelAutoSave();
-    }
-    function confirmBulkCancel(){
-      closeConfirmModal();
-      showStatus("일괄등록이 취소되었습니다.", "success");
-    }
-    document.getElementById("confirmModalBackdrop")?.addEventListener("click", (e) => {
-      if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
-    });
-    function confirmAndImportBulkExcelAutoSave(){
-      if (!isLoaded) {
-        showLoadHint(true);
-        setLoaded(false);
-        showStatus("먼저 ‘로그인(불러오기)’를 진행해 주세요.", "error");
-        openLoginModal(true);
-        return;
-      }
-      if (isBusy) return;
-
-      if (!selectedFiles.length){
-        showStatus("일괄등록할 파일을 추가해 주세요.", "error");
-        return;
-      }
-
-      openConfirmModal();
-    }
-
-    // =========================================================
-    //  실패 로그 모달
-    // =========================================================
     function openLogModal(title){
       document.getElementById("logModalTitle").textContent = title;
       document.getElementById("logModalBackdrop").style.display = "flex";
       renderLogModalBody();
     }
+
     function closeLogModal(){
       document.getElementById("logModalBackdrop").style.display = "none";
     }
+
     document.getElementById("logModalBackdrop")?.addEventListener("click", (e) => {
       if (e.target.id === "logModalBackdrop") closeLogModal();
     });
+
     function parseRowNo(v){
       const n = parseInt(String(v ?? "").replace(/[^0-9]/g,""), 10);
       return Number.isFinite(n) ? n : 999999999;
     }
+
     function renderLogModalBody(){
       const body = document.getElementById("logModalBody");
       body.innerHTML = buildFailLogSectionsByFile();
     }
+
     function buildFailLogSectionsByFile(){
       if (!importFailLog.length){
         return `<div class="muted">실패 로그가 없습니다.</div>`;
@@ -1611,116 +1758,12 @@
       return html;
     }
 
-    // =========================================================
-    //  대상 판별 / 템플릿 판별
-    // =========================================================
-    function detectTargetByNo(noRaw){
-      const s = String(noRaw ?? "").trim();
-      if (!s) return null;
-
-      if (s.includes("추모의집")) return "deceased";
-      if (s.includes("잔디장") || s.includes("수목장") || s.includes("자연장")) return "nature";
-
-      if (/-\\d{1,3}실-/.test(s) || /\\b\\d{1,3}실\\b/.test(s) || /\\d{1,3}실/.test(s)) return "deceased";
-      if (/^[^-]+-\\d+-\\d+-\\d{4}$/.test(s)) return "nature";
-
-      const m = s.match(/(\\d+)\\s*$/);
-      if (m){
-        const len = m[1].length;
-        if (len === 5) return "deceased";
-        if (len === 4) return "nature";
-      }
-      return null;
-    }
-
-    function detectTemplateTypeByHeaders(rowsObj){
-      const keys = new Set();
-      for (const r of rowsObj || []){
-        Object.keys(r || {}).forEach(k => keys.add(norm(k)));
-        if (keys.size > 30) break;
-      }
-      const hasDe = ["봉안번호","봉안 번호","봉안no","봉안No"].some(x => keys.has(norm(x)));
-      const hasNa = ["자연장번호","자연장 번호","자연장no","자연장No","안장번호","안장 번호"].some(x => keys.has(norm(x)));
-      if (hasDe && !hasNa) return "deceased";
-      if (hasNa && !hasDe) return "nature";
-      if (hasDe && hasNa) return "mixed";
-      return "unknown";
-    }
-
-    function isMeaningfulRow(rowObj){
-      const noRaw = String(getCellByHeader(rowObj, ["봉안번호","봉안 번호","자연장번호","자연장 번호","안장번호","안장 번호","번호","관리번호"])).trim();
-      const deceased = String(getCellByHeader(rowObj, ["사망자명","고인명","고인","사망자"])).trim();
-      const applicant = String(getCellByHeader(rowObj, ["신청자명","신청자","사용자명","계약자명"])).trim();
-      const inDateRaw = String(getCellByHeader(rowObj, ["안치일자","안치 일자","안치일"])).trim();
-      const returnRaw = String(getCellByHeader(rowObj, ["반환일자","반환 일자","반환일"])).trim();
-      return !!(noRaw || deceased || applicant || inDateRaw || returnRaw);
-    }
-
-    function shouldSkipStructuralRow(templateType, idx, lastIdx, rowObj){
-      if (templateType === "nature") {
-        const noRaw = String(getCellByHeader(rowObj, ["자연장번호","자연장 번호","안장번호","안장 번호","번호","관리번호","봉안번호","봉안 번호"])).trim();
-        const deceased = String(getCellByHeader(rowObj, ["사망자명","고인명","고인","사망자"])).trim();
-        const applicant = String(getCellByHeader(rowObj, ["신청자명","신청자","사용자명","계약자명"])).trim();
-
-        if (!noRaw && norm(deceased) === norm("이름") && norm(applicant) === norm("이름")) {
-          return true;
-        }
-      }
-
-      const meaningful = isMeaningfulRow(rowObj);
-
-      if (!meaningful){
-        if (templateType === "nature"){
-          if (idx === 0) return true;
-          if (idx === lastIdx) return true;
-        } else if (templateType === "deceased"){
-          if (idx === lastIdx) return true;
-        } else {
-          if (idx === 0 || idx === lastIdx) return true;
-        }
-      }
-      if (!meaningful) return true;
-      return false;
-    }
-
-    function findExactMatchRowDeceased(noVal, deceasedVal, applicantVal, rowsOverride=null, headersOverride=null) {
-      const d = ds("deceased");
-      const rows = rowsOverride || d.rows;
-      const headers = headersOverride || d.headers;
-
-      const idxNo = findHeaderIndex(headers, ["봉안번호","봉안 번호","봉안no","봉안No","번호","관리번호"]);
-      const idxDe = findHeaderIndex(headers, ["사망자명","고인명","고인","사망자"]);
-      const idxAp = findHeaderIndex(headers, ["신청자명","신청자","사용자명","계약자명"]);
-      const idxReturn = findHeaderIndex(headers, ["반환일자","반환 일자","반환일"]);
-
-      const missing = [];
-      if (idxNo === -1) missing.push("봉안번호");
-      if (idxDe === -1) missing.push("사망자명");
-      if (idxAp === -1) missing.push("신청자명");
-      if (idxReturn === -1) missing.push("반환일자");
-      if (missing.length) throw new Error("헤더를 찾을 수 없습니다: " + missing.join(", "));
-
-      const noN = norm(noVal), deN = norm(deceasedVal), apN = norm(applicantVal);
-
-      for (let r = 0; r < rows.length; r++) {
-        const row = rows[r];
-        if (norm(row[idxNo]) === noN && norm(row[idxDe]) === deN && norm(row[idxAp]) === apN) {
-          const hasReturn = String(row[idxReturn] ?? "").trim() !== "";
-          return { found:true, rowIndex:r, idxReturn, hasReturn };
-        }
-      }
-      return { found:false };
-    }
-
-    // =========================================================
-    //  일괄등록: 엑셀 업로드 → 분석/검증 → JSON 저장(즉시)
-    // =========================================================
+    // ===== 일괄등록: 자동 분류 + 즉시 저장 =====
     async function importBulkExcelAutoSave() {
       if (!isLoaded) {
         showLoadHint(true);
         setLoaded(false);
-        showStatus("먼저 ‘로그인(불러오기)’를 진행해 주세요.", "error");
-        openLoginModal(true);
+        showStatus("먼저 ‘불러오기’를 눌러 주세요.", "error");
         return;
       }
       if (isBusy) return;
@@ -1731,18 +1774,19 @@
       }
 
       setBusy(true);
-      showStatus("일괄등록 준비(분석) → 자동 분류 → JSON 저장 중입니다...", "loading");
+      showStatus("일괄등록 준비(분석) → 자동 분류 → 즉시 저장 중입니다...", "loading");
 
       try {
         importFailLog = [];
         const adds = { deceased: [], nature: [] };
         const rets = [];
 
-        // ✅ 업로드 내 동일 번호 허용(부부=2명) 반영
+        // ✅ 업로드 내 동일 번호 허용(부부단 2명) 반영: Set → Map(count/max)
         const uploadNoCount = { deceased: new Map(), nature: new Map() };
         const uploadNoMax   = { deceased: new Map(), nature: new Map() };
 
         const uploadRetKeySet = new Set();
+
         let processed = 0;
 
         for (const item of selectedFiles){
@@ -1791,7 +1835,7 @@
             if (shouldSkipStructuralRow(templateType, i, lastIndex, r)) continue;
             processed++;
 
-            const noRaw = String(getCellByHeader(r, ["봉안번호","봉안 번호","자연장번호","자연장 번호","안장번호","안장 번호","번호","관리번호"])).trim();
+            const noRaw = String(getCellByHeader(r, ["봉안번호","봉안 번호","자연장번호","자연장 번호","번호","관리번호"])).trim();
             const deceased = String(getCellByHeader(r, ["사망자명","고인명","고인","사망자"])).trim();
             const applicant = String(getCellByHeader(r, ["신청자명","신청자","사용자명","계약자명"])).trim();
             const inDateRaw = String(getCellByHeader(r, ["안치일자","안치 일자","안치일"])).trim();
@@ -1862,7 +1906,7 @@
               continue;
             }
 
-            // ✅ 같은 행에 '부부' 포함이면 동일 번호 2명까지 허용
+            // ✅ 구분칸 "부부단"이면 동일 번호 2명까지 허용(첨부파일 기준)
             const isCouple = coupleFlagFromRow(r);
             const vNo = norm(noRaw);
 
@@ -1876,27 +1920,23 @@
                 file:file.name, rowNo, target:targetLabel, kind:"신규",
                 no:noRaw, deceased, applicant,
                 reason: (maxAllowed === 2)
-                  ? "업로드 파일(전체) 내 동일 번호가 2건을 초과했습니다(부부 허용 2건)."
+                  ? "업로드 파일(전체) 내 동일 번호가 2건을 초과했습니다(부부단 허용 2건)."
                   : "업로드 파일(전체) 내 동일 번호가 중복되었습니다."
               });
               continue;
             }
             uploadNoCount[targetKey].set(vNo, curCnt + 1);
 
-            adds[targetKey].push({ file:file.name, rowNo, inDate, no:noRaw, deceased, applicant });
+            // ✅ adds에 isCouple 포함(아래 applyAdds에서 최종 허용인원 계산에 사용)
+            adds[targetKey].push({ file:file.name, rowNo, inDate, no:noRaw, deceased, applicant, isCouple });
           }
         }
 
         if (processed === 0){
           showStatus("일괄등록할 데이터가 없습니다(예외/빈 행만 존재).", "error");
-          const html =
-            `<div style="font-weight:900; font-size:14px; margin-bottom:10px;">일괄등록 결과</div>` +
-            `<div style="line-height:1.7;">성공 <b>0</b>건<br>실패 <b>${importFailLog.length}</b>건</div>`;
-          openResultModal(html, importFailLog.length > 0);
           return;
         }
 
-        // next (메모리 복사)
         const next = {
           deceased: { headers: ds("deceased").headers.slice(), rows: ds("deceased").rows.map(r=>r.slice()), highlight: new Set() },
           nature:   { headers: ds("nature").headers.slice(),   rows: ds("nature").rows.map(r=>r.slice()),   highlight: new Set() }
@@ -1915,7 +1955,7 @@
 
           const missing = [];
           if (idxInDate === -1) missing.push("안치일자");
-          if (idxNo === -1) missing.push(key === "deceased" ? "봉안번호" : "자연장번호/안장번호");
+          if (idxNo === -1) missing.push(key === "deceased" ? "봉안번호" : "자연장번호");
           if (idxDe === -1) missing.push("사망자명");
           if (idxAp === -1) missing.push("신청자명");
 
@@ -1926,7 +1966,7 @@
 
           if (missing.length) throw new Error(`[${ds(key).label}] 헤더를 찾을 수 없습니다: ${missing.join(", ")}`);
 
-          // ✅ 번호별 "현재 사용중" 인원 수 집계
+          // ✅ 번호별 "현재 사용중(반환일자 없음)" 인원 수 집계
           const activeCount = new Map();
 
           if (key === "deceased") {
@@ -1935,11 +1975,12 @@
               if (!vv) continue;
 
               const hasRet = String(row[idxReturn] ?? "").trim() !== "";
-              if (hasRet) continue;
+              if (hasRet) continue; // 반환된 건은 active 아님
 
               activeCount.set(vv, (activeCount.get(vv) ?? 0) + 1);
             }
           } else {
+            // 자연장지는 반환 개념이 없으므로 기존 데이터도 active로 카운트
             for (const row of rows) {
               const vv = norm(row[idxNo]);
               if (!vv) continue;
@@ -1952,8 +1993,9 @@
           for (const q of adds[key]){
             const vv = norm(q.no);
 
-            // ✅ 업로드 기준 maxAllowed(부부=2, 아니면 1)
-            const maxAllowed = (uploadNoMax[key].get(vv) ?? 1);
+            // ✅ 첨부파일 기준: 부부단이면 2, 아니면 1
+            // (같은 번호가 여러 파일에 걸쳐있어도 uploadNoMax에 이미 2로 올라가 있음)
+            const maxAllowed = (uploadNoMax[key].get(vv) ?? (q.isCouple ? 2 : 1));
             const curActive = activeCount.get(vv) ?? 0;
 
             if (curActive + 1 > maxAllowed){
@@ -1962,7 +2004,7 @@
                 target:ds(key).label, kind:"신규",
                 no:q.no, deceased:q.deceased, applicant:q.applicant,
                 reason: (maxAllowed === 2)
-                  ? "해당 번호는 현재 사용중 2건까지 허용되며(부부), 이미 2건이 사용 중입니다."
+                  ? "해당 번호는 현재 사용중 2건까지 허용되며(부부단), 이미 2건이 사용 중입니다."
                   : "해당 대상 파일의 기존 번호와 중복됩니다(1건만 허용)."
               });
               continue;
@@ -1978,6 +2020,7 @@
             next[key].highlight.add(rows.length - 1);
             added++;
 
+            // ✅ 사용중 카운트 증가
             activeCount.set(vv, curActive + 1);
           }
 
@@ -1989,6 +2032,7 @@
 
           const headers = next.deceased.headers;
           const rows = next.deceased.rows;
+
           let applied = 0;
 
           const keySet = new Set();
@@ -2032,34 +2076,20 @@
         const needSaveDe = (addedDe > 0) || (retDe > 0);
         const needSaveNa = (addedNa > 0);
 
-        // 저장할 게 없다면: 결과 모달만 띄우기
         if (!needSaveDe && !needSaveNa){
           showStatus("저장할 항목이 없습니다. (모두 실패/중복/판별실패)", "error");
-
-          const failCount = importFailLog.length;
-          const successCount = 0;
-
-          const html =
-            `<div style="font-weight:900; font-size:14px; margin-bottom:10px;">일괄등록 결과</div>` +
-            `<div style="line-height:1.7;">` +
-              `<div>성공 <b>${successCount}</b>건</div>` +
-              `<div>실패 <b>${failCount}</b>건</div>` +
-            `</div>`;
-
-          openResultModal(html, failCount > 0);
+          if (importFailLog.length){
+            openLogModal("일괄등록 실패 로그");
+          }
           return;
         }
 
-        // ✅ JSON 저장
         const saveErrors = [];
 
         try {
           if (needSaveDe){
-            await putJsonToGitHub("deceased", {
-              format: "ulsan_skypark_dataset_v1",
-              headers: next.deceased.headers,
-              rows: next.deceased.rows
-            }, `Auto bulk save (deceased) new:${addedDe} return:${retDe} ${new Date().toISOString()}`);
+            const merged = [next.deceased.headers, ...next.deceased.rows];
+            await putToGitHub("deceased", merged, `Auto bulk save (deceased) new:${addedDe} return:${retDe} ${new Date().toISOString()}`);
           }
         } catch (e) {
           saveErrors.push(e.message || String(e));
@@ -2067,11 +2097,8 @@
 
         try {
           if (needSaveNa){
-            await putJsonToGitHub("nature", {
-              format: "ulsan_skypark_dataset_v1",
-              headers: next.nature.headers,
-              rows: next.nature.rows
-            }, `Auto bulk save (nature) new:${addedNa} ${new Date().toISOString()}`);
+            const merged = [next.nature.headers, ...next.nature.rows];
+            await putToGitHub("nature", merged, `Auto bulk save (nature) new:${addedNa} ${new Date().toISOString()}`);
           }
         } catch (e) {
           saveErrors.push(e.message || String(e));
@@ -2082,15 +2109,12 @@
           return;
         }
 
-        // 메모리 반영 + 하이라이트
         if (needSaveDe){
           ds("deceased").rows = next.deceased.rows;
-          ds("deceased").headers = next.deceased.headers;
           ds("deceased").highlight = next.deceased.highlight;
         }
         if (needSaveNa){
           ds("nature").rows = next.nature.rows;
-          ds("nature").headers = next.nature.headers;
           ds("nature").highlight = next.nature.highlight;
         }
 
@@ -2098,7 +2122,7 @@
 
         const inputs = getInputs();
         const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
-        updateLoginInfoBox(true, loadedAtText, loadedFilesText, inputs.branch);
+        updateTopBadges(true, loadedAtText, loadedFilesText, inputs.branch);
 
         const total = ds(fileKey).rows.length;
         document.getElementById("gridMeta").textContent =
@@ -2108,25 +2132,12 @@
           `일괄등록이 완료되었습니다.\n` +
           `추모의집: 신규 ${addedDe} / 반환 ${retDe}\n` +
           `자연장지: 신규 ${addedNa}\n` +
-          (importFailLog.length ? `실패 ${importFailLog.length}건(결과 모달에서 확인 가능)` : `실패 0건`);
+          (importFailLog.length ? `실패 ${importFailLog.length}건(모달에서 확인해 주세요)` : `실패 0건`);
         showStatus(msg, "success");
 
-        // ✅ 결과 모달
-        const failCount = importFailLog.length;
-        const successCount = (addedDe + retDe + addedNa);
-
-        const html =
-          `<div style="font-weight:900; font-size:14px; margin-bottom:10px;">일괄등록 결과</div>` +
-          `<div style="line-height:1.7; margin-bottom:10px;">` +
-            `<div>성공 <b>${successCount}</b>건</div>` +
-            `<div>실패 <b>${failCount}</b>건</div>` +
-          `</div>` +
-          `<div style="font-size:13px; color:#374151; font-weight:800; line-height:1.6;">` +
-            `추모의집: 신규 ${addedDe} / 반환 ${retDe}<br>` +
-            `자연장지: 신규 ${addedNa}` +
-          `</div>`;
-
-        openResultModal(html, failCount > 0);
+        if (importFailLog.length){
+          openLogModal("일괄등록 실패 로그");
+        }
 
       } catch (e) {
         showStatus(e.message || String(e), "error");
@@ -2134,120 +2145,6 @@
         setBusy(false);
       }
     }
-
-    // =========================================================
-    //  부트스트랩
-    // =========================================================
-    window.onload = () => {
-      const savedOwner  = localStorage.getItem("gh_owner");
-      const savedRepo   = localStorage.getItem("gh_repo");
-      const savedBranch = localStorage.getItem("gh_branch");
-      const savedTarget = localStorage.getItem("gh_target");
-      const savedLoadedAt = localStorage.getItem("gh_loaded_at");
-
-      const savedPersist = localStorage.getItem("gh_token_persist");
-      const persist = (savedPersist === null) ? true : (savedPersist === "1");
-      const persistEl = document.getElementById("tokenPersist");
-      if (persistEl) persistEl.checked = persist;
-
-      if (savedOwner) document.getElementById("owner").value = savedOwner;
-      if (savedRepo)  document.getElementById("repo").value  = savedRepo;
-      document.getElementById("branch").value = savedBranch || "main";
-      if (savedTarget === "nature") fileKey = "nature";
-
-      const savedToken = (persist ? localStorage : sessionStorage).getItem("gh_token");
-      if (savedToken) document.getElementById("token").value = savedToken;
-
-      selectTarget(fileKey, true);
-      setLoaded(false);
-      updateLoginInfoBox(false, savedLoadedAt || "", "", document.getElementById("branch").value.trim() || "main");
-      showLoadHint(true);
-
-      // Enter키 = 로그인(불러오기)
-      ["owner","repo","token","branch"].forEach(id=>{
-        const el = document.getElementById(id);
-        el?.addEventListener("keydown", (e)=>{
-          if(e.key === "Enter") loadAllFiles();
-        });
-      });
-
-      // 토큰 저장 옵션 변경 시 즉시 반영
-      document.getElementById("tokenPersist")?.addEventListener("change", (e)=>{
-        const persistNow = e.target.checked;
-        localStorage.setItem("gh_token_persist", persistNow ? "1" : "0");
-
-        const tokenVal = document.getElementById("token")?.value?.trim() || "";
-        if (persistNow){
-          if (tokenVal) localStorage.setItem("gh_token", tokenVal);
-          sessionStorage.removeItem("gh_token");
-        } else {
-          if (tokenVal) sessionStorage.setItem("gh_token", tokenVal);
-          localStorage.removeItem("gh_token");
-        }
-      });
-
-      // 토큰 입력 변경 시 저장값 최신화
-      document.getElementById("token")?.addEventListener("input", ()=>{
-        const v = document.getElementById("token")?.value?.trim() || "";
-        if (!v) return;
-        if (isTokenPersistEnabled()){
-          localStorage.setItem("gh_token", v);
-          sessionStorage.removeItem("gh_token");
-        } else {
-          sessionStorage.setItem("gh_token", v);
-          localStorage.removeItem("gh_token");
-        }
-      });
-
-      // 파일 선택
-      document.getElementById("bulkFile")?.addEventListener("change", (e) => {
-        const input = e.target;
-        const files = Array.from(input.files || []);
-        if (!files.length) return;
-
-        addSelectedFiles(files);
-        input.value = "";
-
-        renderSelectedFiles();
-        updateBulkButtonState();
-      });
-
-      // 드래그 앤 드롭
-      const dz = document.getElementById("fileDropZone");
-      if (dz){
-        const stop = (e)=>{ e.preventDefault(); e.stopPropagation(); };
-        ["dragenter","dragover"].forEach(evt=>{
-          dz.addEventListener(evt, (e)=>{
-            stop(e);
-            if (!isLoaded || isBusy) return;
-            dz.classList.add("drop-ready");
-          });
-        });
-        ["dragleave","drop"].forEach(evt=>{
-          dz.addEventListener(evt, (e)=>{
-            stop(e);
-            dz.classList.remove("drop-ready");
-          });
-        });
-        dz.addEventListener("drop", (e)=>{
-          if (!isLoaded || isBusy) return;
-          const files = Array.from(e.dataTransfer?.files || []).filter(f=>{
-            const lower = (f.name || "").toLowerCase();
-            return lower.endsWith(".xlsx") || lower.endsWith(".xls");
-          });
-          if (!files.length) return;
-          addSelectedFiles(files);
-          renderSelectedFiles();
-          updateBulkButtonState();
-        });
-      }
-
-      renderSelectedFiles();
-      updateBulkButtonState();
-
-      // ✅ 최초 진입: 로드 전이면 로그인 모달 오픈
-      openLoginModal(false);
-    };
   </script>
 </body>
 </html>
