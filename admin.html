@@ -42,7 +42,7 @@
     *{ box-sizing:border-box; }
     body{
       margin:0;
-      padding:18px;
+      padding:14px;
       background: var(--bg);
       color:var(--text);
       font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
@@ -63,7 +63,7 @@
     }
 
     .header{
-      padding:14px 16px;
+      padding:12px 16px;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -74,7 +74,7 @@
     .header-left{
       display:flex;
       flex-direction:column;
-      gap:8px;
+      gap:6px;
       min-width:0;
     }
     .title{
@@ -85,29 +85,8 @@
       line-height:1.15;
     }
 
-    .meta-line{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      min-height:24px;
-      color:var(--muted);
-      font-size:13px;
-      font-weight:700;
-    }
-    .meta-item{
-      display:inline-flex;
-      gap:6px;
-      align-items:center;
-      padding:3px 8px;
-      border:1px solid var(--line-soft);
-      background:#fff;
-      border-radius: var(--radius-sm);
-      color:#374151;
-      white-space:nowrap;
-    }
-    .meta-item b{ font-weight:900; }
-    .hidden{ display:none !important; }
+    /* ✅ 제목 아래 메타 정보는 숨김 처리 */
+    .meta-line{ display:none !important; }
 
     .header-right{
       display:flex;
@@ -116,27 +95,21 @@
       flex-shrink:0;
     }
     .logo{
-      height:38px;
+      height:36px;
       width:auto;
       display:block;
       filter: saturate(0.95) contrast(0.98);
     }
 
-    .content{ padding:14px 16px 16px; }
+    .content{ padding:12px 16px 14px; }
 
     /* 상단 2개 박스 동일 폭 + 높이 맞춤 */
     .top-panels{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:12px;
+      gap:10px;
       align-items:stretch;
-      margin-bottom:12px;
-    }
-    .top-panels .box{
-      margin-bottom:0;
-      height:100%;
-      display:flex;
-      flex-direction:column;
+      margin-bottom:10px;
     }
     @media (max-width: 980px){
       .top-panels{ grid-template-columns: 1fr; }
@@ -146,8 +119,16 @@
       background:#fff;
       border:1px solid var(--line);
       border-radius: var(--radius);
-      padding:14px;
-      margin-bottom:12px;
+      padding:12px;
+      margin-bottom:10px;
+    }
+
+    /* ✅ 상단 박스(로드정보/일괄등록) 높이 줄이기 */
+    .top-panels .box{
+      margin-bottom:0;
+      display:flex;
+      flex-direction:column;
+      min-height: 210px; /* 줄임 */
     }
 
     .box-title{
@@ -163,7 +144,7 @@
 
     .row{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
       gap:10px;
       margin:0;
     }
@@ -175,9 +156,9 @@
       margin-bottom:6px;
       color:#374151;
     }
-    .form-group input{
+    .form-group input, .form-group select{
       width:100%;
-      padding:10px 10px;
+      padding:9px 10px;
       border:1px solid var(--line);
       border-radius: var(--radius-sm);
       background:#fff;
@@ -185,34 +166,21 @@
       outline:none;
       transition:0.12s;
     }
-    .form-group input:focus{
+    .form-group input:focus, .form-group select:focus{
       border-color:#9bb9dd;
       box-shadow:0 0 0 3px rgba(47,111,178,0.14);
     }
 
     .field-help{
-      margin-top:6px;
+      margin-top:8px;
       font-size:12px;
       color:var(--muted);
       font-weight:700;
       line-height:1.35;
     }
-    .field-help .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:2px 8px;
-      border-radius:999px;
-      border:1px solid var(--line-soft);
-      background:#fff;
-      color:#374151;
-      font-weight:900;
-      margin-right:6px;
-      white-space:nowrap;
-    }
 
     .toolbar{
-      margin-top:10px;
+      margin-top:auto;
       display:flex;
       align-items:center;
       justify-content:flex-end;
@@ -262,35 +230,12 @@
     }
     .icon-btn:hover{ background:#f9fafb; }
 
-    /* “먼저 불러오기” 안내 */
-    .load-hint{
-      display:none;
-      font-size:13px;
-      font-weight:900;
-      color: var(--danger);
-      padding:0;
-      border:0;
-      background:transparent;
-      white-space:nowrap;
-    }
-    .blink-arrow{
-      display:inline-block;
-      margin-left:8px;
-      font-weight:900;
-      color: var(--danger);
-      animation: blinkNudge 1s infinite;
-    }
-    @keyframes blinkNudge{
-      0%, 100% { opacity: .15; transform: translateX(0); }
-      50%      { opacity: 1;   transform: translateX(6px); }
-    }
-
     .status{
       display:none;
       position: sticky;
       top: 10px;
       z-index: 50;
-      margin:10px 0 12px;
+      margin:10px 0 10px;
       padding:10px 12px;
       border-radius: var(--radius-sm);
       border:1px solid var(--line);
@@ -308,7 +253,7 @@
       border:1px solid var(--line-soft);
       background:#fafafa;
       border-radius: var(--radius-sm);
-      padding:10px;
+      padding:9px;
       transition:0.12s;
     }
     .file-panel.drop-ready{
@@ -422,6 +367,7 @@
       margin-bottom:10px;
       border-bottom:1px solid var(--line);
       padding-bottom:8px;
+      flex-wrap:wrap;
     }
     .tabs{
       display:inline-flex;
@@ -449,12 +395,34 @@
       color:#111827;
       border-bottom:2px solid #fff;
     }
+
+    .grid-right{
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
     .grid-meta{
       font-size:12px;
       color:#374151;
       font-weight:900;
       white-space:nowrap;
       padding-bottom:2px;
+    }
+    .grid-limit{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      white-space:nowrap;
+      font-size:12px;
+      font-weight:900;
+      color:#374151;
+    }
+    .grid-limit select{
+      width:auto;
+      padding:7px 10px;
+      font-size:13px;
+      font-weight:900;
     }
 
     #hotContainer{
@@ -467,10 +435,11 @@
     }
     .hot-row-highlight{ background: rgba(47,111,178,0.12) !important; }
 
+    /* ✅ 로그인/설정 모달 */
     .modal-backdrop{
       position:fixed;
       inset:0;
-      background: rgba(17, 24, 39, 0.45);
+      background: rgba(17, 24, 39, 0.52);
       display:none;
       align-items:center;
       justify-content:center;
@@ -479,7 +448,7 @@
     }
     .modal{
       width:100%;
-      max-width:1200px;
+      max-width:760px;
       background:#fff;
       border-radius: var(--radius);
       border:1px solid var(--line);
@@ -506,7 +475,7 @@
       color:#111827;
       font-size:13px;
       line-height:1.5;
-      max-height:72vh;
+      max-height:78vh;
       overflow:auto;
     }
     .modal-foot{
@@ -516,8 +485,126 @@
       justify-content:flex-end;
       gap:8px;
       background:#fafafa;
+      flex-wrap:wrap;
     }
 
+    .token-row{
+      display:grid;
+      grid-template-columns: 1fr auto auto;
+      gap:8px;
+      align-items:center;
+    }
+    @media (max-width: 560px){
+      .token-row{ grid-template-columns: 1fr 1fr; }
+      .token-row input{ grid-column: 1 / -1; }
+    }
+    .token-persist{
+      margin-top:10px;
+      display:flex;
+      align-items:flex-start;
+    }
+    .token-persist .token-check{
+      display:inline-flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:8px;
+      cursor:pointer;
+      width: fit-content;
+      max-width:100%;
+      margin:0;
+      padding:0;
+    }
+    .token-persist .token-check input{ transform: translateY(1px); }
+    .token-persist .token-label{
+      display:inline-flex;
+      align-items:baseline;
+      gap:10px;
+      white-space:nowrap;
+    }
+    .token-persist .token-inline-note{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      line-height:1.35;
+    }
+
+    /* ✅ 로그인 실패 메시지(모달 내부) */
+    .login-status{
+      margin-top:10px;
+      padding:10px 10px;
+      border:1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background:#fff;
+      font-weight:900;
+      white-space:pre-wrap;
+      display:none;
+    }
+    .login-status.error{ border-color:#fecdd3; background:#fff1f2; color:#7f1d1d; }
+    .login-status.loading{ background:#f8fafc; color:#374151; }
+    .login-status.success{ border-color:#99f6e4; background:#f0fdfa; color:#134e4a; }
+
+    /* ✅ “접근 차단” 느낌(로드 전) */
+    .locked{
+      filter: blur(0.6px);
+      opacity:0.55;
+      pointer-events:none;
+      user-select:none;
+    }
+
+    .danger{ color:var(--danger); font-weight:900; white-space:pre-wrap; }
+
+    /* 일괄등록 박스 조금 더 타이트 */
+    .bulk-box .file-panel{
+      margin-bottom: 10px;
+    }
+    .bulk-box #selectedFiles{
+      min-height:160px; /* 줄임 */
+      max-height:220px;
+      overflow:auto;
+    }
+    .bulk-box .field-help{
+      margin-top:10px;
+      font-size:13px;
+      font-weight:900;
+      color:#374151;
+      line-height:1.5;
+    }
+    .bulk-box .toolbar{ margin-top: 10px; }
+
+    /* 로드 정보 박스 */
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:10px;
+    }
+    .info-item{
+      border:1px solid var(--line-soft);
+      background:#fafafa;
+      border-radius: var(--radius-sm);
+      padding:10px;
+    }
+    .info-item .k{
+      font-size:12px;
+      font-weight:900;
+      color:#374151;
+      margin-bottom:6px;
+    }
+    .info-item .v{
+      font-size:14px;
+      font-weight:900;
+      color:#111827;
+      word-break:break-word;
+    }
+    .info-item .v.mono{ font-size:13px; }
+    .info-actions{
+      margin-top:10px;
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    /* Failure Log Modal(기존 유지) */
     .file-section{
       margin-top:12px;
       border:1px solid var(--line);
@@ -547,7 +634,6 @@
       border-radius: var(--radius-sm);
       white-space:nowrap;
     }
-
     table.q{
       width:100%;
       border-collapse:collapse;
@@ -569,103 +655,6 @@
     }
     table.q tr:last-child td{ border-bottom:0; }
     table.q th:last-child, table.q td:last-child{ border-right:0; }
-    .danger{ color:var(--danger); font-weight:900; white-space:pre-wrap; }
-
-    /* 상단 2박스 버튼줄 바닥정렬 */
-    .top-panels .box .toolbar{ margin-top:auto; }
-
-    /* 일괄등록 박스 확장 */
-    .bulk-box{ min-height:0; }
-    .bulk-box .form-group{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      min-height:0;
-    }
-    .bulk-box .file-panel{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      min-height:0;
-      margin-bottom: 14px;
-    }
-    .bulk-box #selectedFiles{
-      flex:1;
-      min-height:260px;
-      overflow:auto;
-    }
-    .bulk-box .field-help{
-      margin-top:10px;
-      font-size:14px;
-      font-weight:900;
-      color:#374151;
-      line-height:1.5;
-    }
-    .bulk-box .field-help ul{
-      margin:0;
-      padding-left:18px;
-    }
-    .bulk-box .field-help li{ margin:4px 0; }
-    .bulk-box .toolbar{ margin-top: 18px; }
-
-    /* ✅ Access Token: 입력줄 반응형 + 토큰 저장옵션(라벨 1줄 + 안내문 아래) */
-    .token-row{
-      display:grid;
-      grid-template-columns: 1fr auto auto;
-      gap:8px;
-      align-items:center;
-    }
-    @media (max-width: 560px){
-      .token-row{ grid-template-columns: 1fr 1fr; }
-      .token-row input{ grid-column: 1 / -1; }
-    }
-    .token-persist{
-      margin-top:10px;
-      display:flex;
-      align-items:flex-start; /* 왼쪽 정렬 */
-    }
-
-    /* 체크박스 + 문구(한 줄) */
-    .token-persist .token-check{
-      display:inline-flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap:8px;
-      cursor:pointer;
-      width: fit-content;   /* 라벨이 화면 끝까지 안 먹게 */
-      max-width:100%;
-      margin:0;
-      padding:0;
-    }
-
-    /* 체크박스 살짝 보정(원하면 유지) */
-    .token-persist .token-check input{ transform: translateY(1px); }
-
-    /* '이 브라우저에...' + '※ ...' 한 줄 고정 */
-    .token-persist .token-label{
-      display:inline-flex;
-      align-items:baseline;
-      gap:10px;
-      white-space:nowrap;
-    }
-
-    /* 안내문 스타일(한 줄 안에서 작게/흐리게) */
-    .token-persist .token-inline-note{
-      font-size:12px;
-      font-weight:800;
-      color:var(--muted);
-      line-height:1.35;
-    }
-
-    /* 아래 help 블록은 그대로 둬도 됨 */
-    .token-help{ margin-top:10px; }
-    .token-help .help-line{
-      display:flex;
-      align-items:flex-start;
-      gap:8px;
-      margin-top:6px;
-    }
-    .token-help .help-line:first-child{ margin-top:0; }
   </style>
 </head>
 
@@ -674,82 +663,53 @@
     <div class="header">
       <div class="header-left">
         <h1 class="title">울산하늘공원 안치 정보 관리</h1>
-        <div class="meta-line">
-          <span id="badgeOwner" class="meta-item hidden">Owner: <b>-</b></span>
-          <span id="badgeRepo"  class="meta-item hidden">Repo: <b>-</b></span>
-          <span id="badgeBranch" class="meta-item hidden">Branch: <b>-</b></span>
-          <span id="badgeLoadedAt" class="meta-item hidden">마지막 로드: <b>-</b></span>
-          <span id="badgeLoadedFiles" class="meta-item hidden">로드: <b>-</b></span>
-        </div>
+        <!-- ✅ 제목 아래 정보는 표시하지 않음 -->
+        <div class="meta-line"></div>
       </div>
       <div class="header-right">
         <img class="logo" src="./images/ulsan_logo1.png" alt="울산 로고" />
       </div>
     </div>
 
-    <div class="content">
-
+    <div class="content" id="mainContent">
       <div class="top-panels">
 
-        <!-- GitHub 설정 -->
+        <!-- ✅ GitHub 설정 박스 자리: 로드된 정보 표시 -->
         <div class="box">
           <div class="box-title">
-            <span>GitHub 설정</span>
-
-            <!-- ✅ 설정 초기화 버튼: 우측 상단으로 이동 -->
-            <button id="resetAllBtn" class="btn btn-ghost" type="button"
-                    onclick="resetAllSettings()"
-                    title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
-              설정 초기화
+            <span>로드 정보</span>
+            <button class="btn btn-ghost" type="button" onclick="openLoginModal()">
+              GitHub 로그인/설정
             </button>
           </div>
 
-          <div class="row">
-            <div class="form-group">
-              <label>GitHub Owner</label>
-              <input type="text" id="owner" placeholder="예: UL-SkyPark" autocomplete="off" />
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="k">Owner</div>
+              <div class="v" id="infoOwner">-</div>
             </div>
-            <div class="form-group">
-              <label>Repository</label>
-              <input type="text" id="repo" placeholder="예: ulsan-skypark-search" autocomplete="off" />
+            <div class="info-item">
+              <div class="k">Repository</div>
+              <div class="v" id="infoRepo">-</div>
             </div>
-
-            <div class="form-group">
-              <label>Branch</label>
-              <!-- ✅ “불러오는 파일” 박스 완전 제거 -->
-              <input type="text" id="branch" placeholder="예: main" autocomplete="off" />
+            <div class="info-item">
+              <div class="k">Branch</div>
+              <div class="v mono" id="infoBranch">-</div>
             </div>
-
-            <!-- ✅ Access Token 섹션(통째 완성본) -->
-            <div class="form-group" style="grid-column: 1 / -1;">
-              <label>Access Token</label>
-
-              <div class="token-row">
-                <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" autocomplete="off" />
-                <button type="button" class="icon-btn" id="tokenToggleBtn" onclick="toggleToken()">보기</button>
-                <button type="button" class="icon-btn" id="clearTokenBtn" onclick="clearSavedToken()" title="브라우저에 저장된 토큰만 삭제합니다">
-                  저장토큰 삭제
-                </button>
-              </div>
-
-              <div class="token-persist">
-                <label class="token-check">
-                  <input type="checkbox" id="tokenPersist" checked />
-                  <span class="token-label">
-                    이 브라우저에 토큰 저장
-                    <span class="token-inline-note">※ 체크 해제 시(권장: 공용 PC) 브라우저를 닫으면 토큰이 사라집니다.</span>
-                  </span>
-                </label>
-              </div>
+            <div class="info-item">
+              <div class="k">마지막 로드</div>
+              <div class="v mono" id="infoLoadedAt">-</div>
+            </div>
+            <div class="info-item" style="grid-column: 1 / -1;">
+              <div class="k">로드 건수</div>
+              <div class="v" id="infoLoadedFiles">-</div>
             </div>
           </div>
 
-          <div class="toolbar">
-            <div id="loadHint" class="load-hint">먼저 ‘불러오기’를 눌러 주세요.<span class="blink-arrow">➜</span></div>
-
-            <!-- ✅ 여기 있던 설정 초기화 버튼은 제거됨 -->
-
-            <button id="loadBtn" class="btn btn-primary" onclick="loadAllFiles()">불러오기</button>
+          <div class="info-actions">
+            <button class="btn btn-ghost" type="button" onclick="resetAllSettings()">
+              설정 초기화
+            </button>
           </div>
         </div>
 
@@ -776,9 +736,10 @@
               <div id="selectedFiles" class="muted">선택된 파일 없음</div>
 
               <div class="field-help">
-                <ul>
+                <ul style="margin:0; padding-left:18px;">
                   <li>파일을 이 박스에 끌어다 놓으셔도 추가됩니다.</li>
                   <li>일부 파일만 제외하려면 각 파일의 ×를 눌러 주세요.</li>
+                  <li class="danger">※ 자연장지에도 “부부” 관련 값이 있으면 동일 번호 2건까지 허용됩니다.</li>
                 </ul>
               </div>
             </div>
@@ -801,7 +762,18 @@
             <button id="tabDeceased" class="tab-btn active" onclick="selectTarget('deceased')">추모의집</button>
             <button id="tabNature" class="tab-btn" onclick="selectTarget('nature')">자연장지</button>
           </div>
-          <div class="grid-meta" id="gridMeta">최근 20건 표시</div>
+
+          <div class="grid-right">
+            <div class="grid-limit">
+              표시건수
+              <select id="gridLimitSelect" onchange="changeGridLimit()">
+                <option value="20">20건</option>
+                <option value="50">50건</option>
+                <option value="100">100건</option>
+              </select>
+            </div>
+            <div class="grid-meta" id="gridMeta">최근 20건 표시</div>
+          </div>
         </div>
 
         <div id="hotContainer"></div>
@@ -809,9 +781,72 @@
     </div>
   </div>
 
-  <!-- Failure Log Modal -->
-  <div id="logModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
+  <!-- ✅ GitHub 로그인/설정 모달 (로드 성공 시 닫힘 / 실패 시 메인 접근 불가) -->
+  <div id="loginModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
     <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">GitHub 로그인/설정</div>
+        <button class="btn btn-ghost" type="button" onclick="resetAllSettings()" title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
+          설정 초기화
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="form-group">
+            <label>GitHub Owner</label>
+            <input type="text" id="owner" placeholder="예: UL-SkyPark" autocomplete="off" />
+          </div>
+
+          <div class="form-group">
+            <label>Repository</label>
+            <input type="text" id="repo" placeholder="예: ulsan-skypark-search" autocomplete="off" />
+          </div>
+
+          <div class="form-group">
+            <label>Branch</label>
+            <input type="text" id="branch" placeholder="예: main" autocomplete="off" />
+          </div>
+
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Access Token</label>
+
+            <div class="token-row">
+              <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" autocomplete="off" />
+              <button type="button" class="icon-btn" id="tokenToggleBtn" onclick="toggleToken()">보기</button>
+              <button type="button" class="icon-btn" id="clearTokenBtn" onclick="clearSavedToken()" title="브라우저에 저장된 토큰만 삭제합니다">
+                저장토큰 삭제
+              </button>
+            </div>
+
+            <div class="token-persist">
+              <label class="token-check">
+                <input type="checkbox" id="tokenPersist" checked />
+                <span class="token-label">
+                  이 브라우저에 토큰 저장
+                  <span class="token-inline-note">※ 체크 해제 시(권장: 공용 PC) 브라우저를 닫으면 토큰이 사라집니다.</span>
+                </span>
+              </label>
+            </div>
+
+            <div class="login-status" id="loginStatus"></div>
+          </div>
+        </div>
+
+        <div class="field-help" style="margin-top:10px;">
+          <div class="danger">※ 로드(불러오기) 성공 전에는 본 화면을 사용할 수 없습니다.</div>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button class="btn btn-primary" id="loadBtn" onclick="loadAllFiles()">불러오기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Failure Log Modal -->
+  <div id="logModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
+    <div class="modal" style="max-width:1200px;">
       <div class="modal-head">
         <div class="modal-title" id="logModalTitle">일괄등록 실패 로그</div>
       </div>
@@ -823,7 +858,7 @@
   </div>
 
   <!-- Confirm Modal (일괄등록 확인) -->
-  <div id="confirmModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
+  <div id="confirmModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
     <div class="modal" style="max-width:520px;">
       <div class="modal-head">
         <div class="modal-title">일괄등록 확인</div>
@@ -845,7 +880,10 @@
       deceased: "data/deceased_data.xlsx",
       nature: "data/nature_data.xlsx"
     };
-    const GRID_LIMIT = 20;
+
+    // ✅ 표시건수 드롭다운
+    const GRID_LIMIT_OPTIONS = [20, 50, 100];
+    let GRID_LIMIT = 20;
 
     // ===== 상태 =====
     let hot = null;
@@ -899,159 +937,7 @@
       return isTokenPersistEnabled() ? localStorage : sessionStorage;
     }
 
-    window.onload = () => {
-      const savedOwner  = localStorage.getItem("gh_owner");
-      const savedRepo   = localStorage.getItem("gh_repo");
-      const savedBranch = localStorage.getItem("gh_branch");
-      const savedTarget = localStorage.getItem("gh_target");
-      const savedLoadedAt = localStorage.getItem("gh_loaded_at");
-
-      // 저장 옵션(기본: 체크 true)
-      const savedPersist = localStorage.getItem("gh_token_persist");
-      const persist = (savedPersist === null) ? true : (savedPersist === "1");
-      const persistEl = document.getElementById("tokenPersist");
-      if (persistEl) persistEl.checked = persist;
-
-      if (savedOwner) document.getElementById("owner").value = savedOwner;
-      if (savedRepo)  document.getElementById("repo").value  = savedRepo;
-      document.getElementById("branch").value = savedBranch || "main";
-      if (savedTarget === "nature") fileKey = "nature";
-
-      // 토큰 읽기(옵션에 따라 store 변경)
-      const savedToken = (persist ? localStorage : sessionStorage).getItem("gh_token");
-      if (savedToken) document.getElementById("token").value = savedToken;
-
-      selectTarget(fileKey, true);
-      setLoaded(false);
-      updateTopBadges(false, savedLoadedAt || "", "", document.getElementById("branch").value.trim() || "main");
-
-      ["owner","repo","token","branch"].forEach(id=>{
-        const el = document.getElementById(id);
-        el?.addEventListener("keydown", (e)=>{
-          if(e.key === "Enter") loadAllFiles();
-        });
-      });
-
-      document.getElementById("statusMsg")?.addEventListener("click", ()=>{
-        const el = document.getElementById("statusMsg");
-        el.style.display = "none";
-      });
-
-      // 토큰 저장 옵션 변경 시 즉시 반영
-      document.getElementById("tokenPersist")?.addEventListener("change", (e)=>{
-        const persistNow = e.target.checked;
-        localStorage.setItem("gh_token_persist", persistNow ? "1" : "0");
-
-        const tokenVal = document.getElementById("token")?.value?.trim() || "";
-        if (persistNow){
-          if (tokenVal) localStorage.setItem("gh_token", tokenVal);
-          sessionStorage.removeItem("gh_token");
-        } else {
-          if (tokenVal) sessionStorage.setItem("gh_token", tokenVal);
-          localStorage.removeItem("gh_token");
-        }
-      });
-
-      // 토큰 입력 변경 시(저장옵션 기준으로) 저장값 최신화
-      document.getElementById("token")?.addEventListener("input", ()=>{
-        const v = document.getElementById("token")?.value?.trim() || "";
-        if (!v) return;
-        if (isTokenPersistEnabled()){
-          localStorage.setItem("gh_token", v);
-          sessionStorage.removeItem("gh_token");
-        } else {
-          sessionStorage.setItem("gh_token", v);
-          localStorage.removeItem("gh_token");
-        }
-      });
-
-      document.getElementById("bulkFile")?.addEventListener("change", (e) => {
-        const input = e.target;
-        const files = Array.from(input.files || []);
-        if (!files.length) return;
-
-        addSelectedFiles(files);
-        input.value = "";
-
-        renderSelectedFiles();
-        updateBulkButtonState();
-      });
-
-      // 드래그 앤 드롭
-      const dz = document.getElementById("fileDropZone");
-      if (dz){
-        const stop = (e)=>{ e.preventDefault(); e.stopPropagation(); };
-        ["dragenter","dragover"].forEach(evt=>{
-          dz.addEventListener(evt, (e)=>{
-            stop(e);
-            if (!isLoaded || isBusy) return;
-            dz.classList.add("drop-ready");
-          });
-        });
-        ["dragleave","drop"].forEach(evt=>{
-          dz.addEventListener(evt, (e)=>{
-            stop(e);
-            dz.classList.remove("drop-ready");
-          });
-        });
-        dz.addEventListener("drop", (e)=>{
-          if (!isLoaded || isBusy) return;
-          const files = Array.from(e.dataTransfer?.files || []).filter(f=>{
-            const lower = (f.name || "").toLowerCase();
-            return lower.endsWith(".xlsx") || lower.endsWith(".xls");
-          });
-          if (!files.length) return;
-          addSelectedFiles(files);
-          renderSelectedFiles();
-          updateBulkButtonState();
-        });
-      }
-
-      renderSelectedFiles();
-      updateBulkButtonState();
-    };
-
-    function toggleToken(){
-      const input = document.getElementById("token");
-      const btn = document.getElementById("tokenToggleBtn");
-      if(!input || !btn) return;
-
-      const isPw = input.type === "password";
-      input.type = isPw ? "text" : "password";
-      btn.textContent = isPw ? "가리기" : "보기";
-    }
-
-    function clearSavedToken(){
-      localStorage.removeItem("gh_token");
-      sessionStorage.removeItem("gh_token");
-      const t = document.getElementById("token");
-      if (t) t.value = "";
-      showStatus("저장된 토큰을 삭제하였습니다(이 브라우저).", "success");
-    }
-
-    function resetAllSettings(){
-      ["gh_owner","gh_repo","gh_branch","gh_target","gh_loaded_at","gh_token_persist"].forEach(k=>localStorage.removeItem(k));
-      localStorage.removeItem("gh_token");
-      sessionStorage.removeItem("gh_token");
-
-      ["owner","repo","token"].forEach(id=>{
-        const el = document.getElementById(id);
-        if (el) el.value = "";
-      });
-      const b = document.getElementById("branch");
-      if (b) b.value = "main";
-
-      const persistEl = document.getElementById("tokenPersist");
-      if (persistEl) persistEl.checked = true;
-
-      fileKey = "deceased";
-      selectTarget(fileKey, true);
-      setLoaded(false);
-      updateTopBadges(false, "", "", "main");
-      resetBulkUpload();
-      showStatus("설정이 초기화되었습니다.", "success");
-    }
-
+    // ===== 공통 유틸 =====
     function pad2(n){ return String(n).padStart(2,"0"); }
     function formatLoadedAt(d){
       const yyyy = d.getFullYear();
@@ -1064,7 +950,7 @@
 
     function norm(s) {
       return String(s ?? "")
-        .replace(/\s+/g, "")
+        .replace(/\\s+/g, "")
         .replace(/[–—]/g, "-")
         .toLowerCase();
     }
@@ -1077,7 +963,7 @@
         .replaceAll("'", "&#039;");
     }
     function escapeHtmlWithBr(s){
-      return escapeHtml(s).replaceAll("\n","<br>");
+      return escapeHtml(s).replaceAll("\\n","<br>");
     }
     function formatBytes(bytes){
       const n = Number(bytes || 0);
@@ -1100,14 +986,14 @@
         const y = onlyNum.slice(0,4), m = onlyNum.slice(4,6), d = onlyNum.slice(6,8);
         return `${y}-${m}-${d}`;
       }
-      const cleaned = raw.replace(/\./g, "-").replace(/\//g, "-");
+      const cleaned = raw.replace(/\\./g, "-").replace(/\\//g, "-");
       const parts = cleaned.split("-").map(p => p.trim()).filter(Boolean);
       if (parts.length >= 3) {
         let [y,m,d] = parts;
         if (y.length === 2) y = "20" + y;
         m = String(parseInt(m,10)).padStart(2,"0");
         d = String(parseInt(d,10)).padStart(2,"0");
-        if (!/^\d{4}$/.test(y) || m === "NaN" || d === "NaN") return "";
+        if (!/^\\d{4}$/.test(y) || m === "NaN" || d === "NaN") return "";
         return `${y}-${m}-${d}`;
       }
       return "";
@@ -1148,24 +1034,56 @@
         : ["자연장번호","자연장 번호","자연장no","자연장No","번호","관리번호"];
     }
 
-    // ✅ "구분" 칸이 "부부단"인지 판정(첨부파일 기준)
+    // ✅ “부부” 판정: 업로드 파일의 여러 칸에서 '부부' 포함 여부로 판단(자연장지 포함)
     function coupleFlagFromRow(rowObj){
-      const v = String(getCellByHeader(rowObj, ["구분","구 분","단구분","단 구분"])).trim();
-      return norm(v).includes(norm("부부단"));
+      const candidates = [
+        ["구분","구 분","단구분","단 구분"],
+        ["안장구분","안장 구분","안장구분(개인/부부)","안장(구분)"],
+        ["비고","메모","특이사항"],
+        ["사용구분","사용 구분","분류"]
+      ];
+      let all = "";
+      for (const cands of candidates){
+        const v = String(getCellByHeader(rowObj, cands)).trim();
+        if (v) all += " " + v;
+      }
+      return norm(all).includes(norm("부부"));
+    }
+
+    // ✅ 자연장지 안장구분 값 추출: 업로드 값이 있으면 우선, 없으면 부부판정 기반
+    function burialTypeFromRow(rowObj){
+      const raw = String(getCellByHeader(rowObj, ["안장구분","안장 구분","안장구분(개인/부부)","안장(구분)","구분","단구분"])).trim();
+      const n = norm(raw);
+      if (n.includes(norm("부부"))) return "부부장";
+      if (n.includes(norm("개인"))) return "개인장";
+      // 값이 없거나 애매하면 coupleFlag로 보조
+      return coupleFlagFromRow(rowObj) ? "부부장" : "개인장";
     }
 
     function showStatus(msg, type) {
       const el = document.getElementById("statusMsg");
-      el.textContent = (msg || "") + "\n(클릭하시면 닫힙니다)";
+      el.textContent = (msg || "") + "\\n(클릭하시면 닫힙니다)";
       el.className = "status " + type;
       el.style.display = "block";
       if (type === "success") setTimeout(() => (el.style.display = "none"), 2500);
     }
 
+    function showLoginStatus(msg, type){
+      const el = document.getElementById("loginStatus");
+      if (!el) return;
+      el.textContent = msg || "";
+      el.className = "login-status " + type;
+      el.style.display = "block";
+    }
+    function hideLoginStatus(){
+      const el = document.getElementById("loginStatus");
+      if (!el) return;
+      el.style.display = "none";
+    }
+
     function setBusy(b) {
       isBusy = b;
       document.getElementById("loadBtn").disabled = b;
-      document.getElementById("resetAllBtn").disabled = b;
 
       document.getElementById("bulkResetBtn").disabled = b || !isLoaded;
       document.getElementById("pickFilesBtn").disabled = b || !isLoaded;
@@ -1179,7 +1097,6 @@
     function setLoaded(v){
       isLoaded = v;
       document.getElementById("afterLoad").style.display = v ? "block" : "none";
-      showLoadHint(!v);
 
       document.getElementById("bulkResetBtn").disabled = !v || isBusy;
       document.getElementById("pickFilesBtn").disabled = !v || isBusy;
@@ -1187,46 +1104,113 @@
       document.getElementById("tabDeceased").disabled = !v || isBusy;
       document.getElementById("tabNature").disabled = !v || isBusy;
 
+      // ✅ 로드 전 접근 차단(모달 떠있는 동안)
+      const main = document.getElementById("mainContent");
+      if (main){
+        main.classList.toggle("locked", !v);
+      }
+
       updateBulkButtonState();
       setBusy(isBusy);
     }
 
-    function showLoadHint(show){
-      const el = document.getElementById("loadHint");
-      el.style.display = show ? "inline-flex" : "none";
+    function updateInfoPanel(){
+      const owner = localStorage.getItem("gh_owner") || "";
+      const repo  = localStorage.getItem("gh_repo") || "";
+      const branch= localStorage.getItem("gh_branch") || "main";
+      const loadedAt = localStorage.getItem("gh_loaded_at") || "";
+
+      document.getElementById("infoOwner").textContent = owner || "-";
+      document.getElementById("infoRepo").textContent  = repo  || "-";
+      document.getElementById("infoBranch").textContent= branch || "-";
+      document.getElementById("infoLoadedAt").textContent = loadedAt || "-";
+
+      const loadedFilesText = (isLoaded)
+        ? `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`
+        : "-";
+      document.getElementById("infoLoadedFiles").textContent = loadedFilesText;
     }
 
-    function updateTopBadges(show, loadedAt, loadedFilesText, branchText){
-      const owner = document.getElementById("owner").value.trim();
-      const repo  = document.getElementById("repo").value.trim();
-      const branch= branchText || document.getElementById("branch").value.trim() || "main";
+    function openLoginModal(){
+      document.getElementById("loginModalBackdrop").style.display = "flex";
+      hideLoginStatus();
+    }
+    function closeLoginModal(){
+      document.getElementById("loginModalBackdrop").style.display = "none";
+      hideLoginStatus();
+    }
 
-      const bOwner = document.getElementById("badgeOwner");
-      const bRepo  = document.getElementById("badgeRepo");
-      const bBranch= document.getElementById("badgeBranch");
-      const bLoaded= document.getElementById("badgeLoadedAt");
-      const bFiles = document.getElementById("badgeLoadedFiles");
+    function toggleToken(){
+      const input = document.getElementById("token");
+      const btn = document.getElementById("tokenToggleBtn");
+      if(!input || !btn) return;
 
-      if (!show){
-        bOwner.classList.add("hidden");
-        bRepo.classList.add("hidden");
-        bBranch.classList.add("hidden");
-        bLoaded.classList.add("hidden");
-        bFiles.classList.add("hidden");
+      const isPw = input.type === "password";
+      input.type = isPw ? "text" : "password";
+      btn.textContent = isPw ? "가리기" : "보기";
+    }
+
+    function clearSavedToken(){
+      localStorage.removeItem("gh_token");
+      sessionStorage.removeItem("gh_token");
+      const t = document.getElementById("token");
+      if (t) t.value = "";
+      showLoginStatus("저장된 토큰을 삭제하였습니다(이 브라우저).", "success");
+    }
+
+    function resetAllSettings(){
+      ["gh_owner","gh_repo","gh_branch","gh_target","gh_loaded_at","gh_token_persist","gh_grid_limit"].forEach(k=>localStorage.removeItem(k));
+      localStorage.removeItem("gh_token");
+      sessionStorage.removeItem("gh_token");
+
+      ["owner","repo","token"].forEach(id=>{
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+      const b = document.getElementById("branch");
+      if (b) b.value = "main";
+
+      const persistEl = document.getElementById("tokenPersist");
+      if (persistEl) persistEl.checked = true;
+
+      fileKey = "deceased";
+      localStorage.setItem("gh_target", fileKey);
+
+      loadedAtText = "";
+      setLoaded(false);
+      resetBulkUpload();
+
+      // 그리드 제한 초기화
+      GRID_LIMIT = 20;
+      const sel = document.getElementById("gridLimitSelect");
+      if (sel) sel.value = String(GRID_LIMIT);
+
+      updateInfoPanel();
+      showLoginStatus("설정이 초기화되었습니다. 다시 불러오기 해주세요.", "success");
+    }
+
+    function changeGridLimit(){
+      const sel = document.getElementById("gridLimitSelect");
+      const v = parseInt(sel?.value || "20", 10);
+      GRID_LIMIT = GRID_LIMIT_OPTIONS.includes(v) ? v : 20;
+      localStorage.setItem("gh_grid_limit", String(GRID_LIMIT));
+
+      if (isLoaded){
+        renderGridForCurrentTarget();
+        updateGridMeta();
+      } else {
+        document.getElementById("gridMeta").textContent = `최근 ${GRID_LIMIT}건 표시`;
+      }
+    }
+
+    function updateGridMeta(){
+      if (!isLoaded){
+        document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시`;
         return;
       }
-
-      bOwner.querySelector("b").textContent = owner || "-";
-      bRepo.querySelector("b").textContent  = repo  || "-";
-      bBranch.querySelector("b").textContent = branch || "-";
-      bLoaded.querySelector("b").textContent = loadedAt || "-";
-      bFiles.querySelector("b").textContent  = loadedFilesText || "-";
-
-      bOwner.classList.remove("hidden");
-      bRepo.classList.remove("hidden");
-      bBranch.classList.remove("hidden");
-      bLoaded.classList.remove("hidden");
-      bFiles.classList.remove("hidden");
+      const total = ds(fileKey).rows.length;
+      document.getElementById("gridMeta").textContent =
+        `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
     }
 
     function selectTarget(target, isInit=false) {
@@ -1236,19 +1220,12 @@
       document.getElementById("tabDeceased").classList.toggle("active", fileKey === "deceased");
       document.getElementById("tabNature").classList.toggle("active", fileKey === "nature");
 
-      if (isLoaded) {
-        const total = ds(fileKey).rows.length;
-        document.getElementById("gridMeta").textContent =
-          `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
-      } else {
-        document.getElementById("gridMeta").textContent = `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시`;
-      }
+      updateGridMeta();
 
       if (isLoaded) renderGridForCurrentTarget();
 
       if (!isInit && isLoaded) {
-        const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
-        updateTopBadges(true, loadedAtText, loadedFilesText, document.getElementById("branch").value.trim() || "main");
+        updateInfoPanel();
       }
     }
 
@@ -1344,7 +1321,6 @@
       selectedFiles = [];
       renderSelectedFiles();
       updateBulkButtonState();
-      if (isLoaded) showStatus("선택 파일 목록이 초기화되었습니다.", "success");
     }
 
     // 모달: 일괄등록 확인
@@ -1362,15 +1338,21 @@
       closeConfirmModal();
       showStatus("일괄등록이 취소되었습니다.", "success");
     }
+
     document.getElementById("confirmModalBackdrop")?.addEventListener("click", (e) => {
       if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
     });
 
+    // ✅ 로그인 모달: 바깥 클릭 방지(실수로 닫히지 않도록) -> 필요하면 아래 주석 해제
+    // document.getElementById("loginModalBackdrop")?.addEventListener("click", (e) => {
+    //   if (e.target.id === "loginModalBackdrop") { /* do nothing */ }
+    // });
+
     function confirmAndImportBulkExcelAutoSave(){
       if (!isLoaded) {
-        showLoadHint(true);
-        setLoaded(false);
-        showStatus("먼저 ‘불러오기’를 눌러 주세요.", "error");
+        openLoginModal();
+        showLoginStatus("먼저 불러오기를 완료해 주세요.", "error");
+        showStatus("먼저 ‘불러오기’를 완료해 주세요.", "error");
         return;
       }
       if (isBusy) return;
@@ -1391,7 +1373,7 @@
       });
       if (!metaRes.ok) {
         const txt = await metaRes.text();
-        throw new Error(`메타 조회 실패: ${path} (${metaRes.status})\n${txt}`);
+        throw new Error(`메타 조회 실패: ${path} (${metaRes.status})\\n${txt}`);
       }
       const meta = await metaRes.json();
       if (Array.isArray(meta)) throw new Error(`경로가 폴더로 인식됨: ${path}`);
@@ -1400,7 +1382,7 @@
       const fileRes = await fetch(meta.download_url);
       if (!fileRes.ok) {
         const txt = await fileRes.text();
-        throw new Error(`다운로드 실패: ${path} (${fileRes.status})\n${txt}`);
+        throw new Error(`다운로드 실패: ${path} (${fileRes.status})\\n${txt}`);
       }
 
       const buf = await fileRes.arrayBuffer();
@@ -1422,8 +1404,16 @@
       if (key === "deceased") {
         const idxReturn = findHeaderIndex(d.headers, ["반환일자","반환 일자","반환일"]);
         if (idxReturn === -1) d.headers.push("반환일자");
-        for (const row of d.rows) while (row.length < d.headers.length) row.push("");
       }
+
+      // ✅ 자연장지(잔디장) 관리용: '안장구분' 헤더 보장(개인장/부부장)
+      if (key === "nature") {
+        const idxBurial = findHeaderIndex(d.headers, ["안장구분","안장 구분"]);
+        if (idxBurial === -1) d.headers.push("안장구분");
+      }
+
+      // 모든 row 길이 맞춤
+      for (const row of d.rows) while (row.length < d.headers.length) row.push("");
 
       d.highlight = new Set();
       d.loaded = true;
@@ -1468,13 +1458,25 @@
       setTimeout(() => { hot.render(); hot.refreshDimensions(); }, 0);
     }
 
+    // ✅ (간략) GitHub 에러 요약
+    function summarizeLoadError(errText){
+      const t = String(errText || "");
+      if (t.includes("401")) return "인증 실패(토큰 권한/만료).";
+      if (t.includes("403")) return "권한 부족 또는 API 제한(403).";
+      if (t.includes("404")) return "Owner/Repo/Branch 또는 파일 경로가 올바르지 않습니다(404).";
+      if (t.includes("download_url 없음")) return "파일 메타 정보에 다운로드 링크가 없습니다.";
+      if (t.includes("경로가 폴더")) return "지정한 경로가 파일이 아니라 폴더로 인식됩니다.";
+      return "요청 처리 중 오류가 발생했습니다.";
+    }
+
     async function loadAllFiles() {
       const inputs = getInputs();
       const { owner, repo, token, branch } = inputs;
 
       if (!owner || !repo || !token) {
-        showStatus("Owner / Repo / Token을 모두 입력해 주세요.", "error");
+        showLoginStatus("Owner / Repo / Token을 모두 입력해 주세요.", "error");
         setLoaded(false);
+        openLoginModal();
         return;
       }
 
@@ -1482,7 +1484,7 @@
       saveInputsToStorage({owner, repo, token, branch});
 
       setBusy(true);
-      showStatus("추모의집/자연장지 데이터를 불러오는 중입니다...", "loading");
+      showLoginStatus("추모의집/자연장지 데이터를 불러오는 중입니다...", "loading");
 
       try {
         DATASETS.deceased.loaded = false;
@@ -1507,7 +1509,10 @@
 
         if (errors.length){
           setLoaded(false);
-          throw new Error("로드에 실패하였습니다:\n" + errors.join("\n\n"));
+          const detail = errors.join("\\n\\n");
+          const brief = summarizeLoadError(detail);
+          showLoginStatus(`불러오기 실패: ${brief}\\n\\n(상세)\\n${detail}`, "error");
+          throw new Error(brief);
         }
 
         const now = new Date();
@@ -1516,20 +1521,23 @@
 
         setLoaded(true);
 
-        const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
-        updateTopBadges(true, loadedAtText, loadedFilesText, branch);
-
-        showStatus("로드가 완료되었습니다.", "success");
-
-        const total = ds(fileKey).rows.length;
-        document.getElementById("gridMeta").textContent =
-          `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
-
+        // 표시건수 로컬 반영
+        updateGridMeta();
         renderGridForCurrentTarget();
 
+        updateInfoPanel();
+        showLoginStatus("로드가 완료되었습니다.", "success");
+        showStatus("로드가 완료되었습니다.", "success");
+
+        // ✅ 성공 시 모달 닫고 접근 허용
+        closeLoginModal();
+
       } catch (e) {
+        // ✅ 실패 시 메인 접근 불가 유지(모달 유지)
         setLoaded(false);
-        showStatus(e.message || String(e), "error");
+        openLoginModal();
+        const msg = e?.message || String(e);
+        showStatus("불러오기 실패: " + msg, "error");
       } finally {
         setBusy(false);
       }
@@ -1542,10 +1550,10 @@
       if (s.includes("추모의집")) return "deceased";
       if (s.includes("잔디장") || s.includes("수목장") || s.includes("자연장")) return "nature";
 
-      if (/-\d{1,3}실-/.test(s) || /\b\d{1,3}실\b/.test(s) || /\d{1,3}실/.test(s)) return "deceased";
-      if (/^[^-]+-\d+-\d+-\d{4}$/.test(s)) return "nature";
+      if (/-\\d{1,3}실-/.test(s) || /\\b\\d{1,3}실\\b/.test(s) || /\\d{1,3}실/.test(s)) return "deceased";
+      if (/^[^-]+-\\d+-\\d+-\\d{4}$/.test(s)) return "nature";
 
-      const m = s.match(/(\d+)\s*$/);
+      const m = s.match(/(\\d+)\\s*$/);
       if (m){
         const len = m[1].length;
         if (len === 5) return "deceased";
@@ -1574,7 +1582,8 @@
       const applicant = String(getCellByHeader(rowObj, ["신청자명","신청자","사용자명","계약자명"])).trim();
       const inDateRaw = String(getCellByHeader(rowObj, ["안치일자","안치 일자","안치일"])).trim();
       const returnRaw = String(getCellByHeader(rowObj, ["반환일자","반환 일자","반환일"])).trim();
-      return !!(noRaw || deceased || applicant || inDateRaw || returnRaw);
+      const burialRaw = String(getCellByHeader(rowObj, ["안장구분","안장 구분","구분","단구분"])).trim();
+      return !!(noRaw || deceased || applicant || inDateRaw || returnRaw || burialRaw);
     }
 
     function shouldSkipStructuralRow(templateType, idx, lastIdx, rowObj){
@@ -1662,7 +1671,7 @@
 
       if (!res.ok) {
         const txt = await res.text();
-        throw new Error(`[${d.label}] 저장 실패 (${res.status})\n${txt}`);
+        throw new Error(`[${d.label}] 저장 실패 (${res.status})\\n${txt}`);
       }
 
       const resData = await res.json();
@@ -1761,9 +1770,9 @@
     // ===== 일괄등록: 자동 분류 + 즉시 저장 =====
     async function importBulkExcelAutoSave() {
       if (!isLoaded) {
-        showLoadHint(true);
-        setLoaded(false);
-        showStatus("먼저 ‘불러오기’를 눌러 주세요.", "error");
+        openLoginModal();
+        showLoginStatus("먼저 불러오기를 완료해 주세요.", "error");
+        showStatus("먼저 ‘불러오기’를 완료해 주세요.", "error");
         return;
       }
       if (isBusy) return;
@@ -1781,7 +1790,7 @@
         const adds = { deceased: [], nature: [] };
         const rets = [];
 
-        // ✅ 업로드 내 동일 번호 허용(부부단 2명) 반영: Set → Map(count/max)
+        // ✅ 업로드 내 동일 번호 허용(부부 2명) 반영
         const uploadNoCount = { deceased: new Map(), nature: new Map() };
         const uploadNoMax   = { deceased: new Map(), nature: new Map() };
 
@@ -1856,7 +1865,7 @@
                 no:noRaw,
                 deceased,
                 applicant,
-                reason: "번호 패턴으로 대상(추모의집/자연장지) 판별에 실패하였습니다.\n" + DETECT_HINT
+                reason: "번호 패턴으로 대상(추모의집/자연장지) 판별에 실패하였습니다.\\n" + DETECT_HINT
               });
               continue;
             }
@@ -1906,7 +1915,7 @@
               continue;
             }
 
-            // ✅ 구분칸 "부부단"이면 동일 번호 2명까지 허용(첨부파일 기준)
+            // ✅ 업로드 파일의 '부부' 관련 값이 있으면 동일번호 2건까지 허용 (자연장지 포함)
             const isCouple = coupleFlagFromRow(r);
             const vNo = norm(noRaw);
 
@@ -1920,15 +1929,17 @@
                 file:file.name, rowNo, target:targetLabel, kind:"신규",
                 no:noRaw, deceased, applicant,
                 reason: (maxAllowed === 2)
-                  ? "업로드 파일(전체) 내 동일 번호가 2건을 초과했습니다(부부단 허용 2건)."
+                  ? "업로드 파일(전체) 내 동일 번호가 2건을 초과했습니다(부부 허용 2건)."
                   : "업로드 파일(전체) 내 동일 번호가 중복되었습니다."
               });
               continue;
             }
             uploadNoCount[targetKey].set(vNo, curCnt + 1);
 
-            // ✅ adds에 isCouple 포함(아래 applyAdds에서 최종 허용인원 계산에 사용)
-            adds[targetKey].push({ file:file.name, rowNo, inDate, no:noRaw, deceased, applicant, isCouple });
+            // ✅ 자연장지: 안장구분 값(개인장/부부장) 세팅
+            const burialType = (targetKey === "nature") ? burialTypeFromRow(r) : "";
+
+            adds[targetKey].push({ file:file.name, rowNo, inDate, no:noRaw, deceased, applicant, isCouple, burialType });
           }
         }
 
@@ -1964,10 +1975,23 @@
             : -1;
           if (key === "deceased" && idxReturn === -1) missing.push("반환일자");
 
+          // ✅ 자연장지: 안장구분 헤더 보장 + 인덱스 확보
+          let idxBurial = -1;
+          if (key === "nature"){
+            idxBurial = findHeaderIndex(headers, ["안장구분","안장 구분"]);
+            if (idxBurial === -1){
+              headers.push("안장구분");
+              idxBurial = headers.length - 1;
+              // 기존 row 길이 맞춤
+              for (const r of rows) while (r.length < headers.length) r.push("");
+            }
+          }
+
           if (missing.length) throw new Error(`[${ds(key).label}] 헤더를 찾을 수 없습니다: ${missing.join(", ")}`);
 
-          // ✅ 번호별 "현재 사용중(반환일자 없음)" 인원 수 집계
+          // ✅ 번호별 "현재 사용중" 인원 수 집계 + (자연장지) 기존 데이터의 안장구분으로 최대허용(부부=2) 추정
           const activeCount = new Map();
+          const existingMax = new Map(); // nature에서만 사용
 
           if (key === "deceased") {
             for (const row of rows) {
@@ -1975,16 +1999,25 @@
               if (!vv) continue;
 
               const hasRet = String(row[idxReturn] ?? "").trim() !== "";
-              if (hasRet) continue; // 반환된 건은 active 아님
+              if (hasRet) continue;
 
               activeCount.set(vv, (activeCount.get(vv) ?? 0) + 1);
             }
           } else {
-            // 자연장지는 반환 개념이 없으므로 기존 데이터도 active로 카운트
             for (const row of rows) {
               const vv = norm(row[idxNo]);
               if (!vv) continue;
               activeCount.set(vv, (activeCount.get(vv) ?? 0) + 1);
+
+              // ✅ 기존 자연장지 안장구분에 '부부'가 있으면 해당 번호 최대 2로 간주
+              if (idxBurial !== -1){
+                const bt = norm(row[idxBurial]);
+                if (bt.includes(norm("부부"))){
+                  existingMax.set(vv, 2);
+                } else if (!existingMax.has(vv)) {
+                  existingMax.set(vv, 1);
+                }
+              }
             }
           }
 
@@ -1993,18 +2026,22 @@
           for (const q of adds[key]){
             const vv = norm(q.no);
 
-            // ✅ 첨부파일 기준: 부부단이면 2, 아니면 1
-            // (같은 번호가 여러 파일에 걸쳐있어도 uploadNoMax에 이미 2로 올라가 있음)
-            const maxAllowed = (uploadNoMax[key].get(vv) ?? (q.isCouple ? 2 : 1));
-            const curActive = activeCount.get(vv) ?? 0;
+            // ✅ 최대허용 계산:
+            // - 업로드에서 부부 감지되면 2
+            // - 자연장지: 기존 데이터에서 부부 흔적이 있으면 2
+            // - 그 외 1
+            const baseFromUpload = (uploadNoMax[key].get(vv) ?? (q.isCouple ? 2 : 1));
+            const baseFromExisting = (key === "nature") ? (existingMax.get(vv) ?? 1) : 1;
+            const maxAllowed = Math.max(baseFromUpload, baseFromExisting);
 
+            const curActive = activeCount.get(vv) ?? 0;
             if (curActive + 1 > maxAllowed){
               importFailLog.push({
                 file:q.file, rowNo:q.rowNo,
                 target:ds(key).label, kind:"신규",
                 no:q.no, deceased:q.deceased, applicant:q.applicant,
                 reason: (maxAllowed === 2)
-                  ? "해당 번호는 현재 사용중 2건까지 허용되며(부부단), 이미 2건이 사용 중입니다."
+                  ? "해당 번호는 현재 사용중 2건까지 허용되며(부부), 이미 2건이 사용 중입니다."
                   : "해당 대상 파일의 기존 번호와 중복됩니다(1건만 허용)."
               });
               continue;
@@ -2016,11 +2053,15 @@
             row[idxDe] = q.deceased;
             row[idxAp] = q.applicant;
 
+            // ✅ 자연장지: 안장구분 입력(개인장/부부장)
+            if (key === "nature" && idxBurial !== -1){
+              row[idxBurial] = q.burialType || (q.isCouple ? "부부장" : "개인장");
+            }
+
             rows.push(row);
             next[key].highlight.add(rows.length - 1);
             added++;
 
-            // ✅ 사용중 카운트 증가
             activeCount.set(vv, curActive + 1);
           }
 
@@ -2105,33 +2146,29 @@
         }
 
         if (saveErrors.length){
-          showStatus("저장 중 오류가 발생하였습니다.\n" + saveErrors.join("\n\n"), "error");
+          showStatus("저장 중 오류가 발생하였습니다.\\n" + saveErrors.join("\\n\\n"), "error");
           return;
         }
 
         if (needSaveDe){
           ds("deceased").rows = next.deceased.rows;
+          ds("deceased").headers = next.deceased.headers;
           ds("deceased").highlight = next.deceased.highlight;
         }
         if (needSaveNa){
           ds("nature").rows = next.nature.rows;
+          ds("nature").headers = next.nature.headers;
           ds("nature").highlight = next.nature.highlight;
         }
 
         renderGridForCurrentTarget();
-
-        const inputs = getInputs();
-        const loadedFilesText = `추모의집 ${ds("deceased").rows.length}건 / 자연장지 ${ds("nature").rows.length}건`;
-        updateTopBadges(true, loadedAtText, loadedFilesText, inputs.branch);
-
-        const total = ds(fileKey).rows.length;
-        document.getElementById("gridMeta").textContent =
-          `${ds(fileKey).label} · 최근 ${GRID_LIMIT}건 표시 (총 ${total}건)`;
+        updateGridMeta();
+        updateInfoPanel();
 
         const msg =
-          `일괄등록이 완료되었습니다.\n` +
-          `추모의집: 신규 ${addedDe} / 반환 ${retDe}\n` +
-          `자연장지: 신규 ${addedNa}\n` +
+          `일괄등록이 완료되었습니다.\\n` +
+          `추모의집: 신규 ${addedDe} / 반환 ${retDe}\\n` +
+          `자연장지: 신규 ${addedNa}\\n` +
           (importFailLog.length ? `실패 ${importFailLog.length}건(모달에서 확인해 주세요)` : `실패 0건`);
         showStatus(msg, "success");
 
@@ -2145,6 +2182,137 @@
         setBusy(false);
       }
     }
+
+    // ===== 초기화/로드 =====
+    window.onload = () => {
+      // 저장값 불러오기
+      const savedOwner  = localStorage.getItem("gh_owner");
+      const savedRepo   = localStorage.getItem("gh_repo");
+      const savedBranch = localStorage.getItem("gh_branch");
+      const savedTarget = localStorage.getItem("gh_target");
+      const savedLoadedAt = localStorage.getItem("gh_loaded_at");
+      const savedLimit = localStorage.getItem("gh_grid_limit");
+
+      // 표시건수
+      const lim = parseInt(savedLimit || "20", 10);
+      GRID_LIMIT = GRID_LIMIT_OPTIONS.includes(lim) ? lim : 20;
+      const limitSelect = document.getElementById("gridLimitSelect");
+      if (limitSelect) limitSelect.value = String(GRID_LIMIT);
+
+      // 저장 옵션(기본: 체크 true)
+      const savedPersist = localStorage.getItem("gh_token_persist");
+      const persist = (savedPersist === null) ? true : (savedPersist === "1");
+      const persistEl = document.getElementById("tokenPersist");
+      if (persistEl) persistEl.checked = persist;
+
+      if (savedOwner) document.getElementById("owner").value = savedOwner;
+      if (savedRepo)  document.getElementById("repo").value  = savedRepo;
+      document.getElementById("branch").value = savedBranch || "main";
+      if (savedTarget === "nature") fileKey = "nature";
+
+      // 토큰 읽기(옵션에 따라 store 변경)
+      const savedToken = (persist ? localStorage : sessionStorage).getItem("gh_token");
+      if (savedToken) document.getElementById("token").value = savedToken;
+
+      // 이벤트
+      ["owner","repo","token","branch"].forEach(id=>{
+        const el = document.getElementById(id);
+        el?.addEventListener("keydown", (e)=>{
+          if(e.key === "Enter") loadAllFiles();
+        });
+      });
+
+      document.getElementById("statusMsg")?.addEventListener("click", ()=>{
+        const el = document.getElementById("statusMsg");
+        el.style.display = "none";
+      });
+
+      // 토큰 저장 옵션 변경 시 즉시 반영
+      document.getElementById("tokenPersist")?.addEventListener("change", (e)=>{
+        const persistNow = e.target.checked;
+        localStorage.setItem("gh_token_persist", persistNow ? "1" : "0");
+
+        const tokenVal = document.getElementById("token")?.value?.trim() || "";
+        if (persistNow){
+          if (tokenVal) localStorage.setItem("gh_token", tokenVal);
+          sessionStorage.removeItem("gh_token");
+        } else {
+          if (tokenVal) sessionStorage.setItem("gh_token", tokenVal);
+          localStorage.removeItem("gh_token");
+        }
+      });
+
+      // 토큰 입력 변경 시 저장값 최신화
+      document.getElementById("token")?.addEventListener("input", ()=>{
+        const v = document.getElementById("token")?.value?.trim() || "";
+        if (!v) return;
+        if (isTokenPersistEnabled()){
+          localStorage.setItem("gh_token", v);
+          sessionStorage.removeItem("gh_token");
+        } else {
+          sessionStorage.setItem("gh_token", v);
+          localStorage.removeItem("gh_token");
+        }
+      });
+
+      // 파일 선택
+      document.getElementById("bulkFile")?.addEventListener("change", (e) => {
+        const input = e.target;
+        const files = Array.from(input.files || []);
+        if (!files.length) return;
+
+        addSelectedFiles(files);
+        input.value = "";
+
+        renderSelectedFiles();
+        updateBulkButtonState();
+      });
+
+      // 드래그 앤 드롭
+      const dz = document.getElementById("fileDropZone");
+      if (dz){
+        const stop = (e)=>{ e.preventDefault(); e.stopPropagation(); };
+        ["dragenter","dragover"].forEach(evt=>{
+          dz.addEventListener(evt, (e)=>{
+            stop(e);
+            if (!isLoaded || isBusy) return;
+            dz.classList.add("drop-ready");
+          });
+        });
+        ["dragleave","drop"].forEach(evt=>{
+          dz.addEventListener(evt, (e)=>{
+            stop(e);
+            dz.classList.remove("drop-ready");
+          });
+        });
+        dz.addEventListener("drop", (e)=>{
+          if (!isLoaded || isBusy) return;
+          const files = Array.from(e.dataTransfer?.files || []).filter(f=>{
+            const lower = (f.name || "").toLowerCase();
+            return lower.endsWith(".xlsx") || lower.endsWith(".xls");
+          });
+          if (!files.length) return;
+          addSelectedFiles(files);
+          renderSelectedFiles();
+          updateBulkButtonState();
+        });
+      }
+
+      // 초기 렌더
+      renderSelectedFiles();
+      updateBulkButtonState();
+      selectTarget(fileKey, true);
+
+      // 로드 전 잠금 + 로그인 모달 오픈
+      setLoaded(false);
+
+      // 로드 정보 패널 업데이트(저장값 표시)
+      if (savedLoadedAt) loadedAtText = savedLoadedAt;
+      updateInfoPanel();
+
+      // ✅ 항상 로그인 모달을 띄워서 "로그인" 느낌
+      openLoginModal();
+    };
   </script>
 </body>
 </html>
