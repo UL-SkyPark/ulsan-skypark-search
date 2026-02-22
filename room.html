@@ -15,10 +15,9 @@
       --text: #2f2a25;
       --muted: #6c5f56;
 
-      /* ✅ 셀 크기/라벨 폭 (가독성 개선) */
       --cell-w: 58px;
-      --cell-h: 56px;   /* 기존 48px → 56px */
-      --label-w: 58px;  /* ✅ 단번호(좌측 라벨) 기본 폭 */
+      --cell-h: 56px;
+      --label-w: 58px;
 
       --cell-border: #d0c6bb;
 
@@ -35,10 +34,7 @@
 
       --plus-color: #b8b8bf;
 
-      /* ✅ 모바일 손잡이 높이(텍스트 포함) */
       --handle-h: 34px;
-
-      /* ✅ 모바일 접힘 애니메이션용(충분히 크게) */
       --panel-maxh: 1200px;
     }
 
@@ -81,7 +77,6 @@
       flex-wrap:wrap;
     }
 
-    /* ✅ 다음 봉안 예정(부부단만) */
     .next-wrap{
       display:none;
       flex: 0 1 560px;
@@ -380,20 +375,18 @@
     }
     #room{ padding-top: 4px; }
 
-    /* ✅ 핵심: 가로 스크롤 폭을 콘텐츠(그리드) 기준으로 잡아서
-       단번호 sticky가 끝까지 유지되게 */
     .room{ display:flex; flex-direction:column; width: max-content; }
 
     .row{
       display:flex; gap:0; align-items:stretch; position: relative;
-      width: max-content; /* ✅ */
+      width: max-content;
     }
 
     .dan-label{
-      width: var(--label-w); /* ✅ */
+      width: var(--label-w);
       flex: 0 0 auto;
 
-      position: -webkit-sticky; /* ✅ iOS */
+      position: -webkit-sticky;
       position: sticky;
       left: 0;
 
@@ -411,7 +404,6 @@
       box-sizing: border-box;
       min-height: calc(var(--cell-h) + 6px);
 
-      /* ✅ sticky 안정화(사라짐 방지 보조) */
       transform: translateZ(0);
       backface-visibility: hidden;
       will-change: transform;
@@ -422,7 +414,7 @@
       column-gap: 8px;
       row-gap: 5px;
       padding: 1px 0;
-      width: max-content; /* ✅ */
+      width: max-content;
     }
 
     .niche{
@@ -460,12 +452,12 @@
       flex: 0 0 auto;
       font-size: 12px;
       line-height: 14px;
-      padding: 3px 6px 4px; /* ✅ 기본도 살짝 여유 */
+      padding: 3px 6px 4px;
       text-align:center;
       border-top: 1px solid rgba(0,0,0,0.10);
       background: rgba(255,255,255,0.64);
       color:#2b2520;
-      letter-spacing: 0.1px; /* ✅ 너무 크면 잘려보임 */
+      letter-spacing: 0.1px;
       font-weight: 900;
       font-variant-numeric: tabular-nums;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -536,10 +528,6 @@
     .list li { margin: 6px 0; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-variant-numeric: tabular-nums; }
 
-    /* =========================
-       ✅ 모바일 전용: 손잡이 + 상단패널 완전 접힘(레이아웃 공간도 0)
-       ========================= */
-
     .collapse-handle{
       display:none;
       position: sticky;
@@ -588,38 +576,32 @@
       .tabs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .search input{ width: 260px; max-width: 68vw; }
 
-      /* ✅ 모바일: 셀 더 큼 + 단번호 라벨 더 넓게(안정성) */
       :root{
         --cell-w: 60px;
         --cell-h: 60px;
-        --label-w: 68px; /* ✅ 요청: 62~68px → 68px로 */
+        --label-w: 68px;
       }
 
-      /* ✅ 번호 잘림 방지(모바일) */
       .niche-no{
         font-size: 13px;
         letter-spacing: 0;
         padding: 4px 7px 6px;
       }
 
-      /* 모바일은 다시 세로로 */
       .next-rows{ flex-direction:column; }
       .next-note{ flex: 1 1 auto; }
 
       .collapse-handle{ display:flex; }
 
-      /* ✅ 모바일에서 상단패널은 손잡이 아래로 붙게(겹침 방지) */
       #topPanel.panel.sticky{
         top: calc(var(--handle-h) + env(safe-area-inset-top, 0px));
       }
 
-      /* ✅ 모바일에서 봉안단 영역이 세로 스크롤 담당 */
       .scroll-x{
         overflow-y: auto;
         padding-top: 6px;
       }
 
-      /* ✅ 접힘: 상단패널이 “진짜로” 높이 0 (하단이 화면 꽉 씀) */
       #topPanel{
         max-height: var(--panel-maxh);
         overflow: hidden;
@@ -636,8 +618,6 @@
       }
     }
   </style>
-
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 
 <body>
@@ -698,7 +678,8 @@
   </div>
 
 <script>
-  const EXCEL_URL = "./data/deceased_data.xlsx";
+  // ✅ JSON 파일로 변경 (엑셀/XLSX 사용 안함)
+  const DECEASED_JSON_URL = "./data/deceased_data.json";
 
   const ICONS = {
     single: "./images/solo.png",
@@ -1103,6 +1084,43 @@
     requestAnimationFrame(() => focusCell(nextCouple.room, nextCouple.no));
   });
 
+  // ----------------------------
+  // ✅ JSON 로딩용 유틸
+  // ----------------------------
+  function jsonArrayToAoa(rows){
+    const preferred = ["안치일자","봉안번호","사망자명","신청자명","반환일자"];
+
+    const keySet = new Set();
+    for (const r of (rows || [])){
+      if (r && typeof r === "object"){
+        Object.keys(r).forEach(k => keySet.add(k));
+      }
+    }
+
+    const rest = [...keySet].filter(k => !preferred.includes(k)).sort();
+    const header = [...preferred.filter(k => keySet.has(k)), ...rest];
+
+    if (header.length === 0){
+      header.push(...preferred);
+    }
+
+    const aoa = [header];
+    for (const r of (rows || [])){
+      const row = header.map(h => (r && typeof r === "object") ? (r[h] ?? "") : "");
+      aoa.push(row);
+    }
+    return aoa;
+  }
+
+  async function fetchJson(url){
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error("fetch fail: " + res.status);
+    return await res.json();
+  }
+
+  // ----------------------------
+  // 기존 applyExcel(aoa) 로직 유지
+  // ----------------------------
   function guessHeaderRow(aoa){
     for (let r=0; r<Math.min(10, aoa.length); r++){
       const s = (aoa[r]||[]).map(x => String(x||"").trim());
@@ -1139,6 +1157,7 @@
   }
 
   function parseExcelDate(v){
+    // ✅ JSON에서도 Date/숫자/문자 모두 처리 가능하게 그대로 유지
     if (v instanceof Date && !isNaN(v.getTime())) return v;
     if (typeof v === "number" && isFinite(v)) {
       const ms = (v - 25569) * 86400 * 1000;
@@ -1174,7 +1193,7 @@
   function applyExcel(aoa){
     for (const room of Object.keys(infoByRoom)) infoByRoom[room] = {};
 
-    if (!aoa || aoa.length === 0) { setMsg("엑셀 비어있음", "error"); return; }
+    if (!aoa || aoa.length === 0) { setMsg("데이터 비어있음", "error"); return; }
     setMsg("");
 
     const headerRowIndex = guessHeaderRow(aoa);
@@ -1290,19 +1309,33 @@
     requestAnimationFrame(updateScrollerHeight);
   }
 
-  async function loadExcelFromUrl(){
+  // ✅ JSON 로딩 (엑셀 로딩 함수 대체)
+  async function loadDeceasedFromJson(){
     try{
       setMsg("");
-      const res = await fetch(EXCEL_URL, { cache: "no-store" });
-      if (!res.ok) throw new Error("fetch fail");
-      const buf = await res.arrayBuffer();
-      const wb = XLSX.read(buf, { type:"array" });
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      const aoa = XLSX.utils.sheet_to_json(ws, { header:1, defval:"" });
+      const json = await fetchJson(DECEASED_JSON_URL);
+
+      let aoa = null;
+
+      if (Array.isArray(json)){
+        if (json.length && Array.isArray(json[0])) aoa = json;          // 이미 AOA
+        else aoa = jsonArrayToAoa(json);                                // rows 배열
+      } else if (json && typeof json === "object"){
+        if (Array.isArray(json.aoa)) aoa = json.aoa;
+        else if (Array.isArray(json.data)) aoa = jsonArrayToAoa(json.data);
+        else if (Array.isArray(json.rows)) aoa = jsonArrayToAoa(json.rows);
+        else if (Array.isArray(json.items)) aoa = jsonArrayToAoa(json.items);
+      }
+
+      if (!aoa || !Array.isArray(aoa) || aoa.length === 0){
+        setMsg("JSON 형식이 올바르지 않습니다.", "error");
+        return;
+      }
+
       applyExcel(aoa);
     } catch(err){
       console.error(err);
-      setMsg("엑셀 로딩 실패", "error");
+      setMsg("JSON 로딩 실패", "error");
     }
   }
 
@@ -1473,7 +1506,8 @@
     }
   });
 
-  $("reloadBtn").addEventListener("click", loadExcelFromUrl);
+  // ✅ 새로고침: JSON 다시 로딩
+  $("reloadBtn").addEventListener("click", loadDeceasedFromJson);
 
   const UI = { collapsed: false };
 
@@ -1572,12 +1606,13 @@
     requestAnimationFrame(applyByWidth);
   })();
 
+  // ✅ 초기 로딩: JSON 로딩
   restoreState();
   buildLegend();
   renderTabs();
   renderRoomButtons();
   renderRoom(false);
-  loadExcelFromUrl();
+  loadDeceasedFromJson();
   requestAnimationFrame(updateScrollerHeight);
 </script>
 </body>
