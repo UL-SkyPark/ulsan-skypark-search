@@ -10,7 +10,6 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
@@ -29,8 +28,8 @@
       --danger:#b42318;
 
       --shadow: 0 6px 14px rgba(17, 24, 39, 0.08);
-      --radius:8px;
-      --radius-sm:6px;
+      --radius:10px;
+      --radius-sm:8px;
 
       --header:#eef2f7;
     }
@@ -47,6 +46,8 @@
       justify-content:center;
       font-size:16px;
     }
+
+    .hidden{ display:none !important; }
 
     .container{
       width:100%;
@@ -67,26 +68,12 @@
       border-bottom:1px solid var(--line);
       background: var(--header);
     }
-    .header-left{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      min-width:0;
-    }
     .title{
       font-size:22px;
       font-weight:900;
       letter-spacing:-0.2px;
       margin:0;
       line-height:1.15;
-    }
-    .meta-line{ display:none !important; }
-
-    .header-right{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      flex-shrink:0;
     }
     .logo{
       height:38px;
@@ -120,7 +107,7 @@
 
     .top-panels .box{
       margin-bottom:0;
-      min-height: 190px;
+      min-height: 200px;
     }
 
     .box-title{
@@ -131,7 +118,7 @@
       font-weight:900;
       margin-bottom:10px;
       color:#111827;
-      font-size:16px;
+      font-size:17px;
     }
 
     .row{
@@ -161,14 +148,6 @@
     .form-group input:focus, .form-group select:focus{
       border-color:#9bb9dd;
       box-shadow:0 0 0 3px rgba(47,111,178,0.14);
-    }
-
-    .field-help{
-      margin-top:10px;
-      font-size:13px;
-      color:var(--muted);
-      font-weight:800;
-      line-height:1.45;
     }
 
     .toolbar{
@@ -234,13 +213,46 @@
       border:1px solid var(--line);
       background:#fff;
       color:#111827;
-      white-space:pre-wrap;
       font-size:15px;
       cursor:pointer;
+      line-height:1.5;
     }
+    .status small{ display:block; margin-top:6px; font-weight:900; opacity:.75; }
     .status.success{ border-color:#99f6e4; background:#f0fdfa; color:#134e4a; }
     .status.error{ border-color:#fecdd3; background:#fff1f2; color:#7f1d1d; }
     .status.loading{ background:#f8fafc; color:#374151; }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:10px;
+    }
+    .info-item{
+      border:1px solid var(--line-soft);
+      background:#fafafa;
+      border-radius: var(--radius-sm);
+      padding:10px;
+    }
+    .info-item .k{
+      font-size:13px;
+      font-weight:900;
+      color:#374151;
+      margin-bottom:6px;
+    }
+    .info-item .v{
+      font-size:17px;
+      font-weight:900;
+      color:#111827;
+      word-break:break-word;
+    }
+    .info-item .v.mono{ font-size:16px; }
+    .info-actions{
+      margin-top:10px;
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+      flex-wrap:wrap;
+    }
 
     .file-panel{
       border:1px solid var(--line-soft);
@@ -252,7 +264,7 @@
       flex-direction:column;
       gap:10px;
       flex:1;
-      min-height:120px;
+      min-height:150px;
     }
     .file-panel.drop-ready{
       outline: 2px dashed rgba(47,111,178,0.35);
@@ -278,21 +290,88 @@
       font-size:13px;
     }
 
-    .drop-hint{
+    .file-list-box{
       flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding:10px;
+      border:1px dashed var(--line);
+      border-radius: var(--radius-sm);
+      background:#fff;
+      min-height:110px;
+      cursor:pointer;
+    }
+
+    .file-empty{
       display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
-      padding:12px;
-      border:1px dashed var(--line);
-      border-radius: var(--radius-sm);
-      background:#fff;
       font-weight:900;
       color:#374151;
       font-size:15px;
-      min-height:70px;
+      min-height:90px;
     }
+
+    .file-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      overflow:auto;
+      max-height:130px;
+    }
+    .file-list li{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      align-items:center;
+      gap:10px;
+      padding:8px 9px;
+      background:#fff;
+      border:1px solid var(--line-soft);
+      border-radius: var(--radius-sm);
+      font-size:14px;
+      color:#111827;
+    }
+    .file-left{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .file-name{
+      font-weight:900;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .file-sub{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .x-btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:#374151;
+      width:30px;
+      height:30px;
+      border-radius: var(--radius-sm);
+      cursor:pointer;
+      font-weight:900;
+      line-height:1;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    .x-btn:hover{ background:#f9fafb; }
 
     .muted{ color:var(--muted); font-weight:800; }
     .mono{
@@ -435,31 +514,34 @@
       .token-row{ grid-template-columns: 1fr 1fr; }
       .token-row input{ grid-column: 1 / -1; }
     }
+
     .token-persist{
       margin-top:10px;
-      display:flex;
-      align-items:flex-start;
+      display:block;
     }
     .token-persist .token-check{
-      display:inline-flex;
+      display:flex;
       align-items:center;
-      justify-content:flex-start;
-      gap:8px;
-      cursor:pointer;
-      width: fit-content;
-      max-width:100%;
+      gap:10px;
+      flex-wrap:wrap;
+      font-weight:900;
       margin:0;
       padding:0;
-      font-weight:900;
+      cursor:pointer;
+      user-select:none;
     }
-    .token-persist .token-check input{ transform: translateY(1px); }
+    .token-persist .token-check input{
+      width:16px;
+      height:16px;
+      transform:none;
+    }
     .token-persist .token-inline-note{
       font-size:12px;
-      font-weight:800;
+      font-weight:900;
       color:var(--muted);
       line-height:1.4;
-      margin-left:8px;
-      white-space:nowrap;
+      white-space:normal;
+      margin-left:0;
     }
 
     .login-status{
@@ -469,9 +551,10 @@
       border-radius: var(--radius-sm);
       background:#fff;
       font-weight:900;
-      white-space:pre-wrap;
       display:none;
       font-size:14px;
+      line-height:1.5;
+      white-space:normal;
     }
     .login-status.error{ border-color:#fecdd3; background:#fff1f2; color:#7f1d1d; }
     .login-status.loading{ background:#f8fafc; color:#374151; }
@@ -485,40 +568,6 @@
     }
 
     .danger{ color:var(--danger); font-weight:900; white-space:pre-wrap; }
-
-    .bulk-box .toolbar{ margin-top: 10px; }
-
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-      gap:10px;
-    }
-    .info-item{
-      border:1px solid var(--line-soft);
-      background:#fafafa;
-      border-radius: var(--radius-sm);
-      padding:10px;
-    }
-    .info-item .k{
-      font-size:13px;
-      font-weight:900;
-      color:#374151;
-      margin-bottom:6px;
-    }
-    .info-item .v{
-      font-size:16px;
-      font-weight:900;
-      color:#111827;
-      word-break:break-word;
-    }
-    .info-item .v.mono{ font-size:15px; }
-    .info-actions{
-      margin-top:10px;
-      display:flex;
-      justify-content:flex-end;
-      gap:8px;
-      flex-wrap:wrap;
-    }
 
     .file-section{
       margin-top:12px;
@@ -572,9 +621,9 @@
     table.q th:last-child, table.q td:last-child{ border-right:0; }
 
     #confirmModalBody{
-      font-size:18px;
+      font-size:19px;
       font-weight:900;
-      line-height:1.6;
+      line-height:1.7;
     }
     #confirmModalBackdrop .modal-foot{
       justify-content:center;
@@ -585,13 +634,8 @@
 <body>
   <div class="container">
     <div class="header">
-      <div class="header-left">
-        <h1 class="title">울산하늘공원 안치 정보 관리</h1>
-        <div class="meta-line"></div>
-      </div>
-      <div class="header-right">
-        <img class="logo" src="./images/ulsan_logo1.png" alt="울산 로고" />
-      </div>
+      <h1 class="title">울산하늘공원 안치 정보 관리</h1>
+      <img class="logo" src="./images/ulsan_logo1.png" alt="울산 로고" />
     </div>
 
     <div class="content" id="mainContent">
@@ -626,9 +670,7 @@
           </div>
 
           <div class="info-actions">
-            <button class="btn btn-ghost" type="button" onclick="openLoginModal()">
-              로그인/설정
-            </button>
+            <button class="btn btn-ghost" type="button" onclick="openLoginModal()">로그인/설정</button>
           </div>
         </div>
 
@@ -639,6 +681,7 @@
 
           <div class="form-group" style="margin-bottom:0;">
             <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" aria-label="일괄등록 엑셀 파일 선택" />
+
             <div class="file-panel" id="fileDropZone" title="이 박스에 파일을 끌어다 놓으시면 추가됩니다">
               <div class="file-panel-top">
                 <div style="display:flex; align-items:center; gap:10px; font-weight:900;">
@@ -650,15 +693,9 @@
                 </div>
               </div>
 
-              <div class="drop-hint" id="dropHint" onclick="triggerFilePick()">
-                여기에 파일을 끌어다 놓거나 클릭해서 선택하세요
-              </div>
-
-              <div class="field-help" style="margin-top:0;">
-                <ul style="margin:0; padding-left:18px;">
-                  <li>파일을 이 박스에 끌어다 놓으셔도 추가됩니다.</li>
-                  <li>초기화 버튼으로 선택 파일을 모두 지울 수 있습니다.</li>
-                </ul>
+              <div class="file-list-box" id="fileListBox" onclick="triggerFilePick()">
+                <div class="file-empty" id="fileEmpty">여기에 파일을 끌어다 놓거나 클릭해서 선택하세요</div>
+                <ul class="file-list" id="fileList" style="display:none;"></ul>
               </div>
             </div>
           </div>
@@ -707,24 +744,24 @@
         <div class="row">
           <div class="form-group">
             <label>GitHub Owner</label>
-            <input type="text" id="owner" placeholder="예: UL-SkyPark" autocomplete="off" />
+            <input type="text" id="owner" autocomplete="off" />
           </div>
 
           <div class="form-group">
             <label>Repository</label>
-            <input type="text" id="repo" placeholder="예: ulsan-skypark-search" autocomplete="off" />
+            <input type="text" id="repo" autocomplete="off" />
           </div>
 
           <div class="form-group">
             <label>Branch</label>
-            <input type="text" id="branch" placeholder="예: main" autocomplete="off" />
+            <input type="text" id="branch" autocomplete="off" />
           </div>
 
           <div class="form-group" style="grid-column: 1 / -1;">
             <label>Access Token</label>
 
             <div class="token-row">
-              <input type="password" id="token" placeholder="ghp_... 또는 fine-grained token" autocomplete="off" />
+              <input type="password" id="token" autocomplete="off" />
               <button type="button" class="icon-btn" id="tokenToggleBtn" onclick="toggleToken()">보기</button>
               <button type="button" class="icon-btn" id="clearTokenBtn" onclick="clearSavedToken()" title="브라우저에 저장된 토큰만 삭제합니다">
                 저장토큰 삭제
@@ -743,7 +780,7 @@
           </div>
         </div>
 
-        <div class="field-help" style="margin-top:10px;">
+        <div style="margin-top:10px;">
           <div class="danger">※ 로드(불러오기) 성공 전에는 본 화면을 사용할 수 없습니다.</div>
         </div>
       </div>
@@ -795,51 +832,17 @@
     let fileKey = "deceased";
     let isBusy = false;
     let isLoaded = false;
-    let loadedAtText = "";
 
-    let selectedFiles = [];
+    let selectedFiles = []; // [{id,file}]
     let importFailLog = [];
 
-    const DETECT_HINT = [
-      "힌트(번호 규칙):",
-      " - 추모의집: '...추모의집-62실-개인단-21908'",
-      " - 자연장지: '잔디장-2-9-0108'",
-      "판별 규칙(요약):",
-      " - '추모의집' 또는 '00실' 포함 → 추모의집",
-      " - '잔디장/수목장/자연장' 포함 또는 '이름-숫자-숫자-4자리' 형태 → 자연장지",
-      " - 끝자리 숫자 5자리 → 추모의집 / 4자리 → 자연장지(보조)"
-    ].join("\n");
-
     const DATASETS = {
-      deceased: {
-        label: "추모의집",
-        path: FILES.deceased,
-        loaded: false,
-        sha: "",
-        headers: [],
-        rows: [],
-        highlight: new Set(),
-        jsonFormat: "array_obj"
-      },
-      nature: {
-        label: "자연장지",
-        path: FILES.nature,
-        loaded: false,
-        sha: "",
-        headers: [],
-        rows: [],
-        highlight: new Set(),
-        jsonFormat: "array_obj"
-      }
+      deceased: { label: "추모의집", path: FILES.deceased, loaded:false, sha:"", headers:[], rows:[], highlight:new Set(), jsonFormat:"array_obj", jsonWrapperKey:"" },
+      nature:   { label: "자연장지", path: FILES.nature,   loaded:false, sha:"", headers:[], rows:[], highlight:new Set(), jsonFormat:"array_obj", jsonWrapperKey:"" }
     };
     const ds = (k = fileKey) => DATASETS[k];
 
-    function isTokenPersistEnabled(){
-      return document.getElementById("tokenPersist")?.checked ?? true;
-    }
-    function tokenStore(){
-      return isTokenPersistEnabled() ? localStorage : sessionStorage;
-    }
+    function isTokenPersistEnabled(){ return document.getElementById("tokenPersist")?.checked ?? true; }
 
     function pad2(n){ return String(n).padStart(2,"0"); }
     function formatLoadedAt(d){
@@ -852,10 +855,7 @@
     }
 
     function norm(s) {
-      return String(s ?? "")
-        .replace(/\s+/g, "")
-        .replace(/[–—]/g, "-")
-        .toLowerCase();
+      return String(s ?? "").replace(/\s+/g, "").replace(/[–—]/g, "-").toLowerCase();
     }
     function escapeHtml(s) {
       return String(s ?? "")
@@ -868,15 +868,21 @@
     function escapeHtmlWithBr(s){
       return escapeHtml(s).replaceAll("\n","<br>");
     }
+    function formatBytes(bytes){
+      const n = Number(bytes || 0);
+      if (!isFinite(n) || n <= 0) return "0 B";
+      const units = ["B","KB","MB","GB"];
+      let v = n, i = 0;
+      while (v >= 1024 && i < units.length - 1){ v = v / 1024; i++; }
+      const fixed = (i === 0) ? String(Math.round(v)) : v.toFixed(1);
+      return `${fixed} ${units[i]}`;
+    }
 
     function normalizeDate(input) {
       const raw = String(input ?? "").trim();
       if (!raw) return "";
       const onlyNum = raw.replace(/[^0-9]/g, "");
-      if (onlyNum.length === 8) {
-        const y = onlyNum.slice(0,4), m = onlyNum.slice(4,6), d = onlyNum.slice(6,8);
-        return `${y}-${m}-${d}`;
-      }
+      if (onlyNum.length === 8) return `${onlyNum.slice(0,4)}-${onlyNum.slice(4,6)}-${onlyNum.slice(6,8)}`;
       const cleaned = raw.replace(/\./g, "-").replace(/\//g, "-");
       const parts = cleaned.split("-").map(p => p.trim()).filter(Boolean);
       if (parts.length >= 3) {
@@ -908,7 +914,6 @@
       }
       return btoa(binary);
     }
-
     function utf8ToBase64(str){
       const bytes = new TextEncoder().encode(str);
       return uint8ArrayToBase64(bytes);
@@ -955,7 +960,8 @@
 
     function showStatus(msg, type) {
       const el = document.getElementById("statusMsg");
-      el.textContent = (msg || "") + "\n(클릭하시면 닫힙니다)";
+      const html = escapeHtml(String(msg || "")).replaceAll("\n","<br>");
+      el.innerHTML = `${html}<small>클릭하시면 닫힙니다</small>`;
       el.className = "status " + type;
       el.style.display = "block";
       if (type === "success") setTimeout(() => (el.style.display = "none"), 2500);
@@ -964,7 +970,7 @@
     function showLoginStatus(msg, type){
       const el = document.getElementById("loginStatus");
       if (!el) return;
-      el.textContent = msg || "";
+      el.innerHTML = escapeHtml(String(msg || "")).replaceAll("\n","<br>");
       el.className = "login-status " + type;
       el.style.display = "block";
     }
@@ -998,9 +1004,7 @@
       document.getElementById("tabNature").disabled = !v || isBusy;
 
       const main = document.getElementById("mainContent");
-      if (main){
-        main.classList.toggle("locked", !v);
-      }
+      if (main) main.classList.toggle("locked", !v);
 
       updateBulkButtonState();
       setBusy(isBusy);
@@ -1036,7 +1040,6 @@
       const input = document.getElementById("token");
       const btn = document.getElementById("tokenToggleBtn");
       if(!input || !btn) return;
-
       const isPw = input.type === "password";
       input.type = isPw ? "text" : "password";
       btn.textContent = isPw ? "가리기" : "보기";
@@ -1047,7 +1050,7 @@
       sessionStorage.removeItem("gh_token");
       const t = document.getElementById("token");
       if (t) t.value = "";
-      showLoginStatus("저장된 토큰을 삭제하였습니다(이 브라우저).", "success");
+      showLoginStatus("저장된 토큰을 삭제하였습니다.", "success");
     }
 
     function resetAllSettings(){
@@ -1068,7 +1071,6 @@
       fileKey = "deceased";
       localStorage.setItem("gh_target", fileKey);
 
-      loadedAtText = "";
       setLoaded(false);
       resetBulkUpload();
 
@@ -1144,22 +1146,62 @@
       return `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(branch)}`;
     }
 
+    function makeFileId(file){ return `${file.name}__${file.size}__${file.lastModified}`; }
+
     function triggerFilePick(){
       if (!isLoaded || isBusy) return;
       document.getElementById("bulkFile")?.click();
     }
 
     function addSelectedFiles(files){
+      const exist = new Set(selectedFiles.map(x => x.id));
       for (const f of files){
         const lower = (f.name || "").toLowerCase();
         if (!(lower.endsWith(".xlsx") || lower.endsWith(".xls"))) continue;
-        selectedFiles.push(f);
+        const id = makeFileId(f);
+        if (exist.has(id)) continue;
+        selectedFiles.push({ id, file: f });
+        exist.add(id);
       }
     }
 
-    function renderSelectedFileCount(){
+    function removeSelectedFile(id){
+      selectedFiles = selectedFiles.filter(x => x.id !== id);
+      renderSelectedFiles();
+      updateBulkButtonState();
+    }
+
+    function renderSelectedFiles(){
       const cnt = document.getElementById("selectedFileCount");
+      const empty = document.getElementById("fileEmpty");
+      const ul = document.getElementById("fileList");
+
       cnt.textContent = String(selectedFiles.length);
+
+      if (!selectedFiles.length){
+        empty.style.display = "flex";
+        ul.style.display = "none";
+        ul.innerHTML = "";
+        return;
+      }
+
+      empty.style.display = "none";
+      ul.style.display = "flex";
+
+      ul.innerHTML = selectedFiles.map(({id, file}) => {
+        return `
+          <li>
+            <div class="file-left">
+              <div class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</div>
+              <div class="file-sub">
+                <span class="mono">${escapeHtml(formatBytes(file.size))}</span>
+                <span class="mono">${escapeHtml(new Date(file.lastModified).toLocaleString())}</span>
+              </div>
+            </div>
+            <button class="x-btn" type="button" title="목록에서 제거" onclick="removeSelectedFile('${id}')">×</button>
+          </li>
+        `;
+      }).join("");
     }
 
     function updateBulkButtonState(){
@@ -1170,24 +1212,14 @@
 
     function resetBulkUpload(){
       selectedFiles = [];
-      renderSelectedFileCount();
+      renderSelectedFiles();
       updateBulkButtonState();
     }
 
-    function openConfirmModal(){
-      document.getElementById("confirmModalBackdrop").style.display = "flex";
-    }
-    function closeConfirmModal(){
-      document.getElementById("confirmModalBackdrop").style.display = "none";
-    }
-    function confirmBulkOk(){
-      closeConfirmModal();
-      importBulkExcelAutoSave();
-    }
-    function confirmBulkCancel(){
-      closeConfirmModal();
-      showStatus("일괄등록이 취소되었습니다.", "success");
-    }
+    function openConfirmModal(){ document.getElementById("confirmModalBackdrop").style.display = "flex"; }
+    function closeConfirmModal(){ document.getElementById("confirmModalBackdrop").style.display = "none"; }
+    function confirmBulkOk(){ closeConfirmModal(); importBulkExcelAutoSave(); }
+    function confirmBulkCancel(){ closeConfirmModal(); showStatus("일괄등록이 취소되었습니다.", "success"); }
 
     document.getElementById("confirmModalBackdrop")?.addEventListener("click", (e) => {
       if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
@@ -1217,19 +1249,26 @@
       return { sha: meta.sha || "", json };
     }
 
+    function unwrapJsonIfSheet(obj){
+      if (obj && typeof obj === "object" && !Array.isArray(obj)){
+        const keys = Object.keys(obj);
+        if (keys.length === 1 && Array.isArray(obj[keys[0]])){
+          return { wrapperKey: keys[0], data: obj[keys[0]] };
+        }
+      }
+      return { wrapperKey: "", data: obj };
+    }
+
     function parseJsonDataset(json){
       if (Array.isArray(json)){
         if (!json.length) return { format:"array_obj", headers:[], rows:[] };
-        if (json.length && json.every(x => x && typeof x === "object" && !Array.isArray(x))){
+        if (json.every(x => x && typeof x === "object" && !Array.isArray(x))){
           const headers = [];
           const seen = new Set();
           for (const obj of json){
             for (const k of Object.keys(obj)){
               const nk = String(k);
-              if (!seen.has(nk)){
-                seen.add(nk);
-                headers.push(nk);
-              }
+              if (!seen.has(nk)){ seen.add(nk); headers.push(nk); }
             }
           }
           const rows = json.map(obj => headers.map(h => (obj && obj[h] != null) ? obj[h] : ""));
@@ -1247,6 +1286,7 @@
         if (Array.isArray(json.headers) && Array.isArray(json.rows)){
           const headers = json.headers.map(h => String(h ?? "").trim());
           let rows = json.rows;
+
           if (rows.length && rows.every(r => r && typeof r === "object" && !Array.isArray(r))){
             rows = rows.map(obj => headers.map(h => (obj && obj[h] != null) ? obj[h] : ""));
             return { format:"table_objrows", headers, rows };
@@ -1261,19 +1301,21 @@
 
     function normalizeLoadedDataset(key, json){
       const d = ds(key);
-      const parsed = parseJsonDataset(json);
+
+      const unwrapped = unwrapJsonIfSheet(json);
+      d.jsonWrapperKey = unwrapped.wrapperKey || "";
+
+      const parsed = parseJsonDataset(unwrapped.data);
 
       d.jsonFormat = parsed.format;
       d.headers = parsed.headers || [];
       d.rows = parsed.rows || [];
 
       if (key === "deceased") {
-        const idxReturn = findHeaderIndex(d.headers, ["반환일자","반환 일자","반환일"]);
-        if (idxReturn === -1) d.headers.push("반환일자");
+        if (findHeaderIndex(d.headers, ["반환일자","반환 일자","반환일"]) === -1) d.headers.push("반환일자");
       }
       if (key === "nature") {
-        const idxBurial = findHeaderIndex(d.headers, ["안장구분","안장 구분"]);
-        if (idxBurial === -1) d.headers.push("안장구분");
+        if (findHeaderIndex(d.headers, ["안장구분","안장 구분"]) === -1) d.headers.push("안장구분");
       }
 
       for (const row of d.rows) while (row.length < d.headers.length) row.push("");
@@ -1307,13 +1349,11 @@
         manualRowResize: true,
         filters: true,
         dropdownMenu: true,
-        cells: function (row, col) {
+        cells: function (row) {
           const props = {};
           const startGlobal = Math.max(0, rows.length - GRID_LIMIT);
           const globalIdx = startGlobal + row;
-          if (cur.highlight.has(globalIdx)) {
-            props.className = (props.className ? props.className + " " : "") + "hot-row-highlight";
-          }
+          if (cur.highlight.has(globalIdx)) props.className = "hot-row-highlight";
           return props;
         }
       });
@@ -1372,14 +1412,11 @@
           setLoaded(false);
           const detail = errors.join("\n\n");
           const brief = summarizeLoadError(detail);
-          showLoginStatus(`불러오기 실패: ${brief}\n\n(상세)\n${detail}`, "error");
+          showLoginStatus(`불러오기 실패: ${brief}\n\n${detail}`, "error");
           throw new Error(brief);
         }
 
-        const now = new Date();
-        loadedAtText = formatLoadedAt(now);
-        localStorage.setItem("gh_loaded_at", loadedAtText);
-
+        localStorage.setItem("gh_loaded_at", formatLoadedAt(new Date()));
         setLoaded(true);
         updateGridMeta();
         renderGridForCurrentTarget();
@@ -1392,8 +1429,7 @@
       } catch (e) {
         setLoaded(false);
         openLoginModal();
-        const msg = e?.message || String(e);
-        showStatus("불러오기 실패: " + msg, "error");
+        showStatus("불러오기 실패: " + (e?.message || String(e)), "error");
       } finally {
         setBusy(false);
       }
@@ -1447,10 +1483,7 @@
         const noRaw = String(getCellByHeader(rowObj, ["자연장번호","자연장 번호","번호","관리번호","봉안번호","봉안 번호"])).trim();
         const deceased = String(getCellByHeader(rowObj, ["사망자명","고인명","고인","사망자"])).trim();
         const applicant = String(getCellByHeader(rowObj, ["신청자명","신청자","사용자명","계약자명"])).trim();
-
-        if (!noRaw && norm(deceased) === norm("이름") && norm(applicant) === norm("이름")) {
-          return true;
-        }
+        if (!noRaw && norm(deceased) === norm("이름") && norm(applicant) === norm("이름")) return true;
       }
 
       const meaningful = isMeaningfulRow(rowObj);
@@ -1465,14 +1498,12 @@
           if (idx === 0 || idx === lastIdx) return true;
         }
       }
-      if (!meaningful) return true;
-      return false;
+      return !meaningful;
     }
 
     function findExactMatchRowDeceased(noVal, deceasedVal, applicantVal, rowsOverride=null, headersOverride=null) {
-      const d = ds("deceased");
-      const rows = rowsOverride || d.rows;
-      const headers = headersOverride || d.headers;
+      const rows = rowsOverride || ds("deceased").rows;
+      const headers = headersOverride || ds("deceased").headers;
 
       const idxNo = findHeaderIndex(headers, ["봉안번호","봉안 번호","봉안no","봉안No","번호","관리번호"]);
       const idxDe = findHeaderIndex(headers, ["사망자명","고인명","고인","사망자"]);
@@ -1499,21 +1530,25 @@
     }
 
     function buildJsonForSave(targetKey, headers, rows){
-      const format = ds(targetKey).jsonFormat;
+      const d = ds(targetKey);
+      const format = d.jsonFormat;
+
+      let payload;
 
       if (format === "table" || format === "table_objrows"){
-        return { headers, rows };
+        payload = { headers, rows };
+      } else {
+        const out = [];
+        for (const row of rows){
+          const obj = {};
+          for (let i = 0; i < headers.length; i++) obj[headers[i]] = (row[i] ?? "");
+          out.push(obj);
+        }
+        payload = out;
       }
 
-      const out = [];
-      for (const row of rows){
-        const obj = {};
-        for (let i = 0; i < headers.length; i++){
-          obj[headers[i]] = (row[i] ?? "");
-        }
-        out.push(obj);
-      }
-      return out;
+      if (d.jsonWrapperKey) return { [d.jsonWrapperKey]: payload };
+      return payload;
     }
 
     async function putJsonToGitHub(targetKey, jsonObj, message) {
@@ -1551,11 +1586,9 @@
       document.getElementById("logModalBackdrop").style.display = "flex";
       renderLogModalBody();
     }
-
     function closeLogModal(){
       document.getElementById("logModalBackdrop").style.display = "none";
     }
-
     document.getElementById("logModalBackdrop")?.addEventListener("click", (e) => {
       if (e.target.id === "logModalBackdrop") closeLogModal();
     });
@@ -1566,26 +1599,22 @@
     }
 
     function renderLogModalBody(){
-      const body = document.getElementById("logModalBody");
-      body.innerHTML = buildFailLogSectionsByFile();
+      document.getElementById("logModalBody").innerHTML = buildFailLogSectionsByFile();
     }
 
     function buildFailLogSectionsByFile(){
-      if (!importFailLog.length){
-        return `<div class="muted">실패 로그가 없습니다.</div>`;
-      }
+      if (!importFailLog.length) return `<div class="muted">실패 로그가 없습니다.</div>`;
 
-      const list = importFailLog.slice();
       const groups = new Map();
-      for (const item of list){
+      for (const item of importFailLog){
         const key = String(item.file || "-");
         if (!groups.has(key)) groups.set(key, []);
         groups.get(key).push(item);
       }
 
       const fileNames = Array.from(groups.keys()).sort((a,b)=>a.localeCompare(b,"ko"));
-
       let html = "";
+
       for (const fn of fileNames){
         const arr = groups.get(fn);
         arr.sort((a,b)=>parseRowNo(a.rowNo) - parseRowNo(b.rowNo));
@@ -1650,7 +1679,7 @@
       }
 
       setBusy(true);
-      showStatus("일괄등록 준비(분석) → 자동 분류 → 즉시 저장 중입니다...", "loading");
+      showStatus("일괄등록 처리 중입니다...", "loading");
 
       try {
         importFailLog = [];
@@ -1663,7 +1692,8 @@
 
         let processed = 0;
 
-        for (const file of selectedFiles){
+        for (const item of selectedFiles){
+          const file = item.file;
           const lower = (file.name || "").toLowerCase();
           if (!(lower.endsWith(".xlsx") || lower.endsWith(".xls"))){
             importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"확장자가 .xlsx/.xls가 아닙니다." });
@@ -1675,7 +1705,7 @@
             const buf = await file.arrayBuffer();
             wb = XLSX.read(new Uint8Array(buf), { type: "array" });
           } catch (e) {
-            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"파일 읽기에 실패하였습니다(손상 가능)." });
+            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"파일 읽기에 실패하였습니다." });
             continue;
           }
 
@@ -1693,7 +1723,7 @@
           const rowsObj = XLSX.utils.sheet_to_json(ws, { defval: "" });
 
           if (!rowsObj || rowsObj.length === 0){
-            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"데이터가 없습니다(빈 시트)." });
+            importFailLog.push({ file:file.name, rowNo:"-", target:"-", kind:"-", no:"", deceased:"", applicant:"", reason:"데이터가 없습니다." });
             continue;
           }
 
@@ -1714,22 +1744,13 @@
             const returnRaw = String(getCellByHeader(r, ["반환일자","반환 일자","반환일"])).trim();
 
             if (!noRaw){
-              importFailLog.push({ file:file.name, rowNo, target:"-", kind:"-", no:noRaw, deceased, applicant, reason:"번호(봉안/자연장)가 누락되었습니다." });
+              importFailLog.push({ file:file.name, rowNo, target:"-", kind:"-", no:noRaw, deceased, applicant, reason:"번호가 누락되었습니다." });
               continue;
             }
 
             const targetKey = detectTargetByNo(noRaw);
             if (!targetKey){
-              importFailLog.push({
-                file:file.name,
-                rowNo,
-                target:"판별실패",
-                kind:"-",
-                no:noRaw,
-                deceased,
-                applicant,
-                reason: "번호 패턴으로 대상(추모의집/자연장지) 판별에 실패하였습니다.\n" + DETECT_HINT
-              });
+              importFailLog.push({ file:file.name, rowNo, target:"판별실패", kind:"-", no:noRaw, deceased, applicant, reason:"대상(추모의집/자연장지) 판별에 실패하였습니다." });
               continue;
             }
             const targetLabel = ds(targetKey).label;
@@ -1743,7 +1764,7 @@
                 continue;
               }
               if (!deceased || !applicant){
-                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"필수값 누락(사망자명/신청자명)으로 반환 처리 불가합니다." });
+                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"필수값 누락(사망자명/신청자명)." });
                 continue;
               }
               const returnDate = normalizeDate(returnRaw);
@@ -1754,7 +1775,7 @@
 
               const key3 = norm(noRaw) + "|" + norm(deceased) + "|" + norm(applicant);
               if (uploadRetKeySet.has(key3)){
-                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"업로드 파일(전체) 내 반환 항목이 중복되었습니다(번호/사망자/신청자)." });
+                importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"업로드 내 반환 항목 중복(번호/사망자/신청자)." });
                 continue;
               }
               uploadRetKeySet.add(key3);
@@ -1764,16 +1785,16 @@
             }
 
             if (!deceased || !applicant){
-              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"필수값이 누락되었습니다(사망자명/신청자명)." });
+              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"필수값 누락(사망자명/신청자명)." });
               continue;
             }
             if (!inDateRaw){
-              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"안치일자가 누락되었습니다(신규)." });
+              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"안치일자 누락." });
               continue;
             }
             const inDate = normalizeDate(inDateRaw);
             if (!inDate){
-              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"안치일자 형식이 올바르지 않습니다(신규)." });
+              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind, no:noRaw, deceased, applicant, reason:"안치일자 형식이 올바르지 않습니다." });
               continue;
             }
 
@@ -1786,13 +1807,7 @@
 
             const curCnt = uploadNoCount[targetKey].get(vNo) ?? 0;
             if (curCnt + 1 > maxAllowed){
-              importFailLog.push({
-                file:file.name, rowNo, target:targetLabel, kind:"신규",
-                no:noRaw, deceased, applicant,
-                reason: (maxAllowed === 2)
-                  ? "업로드 파일(전체) 내 동일 번호가 2건을 초과했습니다."
-                  : "업로드 파일(전체) 내 동일 번호가 중복되었습니다."
-              });
+              importFailLog.push({ file:file.name, rowNo, target:targetLabel, kind:"신규", no:noRaw, deceased, applicant, reason:"업로드 내 동일 번호가 허용 건수를 초과했습니다." });
               continue;
             }
             uploadNoCount[targetKey].set(vNo, curCnt + 1);
@@ -1803,7 +1818,7 @@
         }
 
         if (processed === 0){
-          showStatus("일괄등록할 데이터가 없습니다(예외/빈 행만 존재).", "error");
+          showStatus("일괄등록할 데이터가 없습니다.", "error");
           return;
         }
 
@@ -1853,10 +1868,8 @@
             for (const row of rows) {
               const vv = norm(row[idxNo]);
               if (!vv) continue;
-
               const hasRet = String(row[idxReturn] ?? "").trim() !== "";
               if (hasRet) continue;
-
               activeCount.set(vv, (activeCount.get(vv) ?? 0) + 1);
             }
           } else {
@@ -1867,11 +1880,8 @@
 
               if (idxBurial !== -1){
                 const bt = norm(row[idxBurial]);
-                if (bt.includes(norm("부부"))){
-                  existingMax.set(vv, 2);
-                } else if (!existingMax.has(vv)) {
-                  existingMax.set(vv, 1);
-                }
+                if (bt.includes(norm("부부"))) existingMax.set(vv, 2);
+                else if (!existingMax.has(vv)) existingMax.set(vv, 1);
               }
             }
           }
@@ -1880,7 +1890,6 @@
 
           for (const q of adds[key]){
             const vv = norm(q.no);
-
             const baseFromUpload = (uploadNoMax[key].get(vv) ?? (q.isCouple ? 2 : 1));
             const baseFromExisting = (key === "nature") ? (existingMax.get(vv) ?? 1) : 1;
             const maxAllowed = Math.max(baseFromUpload, baseFromExisting);
@@ -1891,9 +1900,7 @@
                 file:q.file, rowNo:q.rowNo,
                 target:ds(key).label, kind:"신규",
                 no:q.no, deceased:q.deceased, applicant:q.applicant,
-                reason: (maxAllowed === 2)
-                  ? "해당 번호는 현재 사용중 2건까지 허용되며 이미 2건이 사용 중입니다."
-                  : "해당 대상 파일의 기존 번호와 중복됩니다(1건만 허용)."
+                reason:"해당 번호는 이미 사용 중입니다."
               });
               continue;
             }
@@ -1925,12 +1932,12 @@
           const rows = next.deceased.rows;
 
           let applied = 0;
-
           const keySet = new Set();
+
           for (const q of rets){
             const k = norm(q.no) + "|" + norm(q.deceased) + "|" + norm(q.applicant);
             if (keySet.has(k)){
-              importFailLog.push({ file:q.file, rowNo:q.rowNo, target:"추모의집", kind:"반환", no:q.no, deceased:q.deceased, applicant:q.applicant, reason:"업로드 내 반환 항목이 중복되었습니다(번호/사망자/신청자)." });
+              importFailLog.push({ file:q.file, rowNo:q.rowNo, target:"추모의집", kind:"반환", no:q.no, deceased:q.deceased, applicant:q.applicant, reason:"업로드 내 반환 항목 중복." });
               continue;
             }
             keySet.add(k);
@@ -1944,7 +1951,7 @@
             }
 
             if (!match.found){
-              importFailLog.push({ file:q.file, rowNo:q.rowNo, target:"추모의집", kind:"반환", no:q.no, deceased:q.deceased, applicant:q.applicant, reason:"기존 정보와 일치하는 행을 찾을 수 없습니다(완전일치 필요)." });
+              importFailLog.push({ file:q.file, rowNo:q.rowNo, target:"추모의집", kind:"반환", no:q.no, deceased:q.deceased, applicant:q.applicant, reason:"기존 정보와 일치하는 행을 찾을 수 없습니다." });
               continue;
             }
             if (match.hasReturn){
@@ -1968,10 +1975,8 @@
         const needSaveNa = (addedNa > 0);
 
         if (!needSaveDe && !needSaveNa){
-          showStatus("저장할 항목이 없습니다. (모두 실패/중복/판별실패)", "error");
-          if (importFailLog.length){
-            openLogModal("일괄등록 실패 로그");
-          }
+          showStatus("저장할 항목이 없습니다.", "error");
+          if (importFailLog.length) openLogModal("일괄등록 실패 로그");
           return;
         }
 
@@ -1982,18 +1987,14 @@
             const jsonOut = buildJsonForSave("deceased", next.deceased.headers, next.deceased.rows);
             await putJsonToGitHub("deceased", jsonOut, `Auto bulk save (deceased) new:${addedDe} return:${retDe} ${new Date().toISOString()}`);
           }
-        } catch (e) {
-          saveErrors.push(e.message || String(e));
-        }
+        } catch (e) { saveErrors.push(e.message || String(e)); }
 
         try {
           if (needSaveNa){
             const jsonOut = buildJsonForSave("nature", next.nature.headers, next.nature.rows);
             await putJsonToGitHub("nature", jsonOut, `Auto bulk save (nature) new:${addedNa} ${new Date().toISOString()}`);
           }
-        } catch (e) {
-          saveErrors.push(e.message || String(e));
-        }
+        } catch (e) { saveErrors.push(e.message || String(e)); }
 
         if (saveErrors.length){
           showStatus("저장 중 오류가 발생하였습니다.\n" + saveErrors.join("\n\n"), "error");
@@ -2019,12 +2020,10 @@
           `일괄등록이 완료되었습니다.\n` +
           `추모의집: 신규 ${addedDe} / 반환 ${retDe}\n` +
           `자연장지: 신규 ${addedNa}\n` +
-          (importFailLog.length ? `실패 ${importFailLog.length}건(모달에서 확인해 주세요)` : `실패 0건`);
+          `실패 ${importFailLog.length}건`;
         showStatus(msg, "success");
 
-        if (importFailLog.length){
-          openLogModal("일괄등록 실패 로그");
-        }
+        if (importFailLog.length) openLogModal("일괄등록 실패 로그");
 
       } catch (e) {
         showStatus(e.message || String(e), "error");
@@ -2042,12 +2041,10 @@
         return;
       }
       if (isBusy) return;
-
       if (!selectedFiles.length){
         showStatus("일괄등록할 파일을 추가해 주세요.", "error");
         return;
       }
-
       openConfirmModal();
     }
 
@@ -2079,9 +2076,7 @@
 
       ["owner","repo","token","branch"].forEach(id=>{
         const el = document.getElementById(id);
-        el?.addEventListener("keydown", (e)=>{
-          if(e.key === "Enter") loadAllFiles();
-        });
+        el?.addEventListener("keydown", (e)=>{ if(e.key === "Enter") loadAllFiles(); });
       });
 
       document.getElementById("statusMsg")?.addEventListener("click", ()=>{
@@ -2123,7 +2118,7 @@
         addSelectedFiles(files);
         input.value = "";
 
-        renderSelectedFileCount();
+        renderSelectedFiles();
         updateBulkButtonState();
       });
 
@@ -2145,24 +2140,21 @@
         });
         dz.addEventListener("drop", (e)=>{
           if (!isLoaded || isBusy) return;
-          const files = Array.from(e.dataTransfer?.files || []).filter(f=>{
-            const lower = (f.name || "").toLowerCase();
-            return lower.endsWith(".xlsx") || lower.endsWith(".xls");
-          });
+          const files = Array.from(e.dataTransfer?.files || []);
           if (!files.length) return;
           addSelectedFiles(files);
-          renderSelectedFileCount();
+          renderSelectedFiles();
           updateBulkButtonState();
         });
       }
 
-      renderSelectedFileCount();
+      renderSelectedFiles();
       updateBulkButtonState();
       selectTarget(fileKey, true);
 
       setLoaded(false);
 
-      if (savedLoadedAt) loadedAtText = savedLoadedAt;
+      if (savedLoadedAt) localStorage.setItem("gh_loaded_at", savedLoadedAt);
       updateInfoPanel();
 
       openLoginModal();
