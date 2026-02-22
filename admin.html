@@ -18,32 +18,26 @@
       --panel:#ffffff;
       --text:#111827;
       --muted:#6b7280;
-
       --line:#d1d5db;
       --line-soft:#e5e7eb;
-
       --primary:#2f6fb2;
       --primary-h:#285f98;
-
       --danger:#b42318;
-
       --shadow: 0 6px 14px rgba(17, 24, 39, 0.08);
       --radius:10px;
       --radius-sm:8px;
-
       --header:#eef2f7;
-
-      /* Typography tokens */
       --fs-base: 15px;
       --fs-sm: 13px;
       --fs-xs: 12px;
-      --fs-lg: 18px;
       --fs-xl: 22px;
-
       --fw-regular: 400;
       --fw-medium: 500;
       --fw-semibold: 600;
       --fw-bold: 700;
+      --btn-h: 40px;
+      --box-pad: 12px;
+      --footer-gap-top: 12px;
     }
 
     *{ box-sizing:border-box; }
@@ -113,7 +107,7 @@
       background:#fff;
       border:1px solid var(--line);
       border-radius: var(--radius);
-      padding:12px;
+      padding: var(--box-pad);
       margin-bottom:10px;
       display:flex;
       flex-direction:column;
@@ -133,6 +127,16 @@
       margin-bottom:10px;
       color:#111827;
       font-size:16px;
+    }
+
+    .box-footer{
+      margin-top:auto;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:8px;
+      flex-wrap:wrap;
+      padding-top: var(--footer-gap-top);
     }
 
     .row{
@@ -165,29 +169,28 @@
       box-shadow:0 0 0 3px rgba(47,111,178,0.14);
     }
 
-    .toolbar{
-      margin-top:10px; /* 버튼과 드롭박스 사이 여백 */
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
     .btn{
-      border:1px solid var(--line);
-      padding:10px 13px;
+      -webkit-appearance: none;
+      appearance: none;
+      box-sizing: border-box;
+      border: 1px solid var(--line);
+      height: var(--btn-h);
+      min-height: var(--btn-h);
+      padding: 0 13px;
+      line-height: 1;
       border-radius: var(--radius-sm);
-      font-size:14px;
+      font-size: 14px;
       font-weight: var(--fw-semibold);
+      font-family: inherit;
       cursor:pointer;
       transition:0.12s;
       display:inline-flex;
       align-items:center;
+      justify-content:center;
       gap:8px;
       background:#fff;
       color:#111827;
-      min-height:38px;
+      vertical-align: middle;
     }
     .btn:disabled{ opacity:0.55; cursor:not-allowed; }
     .btn:hover{ background:#f9fafb; }
@@ -199,7 +202,6 @@
       color:#fff;
     }
     .btn-primary:hover{ background: var(--primary-h); border-color: var(--primary-h); }
-
     .btn-ghost{ background:#fff; border-color: var(--line); color:#111827; }
 
     .icon-btn{
@@ -212,7 +214,8 @@
       cursor:pointer;
       transition:0.12s;
       white-space:nowrap;
-      min-height:38px;
+      height:var(--btn-h);
+      min-height:var(--btn-h);
       font-size:14px;
     }
     .icon-btn:hover{ background:#f9fafb; }
@@ -261,15 +264,7 @@
       word-break:break-word;
     }
     .info-item .v.mono{ font-size:15px; }
-    .info-actions{
-      margin-top:10px;
-      display:flex;
-      justify-content:flex-end;
-      gap:8px;
-      flex-wrap:wrap;
-    }
 
-    /* 파일 패널(드롭존) - 높이 줄이고 버튼과 가깝게 */
     .file-panel{
       border:1px solid var(--line-soft);
       background:#fafafa;
@@ -280,7 +275,7 @@
       flex-direction:column;
       gap:10px;
       flex:1;
-      min-height:120px;  /* 기존 150 -> 120 */
+      min-height: 190px;
     }
     .file-panel.drop-ready{
       outline: 2px dashed rgba(47,111,178,0.35);
@@ -315,8 +310,9 @@
       border:1px dashed var(--line);
       border-radius: var(--radius-sm);
       background:#fff;
-      min-height:86px;  /* 기존 110 -> 86 */
+      min-height: 120px;
       cursor:pointer;
+      justify-content:center;
     }
 
     .file-empty{
@@ -327,7 +323,7 @@
       font-weight: var(--fw-medium);
       color:#374151;
       font-size: var(--fs-base);
-      min-height:62px; /* 기존 90 -> 62 */
+      min-height:64px;
     }
 
     .file-list{
@@ -338,7 +334,7 @@
       flex-direction:column;
       gap:6px;
       overflow:auto;
-      max-height:120px; /* 기존 130 -> 120 */
+      max-height: 210px;
     }
     .file-list li{
       display:grid;
@@ -425,6 +421,7 @@
       border-right:1px solid var(--line);
       border-radius:0;
       min-width:120px;
+      height:var(--btn-h);
     }
     .tab-btn:last-child{ border-right:0; }
     .tab-btn:disabled{ opacity:0.55; cursor:not-allowed; }
@@ -456,6 +453,7 @@
       border:1px solid var(--line);
       border-radius: var(--radius-sm);
       background:#fff;
+      height:var(--btn-h);
     }
 
     #hotContainer{
@@ -645,7 +643,6 @@
       justify-content:center;
     }
 
-    /* 업로드 결과 모달 요약 UI */
     .result-summary{
       border:1px solid var(--line-soft);
       border-radius: var(--radius-sm);
@@ -676,10 +673,9 @@
 
     <div class="content" id="mainContent">
       <div class="top-panels">
-
         <div class="box">
           <div class="box-title">
-            <span>로드 정보</span>
+            <span>시스템 연결 현황</span>
           </div>
 
           <div class="info-grid">
@@ -705,8 +701,8 @@
             </div>
           </div>
 
-          <div class="info-actions">
-            <button class="btn btn-ghost" type="button" onclick="openLoginModal()">로그인/설정</button>
+          <div class="box-footer">
+            <button class="btn btn-ghost" type="button" onclick="openLoginModal()">연결설정</button>
           </div>
         </div>
 
@@ -717,7 +713,6 @@
 
           <div class="form-group" style="margin-bottom:0;">
             <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" aria-label="파일등록 엑셀 파일 선택" />
-
             <div class="file-panel" id="fileDropZone" title="이 박스에 파일을 끌어다 놓으시면 추가됩니다">
               <div class="file-panel-top">
                 <div style="display:flex; align-items:center; gap:10px; font-weight: var(--fw-semibold);">
@@ -733,15 +728,13 @@
                 <div class="file-empty" id="fileEmpty">여기에 파일을 끌어다 놓거나 클릭해서 선택하세요</div>
                 <ul class="file-list" id="fileList" style="display:none;"></ul>
               </div>
-
-              <!-- 버튼과 더 가깝게(딱 붙지 않게) -->
-              <div class="toolbar" style="margin-top:8px;">
-                <button class="btn btn-primary" id="bulkBtn" onclick="confirmAndImportBulkExcelAutoSave()" disabled>파일등록 실행</button>
-              </div>
             </div>
           </div>
-        </div>
 
+          <div class="box-footer">
+            <button class="btn btn-primary" id="bulkBtn" onclick="confirmAndImportBulkExcelAutoSave()" disabled>파일등록</button>
+          </div>
+        </div>
       </div>
 
       <div id="statusMsg" class="status" role="status" aria-live="polite" title="클릭하시면 닫힙니다"></div>
@@ -768,11 +761,10 @@
     </div>
   </div>
 
-  <!-- 로그인/설정 모달 -->
   <div id="loginModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-head">
-        <div class="modal-title">로그인/설정</div>
+        <div class="modal-title">연결설정</div>
         <button class="btn btn-ghost" type="button" onclick="resetAllSettings()" title="Owner/Repo/Branch/Token 저장값을 초기화합니다">
           설정 초기화
         </button>
@@ -829,7 +821,6 @@
     </div>
   </div>
 
-  <!-- 실패 로그 모달(버튼으로만 열림) -->
   <div id="logModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
     <div class="modal" style="max-width:1200px;">
       <div class="modal-head">
@@ -842,7 +833,6 @@
     </div>
   </div>
 
-  <!-- 확인 모달 -->
   <div id="confirmModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
     <div class="modal" style="max-width:520px;">
       <div class="modal-head">
@@ -859,7 +849,6 @@
     </div>
   </div>
 
-  <!-- 업로드 결과 모달(성공/실패 요약, 실패로그는 버튼) -->
   <div id="resultModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
     <div class="modal" style="max-width:520px;">
       <div class="modal-head">
@@ -904,7 +893,7 @@
     let isBusy = false;
     let isLoaded = false;
 
-    let selectedFiles = []; // [{id,file}]
+    let selectedFiles = [];
     let importFailLog = [];
 
     const DATASETS = {
@@ -914,7 +903,6 @@
     const ds = (k = fileKey) => DATASETS[k];
 
     function isTokenPersistEnabled(){ return document.getElementById("tokenPersist")?.checked ?? true; }
-
     function pad2(n){ return String(n).padStart(2,"0"); }
     function formatLoadedAt(d){
       const yyyy = d.getFullYear();
@@ -1246,6 +1234,7 @@
       const cnt = document.getElementById("selectedFileCount");
       const empty = document.getElementById("fileEmpty");
       const ul = document.getElementById("fileList");
+      const box = document.getElementById("fileListBox");
 
       cnt.textContent = String(selectedFiles.length);
 
@@ -1253,11 +1242,13 @@
         empty.style.display = "flex";
         ul.style.display = "none";
         ul.innerHTML = "";
+        if (box) box.style.justifyContent = "center";
         return;
       }
 
       empty.style.display = "none";
       ul.style.display = "flex";
+      if (box) box.style.justifyContent = "flex-start";
 
       ul.innerHTML = selectedFiles.map(({id, file}) => {
         return `
@@ -1296,7 +1287,6 @@
       if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
     });
 
-    /* 결과 모달 */
     function openResultModal({ success=0, fail=0, detailText="" }){
       const bd = document.getElementById("resultModalBackdrop");
       const s = document.getElementById("resultSuccessCount");
@@ -2109,7 +2099,7 @@
           openResultModal({
             success: (addedDe + retDe + addedNa) - importFailLog.length,
             fail: importFailLog.length,
-            detailText: "저장 중 오류가 발생했습니다.\n상세 내용은 상단 알림을 확인하세요."
+            detailText: "저장 중 오류가 발생했습니다.\n상단 알림을 확인하세요."
           });
           return;
         }
@@ -2179,7 +2169,6 @@
       const savedRepo   = localStorage.getItem("gh_repo");
       const savedBranch = localStorage.getItem("gh_branch");
       const savedTarget = localStorage.getItem("gh_target");
-      const savedLoadedAt = localStorage.getItem("gh_loaded_at");
       const savedLimit = localStorage.getItem("gh_grid_limit");
 
       const lim = parseInt(savedLimit || "20", 10);
@@ -2279,8 +2268,6 @@
       selectTarget(fileKey, true);
 
       setLoaded(false);
-
-      if (savedLoadedAt) localStorage.setItem("gh_loaded_at", savedLoadedAt);
       updateInfoPanel();
 
       openLoginModal();
