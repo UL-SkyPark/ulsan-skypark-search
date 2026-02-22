@@ -32,6 +32,18 @@
       --radius-sm:8px;
 
       --header:#eef2f7;
+
+      /* Typography tokens */
+      --fs-base: 15px;
+      --fs-sm: 13px;
+      --fs-xs: 12px;
+      --fs-lg: 18px;
+      --fs-xl: 22px;
+
+      --fw-regular: 400;
+      --fw-medium: 500;
+      --fw-semibold: 600;
+      --fw-bold: 700;
     }
 
     *{ box-sizing:border-box; }
@@ -44,7 +56,9 @@
         Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       display:flex;
       justify-content:center;
-      font-size:16px;
+      font-size: var(--fs-base);
+      font-weight: var(--fw-regular);
+      line-height: 1.5;
     }
 
     .hidden{ display:none !important; }
@@ -69,8 +83,8 @@
       background: var(--header);
     }
     .title{
-      font-size:22px;
-      font-weight:900;
+      font-size: var(--fs-xl);
+      font-weight: var(--fw-bold);
       letter-spacing:-0.2px;
       margin:0;
       line-height:1.15;
@@ -115,10 +129,10 @@
       align-items:center;
       justify-content:space-between;
       gap:12px;
-      font-weight:900;
+      font-weight: var(--fw-semibold);
       margin-bottom:10px;
       color:#111827;
-      font-size:17px;
+      font-size:16px;
     }
 
     .row{
@@ -130,8 +144,8 @@
 
     .form-group label{
       display:block;
-      font-weight:900;
-      font-size:14px;
+      font-weight: var(--fw-semibold);
+      font-size: var(--fs-sm);
       margin-bottom:6px;
       color:#374151;
     }
@@ -141,9 +155,10 @@
       border:1px solid var(--line);
       border-radius: var(--radius-sm);
       background:#fff;
-      font-size:15px;
+      font-size: var(--fs-base);
       outline:none;
       transition:0.12s;
+      font-weight: var(--fw-regular);
     }
     .form-group input:focus, .form-group select:focus{
       border-color:#9bb9dd;
@@ -151,7 +166,7 @@
     }
 
     .toolbar{
-      margin-top:auto;
+      margin-top:10px; /* 버튼과 드롭박스 사이 여백 */
       display:flex;
       align-items:center;
       justify-content:flex-end;
@@ -163,8 +178,8 @@
       border:1px solid var(--line);
       padding:10px 13px;
       border-radius: var(--radius-sm);
-      font-size:15px;
-      font-weight:900;
+      font-size:14px;
+      font-weight: var(--fw-semibold);
       cursor:pointer;
       transition:0.12s;
       display:inline-flex;
@@ -193,12 +208,12 @@
       color:#111827;
       padding:10px 11px;
       border-radius: var(--radius-sm);
-      font-weight:900;
+      font-weight: var(--fw-semibold);
       cursor:pointer;
       transition:0.12s;
       white-space:nowrap;
       min-height:38px;
-      font-size:15px;
+      font-size:14px;
     }
     .icon-btn:hover{ background:#f9fafb; }
 
@@ -213,11 +228,11 @@
       border:1px solid var(--line);
       background:#fff;
       color:#111827;
-      font-size:15px;
+      font-size: var(--fs-base);
       cursor:pointer;
       line-height:1.5;
     }
-    .status small{ display:block; margin-top:6px; font-weight:900; opacity:.75; }
+    .status small{ display:block; margin-top:6px; font-weight: var(--fw-semibold); opacity:.75; }
     .status.success{ border-color:#99f6e4; background:#f0fdfa; color:#134e4a; }
     .status.error{ border-color:#fecdd3; background:#fff1f2; color:#7f1d1d; }
     .status.loading{ background:#f8fafc; color:#374151; }
@@ -234,18 +249,18 @@
       padding:10px;
     }
     .info-item .k{
-      font-size:13px;
-      font-weight:900;
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-medium);
       color:#374151;
       margin-bottom:6px;
     }
     .info-item .v{
-      font-size:17px;
-      font-weight:900;
+      font-size:16px;
+      font-weight: var(--fw-semibold);
       color:#111827;
       word-break:break-word;
     }
-    .info-item .v.mono{ font-size:16px; }
+    .info-item .v.mono{ font-size:15px; }
     .info-actions{
       margin-top:10px;
       display:flex;
@@ -254,6 +269,7 @@
       flex-wrap:wrap;
     }
 
+    /* 파일 패널(드롭존) - 높이 줄이고 버튼과 가깝게 */
     .file-panel{
       border:1px solid var(--line-soft);
       background:#fafafa;
@@ -264,7 +280,7 @@
       flex-direction:column;
       gap:10px;
       flex:1;
-      min-height:150px;
+      min-height:120px;  /* 기존 150 -> 120 */
     }
     .file-panel.drop-ready{
       outline: 2px dashed rgba(47,111,178,0.35);
@@ -280,14 +296,14 @@
       flex-wrap:wrap;
     }
     .count{
-      font-weight:900;
+      font-weight: var(--fw-semibold);
       color:#111827;
       background:#fff;
       border:1px solid var(--line-soft);
       padding:3px 10px;
       border-radius: var(--radius-sm);
       white-space:nowrap;
-      font-size:13px;
+      font-size: var(--fs-xs);
     }
 
     .file-list-box{
@@ -299,7 +315,7 @@
       border:1px dashed var(--line);
       border-radius: var(--radius-sm);
       background:#fff;
-      min-height:110px;
+      min-height:86px;  /* 기존 110 -> 86 */
       cursor:pointer;
     }
 
@@ -308,10 +324,10 @@
       align-items:center;
       justify-content:center;
       text-align:center;
-      font-weight:900;
+      font-weight: var(--fw-medium);
       color:#374151;
-      font-size:15px;
-      min-height:90px;
+      font-size: var(--fs-base);
+      min-height:62px; /* 기존 90 -> 62 */
     }
 
     .file-list{
@@ -322,7 +338,7 @@
       flex-direction:column;
       gap:6px;
       overflow:auto;
-      max-height:130px;
+      max-height:120px; /* 기존 130 -> 120 */
     }
     .file-list li{
       display:grid;
@@ -333,7 +349,7 @@
       background:#fff;
       border:1px solid var(--line-soft);
       border-radius: var(--radius-sm);
-      font-size:14px;
+      font-size: var(--fs-sm);
       color:#111827;
     }
     .file-left{
@@ -343,15 +359,15 @@
       min-width:0;
     }
     .file-name{
-      font-weight:900;
+      font-weight: var(--fw-semibold);
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
     }
     .file-sub{
-      font-size:12px;
+      font-size: var(--fs-xs);
       color:var(--muted);
-      font-weight:900;
+      font-weight: var(--fw-medium);
       display:flex;
       gap:10px;
       flex-wrap:wrap;
@@ -364,7 +380,7 @@
       height:30px;
       border-radius: var(--radius-sm);
       cursor:pointer;
-      font-weight:900;
+      font-weight: var(--fw-semibold);
       line-height:1;
       display:inline-flex;
       align-items:center;
@@ -373,7 +389,7 @@
     }
     .x-btn:hover{ background:#f9fafb; }
 
-    .muted{ color:var(--muted); font-weight:800; }
+    .muted{ color:var(--muted); font-weight: var(--fw-medium); }
     .mono{
       font-variant-numeric: tabular-nums;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -403,8 +419,8 @@
       background:#f9fafb;
       cursor:pointer;
       padding:10px 16px;
-      font-weight:900;
-      font-size:14px;
+      font-weight: var(--fw-semibold);
+      font-size: var(--fs-sm);
       color:#374151;
       border-right:1px solid var(--line);
       border-radius:0;
@@ -426,17 +442,17 @@
       margin-left:auto;
     }
     .grid-meta{
-      font-size:13px;
+      font-size: var(--fs-sm);
       color:#374151;
-      font-weight:900;
+      font-weight: var(--fw-medium);
       white-space:nowrap;
       padding-bottom:2px;
     }
     .grid-right select{
       width:auto;
       padding:8px 10px;
-      font-size:14px;
-      font-weight:900;
+      font-size: var(--fs-sm);
+      font-weight: var(--fw-semibold);
       border:1px solid var(--line);
       border-radius: var(--radius-sm);
       background:#fff;
@@ -481,15 +497,15 @@
       background:#f8fafc;
     }
     .modal-title{
-      font-size:15px;
-      font-weight:900;
+      font-size: var(--fs-sm);
+      font-weight: var(--fw-semibold);
       margin:0;
       color:#111827;
     }
     .modal-body{
       padding:12px 14px;
       color:#111827;
-      font-size:14px;
+      font-size: var(--fs-sm);
       line-height:1.55;
       max-height:78vh;
       overflow:auto;
@@ -524,7 +540,7 @@
       align-items:center;
       gap:10px;
       flex-wrap:wrap;
-      font-weight:900;
+      font-weight: var(--fw-medium);
       margin:0;
       padding:0;
       cursor:pointer;
@@ -536,8 +552,8 @@
       transform:none;
     }
     .token-persist .token-inline-note{
-      font-size:12px;
-      font-weight:900;
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-medium);
       color:var(--muted);
       line-height:1.4;
       white-space:normal;
@@ -550,9 +566,9 @@
       border:1px solid var(--line);
       border-radius: var(--radius-sm);
       background:#fff;
-      font-weight:900;
+      font-weight: var(--fw-medium);
       display:none;
-      font-size:14px;
+      font-size: var(--fs-sm);
       line-height:1.5;
       white-space:normal;
     }
@@ -567,7 +583,7 @@
       user-select:none;
     }
 
-    .danger{ color:var(--danger); font-weight:900; white-space:pre-wrap; }
+    .danger{ color:var(--danger); font-weight: var(--fw-semibold); white-space:pre-wrap; }
 
     .file-section{
       margin-top:12px;
@@ -584,14 +600,14 @@
       justify-content:space-between;
       align-items:center;
       gap:10px;
-      font-weight:900;
+      font-weight: var(--fw-semibold);
       color:#111827;
-      font-size:14px;
+      font-size: var(--fs-sm);
     }
     .file-section-head .mini{
-      font-size:12px;
+      font-size: var(--fs-xs);
       color:#374151;
-      font-weight:900;
+      font-weight: var(--fw-medium);
       background:#fff;
       border:1px solid var(--line-soft);
       padding:2px 8px;
@@ -603,7 +619,7 @@
       border-collapse:collapse;
       border:0;
       background:#fff;
-      font-size:14px;
+      font-size: var(--fs-sm);
     }
     table.q th, table.q td{
       border-bottom:1px solid var(--line-soft);
@@ -614,20 +630,40 @@
     }
     table.q th{
       background:#fafafa;
-      font-weight:900;
+      font-weight: var(--fw-semibold);
       color:#374151;
     }
     table.q tr:last-child td{ border-bottom:0; }
     table.q th:last-child, table.q td:last-child{ border-right:0; }
 
     #confirmModalBody{
-      font-size:19px;
-      font-weight:900;
+      font-size:16px;
+      font-weight: var(--fw-semibold);
       line-height:1.7;
     }
     #confirmModalBackdrop .modal-foot{
       justify-content:center;
     }
+
+    /* 업로드 결과 모달 요약 UI */
+    .result-summary{
+      border:1px solid var(--line-soft);
+      border-radius: var(--radius-sm);
+      background:#fafafa;
+      padding:12px;
+      display:grid;
+      gap:8px;
+    }
+    .result-line{
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      font-size: var(--fs-base);
+    }
+    .result-line .k{ color:#374151; font-weight: var(--fw-semibold); min-width:44px; }
+    .result-line .v{ font-weight: var(--fw-bold); font-size:20px; }
+    .result-line .u{ color:#6b7280; font-weight: var(--fw-medium); }
+    .result-detail{ color:#374151; font-size: var(--fs-sm); line-height:1.5; white-space:pre-line; }
   </style>
 </head>
 
@@ -676,15 +712,15 @@
 
         <div class="box bulk-box">
           <div class="box-title">
-            <span>일괄등록</span>
+            <span>파일등록</span>
           </div>
 
           <div class="form-group" style="margin-bottom:0;">
-            <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" aria-label="일괄등록 엑셀 파일 선택" />
+            <input type="file" id="bulkFile" accept=".xlsx,.xls" multiple class="hidden" aria-label="파일등록 엑셀 파일 선택" />
 
             <div class="file-panel" id="fileDropZone" title="이 박스에 파일을 끌어다 놓으시면 추가됩니다">
               <div class="file-panel-top">
-                <div style="display:flex; align-items:center; gap:10px; font-weight:900;">
+                <div style="display:flex; align-items:center; gap:10px; font-weight: var(--fw-semibold);">
                   선택 파일 <span class="count" id="selectedFileCount">0</span>
                 </div>
                 <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -697,11 +733,12 @@
                 <div class="file-empty" id="fileEmpty">여기에 파일을 끌어다 놓거나 클릭해서 선택하세요</div>
                 <ul class="file-list" id="fileList" style="display:none;"></ul>
               </div>
-            </div>
-          </div>
 
-          <div class="toolbar">
-            <button class="btn btn-primary" id="bulkBtn" onclick="confirmAndImportBulkExcelAutoSave()" disabled>일괄등록</button>
+              <!-- 버튼과 더 가깝게(딱 붙지 않게) -->
+              <div class="toolbar" style="margin-top:8px;">
+                <button class="btn btn-primary" id="bulkBtn" onclick="confirmAndImportBulkExcelAutoSave()" disabled>파일등록 실행</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -731,6 +768,7 @@
     </div>
   </div>
 
+  <!-- 로그인/설정 모달 -->
   <div id="loginModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-head">
@@ -791,10 +829,11 @@
     </div>
   </div>
 
+  <!-- 실패 로그 모달(버튼으로만 열림) -->
   <div id="logModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
     <div class="modal" style="max-width:1200px;">
       <div class="modal-head">
-        <div class="modal-title" id="logModalTitle">일괄등록 실패 로그</div>
+        <div class="modal-title" id="logModalTitle">파일등록 실패 로그</div>
       </div>
       <div class="modal-body" id="logModalBody"></div>
       <div class="modal-foot">
@@ -803,18 +842,50 @@
     </div>
   </div>
 
+  <!-- 확인 모달 -->
   <div id="confirmModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
     <div class="modal" style="max-width:520px;">
       <div class="modal-head">
-        <div class="modal-title">일괄등록 확인</div>
+        <div class="modal-title">파일등록 확인</div>
       </div>
       <div class="modal-body" id="confirmModalBody">
-        일괄등록을 진행 하시겠습니까?<br>
+        파일등록을 진행 하시겠습니까?<br>
         계속 하시려면 [확인], 취소하시려면 [취소]를 선택해 주세요.
       </div>
       <div class="modal-foot">
         <button class="btn btn-primary" onclick="confirmBulkOk()">확인</button>
         <button class="btn btn-ghost" onclick="confirmBulkCancel()">취소</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 업로드 결과 모달(성공/실패 요약, 실패로그는 버튼) -->
+  <div id="resultModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" style="display:none;">
+    <div class="modal" style="max-width:520px;">
+      <div class="modal-head">
+        <div class="modal-title">파일등록 결과</div>
+      </div>
+
+      <div class="modal-body">
+        <div class="result-summary">
+          <div class="result-line">
+            <span class="k">성공</span>
+            <span class="v mono" id="resultSuccessCount">0</span>
+            <span class="u">건</span>
+          </div>
+          <div class="result-line">
+            <span class="k">실패</span>
+            <span class="v mono" id="resultFailCount">0</span>
+            <span class="u">건</span>
+          </div>
+        </div>
+
+        <div class="result-detail mono" id="resultDetailText" style="margin-top:10px;"></div>
+      </div>
+
+      <div class="modal-foot" style="justify-content:space-between;">
+        <button class="btn btn-ghost" id="resultLogBtn" onclick="openLogModal('파일등록 실패 로그')">실패 로그 보기</button>
+        <button class="btn btn-primary" onclick="closeResultModal()">확인</button>
       </div>
     </div>
   </div>
@@ -1219,10 +1290,39 @@
     function openConfirmModal(){ document.getElementById("confirmModalBackdrop").style.display = "flex"; }
     function closeConfirmModal(){ document.getElementById("confirmModalBackdrop").style.display = "none"; }
     function confirmBulkOk(){ closeConfirmModal(); importBulkExcelAutoSave(); }
-    function confirmBulkCancel(){ closeConfirmModal(); showStatus("일괄등록이 취소되었습니다.", "success"); }
+    function confirmBulkCancel(){ closeConfirmModal(); showStatus("파일등록이 취소되었습니다.", "success"); }
 
     document.getElementById("confirmModalBackdrop")?.addEventListener("click", (e) => {
       if (e.target.id === "confirmModalBackdrop") confirmBulkCancel();
+    });
+
+    /* 결과 모달 */
+    function openResultModal({ success=0, fail=0, detailText="" }){
+      const bd = document.getElementById("resultModalBackdrop");
+      const s = document.getElementById("resultSuccessCount");
+      const f = document.getElementById("resultFailCount");
+      const d = document.getElementById("resultDetailText");
+      const logBtn = document.getElementById("resultLogBtn");
+
+      if (s) s.textContent = String(success);
+      if (f) f.textContent = String(fail);
+      if (d) d.textContent = detailText || "";
+
+      if (logBtn){
+        logBtn.disabled = (fail <= 0);
+        logBtn.style.display = (fail <= 0) ? "none" : "inline-flex";
+      }
+
+      if (bd) bd.style.display = "flex";
+    }
+
+    function closeResultModal(){
+      const bd = document.getElementById("resultModalBackdrop");
+      if (bd) bd.style.display = "none";
+    }
+
+    document.getElementById("resultModalBackdrop")?.addEventListener("click", (e) => {
+      if (e.target.id === "resultModalBackdrop") closeResultModal();
     });
 
     async function fetchJsonFromGitHub({owner, repo, token, branch}, path){
@@ -1674,12 +1774,12 @@
       if (isBusy) return;
 
       if (!selectedFiles.length){
-        showStatus("일괄등록할 파일을 추가해 주세요.", "error");
+        showStatus("등록할 파일을 추가해 주세요.", "error");
         return;
       }
 
       setBusy(true);
-      showStatus("일괄등록 처리 중입니다...", "loading");
+      showStatus("파일등록 처리 중입니다...", "loading");
 
       try {
         importFailLog = [];
@@ -1818,7 +1918,8 @@
         }
 
         if (processed === 0){
-          showStatus("일괄등록할 데이터가 없습니다.", "error");
+          showStatus("등록할 데이터가 없습니다.", "error");
+          openResultModal({ success:0, fail:importFailLog.length, detailText:"등록할 데이터가 없습니다." });
           return;
         }
 
@@ -1975,8 +2076,15 @@
         const needSaveNa = (addedNa > 0);
 
         if (!needSaveDe && !needSaveNa){
-          showStatus("저장할 항목이 없습니다.", "error");
-          if (importFailLog.length) openLogModal("일괄등록 실패 로그");
+          const success = 0;
+          const fail = importFailLog.length;
+
+          showStatus("저장할 항목이 없습니다.", fail ? "error" : "success");
+          openResultModal({
+            success,
+            fail,
+            detailText: `저장된 항목이 없습니다.\n(실패 로그가 있으면 '실패 로그 보기'에서 확인하세요.)`
+          });
           return;
         }
 
@@ -1998,6 +2106,11 @@
 
         if (saveErrors.length){
           showStatus("저장 중 오류가 발생하였습니다.\n" + saveErrors.join("\n\n"), "error");
+          openResultModal({
+            success: (addedDe + retDe + addedNa) - importFailLog.length,
+            fail: importFailLog.length,
+            detailText: "저장 중 오류가 발생했습니다.\n상세 내용은 상단 알림을 확인하세요."
+          });
           return;
         }
 
@@ -2016,17 +2129,30 @@
         updateGridMeta();
         updateInfoPanel();
 
+        const success = (addedDe + retDe + addedNa);
+        const fail = importFailLog.length;
+
         const msg =
-          `일괄등록이 완료되었습니다.\n` +
+          `파일등록이 완료되었습니다.\n` +
           `추모의집: 신규 ${addedDe} / 반환 ${retDe}\n` +
           `자연장지: 신규 ${addedNa}\n` +
-          `실패 ${importFailLog.length}건`;
+          `실패 ${fail}건`;
+
         showStatus(msg, "success");
 
-        if (importFailLog.length) openLogModal("일괄등록 실패 로그");
+        openResultModal({
+          success,
+          fail,
+          detailText:
+            `추모의집: 신규 ${addedDe} / 반환 ${retDe}\n` +
+            `자연장지: 신규 ${addedNa}\n` +
+            `실패 ${fail}건\n\n` +
+            (fail ? "실패 내역은 '실패 로그 보기'에서 확인할 수 있습니다." : "")
+        });
 
       } catch (e) {
         showStatus(e.message || String(e), "error");
+        openResultModal({ success:0, fail:importFailLog.length, detailText:"오류가 발생했습니다.\n상단 알림을 확인하세요." });
       } finally {
         setBusy(false);
         resetBulkUpload();
@@ -2042,7 +2168,7 @@
       }
       if (isBusy) return;
       if (!selectedFiles.length){
-        showStatus("일괄등록할 파일을 추가해 주세요.", "error");
+        showStatus("등록할 파일을 추가해 주세요.", "error");
         return;
       }
       openConfirmModal();
