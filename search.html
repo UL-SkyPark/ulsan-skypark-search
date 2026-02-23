@@ -8,7 +8,6 @@
   <link rel="apple-touch-icon" href="./images/symbol.png">
 
   <style>
-    /* ====== (원본 CSS 그대로) ====== */
     *{ margin:0; padding:0; box-sizing:border-box; }
 
     .sr-only{
@@ -20,7 +19,6 @@
       font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",Arial,sans-serif;
       min-height:100vh;
       text-align:center;
-
       background-image:
         linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.70)),
         url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/92cb8bcc-4430-4edc-b1cf-8dd3dbbffb9d.png');
@@ -28,7 +26,6 @@
       background-size:cover, cover;
       background-repeat:no-repeat, no-repeat;
       background-attachment:scroll, scroll;
-
       display:flex;
       flex-direction:column;
       justify-content:center;
@@ -599,9 +596,7 @@
 
   <script>
     /* =========================
-      ✅ JSON 로딩 적용 (엑셀/XLSX 제거)
-      - 서버에 data/deceased_data.json, data/nature_data.json 배치
-      - nature_data.json은 { "Sheet1": [ ... ] } 구조도 자동 지원
+       JSON 데이터 소스 경로
     ========================== */
     const SOURCES = {
       memorial: 'data/deceased_data.json',
@@ -609,33 +604,27 @@
     };
 
     /* =========================
-      ✅ 추모의집 JSON 헤더 (이미 변경 반영)
-      - deadName: 고인명
-      - ensNo:   봉안번호
-      - applName:신청자
-      - strDate: 안치일자
-      - retDate: 반환일자
+       추모의집 JSON 필드 매핑
+       실제 JSON 키: deadName, ensNo, applName, strDate, retDate
     ========================== */
     const MEM_FIELDS = {
-      name: "deadName",
-      loc: "ensNo",
-      applicant: "applName",
-      date: "strDate",
-      returned: "retDate"
+      name:     "deadName",   // 고인명
+      loc:      "ensNo",      // 봉안번호
+      applicant:"applName",   // 신청자
+      date:     "strDate",    // 안치일자
+      returned: "retDate"     // 반환일자 (값이 있으면 검색에서 제외)
     };
 
     /* =========================
-      ✅ (요청 반영) 자연장지 JSON 헤더 변경 적용
-      - deadName: 고인명
-      - natNo:   자연장번호
-      - applName:신청자명
-      - natDate: 안치일자
+       자연장지 JSON 필드 매핑
+       실제 JSON 키: deadName, natNo, applName, natDate
+       샘플: { "natDate":"2013-03-01", "natNo":"잔디장-1-1-0001", "applName":"이석일", "deadName":"박재현" }
     ========================== */
     const NAT_FIELDS = {
-      name: "deadName",
-      loc: "natNo",
-      applicant: "applName",
-      date: "natDate"
+      name:     "deadName",   // 고인명
+      loc:      "natNo",      // 자연장번호 (예: 잔디장-1-1-0001)
+      applicant:"applName",   // 신청자
+      date:     "natDate"     // 안장일자 (예: 2013-03-01)
     };
 
     let currentMode = 'all';
@@ -645,6 +634,7 @@
     let loadPromiseNature = null;
     let lastFound = [];
 
+    /* ===== 검색 정규화 ===== */
     function normalizeForSearch(value){
       if (value === null || value === undefined) return "";
       let s = String(value);
@@ -660,12 +650,12 @@
       return norm.length >= 2;
     }
 
+    /* ===== URL 모드 처리 ===== */
     function getModeFromUrl(){
       const params = new URLSearchParams(window.location.search);
       const m1 = (params.get("mode") || "").toLowerCase();
       const h = (location.hash || "").replace("#","").toLowerCase();
-      const m2 = h;
-      const m = m1 || m2;
+      const m = m1 || h;
       if (["all","memorial","nature"].includes(m)) return m;
       return "all";
     }
@@ -688,13 +678,12 @@
       if (input) input.focus();
     }
 
-    /* ===== JSON Fetch ===== */
+    /* ===== JSON 로딩 ===== */
     async function fetchJson(url){
       const response = await fetch(url, { cache: "no-store" });
       if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다: ' + url);
       const data = await response.json();
-
-      // {Sheet1:[...]} 구조 지원
+      // {Sheet1:[...]} 구조도 자동 지원
       if (data && typeof data === "object" && Array.isArray(data.Sheet1)) return data.Sheet1;
       if (Array.isArray(data)) return data;
       return [];
@@ -735,6 +724,7 @@
       }
     }
 
+    /* ===== 봉안번호 정규화 (추모의집 전용) ===== */
     function normalizeRoom(raw){
       if (!raw) return "";
       const s = String(raw).replace(/\s+/g, "");
@@ -747,12 +737,14 @@
       return String(raw);
     }
 
+    /* ===== 자연장번호 정규화 ===== */
     function normalizeNatureNo(raw){
       if (!raw) return "";
       const s = String(raw).trim();
       return s.split("-").map(p => p.trim()).filter(Boolean).join("-");
     }
 
+    /* ===== 신청자 마스킹 ===== */
     function maskName(name){
       if (!name) return "";
       const trimmed = String(name).substring(0, 3);
@@ -762,6 +754,7 @@
       return trimmed;
     }
 
+    /* ===== 테이블 헤더 라벨 ===== */
     function getHeaderLabels(mode){
       if (mode === 'nature'){
         return { name:"고인명", loc:"안장번호", applicant:"신청자", date:"안장일자" };
@@ -772,6 +765,7 @@
       return { name:"고인명", loc:"위치번호", applicant:"신청자", date:"안치일자" };
     }
 
+    /* ===== 추모의집 시설명 추출 ===== */
     function getMemorialTypeLabelFromLoc(rawLoc){
       const s = String(rawLoc || "").trim();
 
@@ -789,6 +783,7 @@
       return facility + floor;
     }
 
+    /* ===== 모달 열기 ===== */
     function openModal(record){
       document.getElementById("modalName").textContent = record.name || "";
       document.getElementById("modalLoc").textContent = record.location || "";
@@ -832,13 +827,14 @@
       }
     });
 
+    /* ===== 추모의집 검색 ===== */
     function searchMemorial(keyword){
       const k = normalizeForSearch(keyword);
       return excelDataMemorial
         .filter(row => {
           const rawName = row[MEM_FIELDS.name];
           if (!rawName) return false;
-          if (row[MEM_FIELDS.returned]) return false; // 반환일자 있으면 제외(원본 로직 유지)
+          if (row[MEM_FIELDS.returned]) return false;
           return normalizeForSearch(rawName).includes(k);
         })
         .map(row => ({
@@ -853,6 +849,7 @@
         }));
     }
 
+    /* ===== 자연장지 검색 ===== */
     function searchNature(keyword){
       const k = normalizeForSearch(keyword);
       return excelDataNature
@@ -861,27 +858,25 @@
           if (!rawName) return false;
           return normalizeForSearch(rawName).includes(k);
         })
-        .map(row => {
-          const raw = row[NAT_FIELDS.loc] || "";
-          return {
-            type: 'nature',
-            typeLabel: '자연장지',
-            name: row[NAT_FIELDS.name] || "",
-            location: normalizeNatureNo(raw),
-            applicant: maskName(row[NAT_FIELDS.applicant]),
-            date: row[NAT_FIELDS.date] || "",
-            locationLabel: "안장번호",
-            dateLabel: "안장일자"
-          };
-        });
+        .map(row => ({
+          type: 'nature',
+          typeLabel: '자연장지',
+          name: row[NAT_FIELDS.name] || "",
+          location: normalizeNatureNo(row[NAT_FIELDS.loc] || ""),
+          applicant: maskName(row[NAT_FIELDS.applicant]),
+          date: row[NAT_FIELDS.date] || "",
+          locationLabel: "안장번호",
+          dateLabel: "안장일자"
+        }));
     }
 
+    /* ===== 결과 렌더링 ===== */
     function renderResults(records, keyword){
       const resultDiv = document.getElementById("result");
       const h = getHeaderLabels(currentMode);
 
       if (!records || records.length === 0){
-        resultDiv.innerHTML = `<div class="no-result">‘${keyword}’에 대한 검색 결과가 없습니다.</div>`;
+        resultDiv.innerHTML = `<div class="no-result">'${keyword}'에 대한 검색 결과가 없습니다.</div>`;
         return;
       }
 
@@ -926,6 +921,7 @@
       bindTableClick();
     }
 
+    /* ===== 검색 폼 제출 ===== */
     document.getElementById("searchForm").addEventListener("submit", async function(event){
       event.preventDefault();
 
@@ -964,6 +960,7 @@
       renderResults(found, keyword);
     });
 
+    /* ===== 초기화 ===== */
     function resetResultOnly(){
       const resultDiv = document.getElementById("result");
       resultDiv.style.display = "none";
@@ -986,6 +983,7 @@
       }, 150);
     });
 
+    /* ===== 스크롤 시 로고 숨김/표시 ===== */
     (function(){
       const bottomLogo = document.getElementById("footerLogo");
       const topLogo = document.getElementById("globalLogo");
