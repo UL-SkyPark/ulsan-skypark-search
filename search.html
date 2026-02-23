@@ -608,14 +608,23 @@
       nature:   'data/nature_data.json'
     };
 
+    /* =========================
+      ✅ (수정) 추모의집 JSON 헤더 변경 반영
+      - deadName: 고인명
+      - ensNo:   봉안번호
+      - applName:신청자
+      - strDate: 안치일자
+      - retDate: 반환일자
+    ========================== */
     const MEM_FIELDS = {
-      name: "사망자명",
-      loc: "봉안번호",
-      applicant: "신청자명",
-      date: "안치일자",
-      returned: "반환일자"
+      name: "deadName",
+      loc: "ensNo",
+      applicant: "applName",
+      date: "strDate",
+      returned: "retDate"
     };
 
+    // 자연장지는 기존 그대로 유지
     const NAT_FIELDS = {
       name: "사망자명",
       loc: "자연장번호",
@@ -679,7 +688,7 @@
       if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다: ' + url);
       const data = await response.json();
 
-      // nature_data.json처럼 {Sheet1:[...]} 구조 지원
+      // {Sheet1:[...]} 구조 지원
       if (data && typeof data === "object" && Array.isArray(data.Sheet1)) return data.Sheet1;
       if (Array.isArray(data)) return data;
       return [];
