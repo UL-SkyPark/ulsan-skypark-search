@@ -609,7 +609,7 @@
     };
 
     /* =========================
-      ✅ (수정) 추모의집 JSON 헤더 변경 반영
+      ✅ 추모의집 JSON 헤더 (이미 변경 반영)
       - deadName: 고인명
       - ensNo:   봉안번호
       - applName:신청자
@@ -624,12 +624,18 @@
       returned: "retDate"
     };
 
-    // 자연장지는 기존 그대로 유지
+    /* =========================
+      ✅ (요청 반영) 자연장지 JSON 헤더 변경 적용
+      - deadName: 고인명
+      - natNo:   자연장번호
+      - applName:신청자명
+      - natDate: 안치일자
+    ========================== */
     const NAT_FIELDS = {
-      name: "사망자명",
-      loc: "자연장번호",
-      applicant: "신청자명",
-      date: "안치일자"
+      name: "deadName",
+      loc: "natNo",
+      applicant: "applName",
+      date: "natDate"
     };
 
     let currentMode = 'all';
