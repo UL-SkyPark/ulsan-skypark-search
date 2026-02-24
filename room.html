@@ -169,7 +169,7 @@
     .next-move-btn:hover{ background: rgba(255,255,255,0.98); }
     .next-move-btn:disabled{ opacity: .45; cursor: not-allowed; }
 
-    /* ✅ (요청 반영) "현재 YYYY년..." 크게/2줄 표시용 */
+    /* ✅ "현재 YYYY년..." 크게/2줄 표시용 */
     .next-note{
       flex: 0 0 240px;
       margin-top: 0;
@@ -662,7 +662,6 @@
             <button id="nextCoupleMoveBtn" class="next-move-btn" type="button">이동</button>
           </div>
 
-          <!-- ✅ (요청 반영) 2줄 / 서버시간 기준 표시 -->
           <div class="next-note" aria-label="기준 시간">
             <div class="asof-date" id="asofDate">현재 —년 —월 —일 기준</div>
             <div class="asof-time" id="asofTime">—시—분</div>
@@ -704,8 +703,7 @@
   // ✅ JSON 파일 (엑셀/XLSX 사용 안함)
   const DECEASED_JSON_URL = "./data/deceased_data.json";
 
-  // ✅ (요청 반영) 변경된 JSON 헤더 키
-  // 고인명 deadName / 신청자 applName / 봉안번호 ensNo / 안치일자 strDate / 반환일자 retDate
+  // ✅ 변경된 JSON 헤더 키
   const JSON_FIELDS = {
     deadName: "deadName",
     applName: "applName",
@@ -738,12 +736,15 @@
   const END_OVERRIDE = { "62실": 22193 };
 
   const $ = (id) => document.getElementById(id);
+
   function pad5(n){ return String(n).padStart(5,"0"); }
+
   function escapeHtml(s){
     return String(s ?? "")
       .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
       .replaceAll('"',"&quot;").replaceAll("'","&#039;");
   }
+
   function setMsg(text, kind="info"){
     const el = $("msg");
     if (!text){
@@ -756,6 +757,7 @@
     el.style.display = "block";
     el.classList.toggle("error", kind === "error");
   }
+
   function roomStr(n){ return String(n).padStart(2,"0") + "실"; }
   function roomsRange(a,b){ const out=[]; for(let i=a;i<=b;i++) out.push(roomStr(i)); return out; }
 
@@ -765,6 +767,7 @@
 
   const ROOM_CFG = {};
   const tmp = [];
+
   for (let i=0; i<itemsByStart.length; i++){
     const cur = itemsByStart[i];
     const next = itemsByStart[i+1];
@@ -782,12 +785,14 @@
 
     tmp.push({ ...cur, end, count, dans });
   }
+
   function nearestFixedDans(idx, dir){
     for (let j = idx + dir; j >= 0 && j < tmp.length; j += dir){
       if (tmp[j].dans) return tmp[j].dans;
     }
     return null;
   }
+
   for (let i=0; i<tmp.length; i++){
     if (!tmp[i].dans){
       const prev = nearestFixedDans(i, -1);
@@ -806,13 +811,13 @@
       cols
     };
   }
+
   const ROOM_LIST = Object.values(ROOM_CFG).sort((a,b)=>a.start-b.start);
 
   const COUPLE_ROOMS = roomsRange(1,9);
   const PERSONAL1_ROOMS = [...roomsRange(10,18), roomStr(61), roomStr(62)];
   const PERSONAL2A_ROOMS = roomsRange(19,39);
   const PERSONAL2B_ROOMS = roomsRange(40,60);
-
   const PERSONAL_ALL_ROOMS = [...PERSONAL1_ROOMS, ...PERSONAL2A_ROOMS, ...PERSONAL2B_ROOMS];
 
   const TAB_DEFS = [
@@ -856,6 +861,7 @@
       timeLine: `${hh}시${mm}분`
     };
   }
+
   function updateAsOfUI(){
     const d = (LAST_SERVER_TIME instanceof Date && !isNaN(LAST_SERVER_TIME.getTime())) ? LAST_SERVER_TIME : new Date();
     const t = formatAsOf(d);
@@ -979,6 +985,7 @@
       localStorage.setItem("memorial_ui_state", JSON.stringify({ tab: activeTabId, room: currentRoom }));
     }catch(e){}
   }
+
   function restoreState(){
     try{
       const raw = localStorage.getItem("memorial_ui_state");
@@ -1022,7 +1029,7 @@
   }
 
   function scrollNextSlotIntoCenter(){
-    const el = document.querySelector(\`.niche.next-slot[data-room="\${currentRoom}"]\`);
+    const el = document.querySelector(`.niche.next-slot[data-room="${currentRoom}"]`);
     if (!el) return;
     el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
   }
@@ -1045,12 +1052,12 @@
 
       const label = document.createElement("div");
       label.className = "dan-label";
-      label.textContent = \`\${dan}단\`;
+      label.textContent = `${dan}단`;
       row.appendChild(label);
 
       const grid = document.createElement("div");
       grid.className = "grid";
-      grid.style.gridTemplateColumns = \`repeat(\${cfg.cols}, var(--cell-w))\`;
+      grid.style.gridTemplateColumns = `repeat(${cfg.cols}, var(--cell-w))`;
 
       for (let c=0; c<cfg.cols; c++){
         const idx = c * cfg.dans + r;
@@ -1134,7 +1141,7 @@
     const pAll = computeNextForRooms(PERSONAL_ALL_ROOMS);
     nextPersonalRoom = pAll ? pAll.room : null;
 
-    // ✅ (요청 반영) 기준시간 표시 갱신
+    // 기준시간 표시 갱신
     updateAsOfUI();
 
     requestAnimationFrame(updateScrollerHeight);
@@ -1146,13 +1153,6 @@
     requestAnimationFrame(() => focusCell(nextCouple.room, nextCouple.no));
   });
 
-  // ----------------------------
-  // ✅ JSON 로딩 (헤더 변경 대응: deadName/applName/ensNo/strDate/retDate)
-  // - 다양한 JSON 구조 지원:
-  //   1) [ {...}, {...} ]
-  //   2) { Sheet1: [ {...} ] }
-  //   3) { data: [ {...} ] } / rows/items 등
-  // ----------------------------
   function pickRowsFromJson(json){
     if (Array.isArray(json)) return json;
     if (json && typeof json === "object"){
@@ -1165,9 +1165,6 @@
     return null;
   }
 
-  /* ✅ (요청 반영) 서버시간: 응답 헤더 Date 사용
-     - 서버가 Date 헤더를 안 주거나 CORS/캐시 환경으로 못 읽는 경우 → 브라우저 시간 fallback
-  */
   async function fetchJsonWithServerTime(url){
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error("fetch fail: " + res.status);
@@ -1187,8 +1184,7 @@
       SERVER_TIME_FALLBACK = true;
     }
 
-    const json = await res.json();
-    return json;
+    return await res.json();
   }
 
   function isBlank(v){
@@ -1218,7 +1214,6 @@
   }
 
   function parseExcelDate(v){
-    // JSON에서도 Date/숫자/문자 모두 처리
     if (v instanceof Date && !isNaN(v.getTime())) return v;
     if (typeof v === "number" && isFinite(v)) {
       const ms = (v - 25569) * 86400 * 1000;
@@ -1247,6 +1242,7 @@
     const da = String(d.getDate()).padStart(2,"0");
     return `${y}-${m}-${da}`;
   }
+
   function addYearsMinusOneDay(d, years){
     const x = new Date(d.getTime());
     x.setFullYear(x.getFullYear() + years);
@@ -1258,7 +1254,6 @@
     for (const room of Object.keys(infoByRoom)) infoByRoom[room] = {};
   }
 
-  // ✅ 핵심: 변경된 키로 직접 파싱해서 infoByRoom 구성
   function applyJsonRows(rows){
     clearInfo();
 
@@ -1322,7 +1317,6 @@
       let chosenIsReturned = false;
       let pool = null;
 
-      // 원본 로직 유지: 반환일자 없는 것(사용중) 우선, 없으면 반환건으로 표시
       if (actives.length > 0){
         actives.sort((a,b)=>{
           const ka = sortKey(a), kb = sortKey(b);
@@ -1375,8 +1369,6 @@
   async function loadDeceasedFromJson(){
     try{
       setMsg("");
-
-      // ✅ 서버시간 포함 JSON 로딩
       const json = await fetchJsonWithServerTime(DECEASED_JSON_URL);
       updateAsOfUI();
 
@@ -1384,11 +1376,10 @@
 
       if (!rows || !Array.isArray(rows) || rows.length === 0){
         setMsg("JSON 형식이 올바르지 않습니다.", "error");
-        applyJsonRows([]); // 빈 처리(화면은 유지)
+        applyJsonRows([]);
         return;
       }
 
-      // ✅ 필수 키가 존재하는지 최소 점검 (없어도 파싱은 시도)
       const sample = rows.find(x => x && typeof x === "object");
       if (sample){
         const keysOk = (
@@ -1406,7 +1397,6 @@
       console.error(err);
       setMsg("JSON 로딩 실패", "error");
 
-      // ✅ 실패 시에도 기준시간은 브라우저 시간으로 표시
       LAST_SERVER_TIME = new Date();
       SERVER_TIME_FALLBACK = true;
       updateAsOfUI();
@@ -1435,6 +1425,7 @@
       if (!d) continue;
       if (!startDate || d.getTime() < startDate.getTime()) startDate = d;
     }
+
     const periodText = startDate
       ? `<div class="mono">${fmtDate(startDate)}<br>~ ${fmtDate(addYearsMinusOneDay(startDate, 15))}</div>`
       : `<div class="mono">—</div>`;
@@ -1468,7 +1459,9 @@
     const el = document.querySelector(`.niche[data-room="${room}"][data-no="${noStr}"]`);
     if (!el) return;
     el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
-    el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    el.classList.remove("flash");
+    void el.offsetWidth;
+    el.classList.add("flash");
   }
 
   function normalizeText(text){
@@ -1582,7 +1575,6 @@
     }
   });
 
-  // ✅ 새로고침: JSON 다시 로딩(서버시간도 같이 갱신)
   $("reloadBtn").addEventListener("click", loadDeceasedFromJson);
 
   const UI = { collapsed: false };
@@ -1666,11 +1658,7 @@
     });
 
     function applyByWidth(){
-      if (isMobileWidth()){
-        setCollapsed(false);
-      } else {
-        setCollapsed(false);
-      }
+      setCollapsed(false);
       requestAnimationFrame(updateScrollerHeight);
     }
 
