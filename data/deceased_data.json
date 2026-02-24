@@ -16843,13 +16843,6 @@
   },
   {
     "strDate": "2014-10-19",
-    "ensNo": "1추모의집-16실-개인단-04596",
-    "deadName": "김종일",
-    "applName": "　",
-    "retDate": null
-  },
-  {
-    "strDate": "2014-10-19",
     "ensNo": "1추모의집-16실-개인단-04597",
     "deadName": "송온호",
     "applName": "송명철",
@@ -29307,13 +29300,6 @@
     "deadName": "임순금",
     "applName": "김회정",
     "retDate": null
-  },
-  {
-    "strDate": "2015-12-22",
-    "ensNo": "1추모의집-01실-부부단-00197",
-    "deadName": "임춘옥",
-    "applName": "함영호",
-    "retDate": "2023-04-09"
   },
   {
     "strDate": "2015-12-22",
@@ -55060,13 +55046,6 @@
     "deadName": "전말순",
     "applName": "윤준우",
     "retDate": null
-  },
-  {
-    "strDate": "2018-04-08",
-    "ensNo": "1추모의집-03실-부부단-00463",
-    "deadName": "엄귀주",
-    "applName": "이상봉",
-    "retDate": "2018-07-02"
   },
   {
     "strDate": "2018-04-08",
@@ -91526,13 +91505,6 @@
   },
   {
     "strDate": "2021-03-09",
-    "ensNo": "1추모의집-05실-부부단-00872",
-    "deadName": "원명화",
-    "applName": "이광복",
-    "retDate": "2021-06-12"
-  },
-  {
-    "strDate": "2021-03-09",
     "ensNo": "1추모의집-16실-무연고-04617",
     "deadName": "어금선",
     "applName": "강인경",
@@ -95184,13 +95156,6 @@
     "deadName": "김창호",
     "applName": "김영재",
     "retDate": null
-  },
-  {
-    "strDate": "2021-06-24",
-    "ensNo": "1추모의집-05실-부부단-00872",
-    "deadName": "김순녀",
-    "applName": "박진성",
-    "retDate": "2025-08-02"
   },
   {
     "strDate": "2021-06-24",
@@ -168709,7 +168674,7 @@
   {
     "strDate": "2026-02-22",
     "ensNo": "1추모의집-62실-개인단-21942",
-    "deadName": "JINHENGQUAN",
+    "deadName": "JIN HENGQUAN",
     "applName": "김호림",
     "retDate": null
   },
