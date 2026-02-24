@@ -168604,6 +168604,13 @@
   {
     "strDate": "2026-02-22",
     "ensNo": "1추모의집-09실-개인단-01877",
+    "deadName": "김홍주",
+    "applName": "김용식",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-22",
+    "ensNo": "1추모의집-09실-개인단-01877",
     "deadName": "장순자",
     "applName": "김용식",
     "retDate": null
@@ -168612,6 +168619,13 @@
     "strDate": "2026-02-22",
     "ensNo": "1추모의집-09실-부부단-01876",
     "deadName": "백학남",
+    "applName": "조진섭",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-22",
+    "ensNo": "1추모의집-09실-부부단-01876",
+    "deadName": "조병용",
     "applName": "조진섭",
     "retDate": null
   },
@@ -168695,7 +168709,7 @@
   {
     "strDate": "2026-02-22",
     "ensNo": "1추모의집-62실-개인단-21942",
-    "deadName": "JIN HENGQUAN",
+    "deadName": "JINHENGQUAN",
     "applName": "김호림",
     "retDate": null
   },
@@ -168709,6 +168723,13 @@
   {
     "strDate": "2026-02-23",
     "ensNo": "1추모의집-09실-부부단-01878",
+    "deadName": "문석영",
+    "applName": "문동혁",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-23",
+    "ensNo": "1추모의집-09실-부부단-01878",
     "deadName": "조미자",
     "applName": "문동혁",
     "retDate": null
@@ -168717,6 +168738,13 @@
     "strDate": "2026-02-23",
     "ensNo": "1추모의집-09실-부부단-01879",
     "deadName": "박상문",
+    "applName": "박준철",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-23",
+    "ensNo": "1추모의집-09실-부부단-01879",
+    "deadName": "황순옥",
     "applName": "박준철",
     "retDate": null
   },
@@ -168778,8 +168806,22 @@
   },
   {
     "strDate": "2026-02-24",
+    "ensNo": "1추모의집-09실-부부단-01880",
+    "deadName": "이암광",
+    "applName": "이미란",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-24",
     "ensNo": "1추모의집-09실-부부단-01881",
     "deadName": "강혜진",
+    "applName": "김성순",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-24",
+    "ensNo": "1추모의집-09실-부부단-01881",
+    "deadName": "구대우",
     "applName": "김성순",
     "retDate": null
   },
@@ -168809,13 +168851,6 @@
     "ensNo": "1추모의집-62실-개인단-21950",
     "deadName": "성우지",
     "applName": "성진충",
-    "retDate": null
-  },
-  {
-    "strDate": "2026-02-24",
-    "ensNo": "1추모의집-62실-개인단-21951",
-    "deadName": "테스트",
-    "applName": "테스트",
     "retDate": null
   }
 ]
