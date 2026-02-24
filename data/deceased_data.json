@@ -75947,7 +75947,7 @@
     "ensNo": "1추모의집-33실-개인단-11191",
     "deadName": "이암광",
     "applName": "이미란",
-    "retDate": null
+    "retDate": "2026-02-24"
   },
   {
     "strDate": "2019-08-22",
@@ -155033,7 +155033,7 @@
     "ensNo": "1추모의집-57실-개인단-19385",
     "deadName": "김순자",
     "applName": "이미란",
-    "retDate": null
+    "retDate": "2026-02-24"
   },
   {
     "strDate": "2024-08-12",
@@ -181451,7 +181451,7 @@
     "ensNo": "1추모의집-62실-개인단-21858",
     "deadName": "구대우",
     "applName": "김성순",
-    "retDate": null
+    "retDate": "2026-02-24"
   },
   {
     "strDate": "2026-02-05",
@@ -182396,6 +182396,69 @@
     "ensNo": "1추모의집-62실-개인단-21949",
     "deadName": "김상수",
     "applName": "김복기",
+    "retDate": null
+  },
+  {
+    "strDate": "2023-06-13",
+    "ensNo": "1추모의집-52실-개인단-17363",
+    "deadName": "강혜진",
+    "applName": "김성순",
+    "retDate": "2026-02-24"
+  },
+  {
+    "strDate": "2026-02-24",
+    "ensNo": "1추모의집-62실-개인단-21950",
+    "deadName": "성우지",
+    "applName": "성진충",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-24",
+    "ensNo": "1추모의집-09실-부부단-01880",
+    "deadName": "이암광",
+    "applName": "이미란",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-24",
+    "ensNo": "1추모의집-09실-부부단-01880",
+    "deadName": "김순자",
+    "applName": "이미란",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-24",
+    "ensNo": "1추모의집-16실-무연고-04554",
+    "deadName": "박유하",
+    "applName": "장태영",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-24",
+    "ensNo": "1추모의집-16실-무연고-04563",
+    "deadName": "조중봉",
+    "applName": "김동우",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-24",
+    "ensNo": "1추모의집-16실-무연고-04572",
+    "deadName": "권을식",
+    "applName": "김동우",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-24",
+    "ensNo": "1추모의집-09실-부부단-01881",
+    "deadName": "구대우",
+    "applName": "김성순",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-24",
+    "ensNo": "1추모의집-09실-부부단-01881",
+    "deadName": "강혜진",
+    "applName": "김성순",
     "retDate": null
   }
 ]
