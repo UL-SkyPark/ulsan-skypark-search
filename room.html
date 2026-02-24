@@ -169,22 +169,43 @@
     .next-move-btn:hover{ background: rgba(255,255,255,0.98); }
     .next-move-btn:disabled{ opacity: .45; cursor: not-allowed; }
 
+    /* ✅ (요청 반영) "현재 YYYY년..." 크게/2줄 표시용 */
     .next-note{
-      flex: 0 0 220px;
+      flex: 0 0 240px;
       margin-top: 0;
-      padding: 6px 8px;
+      padding: 10px 10px;
       border-radius: 12px;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(180,58,58,0.10);
-      font-size: 11px;
-      color: #6c5f56;
-      line-height: 1.25;
+      background: rgba(255,255,255,0.70);
+      border: 1px solid rgba(180,58,58,0.12);
+      line-height: 1.15;
       display:flex;
       flex-direction:column;
       justify-content:center;
-      gap:4px;
+      gap:6px;
     }
-    .next-note b{ color: rgba(155,37,37,0.88); }
+    .asof-date{
+      font-size: 16px;
+      font-weight: 950;
+      color: rgba(155,37,37,0.92);
+      letter-spacing: .15px;
+      white-space: nowrap;
+    }
+    .asof-time{
+      font-size: 20px;
+      font-weight: 950;
+      color: #6b1f1f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .2px;
+      white-space: nowrap;
+    }
+    .asof-fallback{
+      font-size: 12px;
+      font-weight: 800;
+      color: rgba(108,95,86,0.95);
+      line-height: 1.2;
+      display:none;
+    }
 
     .search{
       display:flex;
@@ -641,9 +662,11 @@
             <button id="nextCoupleMoveBtn" class="next-move-btn" type="button">이동</button>
           </div>
 
-          <div class="next-note">
-            <div>• <b>매일 18시 기준</b> 업데이트</div>
-            <div>• 실시간 확인: <b>052-255-3800</b></div>
+          <!-- ✅ (요청 반영) 2줄 / 서버시간 기준 표시 -->
+          <div class="next-note" aria-label="기준 시간">
+            <div class="asof-date" id="asofDate">현재 —년 —월 —일 기준</div>
+            <div class="asof-time" id="asofTime">—시—분</div>
+            <div class="asof-fallback" id="asofFallback">※ 서버시간 확인 불가 시, 브라우저 시간을 표시합니다.</div>
           </div>
         </div>
       </div>
@@ -818,6 +841,32 @@
   let nextCouple = null;
   let nextPersonalRoom = null;
 
+  // ✅ 서버시간(HTTP Date 헤더) 저장
+  let LAST_SERVER_TIME = null;
+  let SERVER_TIME_FALLBACK = false;
+
+  function formatAsOf(d){
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const da = String(d.getDate()).padStart(2,"0");
+    const hh = String(d.getHours()).padStart(2,"0");
+    const mm = String(d.getMinutes()).padStart(2,"0");
+    return {
+      dateLine: `현재 ${y}년 ${m}월 ${da}일 기준`,
+      timeLine: `${hh}시${mm}분`
+    };
+  }
+  function updateAsOfUI(){
+    const d = (LAST_SERVER_TIME instanceof Date && !isNaN(LAST_SERVER_TIME.getTime())) ? LAST_SERVER_TIME : new Date();
+    const t = formatAsOf(d);
+    const dateEl = $("asofDate");
+    const timeEl = $("asofTime");
+    const fbEl = $("asofFallback");
+    if (dateEl) dateEl.textContent = t.dateLine;
+    if (timeEl) timeEl.textContent = t.timeLine;
+    if (fbEl) fbEl.style.display = SERVER_TIME_FALLBACK ? "block" : "none";
+  }
+
   function buildLegend(){
     const showNext = (activeTabId === "couple");
     $("legend").innerHTML = `
@@ -973,7 +1022,7 @@
   }
 
   function scrollNextSlotIntoCenter(){
-    const el = document.querySelector(`.niche.next-slot[data-room="${currentRoom}"]`);
+    const el = document.querySelector(\`.niche.next-slot[data-room="\${currentRoom}"]\`);
     if (!el) return;
     el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
   }
@@ -996,12 +1045,12 @@
 
       const label = document.createElement("div");
       label.className = "dan-label";
-      label.textContent = `${dan}단`;
+      label.textContent = \`\${dan}단\`;
       row.appendChild(label);
 
       const grid = document.createElement("div");
       grid.className = "grid";
-      grid.style.gridTemplateColumns = `repeat(${cfg.cols}, var(--cell-w))`;
+      grid.style.gridTemplateColumns = \`repeat(\${cfg.cols}, var(--cell-w))\`;
 
       for (let c=0; c<cfg.cols; c++){
         const idx = c * cfg.dans + r;
@@ -1085,6 +1134,9 @@
     const pAll = computeNextForRooms(PERSONAL_ALL_ROOMS);
     nextPersonalRoom = pAll ? pAll.room : null;
 
+    // ✅ (요청 반영) 기준시간 표시 갱신
+    updateAsOfUI();
+
     requestAnimationFrame(updateScrollerHeight);
   }
 
@@ -1113,10 +1165,30 @@
     return null;
   }
 
-  async function fetchJson(url){
+  /* ✅ (요청 반영) 서버시간: 응답 헤더 Date 사용
+     - 서버가 Date 헤더를 안 주거나 CORS/캐시 환경으로 못 읽는 경우 → 브라우저 시간 fallback
+  */
+  async function fetchJsonWithServerTime(url){
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error("fetch fail: " + res.status);
-    return await res.json();
+
+    const dateHdr = res.headers.get("Date");
+    if (dateHdr){
+      const d = new Date(dateHdr);
+      if (!isNaN(d.getTime())){
+        LAST_SERVER_TIME = d;
+        SERVER_TIME_FALLBACK = false;
+      } else {
+        LAST_SERVER_TIME = new Date();
+        SERVER_TIME_FALLBACK = true;
+      }
+    } else {
+      LAST_SERVER_TIME = new Date();
+      SERVER_TIME_FALLBACK = true;
+    }
+
+    const json = await res.json();
+    return json;
   }
 
   function isBlank(v){
@@ -1303,7 +1375,11 @@
   async function loadDeceasedFromJson(){
     try{
       setMsg("");
-      const json = await fetchJson(DECEASED_JSON_URL);
+
+      // ✅ 서버시간 포함 JSON 로딩
+      const json = await fetchJsonWithServerTime(DECEASED_JSON_URL);
+      updateAsOfUI();
+
       const rows = pickRowsFromJson(json);
 
       if (!rows || !Array.isArray(rows) || rows.length === 0){
@@ -1329,6 +1405,12 @@
     } catch(err){
       console.error(err);
       setMsg("JSON 로딩 실패", "error");
+
+      // ✅ 실패 시에도 기준시간은 브라우저 시간으로 표시
+      LAST_SERVER_TIME = new Date();
+      SERVER_TIME_FALLBACK = true;
+      updateAsOfUI();
+
       applyJsonRows([]);
     }
   }
@@ -1500,7 +1582,7 @@
     }
   });
 
-  // ✅ 새로고침: JSON 다시 로딩
+  // ✅ 새로고침: JSON 다시 로딩(서버시간도 같이 갱신)
   $("reloadBtn").addEventListener("click", loadDeceasedFromJson);
 
   const UI = { collapsed: false };
@@ -1606,6 +1688,12 @@
   renderTabs();
   renderRoomButtons();
   renderRoom(false);
+
+  // 기준시간 UI 초기값(로딩 전에도 보이도록)
+  LAST_SERVER_TIME = new Date();
+  SERVER_TIME_FALLBACK = true;
+  updateAsOfUI();
+
   loadDeceasedFromJson();
   requestAnimationFrame(updateScrollerHeight);
 </script>
