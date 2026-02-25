@@ -180099,7 +180099,7 @@
     "strDate": "2026-01-10",
     "ensNo": "1추모의집-62실-개인단-21731",
     "deadName": "임종문",
-    "applName": "임성미",
+    "applName": "임성규",
     "retDate": null
   },
   {
@@ -182480,6 +182480,13 @@
     "ensNo": "1추모의집-62실-개인단-21952",
     "deadName": "이순재",
     "applName": "박정선",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-25",
+    "ensNo": "1추모의집-62실-개인단-21953",
+    "deadName": "김성철",
+    "applName": "김선민",
     "retDate": null
   }
 ]
