@@ -79,6 +79,7 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    /* ===== 부부단 다음 봉안 예정 ===== */
     .next-wrap{
       display:none;
       flex: 0 0 auto;
@@ -116,12 +117,15 @@
       flex: 0 0 auto;
     }
 
+    /* ✅ 기준시간: 제목 아래에 표시 */
     .asof-inline{
       font-size: 14px;
       font-weight: 900;
       color: rgba(108,95,86,0.95);
       letter-spacing: .15px;
       white-space: nowrap;
+      line-height: 1.2;
+      margin-left: 14px; /* PC에서 살짝 들여쓰기 느낌 */
     }
 
     .next-rows{
@@ -181,6 +185,7 @@
     .next-move-btn:hover{ background: rgba(255,255,255,0.98); }
     .next-move-btn:disabled{ opacity: .45; cursor: not-allowed; }
 
+    /* ===== 검색 ===== */
     .search{
       display:flex;
       gap:6px;
@@ -524,21 +529,19 @@
     .list li { margin: 6px 0; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-variant-numeric: tabular-nums; }
 
+    /* ===== 메뉴 열기/닫기 핸들 =====
+       기본: PC에서는 아예 표시 안 함 (모바일에서만 @media로 표시)
+    */
     .collapse-handle{
-      display:none;
-      position: sticky;
-      top: 0;
-      z-index: 80;
+      display:none; /* ✅ PC에서는 숨김 */
+      position: relative;
 
       height: calc(var(--handle-h) + env(safe-area-inset-top, 0px));
       padding-top: env(safe-area-inset-top, 0px);
 
-      margin: 0 0 8px;
-      border-radius: 999px;
       border: 1px solid rgba(0,0,0,0.08);
       background: rgba(251,248,244,0.92);
       backdrop-filter: blur(6px);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 
       cursor: pointer;
       touch-action: manipulation;
@@ -551,6 +554,13 @@
       font-weight: 900;
       color: rgba(47,42,37,0.82);
       font-size: 12px;
+
+      /* ✅ 폭 줄이고 가운데 */
+      width: 160px;
+      max-width: 70vw;
+      margin: 0 auto 10px;
+
+      border-radius: 999px;
     }
     .collapse-handle .handle-pill{
       width: 46px;
@@ -568,9 +578,34 @@
     @media (max-width: 520px){
       body{ margin:10px; }
       h1{ font-size: 20px; margin-bottom: 8px; }
+
+      /* ✅ 모바일에서 패널과 핸들을 한 덩어리 UI로 */
+      #topPanel{
+        margin-bottom: 0;            /* 핸들과 붙게 */
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      }
+
+      .collapse-handle{
+        display:flex;               /* ✅ 모바일에서만 표시 */
+        width: 180px;               /* 모바일은 조금 넓게 */
+        max-width: 76vw;
+        margin: -8px auto 10px;     /* ✅ 패널 아래에 딱 붙게(겹치기) */
+        border-top-left-radius: 0;  /* ✅ 패널과 연결 느낌 */
+        border-top-right-radius: 0;
+        border-top: 0;              /* 경계선 제거 */
+        box-shadow: 0 8px 14px rgba(0,0,0,0.06);
+      }
+
+      /* ✅ 패널 sticky는 기본 0 (핸들이 위에 없으니 보정 제거) */
+      #topPanel.panel.sticky{
+        top: 0;
+      }
+
       .panel{ padding:10px; }
+
       .tabs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .search input{ width: 260px; max-width: 68vw; }
 
       :root{
         --cell-w: 60px;
@@ -586,12 +621,43 @@
 
       .next-rows{ flex-direction:column; }
 
-      .collapse-handle{ display:flex; }
-
-      #topPanel.panel.sticky{
-        top: calc(var(--handle-h) + env(safe-area-inset-top, 0px));
+      /* ✅ 모바일: 부부단 박스 + 검색을 세로로 쌓아서 가로스크롤 제거 */
+      .panel-top{
+        flex-direction: column;
+        align-items: stretch;
+        flex-wrap: wrap;
+        overflow-x: hidden;
+        gap: 10px;
       }
 
+      .next-wrap{
+        width: 100%;
+        max-width: 100%;
+      }
+
+      /* 제목 아래 기준시간: 모바일은 들여쓰기 제거 */
+      .asof-inline{
+        margin-left: 0;
+        white-space: normal;
+      }
+
+      .search{
+        width: 100%;
+        margin-left: 0;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .search input{
+        width: 100%;
+        max-width: 100%;
+        flex: 1 1 100%;
+      }
+      .search button{
+        flex: 1 1 calc(50% - 4px);
+        min-width: 0;
+      }
+
+      /* 기존 모바일 접기 로직용 */
       .scroll-x{
         overflow-y: auto;
         padding-top: 6px;
@@ -611,6 +677,33 @@
         border-color: transparent;
         pointer-events: none;
       }
+      /* ✅ 접힘 상태: 핸들만 남기고 자연스럽게 */
+      #topPanel.is-collapsed{
+        border-width: 0 !important;
+        box-shadow: none !important;
+      }
+
+      /* 접힘 상태에서는 핸들이 단독 pill */
+      #topPanel.is-collapsed + #collapseHandle{
+        margin: 10px auto 10px !important;
+        border-radius: 999px !important;
+        border-top: 1px solid rgba(0,0,0,0.08) !important;
+        box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
+      }
+
+      /* 펼침 상태에서는 패널과 한 덩어리로 */
+      #topPanel:not(.is-collapsed) + #collapseHandle{
+        margin: -8px auto 10px !important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-top: 0 !important;
+        box-shadow: 0 8px 14px rgba(0,0,0,0.06) !important;
+      }
+
+      #topPanel.is-collapsed + #collapseHandle .handle-pill{
+        width: 40px;
+        opacity: .9;
+      }
     }
   </style>
 </head>
@@ -618,19 +711,16 @@
 <body>
   <h1>추모의집 봉안 현황</h1>
 
-  <div id="collapseHandle" class="collapse-handle" aria-label="상단 패널 펼치기/접기">
-    <span class="handle-pill" aria-hidden="true"></span>
-    <span id="handleText" class="handle-text">메뉴 열기 ▾</span>
-  </div>
-
   <div class="panel sticky" id="topPanel">
     <div class="panel-top">
 
       <div id="nextWrap" class="next-wrap" aria-label="부부단 다음 봉안 예정">
+        <!-- ✅ 제목만 -->
         <div class="next-head">
           <span>부부단 다음 봉안 예정</span>
-          <span class="asof-inline" id="asofInline">0000년 00월 00일 00시00분 기준</span>
         </div>
+        <!-- ✅ 기준시간을 제목 아래로 -->
+        <div class="asof-inline" id="asofInline">0000년 00월 00일 00시00분 기준</div>
 
         <div class="next-rows">
           <div class="next-line">
@@ -651,6 +741,12 @@
 
     <div id="tabBar" class="tabs"></div>
     <div id="roomBtns" class="room-btns"></div>
+  </div>
+
+  <!-- ✅ 모바일에서만 보이는 '메뉴 열기/닫기' 버튼: 패널 하단 -->
+  <div id="collapseHandle" class="collapse-handle" aria-label="상단 패널 펼치기/접기">
+    <span class="handle-pill" aria-hidden="true"></span>
+    <span id="handleText" class="handle-text">메뉴 열기 ▾</span>
   </div>
 
   <div class="legend" id="legend"></div>
@@ -711,7 +807,7 @@
   function escapeHtml(s){
     return String(s ?? "")
       .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+      .replaceAll('"',"quot;").replaceAll("'","&#039;");
   }
 
   function setMsg(text, kind="info"){
@@ -1098,7 +1194,6 @@
     nextPersonalRoom = pAll ? pAll.room : null;
 
     updateAsOfUI();
-
     requestAnimationFrame(updateScrollerHeight);
   }
 
@@ -1559,14 +1654,14 @@
     if (!isMobileWidth()){
       UI.collapsed = false;
       panel.classList.remove("is-collapsed");
-      handle.style.display = "none";
+      handle.style.display = "none";  // ✅ PC에서는 숨김
       legend.style.display = "";
       if (msg) msg.style.display = (msg.textContent ? "block" : "none");
       requestAnimationFrame(updateScrollerHeight);
       return;
     }
 
-    handle.style.display = "flex";
+    handle.style.display = "flex"; // ✅ 모바일에서만 표시
     panel.classList.toggle("is-collapsed", UI.collapsed);
 
     legend.style.display = UI.collapsed ? "none" : "";
