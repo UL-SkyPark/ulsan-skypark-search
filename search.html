@@ -161,7 +161,7 @@
       height:64px;
       padding:0 18px;
       font-size:20px;
-      font-weight:800;
+      font-weight:500;
       border-radius:14px;
       border:2px solid rgba(15,23,42,0.12);
       background:rgba(255,255,255,0.98);
@@ -172,7 +172,7 @@
 
     input[type="text"]::placeholder{
       color:rgba(51,65,85,0.55);
-      font-weight:800;
+      font-weight:400;
     }
 
     input[type="text"]:focus{
@@ -187,7 +187,7 @@
       border-radius:14px;
       cursor:pointer;
       font-size:20px;
-      font-weight:900;
+      font-weight:700;
       color:#ffffff;
       background:linear-gradient(180deg, #1e88e5, #1565c0);
       box-shadow:0 12px 28px rgba(21,101,192,0.30);
@@ -513,6 +513,18 @@
         filter:none;
       }
     }
+
+/* 기본: 모바일에서 줄바꿈 */
+.m-br{
+  display:block;
+}
+
+/* PC에서는 줄바꿈 제거 */
+@media (min-width:1024px){
+  .m-br{
+    display:none;
+  }
+}
   </style>
 </head>
 
@@ -885,7 +897,7 @@
           ? '전체'
           : (currentMode === 'memorial' ? '추모의집' : '자연장지')
         } 검색 결과 ${records.length}건`;
-      const titleRight = `결과를 선택하면<br>상세 정보가 표시됩니다.`;
+      const titleRight = `결과를 선택하면<span class="m-br"></span>상세 정보가 표시됩니다.`;
 
       let html = `
         <div class="result-head">
