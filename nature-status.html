@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자연장지 금일 접수현황</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; }
+        h1 { text-align: center; color: #6a4c93; margin-bottom: 10px; font-size: 2em; }
+        .date { text-align: center; color: #888; font-size: 1.1em; margin-bottom: 30px; }
+        button { background: #6a4c93; color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 1em; transition: background 0.3s; }
+        button:hover { background: #5a3c83; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9ff; font-weight: 600; color: #6a4c93; }
+        tr:hover { background: #f0f4ff; }
+        .no-data { text-align: center; color: #888; font-style: italic; padding: 40px; }
+        @media (max-width: 768px) { .container { padding: 20px; } th, td { padding: 8px; font-size: 0.9em; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌿 자연장지 금일 접수현황</h1>
+        <div class="date" id="todayDate"></div>
+        <button onclick="loadTodayStatus()">금일 현황 확인</button>
+        <div id="statusTable"></div>
+    </div>
+
+    <script>
+        // 오늘 날짜 표시 (YYYY-MM-DD 형식)
+        document.getElementById('todayDate').textContent = `오늘 (${new Date().toISOString().split('T')[0]}) 접수 현황`;
+
+        async function loadTodayStatus() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '로드 중...';
+            const tableDiv = document.getElementById('statusTable');
+
+            try {
+                // data/nature_data.json 로드
+                const response = await fetch('data/nature_data.json');
+                if (!response.ok) throw new Error('파일을 찾을 수 없습니다.');
+                const data = await response.json();
+
+                // 오늘 날짜 (YYYY-MM-DD)
+                const today = new Date().toISOString().split('T')[0];
+
+                // 안치일자가 오늘인 필터링
+                const todayStatus = data.filter(item => item['안치일자'] === today);
+
+                if (todayStatus.length === 0) {
+                    tableDiv.innerHTML = '<div class="no-data">금일 접수된 자연장지가 없습니다.</div>';
+                    return;
+                }
+
+                // 테이블 생성
+                let tableHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>봉안번호</th>
+                                <th>구분</th>
+                                <th>사망자명</th>
+                                <th>신청자명</th>
+                                <th>안치일자</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                todayStatus.forEach(item => {
+                    tableHTML += `
+                        <tr>
+                            <td>${item['봉안번호'] || ''}</td>
+                            <td>${item['구분'] || ''}</td>
+                            <td>${item['사망자명'] || ''}</td>
+                            <td>${item['신청자명'] || ''}</td>
+                            <td>${item['안치일자'] || ''}</td>
+                        </tr>
+                    `;
+                });
+                tableHTML += '</tbody></table>';
+                tableDiv.innerHTML = tableHTML;
+            } catch (error) {
+                tableDiv.innerHTML = `<div class="no-data" style="color: #d32f2f;">오류: ${error.message}<br>파일 경로(data/nature_data.json)를 확인하세요.</div>`;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '금일 현황 확인';
+            }
+        }
+    </script>
+</body>
+</html>
