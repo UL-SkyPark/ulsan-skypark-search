@@ -15,7 +15,6 @@
       --text:#0f172a;
       --muted:#64748b;
 
-      /* 상태별 파스텔 */
       --st-recv-bg: rgba(249,168,212,.22);
       --st-recv-bd: rgba(249,168,212,.38);
       --st-recv-tx: rgba(131,24,67,.85);
@@ -52,30 +51,40 @@
       overflow: hidden;
     }
 
+    /* ✅ 헤더: 한 줄 고정 */
     .top{
-      padding: 16px 16px 12px;
+      padding: 14px 14px 10px;
       display:flex;
       flex-direction:column;
       gap: 10px;
     }
 
-    .title{
+    .titleRow{
       display:flex;
-      align-items:flex-end;
+      align-items:center;
       justify-content:space-between;
       gap: 10px;
     }
-    .title h1{
+
+    /* ✅ 모바일 줄바꿈 방지 */
+    .titleRow h1{
       margin:0;
-      font-size: 1.22rem;
+      font-size: 1.12rem;
       letter-spacing: -0.02em;
       font-weight: 950;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      min-width: 0;
     }
-    .title .mini{
+
+    .mini{
       color: var(--muted);
-      font-size: .9rem;
+      font-size: .88rem;
       font-weight: 900;
       white-space: nowrap;
+      flex: 0 0 auto;
     }
 
     .bar{
@@ -122,6 +131,7 @@
       border: 1px solid rgba(148,163,184,0.22);
       border-radius: 999px;
       padding: 6px 10px;
+      flex: 0 1 auto;
     }
     .date-wrap .label{
       color: var(--muted);
@@ -142,71 +152,31 @@
       -webkit-appearance:none;
     }
 
-    /* ✅ 라디오 칩(접수/안치완료) */
-    .filters{
-      display:flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 2px;
-    }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.22);
-      background: rgba(255,255,255,0.72);
-      font-weight: 950;
-      font-size: .9rem;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .chip:active{ transform: translateY(1px); }
-
-    .chip input{
-      width: 16px;
-      height: 16px;
-      accent-color: rgba(165,180,252,1);
-    }
-
-    .chip.recv.on{
-      background: var(--st-recv-bg);
-      border-color: var(--st-recv-bd);
-      color: var(--st-recv-tx);
-      box-shadow: 0 10px 24px rgba(249,168,212,.18);
-    }
-    .chip.done.on{
-      background: var(--st-done-bg);
-      border-color: var(--st-done-bd);
-      color: var(--st-done-tx);
-      box-shadow: 0 10px 24px rgba(134,239,172,.16);
-    }
-
+    /* ✅ 통계: 오늘 접수 건수만(날짜 문구 X) */
     .stats{
+      margin-top: 2px;
       display:flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-top: 4px;
     }
     .stat{
-      flex: 1 1 160px;
-      background: rgba(255,255,255,0.70);
-      border: 1px solid rgba(148,163,184,0.18);
+      flex: 1 1 220px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(148,163,184,0.16);
       border-radius: 16px;
       padding: 10px 12px;
     }
     .stat .num{
       font-weight: 950;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       letter-spacing: -0.02em;
+      line-height: 1.1;
     }
     .stat .txt{
       color: var(--muted);
-      font-weight: 850;
-      font-size: .88rem;
-      margin-top: 2px;
+      font-weight: 900;
+      font-size: .9rem;
+      margin-top: 4px;
     }
 
     .content{
@@ -236,6 +206,10 @@
       color: var(--muted);
       font-size: .9rem;
       font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
     }
     .list-head .badge{
       font-size: .86rem;
@@ -246,6 +220,7 @@
       border-radius: 999px;
       white-space: nowrap;
       color: rgba(15,23,42,.72);
+      flex: 0 0 auto;
     }
 
     ul{ list-style:none; padding:0; margin:0; }
@@ -516,7 +491,7 @@
 <body>
   <div class="app">
     <div class="top">
-      <div class="title">
+      <div class="titleRow">
         <h1>🌸 울산하늘공원 접수 현황</h1>
         <div class="mini" id="todayLabel">오늘: -</div>
       </div>
@@ -533,18 +508,7 @@
         </div>
       </div>
 
-      <!-- ✅ 라디오 칩: 하나만 선택 -->
-      <div class="filters">
-        <label class="chip recv" id="chipRecv" title="접수만 보기">
-          <input type="radio" name="statusFilter" id="filterRecv" value="접수" />
-          접수
-        </label>
-        <label class="chip done" id="chipDone" title="안치완료만 보기">
-          <input type="radio" name="statusFilter" id="filterDone" value="안치완료" />
-          안치완료
-        </label>
-      </div>
-
+      <!-- ✅ 오늘 접수 건수 아래 날짜 표기 제거 -->
       <div class="stats" id="stats"></div>
     </div>
 
@@ -553,6 +517,7 @@
     </div>
   </div>
 
+  <!-- 바텀시트 모달 -->
   <div class="overlay" id="overlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true">
       <div class="sheet-head">
@@ -569,7 +534,6 @@
           <div class="v" style="text-align:right;">
             <div class="statusRow">
               <div class="left" id="mStatusBadgeWrap"></div>
-              <!-- ✅ 대기 삭제: 접수/안치완료만 -->
               <select id="mStatus">
                 <option value="접수">접수</option>
                 <option value="안치완료">안치완료</option>
@@ -624,13 +588,19 @@
     function statusCategory(status){
       const s = (status ?? '').toString().trim();
       if (s === '안치완료' || s === '안장완료') return 'done';
-      return 'recv'; // 접수 이외는 접수로 처리(대기 삭제 정책)
+      return 'recv';
     }
     function statusBadgeHTML(status){
       const cat = statusCategory(status);
       return cat === 'done'
         ? `<span class="badge-st badge-done">안치완료</span>`
         : `<span class="badge-st badge-recv">접수</span>`;
+    }
+
+    async function fetchJson(url){
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
+      return res.json();
     }
 
     function escapeHtml(str){
@@ -640,12 +610,6 @@
         .replaceAll('>','&gt;')
         .replaceAll('"','&quot;')
         .replaceAll("'","&#039;");
-    }
-
-    async function fetchJson(url){
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
-      return res.json();
     }
 
     function showToast(msg){
@@ -698,7 +662,7 @@
     function getStatus(sourceKey, id){ return localStorage.getItem(statusKey(sourceKey, id)) || '접수'; }
     function setStatus(sourceKey, id, val){ localStorage.setItem(statusKey(sourceKey, id), val); }
 
-    // DOM
+    // DOM/state
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
     const statsDiv = document.getElementById('stats');
@@ -706,11 +670,6 @@
 
     const tabHouse = document.getElementById('tabHouse');
     const tabNature = document.getElementById('tabNature');
-
-    const filterRecv = document.getElementById('filterRecv');
-    const filterDone = document.getElementById('filterDone');
-    const chipRecv = document.getElementById('chipRecv');
-    const chipDone = document.getElementById('chipDone');
 
     const overlay = document.getElementById('overlay');
     const mTitle = document.getElementById('mTitle');
@@ -727,18 +686,7 @@
     todayLabel.textContent = `오늘: ${TODAY}`;
     datePicker.value = TODAY;
 
-    // ✅ 기본 필터: 접수(라디오)
-    filterRecv.checked = true;
-
-    function syncChipStyles(){
-      chipRecv.classList.toggle('on', filterRecv.checked);
-      chipDone.classList.toggle('on', filterDone.checked);
-    }
-    syncChipStyles();
-
     datePicker.addEventListener('change', () => load());
-    filterRecv.addEventListener('change', () => { syncChipStyles(); load(); });
-    filterDone.addEventListener('change', () => { syncChipStyles(); load(); });
 
     function switchSource(sourceKey){
       currentSource = sourceKey;
@@ -747,20 +695,19 @@
       load();
     }
 
-    function selectedFilterValue(){
-      if (filterDone.checked) return '안치완료';
-      return '접수';
-    }
-
-    function applyRadioFilter(rows){
-      const want = selectedFilterValue(); // '접수' or '안치완료'
-      return rows.filter(item => {
-        const id = (currentSource === 'nature') ? String(item.natNo ?? '-') : getId(item);
-        const st = getStatus(currentSource, id);
-        const cat = statusCategory(st);
-        const normalized = (cat === 'done') ? '안치완료' : '접수';
-        return normalized === want;
-      });
+    // ✅ 정렬: 접수 위 / 안치완료 아래 (항상 적용)
+    function sortByStatusStable(rows){
+      return rows
+        .map((item, idx) => ({ item, idx }))
+        .sort((a,b) => {
+          const ida = (currentSource === 'nature') ? String(a.item.natNo ?? '-') : getId(a.item);
+          const idb = (currentSource === 'nature') ? String(b.item.natNo ?? '-') : getId(b.item);
+          const ra = (statusCategory(getStatus(currentSource, ida)) === 'done') ? 1 : 0;
+          const rb = (statusCategory(getStatus(currentSource, idb)) === 'done') ? 1 : 0;
+          if (ra !== rb) return ra - rb;
+          return a.idx - b.idx;
+        })
+        .map(x => x.item);
     }
 
     async function load(){
@@ -779,33 +726,20 @@
         let displayData = filtered;
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // ✅ 라디오 필터 적용
-        displayData = applyRadioFilter(displayData);
-
-        // ✅ 정렬: 접수는 위 / 안치완료는 아래 (라디오라서 보통 한쪽만 나옴)
-        displayData = displayData
-          .map((item, idx) => ({ item, idx }))
-          .sort((a,b) => {
-            const ida = (currentSource === 'nature') ? String(a.item.natNo ?? '-') : getId(a.item);
-            const idb = (currentSource === 'nature') ? String(b.item.natNo ?? '-') : getId(b.item);
-            const ra = statusCategory(getStatus(currentSource, ida)) === 'done' ? 1 : 0;
-            const rb = statusCategory(getStatus(currentSource, idb)) === 'done' ? 1 : 0;
-            if (ra !== rb) return ra - rb;
-            return a.idx - b.idx;
-          })
-          .map(x => x.item);
-
+        // 정렬 적용
+        displayData = sortByStatusStable(displayData);
         currentDisplayData = displayData;
 
-        const filterLabel = selectedFilterValue();
+        // ✅ 통계: 오늘 접수 건수만 + 날짜 문구 없음
+        const recvCount = displayData.reduce((acc, item) => {
+          const id = (currentSource === 'nature') ? String(item.natNo ?? '-') : getId(item);
+          return acc + (statusCategory(getStatus(currentSource, id)) === 'recv' ? 1 : 0);
+        }, 0);
+
         statsDiv.innerHTML = `
           <div class="stat">
-            <div class="num">${displayData.length.toLocaleString()}</div>
-            <div class="txt">${source.label} · ${selectedDate} · ${filterLabel}</div>
-          </div>
-          <div class="stat">
-            <div class="num">${data.length.toLocaleString()}</div>
-            <div class="txt">원본 전체 건수</div>
+            <div class="num">${recvCount.toLocaleString()}</div>
+            <div class="txt">오늘 접수 건수</div>
           </div>
         `;
 
@@ -830,11 +764,8 @@
           const id = (currentSource === 'nature') ? (item.natNo ?? '-') : getId(item);
           const name = (currentSource === 'nature') ? (item.deadName ?? '-') : getName(item);
 
-          // ✅ 대기 삭제 정책: 저장값이 이상해도 recv/done으로만 표시
           const stRaw = getStatus(currentSource, String(id));
           const cat = statusCategory(stRaw);
-          const stShow = (cat === 'done') ? '안치완료' : '접수';
-
           const leftCls = (cat === 'done') ? 'done' : 'recv';
           const badge = (cat === 'done')
             ? `<span class="badge-st badge-done">안치완료</span>`
@@ -887,13 +818,11 @@
       const name = (currentSource === 'nature') ? String(item.deadName ?? '-') : getName(item);
 
       const stRaw = getStatus(currentSource, id);
-      const cat = statusCategory(stRaw);
-      const stShow = (cat === 'done') ? '안치완료' : '접수';
+      const stShow = (statusCategory(stRaw) === 'done') ? '안치완료' : '접수';
 
       mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(id)} ${statusBadgeHTML(stShow)}`;
       mSub.textContent = name;
 
-      // ✅ 상태 변경도 접수/안치완료만
       mStatus.value = stShow;
       mStatusBadgeWrap.innerHTML = statusBadgeHTML(stShow);
 
@@ -904,7 +833,6 @@
         load();
       };
 
-      // 상세 필드
       let fieldsHTML = '';
       if (currentSource === 'nature'){
         fieldsHTML += kvRow('신청자명', item.applName ?? '-');
@@ -942,8 +870,7 @@
 
     window.addEventListener('load', () => {
       datePicker.value = TODAY;
-      // 기본: 추모의집 + 접수
-      switchSource('house');
+      switchSource('house'); // 기본: 추모의집
     });
   </script>
 </body>
