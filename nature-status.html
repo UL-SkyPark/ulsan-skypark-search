@@ -8,59 +8,79 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); margin: 0; padding: 20px; color: #333; }
         .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; }
         h1 { text-align: center; color: #6a4c93; margin-bottom: 10px; font-size: 2em; }
-        .date { text-align: center; color: #888; font-size: 1.1em; margin-bottom: 30px; }
-        button { background: #6a4c93; color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 1em; transition: background 0.3s; }
-        button:hover { background: #5a3c83; }
+        .controls { text-align: center; margin-bottom: 30px; }
+        .date { color: #888; font-size: 1.1em; margin-bottom: 15px; }
+        input[type="date"] { padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; margin: 0 10px; }
+        .btn-group { display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        button { background: #6a4c93; color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-size: 0.95em; transition: all 0.3s; }
+        button:hover:not(:disabled) { background: #5a3c83; transform: translateY(-1px); }
         button:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-all { background: #4caf50; } .btn-all:hover:not(:disabled) { background: #45a049; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background: #f8f9ff; font-weight: 600; color: #6a4c93; }
+        th { background: #f8f9ff; font-weight: 600; color: #6a4c93; position: sticky; top: 0; }
         tr:hover { background: #f0f4ff; }
         .no-data { text-align: center; color: #888; font-style: italic; padding: 40px; }
         .stats { display: flex; justify-content: space-around; margin: 20px 0; flex-wrap: wrap; }
         .stat-box { background: #e8f4fd; padding: 15px; border-radius: 10px; text-align: center; min-width: 120px; }
         .stat-num { font-size: 2em; color: #6a4c93; font-weight: bold; }
-        @media (max-width: 768px) { .container { padding: 20px; } th, td { padding: 8px; font-size: 0.9em; } .stats { flex-direction: column; } }
+        @media (max-width: 768px) { .container { padding: 20px; } th, td { padding: 8px; font-size: 0.9em; } .btn-group { flex-direction: column; width: 100%; } input[type="date"] { width: 100%; margin: 5px 0; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🌿 자연장지 안장현황</h1>
-        <div class="date" id="todayDate"></div>
-        <button onclick="loadStatus()">안장현황 확인</button>
+        <h1>🌿 자연장지 안장현황 조회</h1>
+        <div class="controls">
+            <div class="date" id="selectedDate"></div>
+            <div class="btn-group">
+                <input type="date" id="datePicker" value="">
+                <button onclick="loadStatus()">날짜별 조회</button>
+                <button class="btn-all" onclick="loadAllStatus()">전체 보기</button>
+            </div>
+        </div>
         <div class="stats" id="stats"></div>
         <div id="statusTable"></div>
     </div>
 
     <script>
-        // 오늘 날짜 표시
-        document.getElementById('todayDate').textContent = `오늘 (${new Date().toISOString().split('T')[0]}) 안장 현황`;
+        const datePicker = document.getElementById('datePicker');
+        const dateDisplay = document.getElementById('selectedDate');
 
-        async function loadStatus() {
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = '로드 중...';
+        // 오늘 날짜 기본 설정
+        const today = new Date().toISOString().split('T')[0];
+        datePicker.value = today;
+        dateDisplay.textContent = `선택: ${today}`;
+
+        // 날짜 변경시 표시 업데이트
+        datePicker.addEventListener('change', () => {
+            dateDisplay.textContent = `선택: ${datePicker.value || '전체'}`;
+        });
+
+        async function loadStatus(selectedDate = null) {
+            const btn = event ? event.target : null;
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = '로드 중...';
+            }
             const tableDiv = document.getElementById('statusTable');
             const statsDiv = document.getElementById('stats');
 
             try {
-                // ./data/nature_data.json 로드
                 const response = await fetch('./data/nature_data.json');
                 if (!response.ok) throw new Error('파일을 찾을 수 없습니다. ./data/nature_data.json 경로 확인');
                 const data = await response.json();
 
-                // 오늘 날짜 (YYYY-MM-DD)
-                const today = new Date().toISOString().split('T')[0];
+                let filteredData = data;
+                if (selectedDate) {
+                    filteredData = data.filter(item => item.natDate === selectedDate);
+                }
 
-                // 금일 안장 필터링 (natDate === today)
-                const todayStatus = data.filter(item => item.natDate === today);
-
-                // 전체 통계
-                const totalToday = todayStatus.length;
+                // 통계
+                const totalFiltered = filteredData.length;
                 const statsHTML = `
                     <div class="stat-box">
-                        <div class="stat-num">${totalToday}</div>
-                        <div>금일 안장</div>
+                        <div class="stat-num">${totalFiltered}</div>
+                        <div>${selectedDate ? '선택일자' : '전체'} 안장</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-num">${data.length}</div>
@@ -69,12 +89,12 @@
                 `;
                 statsDiv.innerHTML = statsHTML;
 
-                if (totalToday === 0) {
-                    tableDiv.innerHTML = '<div class="no-data">금일 안장된 자연장지가 없습니다.</div>';
+                if (totalFiltered === 0) {
+                    tableDiv.innerHTML = `<div class="no-data">${selectedDate ? `${selectedDate}에 ` : ''}안장된 자연장지가 없습니다.</div>`;
                     return;
                 }
 
-                // 테이블 생성 (새 헤더 기준)
+                // 테이블 생성
                 let tableHTML = `
                     <table>
                         <thead>
@@ -87,7 +107,7 @@
                         </thead>
                         <tbody>
                 `;
-                todayStatus.forEach(item => {
+                filteredData.slice(0, 100).forEach(item => {  // 100건 제한 (성능)
                     tableHTML += `
                         <tr>
                             <td>${item.natNo || ''}</td>
@@ -98,18 +118,29 @@
                     `;
                 });
                 tableHTML += '</tbody></table>';
+                if (filteredData.length > 100) {
+                    tableHTML += `<p style="text-align:center;color:#888;">총 ${filteredData.length}건 (상위 100건 표시)</p>`;
+                }
                 tableDiv.innerHTML = tableHTML;
 
             } catch (error) {
                 tableDiv.innerHTML = `<div class="no-data" style="color: #d32f2f;">오류: ${error.message}</div>`;
             } finally {
-                btn.disabled = false;
-                btn.textContent = '안장현황 확인';
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = '날짜별 조회';
+                }
             }
         }
 
-        // 페이지 로드시 자동 확인 (선택사항)
-        // loadStatus();
+        async function loadAllStatus() {
+            datePicker.value = '';
+            dateDisplay.textContent = '선체 보기';
+            await loadStatus(null);
+        }
+
+        // 초기 로드 (오늘)
+        loadStatus(today);
     </script>
 </body>
 </html>
