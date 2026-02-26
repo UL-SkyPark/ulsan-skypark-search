@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>🌿 현황 조회</title>
+  <title>🌸 울산하늘공원 접수 현황</title>
 
   <style>
     :root{
-      /* 은은한 파스텔 톤 */
       --bg-a:#f7f7ff;
       --bg-b:#f2fbf7;
       --bg-c:#fff6fb;
 
       --card: rgba(255,255,255,0.92);
-      --card2: rgba(255,255,255,0.80);
-      --line: rgba(148,163,184,0.35);
+      --line: rgba(148,163,184,0.28);
 
       --text:#0f172a;
       --muted:#64748b;
@@ -24,8 +22,20 @@
       --p3:#86efac; /* green pastel */
       --p4:#93c5fd; /* sky pastel */
 
+      /* 상태별 파스텔 */
+      --st-recv-bg: rgba(249,168,212,.22);  /* 접수 */
+      --st-recv-bd: rgba(249,168,212,.38);
+      --st-recv-tx: rgba(131,24,67,.85);
+
+      --st-done-bg: rgba(134,239,172,.26);  /* 안치완료 */
+      --st-done-bd: rgba(134,239,172,.40);
+      --st-done-tx: rgba(20,83,45,.86);
+
+      --st-mid-bg: rgba(147,197,253,.22);   /* 중간단계 */
+      --st-mid-bd: rgba(147,197,253,.38);
+      --st-mid-tx: rgba(30,64,175,.80);
+
       --shadow: 0 14px 40px rgba(15,23,42,0.10);
-      --radius: 18px;
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
@@ -53,12 +63,11 @@
       overflow: hidden;
     }
 
-    /* 상단 */
     .top{
       padding: 16px 16px 12px;
       display:flex;
       flex-direction:column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .title{
@@ -67,21 +76,19 @@
       justify-content:space-between;
       gap: 10px;
     }
-
     .title h1{
       margin:0;
       font-size: 1.22rem;
       letter-spacing: -0.02em;
-      font-weight: 900;
+      font-weight: 950;
     }
     .title .mini{
       color: var(--muted);
       font-size: .9rem;
-      font-weight: 700;
+      font-weight: 900;
       white-space: nowrap;
     }
 
-    /* 세그먼트 + 날짜 */
     .bar{
       display:flex;
       gap: 10px;
@@ -92,7 +99,7 @@
     .seg{
       display:flex;
       background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(148,163,184,0.25);
+      border: 1px solid rgba(148,163,184,0.22);
       border-radius: 999px;
       padding: 4px;
       gap: 4px;
@@ -104,7 +111,7 @@
       border: 0;
       border-radius: 999px;
       padding: 9px 10px;
-      font-weight: 900;
+      font-weight: 950;
       font-size: .95rem;
       cursor:pointer;
       background: transparent;
@@ -123,7 +130,7 @@
       align-items:center;
       gap: 8px;
       background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(148,163,184,0.25);
+      border: 1px solid rgba(148,163,184,0.22);
       border-radius: 999px;
       padding: 6px 10px;
       flex: 0 1 auto;
@@ -131,7 +138,7 @@
     .date-wrap .label{
       color: var(--muted);
       font-size: .9rem;
-      font-weight: 800;
+      font-weight: 900;
       padding-left: 6px;
       white-space: nowrap;
     }
@@ -139,7 +146,7 @@
       border: 0;
       background: transparent;
       padding: 6px 6px;
-      font-weight: 900;
+      font-weight: 950;
       color: var(--text);
       outline: none;
       font-size: .95rem;
@@ -147,38 +154,59 @@
       -webkit-appearance:none;
     }
 
-    /* 작고 단순한 토글 */
-    .tiny-actions{
+    /* ✅ 필터 칩 (접수 / 안치완료) */
+    .filters{
       display:flex;
-      align-items:center;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
       margin-top: 2px;
     }
     .chip{
       display:inline-flex;
       align-items:center;
       gap: 8px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid rgba(148,163,184,0.25);
+      padding: 9px 12px;
       border-radius: 999px;
-      padding: 8px 10px;
-      user-select:none;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(255,255,255,0.72);
+      font-weight: 950;
       font-size: .9rem;
-      font-weight: 850;
       color: rgba(15,23,42,0.78);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, box-shadow .12s ease;
     }
-    .chip input{ width: 16px; height: 16px; }
+    .chip:active{ transform: translateY(1px); }
 
-    /* 통계 - 간단 */
+    .chip input{
+      width: 16px;
+      height: 16px;
+      accent-color: rgba(165,180,252,1);
+    }
+
+    .chip.recv.on{
+      background: var(--st-recv-bg);
+      border-color: var(--st-recv-bd);
+      color: var(--st-recv-tx);
+      box-shadow: 0 10px 24px rgba(249,168,212,.18);
+    }
+    .chip.done.on{
+      background: var(--st-done-bg);
+      border-color: var(--st-done-bd);
+      color: var(--st-done-tx);
+      box-shadow: 0 10px 24px rgba(134,239,172,.16);
+    }
+
     .stats{
       display:flex;
       gap: 10px;
       flex-wrap: wrap;
+      margin-top: 4px;
     }
     .stat{
       flex: 1 1 160px;
       background: rgba(255,255,255,0.70);
-      border: 1px solid rgba(148,163,184,0.22);
+      border: 1px solid rgba(148,163,184,0.18);
       border-radius: 16px;
       padding: 10px 12px;
     }
@@ -189,33 +217,29 @@
     }
     .stat .txt{
       color: var(--muted);
-      font-weight: 800;
+      font-weight: 850;
       font-size: .88rem;
       margin-top: 2px;
     }
 
-    /* 리스트 */
     .content{
       padding: 12px 12px 14px;
-      border-top: 1px solid rgba(148,163,184,0.18);
+      border-top: 1px solid rgba(148,163,184,0.14);
     }
 
     .list{
       background: var(--card);
-      border: 1px solid rgba(148,163,184,0.20);
+      border: 1px solid rgba(148,163,184,0.18);
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 14px 34px rgba(15,23,42,0.08);
     }
 
     .list-head{
-      position: sticky;
-      top: 0;
-      z-index: 3;
       background: rgba(255,255,255,0.78);
       backdrop-filter: blur(10px);
       padding: 10px 12px;
-      border-bottom: 1px solid rgba(148,163,184,0.22);
+      border-bottom: 1px solid rgba(148,163,184,0.18);
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -224,19 +248,21 @@
     .list-head .hint{
       color: var(--muted);
       font-size: .9rem;
-      font-weight: 800;
+      font-weight: 900;
     }
     .list-head .badge{
       font-size: .86rem;
       font-weight: 950;
-      background: rgba(249,168,212,.20);
-      border: 1px solid rgba(249,168,212,.30);
+      background: rgba(249,168,212,.16);
+      border: 1px solid rgba(249,168,212,.25);
       padding: 7px 10px;
       border-radius: 999px;
       white-space: nowrap;
+      color: rgba(15,23,42,.72);
     }
 
     ul{ list-style:none; padding:0; margin:0; }
+
     .item{
       width:100%;
       border:0;
@@ -247,24 +273,44 @@
       align-items:center;
       justify-content:space-between;
       gap: 10px;
-      border-bottom: 1px solid rgba(148,163,184,0.22);
+      border-bottom: 1px solid rgba(148,163,184,0.18);
       cursor:pointer;
+      position: relative;
     }
-    .item:active{
-      background: rgba(165,180,252,.10);
+
+    /* 상태별 좌측 라인 */
+    .item::before{
+      content:"";
+      position:absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background: rgba(147,197,253,.35);
     }
+    .item.status-recv::before{ background: rgba(249,168,212,.55); }
+    .item.status-done::before{ background: rgba(134,239,172,.65); }
+    .item.status-mid::before { background: rgba(147,197,253,.55); }
+
+    .item:active{ background: rgba(165,180,252,.08); }
+
     .main{
       min-width:0;
       flex: 1;
       display:flex;
       flex-direction:column;
       gap: 4px;
+      padding-left: 6px;
     }
     .id{
       font-weight: 950;
       font-size: 1.02rem;
       letter-spacing: -0.01em;
       color: #0b1020;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     .name{
       font-weight: 850;
@@ -273,12 +319,38 @@
       word-break: keep-all;
       line-height: 1.25;
     }
+
+    .badge-st{
+      display:inline-flex;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 950;
+      font-size: .82rem;
+      border: 1px solid rgba(148,163,184,0.18);
+    }
+    .badge-recv{
+      background: var(--st-recv-bg);
+      border-color: var(--st-recv-bd);
+      color: var(--st-recv-tx);
+    }
+    .badge-done{
+      background: var(--st-done-bg);
+      border-color: var(--st-done-bd);
+      color: var(--st-done-tx);
+    }
+    .badge-mid{
+      background: var(--st-mid-bg);
+      border-color: var(--st-mid-bd);
+      color: var(--st-mid-tx);
+    }
+
     .chev{
       width: 34px;
       height: 34px;
       border-radius: 999px;
-      background: rgba(147,197,253,.22);
-      border: 1px solid rgba(147,197,253,.28);
+      background: rgba(147,197,253,.18);
+      border: 1px solid rgba(147,197,253,.24);
       display:grid;
       place-items:center;
       font-weight: 950;
@@ -290,14 +362,14 @@
       text-align:center;
       padding: 26px 14px;
       color: rgba(15,23,42,0.55);
-      font-weight: 850;
+      font-weight: 900;
     }
 
-    /* 모달(바텀시트) */
+    /* 모달 */
     .overlay{
       position: fixed;
       inset: 0;
-      background: rgba(2,6,23,.35);
+      background: rgba(2,6,23,.30);
       display:none;
       align-items:flex-end;
       justify-content:center;
@@ -311,17 +383,14 @@
       background: rgba(255,255,255,0.92);
       border: 1px solid rgba(255,255,255,0.65);
       border-radius: 22px;
-      box-shadow: 0 28px 90px rgba(15,23,42,.25);
+      box-shadow: 0 28px 90px rgba(15,23,42,.20);
       overflow:hidden;
       backdrop-filter: blur(14px);
       transform: translateY(8px);
       opacity: 0;
       transition: transform .16s ease, opacity .16s ease;
     }
-    .overlay.show .sheet{
-      transform: translateY(0);
-      opacity: 1;
-    }
+    .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
 
     .sheet-head{
       padding: 14px 14px 10px;
@@ -329,17 +398,19 @@
       align-items:flex-start;
       justify-content:space-between;
       gap: 10px;
-      background: rgba(255,255,255,0.76);
-      border-bottom: 1px solid rgba(148,163,184,0.22);
+      background: rgba(255,255,255,0.78);
+      border-bottom: 1px solid rgba(148,163,184,0.18);
     }
-    .sheet-head .t{
-      min-width:0;
-    }
+    .sheet-head .t{ min-width:0; }
     .sheet-head .t .line1{
       margin:0 0 4px 0;
       font-weight: 950;
       letter-spacing: -0.02em;
       font-size: 1.06rem;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     .sheet-head .t .line2{
       margin:0;
@@ -367,7 +438,7 @@
 
     .kv{
       background: rgba(255,255,255,0.75);
-      border: 1px solid rgba(148,163,184,0.22);
+      border: 1px solid rgba(148,163,184,0.18);
       border-radius: 16px;
       padding: 10px 12px;
       display:flex;
@@ -377,7 +448,7 @@
     }
     .kv .k{
       color: var(--muted);
-      font-weight: 900;
+      font-weight: 950;
       font-size: .88rem;
       flex: 0 0 auto;
       padding-top: 2px;
@@ -398,18 +469,20 @@
       align-items:center;
       justify-content:space-between;
       gap: 10px;
+      width: 100%;
     }
-    .statusRow .k{
-      color: var(--muted);
-      font-weight: 900;
-      font-size: .88rem;
+    .statusRow .left{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     .statusRow select{
       border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.35);
+      border: 1px solid rgba(148,163,184,0.30);
       padding: 8px 10px;
       font-weight: 950;
-      background: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.90);
       outline: none;
     }
 
@@ -428,17 +501,16 @@
       min-height: 42px;
     }
     .ghost{
-      background: rgba(147,197,253,.20);
-      border: 1px solid rgba(147,197,253,.25);
+      background: rgba(147,197,253,.18);
+      border: 1px solid rgba(147,197,253,.22);
       color: rgba(15,23,42,.80);
     }
     .ok{
-      background: linear-gradient(135deg, rgba(134,239,172,.85), rgba(165,180,252,.85));
-      border: 1px solid rgba(165,180,252,.25);
+      background: linear-gradient(135deg, rgba(134,239,172,.80), rgba(165,180,252,.80));
+      border: 1px solid rgba(165,180,252,.22);
       color: rgba(15,23,42,.88);
     }
 
-    /* 토스트 */
     .toast{
       position: fixed;
       left: 50%;
@@ -449,7 +521,7 @@
       padding: 10px 14px;
       border-radius: 999px;
       font-size: .92rem;
-      font-weight: 800;
+      font-weight: 850;
       opacity: 0;
       transition: opacity .16s ease, transform .16s ease;
       z-index: 10000;
@@ -460,10 +532,6 @@
       opacity: 1;
       transform: translateX(-50%) translateY(-6px);
     }
-
-    @media (max-width: 420px){
-      .date-wrap input[type="date"]{ min-width: 140px; }
-    }
   </style>
 </head>
 
@@ -471,14 +539,15 @@
   <div class="app">
     <div class="top">
       <div class="title">
-        <h1>🌿 현황 조회</h1>
+        <h1>🌸 울산하늘공원 접수 현황</h1>
         <div class="mini" id="todayLabel">오늘: -</div>
       </div>
 
       <div class="bar">
+        <!-- ✅ 탭 순서: 추모의집 → 자연장지 -->
         <div class="seg" role="tablist" aria-label="시설 선택">
-          <button id="tabNature" class="active" onclick="switchSource('nature')">자연장지</button>
-          <button id="tabHouse" onclick="switchSource('house')">추모의집</button>
+          <button id="tabHouse" class="active" onclick="switchSource('house')">추모의집</button>
+          <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
         </div>
 
         <div class="date-wrap">
@@ -487,10 +556,15 @@
         </div>
       </div>
 
-      <div class="tiny-actions">
-        <label class="chip" title="체크하면 전체 데이터를 봅니다">
-          <input type="checkbox" id="toggleAll" />
-          전체
+      <!-- ✅ 필터 칩 2개만 -->
+      <div class="filters">
+        <label class="chip recv" id="chipRecv" title="접수만 보기">
+          <input type="checkbox" id="filterRecv" />
+          접수
+        </label>
+        <label class="chip done" id="chipDone" title="안치완료만 보기">
+          <input type="checkbox" id="filterDone" />
+          안치완료
         </label>
       </div>
 
@@ -516,9 +590,9 @@
       <div class="sheet-body">
         <div class="kv">
           <div class="k">현황</div>
-          <div class="v">
+          <div class="v" style="text-align:right;">
             <div class="statusRow">
-              <span class="k"></span>
+              <div class="left" id="mStatusBadgeWrap"></div>
               <select id="mStatus"></select>
             </div>
           </div>
@@ -537,10 +611,7 @@
   <div class="toast" id="toast">-</div>
 
   <script>
-    /* -------------------------
-      ✅ 로컬(한국) 기준 YYYY-MM-DD
-      - toISOString() 쓰면 UTC라서 하루 전으로 보일 수 있음
-    --------------------------*/
+    // 로컬 날짜(UTC 이슈 방지)
     function getLocalISODate(d = new Date()){
       const y = d.getFullYear();
       const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -549,67 +620,13 @@
     }
 
     const SOURCES = {
-      nature: { label: "자연장지", url: "./data/nature_data.json" },
-      house:  { label: "추모의집", url: "./data/deceased_data.json" }
+      // ✅ deceased_data 날짜키: strDate 고정
+      house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
+      nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
     };
 
-    const datePicker = document.getElementById('datePicker');
-    const toggleAll = document.getElementById('toggleAll');
-    const todayLabel = document.getElementById('todayLabel');
-    const statsDiv = document.getElementById('stats');
-    const listArea = document.getElementById('listArea');
-
-    const tabNature = document.getElementById('tabNature');
-    const tabHouse = document.getElementById('tabHouse');
-
-    const overlay = document.getElementById('overlay');
-    const mTitle = document.getElementById('mTitle');
-    const mSub = document.getElementById('mSub');
-    const mStatus = document.getElementById('mStatus');
-    const mFields = document.getElementById('mFields');
-
-    let currentSource = 'nature';
-    let currentDisplayData = [];   // 화면에 표시되는 목록 데이터
-    let currentSelected = null;    // 모달에 표시 중인 항목(원본)
-
-    // ✅ 오늘 날짜(로컬)
-    const TODAY = getLocalISODate(new Date());
-    todayLabel.textContent = `오늘: ${TODAY}`;
-
-    // ✅ 초기 진입은 항상 "오늘"로 고정
-    datePicker.value = TODAY;
-
-    // UX 단순화: 날짜 변경/전체 토글/탭 변경 시 자동 로드
-    datePicker.addEventListener('change', () => load());
-    toggleAll.addEventListener('change', () => load());
-
-    function switchSource(sourceKey){
-      currentSource = sourceKey;
-      tabNature.classList.toggle('active', sourceKey === 'nature');
-      tabHouse.classList.toggle('active', sourceKey === 'house');
-      load();
-    }
-
-    // -------------------------
-    // ✅ 상태 저장: "시설+번호" 단위
-    // -------------------------
-    function statusKey(sourceKey, id){
-      return `status_${sourceKey}_${id}`;
-    }
-    function getStatus(sourceKey, id){
-      return localStorage.getItem(statusKey(sourceKey, id)) || '접수';
-    }
-    function setStatus(sourceKey, id, val){
-      localStorage.setItem(statusKey(sourceKey, id), val);
-    }
-
-    // -------------------------
-    // ✅ 데이터 필드 유연 매핑 (추모의집 JSON 구조가 달라도 최대한 동작)
-    // -------------------------
     const ID_CANDIDATES = ['natNo','deceasedNo','receiptNo','recNo','applyNo','no','id','번호','접수번호','관리번호'];
     const NAME_CANDIDATES = ['deadName','deceasedName','name','고인명','사망자명'];
-    const APPL_CANDIDATES = ['applName','applicant','신청자명','신청인','유족'];
-    const DATE_CANDIDATES = ['natDate','recDate','receiptDate','applyDate','regDate','date','접수일자','등록일자','안장일자'];
 
     function pickField(obj, candidates){
       for (const k of candidates){
@@ -617,7 +634,6 @@
       }
       return null;
     }
-
     function getId(obj){
       const k = pickField(obj, ID_CANDIDATES);
       return k ? String(obj[k]) : '-';
@@ -626,24 +642,39 @@
       const k = pickField(obj, NAME_CANDIDATES);
       return k ? String(obj[k]) : '-';
     }
-    function getApplicant(obj){
-      const k = pickField(obj, APPL_CANDIDATES);
-      return k ? String(obj[k]) : '-';
+
+    // 상태 분류
+    function statusCategory(status){
+      const s = (status ?? '').toString().trim();
+      if (s === '접수') return 'recv';
+      if (s === '안치완료' || s === '안장완료') return 'done';
+      return 'mid';
     }
-    function getDateField(sampleObj){
-      return pickField(sampleObj, DATE_CANDIDATES);
+    function itemStatusClass(status){
+      const cat = statusCategory(status);
+      return cat === 'recv' ? 'status-recv' : cat === 'done' ? 'status-done' : 'status-mid';
+    }
+    function statusBadgeHTML(status){
+      const cat = statusCategory(status);
+      const cls = cat === 'recv' ? 'badge-st badge-recv' : cat === 'done' ? 'badge-st badge-done' : 'badge-st badge-mid';
+      return `<span class="${cls}">${escapeHtml(status)}</span>`;
+    }
+    function statusSortRank(status){
+      // ✅ 접수(0) → 중간(1) → 안치완료(2)
+      const cat = statusCategory(status);
+      if (cat === 'recv') return 0;
+      if (cat === 'done') return 2;
+      return 1;
     }
 
-    // 자연장지: 부부장 병합(기존 로직 유지)
+    // 자연장지: 부부장 병합
     function mergeCoupleRows(rows) {
       const map = new Map();
       const order = [];
-
       for (const r of rows) {
         const natNo = (r.natNo ?? '').toString();
         const applName = (r.applName ?? '').toString();
         const key = `${natNo}||${applName}`;
-
         if (!map.has(key)) {
           map.set(key, {
             natNo: r.natNo ?? '-',
@@ -660,7 +691,6 @@
           cur._raw.push(r);
         }
       }
-
       return order.map(key => {
         const v = map.get(key);
         const deadNameJoined = Array.from(v.deadNames).filter(x => x && x !== '-').join(' / ') || '-';
@@ -697,52 +727,121 @@
       return res.json();
     }
 
-    // -------------------------
-    // ✅ 메인 로드
-    // -------------------------
+    // 상태 저장: 시설+번호 단위
+    function statusKey(sourceKey, id){ return `status_${sourceKey}_${id}`; }
+    function getStatus(sourceKey, id){ return localStorage.getItem(statusKey(sourceKey, id)) || '접수'; }
+    function setStatus(sourceKey, id, val){ localStorage.setItem(statusKey(sourceKey, id), val); }
+
+    // DOM
+    const datePicker = document.getElementById('datePicker');
+    const todayLabel = document.getElementById('todayLabel');
+    const statsDiv = document.getElementById('stats');
+    const listArea = document.getElementById('listArea');
+
+    const tabHouse = document.getElementById('tabHouse');
+    const tabNature = document.getElementById('tabNature');
+
+    const filterRecv = document.getElementById('filterRecv');
+    const filterDone = document.getElementById('filterDone');
+    const chipRecv = document.getElementById('chipRecv');
+    const chipDone = document.getElementById('chipDone');
+
+    const overlay = document.getElementById('overlay');
+    const mTitle = document.getElementById('mTitle');
+    const mSub = document.getElementById('mSub');
+    const mStatus = document.getElementById('mStatus');
+    const mFields = document.getElementById('mFields');
+    const mStatusBadgeWrap = document.getElementById('mStatusBadgeWrap');
+
+    // state
+    let currentSource = 'house'; // ✅ 기본: 추모의집
+    let currentDisplayData = [];
+    let currentSelected = null;
+
+    const TODAY = getLocalISODate(new Date());
+    todayLabel.textContent = `오늘: ${TODAY}`;
+    datePicker.value = TODAY;
+
+    datePicker.addEventListener('change', () => load());
+
+    function syncChipStyles(){
+      chipRecv.classList.toggle('on', filterRecv.checked);
+      chipDone.classList.toggle('on', filterDone.checked);
+    }
+    filterRecv.addEventListener('change', () => { syncChipStyles(); load(); });
+    filterDone.addEventListener('change', () => { syncChipStyles(); load(); });
+
+    function switchSource(sourceKey){
+      currentSource = sourceKey;
+      tabHouse.classList.toggle('active', sourceKey === 'house');
+      tabNature.classList.toggle('active', sourceKey === 'nature');
+      load();
+    }
+
+    function applyStatusFilter(rows){
+      const wantRecv = filterRecv.checked;
+      const wantDone = filterDone.checked;
+
+      // 둘 다 OFF면 전체
+      if (!wantRecv && !wantDone) return rows;
+
+      return rows.filter(item => {
+        const id = (currentSource === 'nature') ? String(item.natNo ?? '-') : getId(item);
+        const st = getStatus(currentSource, id);
+        const cat = statusCategory(st);
+        if (wantRecv && cat === 'recv') return true;
+        if (wantDone && cat === 'done') return true;
+        return false;
+      });
+    }
+
     async function load(){
       const source = SOURCES[currentSource];
-      const selectedDate = datePicker.value || TODAY; // 비어있으면 오늘로
-      const showAll = toggleAll.checked;
+      const selectedDate = datePicker.value || TODAY;
 
       try{
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
-        // 날짜 필터: 소스별로 자동 추정(없으면 필터 불가)
-        const dateKey = data.length ? getDateField(data[0]) : null;
+        // 날짜 필터(해당 날짜만)
+        const dateKey = source.dateKey;
+        let filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
 
-        let filtered = data;
-        if (!showAll && dateKey){
-          filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
-        }
-
-        // 표시용 데이터: 자연장지면 병합, 추모의집은 그대로
+        // 표시 데이터
         let displayData = filtered;
-        if (currentSource === 'nature'){
-          displayData = mergeCoupleRows(filtered);
-        }
+        if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
+
+        // ✅ 상태 필터(칩)
+        displayData = applyStatusFilter(displayData);
+
+        // ✅ 자동 정렬: 접수↑ 중간↕ 안치완료↓
+        displayData = displayData
+          .map((item, idx) => ({ item, idx })) // 안정 정렬(동일 rank면 원본순)
+          .sort((a,b) => {
+            const ida = (currentSource === 'nature') ? String(a.item.natNo ?? '-') : getId(a.item);
+            const idb = (currentSource === 'nature') ? String(b.item.natNo ?? '-') : getId(b.item);
+            const ra = statusSortRank(getStatus(currentSource, ida));
+            const rb = statusSortRank(getStatus(currentSource, idb));
+            if (ra !== rb) return ra - rb;
+            return a.idx - b.idx;
+          })
+          .map(x => x.item);
 
         currentDisplayData = displayData;
 
-        // 통계 (깔끔하게 2개만)
-        const displayCount = displayData.length;
-        const rawCount = data.length;
-
-        const rangeLabel = showAll ? '전체' : selectedDate;
+        // 통계(필터 반영된 표시건수)
         statsDiv.innerHTML = `
           <div class="stat">
-            <div class="num">${displayCount.toLocaleString()}</div>
-            <div class="txt">${source.label} · ${rangeLabel} 표시건수</div>
+            <div class="num">${displayData.length.toLocaleString()}</div>
+            <div class="txt">${source.label} · ${selectedDate}</div>
           </div>
           <div class="stat">
-            <div class="num">${rawCount.toLocaleString()}</div>
+            <div class="num">${data.length.toLocaleString()}</div>
             <div class="txt">원본 전체 건수</div>
           </div>
         `;
 
-        // 리스트 렌더
-        if (displayCount === 0){
+        if (displayData.length === 0){
           listArea.innerHTML = `<div class="no-data">표시할 데이터가 없습니다.</div>`;
           return;
         }
@@ -753,22 +852,26 @@
         let html = `
           <div class="list">
             <div class="list-head">
-              <div class="hint">목록(번호+고인명) → 눌러서 상세</div>
-              <div class="badge">${Math.min(limit, displayCount).toLocaleString()} / ${displayCount.toLocaleString()}</div>
+              <div class="hint">번호+고인명 · 눌러서 상세</div>
+              <div class="badge">${Math.min(limit, displayData.length).toLocaleString()} / ${displayData.length.toLocaleString()}</div>
             </div>
             <ul>
         `;
 
         shown.forEach((item, idx) => {
-          // 표시: 번호 + 고인명
           const id = (currentSource === 'nature') ? (item.natNo ?? '-') : getId(item);
           const name = (currentSource === 'nature') ? (item.deadName ?? '-') : getName(item);
+          const status = getStatus(currentSource, String(id));
+          const cls = itemStatusClass(status);
 
           html += `
             <li>
-              <button class="item" onclick="openSheet(${idx})">
+              <button class="item ${cls}" onclick="openSheet(${idx})">
                 <div class="main">
-                  <div class="id">${escapeHtml(id)}</div>
+                  <div class="id">
+                    ${escapeHtml(id)}
+                    ${statusBadgeHTML(status)}
+                  </div>
                   <div class="name">${escapeHtml(name)}</div>
                 </div>
                 <div class="chev">›</div>
@@ -780,83 +883,13 @@
         html += `</ul></div>`;
         listArea.innerHTML = html;
 
-        if (displayCount > limit){
+        if (displayData.length > limit){
           listArea.insertAdjacentHTML('beforeend', `<div class="no-data" style="padding:10px 0 0;">(상위 ${limit}건만 표시 중)</div>`);
         }
 
       }catch(err){
         listArea.innerHTML = `<div class="no-data">❌ 오류: ${escapeHtml(err.message)}</div>`;
       }
-    }
-
-    // -------------------------
-    // ✅ 모달(바텀시트) 열기
-    // -------------------------
-    function openSheet(index){
-      const item = currentDisplayData[index];
-      if (!item) return;
-
-      // 자연장지는 병합된 item을 그대로 사용(모달에 표시)
-      // 추모의집은 원본 item 사용
-      currentSelected = item;
-
-      const sourceLabel = SOURCES[currentSource].label;
-
-      const id = (currentSource === 'nature') ? String(item.natNo ?? '-') : getId(item);
-      const name = (currentSource === 'nature') ? String(item.deadName ?? '-') : getName(item);
-
-      mTitle.textContent = `${sourceLabel} · ${id}`;
-      mSub.textContent = name;
-
-      // 현황 셀렉트
-      mStatus.innerHTML = `
-        <option value="접수">접수</option>
-        <option value="안치대기">안치대기</option>
-        <option value="안장완료">안장완료</option>
-      `;
-      mStatus.value = getStatus(currentSource, id);
-      mStatus.onchange = (e) => {
-        setStatus(currentSource, id, e.target.value);
-        showToast(`✅ ${id} : ${e.target.value}`);
-      };
-
-      // ✅ 상세 필드: “나머지 데이터도 다같이 표기”
-      // - 자연장지: natNo/deadName/applName/natDate + (병합이면 _raw 개수 표시)
-      // - 추모의집: 객체의 모든 키-값을 보여줌(너무 길면 자동 줄바꿈)
-      let fieldsHTML = '';
-
-      if (currentSource === 'nature'){
-        const applName = item.applName ?? '-';
-        const natDate = item.natDate ?? '-';
-        const mergedCount = Array.isArray(item._raw) ? item._raw.length : 1;
-
-        fieldsHTML += kvRow('신청자명', applName);
-        fieldsHTML += kvRow('일자', natDate);
-        if (mergedCount > 1) fieldsHTML += kvRow('병합', `${mergedCount}건(부부장)`);
-
-      } else {
-        // 추모의집: JSON의 모든 키 출력
-        const obj = item || {};
-        const entries = Object.entries(obj);
-
-        // 보기에서 너무 불필요한 내부키는 제외(원하면 제거 가능)
-        const hideKeys = new Set(['_raw']);
-        entries
-          .filter(([k]) => !hideKeys.has(k))
-          .forEach(([k, v]) => {
-            fieldsHTML += kvRow(k, (v == null || v === '') ? '-' : String(v));
-          });
-
-        // 후보 필드 추가 안내(데이터에 날짜키가 없으면 필터가 안 될 수 있어서)
-        if (!entries.length){
-          fieldsHTML += kvRow('안내', '표시할 상세 필드가 없습니다.');
-        }
-      }
-
-      mFields.innerHTML = fieldsHTML;
-
-      overlay.classList.add('show');
-      overlay.setAttribute('aria-hidden','false');
     }
 
     function kvRow(k, v){
@@ -868,32 +901,79 @@
       `;
     }
 
+    function openSheet(index){
+      const item = currentDisplayData[index];
+      if (!item) return;
+      currentSelected = item;
+
+      const sourceLabel = SOURCES[currentSource].label;
+      const id = (currentSource === 'nature') ? String(item.natNo ?? '-') : getId(item);
+      const name = (currentSource === 'nature') ? String(item.deadName ?? '-') : getName(item);
+
+      const status = getStatus(currentSource, id);
+
+      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(id)} ${statusBadgeHTML(status)}`;
+      mSub.textContent = name;
+
+      mStatus.innerHTML = `
+        <option value="접수">접수</option>
+        <option value="안치대기">안치대기</option>
+        <option value="안치완료">안치완료</option>
+      `;
+      mStatus.value = (status === '안장완료') ? '안치완료' : status;
+      mStatusBadgeWrap.innerHTML = statusBadgeHTML(mStatus.value);
+
+      mStatus.onchange = (e) => {
+        setStatus(currentSource, id, e.target.value);
+        mStatusBadgeWrap.innerHTML = statusBadgeHTML(e.target.value);
+        showToast(`✅ ${id} : ${e.target.value}`);
+        load(); // 목록 정렬/필터 반영
+      };
+
+      // 상세 필드
+      let fieldsHTML = '';
+      if (currentSource === 'nature'){
+        fieldsHTML += kvRow('신청자명', item.applName ?? '-');
+        fieldsHTML += kvRow('일자', item.natDate ?? '-');
+        const mergedCount = Array.isArray(item._raw) ? item._raw.length : 1;
+        if (mergedCount > 1) fieldsHTML += kvRow('병합', `${mergedCount}건(부부장)`);
+      } else {
+        const obj = item || {};
+        const entries = Object.entries(obj);
+        const hideKeys = new Set(['_raw']);
+        entries
+          .filter(([k]) => !hideKeys.has(k))
+          .forEach(([k, v]) => fieldsHTML += kvRow(k, (v == null || v === '') ? '-' : String(v)));
+        if (!entries.length) fieldsHTML += kvRow('안내', '표시할 상세 필드가 없습니다.');
+      }
+      mFields.innerHTML = fieldsHTML;
+
+      overlay.classList.add('show');
+      overlay.setAttribute('aria-hidden','false');
+    }
+
     function closeSheet(){
       overlay.classList.remove('show');
       overlay.setAttribute('aria-hidden','true');
       currentSelected = null;
     }
-
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeSheet();
-    });
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet();
-    });
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
 
     function copyId(){
-      const sourceLabel = SOURCES[currentSource].label;
       if (!currentSelected) return;
+      const sourceLabel = SOURCES[currentSource].label;
       const id = (currentSource === 'nature') ? String(currentSelected.natNo ?? '') : getId(currentSelected);
       if (!id) return;
       navigator.clipboard.writeText(id);
       showToast(`📋 ${sourceLabel} 번호 복사됨`);
     }
 
-    // ✅ 최초 로드: 오늘로 고정 + 자연장지 기본
+    // 초기 로드: 추모의집 기본
     window.addEventListener('load', () => {
       datePicker.value = TODAY;
-      switchSource('nature'); // 내부에서 load() 호출
+      syncChipStyles();
+      switchSource('house'); // load 포함
     });
   </script>
 </body>
