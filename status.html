@@ -12,28 +12,17 @@
       --bg-c:#fff6fb;
 
       --card: rgba(255,255,255,0.92);
-      --line: rgba(148,163,184,0.28);
-
       --text:#0f172a;
       --muted:#64748b;
 
-      --p1:#a5b4fc; /* indigo pastel */
-      --p2:#f9a8d4; /* pink pastel */
-      --p3:#86efac; /* green pastel */
-      --p4:#93c5fd; /* sky pastel */
-
       /* 상태별 파스텔 */
-      --st-recv-bg: rgba(249,168,212,.22);  /* 접수 */
+      --st-recv-bg: rgba(249,168,212,.22);
       --st-recv-bd: rgba(249,168,212,.38);
       --st-recv-tx: rgba(131,24,67,.85);
 
-      --st-done-bg: rgba(134,239,172,.26);  /* 안치완료 */
+      --st-done-bg: rgba(134,239,172,.26);
       --st-done-bd: rgba(134,239,172,.40);
       --st-done-tx: rgba(20,83,45,.86);
-
-      --st-mid-bg: rgba(147,197,253,.22);   /* 중간단계 */
-      --st-mid-bd: rgba(147,197,253,.38);
-      --st-mid-tx: rgba(30,64,175,.80);
 
       --shadow: 0 14px 40px rgba(15,23,42,0.10);
     }
@@ -133,7 +122,6 @@
       border: 1px solid rgba(148,163,184,0.22);
       border-radius: 999px;
       padding: 6px 10px;
-      flex: 0 1 auto;
     }
     .date-wrap .label{
       color: var(--muted);
@@ -154,7 +142,7 @@
       -webkit-appearance:none;
     }
 
-    /* ✅ 필터 칩 (접수 / 안치완료) */
+    /* ✅ 라디오 칩(접수/안치완료) */
     .filters{
       display:flex;
       gap: 8px;
@@ -171,7 +159,6 @@
       background: rgba(255,255,255,0.72);
       font-weight: 950;
       font-size: .9rem;
-      color: rgba(15,23,42,0.78);
       cursor:pointer;
       user-select:none;
       transition: transform .12s ease, box-shadow .12s ease;
@@ -277,8 +264,6 @@
       cursor:pointer;
       position: relative;
     }
-
-    /* 상태별 좌측 라인 */
     .item::before{
       content:"";
       position:absolute;
@@ -286,11 +271,9 @@
       top: 0;
       bottom: 0;
       width: 6px;
-      background: rgba(147,197,253,.35);
     }
-    .item.status-recv::before{ background: rgba(249,168,212,.55); }
-    .item.status-done::before{ background: rgba(134,239,172,.65); }
-    .item.status-mid::before { background: rgba(147,197,253,.55); }
+    .item.recv::before{ background: rgba(249,168,212,.55); }
+    .item.done::before{ background: rgba(134,239,172,.65); }
 
     .item:active{ background: rgba(165,180,252,.08); }
 
@@ -338,11 +321,6 @@
       background: var(--st-done-bg);
       border-color: var(--st-done-bd);
       color: var(--st-done-tx);
-    }
-    .badge-mid{
-      background: var(--st-mid-bg);
-      border-color: var(--st-mid-bd);
-      color: var(--st-mid-tx);
     }
 
     .chev{
@@ -544,7 +522,6 @@
       </div>
 
       <div class="bar">
-        <!-- ✅ 탭 순서: 추모의집 → 자연장지 -->
         <div class="seg" role="tablist" aria-label="시설 선택">
           <button id="tabHouse" class="active" onclick="switchSource('house')">추모의집</button>
           <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
@@ -556,14 +533,14 @@
         </div>
       </div>
 
-      <!-- ✅ 필터 칩 2개만 -->
+      <!-- ✅ 라디오 칩: 하나만 선택 -->
       <div class="filters">
         <label class="chip recv" id="chipRecv" title="접수만 보기">
-          <input type="checkbox" id="filterRecv" />
+          <input type="radio" name="statusFilter" id="filterRecv" value="접수" />
           접수
         </label>
         <label class="chip done" id="chipDone" title="안치완료만 보기">
-          <input type="checkbox" id="filterDone" />
+          <input type="radio" name="statusFilter" id="filterDone" value="안치완료" />
           안치완료
         </label>
       </div>
@@ -576,7 +553,6 @@
     </div>
   </div>
 
-  <!-- 바텀시트 모달 -->
   <div class="overlay" id="overlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true">
       <div class="sheet-head">
@@ -593,7 +569,11 @@
           <div class="v" style="text-align:right;">
             <div class="statusRow">
               <div class="left" id="mStatusBadgeWrap"></div>
-              <select id="mStatus"></select>
+              <!-- ✅ 대기 삭제: 접수/안치완료만 -->
+              <select id="mStatus">
+                <option value="접수">접수</option>
+                <option value="안치완료">안치완료</option>
+              </select>
             </div>
           </div>
         </div>
@@ -611,7 +591,6 @@
   <div class="toast" id="toast">-</div>
 
   <script>
-    // 로컬 날짜(UTC 이슈 방지)
     function getLocalISODate(d = new Date()){
       const y = d.getFullYear();
       const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -620,7 +599,6 @@
     }
 
     const SOURCES = {
-      // ✅ deceased_data 날짜키: strDate 고정
       house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
     };
@@ -643,28 +621,38 @@
       return k ? String(obj[k]) : '-';
     }
 
-    // 상태 분류
     function statusCategory(status){
       const s = (status ?? '').toString().trim();
-      if (s === '접수') return 'recv';
       if (s === '안치완료' || s === '안장완료') return 'done';
-      return 'mid';
-    }
-    function itemStatusClass(status){
-      const cat = statusCategory(status);
-      return cat === 'recv' ? 'status-recv' : cat === 'done' ? 'status-done' : 'status-mid';
+      return 'recv'; // 접수 이외는 접수로 처리(대기 삭제 정책)
     }
     function statusBadgeHTML(status){
       const cat = statusCategory(status);
-      const cls = cat === 'recv' ? 'badge-st badge-recv' : cat === 'done' ? 'badge-st badge-done' : 'badge-st badge-mid';
-      return `<span class="${cls}">${escapeHtml(status)}</span>`;
+      return cat === 'done'
+        ? `<span class="badge-st badge-done">안치완료</span>`
+        : `<span class="badge-st badge-recv">접수</span>`;
     }
-    function statusSortRank(status){
-      // ✅ 접수(0) → 중간(1) → 안치완료(2)
-      const cat = statusCategory(status);
-      if (cat === 'recv') return 0;
-      if (cat === 'done') return 2;
-      return 1;
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+    }
+
+    async function fetchJson(url){
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
+      return res.json();
+    }
+
+    function showToast(msg){
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
     }
 
     // 자연장지: 부부장 병합
@@ -705,29 +693,7 @@
       });
     }
 
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#039;");
-    }
-
-    function showToast(msg){
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2000);
-    }
-
-    async function fetchJson(url){
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
-      return res.json();
-    }
-
-    // 상태 저장: 시설+번호 단위
+    // 상태 저장(시설+번호)
     function statusKey(sourceKey, id){ return `status_${sourceKey}_${id}`; }
     function getStatus(sourceKey, id){ return localStorage.getItem(statusKey(sourceKey, id)) || '접수'; }
     function setStatus(sourceKey, id, val){ localStorage.setItem(statusKey(sourceKey, id), val); }
@@ -753,8 +719,7 @@
     const mFields = document.getElementById('mFields');
     const mStatusBadgeWrap = document.getElementById('mStatusBadgeWrap');
 
-    // state
-    let currentSource = 'house'; // ✅ 기본: 추모의집
+    let currentSource = 'house';
     let currentDisplayData = [];
     let currentSelected = null;
 
@@ -762,12 +727,16 @@
     todayLabel.textContent = `오늘: ${TODAY}`;
     datePicker.value = TODAY;
 
-    datePicker.addEventListener('change', () => load());
+    // ✅ 기본 필터: 접수(라디오)
+    filterRecv.checked = true;
 
     function syncChipStyles(){
       chipRecv.classList.toggle('on', filterRecv.checked);
       chipDone.classList.toggle('on', filterDone.checked);
     }
+    syncChipStyles();
+
+    datePicker.addEventListener('change', () => load());
     filterRecv.addEventListener('change', () => { syncChipStyles(); load(); });
     filterDone.addEventListener('change', () => { syncChipStyles(); load(); });
 
@@ -778,20 +747,19 @@
       load();
     }
 
-    function applyStatusFilter(rows){
-      const wantRecv = filterRecv.checked;
-      const wantDone = filterDone.checked;
+    function selectedFilterValue(){
+      if (filterDone.checked) return '안치완료';
+      return '접수';
+    }
 
-      // 둘 다 OFF면 전체
-      if (!wantRecv && !wantDone) return rows;
-
+    function applyRadioFilter(rows){
+      const want = selectedFilterValue(); // '접수' or '안치완료'
       return rows.filter(item => {
         const id = (currentSource === 'nature') ? String(item.natNo ?? '-') : getId(item);
         const st = getStatus(currentSource, id);
         const cat = statusCategory(st);
-        if (wantRecv && cat === 'recv') return true;
-        if (wantDone && cat === 'done') return true;
-        return false;
+        const normalized = (cat === 'done') ? '안치완료' : '접수';
+        return normalized === want;
       });
     }
 
@@ -811,17 +779,17 @@
         let displayData = filtered;
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // ✅ 상태 필터(칩)
-        displayData = applyStatusFilter(displayData);
+        // ✅ 라디오 필터 적용
+        displayData = applyRadioFilter(displayData);
 
-        // ✅ 자동 정렬: 접수↑ 중간↕ 안치완료↓
+        // ✅ 정렬: 접수는 위 / 안치완료는 아래 (라디오라서 보통 한쪽만 나옴)
         displayData = displayData
-          .map((item, idx) => ({ item, idx })) // 안정 정렬(동일 rank면 원본순)
+          .map((item, idx) => ({ item, idx }))
           .sort((a,b) => {
             const ida = (currentSource === 'nature') ? String(a.item.natNo ?? '-') : getId(a.item);
             const idb = (currentSource === 'nature') ? String(b.item.natNo ?? '-') : getId(b.item);
-            const ra = statusSortRank(getStatus(currentSource, ida));
-            const rb = statusSortRank(getStatus(currentSource, idb));
+            const ra = statusCategory(getStatus(currentSource, ida)) === 'done' ? 1 : 0;
+            const rb = statusCategory(getStatus(currentSource, idb)) === 'done' ? 1 : 0;
             if (ra !== rb) return ra - rb;
             return a.idx - b.idx;
           })
@@ -829,11 +797,11 @@
 
         currentDisplayData = displayData;
 
-        // 통계(필터 반영된 표시건수)
+        const filterLabel = selectedFilterValue();
         statsDiv.innerHTML = `
           <div class="stat">
             <div class="num">${displayData.length.toLocaleString()}</div>
-            <div class="txt">${source.label} · ${selectedDate}</div>
+            <div class="txt">${source.label} · ${selectedDate} · ${filterLabel}</div>
           </div>
           <div class="stat">
             <div class="num">${data.length.toLocaleString()}</div>
@@ -861,16 +829,24 @@
         shown.forEach((item, idx) => {
           const id = (currentSource === 'nature') ? (item.natNo ?? '-') : getId(item);
           const name = (currentSource === 'nature') ? (item.deadName ?? '-') : getName(item);
-          const status = getStatus(currentSource, String(id));
-          const cls = itemStatusClass(status);
+
+          // ✅ 대기 삭제 정책: 저장값이 이상해도 recv/done으로만 표시
+          const stRaw = getStatus(currentSource, String(id));
+          const cat = statusCategory(stRaw);
+          const stShow = (cat === 'done') ? '안치완료' : '접수';
+
+          const leftCls = (cat === 'done') ? 'done' : 'recv';
+          const badge = (cat === 'done')
+            ? `<span class="badge-st badge-done">안치완료</span>`
+            : `<span class="badge-st badge-recv">접수</span>`;
 
           html += `
             <li>
-              <button class="item ${cls}" onclick="openSheet(${idx})">
+              <button class="item ${leftCls}" onclick="openSheet(${idx})">
                 <div class="main">
                   <div class="id">
                     ${escapeHtml(id)}
-                    ${statusBadgeHTML(status)}
+                    ${badge}
                   </div>
                   <div class="name">${escapeHtml(name)}</div>
                 </div>
@@ -910,24 +886,22 @@
       const id = (currentSource === 'nature') ? String(item.natNo ?? '-') : getId(item);
       const name = (currentSource === 'nature') ? String(item.deadName ?? '-') : getName(item);
 
-      const status = getStatus(currentSource, id);
+      const stRaw = getStatus(currentSource, id);
+      const cat = statusCategory(stRaw);
+      const stShow = (cat === 'done') ? '안치완료' : '접수';
 
-      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(id)} ${statusBadgeHTML(status)}`;
+      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(id)} ${statusBadgeHTML(stShow)}`;
       mSub.textContent = name;
 
-      mStatus.innerHTML = `
-        <option value="접수">접수</option>
-        <option value="안치대기">안치대기</option>
-        <option value="안치완료">안치완료</option>
-      `;
-      mStatus.value = (status === '안장완료') ? '안치완료' : status;
-      mStatusBadgeWrap.innerHTML = statusBadgeHTML(mStatus.value);
+      // ✅ 상태 변경도 접수/안치완료만
+      mStatus.value = stShow;
+      mStatusBadgeWrap.innerHTML = statusBadgeHTML(stShow);
 
       mStatus.onchange = (e) => {
         setStatus(currentSource, id, e.target.value);
         mStatusBadgeWrap.innerHTML = statusBadgeHTML(e.target.value);
         showToast(`✅ ${id} : ${e.target.value}`);
-        load(); // 목록 정렬/필터 반영
+        load();
       };
 
       // 상세 필드
@@ -940,10 +914,7 @@
       } else {
         const obj = item || {};
         const entries = Object.entries(obj);
-        const hideKeys = new Set(['_raw']);
-        entries
-          .filter(([k]) => !hideKeys.has(k))
-          .forEach(([k, v]) => fieldsHTML += kvRow(k, (v == null || v === '') ? '-' : String(v)));
+        entries.forEach(([k, v]) => fieldsHTML += kvRow(k, (v == null || v === '') ? '-' : String(v)));
         if (!entries.length) fieldsHTML += kvRow('안내', '표시할 상세 필드가 없습니다.');
       }
       mFields.innerHTML = fieldsHTML;
@@ -969,11 +940,10 @@
       showToast(`📋 ${sourceLabel} 번호 복사됨`);
     }
 
-    // 초기 로드: 추모의집 기본
     window.addEventListener('load', () => {
       datePicker.value = TODAY;
-      syncChipStyles();
-      switchSource('house'); // load 포함
+      // 기본: 추모의집 + 접수
+      switchSource('house');
     });
   </script>
 </body>
