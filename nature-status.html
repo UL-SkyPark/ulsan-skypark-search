@@ -1,303 +1,449 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>🌿 자연장지 안장현황</title>
-    <style>
-        /* 모바일 우선 CSS */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            margin: 0; padding: 15px; color: #333; min-height: 100vh;
-            overscroll-behavior: none;
-        }
-        .container { 
-            background: rgba(255,255,255,0.95); 
-            backdrop-filter: blur(20px); 
-            border-radius: 20px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2); 
-            padding: 25px 20px; 
-            max-width: 100%; 
-            margin: 0 auto;
-        }
-        h1 { 
-            text-align: center; 
-            color: #4a5568; 
-            margin: 0 0 25px 0; 
-            font-size: clamp(1.5em, 5vw, 2.2em); 
-            font-weight: 700;
-        }
-        .controls { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px; 
-            margin-bottom: 25px; 
-            align-items: center;
-        }
-        .date-info { 
-            background: linear-gradient(135deg, #667eea, #764ba2); 
-            color: white; 
-            padding: 15px 20px; 
-            border-radius: 15px; 
-            text-align: center; 
-            font-size: 1.1em; 
-            font-weight: 500;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-            width: 100%;
-        }
-        .date-picker { 
-            width: 100%; 
-            padding: 18px 20px; 
-            border: 3px solid #e2e8f0; 
-            border-radius: 15px; 
-            font-size: 1.1em; 
-            background: white; 
-            transition: all 0.3s ease;
-            -webkit-appearance: none;
-        }
-        .date-picker:focus { 
-            outline: none; 
-            border-color: #667eea; 
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
-        .btn-group { 
-            display: flex; 
-            gap: 15px; 
-            width: 100%; 
-            flex-wrap: wrap;
-        }
-        button { 
-            flex: 1; 
-            padding: 18px 10px; 
-            border: none; 
-            border-radius: 15px; 
-            font-size: 1.05em; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            min-height: 56px; /* 터치 영역 확보 */
-            touch-action: manipulation;
-        }
-        .btn-query { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-        .btn-query:hover:not(:disabled), .btn-query:active:not(:disabled) { 
-            transform: translateY(-2px); 
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
-        }
-        .btn-all { background: linear-gradient(135deg, #48bb78, #38a169); color: white; }
-        .btn-all:hover:not(:disabled), .btn-all:active:not(:disabled) { 
-            transform: translateY(-2px); 
-            box-shadow: 0 12px 30px rgba(72, 187, 120, 0.4);
-        }
-        button:disabled { 
-            background: #e2e8f0 !important; 
-            color: #a0aec0; 
-            cursor: not-allowed; 
-            transform: none;
-        }
-        .stats { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
-            gap: 15px; 
-            margin: 25px 0; 
-        }
-        .stat-box { 
-            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(248,250,252,0.8)); 
-            padding: 20px 15px; 
-            border-radius: 15px; 
-            text-align: center; 
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .stat-num { font-size: clamp(1.8em, 8vw, 2.5em); color: #4a5568; font-weight: 800; margin-bottom: 5px; }
-        .stat-label { color: #718096; font-size: 0.95em; font-weight: 500; }
-        
-        /* 테이블 모바일 최적화 */
-        .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 20px; }
-        table { width: 100%; min-width: 500px; border-collapse: collapse; }
-        th, td { 
-            padding: 16px 12px; 
-            text-align: left; 
-            border-bottom: 1px solid #e2e8f0; 
-            white-space: nowrap;
-        }
-        th { 
-            background: linear-gradient(135deg, #f7fafc, #edf2f7); 
-            font-weight: 700; 
-            color: #4a5568; 
-            font-size: 0.95em; 
-            position: sticky; 
-            top: 0; 
-            z-index: 10;
-        }
-        tr { transition: background 0.2s; }
-        tr:hover { background: rgba(102, 126, 234, 0.05) !important; }
-        .no-data { 
-            text-align: center; 
-            color: #a0aec0; 
-            font-size: 1.1em; 
-            padding: 60px 20px; 
-            background: rgba(255,255,255,0.5);
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-        .more-info { 
-            text-align: center; 
-            color: #718096; 
-            font-size: 0.9em; 
-            margin-top: 15px; 
-        }
-        
-        /* 로딩 애니메이션 */
-        .loading { display: inline-block; width: 20px; height: 20px; border: 3px solid #e2e8f0; border-radius: 50%; border-top-color: #667eea; animation: spin 1s ease-in-out infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        
-        /* iOS Safari 최적화 */
-        @supports (-webkit-touch-callout: none) { html { cursor: pointer; -webkit-user-select: none; } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>🌿 자연장지 안장현황</title>
+  <style>
+    /* 모바일 우선 CSS */
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0; padding: 15px; color: #333; min-height: 100vh;
+      overscroll-behavior: none;
+    }
+    .container {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      padding: 25px 20px;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #4a5568;
+      margin: 0 0 25px 0;
+      font-size: clamp(1.5em, 5vw, 2.2em);
+      font-weight: 700;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 25px;
+      align-items: center;
+    }
+    .date-info {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 1.1em;
+      font-weight: 500;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      width: 100%;
+    }
+    .date-picker {
+      width: 100%;
+      padding: 18px 20px;
+      border: 3px solid #e2e8f0;
+      border-radius: 15px;
+      font-size: 1.1em;
+      background: white;
+      transition: all 0.3s ease;
+      -webkit-appearance: none;
+    }
+    .date-picker:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+    button {
+      flex: 1;
+      padding: 18px 10px;
+      border: none;
+      border-radius: 15px;
+      font-size: 1.05em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 56px;
+      touch-action: manipulation;
+    }
+    .btn-query { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+    .btn-query:hover:not(:disabled), .btn-query:active:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+    }
+    .btn-all { background: linear-gradient(135deg, #48bb78, #38a169); color: white; }
+    .btn-all:hover:not(:disabled), .btn-all:active:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(72, 187, 120, 0.4);
+    }
+    button:disabled {
+      background: #e2e8f0 !important;
+      color: #a0aec0;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+    .stat-box {
+      background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(248,250,252,0.8));
+      padding: 20px 15px;
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .stat-num {
+      font-size: clamp(1.8em, 8vw, 2.5em);
+      color: #4a5568;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+    .stat-label { color: #718096; font-size: 0.95em; font-weight: 500; }
+
+    /* ✅ 테이블/모바일 최적화: 가로 스크롤 제거 */
+    .table-container { overflow-x: visible; margin-top: 20px; }
+    table { width: 100%; min-width: 0; border-collapse: collapse; }
+    th, td {
+      padding: 16px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      white-space: normal;
+      word-break: keep-all;
+      vertical-align: top;
+    }
+    th {
+      background: linear-gradient(135deg, #f7fafc, #edf2f7);
+      font-weight: 700;
+      color: #4a5568;
+      font-size: 0.95em;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    tr { transition: background 0.2s; }
+    tr:hover { background: rgba(102, 126, 234, 0.05) !important; }
+
+    .no-data {
+      text-align: center;
+      color: #a0aec0;
+      font-size: 1.1em;
+      padding: 60px 20px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+    .more-info {
+      text-align: center;
+      color: #718096;
+      font-size: 0.9em;
+      margin-top: 15px;
+    }
+
+    /* 로딩 애니메이션 */
+    .loading {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border: 3px solid #e2e8f0;
+      border-radius: 50%;
+      border-top-color: #667eea;
+      animation: spin 1s ease-in-out infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* 상태 셀렉트 */
+    .status-select{
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      font-size: 1em;
+      background: white;
+    }
+
+    .copyable { font-weight: 800; cursor: pointer; }
+
+    /* ✅ 모바일: 테이블을 카드형으로 변환 (가로 스크롤 0) */
+    @media (max-width: 640px) {
+      table.status-table,
+      table.status-table thead,
+      table.status-table tbody,
+      table.status-table tr,
+      table.status-table td {
+        display: block;
+        width: 100%;
+      }
+      table.status-table thead { display: none; }
+      table.status-table tr {
+        margin-bottom: 14px;
+        padding: 14px 14px 6px;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.85);
+      }
+      table.status-table td {
+        border: 0;
+        padding: 10px 0;
+      }
+      table.status-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.85em;
+        font-weight: 700;
+        color: #718096;
+        margin-bottom: 6px;
+      }
+    }
+
+    /* iOS Safari 최적화 */
+    @supports (-webkit-touch-callout: none) {
+      html { cursor: pointer; -webkit-user-select: none; }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>🌿 자연장지 안장현황</h1>
-        
-        <div class="controls">
-            <div class="date-info" id="selectedDate">선택: 오늘 (2026-02-26)</div>
-            <input type="date" id="datePicker" class="date-picker">
-            <div class="btn-group">
-                <button class="btn-query" onclick="loadStatus()">📅 날짜 조회</button>
-                <button class="btn-all" onclick="loadAllStatus()">👀 전체 보기</button>
-            </div>
-        </div>
-        
-        <div class="stats" id="stats"></div>
-        <div class="table-container" id="statusTable"></div>
+  <div class="container">
+    <h1>🌿 자연장지 안장현황</h1>
+
+    <div class="controls">
+      <div class="date-info" id="selectedDate">📅 선택: 오늘</div>
+      <input type="date" id="datePicker" class="date-picker" />
+      <div class="btn-group">
+        <button class="btn-query" onclick="loadStatus()">📅 날짜 조회</button>
+        <button class="btn-all" onclick="loadAllStatus()">👀 전체 보기</button>
+      </div>
     </div>
 
-    <script>
-        const datePicker = document.getElementById('datePicker');
-        const dateDisplay = document.getElementById('selectedDate');
+    <div class="stats" id="stats"></div>
+    <div class="table-container" id="statusTable"></div>
+  </div>
 
-        // 오늘 날짜 설정
-        const today = new Date().toISOString().split('T')[0];
-        datePicker.value = today;
-        updateDateDisplay(today);
+  <script>
+    const datePicker = document.getElementById('datePicker');
+    const dateDisplay = document.getElementById('selectedDate');
 
-        datePicker.addEventListener('change', () => {
-            const value = datePicker.value;
-            updateDateDisplay(value || '전체');
+    // 오늘 날짜 설정
+    const today = new Date().toISOString().split('T')[0];
+    datePicker.value = today;
+    updateDateDisplay(today, true);
+
+    datePicker.addEventListener('change', () => {
+      const value = datePicker.value;
+      updateDateDisplay(value || null, false);
+    });
+
+    function updateDateDisplay(dateStr, isInit = false) {
+      if (dateStr) {
+        dateDisplay.textContent = isInit ? `📅 선택: 오늘 (${dateStr})` : `📅 선택: ${dateStr}`;
+        dateDisplay.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+      } else {
+        dateDisplay.textContent = '👀 선택: 전체 보기';
+        dateDisplay.style.background = 'linear-gradient(135deg, #48bb78, #38a169)';
+      }
+    }
+
+    async function loadStatus() {
+      const selectedDate = datePicker.value;
+      if (!selectedDate) {
+        alert('📅 조회할 날짜를 선택해주세요!');
+        return;
+      }
+      await loadData(selectedDate);
+    }
+
+    async function loadAllStatus() {
+      datePicker.value = '';
+      updateDateDisplay(null, false);
+      await loadData(null);
+    }
+
+    // ✅ 상태 저장/로드 (localStorage) : 자연장번호 단위로 관리 (부부장 2명도 동일 번호 공유)
+    function getStatus(natNo) {
+      return localStorage.getItem(`status_${natNo}`) || '접수';
+    }
+    function setStatus(natNo, value) {
+      localStorage.setItem(`status_${natNo}`, value);
+    }
+
+    // ✅ 부부장(같은 자연장번호 + 같은 신청자)인 경우 고인명 2명(이상) 합치기
+    // - 표시는 원본(등록) 순서 유지
+    // - 고인명: 중복 제거 후 " / "로 연결
+    // - 안장일자: 서로 다르면 중복 제거 후 ", "로 연결
+    function mergeCoupleRows(rows) {
+      const map = new Map();         // key => merged object
+      const order = [];              // first-seen order keys
+
+      for (const r of rows) {
+        const natNo = (r.natNo ?? '').toString();
+        const applName = (r.applName ?? '').toString();
+        const key = `${natNo}||${applName}`;
+
+        if (!map.has(key)) {
+          map.set(key, {
+            natNo: r.natNo ?? '-',
+            applName: r.applName ?? '-',
+            deadNames: new Set([(r.deadName ?? '-').toString()]),
+            dates: new Set([(r.natDate ?? '-').toString()])
+          });
+          order.push(key);
+        } else {
+          const cur = map.get(key);
+          cur.deadNames.add((r.deadName ?? '-').toString());
+          cur.dates.add((r.natDate ?? '-').toString());
+        }
+      }
+
+      return order.map(key => {
+        const v = map.get(key);
+        const deadNameJoined = Array.from(v.deadNames).filter(x => x && x !== '-').join(' / ') || '-';
+        const dateJoined = Array.from(v.dates).filter(x => x && x !== '-').join(', ') || '-';
+        return {
+          natNo: v.natNo,
+          deadName: deadNameJoined,
+          applName: v.applName,
+          natDate: dateJoined
+        };
+      });
+    }
+
+    async function loadData(selectedDate = null) {
+      const btnQuery = document.querySelector('.btn-query');
+      const btnAll = document.querySelector('.btn-all');
+
+      btnQuery.disabled = btnAll.disabled = true;
+      btnQuery.innerHTML = '<span class="loading"></span> 로드 중...';
+      btnAll.textContent = '대기 중...';
+
+      const tableDiv = document.getElementById('statusTable');
+      const statsDiv = document.getElementById('stats');
+
+      try {
+        const response = await fetch('./data/nature_data.json');
+        if (!response.ok) throw new Error('❌ 데이터 파일을 찾을 수 없습니다.');
+        const data = await response.json();
+
+        // 날짜 필터 (원본 등록순 유지)
+        let filteredData = data;
+        if (selectedDate) {
+          filteredData = data.filter(item => item.natDate === selectedDate);
+        }
+
+        // ✅ 부부장 병합 (표시용 데이터)
+        const displayData = mergeCoupleRows(filteredData);
+
+        // 통계 표시: 화면 표시건수(병합 후) / 원본 총건수
+        const totalDisplay = displayData.length;
+        const totalRawAll = data.length;
+
+        statsDiv.innerHTML = `
+          <div class="stat-box">
+            <div class="stat-num">${totalDisplay.toLocaleString()}</div>
+            <div class="stat-label">${selectedDate ? `${selectedDate} 표시건수` : '전체 표시건수'}</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">${totalRawAll.toLocaleString()}</div>
+            <div class="stat-label">총 자연장(원본)</div>
+          </div>
+        `;
+
+        if (totalDisplay === 0) {
+          tableDiv.innerHTML = `<div class="no-data">📭 ${selectedDate ? `${selectedDate}에 ` : ''}안장 기록이 없습니다.</div>`;
+          return;
+        }
+
+        // ✅ 테이블 생성: 자연장번호 → 고인명(2명 병합) → 신청자명 → 안장일자 → 현황(단계형)
+        let tableHTML = `
+          <table class="status-table">
+            <thead>
+              <tr>
+                <th>자연장번호</th>
+                <th>고인명</th>
+                <th>신청자명</th>
+                <th>안장일자</th>
+                <th>현황</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        displayData.slice(0, 30).forEach(item => {
+          const natNo = item.natNo || '-';
+          const deadName = item.deadName || '-';
+          const applName = item.applName || '-';
+          const natDate = item.natDate || '-';
+          const status = getStatus(natNo);
+
+          tableHTML += `
+            <tr>
+              <td data-label="자연장번호" class="copyable"
+                  onclick="navigator.clipboard.writeText('${natNo}'); showToast('📋 ${natNo} 복사됨')">
+                ${natNo}
+              </td>
+              <td data-label="고인명">${deadName}</td>
+              <td data-label="신청자명">${applName}</td>
+              <td data-label="안장일자">${natDate}</td>
+              <td data-label="현황">
+                <select class="status-select"
+                        onchange="setStatus('${natNo}', this.value); showToast('✅ ${natNo} : ' + this.value)">
+                  <option value="접수" ${status === '접수' ? 'selected' : ''}>접수</option>
+                  <option value="안치대기" ${status === '안치대기' ? 'selected' : ''}>안치대기</option>
+                  <option value="안장완료" ${status === '안장완료' ? 'selected' : ''}>안장완료</option>
+                </select>
+              </td>
+            </tr>
+          `;
         });
 
-        function updateDateDisplay(dateStr) {
-            dateDisplay.textContent = `📅 선택: ${dateStr || '전체 보기'}`;
-            dateDisplay.style.background = dateStr ? 'linear-gradient(135deg, #667eea, #764ba2)' : 'linear-gradient(135deg, #48bb78, #38a169)';
+        tableHTML += `</tbody></table>`;
+
+        if (displayData.length > 30) {
+          tableHTML += `<div class="more-info">📊 총 ${displayData.length.toLocaleString()}건 (상위 30건 표시)</div>`;
         }
 
-        async function loadStatus() {
-            const selectedDate = datePicker.value;
-            if (!selectedDate) {
-                alert('📅 조회할 날짜를 선택해주세요!');
-                return;
-            }
-            await loadData(selectedDate);
-        }
+        tableDiv.innerHTML = tableHTML;
 
-        async function loadAllStatus() {
-            datePicker.value = '';
-            await loadData(null);
-        }
+      } catch (error) {
+        tableDiv.innerHTML = `<div class="no-data" style="color:#f56565;">❌ 오류: ${error.message}</div>`;
+      } finally {
+        btnQuery.disabled = btnAll.disabled = false;
+        btnQuery.innerHTML = '📅 날짜 조회';
+        btnAll.textContent = '👀 전체 보기';
+      }
+    }
 
-        async function loadData(selectedDate = null) {
-            const btnQuery = document.querySelector('.btn-query');
-            const btnAll = document.querySelector('.btn-all');
-            
-            btnQuery.disabled = btnAll.disabled = true;
-            btnQuery.innerHTML = '<span class="loading"></span> 로드 중...';
-            btnAll.textContent = '대기 중...';
-            
-            const tableDiv = document.getElementById('statusTable');
-            const statsDiv = document.getElementById('stats');
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText =
+        'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);color:white;padding:15px 25px;border-radius:25px;font-size:1em;z-index:1000;max-width:90%;';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2500);
+    }
 
-            try {
-                const response = await fetch('./data/nature_data.json');
-                if (!response.ok) throw new Error('❌ 데이터 파일을 찾을 수 없습니다.');
-                const data = await response.json();
-
-                let filteredData = data;
-                if (selectedDate) {
-                    filteredData = data.filter(item => item.natDate === selectedDate);
-                }
-
-                // 통계 표시
-                const totalFiltered = filteredData.length;
-                const statsHTML = `
-                    <div class="stat-box">
-                        <div class="stat-num">${totalFiltered.toLocaleString()}</div>
-                        <div class="stat-label">${selectedDate ? `${selectedDate} 안장` : '전체'}</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-num">${data.length.toLocaleString()}</div>
-                        <div class="stat-label">총 자연장</div>
-                    </div>
-                `;
-                statsDiv.innerHTML = statsHTML;
-
-                if (totalFiltered === 0) {
-                    tableDiv.innerHTML = `<div class="no-data">📭 ${selectedDate ? `${selectedDate}에 ` : ''}안장 기록이 없습니다.</div>`;
-                    return;
-                }
-
-                // 테이블 생성 (모바일 최적화)
-                let tableHTML = `
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>자연장번호</th>
-                                <th>안치일자</th>
-                                <th>사망자명</th>
-                                <th>신청자명</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
-                
-                filteredData.slice(0, 30).forEach(item => {  // 모바일 성능 최적화
-                    tableHTML += `
-                        <tr onclick="navigator.clipboard.writeText('${item.natNo}'); showToast('📋 ${item.natNo} 복사됨')">
-                            <td>${item.natNo || '-'}</td>
-                            <td>${item.natDate || '-'}</td>
-                            <td>${item.deadName || '-'}</td>
-                            <td>${item.applName || '-'}</td>
-                        </tr>
-                    `;
-                });
-                tableHTML += '</tbody></table>';
-                
-                if (filteredData.length > 30) {
-                    tableHTML += `<div class="more-info">📊 총 ${filteredData.length.toLocaleString()}건 (상위 30건 표시)</div>`;
-                }
-                tableDiv.innerHTML = tableHTML;
-
-            } catch (error) {
-                tableDiv.innerHTML = `<div class="no-data" style="color: #f56565;">❌ 오류: ${error.message}</div>`;
-            } finally {
-                btnQuery.disabled = btnAll.disabled = false;
-                btnQuery.innerHTML = '📅 날짜 조회';
-                btnAll.textContent = '👀 전체 보기';
-            }
-        }
-
-        function showToast(message) {
-            // 모바일 토스트 알림
-            const toast = document.createElement('div');
-            toast.textContent = message;
-            toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);color:white;padding:15px 25px;border-radius:25px;font-size:1em;z-index:1000;max-width:90%;';
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2500);
-        }
-
-        // 페이지 로드시 오늘 데이터 자동 로드
-        window.addEventListener('load', () => loadData(today));
-    </script>
+    // 페이지 로드시 오늘 데이터 자동 로드
+    window.addEventListener('load', () => loadData(today));
+  </script>
 </body>
 </html>
