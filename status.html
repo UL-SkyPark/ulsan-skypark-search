@@ -51,40 +51,30 @@
       overflow: hidden;
     }
 
-    /* ✅ 헤더: 한 줄 고정 */
     .top{
-      padding: 14px 14px 10px;
+      padding: 16px 16px 12px;
       display:flex;
       flex-direction:column;
       gap: 10px;
     }
 
-    .titleRow{
+    .title{
       display:flex;
-      align-items:center;
+      align-items:flex-end;
       justify-content:space-between;
       gap: 10px;
     }
-
-    /* ✅ 모바일 줄바꿈 방지 */
-    .titleRow h1{
+    .title h1{
       margin:0;
-      font-size: 1.12rem;
+      font-size: 1.22rem;
       letter-spacing: -0.02em;
       font-weight: 950;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      flex: 1;
-      min-width: 0;
     }
-
-    .mini{
+    .title .mini{
       color: var(--muted);
-      font-size: .88rem;
+      font-size: .9rem;
       font-weight: 900;
       white-space: nowrap;
-      flex: 0 0 auto;
     }
 
     .bar{
@@ -123,6 +113,15 @@
       box-shadow: 0 8px 20px rgba(165,180,252,.25);
     }
 
+    /* ✅ 모바일에서 날짜 + 오늘접수 건수 나란히 */
+    .date-row{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex: 1 1 320px;
+      min-width: 280px;
+    }
+
     .date-wrap{
       display:flex;
       align-items:center;
@@ -131,7 +130,8 @@
       border: 1px solid rgba(148,163,184,0.22);
       border-radius: 999px;
       padding: 6px 10px;
-      flex: 0 1 auto;
+      flex: 1 1 auto;
+      min-width: 180px;
     }
     .date-wrap .label{
       color: var(--muted);
@@ -150,33 +150,101 @@
       font-size: .95rem;
       min-width: 150px;
       -webkit-appearance:none;
+      flex: 1;
     }
 
-    /* ✅ 통계: 오늘 접수 건수만(날짜 문구 X) */
-    .stats{
+    .todayCount{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(148,163,184,0.22);
+      border-radius: 999px;
+      padding: 6px 10px;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .todayCount .k{
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 900;
+    }
+    .todayCount .v{
+      font-weight: 950;
+      font-size: .98rem;
+      letter-spacing: -0.01em;
+    }
+
+    @media (max-width: 520px){
+      .seg{ min-width: 0; flex: 1 1 100%; }
+      .date-row{ flex: 1 1 100%; }
+      .date-wrap input[type="date"]{ min-width: 0; }
+    }
+
+    .filters{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
       margin-top: 2px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(255,255,255,0.72);
+      font-weight: 950;
+      font-size: .9rem;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .chip:active{ transform: translateY(1px); }
+
+    .chip input{
+      width: 16px;
+      height: 16px;
+      accent-color: rgba(165,180,252,1);
+    }
+
+    .chip.recv.on{
+      background: var(--st-recv-bg);
+      border-color: var(--st-recv-bd);
+      color: var(--st-recv-tx);
+      box-shadow: 0 10px 24px rgba(249,168,212,.18);
+    }
+    .chip.done.on{
+      background: var(--st-done-bg);
+      border-color: var(--st-done-bd);
+      color: var(--st-done-tx);
+      box-shadow: 0 10px 24px rgba(134,239,172,.16);
+    }
+
+    .stats{
       display:flex;
       gap: 10px;
       flex-wrap: wrap;
+      margin-top: 4px;
     }
     .stat{
-      flex: 1 1 220px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid rgba(148,163,184,0.16);
+      flex: 1 1 160px;
+      background: rgba(255,255,255,0.70);
+      border: 1px solid rgba(148,163,184,0.18);
       border-radius: 16px;
       padding: 10px 12px;
     }
     .stat .num{
       font-weight: 950;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       letter-spacing: -0.02em;
-      line-height: 1.1;
     }
     .stat .txt{
       color: var(--muted);
-      font-weight: 900;
-      font-size: .9rem;
-      margin-top: 4px;
+      font-weight: 850;
+      font-size: .88rem;
+      margin-top: 2px;
     }
 
     .content{
@@ -206,10 +274,6 @@
       color: var(--muted);
       font-size: .9rem;
       font-weight: 900;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
     }
     .list-head .badge{
       font-size: .86rem;
@@ -220,7 +284,6 @@
       border-radius: 999px;
       white-space: nowrap;
       color: rgba(15,23,42,.72);
-      flex: 0 0 auto;
     }
 
     ul{ list-style:none; padding:0; margin:0; }
@@ -346,7 +409,7 @@
     .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
 
     .sheet-head{
-      padding: 14px 14px 10px;
+      padding: 14px 14px 12px;
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
@@ -356,7 +419,7 @@
     }
     .sheet-head .t{ min-width:0; }
     .sheet-head .t .line1{
-      margin:0 0 4px 0;
+      margin:0;
       font-weight: 950;
       letter-spacing: -0.02em;
       font-size: 1.06rem;
@@ -365,22 +428,22 @@
       gap: 8px;
       flex-wrap: wrap;
     }
-    .sheet-head .t .line2{
-      margin:0;
-      color: rgba(15,23,42,0.72);
-      font-weight: 850;
-      line-height: 1.25;
-      word-break: keep-all;
+
+    /* ✅ 우측 상단: 닫힘 버튼 삭제, 상태 드랍박스 배치 */
+    .headRight{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      flex: 0 0 auto;
     }
-    .x{
-      border:0;
-      background: rgba(15,23,42,0.06);
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      cursor:pointer;
+    .headRight select{
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.30);
+      padding: 9px 10px;
       font-weight: 950;
-      color: rgba(15,23,42,0.72);
+      background: rgba(255,255,255,0.90);
+      outline: none;
+      min-height: 42px;
     }
 
     .sheet-body{
@@ -417,28 +480,6 @@
       min-width: 0;
     }
 
-    .statusRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      width: 100%;
-    }
-    .statusRow .left{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .statusRow select{
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.30);
-      padding: 8px 10px;
-      font-weight: 950;
-      background: rgba(255,255,255,0.90);
-      outline: none;
-    }
-
     .sheet-actions{
       padding: 0 14px 14px;
       display:flex;
@@ -452,11 +493,6 @@
       font-weight: 950;
       cursor:pointer;
       min-height: 42px;
-    }
-    .ghost{
-      background: rgba(147,197,253,.18);
-      border: 1px solid rgba(147,197,253,.22);
-      color: rgba(15,23,42,.80);
     }
     .ok{
       background: linear-gradient(135deg, rgba(134,239,172,.80), rgba(165,180,252,.80));
@@ -491,7 +527,7 @@
 <body>
   <div class="app">
     <div class="top">
-      <div class="titleRow">
+      <div class="title">
         <h1>🌸 울산하늘공원 접수 현황</h1>
         <div class="mini" id="todayLabel">오늘: -</div>
       </div>
@@ -502,13 +538,30 @@
           <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
         </div>
 
-        <div class="date-wrap">
-          <span class="label">날짜</span>
-          <input type="date" id="datePicker" />
+        <!-- ✅ 날짜 + 오늘접수(접수상태, TODAY 기준) -->
+        <div class="date-row">
+          <div class="date-wrap">
+            <span class="label">날짜</span>
+            <input type="date" id="datePicker" />
+          </div>
+          <div class="todayCount" title="오늘(접수) 건수">
+            <span class="k">오늘접수</span>
+            <span class="v" id="todayRecvCount">0</span>
+          </div>
         </div>
       </div>
 
-      <!-- ✅ 오늘 접수 건수 아래 날짜 표기 제거 -->
+      <div class="filters">
+        <label class="chip recv" id="chipRecv" title="접수만 보기">
+          <input type="radio" name="statusFilter" id="filterRecv" value="접수" />
+          접수
+        </label>
+        <label class="chip done" id="chipDone" title="안치완료만 보기">
+          <input type="radio" name="statusFilter" id="filterDone" value="안치완료" />
+          안치완료
+        </label>
+      </div>
+
       <div class="stats" id="stats"></div>
     </div>
 
@@ -517,36 +570,31 @@
     </div>
   </div>
 
-  <!-- 바텀시트 모달 -->
   <div class="overlay" id="overlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true">
       <div class="sheet-head">
         <div class="t">
+          <!-- ✅ 봉안/안치번호가 여기(상단)에 확실히 표기 -->
           <p class="line1" id="mTitle">-</p>
-          <p class="line2" id="mSub">-</p>
+          <!-- ✅ 봉안번호 아래 고인명(라인2) 표기하지 않음 -->
         </div>
-        <button class="x" onclick="closeSheet()" aria-label="닫기">✕</button>
+
+        <!-- ✅ 닫힘 버튼 삭제 + 상태 드랍박스 배치 -->
+        <div class="headRight">
+          <select id="mStatus" aria-label="상태 선택">
+            <option value="접수">접수</option>
+            <option value="안치완료">안치완료</option>
+          </select>
+        </div>
       </div>
 
       <div class="sheet-body">
-        <div class="kv">
-          <div class="k">현황</div>
-          <div class="v" style="text-align:right;">
-            <div class="statusRow">
-              <div class="left" id="mStatusBadgeWrap"></div>
-              <select id="mStatus">
-                <option value="접수">접수</option>
-                <option value="안치완료">안치완료</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
+        <!-- ✅ 현황칸(별도 kv) 삭제 -->
         <div id="mFields"></div>
       </div>
 
       <div class="sheet-actions">
-        <button class="btnSmall ghost" onclick="copyId()">📋 번호 복사</button>
+        <!-- ✅ 번호 복사 기능 삭제 -->
         <button class="btnSmall ok" onclick="closeSheet()">확인</button>
       </div>
     </div>
@@ -568,7 +616,7 @@
     };
 
     const ID_CANDIDATES = ['natNo','deceasedNo','receiptNo','recNo','applyNo','no','id','번호','접수번호','관리번호'];
-    const NAME_CANDIDATES = ['deadName','deceasedName','name','고인명','사망자명'];
+    const NAME_CANDIDATES = ['deadName','deadname','deceasedName','name','고인명','사망자명'];
 
     function pickField(obj, candidates){
       for (const k of candidates){
@@ -597,12 +645,6 @@
         : `<span class="badge-st badge-recv">접수</span>`;
     }
 
-    async function fetchJson(url){
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
-      return res.json();
-    }
-
     function escapeHtml(str){
       return String(str)
         .replaceAll('&','&amp;')
@@ -612,6 +654,12 @@
         .replaceAll("'","&#039;");
     }
 
+    async function fetchJson(url){
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
+      return res.json();
+    }
+
     function showToast(msg){
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -619,7 +667,70 @@
       setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    // 자연장지: 부부장 병합
+    /* ✅ ensNO(안치번호) 포맷: '00실 00000' */
+    function formatEnsNo(val){
+      if (val == null) return '-';
+      const s = String(val).trim();
+      if (!s) return '-';
+      if (s.includes('실')) return s; // 이미 포맷된 경우
+
+      const digits = s.replace(/\D/g,'');
+      if (!digits) return s;
+
+      // 7자리 이상이면: 앞 2자리=실, 뒤 5자리=번호
+      if (digits.length >= 7){
+        const room = digits.slice(0,2);
+        const num = digits.slice(-5);
+        return `${room}실 ${num}`;
+      }
+      // 5자리면: 실 정보가 없으니 그대로(또는 "00실" 규칙이 있으면 여기서 보정 가능)
+      if (digits.length === 5){
+        return digits;
+      }
+      return s;
+    }
+
+    /* ✅ 추모의집: 동일 ensNO(안치번호) 묶기 */
+    function mergeEnsRows(rows){
+      const map = new Map();
+      const order = [];
+
+      for (const r of rows){
+        const ens = (r.ensNO ?? r.ensNo ?? r.ensno ?? '').toString().trim();
+        const key = ens || '__NO_ENS__';
+
+        if (!map.has(key)){
+          map.set(key, {
+            ensNO: ens || '-',
+            strDate: (r.strDate ?? '-'),
+            deadNames: new Set([(r.deadname ?? r.deadName ?? r.deceasedName ?? '-').toString()]),
+            applNames: new Set([(r.applname ?? r.applName ?? '-').toString()]),
+            _raw: [r]
+          });
+          order.push(key);
+        } else {
+          const cur = map.get(key);
+          cur.deadNames.add((r.deadname ?? r.deadName ?? r.deceasedName ?? '-').toString());
+          cur.applNames.add((r.applname ?? r.applName ?? '-').toString());
+          cur._raw.push(r);
+        }
+      }
+
+      return order.map(key => {
+        const v = map.get(key);
+        const deadJoined = Array.from(v.deadNames).filter(x => x && x !== '-').join(' / ') || '-';
+        const applJoined = Array.from(v.applNames).filter(x => x && x !== '-').join(' / ') || '-';
+        return {
+          ensNO: v.ensNO,
+          strDate: v.strDate,
+          deadname: deadJoined,
+          applname: applJoined,
+          _raw: v._raw
+        };
+      });
+    }
+
+    /* ✅ 자연장지: 부부장 병합(기존 유지) */
     function mergeCoupleRows(rows) {
       const map = new Map();
       const order = [];
@@ -631,14 +742,14 @@
           map.set(key, {
             natNo: r.natNo ?? '-',
             applName: r.applName ?? '-',
-            deadNames: new Set([(r.deadName ?? '-').toString()]),
+            deadNames: new Set([(r.deadName ?? r.deadname ?? '-').toString()]),
             dates: new Set([(r.natDate ?? '-').toString()]),
             _raw: [r]
           });
           order.push(key);
         } else {
           const cur = map.get(key);
-          cur.deadNames.add((r.deadName ?? '-').toString());
+          cur.deadNames.add((r.deadName ?? r.deadname ?? '-').toString());
           cur.dates.add((r.natDate ?? '-').toString());
           cur._raw.push(r);
         }
@@ -657,12 +768,21 @@
       });
     }
 
-    // 상태 저장(시설+번호)
+    /* ✅ 상태 저장 키: 추모의집=ensNO 기준, 자연장지=natNo 기준 */
+    function itemStatusId(sourceKey, item){
+      if (sourceKey === 'house'){
+        const ens = (item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-');
+        return String(ens ?? '-');
+      }
+      // nature
+      return String(item?.natNo ?? '-');
+    }
+
     function statusKey(sourceKey, id){ return `status_${sourceKey}_${id}`; }
     function getStatus(sourceKey, id){ return localStorage.getItem(statusKey(sourceKey, id)) || '접수'; }
     function setStatus(sourceKey, id, val){ localStorage.setItem(statusKey(sourceKey, id), val); }
 
-    // DOM/state
+    // DOM
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
     const statsDiv = document.getElementById('stats');
@@ -671,22 +791,36 @@
     const tabHouse = document.getElementById('tabHouse');
     const tabNature = document.getElementById('tabNature');
 
+    const filterRecv = document.getElementById('filterRecv');
+    const filterDone = document.getElementById('filterDone');
+    const chipRecv = document.getElementById('chipRecv');
+    const chipDone = document.getElementById('chipDone');
+
+    const todayRecvCountEl = document.getElementById('todayRecvCount');
+
     const overlay = document.getElementById('overlay');
     const mTitle = document.getElementById('mTitle');
-    const mSub = document.getElementById('mSub');
     const mStatus = document.getElementById('mStatus');
     const mFields = document.getElementById('mFields');
-    const mStatusBadgeWrap = document.getElementById('mStatusBadgeWrap');
 
     let currentSource = 'house';
     let currentDisplayData = [];
-    let currentSelected = null;
 
     const TODAY = getLocalISODate(new Date());
     todayLabel.textContent = `오늘: ${TODAY}`;
     datePicker.value = TODAY;
 
+    filterRecv.checked = true;
+
+    function syncChipStyles(){
+      chipRecv.classList.toggle('on', filterRecv.checked);
+      chipDone.classList.toggle('on', filterDone.checked);
+    }
+    syncChipStyles();
+
     datePicker.addEventListener('change', () => load());
+    filterRecv.addEventListener('change', () => { syncChipStyles(); load(); });
+    filterDone.addEventListener('change', () => { syncChipStyles(); load(); });
 
     function switchSource(sourceKey){
       currentSource = sourceKey;
@@ -695,19 +829,51 @@
       load();
     }
 
-    // ✅ 정렬: 접수 위 / 안치완료 아래 (항상 적용)
-    function sortByStatusStable(rows){
-      return rows
-        .map((item, idx) => ({ item, idx }))
-        .sort((a,b) => {
-          const ida = (currentSource === 'nature') ? String(a.item.natNo ?? '-') : getId(a.item);
-          const idb = (currentSource === 'nature') ? String(b.item.natNo ?? '-') : getId(b.item);
-          const ra = (statusCategory(getStatus(currentSource, ida)) === 'done') ? 1 : 0;
-          const rb = (statusCategory(getStatus(currentSource, idb)) === 'done') ? 1 : 0;
-          if (ra !== rb) return ra - rb;
-          return a.idx - b.idx;
-        })
-        .map(x => x.item);
+    function selectedFilterValue(){
+      if (filterDone.checked) return '안치완료';
+      return '접수';
+    }
+
+    function applyRadioFilter(rows){
+      const want = selectedFilterValue(); // '접수' or '안치완료'
+      return rows.filter(item => {
+        const sid = itemStatusId(currentSource, item);
+        const st = getStatus(currentSource, sid);
+        const cat = statusCategory(st);
+        const normalized = (cat === 'done') ? '안치완료' : '접수';
+        return normalized === want;
+      });
+    }
+
+    function kvRow(k, v){
+      return `
+        <div class="kv">
+          <div class="k">${escapeHtml(k)}</div>
+          <div class="v">${escapeHtml(v)}</div>
+        </div>
+      `;
+    }
+
+    /* ✅ 오늘(접수) 건수: TODAY + '접수' 기준 */
+    function calcTodayRecvCount(sourceKey, rawData){
+      const source = SOURCES[sourceKey];
+      const dateKey = source.dateKey;
+
+      const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === TODAY);
+
+      let display = todays;
+      if (sourceKey === 'house') display = mergeEnsRows(todays);
+      if (sourceKey === 'nature') display = mergeCoupleRows(todays);
+
+      // '접수'만 카운트(라디오와 무관)
+      const count = display.filter(item => {
+        const sid = itemStatusId(sourceKey, item);
+        const st = getStatus(sourceKey, sid);
+        const cat = statusCategory(st);
+        return (cat !== 'done'); // 접수
+      }).length;
+
+      return count;
     }
 
     async function load(){
@@ -718,28 +884,45 @@
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
+        // ✅ 오늘접수 건수(접수 고정, TODAY 기준)
+        todayRecvCountEl.textContent = calcTodayRecvCount(currentSource, data).toLocaleString();
+
         // 날짜 필터(해당 날짜만)
         const dateKey = source.dateKey;
         let filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
 
-        // 표시 데이터
+        // 표시 데이터(병합)
         let displayData = filtered;
+        if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // 정렬 적용
-        displayData = sortByStatusStable(displayData);
+        // ✅ 라디오 필터 적용(접수/안치완료)
+        displayData = applyRadioFilter(displayData);
+
+        // ✅ 정렬: 접수 위, 안치완료 아래
+        displayData = displayData
+          .map((item, idx) => ({ item, idx }))
+          .sort((a,b) => {
+            const ida = itemStatusId(currentSource, a.item);
+            const idb = itemStatusId(currentSource, b.item);
+            const ra = statusCategory(getStatus(currentSource, ida)) === 'done' ? 1 : 0;
+            const rb = statusCategory(getStatus(currentSource, idb)) === 'done' ? 1 : 0;
+            if (ra !== rb) return ra - rb;
+            return a.idx - b.idx;
+          })
+          .map(x => x.item);
+
         currentDisplayData = displayData;
 
-        // ✅ 통계: 오늘 접수 건수만 + 날짜 문구 없음
-        const recvCount = displayData.reduce((acc, item) => {
-          const id = (currentSource === 'nature') ? String(item.natNo ?? '-') : getId(item);
-          return acc + (statusCategory(getStatus(currentSource, id)) === 'recv' ? 1 : 0);
-        }, 0);
-
+        const filterLabel = selectedFilterValue();
         statsDiv.innerHTML = `
           <div class="stat">
-            <div class="num">${recvCount.toLocaleString()}</div>
-            <div class="txt">오늘 접수 건수</div>
+            <div class="num">${displayData.length.toLocaleString()}</div>
+            <div class="txt">${source.label} · ${selectedDate} · ${filterLabel}</div>
+          </div>
+          <div class="stat">
+            <div class="num">${data.length.toLocaleString()}</div>
+            <div class="txt">원본 전체 건수</div>
           </div>
         `;
 
@@ -754,17 +937,27 @@
         let html = `
           <div class="list">
             <div class="list-head">
-              <div class="hint">번호+고인명 · 눌러서 상세</div>
+              <div class="hint">안치번호+고인명 · 눌러서 상세</div>
               <div class="badge">${Math.min(limit, displayData.length).toLocaleString()} / ${displayData.length.toLocaleString()}</div>
             </div>
             <ul>
         `;
 
         shown.forEach((item, idx) => {
-          const id = (currentSource === 'nature') ? (item.natNo ?? '-') : getId(item);
-          const name = (currentSource === 'nature') ? (item.deadName ?? '-') : getName(item);
+          // ✅ 리스트 표시용 번호/고인명
+          let displayId = '-';
+          let displayName = '-';
+          let statusId = itemStatusId(currentSource, item);
 
-          const stRaw = getStatus(currentSource, String(id));
+          if (currentSource === 'house'){
+            displayId = formatEnsNo(item.ensNO ?? '-');
+            displayName = item.deadname ?? '-';
+          } else {
+            displayId = String(item.natNo ?? '-');
+            displayName = String(item.deadName ?? '-');
+          }
+
+          const stRaw = getStatus(currentSource, statusId);
           const cat = statusCategory(stRaw);
           const leftCls = (cat === 'done') ? 'done' : 'recv';
           const badge = (cat === 'done')
@@ -776,10 +969,10 @@
               <button class="item ${leftCls}" onclick="openSheet(${idx})">
                 <div class="main">
                   <div class="id">
-                    ${escapeHtml(id)}
+                    ${escapeHtml(displayId)}
                     ${badge}
                   </div>
-                  <div class="name">${escapeHtml(name)}</div>
+                  <div class="name">${escapeHtml(displayName)}</div>
                 </div>
                 <div class="chev">›</div>
               </button>
@@ -799,52 +992,54 @@
       }
     }
 
-    function kvRow(k, v){
-      return `
-        <div class="kv">
-          <div class="k">${escapeHtml(k)}</div>
-          <div class="v">${escapeHtml(v)}</div>
-        </div>
-      `;
-    }
-
     function openSheet(index){
       const item = currentDisplayData[index];
       if (!item) return;
-      currentSelected = item;
 
       const sourceLabel = SOURCES[currentSource].label;
-      const id = (currentSource === 'nature') ? String(item.natNo ?? '-') : getId(item);
-      const name = (currentSource === 'nature') ? String(item.deadName ?? '-') : getName(item);
 
-      const stRaw = getStatus(currentSource, id);
-      const stShow = (statusCategory(stRaw) === 'done') ? '안치완료' : '접수';
+      // ✅ 상태 키(추모의집=ensNO, 자연장지=natNo)
+      const sid = itemStatusId(currentSource, item);
 
-      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(id)} ${statusBadgeHTML(stShow)}`;
-      mSub.textContent = name;
+      const stRaw = getStatus(currentSource, sid);
+      const cat = statusCategory(stRaw);
+      const stShow = (cat === 'done') ? '안치완료' : '접수';
 
+      // ✅ 모달 상단: 안치번호(추모의집=ensNO 포맷, 자연장지=natNo)
+      let headerNo = '-';
+      if (currentSource === 'house'){
+        headerNo = formatEnsNo(item.ensNO ?? '-');
+      } else {
+        headerNo = String(item.natNo ?? '-');
+      }
+      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${statusBadgeHTML(stShow)}`;
+
+      // ✅ 우측 상단 상태 드랍박스
       mStatus.value = stShow;
-      mStatusBadgeWrap.innerHTML = statusBadgeHTML(stShow);
-
       mStatus.onchange = (e) => {
-        setStatus(currentSource, id, e.target.value);
-        mStatusBadgeWrap.innerHTML = statusBadgeHTML(e.target.value);
-        showToast(`✅ ${id} : ${e.target.value}`);
+        setStatus(currentSource, sid, e.target.value);
+        showToast(`✅ ${headerNo} : ${e.target.value}`);
         load();
       };
 
+      // ✅ 상세 필드: 고정 구성
       let fieldsHTML = '';
-      if (currentSource === 'nature'){
-        fieldsHTML += kvRow('신청자명', item.applName ?? '-');
-        fieldsHTML += kvRow('일자', item.natDate ?? '-');
-        const mergedCount = Array.isArray(item._raw) ? item._raw.length : 1;
-        if (mergedCount > 1) fieldsHTML += kvRow('병합', `${mergedCount}건(부부장)`);
+
+      if (currentSource === 'house'){
+        // 요청 필드: strDate=안치일자, ensNO=안치번호, deadname=고인명, applname=신청자
+        // retdate 표기 금지
+        fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
+        fieldsHTML += kvRow('안치번호', formatEnsNo(item.ensNO ?? '-'));
+        fieldsHTML += kvRow('고인명', item.deadname ?? '-');
+        fieldsHTML += kvRow('신청자', item.applname ?? '-');
       } else {
-        const obj = item || {};
-        const entries = Object.entries(obj);
-        entries.forEach(([k, v]) => fieldsHTML += kvRow(k, (v == null || v === '') ? '-' : String(v)));
-        if (!entries.length) fieldsHTML += kvRow('안내', '표시할 상세 필드가 없습니다.');
+        // 자연장지: 안치일자, 안치번호, 고인명, 신청자 순
+        fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
+        fieldsHTML += kvRow('안치번호', item.natNo ?? '-');
+        fieldsHTML += kvRow('고인명', item.deadName ?? '-');
+        fieldsHTML += kvRow('신청자', item.applName ?? '-');
       }
+
       mFields.innerHTML = fieldsHTML;
 
       overlay.classList.add('show');
@@ -854,23 +1049,14 @@
     function closeSheet(){
       overlay.classList.remove('show');
       overlay.setAttribute('aria-hidden','true');
-      currentSelected = null;
     }
+
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
 
-    function copyId(){
-      if (!currentSelected) return;
-      const sourceLabel = SOURCES[currentSource].label;
-      const id = (currentSource === 'nature') ? String(currentSelected.natNo ?? '') : getId(currentSelected);
-      if (!id) return;
-      navigator.clipboard.writeText(id);
-      showToast(`📋 ${sourceLabel} 번호 복사됨`);
-    }
-
     window.addEventListener('load', () => {
       datePicker.value = TODAY;
-      switchSource('house'); // 기본: 추모의집
+      switchSource('house');
     });
   </script>
 </body>
