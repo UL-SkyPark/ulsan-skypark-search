@@ -71075,7 +71075,7 @@
     "ensNo": "1추모의집-32실-개인단-10667",
     "deadName": "전정배",
     "applName": "전봉경",
-    "retDate": null
+    "retDate": "2026-02-26"
   },
   {
     "strDate": "2019-03-27",
@@ -182554,6 +182554,27 @@
   },
   {
     "strDate": "2026-02-26",
+    "ensNo": "1추모의집-09실-부부단-01883",
+    "deadName": "도영희",
+    "applName": "전봉경",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
+    "ensNo": "1추모의집-09실-부부단-01883",
+    "deadName": "전정배",
+    "applName": "전봉경",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
+    "ensNo": "1추모의집-11실-무연고-02619",
+    "deadName": "최부근",
+    "applName": "노영래",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
     "ensNo": "1추모의집-36실-개인단-12468",
     "deadName": "최승재",
     "applName": "최근호",
@@ -182564,6 +182585,41 @@
     "ensNo": "1추모의집-62실-개인단-21960",
     "deadName": "이옥자",
     "applName": "이태훈",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
+    "ensNo": "1추모의집-62실-개인단-21961",
+    "deadName": "김선혜",
+    "applName": "박수오",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
+    "ensNo": "1추모의집-62실-개인단-21962",
+    "deadName": "정낙이",
+    "applName": "정수림",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
+    "ensNo": "1추모의집-62실-개인단-21963",
+    "deadName": "이순남",
+    "applName": "고광택",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
+    "ensNo": "1추모의집-62실-개인단-21964",
+    "deadName": "최성우",
+    "applName": "박문희",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
+    "ensNo": "1추모의집-62실-개인단-21965",
+    "deadName": "방세자",
+    "applName": "오기석",
     "retDate": null
   }
 ]
