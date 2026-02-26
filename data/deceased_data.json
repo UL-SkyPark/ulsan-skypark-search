@@ -182554,13 +182554,6 @@
   },
   {
     "strDate": "2026-02-26",
-    "ensNo": null,
-    "deadName": "이순남",
-    "applName": "고광택",
-    "retDate": null
-  },
-  {
-    "strDate": "2026-02-26",
     "ensNo": "1추모의집-36실-개인단-12468",
     "deadName": "최승재",
     "applName": "최근호",
@@ -182585,6 +182578,20 @@
     "ensNo": "1추모의집-62실-개인단-21962",
     "deadName": "정낙이",
     "applName": "정수림",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
+    "ensNo": "1추모의집-62실-개인단-21963",
+    "deadName": "이순남",
+    "applName": "고광택",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-26",
+    "ensNo": "1추모의집-62실-개인단-21964",
+    "deadName": "최성우",
+    "applName": "박문희",
     "retDate": null
   }
 ]
