@@ -156,7 +156,6 @@
       flex-wrap: wrap;
     }
 
-    /* 날짜 인풋을 카드 안에서 자연스럽게 */
     .pill2 input[type="date"]{
       border: 0;
       background: rgba(255,255,255,0.65);
@@ -472,7 +471,6 @@
           <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
         </div>
 
-        <!-- ✅ 날짜선택 / 금일건수 : 두줄 카드 2개 -->
         <div class="date-row">
           <div class="pill2" id="datePill">
             <div class="k">날짜선택</div>
@@ -553,17 +551,47 @@
       return `${y}.${m}.${d}(${dow})`;
     }
 
-    /* ✅ retDate 존재 + 오늘 retDate이면 "금일 반출"로 집계, 리스트도 반출 표시 */
+    /* =========================
+       ✅ retDate 처리: 형식 정규화 + 오늘 반출 판정
+       ========================= */
+    function normalizeToISODate(v){
+      if (v == null) return '';
+      const s = String(v).trim();
+      if (!s) return '';
+
+      // 2026-02-27 09:10:00 / 2026-02-27T09:10:00 형태
+      const m1 = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+      if (m1) {
+        const y = m1[1];
+        const m = String(m1[2]).padStart(2,'0');
+        const d = String(m1[3]).padStart(2,'0');
+        return `${y}-${m}-${d}`;
+      }
+
+      // 2026.02.27 / 2026/02/27 형태
+      const m2 = s.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})/);
+      if (m2) {
+        const y = m2[1];
+        const m = String(m2[2]).padStart(2,'0');
+        const d = String(m2[3]).padStart(2,'0');
+        return `${y}-${m}-${d}`;
+      }
+
+      // 20260227 형태
+      const m3 = s.match(/^(\d{4})(\d{2})(\d{2})$/);
+      if (m3) return `${m3[1]}-${m3[2]}-${m3[3]}`;
+
+      return '';
+    }
+
     function pickRetDate(obj){
       return obj?.retDate ?? obj?.retdate ?? obj?.RETDATE ?? obj?.RetDate ?? '';
     }
     function hasAnyRetDate(obj){
-      const v = pickRetDate(obj);
-      return v != null && String(v).trim() !== '';
+      return normalizeToISODate(pickRetDate(obj)) !== '';
     }
     function isRetToday(obj, todayISO){
-      const v = String(pickRetDate(obj) ?? '').trim();
-      return v === todayISO;
+      return normalizeToISODate(pickRetDate(obj)) === todayISO;
     }
 
     function escapeHtml(str){
@@ -588,20 +616,14 @@
       setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    /* ✅ ensNO 포맷
-       - "1추모의집-62실-개인단-21967" => "62실 21967"
-       - 이미 "09실 01886" => "09실 01886"
-       - 숫자만이면 "00실 00000" 로 보정
-    */
+    /* ✅ ensNO 포맷 */
     function formatEnsNo(val){
       if (val == null) return '-';
       const raw = String(val).trim();
       if (!raw) return '-';
 
-      // 케이스: "1추모의집-62실-개인단-21967"
       if (raw.includes('-')){
         const parts = raw.split('-').map(x => x.trim()).filter(Boolean);
-        // "62실" 포함 파트 찾기
         const roomPart = parts.find(p => /\d+\s*실/.test(p));
         const numPart = parts.find(p => /^\d{1,6}$/.test(p) || /^\d{5}$/.test(p));
         if (roomPart && numPart){
@@ -609,7 +631,6 @@
           const numDigits = numPart.replace(/\D/g,'').padStart(5,'0').slice(-5);
           return `${roomDigits}실 ${numDigits}`;
         }
-        // roomPart만 있으면 뒤에서 숫자 5자리 찾아보기
         if (roomPart){
           const tailNum = parts.slice().reverse().find(p => p.replace(/\D/g,'').length >= 5);
           if (tailNum){
@@ -620,7 +641,6 @@
         }
       }
 
-      // 이미 "09실 01886" 형태면 정규화
       const m1 = raw.match(/(\d{1,2})\s*실\s*(\d{1,5})/);
       if (m1){
         const room = String(m1[1]).padStart(2,'0');
@@ -628,7 +648,6 @@
         return `${room}실 ${num}`;
       }
 
-      // 숫자만 추출
       let digits = raw.replace(/\D/g,'');
       if (!digits) return raw;
 
@@ -643,7 +662,7 @@
       return raw;
     }
 
-    /* ✅ 추모의집: 동일 ensNO 묶기 + retDate 대표값 유지(하나라도 있으면 유지) */
+    /* ✅ 추모의집: 동일 ensNO 묶기 + retDate 대표값 유지 */
     function mergeEnsRows(rows){
       const map = new Map();
       const order = [];
@@ -686,7 +705,6 @@
         }
       }
 
-      // ✅ 원본 등장 순서 유지 => 먼저 접수된 건 위
       return order.map(key => map.get(key));
     }
 
@@ -723,7 +741,7 @@
       return order.map(key => map.get(key));
     }
 
-    /* 상태 저장 키: 추모의집=ensNO, 자연장지=natNo */
+    /* 상태 저장 키 */
     function itemStatusId(sourceKey, item){
       if (sourceKey === 'house'){
         const ens = (item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-');
@@ -735,9 +753,13 @@
     function getStatus(sourceKey, id){ return localStorage.getItem(statusKey(sourceKey, id)) || '접수'; }
     function setStatus(sourceKey, id, val){ localStorage.setItem(statusKey(sourceKey, id), val); }
 
-    /* ✅ 리스트 배지/색상: 추모의집은 retDate가 있으면 무조건 반출 표시(요청) */
+    /* ✅ 리스트 배지/색상:
+       - 추모의집: retDate가 '오늘'이면 반출로 표시
+       - 그 외는 저장상태에 따름
+    */
     function catOfItem(sourceKey, item, savedStatus){
-      if (sourceKey === 'house' && hasAnyRetDate(item)) return 'ret';
+      if (sourceKey === 'house' && isRetToday(item, TODAY)) return 'ret';
+
       const s = (savedStatus ?? '').toString().trim();
       if (s === '반출') return 'ret';
       if (s === '안치완료' || s === '안장완료') return 'done';
@@ -763,28 +785,34 @@
       `;
     }
 
-    /* ✅ 금일건수: 추모의집은 "접수x건, 반출y건" / 자연장지는 "접수x건" */
+    /* ✅ 금일건수:
+       - 추모의집: 접수x건, 반출y건 (retDate=오늘 반영)
+       - 자연장지: 접수x건
+    */
     function calcTodayCounts(sourceKey, rawData, todayISO){
       const source = SOURCES[sourceKey];
       const dateKey = source.dateKey;
 
-      const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === todayISO);
-
       if (sourceKey === 'house'){
-        // 접수: 오늘 strDate 건(묶음 적용 후) 중 "retDate가 오늘이 아닌 것"
-        // 반출: retDate가 오늘인 건(묶음 적용 후)
-        const merged = mergeEnsRows(todays);
+        // 오늘 접수(strDate=오늘) + 오늘 반출(retDate=오늘) 모두 포함해서 묶음 처리
+        const rows = (Array.isArray(rawData) ? rawData : []).filter(x => {
+          const str = String(x?.[dateKey] ?? '');
+          const ret = normalizeToISODate(pickRetDate(x));
+          return (str === todayISO) || (ret === todayISO);
+        });
+
+        const merged = mergeEnsRows(rows);
 
         let recv = 0;
         let ret = 0;
         for (const it of merged){
           if (isRetToday(it, todayISO)) ret++;
-          else recv++;
+          else if (String(it.strDate ?? '') === todayISO) recv++;
         }
         return { recv, ret };
       }
 
-      // 자연장지: 반출 없음, 그냥 접수 건수(묶음 적용 후)
+      const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === todayISO);
       const mergedN = mergeCoupleRows(todays);
       return { recv: mergedN.length, ret: 0 };
     }
@@ -813,10 +841,6 @@
     datePicker.value = TODAY;
 
     function syncDateLabel(){
-      // ✅ 날짜선택 카드 2줄 요구: "날짜선택" + "yyyy.mm.dd(ddd)"
-      // 브라우저 date input 자체는 yyyy-mm-dd로 보이므로, 옆/아래에 표시를 맞추려면 input 아래 텍스트를 붙이면 됨.
-      // 요청은 "날짜선택<br>yyyy.mm.dd(ddd)" 2줄 => k / v로 이미 분리되어 있으니 v에 pretty를 같이 표시(텍스트 노출)
-      // (여기서는 input만 둬도 되지만, PC에서 yyyy.mm.dd(ddd) 보여달라 하셔서 title에 반영)
       const v = datePicker.value || TODAY;
       datePicker.title = prettyDate(v);
     }
@@ -855,15 +879,33 @@
 
         // ✅ 선택 날짜 필터
         const dateKey = source.dateKey;
-        let filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
+
+        let filtered = [];
+        if (currentSource === 'house'){
+          const sel = selectedDate;
+          const isTodayView = (sel === TODAY);
+
+          filtered = data.filter(x => {
+            const str = String(x?.[dateKey] ?? '');
+            const ret = normalizeToISODate(pickRetDate(x));
+
+            // 1) strDate가 선택일이면 표시
+            if (str === sel) return true;
+
+            // 2) 오늘 화면일 때만: retDate가 오늘인 것도 표시(반출현황)
+            if (isTodayView && ret === TODAY) return true;
+
+            return false;
+          });
+        } else {
+          filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
+        }
 
         // ✅ 병합(순서 유지)
         let displayData = filtered;
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // ✅ 정렬 요구: "먼저 접수된 건 위 / 나중 접수된 건 아래"
-        // -> 병합 함수가 원본 등장 순서(order)대로 반환하므로 추가 정렬 없음
         currentDisplayData = displayData;
 
         if (displayData.length === 0){
@@ -961,9 +1003,12 @@
         fieldsHTML += kvRow('고인명', item.deadname ?? '-');
         fieldsHTML += kvRow('신청자', item.applname ?? '-');
 
-        const rd = pickRetDate(item);
-        if (rd != null && String(rd).trim() !== ''){
-          fieldsHTML += kvRow('반출', String(rd));
+        const rdISO = normalizeToISODate(pickRetDate(item));
+        const rdRaw = pickRetDate(item);
+
+        if (rdISO){
+          // 원본이 있으면 원본 표시, 없으면 ISO 표시
+          fieldsHTML += kvRow('반출', String(rdRaw ?? rdISO));
         }
       } else {
         fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
@@ -986,7 +1031,6 @@
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
 
     window.addEventListener('load', () => {
-      // ✅ 새로고침 시 선택 유지
       const saved = localStorage.getItem(STORAGE_KEYS.source);
       const initial = (saved === 'nature' || saved === 'house') ? saved : 'house';
       currentSource = initial;
