@@ -23,7 +23,6 @@
       --st-done-bd: rgba(134,239,172,.40);
       --st-done-tx: rgba(20,83,45,.86);
 
-      /* ✅ 반출(회색 계열) */
       --st-ret-bg: rgba(148,163,184,.18);
       --st-ret-bd: rgba(148,163,184,.28);
       --st-ret-tx: rgba(30,41,59,.78);
@@ -71,7 +70,7 @@
     }
     .title h1{
       margin:0;
-      font-size: 1.15rem;
+      font-size: 1.22rem;
       letter-spacing: -0.02em;
       font-weight: 950;
     }
@@ -118,71 +117,63 @@
       box-shadow: 0 8px 20px rgba(165,180,252,.25);
     }
 
+    /* ✅ 날짜 선택 + 금일건수 : 두 줄 카드 2개 나란히 */
     .date-row{
       display:flex;
       gap: 10px;
-      align-items:center;
-      flex: 1 1 320px;
-      min-width: 280px;
+      align-items:stretch;
+      flex: 1 1 420px;
+      min-width: 320px;
     }
 
-    .date-wrap{
+    .pill2{
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(148,163,184,0.22);
+      border-radius: 18px;
+      padding: 10px 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+      min-height: 64px;
+      flex: 1 1 200px;
+    }
+    .pill2 .k{
+      color: var(--muted);
+      font-size: .88rem;
+      font-weight: 950;
+      line-height: 1.05;
+      white-space: nowrap;
+    }
+    .pill2 .v{
+      font-weight: 950;
+      font-size: .98rem;
+      letter-spacing: -0.01em;
+      line-height: 1.12;
+      color: rgba(15,23,42,.86);
       display:flex;
       align-items:center;
       gap: 8px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(148,163,184,0.22);
-      border-radius: 999px;
-      padding: 6px 10px;
-      flex: 1 1 auto;
-      min-width: 180px;
+      flex-wrap: wrap;
     }
-    .date-wrap .label{
-      color: var(--muted);
-      font-size: .9rem;
-      font-weight: 900;
-      padding-left: 6px;
-      white-space: nowrap;
-    }
-    .date-wrap input[type="date"]{
+
+    /* 날짜 인풋을 카드 안에서 자연스럽게 */
+    .pill2 input[type="date"]{
       border: 0;
-      background: transparent;
-      padding: 6px 6px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(148,163,184,0.20);
+      border-radius: 12px;
+      padding: 8px 10px;
       font-weight: 950;
       color: var(--text);
       outline: none;
       font-size: .95rem;
-      min-width: 150px;
       -webkit-appearance:none;
-      flex: 1;
-    }
-
-    .miniCount{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(148,163,184,0.22);
-      border-radius: 999px;
-      padding: 6px 10px;
-      white-space: nowrap;
-      flex: 0 0 auto;
-    }
-    .miniCount .k{
-      color: var(--muted);
-      font-size: .9rem;
-      font-weight: 900;
-    }
-    .miniCount .v{
-      font-weight: 950;
-      font-size: .98rem;
-      letter-spacing: -0.01em;
+      width: 100%;
     }
 
     @media (max-width: 520px){
       .seg{ min-width: 0; flex: 1 1 100%; }
       .date-row{ flex: 1 1 100%; }
-      .date-wrap input[type="date"]{ min-width: 0; }
     }
 
     .content{
@@ -481,14 +472,19 @@
           <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
         </div>
 
+        <!-- ✅ 날짜선택 / 금일건수 : 두줄 카드 2개 -->
         <div class="date-row">
-          <div class="date-wrap">
-            <span class="label">날짜</span>
-            <input type="date" id="datePicker" />
+          <div class="pill2" id="datePill">
+            <div class="k">날짜선택</div>
+            <div class="v">
+              <input type="date" id="datePicker" />
+              <span id="datePretty" style="display:none;"></span>
+            </div>
           </div>
-          <div class="miniCount" title="금일 건수(오늘 날짜 기준, 묶음 적용 후)">
-            <span class="k">금일 건수</span>
-            <span class="v" id="todayCount">0</span>
+
+          <div class="pill2" id="countPill">
+            <div class="k" id="countTitle">금일건수</div>
+            <div class="v" id="countText">접수0건</div>
           </div>
         </div>
       </div>
@@ -534,36 +530,40 @@
       return `${y}-${m}-${day}`;
     }
 
-    const STORAGE_KEYS = {
-      source: "uic_source_selected"
-    };
+    const STORAGE_KEYS = { source: "uic_source_selected" };
 
     const SOURCES = {
       house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
     };
 
-    /* ✅ retDate(반출일자) 여부로 '반출' 상태 자동 판단 */
-    function hasRetDate(obj){
-      const v = obj?.retDate ?? obj?.retdate ?? obj?.RETDATE ?? obj?.RetDate;
+    /* ✅ 요일/표시 문자열: yyyy.mm.dd(ddd) */
+    function getKoreanDowChar(isoDate){
+      if (!isoDate) return '';
+      const [y,m,d] = isoDate.split('-').map(Number);
+      if (!y || !m || !d) return '';
+      const dt = new Date(y, m-1, d);
+      const days = ['일','월','화','수','목','금','토'];
+      return days[dt.getDay()];
+    }
+    function prettyDate(isoDate){
+      if (!isoDate) return '-';
+      const [y,m,d] = isoDate.split('-');
+      const dow = getKoreanDowChar(isoDate);
+      return `${y}.${m}.${d}(${dow})`;
+    }
+
+    /* ✅ retDate 존재 + 오늘 retDate이면 "금일 반출"로 집계, 리스트도 반출 표시 */
+    function pickRetDate(obj){
+      return obj?.retDate ?? obj?.retdate ?? obj?.RETDATE ?? obj?.RetDate ?? '';
+    }
+    function hasAnyRetDate(obj){
+      const v = pickRetDate(obj);
       return v != null && String(v).trim() !== '';
     }
-
-    function statusCategoryByItem(sourceKey, item, savedStatus){
-      // 1) retDate가 있으면 무조건 반출로 표시(요청사항)
-      if (sourceKey === 'house' && hasRetDate(item)) return 'ret';
-
-      // 2) 저장된 상태값
-      const s = (savedStatus ?? '').toString().trim();
-      if (s === '반출') return 'ret';
-      if (s === '안치완료' || s === '안장완료') return 'done';
-      return 'recv';
-    }
-
-    function statusBadgeHTMLByCat(cat){
-      if (cat === 'ret') return `<span class="badge-st badge-ret">반출</span>`;
-      if (cat === 'done') return `<span class="badge-st badge-done">안치완료</span>`;
-      return `<span class="badge-st badge-recv">접수</span>`;
+    function isRetToday(obj, todayISO){
+      const v = String(pickRetDate(obj) ?? '').trim();
+      return v === todayISO;
     }
 
     function escapeHtml(str){
@@ -588,23 +588,52 @@
       setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    /* ✅ 추모의집 봉안/안치번호(ensNO) 포맷: 무조건 '00실 00000' 형태로 */
+    /* ✅ ensNO 포맷
+       - "1추모의집-62실-개인단-21967" => "62실 21967"
+       - 이미 "09실 01886" => "09실 01886"
+       - 숫자만이면 "00실 00000" 로 보정
+    */
     function formatEnsNo(val){
       if (val == null) return '-';
       const raw = String(val).trim();
       if (!raw) return '-';
 
-      if (/\d{2}\s*실\s*\d{5}/.test(raw)) {
-        const m = raw.match(/(\d{2})\s*실\s*(\d{5})/);
-        return `${m[1]}실 ${m[2]}`;
+      // 케이스: "1추모의집-62실-개인단-21967"
+      if (raw.includes('-')){
+        const parts = raw.split('-').map(x => x.trim()).filter(Boolean);
+        // "62실" 포함 파트 찾기
+        const roomPart = parts.find(p => /\d+\s*실/.test(p));
+        const numPart = parts.find(p => /^\d{1,6}$/.test(p) || /^\d{5}$/.test(p));
+        if (roomPart && numPart){
+          const roomDigits = roomPart.replace(/\D/g,'').padStart(2,'0').slice(-2);
+          const numDigits = numPart.replace(/\D/g,'').padStart(5,'0').slice(-5);
+          return `${roomDigits}실 ${numDigits}`;
+        }
+        // roomPart만 있으면 뒤에서 숫자 5자리 찾아보기
+        if (roomPart){
+          const tailNum = parts.slice().reverse().find(p => p.replace(/\D/g,'').length >= 5);
+          if (tailNum){
+            const roomDigits = roomPart.replace(/\D/g,'').padStart(2,'0').slice(-2);
+            const numDigits = tailNum.replace(/\D/g,'').slice(-5).padStart(5,'0');
+            return `${roomDigits}실 ${numDigits}`;
+          }
+        }
       }
 
+      // 이미 "09실 01886" 형태면 정규화
+      const m1 = raw.match(/(\d{1,2})\s*실\s*(\d{1,5})/);
+      if (m1){
+        const room = String(m1[1]).padStart(2,'0');
+        const num = String(m1[2]).padStart(5,'0');
+        return `${room}실 ${num}`;
+      }
+
+      // 숫자만 추출
       let digits = raw.replace(/\D/g,'');
       if (!digits) return raw;
 
       if (digits.length === 6) digits = digits.padStart(7,'0');
       if (digits.length === 5) return `00실 ${digits}`;
-
       if (digits.length >= 7){
         const room = digits.slice(0,2);
         const num = digits.slice(-5);
@@ -614,7 +643,7 @@
       return raw;
     }
 
-    /* ✅ 추모의집: 동일 ensNO 묶기 + retDate 묶어서 유지(하나라도 있으면 반출 처리) */
+    /* ✅ 추모의집: 동일 ensNO 묶기 + retDate 대표값 유지(하나라도 있으면 유지) */
     function mergeEnsRows(rows){
       const map = new Map();
       const order = [];
@@ -629,7 +658,7 @@
             strDate: (r.strDate ?? '-'),
             deadname: (r.deadname ?? r.deadName ?? r.deceasedName ?? '-'),
             applname: (r.applname ?? r.applName ?? '-'),
-            retDate: (r.retDate ?? r.retdate ?? r.RETDATE ?? r.RetDate ?? ''), // ✅ 저장
+            retDate: pickRetDate(r) || '',
             _raw: [r]
           });
           order.push(key);
@@ -649,18 +678,19 @@
             cur.applname = (curAn && curAn !== '-') ? `${curAn} / ${an}` : an;
           }
 
-          // ✅ 묶인 그룹 중 하나라도 retDate가 있으면 대표 retDate 유지
-          const rd = (r.retDate ?? r.retdate ?? r.RETDATE ?? r.RetDate ?? '');
+          // retDate 대표값: 있으면 유지
+          const rd = pickRetDate(r);
           if (!cur.retDate && rd) cur.retDate = rd;
 
           cur._raw.push(r);
         }
       }
 
+      // ✅ 원본 등장 순서 유지 => 먼저 접수된 건 위
       return order.map(key => map.get(key));
     }
 
-    /* 자연장지: 부부장 병합(원본 순서 유지) */
+    /* ✅ 자연장지: 부부장 병합(원본 순서 유지) */
     function mergeCoupleRows(rows) {
       const map = new Map();
       const order = [];
@@ -705,6 +735,25 @@
     function getStatus(sourceKey, id){ return localStorage.getItem(statusKey(sourceKey, id)) || '접수'; }
     function setStatus(sourceKey, id, val){ localStorage.setItem(statusKey(sourceKey, id), val); }
 
+    /* ✅ 리스트 배지/색상: 추모의집은 retDate가 있으면 무조건 반출 표시(요청) */
+    function catOfItem(sourceKey, item, savedStatus){
+      if (sourceKey === 'house' && hasAnyRetDate(item)) return 'ret';
+      const s = (savedStatus ?? '').toString().trim();
+      if (s === '반출') return 'ret';
+      if (s === '안치완료' || s === '안장완료') return 'done';
+      return 'recv';
+    }
+    function badgeHTML(cat){
+      if (cat === 'ret') return `<span class="badge-st badge-ret">반출</span>`;
+      if (cat === 'done') return `<span class="badge-st badge-done">안치완료</span>`;
+      return `<span class="badge-st badge-recv">접수</span>`;
+    }
+    function leftCls(cat){
+      if (cat === 'ret') return 'ret';
+      if (cat === 'done') return 'done';
+      return 'recv';
+    }
+
     function kvRow(k, v){
       return `
         <div class="kv">
@@ -714,17 +763,30 @@
       `;
     }
 
-    function calcTodayCount(sourceKey, rawData, todayISO){
+    /* ✅ 금일건수: 추모의집은 "접수x건, 반출y건" / 자연장지는 "접수x건" */
+    function calcTodayCounts(sourceKey, rawData, todayISO){
       const source = SOURCES[sourceKey];
       const dateKey = source.dateKey;
 
       const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === todayISO);
 
-      let display = todays;
-      if (sourceKey === 'house') display = mergeEnsRows(todays);
-      if (sourceKey === 'nature') display = mergeCoupleRows(todays);
+      if (sourceKey === 'house'){
+        // 접수: 오늘 strDate 건(묶음 적용 후) 중 "retDate가 오늘이 아닌 것"
+        // 반출: retDate가 오늘인 건(묶음 적용 후)
+        const merged = mergeEnsRows(todays);
 
-      return display.length;
+        let recv = 0;
+        let ret = 0;
+        for (const it of merged){
+          if (isRetToday(it, todayISO)) ret++;
+          else recv++;
+        }
+        return { recv, ret };
+      }
+
+      // 자연장지: 반출 없음, 그냥 접수 건수(묶음 적용 후)
+      const mergedN = mergeCoupleRows(todays);
+      return { recv: mergedN.length, ret: 0 };
     }
 
     // DOM
@@ -735,7 +797,8 @@
     const tabHouse = document.getElementById('tabHouse');
     const tabNature = document.getElementById('tabNature');
 
-    const todayCountEl = document.getElementById('todayCount');
+    const countTitle = document.getElementById('countTitle');
+    const countText = document.getElementById('countText');
 
     const overlay = document.getElementById('overlay');
     const mTitle = document.getElementById('mTitle');
@@ -749,7 +812,16 @@
     todayLabel.textContent = `오늘: ${TODAY}`;
     datePicker.value = TODAY;
 
-    datePicker.addEventListener('change', () => load());
+    function syncDateLabel(){
+      // ✅ 날짜선택 카드 2줄 요구: "날짜선택" + "yyyy.mm.dd(ddd)"
+      // 브라우저 date input 자체는 yyyy-mm-dd로 보이므로, 옆/아래에 표시를 맞추려면 input 아래 텍스트를 붙이면 됨.
+      // 요청은 "날짜선택<br>yyyy.mm.dd(ddd)" 2줄 => k / v로 이미 분리되어 있으니 v에 pretty를 같이 표시(텍스트 노출)
+      // (여기서는 input만 둬도 되지만, PC에서 yyyy.mm.dd(ddd) 보여달라 하셔서 title에 반영)
+      const v = datePicker.value || TODAY;
+      datePicker.title = prettyDate(v);
+    }
+
+    datePicker.addEventListener('change', () => { syncDateLabel(); load(); });
 
     function switchSource(sourceKey){
       currentSource = sourceKey;
@@ -765,21 +837,33 @@
       const selectedDate = datePicker.value || TODAY;
 
       try{
+        syncDateLabel();
+
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
-        // 금일 건수(오늘 기준, 묶음 적용 후)
-        todayCountEl.textContent = calcTodayCount(currentSource, data, TODAY).toLocaleString();
+        // ✅ 금일건수 텍스트 적용
+        const c = calcTodayCounts(currentSource, data, TODAY);
 
-        // 날짜 필터
+        if (currentSource === 'house'){
+          countTitle.innerHTML = `금일건수`;
+          countText.innerHTML = `접수${c.recv}건, 반출${c.ret}건`;
+        } else {
+          countTitle.innerHTML = `금일건수`;
+          countText.innerHTML = `접수${c.recv}건`;
+        }
+
+        // ✅ 선택 날짜 필터
         const dateKey = source.dateKey;
         let filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
 
-        // 병합(순서 유지)
+        // ✅ 병합(순서 유지)
         let displayData = filtered;
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
+        // ✅ 정렬 요구: "먼저 접수된 건 위 / 나중 접수된 건 아래"
+        // -> 병합 함수가 원본 등장 순서(order)대로 반환하므로 추가 정렬 없음
         currentDisplayData = displayData;
 
         if (displayData.length === 0){
@@ -805,10 +889,7 @@
           const sid = itemStatusId(currentSource, item);
 
           const saved = getStatus(currentSource, sid);
-          const cat = statusCategoryByItem(currentSource, item, saved);
-
-          const leftCls = (cat === 'ret') ? 'ret' : (cat === 'done' ? 'done' : 'recv');
-          const badge = statusBadgeHTMLByCat(cat);
+          const cat = catOfItem(currentSource, item, saved);
 
           if (currentSource === 'house'){
             displayId = formatEnsNo(item.ensNO ?? '-');
@@ -820,11 +901,11 @@
 
           html += `
             <li>
-              <button class="item ${leftCls}" onclick="openSheet(${idx})">
+              <button class="item ${leftCls(cat)}" onclick="openSheet(${idx})">
                 <div class="main">
                   <div class="id">
                     ${escapeHtml(displayId)}
-                    ${badge}
+                    ${badgeHTML(cat)}
                   </div>
                   <div class="name">${escapeHtml(displayName)}</div>
                 </div>
@@ -854,9 +935,8 @@
       const sid = itemStatusId(currentSource, item);
 
       const saved = getStatus(currentSource, sid);
-      const cat = statusCategoryByItem(currentSource, item, saved);
+      const cat = catOfItem(currentSource, item, saved);
 
-      // 상태 표시 문자열
       const stShow = (cat === 'ret') ? '반출' : (cat === 'done' ? '안치완료' : '접수');
 
       let headerNo = '-';
@@ -865,12 +945,10 @@
       } else {
         headerNo = String(item.natNo ?? '-');
       }
-      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${statusBadgeHTMLByCat(cat)}`;
+      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badgeHTML(cat)}`;
 
-      // ✅ retDate가 있으면 드랍박스도 반출로 고정(표시 목적)
       mStatus.value = stShow;
       mStatus.onchange = (e) => {
-        // retDate가 있으면 반출 우선(표시 정책). 그래도 저장은 해 둠.
         setStatus(currentSource, sid, e.target.value);
         showToast(`✅ ${headerNo} : ${e.target.value}`);
         load();
@@ -883,21 +961,18 @@
         fieldsHTML += kvRow('고인명', item.deadname ?? '-');
         fieldsHTML += kvRow('신청자', item.applname ?? '-');
 
-        // ✅ 요청: retDate 있을 때도 표시(반출)
-        const rd = item.retDate ?? item.retdate ?? item.RETDATE ?? item.RetDate;
+        const rd = pickRetDate(item);
         if (rd != null && String(rd).trim() !== ''){
           fieldsHTML += kvRow('반출', String(rd));
         }
-
       } else {
         fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
-        fieldsHTML += kvRow('안치번호', item.natNo ?? '-');
+        fieldsHTML += kvRow('안장번호', item.natNo ?? '-');
         fieldsHTML += kvRow('고인명', item.deadName ?? '-');
         fieldsHTML += kvRow('신청자', item.applName ?? '-');
       }
 
       mFields.innerHTML = fieldsHTML;
-
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden','false');
     }
@@ -911,9 +986,7 @@
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
 
     window.addEventListener('load', () => {
-      datePicker.value = TODAY;
-
-      // 새로고침 시 선택 유지
+      // ✅ 새로고침 시 선택 유지
       const saved = localStorage.getItem(STORAGE_KEYS.source);
       const initial = (saved === 'nature' || saved === 'house') ? saved : 'house';
       currentSource = initial;
@@ -921,6 +994,8 @@
       tabHouse.classList.toggle('active', initial === 'house');
       tabNature.classList.toggle('active', initial === 'nature');
 
+      datePicker.value = getLocalISODate(new Date());
+      syncDateLabel();
       load();
     });
   </script>
