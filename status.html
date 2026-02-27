@@ -68,7 +68,7 @@
     }
     .title h1{
       margin:0;
-      font-size: 1.22rem; /* ✅ 크게 */
+      font-size: 1.22rem;
       letter-spacing: -0.02em;
       font-weight: 950;
     }
@@ -242,10 +242,10 @@
     }
 
     /* ✅ 색(바)로만 상태 구분 */
-    .itemRow.recv::before{ background: rgba(249,168,212,.55); }     /* 안치/안장 대기 */
-    .itemRow.done::before{ background: rgba(134,239,172,.65); }     /* 안치/안장 완료 */
-    .itemRow.ret::before{ background: rgba(148,163,184,.55); }      /* 반출 대기 */
-    .itemRow.retDone::before{ background: rgba(165,180,252,.70); }  /* 반출 완료 */
+    .itemRow.recv::before{ background: rgba(249,168,212,.55); }
+    .itemRow.done::before{ background: rgba(134,239,172,.65); }
+    .itemRow.ret::before{ background: rgba(148,163,184,.55); }
+    .itemRow.retDone::before{ background: rgba(165,180,252,.70); }
 
     .itemMainBtn{
       flex: 1;
@@ -350,8 +350,10 @@
     }
     .overlay.show{ display:flex; }
 
+    /* ✅ 모달 폭: PC/모바일 관계없이 "너무 넓지 않게" 적절 비율로 */
     .sheet{
-      width: min(760px, 100%);
+      width: min(520px, 92vw);      /* 핵심: 화면 대비 비율 + 상한 */
+      max-width: 520px;
       background: rgba(255,255,255,0.92);
       border: 1px solid rgba(255,255,255,0.65);
       border-radius: 22px;
@@ -364,14 +366,22 @@
     }
     .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
 
+    /* ✅ 아주 작은 화면에서는 좌우 여백 조금 더 확보 */
+    @media (max-width: 360px){
+      .sheet{ width: 94vw; }
+    }
+
+    /* ✅ 모달 헤더: 제목(안치/안장번호)을 "가운데"로 + 위로 붙는 느낌 완화 */
     .sheet-head{
-      padding: 12px 14px 12px;
+      position: relative;
+      padding: 14px 14px 14px; /* 기존보다 여유 있게 */
       display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
+      align-items:center;
+      justify-content:center;
       gap: 10px;
       background: rgba(255,255,255,0.78);
       border-bottom: 1px solid rgba(148,163,184,0.18);
+      min-height: 64px;        /* 제목이 위로 붙는 느낌 완화 */
     }
 
     .headLeft{
@@ -380,22 +390,30 @@
       display:flex;
       flex-direction:column;
       gap: 6px;
+      align-items:center;      /* ✅ 가운데 정렬 */
+      justify-content:center;  /* ✅ 가운데 정렬 */
+      text-align:center;       /* ✅ 가운데 정렬 */
+      padding: 2px 52px;       /* 오른쪽 토글 영역만큼 좌우 여유 */
     }
+
     .headLine{
       margin:0;
       font-weight: 950;
       letter-spacing: -0.02em;
-      font-size: 1.02rem;
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content:flex-start;
+      font-size: 1.06rem;
+      line-height: 1.15;
+      width: 100%;
+      text-align:center;
+      display:block;           /* 센터링 안정화 */
     }
+
     .headMeta{ display:none; }
 
     .headRight{
-      flex: 0 0 auto;
+      position:absolute;       /* ✅ 제목은 가운데, 토글은 오른쪽 고정 */
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
       display:flex;
       flex-direction:column;
       gap: 8px;
@@ -453,6 +471,7 @@
       gap: 12px;
     }
 
+    /* ✅ 상세 항목 "왼쪽 정렬" + 좌우로 붙는 느낌 제거 */
     .kv{
       background: rgba(255,255,255,0.75);
       border: 1px solid rgba(148,163,184,0.18);
@@ -460,25 +479,35 @@
       padding: 10px 12px;
       display:flex;
       align-items:flex-start;
-      justify-content:space-between;
-      gap: 10px;
+      justify-content:flex-start; /* 기존 space-between 느낌 제거 */
+      gap: 12px;
     }
     .kv .k{
       color: var(--muted);
       font-weight: 950;
       font-size: .88rem;
-      flex: 0 0 auto;
+      flex: 0 0 92px;          /* 라벨 폭 고정(가독성) */
       padding-top: 2px;
+      text-align:left;
     }
     .kv .v{
       font-weight: 900;
       color: rgba(15,23,42,0.82);
       font-size: .95rem;
-      text-align:right;
+      text-align:left;         /* ✅ 핵심 */
       word-break: keep-all;
       line-height: 1.25;
       flex: 1;
       min-width: 0;
+    }
+
+    /* ✅ (선택) 화면이 넓을 때는 모달 필드를 2열로(더 짧고 보기 좋게) */
+    @media (min-width: 720px){
+      #mFields{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
     }
 
     .sheet-actions{
@@ -914,7 +943,7 @@
       load();
     }
 
-    // ✅ 미완료/전체 토글 삭제 -> 헤더는 카운트만
+    // 헤더는 카운트만
     function renderListHead(shownCount, totalCount){
       return `
         <div class="list-head">
@@ -931,11 +960,9 @@
       modeToggle.setAttribute('aria-checked', on ? 'true' : 'false');
 
       if (mode === 'ret'){
-        // ✅ 요청: "반출대기" 토글로
         modeToggleText.textContent = on ? '반출완료' : '반출대기';
         return;
       }
-      // ✅ 요청: "안치대기/안장대기" 토글로
       modeToggleText.textContent = on ? recvDoneText(sourceKey) : recvPendingText(sourceKey);
     }
 
@@ -953,7 +980,6 @@
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
 
-      // ✅ 배지 제거: 타이틀은 시설·번호만
       mTitleLine.textContent = `${sourceLabel} · ${headerNo}`;
       mMetaLine.innerHTML = '';
 
@@ -1047,7 +1073,7 @@
       return fieldsHTML;
     }
 
-    // ✅ 완료/미완료 토글해도 "순서 고정": 완료 여부를 정렬에 반영하지 않음
+    // 완료/미완료 토글해도 "순서 고정": 완료 여부를 정렬에 반영하지 않음
     function sortByWorkPriorityStable(arr, selectedISO){
       const clone = arr.slice();
 
@@ -1087,7 +1113,6 @@
         const c = calcSelectedCounts(currentSource, data, selectedDate);
         countTitle.textContent = `안치현황`;
 
-        // 상단 카운트 표기(이전 요청 유지: "안치/반출" / 자연장지는 안장)
         if (currentSource === 'house'){
           countText.innerHTML = `안치${c.recv}건, 반출${c.ret}건`;
         } else {
@@ -1140,7 +1165,6 @@
             ? (statusText === '반출완료')
             : isRecvDone(currentSource, statusText);
 
-          // ✅ 요청: 라벨은 "대기" 토글로
           const rowLabel = (mode === 'ret')
             ? (isOn ? '반출완료' : '반출대기')
             : (isOn ? recvDoneText(currentSource) : recvPendingText(currentSource));
