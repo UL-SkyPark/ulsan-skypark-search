@@ -352,7 +352,7 @@
 
     /* ✅ 모달 폭: PC/모바일 관계없이 "너무 넓지 않게" 적절 비율로 */
     .sheet{
-      width: min(520px, 92vw);      /* 핵심: 화면 대비 비율 + 상한 */
+      width: min(520px, 92vw);
       max-width: 520px;
       background: rgba(255,255,255,0.92);
       border: 1px solid rgba(255,255,255,0.65);
@@ -366,22 +366,21 @@
     }
     .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
 
-    /* ✅ 아주 작은 화면에서는 좌우 여백 조금 더 확보 */
     @media (max-width: 360px){
       .sheet{ width: 94vw; }
     }
 
-    /* ✅ 모달 헤더: 제목(안치/안장번호)을 "가운데"로 + 위로 붙는 느낌 완화 */
+    /* ✅ 모달 헤더: 제목(상단)만 깔끔하게 */
     .sheet-head{
       position: relative;
-      padding: 14px 14px 14px; /* 기존보다 여유 있게 */
+      padding: 14px 14px 14px;
       display:flex;
       align-items:center;
       justify-content:center;
       gap: 10px;
       background: rgba(255,255,255,0.78);
       border-bottom: 1px solid rgba(148,163,184,0.18);
-      min-height: 64px;        /* 제목이 위로 붙는 느낌 완화 */
+      min-height: 64px;
     }
 
     .headLeft{
@@ -390,10 +389,10 @@
       display:flex;
       flex-direction:column;
       gap: 6px;
-      align-items:flex-startr;     
-      justify-content:center; 
-      text-align:left;      
-      padding: 2px 52px 2px 12px;
+      align-items:flex-start;
+      justify-content:center;
+      text-align:left;
+      padding: 2px 12px 2px 12px; /* ✅ 우측 토글 제거했으니 패딩 단순화 */
     }
 
     .headLine{
@@ -404,66 +403,10 @@
       line-height: 1.15;
       width: 100%;
       text-align: left;
-      display:block;           /* 센터링 안정화 */
+      display:block;
     }
 
     .headMeta{ display:none; }
-
-    .headRight{
-      position:absolute;       /* ✅ 제목은 가운데, 토글은 오른쪽 고정 */
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      display:flex;
-      flex-direction:column;
-      gap: 8px;
-      align-items:flex-end;
-    }
-
-    .modeToggle{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.22);
-      background: rgba(255,255,255,0.72);
-      user-select: none;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .modeToggle span{
-      font-size: .86rem;
-      font-weight: 950;
-      color: rgba(15,23,42,.72);
-    }
-    .modeSwitch{
-      width: 44px;
-      height: 26px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.25);
-      background: rgba(148,163,184,0.18);
-      position: relative;
-      flex: 0 0 auto;
-    }
-    .modeSwitch::after{
-      content:"";
-      position:absolute;
-      top: 50%;
-      left: 3px;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(148,163,184,0.22);
-      transition: left .14s ease;
-    }
-    .modeSwitch.on{
-      background: rgba(165,180,252,.28);
-      border-color: rgba(165,180,252,.38);
-    }
-    .modeSwitch.on::after{ left: 21px; }
 
     .sheet-body{
       padding: 12px 14px 14px;
@@ -479,14 +422,14 @@
       padding: 10px 12px;
       display:flex;
       align-items:flex-start;
-      justify-content:flex-start; /* 기존 space-between 느낌 제거 */
+      justify-content:flex-start;
       gap: 12px;
     }
     .kv .k{
       color: var(--muted);
       font-weight: 950;
       font-size: .88rem;
-      flex: 0 0 92px;          /* 라벨 폭 고정(가독성) */
+      flex: 0 0 92px;
       padding-top: 2px;
       text-align:left;
     }
@@ -494,7 +437,7 @@
       font-weight: 900;
       color: rgba(15,23,42,0.82);
       font-size: .95rem;
-      text-align:left;         /* ✅ 핵심 */
+      text-align:left;
       word-break: keep-all;
       line-height: 1.25;
       flex: 1;
@@ -595,13 +538,6 @@
         <div class="headLeft">
           <p class="headLine" id="mTitleLine">-</p>
           <div class="headMeta" id="mMetaLine"></div>
-        </div>
-
-        <div class="headRight">
-          <div class="modeToggle" id="modeToggle" role="switch" aria-checked="false">
-            <div class="modeSwitch" id="modeSwitch"></div>
-            <span id="modeToggleText">-</span>
-          </div>
         </div>
       </div>
 
@@ -914,15 +850,11 @@
 
     const mTitleLine = document.getElementById('mTitleLine');
     const mMetaLine = document.getElementById('mMetaLine');
-    const modeToggle = document.getElementById('modeToggle');
-    const modeSwitch = document.getElementById('modeSwitch');
-    const modeToggleText = document.getElementById('modeToggleText');
     const mFields = document.getElementById('mFields');
 
     let currentSource = 'house';
     let currentDisplayData = [];
     let currentModalItem = null;
-    let currentModalMode = 'recv';
     let currentSelectedDate = '';
 
     const TODAY = getLocalISODate(new Date());
@@ -955,107 +887,11 @@
       `;
     }
 
-    function setModeToggleUI(sourceKey, mode, on){
-      modeSwitch.classList.toggle('on', !!on);
-      modeToggle.setAttribute('aria-checked', on ? 'true' : 'false');
-
-      if (mode === 'ret'){
-        modeToggleText.textContent = on ? '반출완료' : '반출대기';
-        return;
-      }
-      modeToggleText.textContent = on ? recvDoneText(sourceKey) : recvPendingText(sourceKey);
-    }
-
-    function refreshModal(){
-      const item = currentModalItem;
-      if (!item) return;
-
-      const sourceLabel = SOURCES[currentSource].label;
-      const sid = itemStatusId(currentSource, item);
-
-      const recv = getRecvStatus(currentSource, sid);
-      const ret  = getRetStatus(currentSource, sid);
-
-      const headerNo = (currentSource === 'house')
-        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
-        : String(item.natNo ?? '-');
-
-      mTitleLine.textContent = `${sourceLabel} · ${headerNo}`;
-      mMetaLine.innerHTML = '';
-
-      if (currentModalMode === 'ret'){
-        setModeToggleUI(currentSource, 'ret', ret === '반출완료');
-      } else {
-        setModeToggleUI(currentSource, 'recv', isRecvDone(currentSource, recv));
-      }
-    }
-
-    function applyModeToggle(){
-      const item = currentModalItem;
-      if (!item) return;
-
-      const sid = itemStatusId(currentSource, item);
-
-      const headerNo = (currentSource === 'house')
-        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
-        : String(item.natNo ?? '-');
-
-      if (currentModalMode === 'ret'){
-        const cur = getRetStatus(currentSource, sid);
-        const next = (cur === '반출완료') ? '반출대기' : '반출완료';
-        setRetStatus(currentSource, sid, next);
-        showToast(`✅ ${headerNo} : ${next}`);
-      } else {
-        const cur = getRecvStatus(currentSource, sid);
-        const done = recvDoneText(currentSource);
-        const pending = recvPendingText(currentSource);
-        const next = (cur === done) ? pending : done;
-        setRecvStatus(currentSource, sid, next);
-        showToast(`✅ ${headerNo} : ${next}`);
-      }
-
-      refreshModal();
-      load();
-    }
-
-    function applyRowToggle(index, e){
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-
-      const item = currentDisplayData[index];
-      if (!item) return;
-
-      const sid = itemStatusId(currentSource, item);
-      const mode = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)) ? 'ret' : 'recv';
-
-      const headerNo = (currentSource === 'house')
-        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
-        : String(item.natNo ?? '-');
-
-      if (mode === 'ret'){
-        const cur = getRetStatus(currentSource, sid);
-        const next = (cur === '반출완료') ? '반출대기' : '반출완료';
-        setRetStatus(currentSource, sid, next);
-        showToast(`✅ ${headerNo} : ${next}`);
-      } else {
-        const cur = getRecvStatus(currentSource, sid);
-        const done = recvDoneText(currentSource);
-        const pending = recvPendingText(currentSource);
-        const next = (cur === done) ? pending : done;
-        setRecvStatus(currentSource, sid, next);
-        showToast(`✅ ${headerNo} : ${next}`);
-      }
-
-      load();
-    }
-
     function buildFields(item){
       let fieldsHTML = '';
       if (currentSource === 'house'){
         fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
-        fieldsHTML += kvRow('봉안번호', formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-'));
+        // ✅ 봉안번호는 상단 타이틀에 있으므로 본문에서는 제거
         fieldsHTML += kvRow('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
         fieldsHTML += kvRow('신청자', item.applname ?? item.applName ?? '-');
 
@@ -1066,7 +902,7 @@
         }
       } else {
         fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
-        fieldsHTML += kvRow('안장번호', item.natNo ?? '-');
+        // ✅ 안장번호는 상단 타이틀에 있으므로 본문에서는 제거
         fieldsHTML += kvRow('고인명', item.deadName ?? '-');
         fieldsHTML += kvRow('신청자', item.applName ?? '-');
       }
@@ -1218,16 +1054,18 @@
 
       currentModalItem = item;
 
-      if (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)){
-        currentModalMode = 'ret';
-      } else {
-        currentModalMode = 'recv';
-      }
+      const sourceLabel = SOURCES[currentSource].label;
 
+      const headerNo = (currentSource === 'house')
+        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+        : String(item.natNo ?? '-');
+
+      // ✅ 상단 타이틀에 번호 표시
+      mTitleLine.textContent = `${sourceLabel} · ${headerNo}`;
+      mMetaLine.innerHTML = '';
+
+      // ✅ 본문 필드 렌더(봉안/안장번호 제외)
       mFields.innerHTML = buildFields(item);
-      refreshModal();
-
-      modeToggle.onclick = applyModeToggle;
 
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden','false');
@@ -1237,6 +1075,39 @@
       overlay.classList.remove('show');
       overlay.setAttribute('aria-hidden','true');
       currentModalItem = null;
+    }
+
+    function applyRowToggle(index, e){
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      const item = currentDisplayData[index];
+      if (!item) return;
+
+      const sid = itemStatusId(currentSource, item);
+      const mode = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)) ? 'ret' : 'recv';
+
+      const headerNo = (currentSource === 'house')
+        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+        : String(item.natNo ?? '-');
+
+      if (mode === 'ret'){
+        const cur = getRetStatus(currentSource, sid);
+        const next = (cur === '반출완료') ? '반출대기' : '반출완료';
+        setRetStatus(currentSource, sid, next);
+        showToast(`✅ ${headerNo} : ${next}`);
+      } else {
+        const cur = getRecvStatus(currentSource, sid);
+        const done = recvDoneText(currentSource);
+        const pending = recvPendingText(currentSource);
+        const next = (cur === done) ? pending : done;
+        setRecvStatus(currentSource, sid, next);
+        showToast(`✅ ${headerNo} : ${next}`);
+      }
+
+      load();
     }
 
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
