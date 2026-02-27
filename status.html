@@ -117,10 +117,10 @@
       box-shadow: 0 8px 20px rgba(165,180,252,.25);
     }
 
-    /* ✅ 날짜 선택 + 금일건수 : 두 줄 카드 2개 나란히 */
+    /* ✅ 날짜 선택 + 금일현황 : 간격 더 넓게 + 균형 */
     .date-row{
       display:flex;
-      gap: 10px;
+      gap: 14px;              /* 기존 10px → 14px */
       align-items:stretch;
       flex: 1 1 420px;
       min-width: 320px;
@@ -130,11 +130,11 @@
       background: rgba(255,255,255,0.78);
       border: 1px solid rgba(148,163,184,0.22);
       border-radius: 18px;
-      padding: 10px 12px;
+      padding: 12px 14px;     /* 기존 10/12 → 12/14 */
       display:flex;
       flex-direction:column;
-      gap: 6px;
-      min-height: 64px;
+      gap: 10px;              /* 기존 6px → 10px */
+      min-height: 72px;       /* 기존 64px → 72px */
       flex: 1 1 200px;
     }
     .pill2 .k{
@@ -152,8 +152,17 @@
       color: rgba(15,23,42,.86);
       display:flex;
       align-items:center;
-      gap: 8px;
+      gap: 10px;              /* 기존 8px → 10px */
       flex-wrap: wrap;
+    }
+
+    /* 금일현황 텍스트 균형 */
+    #countText{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      width:100%;
+      gap: 12px;
     }
 
     .pill2 input[type="date"]{
@@ -481,8 +490,8 @@
           </div>
 
           <div class="pill2" id="countPill">
-            <div class="k" id="countTitle">금일건수</div>
-            <div class="v" id="countText">접수0건</div>
+            <div class="k" id="countTitle">금일현황</div>
+            <div class="v" id="countText">접수0건, 반출0건</div>
           </div>
         </div>
       </div>
@@ -552,7 +561,7 @@
     }
 
     /* =========================
-       ✅ retDate 처리: 형식 정규화 + 오늘 반출 판정
+       ✅ retDate 처리: 형식 정규화 + 오늘 반출 판정(오늘만 반출 표시)
        ========================= */
     function normalizeToISODate(v){
       if (v == null) return '';
@@ -668,15 +677,16 @@
       const order = [];
 
       for (const r of rows){
-        const ens = (r.ensNO ?? r.ensNo ?? r.ensno ?? '').toString().trim();
-        const key = ens || '__NO_ENS__';
+        const ens = (r.ensNO ?? r.ensNo ?? r.ensno ?? r.ensNo ?? r.ensno ?? r.ensNo ?? r.ensNo ?? r.ensNo); // safety no-op
+        const ens2 = (r.ensNO ?? r.ensNo ?? r.ensno ?? '').toString().trim();
+        const key = ens2 || '__NO_ENS__';
 
         if (!map.has(key)){
           map.set(key, {
-            ensNO: ens || '-',
+            ensNO: ens2 || '-',
             strDate: (r.strDate ?? '-'),
-            deadname: (r.deadname ?? r.deadName ?? r.deceasedName ?? '-'),
-            applname: (r.applname ?? r.applName ?? '-'),
+            deadname: (r.deadname ?? r.deadName ?? r.deceasedName ?? r.deadName ?? '-'),
+            applname: (r.applname ?? r.applName ?? r.applName ?? '-'),
             retDate: pickRetDate(r) || '',
             _raw: [r]
           });
@@ -684,7 +694,7 @@
         } else {
           const cur = map.get(key);
 
-          const dn = (r.deadname ?? r.deadName ?? r.deceasedName ?? '-').toString();
+          const dn = (r.deadname ?? r.deadName ?? r.deceasedName ?? r.deadName ?? '-').toString();
           const an = (r.applname ?? r.applName ?? '-').toString();
 
           const curDn = (cur.deadname ?? '-').toString();
@@ -754,8 +764,7 @@
     function setStatus(sourceKey, id, val){ localStorage.setItem(statusKey(sourceKey, id), val); }
 
     /* ✅ 리스트 배지/색상:
-       - 추모의집: retDate가 '오늘'이면 반출로 표시
-       - 그 외는 저장상태에 따름
+       - 추모의집: retDate가 '오늘'이면 반출로 표시 (오늘 반출만!)
     */
     function catOfItem(sourceKey, item, savedStatus){
       if (sourceKey === 'house' && isRetToday(item, TODAY)) return 'ret';
@@ -785,9 +794,9 @@
       `;
     }
 
-    /* ✅ 금일건수:
-       - 추모의집: 접수x건, 반출y건 (retDate=오늘 반영)
-       - 자연장지: 접수x건
+    /* ✅ 금일현황:
+       - 추모의집: 접수x건, 반출y건 (retDate=오늘만 반영)
+       - 자연장지: 접수x건, 반출0건
     */
     function calcTodayCounts(sourceKey, rawData, todayISO){
       const source = SOURCES[sourceKey];
@@ -866,15 +875,14 @@
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
-        // ✅ 금일건수 텍스트 적용
+        // ✅ 금일현황 텍스트 적용
         const c = calcTodayCounts(currentSource, data, TODAY);
 
+        countTitle.innerHTML = `금일현황`;
         if (currentSource === 'house'){
-          countTitle.innerHTML = `금일건수`;
           countText.innerHTML = `접수${c.recv}건, 반출${c.ret}건`;
         } else {
-          countTitle.innerHTML = `금일건수`;
-          countText.innerHTML = `접수${c.recv}건`;
+          countText.innerHTML = `접수${c.recv}건, 반출0건`;
         }
 
         // ✅ 선택 날짜 필터
@@ -892,7 +900,7 @@
             // 1) strDate가 선택일이면 표시
             if (str === sel) return true;
 
-            // 2) 오늘 화면일 때만: retDate가 오늘인 것도 표시(반출현황)
+            // 2) 오늘 화면일 때만: retDate가 오늘인 것도 표시(오늘 반출 현황)
             if (isTodayView && ret === TODAY) return true;
 
             return false;
@@ -934,8 +942,8 @@
           const cat = catOfItem(currentSource, item, saved);
 
           if (currentSource === 'house'){
-            displayId = formatEnsNo(item.ensNO ?? '-');
-            displayName = (item.deadname ?? '-');
+            displayId = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
+            displayName = (item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
           } else {
             displayId = String(item.natNo ?? '-');
             displayName = String(item.deadName ?? '-');
@@ -983,7 +991,7 @@
 
       let headerNo = '-';
       if (currentSource === 'house'){
-        headerNo = formatEnsNo(item.ensNO ?? '-');
+        headerNo = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
       } else {
         headerNo = String(item.natNo ?? '-');
       }
@@ -999,15 +1007,14 @@
       let fieldsHTML = '';
       if (currentSource === 'house'){
         fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
-        fieldsHTML += kvRow('봉안번호', formatEnsNo(item.ensNO ?? '-'));
-        fieldsHTML += kvRow('고인명', item.deadname ?? '-');
-        fieldsHTML += kvRow('신청자', item.applname ?? '-');
+        fieldsHTML += kvRow('봉안번호', formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-'));
+        fieldsHTML += kvRow('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
+        fieldsHTML += kvRow('신청자', item.applname ?? item.applName ?? '-');
 
         const rdISO = normalizeToISODate(pickRetDate(item));
         const rdRaw = pickRetDate(item);
 
         if (rdISO){
-          // 원본이 있으면 원본 표시, 없으면 ISO 표시
           fieldsHTML += kvRow('반출', String(rdRaw ?? rdISO));
         }
       } else {
