@@ -27,6 +27,11 @@
       --st-ret-bd: rgba(148,163,184,.28);
       --st-ret-tx: rgba(30,41,59,.78);
 
+      /* ✅ 반출완료 배지 */
+      --st-retdone-bg: rgba(165,180,252,.22);
+      --st-retdone-bd: rgba(165,180,252,.40);
+      --st-retdone-tx: rgba(30,41,59,.86);
+
       --shadow: 0 14px 40px rgba(15,23,42,0.10);
     }
 
@@ -117,10 +122,9 @@
       box-shadow: 0 8px 20px rgba(165,180,252,.25);
     }
 
-    /* ✅ 날짜 선택 + 금일현황 : 간격 더 넓게 + 균형 */
     .date-row{
       display:flex;
-      gap: 14px;              /* 기존 10px → 14px */
+      gap: 14px;
       align-items:stretch;
       flex: 1 1 420px;
       min-width: 320px;
@@ -130,11 +134,11 @@
       background: rgba(255,255,255,0.78);
       border: 1px solid rgba(148,163,184,0.22);
       border-radius: 18px;
-      padding: 12px 14px;     /* 기존 10/12 → 12/14 */
+      padding: 12px 14px;
       display:flex;
       flex-direction:column;
-      gap: 10px;              /* 기존 6px → 10px */
-      min-height: 72px;       /* 기존 64px → 72px */
+      gap: 10px;
+      min-height: 72px;
       flex: 1 1 200px;
     }
     .pill2 .k{
@@ -152,11 +156,10 @@
       color: rgba(15,23,42,.86);
       display:flex;
       align-items:center;
-      gap: 10px;              /* 기존 8px → 10px */
+      gap: 10px;
       flex-wrap: wrap;
     }
 
-    /* 금일현황 텍스트 균형 */
     #countText{
       display:flex;
       align-items:center;
@@ -206,11 +209,21 @@
       align-items:center;
       justify-content:space-between;
       gap: 10px;
+      flex-wrap: wrap;
     }
     .list-head .hint{
       color: var(--muted);
       font-size: .9rem;
       font-weight: 900;
+      white-space: nowrap;
+    }
+    .list-head .right{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap: 8px;
+      margin-left:auto;
+      flex-wrap: wrap;
     }
     .list-head .badge{
       font-size: .86rem;
@@ -222,6 +235,52 @@
       white-space: nowrap;
       color: rgba(15,23,42,.72);
     }
+
+    /* ✅ 완료 숨기기 토글 */
+    .toggle{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(255,255,255,0.72);
+      user-select: none;
+      cursor: pointer;
+    }
+    .toggle span{
+      font-size: .86rem;
+      font-weight: 950;
+      color: rgba(15,23,42,.72);
+      white-space: nowrap;
+    }
+    .switch{
+      width: 44px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.25);
+      background: rgba(148,163,184,0.18);
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .switch::after{
+      content:"";
+      position:absolute;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(148,163,184,0.22);
+      transition: left .14s ease;
+    }
+    .switch.on{
+      background: rgba(134,239,172,.28);
+      border-color: rgba(134,239,172,.38);
+    }
+    .switch.on::after{ left: 21px; }
 
     ul{ list-style:none; padding:0; margin:0; }
 
@@ -250,6 +309,7 @@
     .item.recv::before{ background: rgba(249,168,212,.55); }
     .item.done::before{ background: rgba(134,239,172,.65); }
     .item.ret::before{ background: rgba(148,163,184,.55); }
+    .item.retDone::before{ background: rgba(165,180,252,.70); }
 
     .item:active{ background: rgba(165,180,252,.08); }
 
@@ -302,6 +362,11 @@
       background: var(--st-ret-bg);
       border-color: var(--st-ret-bd);
       color: var(--st-ret-tx);
+    }
+    .badge-retDone{
+      background: var(--st-retdone-bg);
+      border-color: var(--st-retdone-bd);
+      color: var(--st-retdone-tx);
     }
 
     .chev{
@@ -372,26 +437,10 @@
       flex-wrap: wrap;
     }
 
-    .headRight{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      flex: 0 0 auto;
-    }
-    .headRight select{
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.30);
-      padding: 9px 10px;
-      font-weight: 950;
-      background: rgba(255,255,255,0.90);
-      outline: none;
-      min-height: 42px;
-    }
-
     .sheet-body{
       padding: 12px 14px 14px;
       display:grid;
-      gap: 10px;
+      gap: 12px;
     }
 
     .kv{
@@ -420,6 +469,45 @@
       line-height: 1.25;
       flex: 1;
       min-width: 0;
+    }
+
+    /* ✅ 드롭다운 대신: 버튼 2개씩(2블록) */
+    .stBlock{
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(148,163,184,0.18);
+      border-radius: 16px;
+      padding: 12px;
+      display:grid;
+      gap: 10px;
+    }
+    .stBlock .label{
+      font-size: .88rem;
+      font-weight: 950;
+      color: var(--muted);
+    }
+    .stSeg{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .stBtn{
+      flex: 1 1 160px;
+      border-radius: 999px;
+      padding: 10px 12px;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(255,255,255,0.82);
+      font-weight: 950;
+      cursor: pointer;
+      min-height: 42px;
+      color: rgba(15,23,42,.78);
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+    }
+    .stBtn:active{ transform: scale(0.99); }
+    .stBtn.active{
+      background: linear-gradient(135deg, rgba(165,180,252,.55), rgba(134,239,172,.35));
+      border-color: rgba(165,180,252,.35);
+      color: rgba(15,23,42,.90);
+      box-shadow: 0 10px 22px rgba(165,180,252,.18);
     }
 
     .sheet-actions{
@@ -508,16 +596,26 @@
         <div class="t">
           <p class="line1" id="mTitle">-</p>
         </div>
-        <div class="headRight">
-          <select id="mStatus" aria-label="상태 선택">
-            <option value="접수">접수</option>
-            <option value="안치완료">안치완료</option>
-            <option value="반출">반출</option>
-          </select>
-        </div>
       </div>
 
       <div class="sheet-body">
+        <!-- ✅ 버튼 그룹 2개 -->
+        <div class="stBlock">
+          <div class="label">안치 상태</div>
+          <div class="stSeg">
+            <button class="stBtn" id="btnRecv" type="button">접수</button>
+            <button class="stBtn" id="btnDone" type="button">안치완료</button>
+          </div>
+        </div>
+
+        <div class="stBlock">
+          <div class="label">반출 상태</div>
+          <div class="stSeg">
+            <button class="stBtn" id="btnRet" type="button">반출</button>
+            <button class="stBtn" id="btnRetDone" type="button">반출완료</button>
+          </div>
+        </div>
+
         <div id="mFields"></div>
       </div>
 
@@ -537,14 +635,17 @@
       return `${y}-${m}-${day}`;
     }
 
-    const STORAGE_KEYS = { source: "uic_source_selected" };
+    const STORAGE_KEYS = {
+      source: "uic_source_selected",
+      hideDone: "uic_hide_done" // ✅ 완료 숨기기 토글
+    };
 
     const SOURCES = {
       house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
     };
 
-    /* ✅ 요일/표시 문자열: yyyy.mm.dd(ddd) */
+    /* 요일/표시 문자열 */
     function getKoreanDowChar(isoDate){
       if (!isoDate) return '';
       const [y,m,d] = isoDate.split('-').map(Number);
@@ -560,15 +661,12 @@
       return `${y}.${m}.${d}(${dow})`;
     }
 
-    /* =========================
-       ✅ retDate 처리: 형식 정규화 + 오늘 반출 판정(오늘만 반출 표시)
-       ========================= */
+    /* retDate 처리 */
     function normalizeToISODate(v){
       if (v == null) return '';
       const s = String(v).trim();
       if (!s) return '';
 
-      // 2026-02-27 09:10:00 / 2026-02-27T09:10:00 형태
       const m1 = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
       if (m1) {
         const y = m1[1];
@@ -577,7 +675,6 @@
         return `${y}-${m}-${d}`;
       }
 
-      // 2026.02.27 / 2026/02/27 형태
       const m2 = s.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})/);
       if (m2) {
         const y = m2[1];
@@ -586,7 +683,6 @@
         return `${y}-${m}-${d}`;
       }
 
-      // 20260227 형태
       const m3 = s.match(/^(\d{4})(\d{2})(\d{2})$/);
       if (m3) return `${m3[1]}-${m3[2]}-${m3[3]}`;
 
@@ -595,9 +691,6 @@
 
     function pickRetDate(obj){
       return obj?.retDate ?? obj?.retdate ?? obj?.RETDATE ?? obj?.RetDate ?? '';
-    }
-    function hasAnyRetDate(obj){
-      return normalizeToISODate(pickRetDate(obj)) !== '';
     }
     function isRetToday(obj, todayISO){
       return normalizeToISODate(pickRetDate(obj)) === todayISO;
@@ -625,7 +718,7 @@
       setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    /* ✅ ensNO 포맷 */
+    /* ensNO 포맷 */
     function formatEnsNo(val){
       if (val == null) return '-';
       const raw = String(val).trim();
@@ -671,13 +764,12 @@
       return raw;
     }
 
-    /* ✅ 추모의집: 동일 ensNO 묶기 + retDate 대표값 유지 */
+    /* 추모의집: 동일 ensNO 묶기 + retDate 대표값 유지 */
     function mergeEnsRows(rows){
       const map = new Map();
       const order = [];
 
       for (const r of rows){
-        const ens = (r.ensNO ?? r.ensNo ?? r.ensno ?? r.ensNo ?? r.ensno ?? r.ensNo ?? r.ensNo ?? r.ensNo); // safety no-op
         const ens2 = (r.ensNO ?? r.ensNo ?? r.ensno ?? '').toString().trim();
         const key = ens2 || '__NO_ENS__';
 
@@ -685,8 +777,8 @@
           map.set(key, {
             ensNO: ens2 || '-',
             strDate: (r.strDate ?? '-'),
-            deadname: (r.deadname ?? r.deadName ?? r.deceasedName ?? r.deadName ?? '-'),
-            applname: (r.applname ?? r.applName ?? r.applName ?? '-'),
+            deadname: (r.deadname ?? r.deadName ?? r.deceasedName ?? '-'),
+            applname: (r.applname ?? r.applName ?? '-'),
             retDate: pickRetDate(r) || '',
             _raw: [r]
           });
@@ -694,7 +786,7 @@
         } else {
           const cur = map.get(key);
 
-          const dn = (r.deadname ?? r.deadName ?? r.deceasedName ?? r.deadName ?? '-').toString();
+          const dn = (r.deadname ?? r.deadName ?? r.deceasedName ?? '-').toString();
           const an = (r.applname ?? r.applName ?? '-').toString();
 
           const curDn = (cur.deadname ?? '-').toString();
@@ -707,7 +799,6 @@
             cur.applname = (curAn && curAn !== '-') ? `${curAn} / ${an}` : an;
           }
 
-          // retDate 대표값: 있으면 유지
           const rd = pickRetDate(r);
           if (!cur.retDate && rd) cur.retDate = rd;
 
@@ -718,7 +809,7 @@
       return order.map(key => map.get(key));
     }
 
-    /* ✅ 자연장지: 부부장 병합(원본 순서 유지) */
+    /* 자연장지: 부부장 병합(원본 순서 유지) */
     function mergeCoupleRows(rows) {
       const map = new Map();
       const order = [];
@@ -751,7 +842,10 @@
       return order.map(key => map.get(key));
     }
 
-    /* 상태 저장 키 */
+    /* ✅ 상태 저장(2개 트랙)
+       - 안치: 접수 / 안치완료
+       - 반출: 반출 / 반출완료 (미선택 가능)
+    */
     function itemStatusId(sourceKey, item){
       if (sourceKey === 'house'){
         const ens = (item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-');
@@ -759,27 +853,44 @@
       }
       return String(item?.natNo ?? '-');
     }
-    function statusKey(sourceKey, id){ return `status_${sourceKey}_${id}`; }
-    function getStatus(sourceKey, id){ return localStorage.getItem(statusKey(sourceKey, id)) || '접수'; }
-    function setStatus(sourceKey, id, val){ localStorage.setItem(statusKey(sourceKey, id), val); }
 
-    /* ✅ 리스트 배지/색상:
-       - 추모의집: retDate가 '오늘'이면 반출로 표시 (오늘 반출만!)
-    */
-    function catOfItem(sourceKey, item, savedStatus){
+    function recvKey(sourceKey, id){ return `recv_${sourceKey}_${id}`; }
+    function retKey(sourceKey, id){ return `ret_${sourceKey}_${id}`; }
+
+    function getRecvStatus(sourceKey, id){
+      return localStorage.getItem(recvKey(sourceKey, id)) || '접수';
+    }
+    function setRecvStatus(sourceKey, id, val){
+      localStorage.setItem(recvKey(sourceKey, id), val);
+    }
+
+    function getRetStatus(sourceKey, id){
+      return localStorage.getItem(retKey(sourceKey, id)) || ''; // '' | '반출' | '반출완료'
+    }
+    function setRetStatus(sourceKey, id, val){
+      localStorage.setItem(retKey(sourceKey, id), val);
+    }
+
+    /* ✅ 리스트 배지/색상 결정 */
+    function catOfItem(sourceKey, item, recvStatus, retStatus){
+      if (retStatus === '반출완료') return 'retDone';
+      if (retStatus === '반출') return 'ret';
+
+      // 추모의집: retDate가 오늘이면 '반출'로 표시(오늘 화면에서 반출 목록 보여줄 때)
       if (sourceKey === 'house' && isRetToday(item, TODAY)) return 'ret';
 
-      const s = (savedStatus ?? '').toString().trim();
-      if (s === '반출') return 'ret';
-      if (s === '안치완료' || s === '안장완료') return 'done';
+      if (recvStatus === '안치완료' || recvStatus === '안장완료') return 'done';
       return 'recv';
     }
+
     function badgeHTML(cat){
+      if (cat === 'retDone') return `<span class="badge-st badge-retDone">반출완료</span>`;
       if (cat === 'ret') return `<span class="badge-st badge-ret">반출</span>`;
       if (cat === 'done') return `<span class="badge-st badge-done">안치완료</span>`;
       return `<span class="badge-st badge-recv">접수</span>`;
     }
     function leftCls(cat){
+      if (cat === 'retDone') return 'retDone';
       if (cat === 'ret') return 'ret';
       if (cat === 'done') return 'done';
       return 'recv';
@@ -794,16 +905,12 @@
       `;
     }
 
-    /* ✅ 금일현황:
-       - 추모의집: 접수x건, 반출y건 (retDate=오늘만 반영)
-       - 자연장지: 접수x건, 반출0건
-    */
+    /* 금일현황(기존 방식 유지) */
     function calcTodayCounts(sourceKey, rawData, todayISO){
       const source = SOURCES[sourceKey];
       const dateKey = source.dateKey;
 
       if (sourceKey === 'house'){
-        // 오늘 접수(strDate=오늘) + 오늘 반출(retDate=오늘) 모두 포함해서 묶음 처리
         const rows = (Array.isArray(rawData) ? rawData : []).filter(x => {
           const str = String(x?.[dateKey] ?? '');
           const ret = normalizeToISODate(pickRetDate(x));
@@ -826,6 +933,18 @@
       return { recv: mergedN.length, ret: 0 };
     }
 
+    /* ✅ 완료 숨기기 토글 */
+    function isHideDoneOn(){
+      return localStorage.getItem(STORAGE_KEYS.hideDone) === '1';
+    }
+    function setHideDone(on){
+      localStorage.setItem(STORAGE_KEYS.hideDone, on ? '1' : '0');
+    }
+    function toggleHideDone(){
+      setHideDone(!isHideDoneOn());
+      load();
+    }
+
     // DOM
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
@@ -839,11 +958,17 @@
 
     const overlay = document.getElementById('overlay');
     const mTitle = document.getElementById('mTitle');
-    const mStatus = document.getElementById('mStatus');
     const mFields = document.getElementById('mFields');
+
+    // 모달 버튼
+    const btnRecv = document.getElementById('btnRecv');
+    const btnDone = document.getElementById('btnDone');
+    const btnRet = document.getElementById('btnRet');
+    const btnRetDone = document.getElementById('btnRetDone');
 
     let currentSource = 'house';
     let currentDisplayData = [];
+    let currentModalIndex = -1;
 
     const TODAY = getLocalISODate(new Date());
     todayLabel.textContent = `오늘: ${TODAY}`;
@@ -865,6 +990,90 @@
       load();
     }
 
+    function renderListHead(shownCount, totalCount){
+      const on = isHideDoneOn();
+      const switchCls = on ? 'switch on' : 'switch';
+      const txt = on ? '완료 숨김' : '완료 표시';
+
+      return `
+        <div class="list-head">
+          <div class="hint">접수현황</div>
+          <div class="right">
+            <div class="toggle" onclick="toggleHideDone()">
+              <div class="${switchCls}" role="switch" aria-checked="${on ? 'true' : 'false'}"></div>
+              <span>${escapeHtml(txt)}</span>
+            </div>
+            <div class="badge">${shownCount.toLocaleString()} / ${totalCount.toLocaleString()}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function setActiveBtn(btn, on){
+      btn.classList.toggle('active', !!on);
+    }
+
+    function refreshModalButtons(sourceKey, sid, item){
+      // 현재 저장값
+      const recv = getRecvStatus(sourceKey, sid); // 접수/안치완료
+      const ret = getRetStatus(sourceKey, sid);   // '', 반출, 반출완료
+
+      // ✅ 안치 버튼
+      setActiveBtn(btnRecv, recv === '접수');
+      setActiveBtn(btnDone, recv === '안치완료');
+
+      // ✅ 반출 버튼(미선택 허용: 아무 버튼도 active 아닐 수 있음)
+      setActiveBtn(btnRet, ret === '반출');
+      setActiveBtn(btnRetDone, ret === '반출완료');
+
+      // 클릭 바인딩(중복 바인딩 방지 위해 매번 재지정)
+      btnRecv.onclick = () => applyStatuses(sourceKey, sid, item, { recv: '접수' });
+      btnDone.onclick = () => applyStatuses(sourceKey, sid, item, { recv: '안치완료' });
+
+      btnRet.onclick = () => {
+        // 토글처럼: 이미 반출이면 해제(빈값), 아니면 반출
+        const cur = getRetStatus(sourceKey, sid);
+        applyStatuses(sourceKey, sid, item, { ret: (cur === '반출' ? '' : '반출') });
+      };
+      btnRetDone.onclick = () => {
+        // 토글처럼: 이미 반출완료면 해제(빈값), 아니면 반출완료
+        const cur = getRetStatus(sourceKey, sid);
+        applyStatuses(sourceKey, sid, item, { ret: (cur === '반출완료' ? '' : '반출완료') });
+      };
+    }
+
+    function applyStatuses(sourceKey, sid, item, patch){
+      const headerNo = (sourceKey === 'house')
+        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+        : String(item.natNo ?? '-');
+
+      if (patch.recv){
+        setRecvStatus(sourceKey, sid, patch.recv);
+      }
+      if (patch.ret !== undefined){
+        setRetStatus(sourceKey, sid, patch.ret);
+      }
+
+      const recv = getRecvStatus(sourceKey, sid);
+      const ret = getRetStatus(sourceKey, sid);
+
+      // 배지/헤더 갱신
+      refreshModalHeader(sourceKey, headerNo, item, recv, ret);
+      refreshModalButtons(sourceKey, sid, item);
+
+      // 토스트(변경 요약)
+      const msg = `✅ ${headerNo} : ${recv}${ret ? ` / ${ret}` : ''}`;
+      showToast(msg);
+
+      load();
+    }
+
+    function refreshModalHeader(sourceKey, headerNo, item, recv, ret){
+      const sourceLabel = SOURCES[sourceKey].label;
+      const cat = catOfItem(sourceKey, item, recv, ret);
+      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badgeHTML(cat)}`;
+    }
+
     async function load(){
       const source = SOURCES[currentSource];
       const selectedDate = datePicker.value || TODAY;
@@ -875,9 +1084,8 @@
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
-        // ✅ 금일현황 텍스트 적용
+        // 금일현황
         const c = calcTodayCounts(currentSource, data, TODAY);
-
         countTitle.innerHTML = `금일현황`;
         if (currentSource === 'house'){
           countText.innerHTML = `접수${c.recv}건, 반출${c.ret}건`;
@@ -885,10 +1093,10 @@
           countText.innerHTML = `접수${c.recv}건, 반출0건`;
         }
 
-        // ✅ 선택 날짜 필터
+        // 날짜 필터
         const dateKey = source.dateKey;
-
         let filtered = [];
+
         if (currentSource === 'house'){
           const sel = selectedDate;
           const isTodayView = (sel === TODAY);
@@ -897,22 +1105,30 @@
             const str = String(x?.[dateKey] ?? '');
             const ret = normalizeToISODate(pickRetDate(x));
 
-            // 1) strDate가 선택일이면 표시
             if (str === sel) return true;
-
-            // 2) 오늘 화면일 때만: retDate가 오늘인 것도 표시(오늘 반출 현황)
             if (isTodayView && ret === TODAY) return true;
-
             return false;
           });
         } else {
           filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
         }
 
-        // ✅ 병합(순서 유지)
+        // 병합
         let displayData = filtered;
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
+
+        // ✅ 완료 숨기기 적용(안치완료 / 반출완료)
+        const hideDone = isHideDoneOn();
+        if (hideDone){
+          displayData = displayData.filter(item => {
+            const sid = itemStatusId(currentSource, item);
+            const recv = getRecvStatus(currentSource, sid);
+            const ret = getRetStatus(currentSource, sid);
+            const cat = catOfItem(currentSource, item, recv, ret);
+            return !(cat === 'done' || cat === 'retDone');
+          });
+        }
 
         currentDisplayData = displayData;
 
@@ -924,22 +1140,18 @@
         const limit = 80;
         const shown = displayData.slice(0, limit);
 
-        let html = `
-          <div class="list">
-            <div class="list-head">
-              <div class="hint">접수현황</div>
-              <div class="badge">${Math.min(limit, displayData.length).toLocaleString()} / ${displayData.length.toLocaleString()}</div>
-            </div>
-            <ul>
-        `;
+        let html = `<div class="list">`;
+        html += renderListHead(Math.min(limit, displayData.length), displayData.length);
+        html += `<ul>`;
 
         shown.forEach((item, idx) => {
           let displayId = '-';
           let displayName = '-';
           const sid = itemStatusId(currentSource, item);
 
-          const saved = getStatus(currentSource, sid);
-          const cat = catOfItem(currentSource, item, saved);
+          const recv = getRecvStatus(currentSource, sid);
+          const ret = getRetStatus(currentSource, sid);
+          const cat = catOfItem(currentSource, item, recv, ret);
 
           if (currentSource === 'house'){
             displayId = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
@@ -980,30 +1192,26 @@
     function openSheet(index){
       const item = currentDisplayData[index];
       if (!item) return;
+      currentModalIndex = index;
 
-      const sourceLabel = SOURCES[currentSource].label;
       const sid = itemStatusId(currentSource, item);
 
-      const saved = getStatus(currentSource, sid);
-      const cat = catOfItem(currentSource, item, saved);
+      // 헤더번호
+      const headerNo = (currentSource === 'house')
+        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+        : String(item.natNo ?? '-');
 
-      const stShow = (cat === 'ret') ? '반출' : (cat === 'done' ? '안치완료' : '접수');
+      // 저장 상태
+      const recv = getRecvStatus(currentSource, sid);
+      const ret = getRetStatus(currentSource, sid);
 
-      let headerNo = '-';
-      if (currentSource === 'house'){
-        headerNo = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
-      } else {
-        headerNo = String(item.natNo ?? '-');
-      }
-      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badgeHTML(cat)}`;
+      // 헤더
+      refreshModalHeader(currentSource, headerNo, item, recv, ret);
 
-      mStatus.value = stShow;
-      mStatus.onchange = (e) => {
-        setStatus(currentSource, sid, e.target.value);
-        showToast(`✅ ${headerNo} : ${e.target.value}`);
-        load();
-      };
+      // 버튼 상태
+      refreshModalButtons(currentSource, sid, item);
 
+      // 필드
       let fieldsHTML = '';
       if (currentSource === 'house'){
         fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
@@ -1013,18 +1221,17 @@
 
         const rdISO = normalizeToISODate(pickRetDate(item));
         const rdRaw = pickRetDate(item);
-
         if (rdISO){
-          fieldsHTML += kvRow('반출', String(rdRaw ?? rdISO));
+          fieldsHTML += kvRow('반출(데이터)', String(rdRaw ?? rdISO));
         }
       } else {
-        fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
+        fieldsHTML += kvRow('안장일자', item.natDate ?? '-');
         fieldsHTML += kvRow('안장번호', item.natNo ?? '-');
         fieldsHTML += kvRow('고인명', item.deadName ?? '-');
         fieldsHTML += kvRow('신청자', item.applName ?? '-');
       }
-
       mFields.innerHTML = fieldsHTML;
+
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden','false');
     }
@@ -1032,6 +1239,7 @@
     function closeSheet(){
       overlay.classList.remove('show');
       overlay.setAttribute('aria-hidden','true');
+      currentModalIndex = -1;
     }
 
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
@@ -1044,6 +1252,11 @@
 
       tabHouse.classList.toggle('active', initial === 'house');
       tabNature.classList.toggle('active', initial === 'nature');
+
+      // ✅ hideDone 기본값(없으면 0)
+      if (localStorage.getItem(STORAGE_KEYS.hideDone) == null){
+        setHideDone(false);
+      }
 
       datePicker.value = getLocalISODate(new Date());
       syncDateLabel();
