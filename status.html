@@ -59,11 +59,25 @@
       overflow: hidden;
     }
 
+    /* ✅ 상단 자동 숨김(스크롤 다운 시) */
     .top{
       padding: 16px 16px 12px;
       display:flex;
       flex-direction:column;
       gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      transition: transform .18s ease, opacity .18s ease, padding .18s ease;
+      background: rgba(255,255,255,0.58);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(148,163,184,0.14);
+    }
+    .app.top-hidden .top{
+      transform: translateY(-92%);
+      opacity: 0.02;
+      padding-top: 10px;
+      padding-bottom: 6px;
     }
 
     .title{
@@ -188,7 +202,6 @@
 
     .content{
       padding: 12px 12px 14px;
-      border-top: 1px solid rgba(148,163,184,0.14);
     }
 
     .list{
@@ -235,7 +248,7 @@
       color: rgba(15,23,42,.72);
     }
 
-    /* ✅ 완료 숨기기 토글 */
+    /* ✅ 미완료/전체 토글 */
     .toggle{
       display:inline-flex;
       align-items:center;
@@ -309,7 +322,6 @@
     .item.done::before{ background: rgba(134,239,172,.65); }
     .item.ret::before{ background: rgba(148,163,184,.55); }
     .item.retDone::before{ background: rgba(165,180,252,.70); }
-
     .item:active{ background: rgba(165,180,252,.08); }
 
     .main{
@@ -396,7 +408,7 @@
       inset: 0;
       background: rgba(2,6,23,.30);
       display:none;
-      align-items:center;   /* ✅ 가운데 */
+      align-items:center;
       justify-content:center;
       padding: 12px;
       z-index: 9999;
@@ -418,7 +430,7 @@
     .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
 
     /* =========================
-       ✅ 모달 헤더: 한 줄, 왼쪽 정렬 + 우측 상단 토글 배치
+       ✅ 모달 헤더: 좌측 정보 + 우측 상단 토글(상황에 따라 접수/반출)
        ========================= */
     .sheet-head{
       padding: 12px 14px 12px;
@@ -438,7 +450,6 @@
       gap: 6px;
     }
 
-    /* ✅ 1줄로 왼쪽 정렬 표시 */
     .headLine{
       margin:0;
       font-weight: 950;
@@ -451,7 +462,6 @@
       justify-content:flex-start;
     }
 
-    /* ✅ 헤더 뒤쪽(아래) 정보 한줄 */
     .headMeta{
       display:flex;
       align-items:center;
@@ -485,10 +495,8 @@
       align-items:flex-end;
     }
 
-    /* =========================
-       ✅ 모달 우측 상단: 반출 토글만
-       ========================= */
-    .miniToggle{
+    /* ✅ 모달 우측 상단 토글(공용) */
+    .modeToggle{
       display:inline-flex;
       align-items:center;
       gap: 8px;
@@ -500,12 +508,12 @@
       cursor: pointer;
       white-space: nowrap;
     }
-    .miniToggle span{
+    .modeToggle span{
       font-size: .86rem;
       font-weight: 950;
       color: rgba(15,23,42,.72);
     }
-    .miniSwitch{
+    .modeSwitch{
       width: 44px;
       height: 26px;
       border-radius: 999px;
@@ -514,7 +522,7 @@
       position: relative;
       flex: 0 0 auto;
     }
-    .miniSwitch::after{
+    .modeSwitch::after{
       content:"";
       position:absolute;
       top: 50%;
@@ -527,83 +535,17 @@
       border: 1px solid rgba(148,163,184,0.22);
       transition: left .14s ease;
     }
-    .miniSwitch.on{
+    .modeSwitch.on{
       background: rgba(165,180,252,.28);
       border-color: rgba(165,180,252,.38);
     }
-    .miniSwitch.on::after{ left: 21px; }
+    .modeSwitch.on::after{ left: 21px; }
 
-    /* =========================
-       ✅ 모달 본문: 접수/안치완료 토글만
-       ========================= */
     .sheet-body{
       padding: 12px 14px 14px;
       display:grid;
       gap: 12px;
     }
-
-    .stBlock{
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 16px;
-      padding: 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .stBlock .label{
-      font-size: .9rem;
-      font-weight: 950;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .stToggle{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.22);
-      background: rgba(255,255,255,0.72);
-      user-select: none;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .stToggle span{
-      font-size: .86rem;
-      font-weight: 950;
-      color: rgba(15,23,42,.72);
-    }
-    .stSwitch{
-      width: 44px;
-      height: 26px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.25);
-      background: rgba(148,163,184,0.18);
-      position: relative;
-      flex: 0 0 auto;
-    }
-    .stSwitch::after{
-      content:"";
-      position:absolute;
-      top: 50%;
-      left: 3px;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(148,163,184,0.22);
-      transition: left .14s ease;
-    }
-    .stSwitch.on{
-      background: rgba(134,239,172,.28);
-      border-color: rgba(134,239,172,.38);
-    }
-    .stSwitch.on::after{ left: 21px; }
 
     .kv{
       background: rgba(255,255,255,0.75);
@@ -678,8 +620,8 @@
 </head>
 
 <body>
-  <div class="app">
-    <div class="top">
+  <div class="app" id="app">
+    <div class="top" id="topBar">
       <div class="title">
         <h1>🌸 울산하늘공원 접수 현황</h1>
         <div class="mini" id="todayLabel">오늘: -</div>
@@ -700,7 +642,7 @@
           </div>
 
           <div class="pill2" id="countPill">
-            <div class="k" id="countTitle">금일현황</div>
+            <div class="k" id="countTitle">안치현황</div>
             <div class="v" id="countText">접수0건, 반출0건</div>
           </div>
         </div>
@@ -721,25 +663,16 @@
           <div class="headMeta" id="mMetaLine"></div>
         </div>
 
-        <!-- ✅ 우측 상단: 반출 토글만 -->
+        <!-- ✅ 우측 상단: 상황에 따라 "접수 토글" 또는 "반출 토글"만 표시 -->
         <div class="headRight">
-          <div class="miniToggle" id="retToggle" role="switch" aria-checked="false">
-            <div class="miniSwitch" id="retSwitch"></div>
-            <span id="retToggleText">반출</span>
+          <div class="modeToggle" id="modeToggle" role="switch" aria-checked="false">
+            <div class="modeSwitch" id="modeSwitch"></div>
+            <span id="modeToggleText">-</span>
           </div>
         </div>
       </div>
 
       <div class="sheet-body">
-        <!-- ✅ 접수/안치완료 토글만 -->
-        <div class="stBlock">
-          <div class="label">안치 상태</div>
-          <div class="stToggle" id="recvToggle" role="switch" aria-checked="false">
-            <div class="stSwitch" id="recvSwitch"></div>
-            <span id="recvToggleText">접수</span>
-          </div>
-        </div>
-
         <div id="mFields"></div>
       </div>
 
@@ -761,7 +694,7 @@
 
     const STORAGE_KEYS = {
       source: "uic_source_selected",
-      hideDone: "uic_hide_done"
+      hideDone: "uic_hide_done" // ✅ 이제 의미: 미완료(ON) / 전체(OFF)
     };
 
     const SOURCES = {
@@ -815,9 +748,6 @@
 
     function pickRetDate(obj){
       return obj?.retDate ?? obj?.retdate ?? obj?.RETDATE ?? obj?.RetDate ?? '';
-    }
-    function isRetToday(obj, todayISO){
-      return normalizeToISODate(pickRetDate(obj)) === todayISO;
     }
 
     function escapeHtml(str){
@@ -967,8 +897,8 @@
     }
 
     /* ✅ 상태 저장: 2트랙
-       - 안치: 접수 / 안치완료 (토글)
-       - 반출: 반출 / 반출완료 (토글)
+       - 안치: 접수 / 안치완료
+       - 반출: 반출 / 반출완료
     */
     function itemStatusId(sourceKey, item){
       if (sourceKey === 'house'){
@@ -995,28 +925,30 @@
       localStorage.setItem(retKey(sourceKey, id), val);
     }
 
-    /* ✅ 배지/색상 결정 */
-    function catOfItem(sourceKey, item, recvStatus, retStatus){
-      if (retStatus === '반출완료') return 'retDone';
-      if (retStatus === '반출') return 'ret';
-
-      if (sourceKey === 'house' && isRetToday(item, TODAY)) return 'ret';
-
-      if (recvStatus === '안치완료' || recvStatus === '안장완료') return 'done';
-      return 'recv';
+    /* ✅ 이 아이템이 "선택일 기준 반출 건"인가? */
+    function isRetOnDate(item, isoDate){
+      return normalizeToISODate(pickRetDate(item)) === isoDate;
     }
 
-    function badgeHTML(cat){
-      if (cat === 'retDone') return `<span class="badge-st badge-retDone">반출완료</span>`;
-      if (cat === 'ret') return `<span class="badge-st badge-ret">반출</span>`;
-      if (cat === 'done') return `<span class="badge-st badge-done">안치완료</span>`;
-      return `<span class="badge-st badge-recv">접수</span>`;
+    /* ✅ 배지: "접수계열" vs "반출계열" 분리 */
+    function badgeForMode(mode, statusText){
+      // mode: 'recv' | 'ret'
+      if (mode === 'ret'){
+        return (statusText === '반출완료')
+          ? `<span class="badge-st badge-retDone">반출완료</span>`
+          : `<span class="badge-st badge-ret">반출</span>`;
+      }
+      // recv
+      return (statusText === '안치완료' || statusText === '안장완료')
+        ? `<span class="badge-st badge-done">안치완료</span>`
+        : `<span class="badge-st badge-recv">접수</span>`;
     }
-    function leftCls(cat){
-      if (cat === 'retDone') return 'retDone';
-      if (cat === 'ret') return 'ret';
-      if (cat === 'done') return 'done';
-      return 'recv';
+
+    function leftClsForMode(mode, statusText){
+      if (mode === 'ret'){
+        return (statusText === '반출완료') ? 'retDone' : 'ret';
+      }
+      return (statusText === '안치완료' || statusText === '안장완료') ? 'done' : 'recv';
     }
 
     function kvRow(k, v){
@@ -1028,16 +960,17 @@
       `;
     }
 
-    /* 금일현황(기존 방식 유지) */
-    function calcTodayCounts(sourceKey, rawData, todayISO){
+    /* ✅ 선택일 기준 현황(안치현황) */
+    function calcSelectedCounts(sourceKey, rawData, selectedISO){
       const source = SOURCES[sourceKey];
       const dateKey = source.dateKey;
 
       if (sourceKey === 'house'){
+        // 선택일: 접수(strDate==selected) + 반출(retDate==selected)
         const rows = (Array.isArray(rawData) ? rawData : []).filter(x => {
           const str = String(x?.[dateKey] ?? '');
           const ret = normalizeToISODate(pickRetDate(x));
-          return (str === todayISO) || (ret === todayISO);
+          return (str === selectedISO) || (ret === selectedISO);
         });
 
         const merged = mergeEnsRows(rows);
@@ -1045,30 +978,36 @@
         let recv = 0;
         let ret = 0;
         for (const it of merged){
-          if (isRetToday(it, todayISO)) ret++;
-          else if (String(it.strDate ?? '') === todayISO) recv++;
+          const isRet = isRetOnDate(it, selectedISO);
+          const isRecv = String(it.strDate ?? '') === selectedISO;
+          // 같은 ens가 접수/반출 둘 다일 경우 우선 반출로 카운트(현장 기준: 반출이 더 급함)
+          if (isRet) ret++;
+          else if (isRecv) recv++;
         }
         return { recv, ret };
       }
 
-      const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === todayISO);
+      // 자연장지: 반출 없음(현 구조 기준)
+      const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === selectedISO);
       const mergedN = mergeCoupleRows(todays);
       return { recv: mergedN.length, ret: 0 };
     }
 
-    /* 완료 숨기기 토글 */
-    function isHideDoneOn(){
-      return localStorage.getItem(STORAGE_KEYS.hideDone) === '1';
+    /* ✅ 미완료/전체 토글 */
+    function isOnlyUndoneOn(){
+      return localStorage.getItem(STORAGE_KEYS.hideDone) === '1'; // ON = 미완료만
     }
-    function setHideDone(on){
+    function setOnlyUndone(on){
       localStorage.setItem(STORAGE_KEYS.hideDone, on ? '1' : '0');
     }
-    function toggleHideDone(){
-      setHideDone(!isHideDoneOn());
+    function toggleOnlyUndone(){
+      setOnlyUndone(!isOnlyUndoneOn());
       load();
     }
 
     // DOM
+    const appEl = document.getElementById('app');
+
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
     const listArea = document.getElementById('listArea');
@@ -1085,21 +1024,18 @@
     const mTitleLine = document.getElementById('mTitleLine');
     const mMetaLine = document.getElementById('mMetaLine');
 
-    // 모달 토글(안치)
-    const recvToggle = document.getElementById('recvToggle');
-    const recvSwitch = document.getElementById('recvSwitch');
-    const recvToggleText = document.getElementById('recvToggleText');
-
-    // 모달 토글(반출 - 우측 상단)
-    const retToggle = document.getElementById('retToggle');
-    const retSwitch = document.getElementById('retSwitch');
-    const retToggleText = document.getElementById('retToggleText');
+    // 모달 우측상단 토글(공용)
+    const modeToggle = document.getElementById('modeToggle');
+    const modeSwitch = document.getElementById('modeSwitch');
+    const modeToggleText = document.getElementById('modeToggleText');
 
     const mFields = document.getElementById('mFields');
 
     let currentSource = 'house';
     let currentDisplayData = [];
     let currentModalItem = null;
+    let currentModalMode = 'recv'; // 'recv' | 'ret'
+    let currentSelectedDate = '';  // ✅ openSheet에서 사용
 
     const TODAY = getLocalISODate(new Date());
     todayLabel.textContent = `오늘: ${TODAY}`;
@@ -1121,15 +1057,15 @@
     }
 
     function renderListHead(shownCount, totalCount){
-      const on = isHideDoneOn();
+      const on = isOnlyUndoneOn();
       const switchCls = on ? 'switch on' : 'switch';
-      const txt = on ? '완료 숨김' : '완료 표시';
+      const txt = on ? '미완료' : '전체';
 
       return `
         <div class="list-head">
           <div class="hint">접수현황</div>
           <div class="right">
-            <div class="toggle" onclick="toggleHideDone()">
+            <div class="toggle" onclick="toggleOnlyUndone()">
               <div class="${switchCls}" role="switch" aria-checked="${on ? 'true' : 'false'}"></div>
               <span>${escapeHtml(txt)}</span>
             </div>
@@ -1139,19 +1075,16 @@
       `;
     }
 
-    function setToggleUI(which, on){
-      if (which === 'recv'){
-        recvSwitch.classList.toggle('on', !!on);
-        recvToggle.setAttribute('aria-checked', on ? 'true' : 'false');
-        recvToggleText.textContent = on ? '안치완료' : '접수';
+    function setModeToggleUI(mode, on){
+      // mode: recv/ret
+      modeSwitch.classList.toggle('on', !!on);
+      modeToggle.setAttribute('aria-checked', on ? 'true' : 'false');
+
+      if (mode === 'ret'){
+        modeToggleText.textContent = on ? '반출완료' : '반출';
         return;
       }
-      if (which === 'ret'){
-        retSwitch.classList.toggle('on', !!on);
-        retToggle.setAttribute('aria-checked', on ? 'true' : 'false');
-        retToggleText.textContent = on ? '반출완료' : '반출';
-        return;
-      }
+      modeToggleText.textContent = on ? '안치완료' : '접수';
     }
 
     function refreshModal(){
@@ -1161,19 +1094,19 @@
       const sourceLabel = SOURCES[currentSource].label;
       const sid = itemStatusId(currentSource, item);
 
-      const recv = getRecvStatus(currentSource, sid); // 접수/안치완료
-      const ret = getRetStatus(currentSource, sid);   // 반출/반출완료
+      const recv = getRecvStatus(currentSource, sid);
+      const ret  = getRetStatus(currentSource, sid);
 
       const headerNo = (currentSource === 'house')
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
 
-      const cat = catOfItem(currentSource, item, recv, ret);
+      // ✅ 모달 상단 배지: 모드에 맞춰 표시
+      const statusText = (currentModalMode === 'ret') ? ret : recv;
+      const badge = badgeForMode(currentModalMode, statusText);
 
-      // 헤더 1줄: 시설 · 번호 + 배지
-      mTitleLine.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badgeHTML(cat)}`;
+      mTitleLine.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badge}`;
 
-      // 헤더 뒤쪽 한 줄(왼쪽 정렬): 고인 / 신청자(있으면)
       const dead = (currentSource === 'house')
         ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
         : String(item.deadName ?? '-');
@@ -1187,43 +1120,36 @@
         <div class="chip">신청자: ${escapeHtml(appl)}</div>
       `;
 
-      // 토글 UI
-      setToggleUI('recv', recv === '안치완료');
-      setToggleUI('ret', ret === '반출완료');
+      // ✅ 모달 우측상단 토글: 모드에 맞게만 보여줌
+      if (currentModalMode === 'ret'){
+        setModeToggleUI('ret', ret === '반출완료');
+      } else {
+        setModeToggleUI('recv', recv === '안치완료' || recv === '안장완료');
+      }
     }
 
-    function applyRecvToggle(){
+    function applyModeToggle(){
       const item = currentModalItem;
       if (!item) return;
-      const sid = itemStatusId(currentSource, item);
 
-      const cur = getRecvStatus(currentSource, sid);
-      const next = (cur === '안치완료') ? '접수' : '안치완료';
-      setRecvStatus(currentSource, sid, next);
+      const sid = itemStatusId(currentSource, item);
 
       const headerNo = (currentSource === 'house')
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
 
-      showToast(`✅ ${headerNo} : ${next}`);
-      refreshModal();
-      load();
-    }
+      if (currentModalMode === 'ret'){
+        const cur = getRetStatus(currentSource, sid);
+        const next = (cur === '반출완료') ? '반출' : '반출완료';
+        setRetStatus(currentSource, sid, next);
+        showToast(`✅ ${headerNo} : ${next}`);
+      } else {
+        const cur = getRecvStatus(currentSource, sid);
+        const next = (cur === '안치완료') ? '접수' : '안치완료';
+        setRecvStatus(currentSource, sid, next);
+        showToast(`✅ ${headerNo} : ${next}`);
+      }
 
-    function applyRetToggle(){
-      const item = currentModalItem;
-      if (!item) return;
-      const sid = itemStatusId(currentSource, item);
-
-      const cur = getRetStatus(currentSource, sid);
-      const next = (cur === '반출완료') ? '반출' : '반출완료';
-      setRetStatus(currentSource, sid, next);
-
-      const headerNo = (currentSource === 'house')
-        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
-        : String(item.natNo ?? '-');
-
-      showToast(`✅ ${headerNo} : ${next}`);
       refreshModal();
       load();
     }
@@ -1239,7 +1165,7 @@
         const rdISO = normalizeToISODate(pickRetDate(item));
         const rdRaw = pickRetDate(item);
         if (rdISO){
-          fieldsHTML += kvRow('반출일자', String(rdRaw ?? rdISO));  <!-- ✅ 변경 -->
+          fieldsHTML += kvRow('반출일자', String(rdRaw ?? rdISO));
         }
       } else {
         fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
@@ -1250,9 +1176,58 @@
       return fieldsHTML;
     }
 
+    /* ✅ 상태순 정렬(반출→접수→완료) */
+    function sortByWorkPriority(arr, selectedISO){
+      const clone = arr.slice();
+
+      function isCompleted(mode, statusText){
+        if (mode === 'ret') return statusText === '반출완료';
+        return statusText === '안치완료' || statusText === '안장완료';
+      }
+
+      function displayIdOf(item){
+        if (currentSource === 'house'){
+          return formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
+        }
+        return String(item.natNo ?? '-');
+      }
+
+      clone.sort((a, b) => {
+        const ida = itemStatusId(currentSource, a);
+        const idb = itemStatusId(currentSource, b);
+
+        const modeA = (currentSource === 'house' && isRetOnDate(a, selectedISO)) ? 'ret' : 'recv';
+        const modeB = (currentSource === 'house' && isRetOnDate(b, selectedISO)) ? 'ret' : 'recv';
+
+        const recvA = getRecvStatus(currentSource, ida);
+        const retA  = getRetStatus(currentSource, ida);
+        const recvB = getRecvStatus(currentSource, idb);
+        const retB  = getRetStatus(currentSource, idb);
+
+        const stA = (modeA === 'ret') ? retA : recvA;
+        const stB = (modeB === 'ret') ? retB : recvB;
+
+        const doneA = isCompleted(modeA, stA);
+        const doneB = isCompleted(modeB, stB);
+
+        // 그룹: 0=반출(미완료), 1=접수(미완료), 2=완료(모드 무관)
+        const grpA = doneA ? 2 : (modeA === 'ret' ? 0 : 1);
+        const grpB = doneB ? 2 : (modeB === 'ret' ? 0 : 1);
+        if (grpA !== grpB) return grpA - grpB;
+
+        // 같은 그룹 내: 번호순(문자열 비교)
+        const da = displayIdOf(a);
+        const db = displayIdOf(b);
+        return da.localeCompare(db, 'ko');
+      });
+
+      return clone;
+    }
+
     async function load(){
       const source = SOURCES[currentSource];
       const selectedDate = datePicker.value || TODAY;
+      currentSelectedDate = selectedDate;
 
       try{
         syncDateLabel();
@@ -1260,51 +1235,51 @@
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
-        // 금일현황
-        const c = calcTodayCounts(currentSource, data, TODAY);
-        countTitle.innerHTML = `금일현황`;
+        // ✅ 안치현황(선택일 기준)
+        const c = calcSelectedCounts(currentSource, data, selectedDate);
+        countTitle.textContent = `안치현황`;
         if (currentSource === 'house'){
           countText.innerHTML = `접수${c.recv}건, 반출${c.ret}건`;
         } else {
           countText.innerHTML = `접수${c.recv}건, 반출0건`;
         }
 
-        // 날짜 필터
+        // ✅ 선택일 필터(추모의집: 접수/반출 모두 포함)
         const dateKey = source.dateKey;
         let filtered = [];
 
         if (currentSource === 'house'){
-          const sel = selectedDate;
-          const isTodayView = (sel === TODAY);
-
           filtered = data.filter(x => {
             const str = String(x?.[dateKey] ?? '');
             const ret = normalizeToISODate(pickRetDate(x));
-
-            if (str === sel) return true;
-            if (isTodayView && ret === TODAY) return true;
-            return false;
+            return (str === selectedDate) || (ret === selectedDate);
           });
         } else {
           filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
         }
 
-        // 병합
+        // ✅ 병합
         let displayData = filtered;
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // 완료 숨기기(안치완료/반출완료)
-        const hideDone = isHideDoneOn();
-        if (hideDone){
+        // ✅ 미완료만(접수완료/반출완료만 숨김 — 모드별 판단)
+        const onlyUndone = isOnlyUndoneOn();
+        if (onlyUndone){
           displayData = displayData.filter(item => {
             const sid = itemStatusId(currentSource, item);
-            const recv = getRecvStatus(currentSource, sid);
-            const ret = getRetStatus(currentSource, sid);
-            const cat = catOfItem(currentSource, item, recv, ret);
-            return !(cat === 'done' || cat === 'retDone');
+
+            const mode = (currentSource === 'house' && isRetOnDate(item, selectedDate)) ? 'ret' : 'recv';
+            if (mode === 'ret'){
+              return getRetStatus(currentSource, sid) !== '반출완료';
+            }
+            const r = getRecvStatus(currentSource, sid);
+            return !(r === '안치완료' || r === '안장완료');
           });
         }
+
+        // ✅ 상태순 정렬(반출→접수→완료)
+        displayData = sortByWorkPriority(displayData, selectedDate);
 
         currentDisplayData = displayData;
 
@@ -1325,9 +1300,12 @@
           let displayName = '-';
           const sid = itemStatusId(currentSource, item);
 
+          const mode = (currentSource === 'house' && isRetOnDate(item, selectedDate)) ? 'ret' : 'recv';
+
           const recv = getRecvStatus(currentSource, sid);
-          const ret = getRetStatus(currentSource, sid);
-          const cat = catOfItem(currentSource, item, recv, ret);
+          const ret  = getRetStatus(currentSource, sid);
+
+          const statusText = (mode === 'ret') ? ret : recv;
 
           if (currentSource === 'house'){
             displayId = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
@@ -1339,11 +1317,11 @@
 
           html += `
             <li>
-              <button class="item ${leftCls(cat)}" onclick="openSheet(${idx})">
+              <button class="item ${leftClsForMode(mode, statusText)}" onclick="openSheet(${idx})">
                 <div class="main">
                   <div class="id">
                     ${escapeHtml(displayId)}
-                    ${badgeHTML(cat)}
+                    ${badgeForMode(mode, statusText)}
                   </div>
                   <div class="name">${escapeHtml(displayName)}</div>
                 </div>
@@ -1371,15 +1349,21 @@
 
       currentModalItem = item;
 
+      // ✅ 모드 결정(선택일 기준): 반출 건이면 'ret', 아니면 'recv'
+      if (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)){
+        currentModalMode = 'ret';
+      } else {
+        currentModalMode = 'recv';
+      }
+
       // 필드 채우기
       mFields.innerHTML = buildFields(item);
 
       // 모달 헤더/토글 갱신
       refreshModal();
 
-      // 토글 이벤트
-      recvToggle.onclick = applyRecvToggle;
-      retToggle.onclick = applyRetToggle;
+      // 토글 이벤트(공용)
+      modeToggle.onclick = applyModeToggle;
 
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden','false');
@@ -1394,6 +1378,44 @@
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
 
+    /* ✅ 상단 자동 숨김: 아래로 스크롤하면 숨기고, 위로 스크롤하면 다시 표시 */
+    (function bindAutoHideTop(){
+      let lastY = window.scrollY || 0;
+      let acc = 0;
+      const TH = 18;        // 누적 임계치
+      const MINY = 48;      // 이 정도 내려가야 숨김 허용
+
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY || 0;
+        const dy = y - lastY;
+        lastY = y;
+
+        // 작은 흔들림은 무시
+        if (Math.abs(dy) < 2) return;
+
+        acc += dy;
+
+        // 아래로 충분히 스크롤: 숨김
+        if (acc > TH && y > MINY){
+          appEl.classList.add('top-hidden');
+          acc = 0;
+          return;
+        }
+
+        // 위로 스크롤: 표시
+        if (acc < -TH){
+          appEl.classList.remove('top-hidden');
+          acc = 0;
+          return;
+        }
+
+        // 최상단이면 항상 표시
+        if (y < 10){
+          appEl.classList.remove('top-hidden');
+        }
+      }, { passive: true });
+    })();
+
     window.addEventListener('load', () => {
       const saved = localStorage.getItem(STORAGE_KEYS.source);
       const initial = (saved === 'nature' || saved === 'house') ? saved : 'house';
@@ -1403,7 +1425,8 @@
       tabNature.classList.toggle('active', initial === 'nature');
 
       if (localStorage.getItem(STORAGE_KEYS.hideDone) == null){
-        setHideDone(false);
+        // 기본: 전체(OFF)
+        setOnlyUndone(false);
       }
 
       datePicker.value = getLocalISODate(new Date());
