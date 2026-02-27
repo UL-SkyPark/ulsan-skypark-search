@@ -59,7 +59,7 @@
       overflow: hidden;
     }
 
-    /* ✅ 상단 자동 숨김(스크롤 다운 시) */
+    /* ✅ 상단: 원래대로 고정(자연스럽게) */
     .top{
       padding: 16px 16px 12px;
       display:flex;
@@ -68,16 +68,9 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      transition: transform .18s ease, opacity .18s ease, padding .18s ease;
       background: rgba(255,255,255,0.58);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(148,163,184,0.14);
-    }
-    .app.top-hidden .top{
-      transform: translateY(-92%);
-      opacity: 0.02;
-      padding-top: 10px;
-      padding-bottom: 6px;
     }
 
     .title{
@@ -171,14 +164,6 @@
       align-items:center;
       gap: 10px;
       flex-wrap: wrap;
-    }
-
-    #countText{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      width:100%;
-      gap: 12px;
     }
 
     .pill2 input[type="date"]{
@@ -401,7 +386,7 @@
     }
 
     /* =========================
-       ✅ 모달: 가운데 띄우기
+       ✅ 모달: 가운데
        ========================= */
     .overlay{
       position: fixed;
@@ -429,9 +414,6 @@
     }
     .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
 
-    /* =========================
-       ✅ 모달 헤더: 좌측 정보 + 우측 상단 토글(상황에 따라 접수/반출)
-       ========================= */
     .sheet-head{
       padding: 12px 14px 12px;
       display:flex;
@@ -462,30 +444,8 @@
       justify-content:flex-start;
     }
 
-    .headMeta{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-wrap: wrap;
-      color: rgba(15,23,42,.72);
-      font-weight: 900;
-      font-size: .9rem;
-      line-height: 1.2;
-      justify-content:flex-start;
-    }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.20);
-      background: rgba(255,255,255,0.70);
-      color: rgba(15,23,42,.76);
-      font-weight: 950;
-      font-size: .85rem;
-      white-space: nowrap;
-    }
+    /* ✅ 모달 상단 고인/신청자 라인 삭제(요청) */
+    .headMeta{ display:none; }
 
     .headRight{
       flex: 0 0 auto;
@@ -624,7 +584,7 @@
     <div class="top" id="topBar">
       <div class="title">
         <h1>🌸 울산하늘공원 접수 현황</h1>
-        <div class="mini" id="todayLabel">오늘: -</div>
+        <div class="mini" id="todayLabel">-</div>
       </div>
 
       <div class="bar">
@@ -643,7 +603,7 @@
 
           <div class="pill2" id="countPill">
             <div class="k" id="countTitle">안치현황</div>
-            <div class="v" id="countText">접수0건, 반출0건</div>
+            <div class="v" id="countText">안치대기0건, 반출대기0건</div>
           </div>
         </div>
       </div>
@@ -663,7 +623,6 @@
           <div class="headMeta" id="mMetaLine"></div>
         </div>
 
-        <!-- ✅ 우측 상단: 상황에 따라 "접수 토글" 또는 "반출 토글"만 표시 -->
         <div class="headRight">
           <div class="modeToggle" id="modeToggle" role="switch" aria-checked="false">
             <div class="modeSwitch" id="modeSwitch"></div>
@@ -694,7 +653,7 @@
 
     const STORAGE_KEYS = {
       source: "uic_source_selected",
-      hideDone: "uic_hide_done" // ✅ 이제 의미: 미완료(ON) / 전체(OFF)
+      hideDone: "uic_hide_done" // ✅ 의미: 미완료(ON) / 전체(OFF)
     };
 
     const SOURCES = {
@@ -702,23 +661,6 @@
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
     };
 
-    /* 요일/표시 문자열 */
-    function getKoreanDowChar(isoDate){
-      if (!isoDate) return '';
-      const [y,m,d] = isoDate.split('-').map(Number);
-      if (!y || !m || !d) return '';
-      const dt = new Date(y, m-1, d);
-      const days = ['일','월','화','수','목','금','토'];
-      return days[dt.getDay()];
-    }
-    function prettyDate(isoDate){
-      if (!isoDate) return '-';
-      const [y,m,d] = isoDate.split('-');
-      const dow = getKoreanDowChar(isoDate);
-      return `${y}.${m}.${d}(${dow})`;
-    }
-
-    /* retDate 정규화 */
     function normalizeToISODate(v){
       if (v == null) return '';
       const s = String(v).trim();
@@ -772,7 +714,6 @@
       setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    /* ensNO 포맷 */
     function formatEnsNo(val){
       if (val == null) return '-';
       const raw = String(val).trim();
@@ -818,7 +759,6 @@
       return raw;
     }
 
-    /* 추모의집: 동일 ensNO 묶기 + retDate 대표값 유지 */
     function mergeEnsRows(rows){
       const map = new Map();
       const order = [];
@@ -863,7 +803,6 @@
       return order.map(key => map.get(key));
     }
 
-    /* 자연장지: 부부장 병합(원본 순서 유지) */
     function mergeCoupleRows(rows) {
       const map = new Map();
       const order = [];
@@ -896,10 +835,6 @@
       return order.map(key => map.get(key));
     }
 
-    /* ✅ 상태 저장: 2트랙
-       - 안치: 접수 / 안치완료
-       - 반출: 반출 / 반출완료
-    */
     function itemStatusId(sourceKey, item){
       if (sourceKey === 'house'){
         const ens = (item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-');
@@ -911,37 +846,38 @@
     function recvKey(sourceKey, id){ return `recv_${sourceKey}_${id}`; }
     function retKey(sourceKey, id){ return `ret_${sourceKey}_${id}`; }
 
+    /* ✅ 기본값/명칭 변경:
+       - 접수 -> 안치대기
+       - 반출 -> 반출대기
+    */
     function getRecvStatus(sourceKey, id){
-      return localStorage.getItem(recvKey(sourceKey, id)) || '접수';
+      return localStorage.getItem(recvKey(sourceKey, id)) || '안치대기';
     }
     function setRecvStatus(sourceKey, id, val){
       localStorage.setItem(recvKey(sourceKey, id), val);
     }
 
     function getRetStatus(sourceKey, id){
-      return localStorage.getItem(retKey(sourceKey, id)) || '반출';
+      return localStorage.getItem(retKey(sourceKey, id)) || '반출대기';
     }
     function setRetStatus(sourceKey, id, val){
       localStorage.setItem(retKey(sourceKey, id), val);
     }
 
-    /* ✅ 이 아이템이 "선택일 기준 반출 건"인가? */
     function isRetOnDate(item, isoDate){
       return normalizeToISODate(pickRetDate(item)) === isoDate;
     }
 
-    /* ✅ 배지: "접수계열" vs "반출계열" 분리 */
+    /* ✅ 배지 문구도 동일 변경 */
     function badgeForMode(mode, statusText){
-      // mode: 'recv' | 'ret'
       if (mode === 'ret'){
         return (statusText === '반출완료')
           ? `<span class="badge-st badge-retDone">반출완료</span>`
-          : `<span class="badge-st badge-ret">반출</span>`;
+          : `<span class="badge-st badge-ret">반출대기</span>`;
       }
-      // recv
       return (statusText === '안치완료' || statusText === '안장완료')
         ? `<span class="badge-st badge-done">안치완료</span>`
-        : `<span class="badge-st badge-recv">접수</span>`;
+        : `<span class="badge-st badge-recv">안치대기</span>`;
     }
 
     function leftClsForMode(mode, statusText){
@@ -960,13 +896,11 @@
       `;
     }
 
-    /* ✅ 선택일 기준 현황(안치현황) */
     function calcSelectedCounts(sourceKey, rawData, selectedISO){
       const source = SOURCES[sourceKey];
       const dateKey = source.dateKey;
 
       if (sourceKey === 'house'){
-        // 선택일: 접수(strDate==selected) + 반출(retDate==selected)
         const rows = (Array.isArray(rawData) ? rawData : []).filter(x => {
           const str = String(x?.[dateKey] ?? '');
           const ret = normalizeToISODate(pickRetDate(x));
@@ -980,22 +914,19 @@
         for (const it of merged){
           const isRet = isRetOnDate(it, selectedISO);
           const isRecv = String(it.strDate ?? '') === selectedISO;
-          // 같은 ens가 접수/반출 둘 다일 경우 우선 반출로 카운트(현장 기준: 반출이 더 급함)
           if (isRet) ret++;
           else if (isRecv) recv++;
         }
         return { recv, ret };
       }
 
-      // 자연장지: 반출 없음(현 구조 기준)
       const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === selectedISO);
       const mergedN = mergeCoupleRows(todays);
       return { recv: mergedN.length, ret: 0 };
     }
 
-    /* ✅ 미완료/전체 토글 */
     function isOnlyUndoneOn(){
-      return localStorage.getItem(STORAGE_KEYS.hideDone) === '1'; // ON = 미완료만
+      return localStorage.getItem(STORAGE_KEYS.hideDone) === '1';
     }
     function setOnlyUndone(on){
       localStorage.setItem(STORAGE_KEYS.hideDone, on ? '1' : '0');
@@ -1006,8 +937,6 @@
     }
 
     // DOM
-    const appEl = document.getElementById('app');
-
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
     const listArea = document.getElementById('listArea');
@@ -1020,32 +949,25 @@
 
     const overlay = document.getElementById('overlay');
 
-    // 모달 헤더/메타
+    // 모달
     const mTitleLine = document.getElementById('mTitleLine');
-    const mMetaLine = document.getElementById('mMetaLine');
-
-    // 모달 우측상단 토글(공용)
+    const mMetaLine = document.getElementById('mMetaLine'); // 숨김 처리됨
     const modeToggle = document.getElementById('modeToggle');
     const modeSwitch = document.getElementById('modeSwitch');
     const modeToggleText = document.getElementById('modeToggleText');
-
     const mFields = document.getElementById('mFields');
 
     let currentSource = 'house';
     let currentDisplayData = [];
     let currentModalItem = null;
-    let currentModalMode = 'recv'; // 'recv' | 'ret'
-    let currentSelectedDate = '';  // ✅ openSheet에서 사용
+    let currentModalMode = 'recv';
+    let currentSelectedDate = '';
 
     const TODAY = getLocalISODate(new Date());
-    todayLabel.textContent = `오늘: ${TODAY}`;
+    todayLabel.textContent = `${TODAY}`;   // ✅ '오늘:' 제거
     datePicker.value = TODAY;
 
-    function syncDateLabel(){
-      const v = datePicker.value || TODAY;
-      datePicker.title = prettyDate(v);
-    }
-    datePicker.addEventListener('change', () => { syncDateLabel(); load(); });
+    datePicker.addEventListener('change', () => { load(); });
 
     function switchSource(sourceKey){
       currentSource = sourceKey;
@@ -1076,15 +998,14 @@
     }
 
     function setModeToggleUI(mode, on){
-      // mode: recv/ret
       modeSwitch.classList.toggle('on', !!on);
       modeToggle.setAttribute('aria-checked', on ? 'true' : 'false');
 
       if (mode === 'ret'){
-        modeToggleText.textContent = on ? '반출완료' : '반출';
+        modeToggleText.textContent = on ? '반출완료' : '반출대기';
         return;
       }
-      modeToggleText.textContent = on ? '안치완료' : '접수';
+      modeToggleText.textContent = on ? '안치완료' : '안치대기';
     }
 
     function refreshModal(){
@@ -1101,26 +1022,14 @@
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
 
-      // ✅ 모달 상단 배지: 모드에 맞춰 표시
       const statusText = (currentModalMode === 'ret') ? ret : recv;
       const badge = badgeForMode(currentModalMode, statusText);
 
       mTitleLine.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badge}`;
 
-      const dead = (currentSource === 'house')
-        ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
-        : String(item.deadName ?? '-');
+      // ✅ 고인/신청자 라인 삭제(요청) — 아무것도 넣지 않음
+      mMetaLine.innerHTML = '';
 
-      const appl = (currentSource === 'house')
-        ? String(item.applname ?? item.applName ?? '-')
-        : String(item.applName ?? '-');
-
-      mMetaLine.innerHTML = `
-        <div class="chip">고인: ${escapeHtml(dead)}</div>
-        <div class="chip">신청자: ${escapeHtml(appl)}</div>
-      `;
-
-      // ✅ 모달 우측상단 토글: 모드에 맞게만 보여줌
       if (currentModalMode === 'ret'){
         setModeToggleUI('ret', ret === '반출완료');
       } else {
@@ -1140,12 +1049,12 @@
 
       if (currentModalMode === 'ret'){
         const cur = getRetStatus(currentSource, sid);
-        const next = (cur === '반출완료') ? '반출' : '반출완료';
+        const next = (cur === '반출완료') ? '반출대기' : '반출완료';
         setRetStatus(currentSource, sid, next);
         showToast(`✅ ${headerNo} : ${next}`);
       } else {
         const cur = getRecvStatus(currentSource, sid);
-        const next = (cur === '안치완료') ? '접수' : '안치완료';
+        const next = (cur === '안치완료') ? '안치대기' : '안치완료';
         setRecvStatus(currentSource, sid, next);
         showToast(`✅ ${headerNo} : ${next}`);
       }
@@ -1176,7 +1085,6 @@
       return fieldsHTML;
     }
 
-    /* ✅ 상태순 정렬(반출→접수→완료) */
     function sortByWorkPriority(arr, selectedISO){
       const clone = arr.slice();
 
@@ -1210,12 +1118,10 @@
         const doneA = isCompleted(modeA, stA);
         const doneB = isCompleted(modeB, stB);
 
-        // 그룹: 0=반출(미완료), 1=접수(미완료), 2=완료(모드 무관)
         const grpA = doneA ? 2 : (modeA === 'ret' ? 0 : 1);
         const grpB = doneB ? 2 : (modeB === 'ret' ? 0 : 1);
         if (grpA !== grpB) return grpA - grpB;
 
-        // 같은 그룹 내: 번호순(문자열 비교)
         const da = displayIdOf(a);
         const db = displayIdOf(b);
         return da.localeCompare(db, 'ko');
@@ -1230,21 +1136,17 @@
       currentSelectedDate = selectedDate;
 
       try{
-        syncDateLabel();
-
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
-        // ✅ 안치현황(선택일 기준)
         const c = calcSelectedCounts(currentSource, data, selectedDate);
         countTitle.textContent = `안치현황`;
         if (currentSource === 'house'){
-          countText.innerHTML = `접수${c.recv}건, 반출${c.ret}건`;
+          countText.innerHTML = `안치대기${c.recv}건, 반출대기${c.ret}건`;
         } else {
-          countText.innerHTML = `접수${c.recv}건, 반출0건`;
+          countText.innerHTML = `안치대기${c.recv}건, 반출대기0건`;
         }
 
-        // ✅ 선택일 필터(추모의집: 접수/반출 모두 포함)
         const dateKey = source.dateKey;
         let filtered = [];
 
@@ -1258,17 +1160,14 @@
           filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
         }
 
-        // ✅ 병합
         let displayData = filtered;
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // ✅ 미완료만(접수완료/반출완료만 숨김 — 모드별 판단)
         const onlyUndone = isOnlyUndoneOn();
         if (onlyUndone){
           displayData = displayData.filter(item => {
             const sid = itemStatusId(currentSource, item);
-
             const mode = (currentSource === 'house' && isRetOnDate(item, selectedDate)) ? 'ret' : 'recv';
             if (mode === 'ret'){
               return getRetStatus(currentSource, sid) !== '반출완료';
@@ -1278,9 +1177,7 @@
           });
         }
 
-        // ✅ 상태순 정렬(반출→접수→완료)
         displayData = sortByWorkPriority(displayData, selectedDate);
-
         currentDisplayData = displayData;
 
         if (displayData.length === 0){
@@ -1301,10 +1198,8 @@
           const sid = itemStatusId(currentSource, item);
 
           const mode = (currentSource === 'house' && isRetOnDate(item, selectedDate)) ? 'ret' : 'recv';
-
           const recv = getRecvStatus(currentSource, sid);
           const ret  = getRetStatus(currentSource, sid);
-
           const statusText = (mode === 'ret') ? ret : recv;
 
           if (currentSource === 'house'){
@@ -1349,20 +1244,15 @@
 
       currentModalItem = item;
 
-      // ✅ 모드 결정(선택일 기준): 반출 건이면 'ret', 아니면 'recv'
       if (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)){
         currentModalMode = 'ret';
       } else {
         currentModalMode = 'recv';
       }
 
-      // 필드 채우기
       mFields.innerHTML = buildFields(item);
-
-      // 모달 헤더/토글 갱신
       refreshModal();
 
-      // 토글 이벤트(공용)
       modeToggle.onclick = applyModeToggle;
 
       overlay.classList.add('show');
@@ -1378,44 +1268,6 @@
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
 
-    /* ✅ 상단 자동 숨김: 아래로 스크롤하면 숨기고, 위로 스크롤하면 다시 표시 */
-    (function bindAutoHideTop(){
-      let lastY = window.scrollY || 0;
-      let acc = 0;
-      const TH = 18;        // 누적 임계치
-      const MINY = 48;      // 이 정도 내려가야 숨김 허용
-
-      window.addEventListener('scroll', () => {
-        const y = window.scrollY || 0;
-        const dy = y - lastY;
-        lastY = y;
-
-        // 작은 흔들림은 무시
-        if (Math.abs(dy) < 2) return;
-
-        acc += dy;
-
-        // 아래로 충분히 스크롤: 숨김
-        if (acc > TH && y > MINY){
-          appEl.classList.add('top-hidden');
-          acc = 0;
-          return;
-        }
-
-        // 위로 스크롤: 표시
-        if (acc < -TH){
-          appEl.classList.remove('top-hidden');
-          acc = 0;
-          return;
-        }
-
-        // 최상단이면 항상 표시
-        if (y < 10){
-          appEl.classList.remove('top-hidden');
-        }
-      }, { passive: true });
-    })();
-
     window.addEventListener('load', () => {
       const saved = localStorage.getItem(STORAGE_KEYS.source);
       const initial = (saved === 'nature' || saved === 'house') ? saved : 'house';
@@ -1425,12 +1277,11 @@
       tabNature.classList.toggle('active', initial === 'nature');
 
       if (localStorage.getItem(STORAGE_KEYS.hideDone) == null){
-        // 기본: 전체(OFF)
-        setOnlyUndone(false);
+        setOnlyUndone(false); // 기본: 전체
       }
 
       datePicker.value = getLocalISODate(new Date());
-      syncDateLabel();
+      todayLabel.textContent = `${datePicker.value}`; // ✅ 날짜만
       load();
     });
   </script>
