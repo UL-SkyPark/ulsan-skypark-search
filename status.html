@@ -27,7 +27,6 @@
       --st-ret-bd: rgba(148,163,184,.28);
       --st-ret-tx: rgba(30,41,59,.78);
 
-      /* ✅ 반출완료 배지 */
       --st-retdone-bg: rgba(165,180,252,.22);
       --st-retdone-bd: rgba(165,180,252,.40);
       --st-retdone-tx: rgba(30,41,59,.86);
@@ -389,13 +388,15 @@
       font-weight: 900;
     }
 
-    /* 모달 */
+    /* =========================
+       ✅ 모달: 가운데 띄우기
+       ========================= */
     .overlay{
       position: fixed;
       inset: 0;
       background: rgba(2,6,23,.30);
       display:none;
-      align-items:flex-end;
+      align-items:center;   /* ✅ 가운데 */
       justify-content:center;
       padding: 12px;
       z-index: 9999;
@@ -416,8 +417,11 @@
     }
     .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
 
+    /* =========================
+       ✅ 모달 헤더: 한 줄, 왼쪽 정렬 + 우측 상단 토글 배치
+       ========================= */
     .sheet-head{
-      padding: 14px 14px 12px;
+      padding: 12px 14px 12px;
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
@@ -425,23 +429,181 @@
       background: rgba(255,255,255,0.78);
       border-bottom: 1px solid rgba(148,163,184,0.18);
     }
-    .sheet-head .t{ min-width:0; }
-    .sheet-head .t .line1{
+
+    .headLeft{
+      min-width:0;
+      flex: 1;
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+
+    /* ✅ 1줄로 왼쪽 정렬 표시 */
+    .headLine{
       margin:0;
       font-weight: 950;
       letter-spacing: -0.02em;
-      font-size: 1.06rem;
+      font-size: 1.02rem;
       display:flex;
       align-items:center;
       gap: 8px;
       flex-wrap: wrap;
+      justify-content:flex-start;
     }
 
+    /* ✅ 헤더 뒤쪽(아래) 정보 한줄 */
+    .headMeta{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: rgba(15,23,42,.72);
+      font-weight: 900;
+      font-size: .9rem;
+      line-height: 1.2;
+      justify-content:flex-start;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.20);
+      background: rgba(255,255,255,0.70);
+      color: rgba(15,23,42,.76);
+      font-weight: 950;
+      font-size: .85rem;
+      white-space: nowrap;
+    }
+
+    .headRight{
+      flex: 0 0 auto;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      align-items:flex-end;
+    }
+
+    /* =========================
+       ✅ 모달 우측 상단: 반출 토글만
+       ========================= */
+    .miniToggle{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(255,255,255,0.72);
+      user-select: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .miniToggle span{
+      font-size: .86rem;
+      font-weight: 950;
+      color: rgba(15,23,42,.72);
+    }
+    .miniSwitch{
+      width: 44px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.25);
+      background: rgba(148,163,184,0.18);
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .miniSwitch::after{
+      content:"";
+      position:absolute;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(148,163,184,0.22);
+      transition: left .14s ease;
+    }
+    .miniSwitch.on{
+      background: rgba(165,180,252,.28);
+      border-color: rgba(165,180,252,.38);
+    }
+    .miniSwitch.on::after{ left: 21px; }
+
+    /* =========================
+       ✅ 모달 본문: 접수/안치완료 토글만
+       ========================= */
     .sheet-body{
       padding: 12px 14px 14px;
       display:grid;
       gap: 12px;
     }
+
+    .stBlock{
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(148,163,184,0.18);
+      border-radius: 16px;
+      padding: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .stBlock .label{
+      font-size: .9rem;
+      font-weight: 950;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .stToggle{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(255,255,255,0.72);
+      user-select: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .stToggle span{
+      font-size: .86rem;
+      font-weight: 950;
+      color: rgba(15,23,42,.72);
+    }
+    .stSwitch{
+      width: 44px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.25);
+      background: rgba(148,163,184,0.18);
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .stSwitch::after{
+      content:"";
+      position:absolute;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(148,163,184,0.22);
+      transition: left .14s ease;
+    }
+    .stSwitch.on{
+      background: rgba(134,239,172,.28);
+      border-color: rgba(134,239,172,.38);
+    }
+    .stSwitch.on::after{ left: 21px; }
 
     .kv{
       background: rgba(255,255,255,0.75);
@@ -469,45 +631,6 @@
       line-height: 1.25;
       flex: 1;
       min-width: 0;
-    }
-
-    /* ✅ 드롭다운 대신: 버튼 2개씩(2블록) */
-    .stBlock{
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 16px;
-      padding: 12px;
-      display:grid;
-      gap: 10px;
-    }
-    .stBlock .label{
-      font-size: .88rem;
-      font-weight: 950;
-      color: var(--muted);
-    }
-    .stSeg{
-      display:flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .stBtn{
-      flex: 1 1 160px;
-      border-radius: 999px;
-      padding: 10px 12px;
-      border: 1px solid rgba(148,163,184,0.22);
-      background: rgba(255,255,255,0.82);
-      font-weight: 950;
-      cursor: pointer;
-      min-height: 42px;
-      color: rgba(15,23,42,.78);
-      transition: transform .08s ease, background .12s ease, border-color .12s ease;
-    }
-    .stBtn:active{ transform: scale(0.99); }
-    .stBtn.active{
-      background: linear-gradient(135deg, rgba(165,180,252,.55), rgba(134,239,172,.35));
-      border-color: rgba(165,180,252,.35);
-      color: rgba(15,23,42,.90);
-      box-shadow: 0 10px 22px rgba(165,180,252,.18);
     }
 
     .sheet-actions{
@@ -573,7 +696,6 @@
             <div class="k">날짜선택</div>
             <div class="v">
               <input type="date" id="datePicker" />
-              <span id="datePretty" style="display:none;"></span>
             </div>
           </div>
 
@@ -590,29 +712,31 @@
     </div>
   </div>
 
+  <!-- 모달 -->
   <div class="overlay" id="overlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true">
       <div class="sheet-head">
-        <div class="t">
-          <p class="line1" id="mTitle">-</p>
+        <div class="headLeft">
+          <p class="headLine" id="mTitleLine">-</p>
+          <div class="headMeta" id="mMetaLine"></div>
+        </div>
+
+        <!-- ✅ 우측 상단: 반출 토글만 -->
+        <div class="headRight">
+          <div class="miniToggle" id="retToggle" role="switch" aria-checked="false">
+            <div class="miniSwitch" id="retSwitch"></div>
+            <span id="retToggleText">반출</span>
+          </div>
         </div>
       </div>
 
       <div class="sheet-body">
-        <!-- ✅ 버튼 그룹 2개 -->
+        <!-- ✅ 접수/안치완료 토글만 -->
         <div class="stBlock">
           <div class="label">안치 상태</div>
-          <div class="stSeg">
-            <button class="stBtn" id="btnRecv" type="button">접수</button>
-            <button class="stBtn" id="btnDone" type="button">안치완료</button>
-          </div>
-        </div>
-
-        <div class="stBlock">
-          <div class="label">반출 상태</div>
-          <div class="stSeg">
-            <button class="stBtn" id="btnRet" type="button">반출</button>
-            <button class="stBtn" id="btnRetDone" type="button">반출완료</button>
+          <div class="stToggle" id="recvToggle" role="switch" aria-checked="false">
+            <div class="stSwitch" id="recvSwitch"></div>
+            <span id="recvToggleText">접수</span>
           </div>
         </div>
 
@@ -637,7 +761,7 @@
 
     const STORAGE_KEYS = {
       source: "uic_source_selected",
-      hideDone: "uic_hide_done" // ✅ 완료 숨기기 토글
+      hideDone: "uic_hide_done"
     };
 
     const SOURCES = {
@@ -661,7 +785,7 @@
       return `${y}.${m}.${d}(${dow})`;
     }
 
-    /* retDate 처리 */
+    /* retDate 정규화 */
     function normalizeToISODate(v){
       if (v == null) return '';
       const s = String(v).trim();
@@ -842,9 +966,9 @@
       return order.map(key => map.get(key));
     }
 
-    /* ✅ 상태 저장(2개 트랙)
-       - 안치: 접수 / 안치완료
-       - 반출: 반출 / 반출완료 (미선택 가능)
+    /* ✅ 상태 저장: 2트랙
+       - 안치: 접수 / 안치완료 (토글)
+       - 반출: 반출 / 반출완료 (토글)
     */
     function itemStatusId(sourceKey, item){
       if (sourceKey === 'house'){
@@ -865,18 +989,17 @@
     }
 
     function getRetStatus(sourceKey, id){
-      return localStorage.getItem(retKey(sourceKey, id)) || ''; // '' | '반출' | '반출완료'
+      return localStorage.getItem(retKey(sourceKey, id)) || '반출';
     }
     function setRetStatus(sourceKey, id, val){
       localStorage.setItem(retKey(sourceKey, id), val);
     }
 
-    /* ✅ 리스트 배지/색상 결정 */
+    /* ✅ 배지/색상 결정 */
     function catOfItem(sourceKey, item, recvStatus, retStatus){
       if (retStatus === '반출완료') return 'retDone';
       if (retStatus === '반출') return 'ret';
 
-      // 추모의집: retDate가 오늘이면 '반출'로 표시(오늘 화면에서 반출 목록 보여줄 때)
       if (sourceKey === 'house' && isRetToday(item, TODAY)) return 'ret';
 
       if (recvStatus === '안치완료' || recvStatus === '안장완료') return 'done';
@@ -933,7 +1056,7 @@
       return { recv: mergedN.length, ret: 0 };
     }
 
-    /* ✅ 완료 숨기기 토글 */
+    /* 완료 숨기기 토글 */
     function isHideDoneOn(){
       return localStorage.getItem(STORAGE_KEYS.hideDone) === '1';
     }
@@ -957,18 +1080,26 @@
     const countText = document.getElementById('countText');
 
     const overlay = document.getElementById('overlay');
-    const mTitle = document.getElementById('mTitle');
-    const mFields = document.getElementById('mFields');
 
-    // 모달 버튼
-    const btnRecv = document.getElementById('btnRecv');
-    const btnDone = document.getElementById('btnDone');
-    const btnRet = document.getElementById('btnRet');
-    const btnRetDone = document.getElementById('btnRetDone');
+    // 모달 헤더/메타
+    const mTitleLine = document.getElementById('mTitleLine');
+    const mMetaLine = document.getElementById('mMetaLine');
+
+    // 모달 토글(안치)
+    const recvToggle = document.getElementById('recvToggle');
+    const recvSwitch = document.getElementById('recvSwitch');
+    const recvToggleText = document.getElementById('recvToggleText');
+
+    // 모달 토글(반출 - 우측 상단)
+    const retToggle = document.getElementById('retToggle');
+    const retSwitch = document.getElementById('retSwitch');
+    const retToggleText = document.getElementById('retToggleText');
+
+    const mFields = document.getElementById('mFields');
 
     let currentSource = 'house';
     let currentDisplayData = [];
-    let currentModalIndex = -1;
+    let currentModalItem = null;
 
     const TODAY = getLocalISODate(new Date());
     todayLabel.textContent = `오늘: ${TODAY}`;
@@ -978,7 +1109,6 @@
       const v = datePicker.value || TODAY;
       datePicker.title = prettyDate(v);
     }
-
     datePicker.addEventListener('change', () => { syncDateLabel(); load(); });
 
     function switchSource(sourceKey){
@@ -1009,69 +1139,115 @@
       `;
     }
 
-    function setActiveBtn(btn, on){
-      btn.classList.toggle('active', !!on);
+    function setToggleUI(which, on){
+      if (which === 'recv'){
+        recvSwitch.classList.toggle('on', !!on);
+        recvToggle.setAttribute('aria-checked', on ? 'true' : 'false');
+        recvToggleText.textContent = on ? '안치완료' : '접수';
+        return;
+      }
+      if (which === 'ret'){
+        retSwitch.classList.toggle('on', !!on);
+        retToggle.setAttribute('aria-checked', on ? 'true' : 'false');
+        retToggleText.textContent = on ? '반출완료' : '반출';
+        return;
+      }
     }
 
-    function refreshModalButtons(sourceKey, sid, item){
-      // 현재 저장값
-      const recv = getRecvStatus(sourceKey, sid); // 접수/안치완료
-      const ret = getRetStatus(sourceKey, sid);   // '', 반출, 반출완료
+    function refreshModal(){
+      const item = currentModalItem;
+      if (!item) return;
 
-      // ✅ 안치 버튼
-      setActiveBtn(btnRecv, recv === '접수');
-      setActiveBtn(btnDone, recv === '안치완료');
+      const sourceLabel = SOURCES[currentSource].label;
+      const sid = itemStatusId(currentSource, item);
 
-      // ✅ 반출 버튼(미선택 허용: 아무 버튼도 active 아닐 수 있음)
-      setActiveBtn(btnRet, ret === '반출');
-      setActiveBtn(btnRetDone, ret === '반출완료');
+      const recv = getRecvStatus(currentSource, sid); // 접수/안치완료
+      const ret = getRetStatus(currentSource, sid);   // 반출/반출완료
 
-      // 클릭 바인딩(중복 바인딩 방지 위해 매번 재지정)
-      btnRecv.onclick = () => applyStatuses(sourceKey, sid, item, { recv: '접수' });
-      btnDone.onclick = () => applyStatuses(sourceKey, sid, item, { recv: '안치완료' });
-
-      btnRet.onclick = () => {
-        // 토글처럼: 이미 반출이면 해제(빈값), 아니면 반출
-        const cur = getRetStatus(sourceKey, sid);
-        applyStatuses(sourceKey, sid, item, { ret: (cur === '반출' ? '' : '반출') });
-      };
-      btnRetDone.onclick = () => {
-        // 토글처럼: 이미 반출완료면 해제(빈값), 아니면 반출완료
-        const cur = getRetStatus(sourceKey, sid);
-        applyStatuses(sourceKey, sid, item, { ret: (cur === '반출완료' ? '' : '반출완료') });
-      };
-    }
-
-    function applyStatuses(sourceKey, sid, item, patch){
-      const headerNo = (sourceKey === 'house')
+      const headerNo = (currentSource === 'house')
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
 
-      if (patch.recv){
-        setRecvStatus(sourceKey, sid, patch.recv);
-      }
-      if (patch.ret !== undefined){
-        setRetStatus(sourceKey, sid, patch.ret);
-      }
+      const cat = catOfItem(currentSource, item, recv, ret);
 
-      const recv = getRecvStatus(sourceKey, sid);
-      const ret = getRetStatus(sourceKey, sid);
+      // 헤더 1줄: 시설 · 번호 + 배지
+      mTitleLine.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badgeHTML(cat)}`;
 
-      // 배지/헤더 갱신
-      refreshModalHeader(sourceKey, headerNo, item, recv, ret);
-      refreshModalButtons(sourceKey, sid, item);
+      // 헤더 뒤쪽 한 줄(왼쪽 정렬): 고인 / 신청자(있으면)
+      const dead = (currentSource === 'house')
+        ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
+        : String(item.deadName ?? '-');
 
-      // 토스트(변경 요약)
-      const msg = `✅ ${headerNo} : ${recv}${ret ? ` / ${ret}` : ''}`;
-      showToast(msg);
+      const appl = (currentSource === 'house')
+        ? String(item.applname ?? item.applName ?? '-')
+        : String(item.applName ?? '-');
 
+      mMetaLine.innerHTML = `
+        <div class="chip">고인: ${escapeHtml(dead)}</div>
+        <div class="chip">신청자: ${escapeHtml(appl)}</div>
+      `;
+
+      // 토글 UI
+      setToggleUI('recv', recv === '안치완료');
+      setToggleUI('ret', ret === '반출완료');
+    }
+
+    function applyRecvToggle(){
+      const item = currentModalItem;
+      if (!item) return;
+      const sid = itemStatusId(currentSource, item);
+
+      const cur = getRecvStatus(currentSource, sid);
+      const next = (cur === '안치완료') ? '접수' : '안치완료';
+      setRecvStatus(currentSource, sid, next);
+
+      const headerNo = (currentSource === 'house')
+        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+        : String(item.natNo ?? '-');
+
+      showToast(`✅ ${headerNo} : ${next}`);
+      refreshModal();
       load();
     }
 
-    function refreshModalHeader(sourceKey, headerNo, item, recv, ret){
-      const sourceLabel = SOURCES[sourceKey].label;
-      const cat = catOfItem(sourceKey, item, recv, ret);
-      mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badgeHTML(cat)}`;
+    function applyRetToggle(){
+      const item = currentModalItem;
+      if (!item) return;
+      const sid = itemStatusId(currentSource, item);
+
+      const cur = getRetStatus(currentSource, sid);
+      const next = (cur === '반출완료') ? '반출' : '반출완료';
+      setRetStatus(currentSource, sid, next);
+
+      const headerNo = (currentSource === 'house')
+        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+        : String(item.natNo ?? '-');
+
+      showToast(`✅ ${headerNo} : ${next}`);
+      refreshModal();
+      load();
+    }
+
+    function buildFields(item){
+      let fieldsHTML = '';
+      if (currentSource === 'house'){
+        fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
+        fieldsHTML += kvRow('봉안번호', formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-'));
+        fieldsHTML += kvRow('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
+        fieldsHTML += kvRow('신청자', item.applname ?? item.applName ?? '-');
+
+        const rdISO = normalizeToISODate(pickRetDate(item));
+        const rdRaw = pickRetDate(item);
+        if (rdISO){
+          fieldsHTML += kvRow('반출일자', String(rdRaw ?? rdISO));  <!-- ✅ 변경 -->
+        }
+      } else {
+        fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
+        fieldsHTML += kvRow('안장번호', item.natNo ?? '-');
+        fieldsHTML += kvRow('고인명', item.deadName ?? '-');
+        fieldsHTML += kvRow('신청자', item.applName ?? '-');
+      }
+      return fieldsHTML;
     }
 
     async function load(){
@@ -1118,7 +1294,7 @@
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // ✅ 완료 숨기기 적용(안치완료 / 반출완료)
+        // 완료 숨기기(안치완료/반출완료)
         const hideDone = isHideDoneOn();
         if (hideDone){
           displayData = displayData.filter(item => {
@@ -1192,45 +1368,18 @@
     function openSheet(index){
       const item = currentDisplayData[index];
       if (!item) return;
-      currentModalIndex = index;
 
-      const sid = itemStatusId(currentSource, item);
+      currentModalItem = item;
 
-      // 헤더번호
-      const headerNo = (currentSource === 'house')
-        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
-        : String(item.natNo ?? '-');
+      // 필드 채우기
+      mFields.innerHTML = buildFields(item);
 
-      // 저장 상태
-      const recv = getRecvStatus(currentSource, sid);
-      const ret = getRetStatus(currentSource, sid);
+      // 모달 헤더/토글 갱신
+      refreshModal();
 
-      // 헤더
-      refreshModalHeader(currentSource, headerNo, item, recv, ret);
-
-      // 버튼 상태
-      refreshModalButtons(currentSource, sid, item);
-
-      // 필드
-      let fieldsHTML = '';
-      if (currentSource === 'house'){
-        fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
-        fieldsHTML += kvRow('봉안번호', formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-'));
-        fieldsHTML += kvRow('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
-        fieldsHTML += kvRow('신청자', item.applname ?? item.applName ?? '-');
-
-        const rdISO = normalizeToISODate(pickRetDate(item));
-        const rdRaw = pickRetDate(item);
-        if (rdISO){
-          fieldsHTML += kvRow('반출(데이터)', String(rdRaw ?? rdISO));
-        }
-      } else {
-        fieldsHTML += kvRow('안장일자', item.natDate ?? '-');
-        fieldsHTML += kvRow('안장번호', item.natNo ?? '-');
-        fieldsHTML += kvRow('고인명', item.deadName ?? '-');
-        fieldsHTML += kvRow('신청자', item.applName ?? '-');
-      }
-      mFields.innerHTML = fieldsHTML;
+      // 토글 이벤트
+      recvToggle.onclick = applyRecvToggle;
+      retToggle.onclick = applyRetToggle;
 
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden','false');
@@ -1239,7 +1388,7 @@
     function closeSheet(){
       overlay.classList.remove('show');
       overlay.setAttribute('aria-hidden','true');
-      currentModalIndex = -1;
+      currentModalItem = null;
     }
 
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
@@ -1253,7 +1402,6 @@
       tabHouse.classList.toggle('active', initial === 'house');
       tabNature.classList.toggle('active', initial === 'nature');
 
-      // ✅ hideDone 기본값(없으면 0)
       if (localStorage.getItem(STORAGE_KEYS.hideDone) == null){
         setHideDone(false);
       }
