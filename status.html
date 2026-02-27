@@ -59,7 +59,6 @@
       overflow: hidden;
     }
 
-    /* 상단: 고정 */
     .top{
       padding: 16px 16px 12px;
       display:flex;
@@ -233,7 +232,6 @@
       color: rgba(15,23,42,.72);
     }
 
-    /* 미완료/전체 토글 */
     .toggle{
       display:inline-flex;
       align-items:center;
@@ -281,7 +279,6 @@
 
     ul{ list-style:none; padding:0; margin:0; }
 
-    /* 리스트 아이템 */
     .itemRow{
       padding: 12px 12px;
       display:flex;
@@ -373,7 +370,6 @@
       color: var(--st-retdone-tx);
     }
 
-    /* ✅ 리스트 우측 토글(대기/완료) */
     .rowToggle{
       flex: 0 0 auto;
       display:inline-flex;
@@ -427,7 +423,6 @@
       font-weight: 900;
     }
 
-    /* 모달 */
     .overlay{
       position: fixed;
       inset: 0;
@@ -639,7 +634,7 @@
 
           <div class="pill2" id="countPill">
             <div class="k" id="countTitle">안치현황</div>
-            <div class="v" id="countText">안치대기0건, 반출대기0건</div>
+            <div class="v" id="countText">안치0건, 반출0건</div>
           </div>
         </div>
       </div>
@@ -650,7 +645,6 @@
     </div>
   </div>
 
-  <!-- 모달 -->
   <div class="overlay" id="overlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true">
       <div class="sheet-head">
@@ -689,7 +683,7 @@
 
     const STORAGE_KEYS = {
       source: "uic_source_selected",
-      hideDone: "uic_hide_done" // 미완료(ON) / 전체(OFF)
+      hideDone: "uic_hide_done"
     };
 
     const SOURCES = {
@@ -882,12 +876,26 @@
     function recvKey(sourceKey, id){ return `recv_${sourceKey}_${id}`; }
     function retKey(sourceKey, id){ return `ret_${sourceKey}_${id}`; }
 
-    // 기본값/명칭: 안치대기 / 반출대기
+    // ---- 상태 라벨(시설별) ----
+    function recvPendingText(sourceKey){ return (sourceKey === 'nature') ? '안장대기' : '안치대기'; }
+    function recvDoneText(sourceKey){ return (sourceKey === 'nature') ? '안장완료' : '안치완료'; }
+    function recvShortText(sourceKey){ return (sourceKey === 'nature') ? '안장' : '안치'; }
+
+    function isRecvDone(sourceKey, statusText){
+      return statusText === recvDoneText(sourceKey);
+    }
+
     function getRecvStatus(sourceKey, id){
       const v = localStorage.getItem(recvKey(sourceKey, id));
-      if (!v) return '안치대기';
-      // 과거 값 호환
-      if (v === '접수') return '안치대기';
+      if (!v) return recvPendingText(sourceKey);
+
+      // 과거 값 호환(추모의집)
+      if (sourceKey !== 'nature' && v === '접수') return '안치대기';
+
+      // 자연장지 과거 값 호환(혹시 안치대기 저장돼 있던 경우)
+      if (sourceKey === 'nature' && v === '안치대기') return '안장대기';
+      if (sourceKey === 'nature' && v === '안치완료') return '안장완료';
+
       return v;
     }
     function setRecvStatus(sourceKey, id, val){
@@ -897,7 +905,6 @@
     function getRetStatus(sourceKey, id){
       const v = localStorage.getItem(retKey(sourceKey, id));
       if (!v) return '반출대기';
-      // 과거 값 호환
       if (v === '반출') return '반출대기';
       return v;
     }
@@ -909,22 +916,23 @@
       return normalizeToISODate(pickRetDate(item)) === isoDate;
     }
 
-    function badgeForMode(mode, statusText){
+    // ---- 배지: 대기는 "반출/안치/안장"만 ----
+    function badgeForMode(sourceKey, mode, statusText){
       if (mode === 'ret'){
         return (statusText === '반출완료')
           ? `<span class="badge-st badge-retDone">반출완료</span>`
-          : `<span class="badge-st badge-ret">반출대기</span>`;
+          : `<span class="badge-st badge-ret">반출</span>`;
       }
-      return (statusText === '안치완료' || statusText === '안장완료')
-        ? `<span class="badge-st badge-done">안치완료</span>`
-        : `<span class="badge-st badge-recv">안치대기</span>`;
+      return isRecvDone(sourceKey, statusText)
+        ? `<span class="badge-st badge-done">${escapeHtml(recvDoneText(sourceKey))}</span>`
+        : `<span class="badge-st badge-recv">${escapeHtml(recvShortText(sourceKey))}</span>`;
     }
 
-    function leftClsForMode(mode, statusText){
+    function leftClsForMode(sourceKey, mode, statusText){
       if (mode === 'ret'){
         return (statusText === '반출완료') ? 'retDone' : 'ret';
       }
-      return (statusText === '안치완료' || statusText === '안장완료') ? 'done' : 'recv';
+      return isRecvDone(sourceKey, statusText) ? 'done' : 'recv';
     }
 
     function kvRow(k, v){
@@ -976,7 +984,6 @@
       load();
     }
 
-    // DOM
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
     const listArea = document.getElementById('listArea');
@@ -989,9 +996,8 @@
 
     const overlay = document.getElementById('overlay');
 
-    // 모달
     const mTitleLine = document.getElementById('mTitleLine');
-    const mMetaLine = document.getElementById('mMetaLine'); // 숨김
+    const mMetaLine = document.getElementById('mMetaLine');
     const modeToggle = document.getElementById('modeToggle');
     const modeSwitch = document.getElementById('modeSwitch');
     const modeToggleText = document.getElementById('modeToggleText');
@@ -1005,7 +1011,7 @@
 
     const TODAY = getLocalISODate(new Date());
     datePicker.value = TODAY;
-    todayLabel.textContent = `${TODAY}`; // 날짜만
+    todayLabel.textContent = `${TODAY}`;
 
     datePicker.addEventListener('change', () => {
       todayLabel.textContent = `${datePicker.value || TODAY}`;
@@ -1040,15 +1046,16 @@
       `;
     }
 
-    function setModeToggleUI(mode, on){
+    function setModeToggleUI(sourceKey, mode, on){
       modeSwitch.classList.toggle('on', !!on);
       modeToggle.setAttribute('aria-checked', on ? 'true' : 'false');
 
       if (mode === 'ret'){
-        modeToggleText.textContent = on ? '반출완료' : '반출대기';
+        modeToggleText.textContent = on ? '반출완료' : '반출';
         return;
       }
-      modeToggleText.textContent = on ? '안치완료' : '안치대기';
+      // 자연장지: 안장 / 안장완료, 추모의집: 안치 / 안치완료
+      modeToggleText.textContent = on ? recvDoneText(sourceKey) : recvShortText(sourceKey);
     }
 
     function refreshModal(){
@@ -1066,15 +1073,15 @@
         : String(item.natNo ?? '-');
 
       const statusText = (currentModalMode === 'ret') ? ret : recv;
-      const badge = badgeForMode(currentModalMode, statusText);
+      const badge = badgeForMode(currentSource, currentModalMode, statusText);
 
       mTitleLine.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badge}`;
       mMetaLine.innerHTML = '';
 
       if (currentModalMode === 'ret'){
-        setModeToggleUI('ret', ret === '반출완료');
+        setModeToggleUI(currentSource, 'ret', ret === '반출완료');
       } else {
-        setModeToggleUI('recv', recv === '안치완료' || recv === '안장완료');
+        setModeToggleUI(currentSource, 'recv', isRecvDone(currentSource, recv));
       }
     }
 
@@ -1095,7 +1102,9 @@
         showToast(`✅ ${headerNo} : ${next}`);
       } else {
         const cur = getRecvStatus(currentSource, sid);
-        const next = (cur === '안치완료') ? '안치대기' : '안치완료';
+        const done = recvDoneText(currentSource);
+        const pending = recvPendingText(currentSource);
+        const next = (cur === done) ? pending : done;
         setRecvStatus(currentSource, sid, next);
         showToast(`✅ ${headerNo} : ${next}`);
       }
@@ -1104,9 +1113,7 @@
       load();
     }
 
-    /* ✅ 리스트 우측 토글(대기/완료) */
     function applyRowToggle(index, e){
-      // 클릭이 행 전체(openSheet)로 버블링 되는 걸 차단
       if (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -1129,7 +1136,9 @@
         showToast(`✅ ${headerNo} : ${next}`);
       } else {
         const cur = getRecvStatus(currentSource, sid);
-        const next = (cur === '안치완료') ? '안치대기' : '안치완료';
+        const done = recvDoneText(currentSource);
+        const pending = recvPendingText(currentSource);
+        const next = (cur === done) ? pending : done;
         setRecvStatus(currentSource, sid, next);
         showToast(`✅ ${headerNo} : ${next}`);
       }
@@ -1159,13 +1168,9 @@
       return fieldsHTML;
     }
 
-    function sortByWorkPriority(arr, selectedISO){
+    // ✅ 완료/미완료 토글해도 순서가 바뀌지 않도록: "완료 여부"를 정렬에 반영하지 않음
+    function sortByWorkPriorityStable(arr, selectedISO){
       const clone = arr.slice();
-
-      function isCompleted(mode, statusText){
-        if (mode === 'ret') return statusText === '반출완료';
-        return statusText === '안치완료' || statusText === '안장완료';
-      }
 
       function displayIdOf(item){
         if (currentSource === 'house'){
@@ -1175,28 +1180,15 @@
       }
 
       clone.sort((a, b) => {
-        const ida = itemStatusId(currentSource, a);
-        const idb = itemStatusId(currentSource, b);
-
         const modeA = (currentSource === 'house' && isRetOnDate(a, selectedISO)) ? 'ret' : 'recv';
         const modeB = (currentSource === 'house' && isRetOnDate(b, selectedISO)) ? 'ret' : 'recv';
 
-        const recvA = getRecvStatus(currentSource, ida);
-        const retA  = getRetStatus(currentSource, ida);
-        const recvB = getRecvStatus(currentSource, idb);
-        const retB  = getRetStatus(currentSource, idb);
-
-        const stA = (modeA === 'ret') ? retA : recvA;
-        const stB = (modeB === 'ret') ? retB : recvB;
-
-        const doneA = isCompleted(modeA, stA);
-        const doneB = isCompleted(modeB, stB);
-
-        // 그룹: 0=반출(미완료) -> 1=안치(미완료) -> 2=완료
-        const grpA = doneA ? 2 : (modeA === 'ret' ? 0 : 1);
-        const grpB = doneB ? 2 : (modeB === 'ret' ? 0 : 1);
+        // 그룹: 0=반출(상단) -> 1=안치/안장
+        const grpA = (modeA === 'ret') ? 0 : 1;
+        const grpB = (modeB === 'ret') ? 0 : 1;
         if (grpA !== grpB) return grpA - grpB;
 
+        // 완료여부는 무시(순서 고정), 표시번호 기준 정렬만 유지
         const da = displayIdOf(a);
         const db = displayIdOf(b);
         return da.localeCompare(db, 'ko');
@@ -1214,16 +1206,17 @@
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
-        // 선택일 기준 카운트
         const c = calcSelectedCounts(currentSource, data, selectedDate);
         countTitle.textContent = `안치현황`;
+
+        // ✅ 안치현황 상자: "안치대기/반출대기" -> "안치/반출"
         if (currentSource === 'house'){
-          countText.innerHTML = `안치대기${c.recv}건, 반출대기${c.ret}건`;
+          countText.innerHTML = `안치${c.recv}건, 반출${c.ret}건`;
         } else {
-          countText.innerHTML = `안치대기${c.recv}건, 반출대기0건`;
+          // 자연장지: 표시 문구는 동일 포맷(반출은 0)
+          countText.innerHTML = `${recvShortText(currentSource)}${c.recv}건, 반출0건`;
         }
 
-        // 선택일 필터
         const dateKey = source.dateKey;
         let filtered = [];
 
@@ -1237,12 +1230,10 @@
           filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
         }
 
-        // 병합
         let displayData = filtered;
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // 미완료 필터
         const onlyUndone = isOnlyUndoneOn();
         if (onlyUndone){
           displayData = displayData.filter(item => {
@@ -1252,12 +1243,12 @@
               return getRetStatus(currentSource, sid) !== '반출완료';
             }
             const r = getRecvStatus(currentSource, sid);
-            return !(r === '안치완료' || r === '안장완료');
+            return !isRecvDone(currentSource, r);
           });
         }
 
-        // 정렬
-        displayData = sortByWorkPriority(displayData, selectedDate);
+        // ✅ 정렬(완료여부 무시) 적용
+        displayData = sortByWorkPriorityStable(displayData, selectedDate);
         currentDisplayData = displayData;
 
         if (displayData.length === 0){
@@ -1284,11 +1275,12 @@
 
           const isOn = (mode === 'ret')
             ? (statusText === '반출완료')
-            : (statusText === '안치완료' || statusText === '안장완료');
+            : isRecvDone(currentSource, statusText);
 
+          // ✅ 우측 토글 라벨도 "대기" 제거(배지와 동일 기준)
           const rowLabel = (mode === 'ret')
-            ? (isOn ? '반출완료' : '반출대기')
-            : (isOn ? '안치완료' : '안치대기');
+            ? (isOn ? '반출완료' : '반출')
+            : (isOn ? recvDoneText(currentSource) : recvShortText(currentSource));
 
           const rowSwitchCls = isOn ? 'rowSwitch on' : 'rowSwitch';
 
@@ -1302,18 +1294,17 @@
 
           html += `
             <li>
-              <div class="itemRow ${leftClsForMode(mode, statusText)}">
+              <div class="itemRow ${leftClsForMode(currentSource, mode, statusText)}">
                 <button class="itemMainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
                   <div class="main">
                     <div class="id">
                       ${escapeHtml(displayId)}
-                      ${badgeForMode(mode, statusText)}
+                      ${badgeForMode(currentSource, mode, statusText)}
                     </div>
                     <div class="name">${escapeHtml(displayName)}</div>
                   </div>
                 </button>
 
-                <!-- ✅ 기존 '>' 삭제, 그 자리에 토글 -->
                 <div class="rowToggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
                   <div class="${rowSwitchCls}"></div>
                   <span>${escapeHtml(rowLabel)}</span>
@@ -1341,7 +1332,6 @@
 
       currentModalItem = item;
 
-      // 선택일 기준: 반출(retDate==선택일)이면 반출 토글만, 아니면 안치 토글만
       if (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)){
         currentModalMode = 'ret';
       } else {
@@ -1375,7 +1365,7 @@
       tabNature.classList.toggle('active', initial === 'nature');
 
       if (localStorage.getItem(STORAGE_KEYS.hideDone) == null){
-        setOnlyUndone(false); // 기본: 전체
+        setOnlyUndone(false);
       }
 
       datePicker.value = getLocalISODate(new Date());
@@ -1383,7 +1373,6 @@
       load();
     });
 
-    // 전역 노출(인라인 onclick 용)
     window.switchSource = switchSource;
     window.toggleOnlyUndone = toggleOnlyUndone;
     window.openSheet = openSheet;
