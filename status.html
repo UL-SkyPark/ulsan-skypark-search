@@ -59,7 +59,7 @@
       overflow: hidden;
     }
 
-    /* ✅ 상단: 원래대로 고정(자연스럽게) */
+    /* 상단: 고정 */
     .top{
       padding: 16px 16px 12px;
       display:flex;
@@ -233,7 +233,7 @@
       color: rgba(15,23,42,.72);
     }
 
-    /* ✅ 미완료/전체 토글 */
+    /* 미완료/전체 토글 */
     .toggle{
       display:inline-flex;
       align-items:center;
@@ -281,21 +281,18 @@
 
     ul{ list-style:none; padding:0; margin:0; }
 
-    .item{
-      width:100%;
-      border:0;
-      background: transparent;
-      text-align:left;
+    /* 리스트 아이템 */
+    .itemRow{
       padding: 12px 12px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 10px;
       border-bottom: 1px solid rgba(148,163,184,0.18);
-      cursor:pointer;
       position: relative;
+      background: transparent;
     }
-    .item::before{
+    .itemRow::before{
       content:"";
       position:absolute;
       left: 0;
@@ -303,15 +300,25 @@
       bottom: 0;
       width: 6px;
     }
-    .item.recv::before{ background: rgba(249,168,212,.55); }
-    .item.done::before{ background: rgba(134,239,172,.65); }
-    .item.ret::before{ background: rgba(148,163,184,.55); }
-    .item.retDone::before{ background: rgba(165,180,252,.70); }
-    .item:active{ background: rgba(165,180,252,.08); }
+    .itemRow.recv::before{ background: rgba(249,168,212,.55); }
+    .itemRow.done::before{ background: rgba(134,239,172,.65); }
+    .itemRow.ret::before{ background: rgba(148,163,184,.55); }
+    .itemRow.retDone::before{ background: rgba(165,180,252,.70); }
+
+    .itemMainBtn{
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      background: transparent;
+      text-align:left;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+    }
+    .itemMainBtn:active{ background: rgba(165,180,252,.08); }
 
     .main{
       min-width:0;
-      flex: 1;
       display:flex;
       flex-direction:column;
       gap: 4px;
@@ -343,6 +350,7 @@
       font-weight: 950;
       font-size: .82rem;
       border: 1px solid rgba(148,163,184,0.18);
+      white-space: nowrap;
     }
     .badge-recv{
       background: var(--st-recv-bg);
@@ -365,18 +373,52 @@
       color: var(--st-retdone-tx);
     }
 
-    .chev{
-      width: 34px;
-      height: 34px;
+    /* ✅ 리스트 우측 토글(대기/완료) */
+    .rowToggle{
+      flex: 0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
       border-radius: 999px;
-      background: rgba(147,197,253,.18);
-      border: 1px solid rgba(147,197,253,.24);
-      display:grid;
-      place-items:center;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(255,255,255,0.72);
+      user-select: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .rowToggle span{
+      font-size: .86rem;
       font-weight: 950;
-      color: rgba(15,23,42,.55);
+      color: rgba(15,23,42,.72);
+    }
+    .rowSwitch{
+      width: 44px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.25);
+      background: rgba(148,163,184,0.18);
+      position: relative;
       flex: 0 0 auto;
     }
+    .rowSwitch::after{
+      content:"";
+      position:absolute;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(148,163,184,0.22);
+      transition: left .14s ease;
+    }
+    .rowSwitch.on{
+      background: rgba(134,239,172,.28);
+      border-color: rgba(134,239,172,.38);
+    }
+    .rowSwitch.on::after{ left: 21px; }
 
     .no-data{
       text-align:center;
@@ -385,9 +427,7 @@
       font-weight: 900;
     }
 
-    /* =========================
-       ✅ 모달: 가운데
-       ========================= */
+    /* 모달 */
     .overlay{
       position: fixed;
       inset: 0;
@@ -431,7 +471,6 @@
       flex-direction:column;
       gap: 6px;
     }
-
     .headLine{
       margin:0;
       font-weight: 950;
@@ -443,8 +482,6 @@
       flex-wrap: wrap;
       justify-content:flex-start;
     }
-
-    /* ✅ 모달 상단 고인/신청자 라인 삭제(요청) */
     .headMeta{ display:none; }
 
     .headRight{
@@ -455,7 +492,6 @@
       align-items:flex-end;
     }
 
-    /* ✅ 모달 우측 상단 토글(공용) */
     .modeToggle{
       display:inline-flex;
       align-items:center;
@@ -653,7 +689,7 @@
 
     const STORAGE_KEYS = {
       source: "uic_source_selected",
-      hideDone: "uic_hide_done" // ✅ 의미: 미완료(ON) / 전체(OFF)
+      hideDone: "uic_hide_done" // 미완료(ON) / 전체(OFF)
     };
 
     const SOURCES = {
@@ -846,19 +882,24 @@
     function recvKey(sourceKey, id){ return `recv_${sourceKey}_${id}`; }
     function retKey(sourceKey, id){ return `ret_${sourceKey}_${id}`; }
 
-    /* ✅ 기본값/명칭 변경:
-       - 접수 -> 안치대기
-       - 반출 -> 반출대기
-    */
+    // 기본값/명칭: 안치대기 / 반출대기
     function getRecvStatus(sourceKey, id){
-      return localStorage.getItem(recvKey(sourceKey, id)) || '안치대기';
+      const v = localStorage.getItem(recvKey(sourceKey, id));
+      if (!v) return '안치대기';
+      // 과거 값 호환
+      if (v === '접수') return '안치대기';
+      return v;
     }
     function setRecvStatus(sourceKey, id, val){
       localStorage.setItem(recvKey(sourceKey, id), val);
     }
 
     function getRetStatus(sourceKey, id){
-      return localStorage.getItem(retKey(sourceKey, id)) || '반출대기';
+      const v = localStorage.getItem(retKey(sourceKey, id));
+      if (!v) return '반출대기';
+      // 과거 값 호환
+      if (v === '반출') return '반출대기';
+      return v;
     }
     function setRetStatus(sourceKey, id, val){
       localStorage.setItem(retKey(sourceKey, id), val);
@@ -868,7 +909,6 @@
       return normalizeToISODate(pickRetDate(item)) === isoDate;
     }
 
-    /* ✅ 배지 문구도 동일 변경 */
     function badgeForMode(mode, statusText){
       if (mode === 'ret'){
         return (statusText === '반출완료')
@@ -951,7 +991,7 @@
 
     // 모달
     const mTitleLine = document.getElementById('mTitleLine');
-    const mMetaLine = document.getElementById('mMetaLine'); // 숨김 처리됨
+    const mMetaLine = document.getElementById('mMetaLine'); // 숨김
     const modeToggle = document.getElementById('modeToggle');
     const modeSwitch = document.getElementById('modeSwitch');
     const modeToggleText = document.getElementById('modeToggleText');
@@ -964,10 +1004,13 @@
     let currentSelectedDate = '';
 
     const TODAY = getLocalISODate(new Date());
-    todayLabel.textContent = `${TODAY}`;   // ✅ '오늘:' 제거
     datePicker.value = TODAY;
+    todayLabel.textContent = `${TODAY}`; // 날짜만
 
-    datePicker.addEventListener('change', () => { load(); });
+    datePicker.addEventListener('change', () => {
+      todayLabel.textContent = `${datePicker.value || TODAY}`;
+      load();
+    });
 
     function switchSource(sourceKey){
       currentSource = sourceKey;
@@ -1026,8 +1069,6 @@
       const badge = badgeForMode(currentModalMode, statusText);
 
       mTitleLine.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${badge}`;
-
-      // ✅ 고인/신청자 라인 삭제(요청) — 아무것도 넣지 않음
       mMetaLine.innerHTML = '';
 
       if (currentModalMode === 'ret'){
@@ -1060,6 +1101,39 @@
       }
 
       refreshModal();
+      load();
+    }
+
+    /* ✅ 리스트 우측 토글(대기/완료) */
+    function applyRowToggle(index, e){
+      // 클릭이 행 전체(openSheet)로 버블링 되는 걸 차단
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      const item = currentDisplayData[index];
+      if (!item) return;
+
+      const sid = itemStatusId(currentSource, item);
+      const mode = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)) ? 'ret' : 'recv';
+
+      const headerNo = (currentSource === 'house')
+        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+        : String(item.natNo ?? '-');
+
+      if (mode === 'ret'){
+        const cur = getRetStatus(currentSource, sid);
+        const next = (cur === '반출완료') ? '반출대기' : '반출완료';
+        setRetStatus(currentSource, sid, next);
+        showToast(`✅ ${headerNo} : ${next}`);
+      } else {
+        const cur = getRecvStatus(currentSource, sid);
+        const next = (cur === '안치완료') ? '안치대기' : '안치완료';
+        setRecvStatus(currentSource, sid, next);
+        showToast(`✅ ${headerNo} : ${next}`);
+      }
+
       load();
     }
 
@@ -1118,6 +1192,7 @@
         const doneA = isCompleted(modeA, stA);
         const doneB = isCompleted(modeB, stB);
 
+        // 그룹: 0=반출(미완료) -> 1=안치(미완료) -> 2=완료
         const grpA = doneA ? 2 : (modeA === 'ret' ? 0 : 1);
         const grpB = doneB ? 2 : (modeB === 'ret' ? 0 : 1);
         if (grpA !== grpB) return grpA - grpB;
@@ -1139,6 +1214,7 @@
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
+        // 선택일 기준 카운트
         const c = calcSelectedCounts(currentSource, data, selectedDate);
         countTitle.textContent = `안치현황`;
         if (currentSource === 'house'){
@@ -1147,6 +1223,7 @@
           countText.innerHTML = `안치대기${c.recv}건, 반출대기0건`;
         }
 
+        // 선택일 필터
         const dateKey = source.dateKey;
         let filtered = [];
 
@@ -1160,10 +1237,12 @@
           filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
         }
 
+        // 병합
         let displayData = filtered;
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
+        // 미완료 필터
         const onlyUndone = isOnlyUndoneOn();
         if (onlyUndone){
           displayData = displayData.filter(item => {
@@ -1177,6 +1256,7 @@
           });
         }
 
+        // 정렬
         displayData = sortByWorkPriority(displayData, selectedDate);
         currentDisplayData = displayData;
 
@@ -1202,6 +1282,16 @@
           const ret  = getRetStatus(currentSource, sid);
           const statusText = (mode === 'ret') ? ret : recv;
 
+          const isOn = (mode === 'ret')
+            ? (statusText === '반출완료')
+            : (statusText === '안치완료' || statusText === '안장완료');
+
+          const rowLabel = (mode === 'ret')
+            ? (isOn ? '반출완료' : '반출대기')
+            : (isOn ? '안치완료' : '안치대기');
+
+          const rowSwitchCls = isOn ? 'rowSwitch on' : 'rowSwitch';
+
           if (currentSource === 'house'){
             displayId = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
             displayName = (item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
@@ -1212,16 +1302,23 @@
 
           html += `
             <li>
-              <button class="item ${leftClsForMode(mode, statusText)}" onclick="openSheet(${idx})">
-                <div class="main">
-                  <div class="id">
-                    ${escapeHtml(displayId)}
-                    ${badgeForMode(mode, statusText)}
+              <div class="itemRow ${leftClsForMode(mode, statusText)}">
+                <button class="itemMainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
+                  <div class="main">
+                    <div class="id">
+                      ${escapeHtml(displayId)}
+                      ${badgeForMode(mode, statusText)}
+                    </div>
+                    <div class="name">${escapeHtml(displayName)}</div>
                   </div>
-                  <div class="name">${escapeHtml(displayName)}</div>
+                </button>
+
+                <!-- ✅ 기존 '>' 삭제, 그 자리에 토글 -->
+                <div class="rowToggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
+                  <div class="${rowSwitchCls}"></div>
+                  <span>${escapeHtml(rowLabel)}</span>
                 </div>
-                <div class="chev">›</div>
-              </button>
+              </div>
             </li>
           `;
         });
@@ -1244,6 +1341,7 @@
 
       currentModalItem = item;
 
+      // 선택일 기준: 반출(retDate==선택일)이면 반출 토글만, 아니면 안치 토글만
       if (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)){
         currentModalMode = 'ret';
       } else {
@@ -1281,9 +1379,16 @@
       }
 
       datePicker.value = getLocalISODate(new Date());
-      todayLabel.textContent = `${datePicker.value}`; // ✅ 날짜만
+      todayLabel.textContent = `${datePicker.value}`;
       load();
     });
+
+    // 전역 노출(인라인 onclick 용)
+    window.switchSource = switchSource;
+    window.toggleOnlyUndone = toggleOnlyUndone;
+    window.openSheet = openSheet;
+    window.closeSheet = closeSheet;
+    window.applyRowToggle = applyRowToggle;
   </script>
 </body>
 </html>
