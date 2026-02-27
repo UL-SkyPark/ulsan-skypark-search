@@ -57742,12 +57742,6 @@
   },
   {
     "natDate": "2026-02-27",
-    "natNo": null,
-    "applName": "유정수",
-    "deadName": "유한수"
-  },
-  {
-    "natDate": "2026-02-27",
     "natNo": "잔디장-2-9-0159",
     "applName": "박정민",
     "deadName": "박차호"
@@ -57757,5 +57751,11 @@
     "natNo": "잔디장-2-9-0160",
     "applName": "김헌조",
     "deadName": "김선옥"
+  },
+  {
+    "natDate": "2026-02-27",
+    "natNo": "잔디장-2-9-0161",
+    "applName": "유정수",
+    "deadName": "유한수"
   }
 ]
