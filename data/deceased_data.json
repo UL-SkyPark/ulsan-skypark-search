@@ -180660,7 +180660,7 @@
     "ensNo": "1추모의집-62실-개인단-21773",
     "deadName": "윤순덕",
     "applName": "오진한",
-    "retDate": null
+    "retDate": "2026-02-28"
   },
   {
     "strDate": "2026-01-19",
@@ -182708,9 +182708,30 @@
   },
   {
     "strDate": "2026-02-28",
+    "ensNo": "1추모의집-09실-부부단-01888",
+    "deadName": "오창길",
+    "applName": "오진한",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-28",
+    "ensNo": "1추모의집-09실-부부단-01888",
+    "deadName": "윤순덕",
+    "applName": "오진한",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-28",
     "ensNo": "1추모의집-62실-개인단-21969",
     "deadName": "박용철",
     "applName": "박윤희",
+    "retDate": null
+  },
+  {
+    "strDate": "2026-02-28",
+    "ensNo": "1추모의집-62실-개인단-21970",
+    "deadName": "이성태",
+    "applName": "조희진",
     "retDate": null
   }
 ]
