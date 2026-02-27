@@ -66,7 +66,7 @@
     }
     .title h1{
       margin:0;
-      font-size: 1.22rem;
+      font-size: 1rem;
       letter-spacing: -0.02em;
       font-weight: 950;
     }
@@ -113,7 +113,6 @@
       box-shadow: 0 8px 20px rgba(165,180,252,.25);
     }
 
-    /* ✅ 모바일에서 날짜 + 오늘접수 건수 나란히 */
     .date-row{
       display:flex;
       gap: 10px;
@@ -153,98 +152,10 @@
       flex: 1;
     }
 
-    .todayCount{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(148,163,184,0.22);
-      border-radius: 999px;
-      padding: 6px 10px;
-      white-space: nowrap;
-      flex: 0 0 auto;
-    }
-    .todayCount .k{
-      color: var(--muted);
-      font-size: .9rem;
-      font-weight: 900;
-    }
-    .todayCount .v{
-      font-weight: 950;
-      font-size: .98rem;
-      letter-spacing: -0.01em;
-    }
-
     @media (max-width: 520px){
       .seg{ min-width: 0; flex: 1 1 100%; }
       .date-row{ flex: 1 1 100%; }
       .date-wrap input[type="date"]{ min-width: 0; }
-    }
-
-    .filters{
-      display:flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 2px;
-    }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.22);
-      background: rgba(255,255,255,0.72);
-      font-weight: 950;
-      font-size: .9rem;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .chip:active{ transform: translateY(1px); }
-
-    .chip input{
-      width: 16px;
-      height: 16px;
-      accent-color: rgba(165,180,252,1);
-    }
-
-    .chip.recv.on{
-      background: var(--st-recv-bg);
-      border-color: var(--st-recv-bd);
-      color: var(--st-recv-tx);
-      box-shadow: 0 10px 24px rgba(249,168,212,.18);
-    }
-    .chip.done.on{
-      background: var(--st-done-bg);
-      border-color: var(--st-done-bd);
-      color: var(--st-done-tx);
-      box-shadow: 0 10px 24px rgba(134,239,172,.16);
-    }
-
-    .stats{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-    }
-    .stat{
-      flex: 1 1 160px;
-      background: rgba(255,255,255,0.70);
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 16px;
-      padding: 10px 12px;
-    }
-    .stat .num{
-      font-weight: 950;
-      font-size: 1.25rem;
-      letter-spacing: -0.02em;
-    }
-    .stat .txt{
-      color: var(--muted);
-      font-weight: 850;
-      font-size: .88rem;
-      margin-top: 2px;
     }
 
     .content{
@@ -429,7 +340,6 @@
       flex-wrap: wrap;
     }
 
-    /* ✅ 우측 상단: 닫힘 버튼 삭제, 상태 드랍박스 배치 */
     .headRight{
       display:flex;
       align-items:center;
@@ -538,31 +448,16 @@
           <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
         </div>
 
-        <!-- ✅ 날짜 + 오늘접수(접수상태, TODAY 기준) -->
         <div class="date-row">
           <div class="date-wrap">
             <span class="label">날짜</span>
             <input type="date" id="datePicker" />
           </div>
-          <div class="todayCount" title="오늘(접수) 건수">
-            <span class="k">오늘접수</span>
-            <span class="v" id="todayRecvCount">0</span>
-          </div>
         </div>
       </div>
 
-      <div class="filters">
-        <label class="chip recv" id="chipRecv" title="접수만 보기">
-          <input type="radio" name="statusFilter" id="filterRecv" value="접수" />
-          접수
-        </label>
-        <label class="chip done" id="chipDone" title="안치완료만 보기">
-          <input type="radio" name="statusFilter" id="filterDone" value="안치완료" />
-          안치완료
-        </label>
-      </div>
-
-      <div class="stats" id="stats"></div>
+      <!-- ✅ 요청: 날짜 아래 접수/안치완료 버튼(필터) 삭제 -->
+      <!-- ✅ 요청: 오늘건수/전체건수(상단 카드) 전부 삭제 -> stats 영역도 삭제 -->
     </div>
 
     <div class="content">
@@ -574,12 +469,9 @@
     <div class="sheet" role="dialog" aria-modal="true">
       <div class="sheet-head">
         <div class="t">
-          <!-- ✅ 봉안/안치번호가 여기(상단)에 확실히 표기 -->
           <p class="line1" id="mTitle">-</p>
-          <!-- ✅ 봉안번호 아래 고인명(라인2) 표기하지 않음 -->
         </div>
 
-        <!-- ✅ 닫힘 버튼 삭제 + 상태 드랍박스 배치 -->
         <div class="headRight">
           <select id="mStatus" aria-label="상태 선택">
             <option value="접수">접수</option>
@@ -589,12 +481,10 @@
       </div>
 
       <div class="sheet-body">
-        <!-- ✅ 현황칸(별도 kv) 삭제 -->
         <div id="mFields"></div>
       </div>
 
       <div class="sheet-actions">
-        <!-- ✅ 번호 복사 기능 삭제 -->
         <button class="btnSmall ok" onclick="closeSheet()">확인</button>
       </div>
     </div>
@@ -614,24 +504,6 @@
       house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
     };
-
-    const ID_CANDIDATES = ['natNo','deceasedNo','receiptNo','recNo','applyNo','no','id','번호','접수번호','관리번호'];
-    const NAME_CANDIDATES = ['deadName','deadname','deceasedName','name','고인명','사망자명'];
-
-    function pickField(obj, candidates){
-      for (const k of candidates){
-        if (obj && Object.prototype.hasOwnProperty.call(obj, k) && obj[k] != null && String(obj[k]).trim() !== '') return k;
-      }
-      return null;
-    }
-    function getId(obj){
-      const k = pickField(obj, ID_CANDIDATES);
-      return k ? String(obj[k]) : '-';
-    }
-    function getName(obj){
-      const k = pickField(obj, NAME_CANDIDATES);
-      return k ? String(obj[k]) : '-';
-    }
 
     function statusCategory(status){
       const s = (status ?? '').toString().trim();
@@ -667,30 +539,25 @@
       setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    /* ✅ ensNO(안치번호) 포맷: '00실 00000' */
+    /* ✅ 추모의집 봉안번호(ensNO) 포맷: '00실 00000' */
     function formatEnsNo(val){
       if (val == null) return '-';
       const s = String(val).trim();
       if (!s) return '-';
-      if (s.includes('실')) return s; // 이미 포맷된 경우
+      if (s.includes('실')) return s;
 
       const digits = s.replace(/\D/g,'');
       if (!digits) return s;
 
-      // 7자리 이상이면: 앞 2자리=실, 뒤 5자리=번호
       if (digits.length >= 7){
         const room = digits.slice(0,2);
         const num = digits.slice(-5);
         return `${room}실 ${num}`;
       }
-      // 5자리면: 실 정보가 없으니 그대로(또는 "00실" 규칙이 있으면 여기서 보정 가능)
-      if (digits.length === 5){
-        return digits;
-      }
       return s;
     }
 
-    /* ✅ 추모의집: 동일 ensNO(안치번호) 묶기 */
+    /* ✅ 추모의집: 동일 ensNO 묶기 */
     function mergeEnsRows(rows){
       const map = new Map();
       const order = [];
@@ -703,34 +570,33 @@
           map.set(key, {
             ensNO: ens || '-',
             strDate: (r.strDate ?? '-'),
-            deadNames: new Set([(r.deadname ?? r.deadName ?? r.deceasedName ?? '-').toString()]),
-            applNames: new Set([(r.applname ?? r.applName ?? '-').toString()]),
+            deadname: (r.deadname ?? r.deadName ?? r.deceasedName ?? '-'),
+            applname: (r.applname ?? r.applName ?? '-'),
             _raw: [r]
           });
           order.push(key);
         } else {
           const cur = map.get(key);
-          cur.deadNames.add((r.deadname ?? r.deadName ?? r.deceasedName ?? '-').toString());
-          cur.applNames.add((r.applname ?? r.applName ?? '-').toString());
+          // 고인/신청자는 여러명일 수 있어 " / "로 합치기
+          const dn = (r.deadname ?? r.deadName ?? r.deceasedName ?? '-').toString();
+          const an = (r.applname ?? r.applName ?? '-').toString();
+          const curDn = (cur.deadname ?? '-').toString();
+          const curAn = (cur.applname ?? '-').toString();
+
+          if (dn && dn !== '-' && !curDn.split(' / ').includes(dn)){
+            cur.deadname = (curDn && curDn !== '-') ? `${curDn} / ${dn}` : dn;
+          }
+          if (an && an !== '-' && !curAn.split(' / ').includes(an)){
+            cur.applname = (curAn && curAn !== '-') ? `${curAn} / ${an}` : an;
+          }
           cur._raw.push(r);
         }
       }
 
-      return order.map(key => {
-        const v = map.get(key);
-        const deadJoined = Array.from(v.deadNames).filter(x => x && x !== '-').join(' / ') || '-';
-        const applJoined = Array.from(v.applNames).filter(x => x && x !== '-').join(' / ') || '-';
-        return {
-          ensNO: v.ensNO,
-          strDate: v.strDate,
-          deadname: deadJoined,
-          applname: applJoined,
-          _raw: v._raw
-        };
-      });
+      return order.map(key => map.get(key));
     }
 
-    /* ✅ 자연장지: 부부장 병합(기존 유지) */
+    /* 자연장지: 기존 부부장 병합(유지) */
     function mergeCoupleRows(rows) {
       const map = new Map();
       const order = [];
@@ -741,62 +607,57 @@
         if (!map.has(key)) {
           map.set(key, {
             natNo: r.natNo ?? '-',
+            deadName: (r.deadName ?? r.deadname ?? '-').toString(),
             applName: r.applName ?? '-',
-            deadNames: new Set([(r.deadName ?? r.deadname ?? '-').toString()]),
-            dates: new Set([(r.natDate ?? '-').toString()]),
+            natDate: (r.natDate ?? '-').toString(),
             _raw: [r]
           });
           order.push(key);
         } else {
           const cur = map.get(key);
-          cur.deadNames.add((r.deadName ?? r.deadname ?? '-').toString());
-          cur.dates.add((r.natDate ?? '-').toString());
+          const dn = (r.deadName ?? r.deadname ?? '-').toString();
+          if (dn && dn !== '-' && !cur.deadName.split(' / ').includes(dn)){
+            cur.deadName = (cur.deadName && cur.deadName !== '-') ? `${cur.deadName} / ${dn}` : dn;
+          }
+          // 날짜도 다를 수 있으면 합치기
+          const dt = (r.natDate ?? '-').toString();
+          if (dt && dt !== '-' && !cur.natDate.split(', ').includes(dt)){
+            cur.natDate = (cur.natDate && cur.natDate !== '-') ? `${cur.natDate}, ${dt}` : dt;
+          }
           cur._raw.push(r);
         }
       }
-      return order.map(key => {
-        const v = map.get(key);
-        const deadNameJoined = Array.from(v.deadNames).filter(x => x && x !== '-').join(' / ') || '-';
-        const dateJoined = Array.from(v.dates).filter(x => x && x !== '-').join(', ') || '-';
-        return {
-          natNo: v.natNo,
-          deadName: deadNameJoined,
-          applName: v.applName,
-          natDate: dateJoined,
-          _raw: v._raw
-        };
-      });
+      return order.map(key => map.get(key));
     }
 
-    /* ✅ 상태 저장 키: 추모의집=ensNO 기준, 자연장지=natNo 기준 */
+    /* 상태 저장 키: 추모의집=ensNO, 자연장지=natNo */
     function itemStatusId(sourceKey, item){
       if (sourceKey === 'house'){
         const ens = (item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-');
         return String(ens ?? '-');
       }
-      // nature
       return String(item?.natNo ?? '-');
     }
-
     function statusKey(sourceKey, id){ return `status_${sourceKey}_${id}`; }
     function getStatus(sourceKey, id){ return localStorage.getItem(statusKey(sourceKey, id)) || '접수'; }
     function setStatus(sourceKey, id, val){ localStorage.setItem(statusKey(sourceKey, id), val); }
 
+    function kvRow(k, v){
+      return `
+        <div class="kv">
+          <div class="k">${escapeHtml(k)}</div>
+          <div class="v">${escapeHtml(v)}</div>
+        </div>
+      `;
+    }
+
     // DOM
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
-    const statsDiv = document.getElementById('stats');
     const listArea = document.getElementById('listArea');
 
     const tabHouse = document.getElementById('tabHouse');
     const tabNature = document.getElementById('tabNature');
-
-    const filterRecv = document.getElementById('filterRecv');
-    const filterDone = document.getElementById('filterDone');
-    const chipRecv = document.getElementById('chipRecv');
-    const chipDone = document.getElementById('chipDone');
-
-    const todayRecvCountEl = document.getElementById('todayRecvCount');
 
     const overlay = document.getElementById('overlay');
     const mTitle = document.getElementById('mTitle');
@@ -810,70 +671,13 @@
     todayLabel.textContent = `오늘: ${TODAY}`;
     datePicker.value = TODAY;
 
-    filterRecv.checked = true;
-
-    function syncChipStyles(){
-      chipRecv.classList.toggle('on', filterRecv.checked);
-      chipDone.classList.toggle('on', filterDone.checked);
-    }
-    syncChipStyles();
-
     datePicker.addEventListener('change', () => load());
-    filterRecv.addEventListener('change', () => { syncChipStyles(); load(); });
-    filterDone.addEventListener('change', () => { syncChipStyles(); load(); });
 
     function switchSource(sourceKey){
       currentSource = sourceKey;
       tabHouse.classList.toggle('active', sourceKey === 'house');
       tabNature.classList.toggle('active', sourceKey === 'nature');
       load();
-    }
-
-    function selectedFilterValue(){
-      if (filterDone.checked) return '안치완료';
-      return '접수';
-    }
-
-    function applyRadioFilter(rows){
-      const want = selectedFilterValue(); // '접수' or '안치완료'
-      return rows.filter(item => {
-        const sid = itemStatusId(currentSource, item);
-        const st = getStatus(currentSource, sid);
-        const cat = statusCategory(st);
-        const normalized = (cat === 'done') ? '안치완료' : '접수';
-        return normalized === want;
-      });
-    }
-
-    function kvRow(k, v){
-      return `
-        <div class="kv">
-          <div class="k">${escapeHtml(k)}</div>
-          <div class="v">${escapeHtml(v)}</div>
-        </div>
-      `;
-    }
-
-    /* ✅ 오늘(접수) 건수: TODAY + '접수' 기준 */
-    function calcTodayRecvCount(sourceKey, rawData){
-      const source = SOURCES[sourceKey];
-      const dateKey = source.dateKey;
-
-      const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === TODAY);
-
-      let display = todays;
-      if (sourceKey === 'house') display = mergeEnsRows(todays);
-      if (sourceKey === 'nature') display = mergeCoupleRows(todays);
-
-      // '접수'만 카운트(라디오와 무관)
-      const count = display.filter(item => {
-        const sid = itemStatusId(sourceKey, item);
-        const st = getStatus(sourceKey, sid);
-        const cat = statusCategory(st);
-        return (cat !== 'done'); // 접수
-      }).length;
-
-      return count;
     }
 
     async function load(){
@@ -884,47 +688,14 @@
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
-        // ✅ 오늘접수 건수(접수 고정, TODAY 기준)
-        todayRecvCountEl.textContent = calcTodayRecvCount(currentSource, data).toLocaleString();
-
-        // 날짜 필터(해당 날짜만)
         const dateKey = source.dateKey;
         let filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
 
-        // 표시 데이터(병합)
         let displayData = filtered;
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // ✅ 라디오 필터 적용(접수/안치완료)
-        displayData = applyRadioFilter(displayData);
-
-        // ✅ 정렬: 접수 위, 안치완료 아래
-        displayData = displayData
-          .map((item, idx) => ({ item, idx }))
-          .sort((a,b) => {
-            const ida = itemStatusId(currentSource, a.item);
-            const idb = itemStatusId(currentSource, b.item);
-            const ra = statusCategory(getStatus(currentSource, ida)) === 'done' ? 1 : 0;
-            const rb = statusCategory(getStatus(currentSource, idb)) === 'done' ? 1 : 0;
-            if (ra !== rb) return ra - rb;
-            return a.idx - b.idx;
-          })
-          .map(x => x.item);
-
         currentDisplayData = displayData;
-
-        const filterLabel = selectedFilterValue();
-        statsDiv.innerHTML = `
-          <div class="stat">
-            <div class="num">${displayData.length.toLocaleString()}</div>
-            <div class="txt">${source.label} · ${selectedDate} · ${filterLabel}</div>
-          </div>
-          <div class="stat">
-            <div class="num">${data.length.toLocaleString()}</div>
-            <div class="txt">원본 전체 건수</div>
-          </div>
-        `;
 
         if (displayData.length === 0){
           listArea.innerHTML = `<div class="no-data">표시할 데이터가 없습니다.</div>`;
@@ -937,29 +708,30 @@
         let html = `
           <div class="list">
             <div class="list-head">
-              <div class="hint">안치번호+고인명 · 눌러서 상세</div>
+              <!-- ✅ 요청: '안치번호+고인명' -> '접수현황' -->
+              <div class="hint">접수현황</div>
               <div class="badge">${Math.min(limit, displayData.length).toLocaleString()} / ${displayData.length.toLocaleString()}</div>
             </div>
             <ul>
         `;
 
         shown.forEach((item, idx) => {
-          // ✅ 리스트 표시용 번호/고인명
           let displayId = '-';
           let displayName = '-';
-          let statusId = itemStatusId(currentSource, item);
+          const sid = itemStatusId(currentSource, item);
+
+          const stRaw = getStatus(currentSource, sid);
+          const cat = statusCategory(stRaw);
+          const leftCls = (cat === 'done') ? 'done' : 'recv';
 
           if (currentSource === 'house'){
-            displayId = formatEnsNo(item.ensNO ?? '-');
-            displayName = item.deadname ?? '-';
+            displayId = formatEnsNo(item.ensNO ?? '-');   // ✅ '00실 00000'
+            displayName = (item.deadname ?? '-');
           } else {
             displayId = String(item.natNo ?? '-');
             displayName = String(item.deadName ?? '-');
           }
 
-          const stRaw = getStatus(currentSource, statusId);
-          const cat = statusCategory(stRaw);
-          const leftCls = (cat === 'done') ? 'done' : 'recv';
           const badge = (cat === 'done')
             ? `<span class="badge-st badge-done">안치완료</span>`
             : `<span class="badge-st badge-recv">접수</span>`;
@@ -997,15 +769,12 @@
       if (!item) return;
 
       const sourceLabel = SOURCES[currentSource].label;
-
-      // ✅ 상태 키(추모의집=ensNO, 자연장지=natNo)
       const sid = itemStatusId(currentSource, item);
 
       const stRaw = getStatus(currentSource, sid);
       const cat = statusCategory(stRaw);
       const stShow = (cat === 'done') ? '안치완료' : '접수';
 
-      // ✅ 모달 상단: 안치번호(추모의집=ensNO 포맷, 자연장지=natNo)
       let headerNo = '-';
       if (currentSource === 'house'){
         headerNo = formatEnsNo(item.ensNO ?? '-');
@@ -1014,7 +783,6 @@
       }
       mTitle.innerHTML = `${escapeHtml(sourceLabel)} · ${escapeHtml(headerNo)} ${statusBadgeHTML(stShow)}`;
 
-      // ✅ 우측 상단 상태 드랍박스
       mStatus.value = stShow;
       mStatus.onchange = (e) => {
         setStatus(currentSource, sid, e.target.value);
@@ -1022,18 +790,14 @@
         load();
       };
 
-      // ✅ 상세 필드: 고정 구성
       let fieldsHTML = '';
 
       if (currentSource === 'house'){
-        // 요청 필드: strDate=안치일자, ensNO=안치번호, deadname=고인명, applname=신청자
-        // retdate 표기 금지
         fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
-        fieldsHTML += kvRow('안치번호', formatEnsNo(item.ensNO ?? '-'));
+        fieldsHTML += kvRow('봉안번호', formatEnsNo(item.ensNO ?? '-'));
         fieldsHTML += kvRow('고인명', item.deadname ?? '-');
         fieldsHTML += kvRow('신청자', item.applname ?? '-');
       } else {
-        // 자연장지: 안치일자, 안치번호, 고인명, 신청자 순
         fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
         fieldsHTML += kvRow('안치번호', item.natNo ?? '-');
         fieldsHTML += kvRow('고인명', item.deadName ?? '-');
