@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653366",
-    "deadName": "윤영덕",
-    "burnDate": "2026-03-01",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "01"
-  },
-  {
     "deadId": "1653383",
     "deadName": "강맹금",
     "burnDate": "2026-03-01",
@@ -28,6 +20,14 @@
     "deadName": "김병권",
     "burnDate": "2026-03-01",
     "burnStrTime": "07:27",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653366",
+    "deadName": "윤영덕",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "07:39",
     "burnEndTime": null,
     "burnChasu": "01"
   }

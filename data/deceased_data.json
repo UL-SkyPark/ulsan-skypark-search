@@ -146621,7 +146621,7 @@
     "ensNo": "1추모의집-50실-개인단-16674",
     "deadName": "김두영",
     "applName": "김태주",
-    "retDate": null
+    "retDate": "2026-03-01"
   },
   {
     "deadId": "1471249",
@@ -208880,11 +208880,19 @@
     "retDate": null
   },
   {
+    "deadId": "1553901",
+    "strDate": "2026-03-01",
+    "ensNo": "1추모의집-09실-부부단-01889",
+    "deadName": "김두영",
+    "applName": "김태주",
+    "retDate": null
+  },
+  {
     "deadId": "1653366",
     "strDate": "2026-03-01",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-01889",
     "deadName": "윤영덕",
-    "applName": "김송주",
+    "applName": "김태주",
     "retDate": null
   }
 ]
