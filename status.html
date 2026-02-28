@@ -3,303 +3,375 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>🌸 울산하늘공원 접수 현황</title>
+  <title>울산하늘공원 접수 현황</title>
 
   <link rel="icon" type="image/png" href="./images/symbol.png">
   <link rel="apple-touch-icon" href="./images/symbol.png">
 
   <style>
     :root{
-      --bg-a:#f7f7ff;
-      --bg-b:#f2fbf7;
-      --bg-c:#fff6fb;
+      --bg:#f4f6f9;
+      --panel:#ffffff;
+      --panel2:#fbfcfe;
+      --line:#d9e0ea;
+      --line2:#c9d2df;
+      --text:#1f2a37;
+      --muted:#6b7280;
+      --muted2:#94a3b8;
 
-      --card: rgba(255,255,255,0.92);
-      --text:#0f172a;
-      --muted:#64748b;
+      --primary:#1f4e79;
+      --primary2:#2f6fad;
+      --ok:#2e7d32;
+      --warn:#b45309;
+      --info:#334155;
 
-      --shadow: 0 14px 40px rgba(15,23,42,0.10);
+      --shadow: 0 8px 24px rgba(15,23,42,0.08);
+      --shadow2: 0 14px 40px rgba(15,23,42,0.10);
+
+      --radius: 14px;
+      --radius2: 10px;
+      --radius3: 8px;
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     html, body { height:100%; }
+
     body{
       margin:0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
       color: var(--text);
-      background:
-        radial-gradient(900px 480px at 15% 10%, rgba(165,180,252,.55), transparent 55%),
-        radial-gradient(900px 520px at 85% 0%, rgba(249,168,212,.45), transparent 55%),
-        radial-gradient(1000px 600px at 60% 100%, rgba(134,239,172,.38), transparent 60%),
-        linear-gradient(140deg, var(--bg-a), var(--bg-b), var(--bg-c));
-      padding: 14px;
+      padding: 12px;
     }
 
     .app{
-      max-width: 820px;
+      max-width: 980px;
       margin: 0 auto;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(255,255,255,0.55);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 4px);
+      box-shadow: var(--shadow2);
       overflow: hidden;
     }
 
     .top{
-      padding: 16px 16px 12px;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(255,255,255,0.58);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(148,163,184,0.14);
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      border-bottom: 1px solid var(--line);
     }
 
-    .title{
+    .header{
+      padding: 14px 16px 10px;
       display:flex;
-      align-items:flex-end;
+      align-items:center;
       justify-content:space-between;
-      gap: 10px;
+      gap: 12px;
     }
-    .title h1{
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .brand h1{
       margin:0;
-      font-size: 1.22rem;
-      letter-spacing: -0.02em;
-      font-weight: 950;
-    }
-    .title .mini{
-      color: var(--muted);
-      font-size: .9rem;
+      font-size: 1.08rem;
       font-weight: 900;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sub{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: .86rem;
       white-space: nowrap;
     }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      font-weight: 900;
+      color: var(--info);
+    }
+    .chip strong{
+      color: var(--primary);
+      font-weight: 950;
+    }
 
-    .bar{
+    .toolbar{
+      padding: 10px 16px 14px;
       display:flex;
       gap: 10px;
-      align-items:center;
       flex-wrap: wrap;
+      align-items: stretch;
     }
 
     .seg{
       display:flex;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(148,163,184,0.22);
-      border-radius: 999px;
-      padding: 4px;
       gap: 4px;
-      flex: 1 1 240px;
-      min-width: 240px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      min-width: 260px;
+      flex: 0 0 auto;
     }
     .seg button{
-      flex: 1;
-      border: 0;
-      border-radius: 999px;
-      padding: 9px 10px;
-      font-weight: 950;
-      font-size: .95rem;
-      cursor:pointer;
+      border:0;
       background: transparent;
-      color: rgba(15,23,42,0.72);
-      transition: background .15s ease;
-      min-height: 40px;
-    }
-    .seg button.active{
-      background: linear-gradient(135deg, rgba(165,180,252,.95), rgba(147,197,253,.85));
-      color: #0b1020;
-      box-shadow: 0 8px 20px rgba(165,180,252,.25);
-    }
-
-    .date-row{
-      display:flex;
-      gap: 14px;
-      align-items:stretch;
-      flex: 1 1 420px;
-      min-width: 320px;
-    }
-
-    .pill2{
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(148,163,184,0.22);
-      border-radius: 18px;
-      padding: 12px 14px;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-      min-height: 72px;
-      flex: 1 1 200px;
-    }
-    .pill2 .k{
-      color: var(--muted);
-      font-size: .88rem;
+      padding: 10px 12px;
+      border-radius: 10px;
       font-weight: 950;
-      line-height: 1.05;
+      color: rgba(31,42,55,.75);
+      cursor: pointer;
+      min-height: 40px;
+      flex: 1;
       white-space: nowrap;
     }
-    .pill2 .v{
-      font-weight: 950;
-      font-size: .98rem;
+    .seg button.active{
+      background: linear-gradient(180deg, rgba(31,78,121,.14), rgba(47,111,173,.10));
+      color: var(--primary);
+      box-shadow: inset 0 0 0 1px rgba(31,78,121,.25);
+    }
+
+    .group{
+      display:flex;
+      gap: 10px;
+      flex: 1 1 520px;
+      min-width: 320px;
+      align-items: stretch;
+    }
+
+    .field{
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      min-height: 64px;
+      flex: 1 1 220px;
+    }
+    .field .k{
+      color: var(--muted);
+      font-weight: 900;
+      font-size: .82rem;
       letter-spacing: -0.01em;
-      line-height: 1.12;
-      color: rgba(15,23,42,.86);
+    }
+    .field .v{
       display:flex;
       align-items:center;
       gap: 10px;
       flex-wrap: wrap;
-    }
-
-    /* ✅ 안치현황(카운트) 라인: 아래로 + 살짝 키우기 + 한 줄 유지(모바일에서도) */
-    #countPill .v{
-      margin-top: 6px;
-      font-size: 1.06rem;
-      line-height: 1.2;
-      white-space: nowrap;
-      flex-wrap: nowrap;
-    }
-
-    .pill2 input[type="date"]{
-      border: 0;
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(148,163,184,0.20);
-      border-radius: 12px;
-      padding: 8px 10px;
       font-weight: 950;
-      color: var(--text);
+      color: rgba(31,42,55,.92);
+    }
+    .field input[type="date"]{
+      width: 100%;
+      border: 1px solid var(--line2);
+      background: #fff;
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-weight: 950;
       outline: none;
+      color: var(--text);
       font-size: .95rem;
       -webkit-appearance:none;
+      min-height: 40px;
+    }
+    .count{
+      display:flex;
+      align-items:baseline;
+      gap: 10px;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      font-size: 1.02rem;
+      line-height: 1.2;
+    }
+    .count b{
+      font-size: 1.06rem;
+      color: #0f172a;
+    }
+    .count span{
+      color: rgba(31,42,55,.85);
+      font-weight: 950;
+    }
+
+    .searchbar{
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display:flex;
+      gap: 8px;
+      align-items:center;
+      flex: 1 1 260px;
+      min-width: 220px;
+    }
+    .searchbar input{
+      border:0;
+      outline:none;
       width: 100%;
+      font-weight: 900;
+      font-size: .94rem;
+      color: var(--text);
+      background: transparent;
+    }
+    .searchbar .icon{
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      color: var(--muted);
+      font-weight: 950;
+      flex: 0 0 auto;
     }
 
-    @media (max-width: 520px){
-      .seg{ min-width: 0; flex: 1 1 100%; }
-      .date-row{ flex: 1 1 100%; }
+    @media (max-width: 560px){
+      .seg{ flex: 1 1 100%; min-width: 0; }
+      .group{ flex: 1 1 100%; min-width: 0; }
+      .searchbar{ flex: 1 1 100%; }
     }
 
-    .content{ padding: 12px 12px 14px; }
+    .content{
+      padding: 12px 16px 16px;
+      background: linear-gradient(180deg, #ffffff, #f6f8fb);
+      min-height: 50vh;
+    }
 
     .list{
-      background: var(--card);
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: 0 14px 34px rgba(15,23,42,0.08);
+      box-shadow: var(--shadow);
     }
 
     .list-head{
-      background: rgba(255,255,255,0.78);
-      backdrop-filter: blur(10px);
       padding: 10px 12px;
-      border-bottom: 1px solid rgba(148,163,184,0.18);
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 10px;
-      flex-wrap: wrap;
+      border-bottom: 1px solid var(--line);
+      background: #f8fafc;
     }
     .list-head .hint{
-      color: var(--muted);
-      font-size: .9rem;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-    .list-head .right{
+      font-weight: 950;
+      color: #0f172a;
       display:flex;
       align-items:center;
-      justify-content:flex-end;
-      gap: 8px;
-      margin-left:auto;
-      flex-wrap: wrap;
+      gap: 10px;
+      white-space: nowrap;
     }
-    .list-head .badge{
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: .84rem;
+      font-weight: 950;
+      color: rgba(31,42,55,.75);
+    }
+    .badge{
       font-size: .86rem;
       font-weight: 950;
-      background: rgba(249,168,212,.16);
-      border: 1px solid rgba(249,168,212,.25);
+      background: #fff;
+      border: 1px solid var(--line);
       padding: 7px 10px;
       border-radius: 999px;
+      color: rgba(31,42,55,.78);
       white-space: nowrap;
-      color: rgba(15,23,42,.72);
     }
 
     ul{ list-style:none; padding:0; margin:0; }
 
-    .itemRow{
-      padding: 12px 12px;
-      display:flex;
-      flex-direction:column; /* ✅ 화장정보를 토글 아래(전체폭)로 내리기 */
-      gap: 8px;
-      border-bottom: 1px solid rgba(148,163,184,0.18);
-      position: relative;
-      background: transparent;
-    }
-    .itemRow::before{
-      content:"";
-      position:absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 6px;
-    }
-
-    /* ✅ 색(바)로만 상태 구분 */
-    .itemRow.recv::before{ background: rgba(249,168,212,.55); }
-    .itemRow.done::before{ background: rgba(134,239,172,.65); }
-    .itemRow.ret::before{ background: rgba(148,163,184,.55); }
-    .itemRow.retDone::before{ background: rgba(165,180,252,.70); }
-
-    .rowTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
+    .row{
+      display:grid;
+      grid-template-columns: 10px 1fr auto;
       gap: 10px;
-      min-width: 0;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      align-items:start;
+      background: #fff;
     }
+    .row:last-child{ border-bottom:0; }
 
-    .itemMainBtn{
-      flex: 1;
-      min-width: 0;
-      border: 0;
+    .barL{
+      width: 10px;
+      border-radius: 6px;
+      min-height: 52px;
+      background: #e2e8f0;
+    }
+    .row.recv .barL{ background: rgba(31,78,121,.35); }
+    .row.done .barL{ background: rgba(46,125,50,.45); }
+    .row.ret .barL{ background: rgba(180,83,9,.40); }
+    .row.retDone .barL{ background: rgba(47,111,173,.45); }
+
+    .mainBtn{
+      border:0;
       background: transparent;
       text-align:left;
-      cursor: pointer;
       padding: 0;
       margin: 0;
+      cursor: pointer;
+      min-width: 0;
     }
-    .itemMainBtn:active{ background: rgba(165,180,252,.08); }
+    .mainBtn:active{ background: rgba(31,78,121,.06); }
 
     .main{
-      min-width:0;
       display:flex;
       flex-direction:column;
-      gap: 4px;
-      padding-left: 6px;
+      gap: 5px;
+      min-width: 0;
     }
-    .id{
-      font-weight: 950;
-      font-size: 1.02rem;
-      letter-spacing: -0.01em;
-      color: #0b1020;
+
+    .topline{
       display:flex;
       align-items:center;
       gap: 8px;
       flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .no{
+      font-weight: 950;
+      color: #0f172a;
+      font-size: 1.01rem;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
     }
     .name{
       font-weight: 850;
+      color: rgba(31,42,55,.82);
       font-size: .95rem;
-      color: rgba(15,23,42,0.78);
-      word-break: keep-all;
       line-height: 1.25;
+      word-break: keep-all;
+      min-width: 0;
     }
 
-    /* ✅ 리스트의 화장정보: 말줄임(ellipsis) + 길게 누르면 전체보기(토스트) */
     .cremWrap{
-      padding-left: 6px; /* 왼쪽 정렬감 유지 */
+      margin-top: 4px;
       display:flex;
       flex-direction:column;
       gap: 2px;
@@ -307,9 +379,8 @@
     .cremLine{
       font-weight: 850;
       font-size: .86rem;
-      color: rgba(15,23,42,0.62);
+      color: rgba(31,42,55,.62);
       line-height: 1.22;
-
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -317,38 +388,34 @@
       cursor: default;
     }
 
-    /* 리스트 우측 토글 */
-    .rowToggle{
-      flex: 0 0 auto;
-      display:inline-flex;
+    .toggle{
+      display:flex;
       align-items:center;
-      gap: 6px;
-      padding: 5px 8px;
+      gap: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
       border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.22);
-      background: rgba(255,255,255,0.72);
-      user-select: none;
+      padding: 6px 10px;
       cursor: pointer;
       white-space: nowrap;
-      margin-top: -2px;
+      user-select:none;
+      margin-top: 2px;
     }
-    .rowToggle span{
+    .toggle span{
       font-size: .82rem;
       font-weight: 950;
-      color: rgba(15,23,42,.72);
-      line-height: 1;
-      white-space: nowrap;
+      color: rgba(31,42,55,.74);
     }
-    .rowSwitch{
+    .sw{
       width: 38px;
       height: 22px;
       border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.25);
-      background: rgba(148,163,184,0.18);
+      border: 1px solid var(--line2);
+      background: #eef2f7;
       position: relative;
       flex: 0 0 auto;
     }
-    .rowSwitch::after{
+    .sw::after{
       content:"";
       position:absolute;
       top: 50%;
@@ -357,124 +424,105 @@
       width: 17px;
       height: 17px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(148,163,184,0.22);
+      background: #fff;
+      border: 1px solid var(--line2);
       transition: left .14s ease;
     }
-    .rowSwitch.on{
-      background: rgba(134,239,172,.28);
-      border-color: rgba(134,239,172,.38);
+    .sw.on{
+      background: rgba(46,125,50,.14);
+      border-color: rgba(46,125,50,.22);
     }
-    .rowSwitch.on::after{ left: 18px; }
+    .sw.on::after{ left: 18px; }
 
     .no-data{
       text-align:center;
       padding: 26px 14px;
-      color: rgba(15,23,42,0.55);
+      color: rgba(31,42,55,0.56);
       font-weight: 900;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
     }
 
     .overlay{
       position: fixed;
       inset: 0;
-      background: rgba(2,6,23,.30);
+      background: rgba(15,23,42,.45);
       display:none;
       align-items:center;
       justify-content:center;
-      padding: 12px;
+      padding: 14px;
       z-index: 9999;
     }
     .overlay.show{ display:flex; }
 
     .sheet{
-      width: min(520px, 92vw);
-      max-width: 520px;
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(255,255,255,0.65);
-      border-radius: 22px;
-      box-shadow: 0 28px 90px rgba(15,23,42,.20);
+      width: min(560px, 94vw);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 30px 90px rgba(15,23,42,.25);
       overflow:hidden;
-      backdrop-filter: blur(14px);
       transform: translateY(8px);
       opacity: 0;
       transition: transform .16s ease, opacity .16s ease;
     }
     .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
 
-    @media (max-width: 360px){
-      .sheet{ width: 94vw; }
-    }
-
     .sheet-head{
-      position: relative;
-      padding: 14px 14px 14px;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--line);
       display:flex;
       align-items:center;
-      justify-content:center;
-      gap: 10px;
-      background: rgba(255,255,255,0.78);
-      border-bottom: 1px solid rgba(148,163,184,0.18);
-      min-height: 64px;
+      justify-content:space-between;
+      gap: 12px;
+      min-height: 58px;
     }
 
-    .headLeft{
-      min-width:0;
-      flex: 1;
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-      align-items:flex-start;
-      justify-content:center;
-      text-align:left;
-      padding: 2px 12px 2px 12px;
-    }
-
-    .headLine{
-      margin:0;
+    .sheet-title{
       font-weight: 950;
+      color: #0f172a;
       letter-spacing: -0.02em;
-      font-size: 1.06rem;
-      line-height: 1.15;
-      width: 100%;
-      text-align: left;
-      display:block;
+      font-size: 1.02rem;
+      line-height: 1.2;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-
-    .headMeta{ display:none; }
 
     .sheet-body{
       padding: 12px 14px 14px;
       display:grid;
-      gap: 12px;
+      gap: 10px;
+      background: #fff;
     }
 
     .kv{
-      background: rgba(255,255,255,0.75);
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 16px;
-      padding: 10px 12px;
       display:flex;
-      align-items:flex-start;
-      justify-content:flex-start;
       gap: 12px;
+      align-items:flex-start;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
     }
     .kv .k{
+      flex: 0 0 92px;
       color: var(--muted);
       font-weight: 950;
-      font-size: .88rem;
-      flex: 0 0 92px;
+      font-size: .86rem;
       padding-top: 2px;
-      text-align:left;
     }
     .kv .v{
-      font-weight: 900;
-      color: rgba(15,23,42,0.82);
-      font-size: .95rem;
-      text-align:left;
-      word-break: keep-all;
-      line-height: 1.25;
       flex: 1;
       min-width: 0;
+      color: rgba(31,42,55,.86);
+      font-weight: 900;
+      font-size: .94rem;
+      line-height: 1.28;
+      word-break: keep-all;
     }
 
     @media (min-width: 720px){
@@ -489,32 +537,35 @@
       padding: 0 14px 14px;
       display:flex;
       gap: 10px;
+      background: #fff;
     }
-    .btnSmall{
+
+    .btn{
       flex: 1;
-      border: 0;
-      border-radius: 14px;
+      border: 1px solid var(--line2);
+      border-radius: 12px;
       padding: 10px 10px;
       font-weight: 950;
       cursor:pointer;
       min-height: 42px;
+      background: #fff;
+      color: rgba(31,42,55,.9);
     }
-    .ok{
-      background: linear-gradient(135deg, rgba(134,239,172,.80), rgba(165,180,252,.80));
-      border: 1px solid rgba(165,180,252,.22);
-      color: rgba(15,23,42,.88);
+    .btn.primary{
+      border-color: rgba(31,78,121,.30);
+      background: linear-gradient(180deg, rgba(31,78,121,.14), rgba(47,111,173,.10));
+      color: var(--primary);
     }
 
-    /* ✅ 토스트: 전체보기용(줄바꿈 허용) */
     .toast{
       position: fixed;
       left: 50%;
       bottom: 22px;
       transform: translateX(-50%);
-      background: rgba(15,23,42,0.86);
-      color: white;
+      background: rgba(15,23,42,0.92);
+      color: #fff;
       padding: 10px 14px;
-      border-radius: 18px;
+      border-radius: 14px;
       font-size: .92rem;
       font-weight: 850;
       opacity: 0;
@@ -536,28 +587,37 @@
 <body>
   <div class="app" id="app">
     <div class="top" id="topBar">
-      <div class="title">
-        <h1>🌸 울산하늘공원 접수 현황</h1>
-        <div class="mini" id="todayLabel">-</div>
+      <div class="header">
+        <div class="brand">
+          <h1>울산하늘공원 접수 현황</h1>
+          <div class="sub">
+            <span class="chip">기준일 <strong id="todayLabel">-</strong></span>
+            <span class="chip"><strong id="sourceLabel">추모의집</strong></span>
+          </div>
+        </div>
+        <div class="chip" id="countPill">
+          <span id="countTitle">현황</span>
+          <strong id="countText" style="margin-left:8px;">-</strong>
+        </div>
       </div>
 
-      <div class="bar">
+      <div class="toolbar">
         <div class="seg" role="tablist" aria-label="시설 선택">
           <button id="tabHouse" class="active" onclick="switchSource('house')">추모의집</button>
           <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
         </div>
 
-        <div class="date-row">
-          <div class="pill2" id="datePill">
-            <div class="k">날짜선택</div>
+        <div class="group">
+          <div class="field" id="datePill">
+            <div class="k">날짜 선택</div>
             <div class="v">
               <input type="date" id="datePicker" />
             </div>
           </div>
 
-          <div class="pill2" id="countPill">
-            <div class="k" id="countTitle">안치현황</div>
-            <div class="v" id="countText">안치0건, 반출0건</div>
+          <div class="searchbar" role="search">
+            <div class="icon">⌕</div>
+            <input id="searchInput" type="text" placeholder="봉안번호/고인명 검색" autocomplete="off" />
           </div>
         </div>
       </div>
@@ -571,18 +631,13 @@
   <div class="overlay" id="overlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true">
       <div class="sheet-head">
-        <div class="headLeft">
-          <p class="headLine" id="mTitleLine">-</p>
-          <div class="headMeta" id="mMetaLine"></div>
-        </div>
+        <div class="sheet-title" id="mTitleLine">-</div>
       </div>
-
       <div class="sheet-body">
         <div id="mFields"></div>
       </div>
-
       <div class="sheet-actions">
-        <button class="btnSmall ok" onclick="closeSheet()">확인</button>
+        <button class="btn primary" onclick="closeSheet()">확인</button>
       </div>
     </div>
   </div>
@@ -874,9 +929,6 @@
       return { recv: mergedN.length, ret: 0 };
     }
 
-    // -----------------------------
-    // 🔥 crem.json 연동
-    // -----------------------------
     let CREM_MAP = null;
     let LAST_CREM_MAP = null;
 
@@ -944,8 +996,6 @@
       return ids;
     }
 
-    /* ✅ 정렬키: (반출 최상단) > '00회차' 기준 오름차순
-       완료/대기 토글은 정렬에 영향 없음(그자리 유지) */
     function itemChasuKey(item, cremMap){
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0) return 9999;
@@ -954,9 +1004,8 @@
       return isFinite(minChasu) ? minChasu : 9999;
     }
 
-    // ✅ 리스트 표시용: 말줄임 텍스트 + data-full로 전체보기(길게누름)
     function buildCremLinesHTML(item, cremMap, mode){
-      if (mode === 'ret') return ''; // 리스트에서는 반출행 화장정보 숨김(원하시면 여기 제거)
+      if (mode === 'ret') return '';
 
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0){
@@ -981,8 +1030,6 @@
       return `<div class="cremWrap">${htmlLines}</div>`;
     }
 
-    // ✅ 모달 표시용: '00회차' 제거 + (화장시작 1줄, 화장종료 1줄)
-    // 여러 명이면 " / "로 합쳐서 2줄만 유지
     function buildCremTimesForModal(item, cremMap){
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0) return { startLine: '화장시작: -', endLine: '화장종료: -' };
@@ -1003,8 +1050,6 @@
       return { startLine: `화장시작: ${startText}`, endLine: `화장종료: ${endText}` };
     }
 
-    // -----------------------------
-
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
     const listArea = document.getElementById('listArea');
@@ -1014,17 +1059,20 @@
 
     const countTitle = document.getElementById('countTitle');
     const countText = document.getElementById('countText');
+    const sourceLabel = document.getElementById('sourceLabel');
 
     const overlay = document.getElementById('overlay');
 
     const mTitleLine = document.getElementById('mTitleLine');
-    const mMetaLine = document.getElementById('mMetaLine');
     const mFields = document.getElementById('mFields');
+
+    const searchInput = document.getElementById('searchInput');
 
     let currentSource = 'house';
     let currentDisplayData = [];
     let currentModalItem = null;
     let currentSelectedDate = '';
+    let currentSearch = '';
 
     const TODAY = getLocalISODate(new Date());
     datePicker.value = TODAY;
@@ -1035,22 +1083,33 @@
       load();
     });
 
+    searchInput.addEventListener('input', () => {
+      currentSearch = (searchInput.value ?? '').toString().trim();
+      load();
+    });
+
     function switchSource(sourceKey){
       currentSource = sourceKey;
       localStorage.setItem(STORAGE_KEYS.source, sourceKey);
 
       tabHouse.classList.toggle('active', sourceKey === 'house');
       tabNature.classList.toggle('active', sourceKey === 'nature');
+
+      sourceLabel.textContent = SOURCES[sourceKey].label;
+      searchInput.value = '';
+      currentSearch = '';
       load();
     }
 
     function renderListHead(shownCount, totalCount){
+      const sLabel = SOURCES[currentSource].label;
       return `
         <div class="list-head">
-          <div class="hint">접수현황</div>
-          <div class="right">
-            <div class="badge">${shownCount.toLocaleString()} / ${totalCount.toLocaleString()}</div>
+          <div class="hint">
+            <span>${escapeHtml(sLabel)} 접수목록</span>
+            <span class="tag">정렬: 반출 우선 · 회차(오름차순)</span>
           </div>
+          <div class="badge">${shownCount.toLocaleString()} / ${totalCount.toLocaleString()}</div>
         </div>
       `;
     }
@@ -1074,7 +1133,6 @@
         fieldsHTML += kvRow('신청자', item.applName ?? '-');
       }
 
-      // ✅ 모달에도 화장시간(2줄) 표시
       const cremMap = LAST_CREM_MAP;
       if (cremMap){
         const t = buildCremTimesForModal(item, cremMap);
@@ -1084,7 +1142,6 @@
       return fieldsHTML;
     }
 
-    // ✅ 정렬: 반출 최상단 > '00회차'(burnChasu) 오름차순 > 원래순서(안정정렬)
     function sortByWorkPriorityStable(arr, selectedISO, cremMap){
       const clone = arr.slice();
 
@@ -1102,14 +1159,12 @@
         const cb = itemChasuKey(b, cremMap);
         if (ca !== cb) return ca - cb;
 
-        // ✅ 완료/대기 상태는 정렬에 반영하지 않음(그자리 유지)
         return (a._pos ?? 0) - (b._pos ?? 0);
       });
 
       return clone;
     }
 
-    // ✅ 추모의집 반출 상태 유지
     function retKeyHouse(id){ return `ret_house_${id}`; }
     function getRetStatusHouse(id){
       const v = localStorage.getItem(retKeyHouse(id));
@@ -1121,7 +1176,6 @@
       localStorage.setItem(retKeyHouse(id), val);
     }
 
-    // ✅ 길게누르면 화장정보 전체보기(토스트)
     function attachLongPressForCremLines(){
       const els = listArea.querySelectorAll('.cremLine[data-full]');
       const HOLD_MS = 420;
@@ -1131,7 +1185,7 @@
         let fired = false;
 
         const full = () => (el.getAttribute('data-full') || '').trim();
-        const start = (e) => {
+        const start = () => {
           fired = false;
           clearTimeout(timer);
           timer = setTimeout(() => {
@@ -1153,13 +1207,31 @@
         el.addEventListener('mouseup', end);
         el.addEventListener('mouseleave', end);
 
-        // ✅ 클릭 시(짧게) 아무 동작 없음(상세보기는 위쪽 버튼에서만)
         el.addEventListener('click', (e) => {
           if (fired) {
             e.preventDefault();
             e.stopPropagation();
           }
         });
+      });
+    }
+
+    function filterBySearch(displayData){
+      const q = (currentSearch ?? '').toString().trim();
+      if (!q) return displayData;
+
+      const qq = q.replace(/\s+/g,'').toLowerCase();
+
+      return displayData.filter(item => {
+        if (currentSource === 'house'){
+          const no = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-').replace(/\s+/g,'').toLowerCase();
+          const nm = String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-').replace(/\s+/g,'').toLowerCase();
+          return no.includes(qq) || nm.includes(qq);
+        } else {
+          const no = String(item.natNo ?? '-').replace(/\s+/g,'').toLowerCase();
+          const nm = String(item.deadName ?? '-').replace(/\s+/g,'').toLowerCase();
+          return no.includes(qq) || nm.includes(qq);
+        }
       });
     }
 
@@ -1176,12 +1248,12 @@
         const data = Array.isArray(raw) ? raw : [];
 
         const c = calcSelectedCounts(currentSource, data, selectedDate);
-        countTitle.textContent = `안치현황`;
 
+        countTitle.textContent = `현황`;
         if (currentSource === 'house'){
-          countText.innerHTML = `안치${c.recv}건, 반출${c.ret}건`;
+          countText.textContent = `안치 ${c.recv} · 반출 ${c.ret}`;
         } else {
-          countText.innerHTML = `안장${c.recv}건`;
+          countText.textContent = `안장 ${c.recv}`;
         }
 
         const dateKey = source.dateKey;
@@ -1201,10 +1273,11 @@
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        // ✅ 안정정렬 기준용 원래 위치 저장
         displayData.forEach((it, i) => { it._pos = i; });
 
         displayData = sortByWorkPriorityStable(displayData, selectedDate, cremMap);
+        displayData = filterBySearch(displayData);
+
         currentDisplayData = displayData;
 
         if (displayData.length === 0){
@@ -1220,28 +1293,28 @@
         html += `<ul>`;
 
         shown.forEach((item, idx) => {
-          let displayId = '-';
-          let displayName = '-';
           const sid = itemStatusId(currentSource, item);
-
           const mode = (currentSource === 'house' && isRetOnDate(item, selectedDate)) ? 'ret' : 'recv';
 
           let statusText = '';
           let isOn = false;
           let rowLabel = '';
-          let rowSwitchCls = 'rowSwitch';
+          let swCls = 'sw';
 
           if (mode === 'ret'){
             statusText = getRetStatusHouse(sid);
             isOn = (statusText === '반출완료');
             rowLabel = isOn ? '반출완료' : '반출대기';
-            rowSwitchCls = isOn ? 'rowSwitch on' : 'rowSwitch';
+            swCls = isOn ? 'sw on' : 'sw';
           } else {
             statusText = getRecvStatus(currentSource, sid);
             isOn = isRecvDone(currentSource, statusText);
             rowLabel = isOn ? recvDoneText(currentSource) : recvPendingText(currentSource);
-            rowSwitchCls = isOn ? 'rowSwitch on' : 'rowSwitch';
+            swCls = isOn ? 'sw on' : 'sw';
           }
+
+          let displayId = '-';
+          let displayName = '-';
 
           if (currentSource === 'house'){
             displayId = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
@@ -1256,22 +1329,23 @@
 
           html += `
             <li>
-              <div class="itemRow ${leftCls}">
-                <div class="rowTop">
-                  <button class="itemMainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
-                    <div class="main">
-                      <div class="id">${escapeHtml(displayId)}</div>
-                      <div class="name">${escapeHtml(displayName)}</div>
+              <div class="row ${leftCls}">
+                <div class="barL"></div>
+
+                <button class="mainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
+                  <div class="main">
+                    <div class="topline">
+                      <div class="no">${escapeHtml(displayId)}</div>
                     </div>
-                  </button>
-
-                  <div class="rowToggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
-                    <div class="${rowSwitchCls}"></div>
-                    <span>${escapeHtml(rowLabel)}</span>
+                    <div class="name">${escapeHtml(displayName)}</div>
+                    ${cremHTML}
                   </div>
-                </div>
+                </button>
 
-                ${cremHTML}
+                <div class="toggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
+                  <div class="${swCls}"></div>
+                  <span>${escapeHtml(rowLabel)}</span>
+                </div>
               </div>
             </li>
           `;
@@ -1281,14 +1355,13 @@
         listArea.innerHTML = html;
 
         if (displayData.length > limit){
-          listArea.insertAdjacentHTML('beforeend', `<div class="no-data" style="padding:10px 0 0;">(상위 ${limit}건만 표시 중)</div>`);
+          listArea.insertAdjacentHTML('beforeend', `<div class="no-data" style="margin-top:10px; padding:10px 12px;">상위 ${limit}건만 표시 중</div>`);
         }
 
-        // ✅ 길게 누르면 전체보기 연결
         attachLongPressForCremLines();
 
       }catch(err){
-        listArea.innerHTML = `<div class="no-data">❌ 오류: ${escapeHtml(err.message)}</div>`;
+        listArea.innerHTML = `<div class="no-data">오류: ${escapeHtml(err.message)}</div>`;
       }
     }
 
@@ -1298,14 +1371,12 @@
 
       currentModalItem = item;
 
-      const sourceLabel = SOURCES[currentSource].label;
+      const sourceLabelText = SOURCES[currentSource].label;
       const headerNo = (currentSource === 'house')
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
 
-      mTitleLine.textContent = `${sourceLabel} · ${headerNo}`;
-      mMetaLine.innerHTML = '';
-
+      mTitleLine.textContent = `${sourceLabelText} · ${headerNo}`;
       mFields.innerHTML = buildFields(item);
 
       overlay.classList.add('show');
@@ -1339,17 +1410,16 @@
         const cur = getRetStatusHouse(sid);
         const next = (cur === '반출완료') ? '반출대기' : '반출완료';
         setRetStatusHouse(sid, next);
-        showToast(`✅ ${headerNo} : ${next}`, 2200);
+        showToast(`${headerNo} : ${next}`, 2200);
       } else {
         const cur = getRecvStatus(currentSource, sid);
         const done = recvDoneText(currentSource);
         const pending = recvPendingText(currentSource);
         const next = (cur === done) ? pending : done;
         setRecvStatus(currentSource, sid, next);
-        showToast(`✅ ${headerNo} : ${next}`, 2200);
+        showToast(`${headerNo} : ${next}`, 2200);
       }
 
-      // ✅ 정렬이 상태에 영향 없어서 위치 유지됨
       load();
     }
 
@@ -1366,6 +1436,9 @@
 
       datePicker.value = getLocalISODate(new Date());
       todayLabel.textContent = `${datePicker.value}`;
+
+      sourceLabel.textContent = SOURCES[initial].label;
+
       load();
     });
 
