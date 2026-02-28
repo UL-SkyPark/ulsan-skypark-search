@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>🌸 울산하늘공원 접수 현황</title>
 
-  <!-- 파비콘 및 아이콘 -->
   <link rel="icon" type="image/png" href="./images/symbol.png">
   <link rel="apple-touch-icon" href="./images/symbol.png">
 
@@ -365,7 +364,6 @@
     }
     .overlay.show{ display:flex; }
 
-    /* ✅ 모달 폭: PC/모바일 관계없이 "너무 넓지 않게" 적절 비율로 */
     .sheet{
       width: min(520px, 92vw);
       max-width: 520px;
@@ -385,7 +383,6 @@
       .sheet{ width: 94vw; }
     }
 
-    /* ✅ 모달 헤더: 제목(상단)만 깔끔하게 */
     .sheet-head{
       position: relative;
       padding: 14px 14px 14px;
@@ -407,7 +404,7 @@
       align-items:flex-start;
       justify-content:center;
       text-align:left;
-      padding: 2px 12px 2px 12px; /* ✅ 우측 토글 제거했으니 패딩 단순화 */
+      padding: 2px 12px 2px 12px;
     }
 
     .headLine{
@@ -429,7 +426,6 @@
       gap: 12px;
     }
 
-    /* ✅ 상세 항목 "왼쪽 정렬" + 좌우로 붙는 느낌 제거 */
     .kv{
       background: rgba(255,255,255,0.75);
       border: 1px solid rgba(148,163,184,0.18);
@@ -459,7 +455,6 @@
       min-width: 0;
     }
 
-    /* ✅ (선택) 화면이 넓을 때는 모달 필드를 2열로(더 짧고 보기 좋게) */
     @media (min-width: 720px){
       #mFields{
         display:grid;
@@ -768,9 +763,10 @@
     }
 
     function recvKey(sourceKey, id){ return `recv_${sourceKey}_${id}`; }
-    function retKey(sourceKey, id){ return `ret_${sourceKey}_${id}`; }
 
-    // ---- 상태 라벨(요청대로: "대기" 토글만) ----
+    // ✅ 자연장지는 "반출" 자체가 없음 (키/상태/토글 삭제)
+    //    추모의집만 반출토글 존재
+
     function recvPendingText(sourceKey){ return (sourceKey === 'nature') ? '안장대기' : '안치대기'; }
     function recvDoneText(sourceKey){ return (sourceKey === 'nature') ? '안장완료' : '안치완료'; }
 
@@ -790,16 +786,6 @@
     }
     function setRecvStatus(sourceKey, id, val){
       localStorage.setItem(recvKey(sourceKey, id), val);
-    }
-
-    function getRetStatus(sourceKey, id){
-      const v = localStorage.getItem(retKey(sourceKey, id));
-      if (!v) return '반출대기';
-      if (v === '반출') return '반출대기';
-      return v;
-    }
-    function setRetStatus(sourceKey, id, val){
-      localStorage.setItem(retKey(sourceKey, id), val);
     }
 
     function isRetOnDate(item, isoDate){
@@ -846,6 +832,7 @@
         return { recv, ret };
       }
 
+      // 자연장지: 반출 없음
       const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === selectedISO);
       const mergedN = mergeCoupleRows(todays);
       return { recv: mergedN.length, ret: 0 };
@@ -886,8 +873,6 @@
       return String(v).trim();
     }
 
-    // deadId 1개 -> { type, text }
-    // type: 'pay' (선결재) | 'info' (회차/시간)
     function cremLineObjByDeadId(deadId, cremMap){
       const did = (deadId ?? "").toString().trim();
       const rec = did ? cremMap.get(did) : null;
@@ -909,15 +894,16 @@
       return { type: 'info', text: `${chasu}회차, 화장시작: ${st}, 화장종료: ${en}` };
     }
 
-    // ✅ 부부단 규칙
+    // ✅ 반출행(mode=ret)에는 아무것도 표시하지 않음(빈 문자열 반환)
+    // ✅ 부부단 규칙:
     // - 2명 중 1명만 선결재 -> 각각 1줄씩(총 2줄)
     // - 2명 다 선결재 -> "선결재" 1줄만
-    // - 2명 다 화장시간(=info) -> 2줄
-    // - 1명만 존재하면 그 1줄
-    function buildCremLinesHTML(item, cremMap){
+    // - 2명 다 info -> 2줄
+    function buildCremLinesHTML(item, cremMap, mode){
+      if (mode === 'ret') return ''; // ⭐ 반출행은 표시 안 함
+
       const raws = Array.isArray(item?._raw) ? item._raw : [item];
 
-      // deadId 중복 제거 + 순서 유지
       const seen = new Set();
       const ids = [];
       for (const r of raws){
@@ -927,14 +913,12 @@
         if (did) ids.push(did);
       }
 
-      // deadId가 아예 없으면: 선결재 1줄
       if (ids.length === 0){
         return `<div class="cremWrap"><div class="cremLine">${escapeHtml('선결재')}</div></div>`;
       }
 
       const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
 
-      // 부부단(2명 이상)인 경우: "둘다 선결재면 1줄"만 예외 처리
       if (lineObjs.length >= 2){
         const allPay = lineObjs.every(o => o.type === 'pay');
         if (allPay){
@@ -990,7 +974,6 @@
       load();
     }
 
-    // 헤더는 카운트만
     function renderListHead(shownCount, totalCount){
       return `
         <div class="list-head">
@@ -1006,7 +989,6 @@
       let fieldsHTML = '';
       if (currentSource === 'house'){
         fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
-        // ✅ 봉안번호는 상단 타이틀에 있으므로 본문에서는 제거
         fieldsHTML += kvRow('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
         fieldsHTML += kvRow('신청자', item.applname ?? item.applName ?? '-');
 
@@ -1017,14 +999,15 @@
         }
       } else {
         fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
-        // ✅ 안장번호는 상단 타이틀에 있으므로 본문에서는 제거
         fieldsHTML += kvRow('고인명', item.deadName ?? '-');
         fieldsHTML += kvRow('신청자', item.applName ?? '-');
+        // ✅ 자연장지: 반출 관련 항목 없음(추가 없음)
       }
       return fieldsHTML;
     }
 
-    // 완료/미완료 토글해도 "순서 고정": 완료 여부를 정렬에 반영하지 않음
+    // ✅ 정렬: 반출은 "추모의집"에서만 상단 그룹
+    // ✅ 자연장지는 전부 recv로 취급
     function sortByWorkPriorityStable(arr, selectedISO){
       const clone = arr.slice();
 
@@ -1039,7 +1022,6 @@
         const modeA = (currentSource === 'house' && isRetOnDate(a, selectedISO)) ? 'ret' : 'recv';
         const modeB = (currentSource === 'house' && isRetOnDate(b, selectedISO)) ? 'ret' : 'recv';
 
-        // 반출(상단) -> 안치/안장
         const grpA = (modeA === 'ret') ? 0 : 1;
         const grpB = (modeB === 'ret') ? 0 : 1;
         if (grpA !== grpB) return grpA - grpB;
@@ -1050,6 +1032,18 @@
       });
 
       return clone;
+    }
+
+    // ✅ 추모의집 반출 상태는 계속 유지 (자연장지는 관련 로직 없음)
+    function retKeyHouse(id){ return `ret_house_${id}`; }
+    function getRetStatusHouse(id){
+      const v = localStorage.getItem(retKeyHouse(id));
+      if (!v) return '반출대기';
+      if (v === '반출') return '반출대기';
+      return v;
+    }
+    function setRetStatusHouse(id, val){
+      localStorage.setItem(retKeyHouse(id), val);
     }
 
     async function load(){
@@ -1069,7 +1063,8 @@
         if (currentSource === 'house'){
           countText.innerHTML = `안치${c.recv}건, 반출${c.ret}건`;
         } else {
-          countText.innerHTML = `안장${c.recv}건, 반출0건`;
+          // ✅ 자연장지: 반출 문구 삭제
+          countText.innerHTML = `안장${c.recv}건`;
         }
 
         const dateKey = source.dateKey;
@@ -1109,20 +1104,28 @@
           let displayName = '-';
           const sid = itemStatusId(currentSource, item);
 
+          // ✅ 모드 결정: 추모의집만 ret 존재
           const mode = (currentSource === 'house' && isRetOnDate(item, selectedDate)) ? 'ret' : 'recv';
-          const recv = getRecvStatus(currentSource, sid);
-          const ret  = getRetStatus(currentSource, sid);
-          const statusText = (mode === 'ret') ? ret : recv;
 
-          const isOn = (mode === 'ret')
-            ? (statusText === '반출완료')
-            : isRecvDone(currentSource, statusText);
+          // ✅ 좌측 바 색상/클래스: ret이면 ret/retDone, recv면 recv/done
+          // ✅ 자연장지는 ret 없음
+          let statusText = '';
+          let isOn = false;
+          let rowLabel = '';
+          let rowSwitchCls = 'rowSwitch';
 
-          const rowLabel = (mode === 'ret')
-            ? (isOn ? '반출완료' : '반출대기')
-            : (isOn ? recvDoneText(currentSource) : recvPendingText(currentSource));
-
-          const rowSwitchCls = isOn ? 'rowSwitch on' : 'rowSwitch';
+          if (mode === 'ret'){
+            // 추모의집 반출 토글
+            statusText = getRetStatusHouse(sid);
+            isOn = (statusText === '반출완료');
+            rowLabel = isOn ? '반출완료' : '반출대기';
+            rowSwitchCls = isOn ? 'rowSwitch on' : 'rowSwitch';
+          } else {
+            statusText = getRecvStatus(currentSource, sid);
+            isOn = isRecvDone(currentSource, statusText);
+            rowLabel = isOn ? recvDoneText(currentSource) : recvPendingText(currentSource);
+            rowSwitchCls = isOn ? 'rowSwitch on' : 'rowSwitch';
+          }
 
           if (currentSource === 'house'){
             displayId = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
@@ -1132,16 +1135,18 @@
             displayName = String(item.deadName ?? '-');
           }
 
+          const leftCls = leftClsForMode(currentSource, mode, statusText);
+
           html += `
             <li>
-              <div class="itemRow ${leftClsForMode(currentSource, mode, statusText)}">
+              <div class="itemRow ${leftCls}">
                 <button class="itemMainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
                   <div class="main">
                     <div class="id">
                       ${escapeHtml(displayId)}
                     </div>
                     <div class="name">${escapeHtml(displayName)}</div>
-                    ${buildCremLinesHTML(item, cremMap)}
+                    ${buildCremLinesHTML(item, cremMap, mode)}
                   </div>
                 </button>
 
@@ -1178,11 +1183,9 @@
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
 
-      // ✅ 상단 타이틀에 번호 표시
       mTitleLine.textContent = `${sourceLabel} · ${headerNo}`;
       mMetaLine.innerHTML = '';
 
-      // ✅ 본문 필드 렌더(봉안/안장번호 제외)
       mFields.innerHTML = buildFields(item);
 
       overlay.classList.add('show');
@@ -1205,6 +1208,8 @@
       if (!item) return;
 
       const sid = itemStatusId(currentSource, item);
+
+      // ✅ 모드 결정: 추모의집만 ret 존재
       const mode = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)) ? 'ret' : 'recv';
 
       const headerNo = (currentSource === 'house')
@@ -1212,9 +1217,10 @@
         : String(item.natNo ?? '-');
 
       if (mode === 'ret'){
-        const cur = getRetStatus(currentSource, sid);
+        // ✅ 자연장지에서는 ret가 될 수 없음
+        const cur = getRetStatusHouse(sid);
         const next = (cur === '반출완료') ? '반출대기' : '반출완료';
-        setRetStatus(currentSource, sid, next);
+        setRetStatusHouse(sid, next);
         showToast(`✅ ${headerNo} : ${next}`);
       } else {
         const cur = getRecvStatus(currentSource, sid);
