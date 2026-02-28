@@ -90,9 +90,12 @@
       flex-direction: column;
     }
 
-    /* ✅ 내용이 적으면 앱 높이를 내용만큼 줄이고, 내부 스크롤 제거 */
-    .app.fit{ height: auto; }
-    .app.fit .content{ overflow: visible; }
+    /* ✅ (변경 1) 내용이 적어도 카드 높이는 유지(100%), 스크롤만 비활성화 */
+    .app.fit{ height: 100%; }
+    .app.fit .content{
+      overflow: hidden;
+      -webkit-overflow-scrolling: auto;
+    }
 
     .top{
       position: sticky;
@@ -299,8 +302,6 @@
       overflow: auto;
       -webkit-overflow-scrolling: touch;
       min-height: 0;
-
-      /* ✅ iOS 바운스/오버스크롤 느낌 완화(선택이지만 추천) */
       overscroll-behavior: contain;
     }
 
@@ -757,15 +758,20 @@
     };
 
     /* =========
-       ✅ 내용이 적을 때: 카드 높이 자동 축소(스크롤 제거)
+       ✅ (변경 2) 내용이 적을 때: fit(스크롤 잠금)만 하고 카드 높이는 유지
        ========= */
     function adjustFit(){
       requestAnimationFrame(() => {
         const app = $('#app');
         if (!app || !scrollArea) return;
-        // 스크롤이 필요한지 여부 판단
+
         const needsScroll = scrollArea.scrollHeight > scrollArea.clientHeight + 2;
+
+        // 내용이 적으면 fit(스크롤 잠금), 많으면 normal(스크롤 허용)
         app.classList.toggle('fit', !needsScroll);
+
+        // fit일 때 스크롤 위치도 0으로 고정(미세 스크롤 방지)
+        if (!needsScroll) scrollArea.scrollTop = 0;
       });
     }
 
@@ -1127,7 +1133,7 @@
 
         if (!display.length){
           listArea.innerHTML = `<div class="no-data">표시할 데이터가 없습니다.</div>`;
-          adjustFit(); /* ✅ */
+          adjustFit();
           return;
         }
 
@@ -1201,11 +1207,11 @@
           );
         }
 
-        adjustFit(); /* ✅ 렌더 후 fit 판단 */
+        adjustFit();
 
       } catch (err){
         listArea.innerHTML = `<div class="no-data">오류: ${esc(err.message)}</div>`;
-        adjustFit(); /* ✅ */
+        adjustFit();
       }
     }
 
@@ -1406,7 +1412,7 @@
         ptrEl.setAttribute('aria-hidden', 'false');
 
         try{
-          await doRefresh();          // PTR도 버튼도 동일 동작 + 동일 애니메이션
+          await doRefresh();
         } finally {
           resetPullUI();
           startY = 0;
