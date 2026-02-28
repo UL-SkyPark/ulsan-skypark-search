@@ -1,29 +1,5 @@
 [
   {
-    "deadId": "1653337",
-    "deadName": "지순이",
-    "burnDate": "2026-02-28",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
-    "deadId": "1653353",
-    "deadName": "이극기",
-    "burnDate": "2026-02-28",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
-    "deadId": "1653386",
-    "deadName": "박수용",
-    "burnDate": "2026-02-28",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
     "deadId": "1653312",
     "deadName": "이중선",
     "burnDate": "2026-02-28",
@@ -124,7 +100,7 @@
     "deadName": "박순규",
     "burnDate": "2026-02-28",
     "burnStrTime": "10:16",
-    "burnEndTime": null,
+    "burnEndTime": "11:44",
     "burnChasu": "04"
   },
   {
@@ -132,7 +108,7 @@
     "deadName": "박순양",
     "burnDate": "2026-02-28",
     "burnStrTime": "10:20",
-    "burnEndTime": null,
+    "burnEndTime": "11:44",
     "burnChasu": "04"
   },
   {
@@ -150,5 +126,37 @@
     "burnStrTime": "10:30",
     "burnEndTime": null,
     "burnChasu": "04"
+  },
+  {
+    "deadId": "1653337",
+    "deadName": "지순이",
+    "burnDate": "2026-02-28",
+    "burnStrTime": "11:18",
+    "burnEndTime": null,
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653386",
+    "deadName": "박수용",
+    "burnDate": "2026-02-28",
+    "burnStrTime": "11:23",
+    "burnEndTime": null,
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653353",
+    "deadName": "이극기",
+    "burnDate": "2026-02-28",
+    "burnStrTime": "11:31",
+    "burnEndTime": null,
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653344",
+    "deadName": "김연호",
+    "burnDate": "2026-02-28",
+    "burnStrTime": "11:39",
+    "burnEndTime": null,
+    "burnChasu": "05"
   }
 ]
