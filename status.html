@@ -33,14 +33,10 @@
       padding: 12px;
     }
 
-    /* =========================
-       ✅ PTR
-       ========================= */
+    /* PTR */
     .pull-to-refresh{
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 60px;
       background: #fff;
       display: flex;
@@ -54,22 +50,17 @@
       padding-top: env(safe-area-inset-top);
     }
     .pull-to-refresh.visible{ transform: translateY(0); }
-
     .loader{
-      width: 20px;
-      height: 20px;
+      width: 20px; height: 20px;
       border: 2px solid #cbd5e1;
       border-top: 2px solid #0f172a;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       opacity: 0;
     }
-    @keyframes spin{
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    @keyframes spin{ to { transform: rotate(360deg); } }
 
-    /* ✅ 스크롤/당김 대상 래퍼 */
+    /* 당김 대상 래퍼 */
     .pullable-content{
       height: calc(100vh - 24px);
       transition: transform 0.22s ease;
@@ -118,19 +109,12 @@
       font-weight: 950;
       letter-spacing: -0.03em;
       color: #0f172a;
-      white-space: normal;
-      overflow: visible;
-      text-overflow: clip;
       word-break: keep-all;
       font-size: 1.40rem;
       line-height: 1.15;
     }
-
     @media (max-width: 560px){
-      .brand h1{
-        font-size: 1.55rem;
-        line-height: 1.18;
-      }
+      .brand h1{ font-size: 1.55rem; line-height: 1.18; }
     }
 
     .rightInfo{
@@ -142,14 +126,9 @@
       margin-left: auto;
     }
 
-    /* =========================
-       ✅ 우측상단 새로고침 버튼 + 스프링 느낌 애니메이션
-       - 눌렀을 때: 살짝 축소/튕김
-       - refreshing 상태: 아이콘 회전 + 펄스(스케일)
-       ========================= */
+    /* 우측상단 새로고침 버튼 (스프링/스핀) */
     .iconBtn{
-      width: 42px;
-      height: 42px;
+      width: 42px; height: 42px;
       border-radius: 999px;
       border: 1px solid var(--line);
       background: #fff;
@@ -163,12 +142,9 @@
       transform: translateZ(0);
       transition: transform 140ms cubic-bezier(.2,.8,.2,1), opacity 140ms ease;
     }
-    .iconBtn:active{
-      transform: scale(0.94);
-    }
+    .iconBtn:active{ transform: scale(0.94); }
     .iconBtn svg{
-      width: 22px;
-      height: 22px;
+      width: 22px; height: 22px;
       fill: none;
       stroke: var(--primary);
       stroke-width: 2.2;
@@ -176,29 +152,20 @@
       stroke-linejoin: round;
       transform-origin: 50% 50%;
     }
-
-    @keyframes iconSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes iconSpin{ to{ transform: rotate(360deg); } }
+    @keyframes iconSpringPulse{
+      0%{ transform: scale(1); }
+      35%{ transform: scale(1.08); }
+      70%{ transform: scale(0.98); }
+      100%{ transform: scale(1); }
     }
-    /* “살짝 튕기면서 도는” 느낌: 스케일을 주기적으로 살짝 올렸다 내림 */
-    @keyframes iconSpringPulse {
-      0%   { transform: scale(1); }
-      35%  { transform: scale(1.08); }
-      70%  { transform: scale(0.98); }
-      100% { transform: scale(1); }
-    }
-
-    /* refreshing: 버튼은 살짝 펄스, 아이콘은 회전 */
     .iconBtn.refreshing{
       cursor: default;
       opacity: .88;
       transform: scale(1.02);
       animation: iconSpringPulse 520ms cubic-bezier(.2, 1.1, .2, 1) infinite;
     }
-    .iconBtn.refreshing svg{
-      animation: iconSpin 0.9s linear infinite;
-    }
+    .iconBtn.refreshing svg{ animation: iconSpin 0.9s linear infinite; }
 
     .toolbar{
       padding: 10px 16px 14px;
@@ -236,13 +203,9 @@
       color: var(--primary);
       box-shadow: inset 0 0 0 1px rgba(31,78,121,.25);
     }
-
     @media (max-width: 560px){
-      .seg button{
-        font-size: 1.12rem;
-        padding: 12px 12px;
-        min-height: 48px;
-      }
+      .seg{ flex: 1 1 100%; min-width: 0; }
+      .seg button{ font-size: 1.12rem; padding: 12px 12px; min-height: 48px; }
     }
 
     .group{
@@ -252,6 +215,9 @@
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       align-items: stretch;
+    }
+    @media (max-width: 560px){
+      .group{ min-width: 0; grid-template-columns: 1fr 1fr; }
     }
 
     .field{
@@ -276,7 +242,6 @@
       display:flex;
       align-items:center;
       gap: 8px;
-      flex-wrap: nowrap;
       font-weight: 950;
       color: rgba(31,42,55,.92);
       min-width: 0;
@@ -312,12 +277,7 @@
       .countCenter{ font-size: .92rem; }
     }
 
-    @media (max-width: 560px){
-      .seg{ flex: 1 1 100%; min-width: 0; }
-      .group{ min-width: 0; grid-template-columns: 1fr 1fr; }
-    }
-
-    /* ✅ .content 내부 스크롤(overflow) */
+    /* 내부 스크롤 구조 */
     .content{
       padding: 12px 16px 16px;
       background: linear-gradient(180deg, #ffffff, #f6f8fb);
@@ -416,20 +376,9 @@
     }
     .mainBtn:active{ background: rgba(31,78,121,.06); }
 
-    .main{
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-      min-width: 0;
-    }
+    .main{ display:flex; flex-direction:column; gap: 6px; min-width: 0; }
 
-    .no{
-      font-weight: 950;
-      color: #0f172a;
-      font-size: 1.02rem;
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-    }
+    .no{ font-weight: 950; color: #0f172a; font-size: 1.02rem; white-space: nowrap; }
 
     .name{
       font-weight: 950;
@@ -437,14 +386,9 @@
       font-size: 1.05rem;
       line-height: 1.28;
       word-break: keep-all;
-      white-space: normal;
-      overflow: visible;
-      text-overflow: clip;
       letter-spacing: -0.01em;
     }
-    @media (max-width: 560px){
-      .name{ font-size: 1.10rem; }
-    }
+    @media (max-width: 560px){ .name{ font-size: 1.10rem; } }
 
     .toggle{
       display:flex;
@@ -493,19 +437,12 @@
     }
     .sw.on::after{ left: 18px; }
 
-    .cremWrap{
-      display:flex;
-      flex-direction:column;
-      gap: 4px;
-    }
+    .cremWrap{ display:flex; flex-direction:column; gap: 4px; }
     .cremLine{
       font-weight: 900;
       font-size: .90rem;
       color: rgba(31,42,55,.72);
       line-height: 1.35;
-      white-space: normal;
-      overflow: visible;
-      text-overflow: clip;
       word-break: keep-all;
     }
 
@@ -554,7 +491,6 @@
       gap: 12px;
       min-height: 58px;
     }
-
     .sheet-title{
       font-weight: 950;
       color: #0f172a;
@@ -567,12 +503,7 @@
       white-space: nowrap;
     }
 
-    .sheet-body{
-      padding: 12px 14px 14px;
-      display:grid;
-      gap: 10px;
-      background: #fff;
-    }
+    .sheet-body{ padding: 12px 14px 14px; display:grid; gap: 10px; background: #fff; }
 
     .kv{
       display:flex;
@@ -601,19 +532,10 @@
     }
 
     @media (min-width: 720px){
-      #mFields{
-        display:grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
+      #mFields{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     }
 
-    .sheet-actions{
-      padding: 0 14px 14px;
-      display:flex;
-      gap: 10px;
-      background: #fff;
-    }
+    .sheet-actions{ padding: 0 14px 14px; display:flex; gap: 10px; background: #fff; }
 
     .btn{
       flex: 1;
@@ -657,7 +579,6 @@
       transform: translateX(-50%) translateY(-6px);
     }
 
-    /* 접근성: 모션 최소화 설정 시 애니메이션 끄기 */
     @media (prefers-reduced-motion: reduce){
       .pull-to-refresh, .pullable-content, .iconBtn{ transition: none !important; }
       .loader, .iconBtn.refreshing, .iconBtn.refreshing svg{ animation: none !important; }
@@ -666,13 +587,11 @@
 </head>
 
 <body>
-  <!-- ✅ Pull to Refresh 영역 -->
   <div id="pull-to-refresh" class="pull-to-refresh" aria-hidden="true">
     <div id="ptr-loader" class="loader" aria-hidden="true"></div>
     <div id="ptr-status">당겨서 새로고침</div>
   </div>
 
-  <!-- ✅ PTR 당김 대상(콘텐츠 래퍼) -->
   <div id="content" class="pullable-content">
     <div class="app" id="app">
       <div class="top" id="topBar">
@@ -681,9 +600,8 @@
             <h1>울산하늘공원 접수 현황</h1>
           </div>
 
-          <!-- ✅ 우측상단 새로고침 아이콘(애니메이션 적용) -->
           <div class="rightInfo">
-            <button id="refreshBtn" class="iconBtn" type="button" aria-label="새로고침" onclick="manualRefresh()">
+            <button id="refreshBtn" class="iconBtn" type="button" aria-label="새로고침">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M20 12a8 8 0 1 1-2.34-5.66"></path>
                 <path d="M20 4v6h-6"></path>
@@ -694,8 +612,8 @@
 
         <div class="toolbar">
           <div class="seg" role="tablist" aria-label="시설 선택">
-            <button id="tabHouse" class="active" onclick="switchSource('house')">추모의집</button>
-            <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
+            <button id="tabHouse" class="active" type="button">추모의집</button>
+            <button id="tabNature" type="button">자연장지</button>
           </div>
 
           <div class="group">
@@ -716,7 +634,6 @@
         </div>
       </div>
 
-      <!-- ✅ 내부 스크롤 영역(.content overflow) -->
       <div class="content" id="scrollArea">
         <div id="listArea"></div>
       </div>
@@ -732,7 +649,7 @@
         <div id="mFields"></div>
       </div>
       <div class="sheet-actions">
-        <button class="btn primary" onclick="closeSheet()">확인</button>
+        <button class="btn primary" type="button" id="sheetOkBtn">확인</button>
       </div>
     </div>
   </div>
@@ -740,65 +657,117 @@
   <div class="toast" id="toast">-</div>
 
   <script>
-    function getLocalISODate(d = new Date()){
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${y}-${m}-${day}`;
-    }
+    /* =========
+       DOM
+       ========= */
+    const $ = (s) => document.querySelector(s);
 
+    const datePicker = $('#datePicker');
+    const listArea   = $('#listArea');
+    const scrollArea = $('#scrollArea');
+
+    const tabHouse   = $('#tabHouse');
+    const tabNature  = $('#tabNature');
+
+    const countText  = $('#countText');
+
+    const overlay    = $('#overlay');
+    const mTitleLine = $('#mTitleLine');
+    const mFields    = $('#mFields');
+    const sheetOkBtn = $('#sheetOkBtn');
+
+    const refreshBtn = $('#refreshBtn');
+
+    const ptrEl      = $('#pull-to-refresh');
+    const statusEl   = $('#ptr-status');
+    const loaderEl   = $('#ptr-loader');
+    const contentEl  = $('#content');
+
+    /* =========
+       Utils
+       ========= */
     const STORAGE_KEYS = { source: "uic_source_selected" };
     const SOURCES = {
       house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
     };
 
-    function normalizeToISODate(v){
+    const TODAY = (() => {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    })();
+
+    const esc = (v) => String(v ?? '')
+      .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+      .replaceAll('"','&quot;').replaceAll("'","&#039;");
+
+    const normISO = (v) => {
       if (v == null) return '';
       const s = String(v).trim();
       if (!s) return '';
-
-      const m1 = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
-      if (m1) return `${m1[1]}-${String(m1[2]).padStart(2,'0')}-${String(m1[3]).padStart(2,'0')}`;
-
-      const m2 = s.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})/);
-      if (m2) return `${m2[1]}-${String(m2[2]).padStart(2,'0')}-${String(m2[3]).padStart(2,'0')}`;
-
-      const m3 = s.match(/^(\d{4})(\d{2})(\d{2})$/);
-      if (m3) return `${m3[1]}-${m3[2]}-${m3[3]}`;
-
+      let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+      if (m) return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+      m = s.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})/);
+      if (m) return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+      m = s.match(/^(\d{4})(\d{2})(\d{2})$/);
+      if (m) return `${m[1]}-${m[2]}-${m[3]}`;
       return '';
-    }
+    };
 
-    function pickRetDate(obj){
-      return obj?.retDate ?? obj?.retdate ?? obj?.RETDATE ?? obj?.RetDate ?? '';
-    }
+    const pickRetDate = (o) => o?.retDate ?? o?.retdate ?? o?.RETDATE ?? o?.RetDate ?? '';
 
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#039;");
-    }
+    const toast = (msg, ms=1600) => {
+      const t = $('#toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => t.classList.remove('show'), ms);
+    };
 
-    /* ✅ 캐시 무효화 옵션(bust) 추가 */
-    async function fetchJson(url, bust = false){
-      const u = bust ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
+    const fetchJson = async (url, bust=false) => {
+      const u = bust ? `${url}${url.includes('?')?'&':'?'}_=${Date.now()}` : url;
       const res = await fetch(u, { cache: bust ? 'no-store' : 'default' });
       if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
       return res.json();
-    }
+    };
 
-    function showToast(msg, ms = 2000){
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      clearTimeout(showToast._timer);
-      showToast._timer = setTimeout(() => t.classList.remove('show'), ms);
-    }
+    const setSpin = (on) => {
+      refreshBtn?.classList.toggle('refreshing', !!on);
+      if (refreshBtn) refreshBtn.disabled = !!on;
+    };
 
+    /* =========
+       Data cache
+       ========= */
+    const dataCache = { house: null, nature: null };
+    let cremMapCache = null;
+
+    const ensureData = async (key, force=false) => {
+      if (dataCache[key] && !force) return dataCache[key];
+      const raw = await fetchJson(SOURCES[key].url, force);
+      dataCache[key] = Array.isArray(raw) ? raw : [];
+      return dataCache[key];
+    };
+
+    const ensureCrem = async (force=false) => {
+      if (cremMapCache && !force) return cremMapCache;
+      const raw = await fetchJson("./data/crem.json", force);
+      const arr = Array.isArray(raw) ? raw : [];
+      const map = new Map();
+      for (const r of arr){
+        const id = String(r?.deadId ?? '').trim();
+        if (id) map.set(id, r);
+      }
+      cremMapCache = map;
+      return map;
+    };
+
+    /* =========
+       Domain helpers
+       ========= */
     function formatEnsNo(val){
       if (val == null) return '-';
       const raw = String(val).trim();
@@ -807,351 +776,272 @@
       if (raw.includes('-')){
         const parts = raw.split('-').map(x => x.trim()).filter(Boolean);
         const roomPart = parts.find(p => /\d+\s*실/.test(p));
-        const numPart = parts.find(p => /^\d{1,6}$/.test(p) || /^\d{5}$/.test(p));
+        const numPart  = parts.find(p => /^\d{1,6}$/.test(p) || /^\d{5}$/.test(p));
         if (roomPart && numPart){
-          const roomDigits = roomPart.replace(/\D/g,'').padStart(2,'0').slice(-2);
-          const numDigits = numPart.replace(/\D/g,'').padStart(5,'0').slice(-5);
-          return `${roomDigits}실 ${numDigits}`;
+          const room = roomPart.replace(/\D/g,'').padStart(2,'0').slice(-2);
+          const num  = numPart.replace(/\D/g,'').padStart(5,'0').slice(-5);
+          return `${room}실 ${num}`;
         }
         if (roomPart){
-          const tailNum = parts.slice().reverse().find(p => p.replace(/\D/g,'').length >= 5);
-          if (tailNum){
-            const roomDigits = roomPart.replace(/\D/g,'').padStart(2,'0').slice(-2);
-            const numDigits = tailNum.replace(/\D/g,'').slice(-5).padStart(5,'0');
-            return `${roomDigits}실 ${numDigits}`;
+          const tail = parts.slice().reverse().find(p => p.replace(/\D/g,'').length >= 5);
+          if (tail){
+            const room = roomPart.replace(/\D/g,'').padStart(2,'0').slice(-2);
+            const num  = tail.replace(/\D/g,'').slice(-5).padStart(5,'0');
+            return `${room}실 ${num}`;
           }
         }
       }
 
       const m1 = raw.match(/(\d{1,2})\s*실\s*(\d{1,5})/);
-      if (m1){
-        const room = String(m1[1]).padStart(2,'0');
-        const num = String(m1[2]).padStart(5,'0');
-        return `${room}실 ${num}`;
-      }
+      if (m1) return `${String(m1[1]).padStart(2,'0')}실 ${String(m1[2]).padStart(5,'0')}`;
 
       let digits = raw.replace(/\D/g,'');
       if (!digits) return raw;
-
       if (digits.length === 6) digits = digits.padStart(7,'0');
       if (digits.length === 5) return `00실 ${digits}`;
-      if (digits.length >= 7){
-        const room = digits.slice(0,2);
-        const num = digits.slice(-5);
-        return `${room}실 ${num}`;
-      }
+      if (digits.length >= 7) return `${digits.slice(0,2)}실 ${digits.slice(-5)}`;
       return raw;
     }
 
-    function safeKeyPart(v){ return (v == null) ? '' : String(v).trim(); }
-
-    function ensMergeKey(r){
-      const ens = safeKeyPart(r.ensNO ?? r.ensNo ?? r.ensno);
+    const safeKey = (v) => String(v ?? '').trim();
+    const ensMergeKey = (r) => {
+      const ens = safeKey(r.ensNO ?? r.ensNo ?? r.ensno);
       if (ens) return `ENS:${ens}`;
+      return `ALT:${safeKey(r.deadId)}|${safeKey(r.strDate)}|${safeKey(r.applname ?? r.applName)}|${safeKey(r.deadname ?? r.deadName ?? r.deceasedName)}`;
+    };
 
-      const deadId = safeKeyPart(r.deadId);
-      const strDate = safeKeyPart(r.strDate);
-      const appl = safeKeyPart(r.applname ?? r.applName);
-      const dead = safeKeyPart(r.deadname ?? r.deadName ?? r.deceasedName);
-      return `ALT:${deadId}|${strDate}|${appl}|${dead}`;
-    }
-
-    function mergeEnsRows(rows){
-      const map = new Map();
-      const order = [];
-
+    const mergeEnsRows = (rows) => {
+      const map = new Map(), order = [];
       for (const r of rows){
         const key = ensMergeKey(r);
-
         if (!map.has(key)){
           map.set(key, {
-            ensNO: safeKeyPart(r.ensNO ?? r.ensNo ?? r.ensno) || '-',
-            strDate: (r.strDate ?? '-'),
-            deadname: (r.deadname ?? r.deadName ?? r.deceasedName ?? '-'),
-            applname: (r.applname ?? r.applName ?? '-'),
+            ensNO: safeKey(r.ensNO ?? r.ensNo ?? r.ensno) || '-',
+            strDate: r.strDate ?? '-',
+            deadname: r.deadname ?? r.deadName ?? r.deceasedName ?? '-',
+            applname: r.applname ?? r.applName ?? '-',
             retDate: pickRetDate(r) || '',
             _raw: [r]
           });
           order.push(key);
         } else {
           const cur = map.get(key);
-
-          const dn = (r.deadname ?? r.deadName ?? r.deceasedName ?? '-').toString();
-          const an = (r.applname ?? r.applName ?? '-').toString();
-
-          const curDn = (cur.deadname ?? '-').toString();
-          const curAn = (cur.applname ?? '-').toString();
-
-          if (dn && dn !== '-' && !curDn.split(' / ').includes(dn)){
-            cur.deadname = (curDn && curDn !== '-') ? `${curDn} / ${dn}` : dn;
-          }
-          if (an && an !== '-' && !curAn.split(' / ').includes(an)){
-            cur.applname = (curAn && curAn !== '-') ? `${curAn} / ${an}` : an;
-          }
-
+          const dn = String(r.deadname ?? r.deadName ?? r.deceasedName ?? '-');
+          const an = String(r.applname ?? r.applName ?? '-');
+          if (dn && dn !== '-' && !String(cur.deadname).split(' / ').includes(dn))
+            cur.deadname = (cur.deadname && cur.deadname !== '-') ? `${cur.deadname} / ${dn}` : dn;
+          if (an && an !== '-' && !String(cur.applname).split(' / ').includes(an))
+            cur.applname = (cur.applname && cur.applname !== '-') ? `${cur.applname} / ${an}` : an;
           const rd = pickRetDate(r);
           if (!cur.retDate && rd) cur.retDate = rd;
-
           cur._raw.push(r);
         }
       }
+      return order.map(k => map.get(k));
+    };
 
-      return order.map(key => map.get(key));
-    }
-
-    function mergeCoupleRows(rows) {
-      const map = new Map();
-      const order = [];
-      for (const r of rows) {
-        const natNo = (r.natNo ?? '').toString().trim();
-        const applName = (r.applName ?? '').toString().trim();
-        const key = `${natNo}||${applName}`;
-
-        if (!map.has(key)) {
+    const mergeCoupleRows = (rows) => {
+      const map = new Map(), order = [];
+      for (const r of rows){
+        const natNo = safeKey(r.natNo);
+        const appl  = safeKey(r.applName);
+        const key = `${natNo}||${appl}`;
+        if (!map.has(key)){
           map.set(key, {
             natNo: r.natNo ?? '-',
-            deadName: (r.deadName ?? r.deadname ?? '-').toString(),
+            deadName: String(r.deadName ?? r.deadname ?? '-'),
             applName: r.applName ?? '-',
-            natDate: (r.natDate ?? '-').toString(),
+            natDate: String(r.natDate ?? '-'),
             _raw: [r]
           });
           order.push(key);
         } else {
           const cur = map.get(key);
-          const dn = (r.deadName ?? r.deadname ?? '-').toString();
-          if (dn && dn !== '-' && !cur.deadName.split(' / ').includes(dn)){
+          const dn = String(r.deadName ?? r.deadname ?? '-');
+          if (dn && dn !== '-' && !cur.deadName.split(' / ').includes(dn))
             cur.deadName = (cur.deadName && cur.deadName !== '-') ? `${cur.deadName} / ${dn}` : dn;
-          }
-          const dt = (r.natDate ?? '-').toString();
-          if (dt && dt !== '-' && !cur.natDate.split(', ').includes(dt)){
+          const dt = String(r.natDate ?? '-');
+          if (dt && dt !== '-' && !cur.natDate.split(', ').includes(dt))
             cur.natDate = (cur.natDate && cur.natDate !== '-') ? `${cur.natDate}, ${dt}` : dt;
-          }
           cur._raw.push(r);
         }
       }
-      return order.map(key => map.get(key));
-    }
+      return order.map(k => map.get(k));
+    };
 
-    function itemStatusId(sourceKey, item){
-      if (sourceKey === 'house'){
-        const ens = (item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-');
-        return String(ens ?? '-');
-      }
-      return String(item?.natNo ?? '-');
-    }
+    const itemId = (src, item) => src === 'house'
+      ? String(item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-')
+      : String(item?.natNo ?? '-');
 
-    function recvKey(sourceKey, id){ return `recv_${sourceKey}_${id}`; }
-    function recvPendingText(sourceKey){ return (sourceKey === 'nature') ? '안장대기' : '안치대기'; }
-    function recvDoneText(sourceKey){ return (sourceKey === 'nature') ? '안장완료' : '안치완료'; }
-    function isRecvDone(sourceKey, statusText){ return statusText === recvDoneText(sourceKey); }
+    const recvKey = (src, id) => `recv_${src}_${id}`;
+    const recvPending = (src) => (src === 'nature') ? '안장대기' : '안치대기';
+    const recvDone    = (src) => (src === 'nature') ? '안장완료' : '안치완료';
 
-    function getRecvStatus(sourceKey, id){
-      const v = localStorage.getItem(recvKey(sourceKey, id));
-      if (!v) return recvPendingText(sourceKey);
-
-      if (sourceKey !== 'nature' && v === '접수') return '안치대기';
-      if (sourceKey === 'nature' && v === '안치대기') return '안장대기';
-      if (sourceKey === 'nature' && v === '안치완료') return '안장완료';
-
+    const getRecv = (src, id) => {
+      const v = localStorage.getItem(recvKey(src, id));
+      if (!v) return recvPending(src);
+      if (src !== 'nature' && v === '접수') return '안치대기';
+      if (src === 'nature' && v === '안치대기') return '안장대기';
+      if (src === 'nature' && v === '안치완료') return '안장완료';
       return v;
-    }
-    function setRecvStatus(sourceKey, id, val){ localStorage.setItem(recvKey(sourceKey, id), val); }
+    };
+    const setRecv = (src, id, v) => localStorage.setItem(recvKey(src, id), v);
 
-    function isRetOnDate(item, isoDate){
-      return normalizeToISODate(pickRetDate(item)) === isoDate;
-    }
+    const isRetOn = (item, iso) => normISO(pickRetDate(item)) === iso;
 
-    function leftClsForMode(sourceKey, mode, statusText){
-      if (mode === 'ret'){
-        return (statusText === '반출완료') ? 'retDone' : 'ret';
-      }
-      return isRecvDone(sourceKey, statusText) ? 'done' : 'recv';
-    }
-
-    function kvRow(k, v){
-      return `
-        <div class="kv">
-          <div class="k">${escapeHtml(k)}</div>
-          <div class="v">${escapeHtml(v)}</div>
-        </div>
-      `;
-    }
-
-    function kvRowLines(k, lines){
-      const safeLines = (Array.isArray(lines) ? lines : [])
-        .map(x => escapeHtml(x))
-        .filter(Boolean);
-
-      if (safeLines.length === 0) return '';
-
-      return `
-        <div class="kv">
-          <div class="k">${escapeHtml(k)}</div>
-          <div class="v">${safeLines.join('<br>')}</div>
-        </div>
-      `;
-    }
-
-    function calcSelectedCounts(sourceKey, rawData, selectedISO){
-      const source = SOURCES[sourceKey];
-      const dateKey = source.dateKey;
-
-      if (sourceKey === 'house'){
-        const rows = (Array.isArray(rawData) ? rawData : []).filter(x => {
-          const str = String(x?.[dateKey] ?? '');
-          const ret = normalizeToISODate(pickRetDate(x));
-          return (str === selectedISO) || (ret === selectedISO);
-        });
-
-        const merged = mergeEnsRows(rows);
-
-        let recv = 0;
-        let ret = 0;
-        for (const it of merged){
-          const isRet = isRetOnDate(it, selectedISO);
-          const isRecv = String(it.strDate ?? '') === selectedISO;
-          if (isRet) ret++;
-          else if (isRecv) recv++;
-        }
-        return { recv, ret };
-      }
-
-      const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === selectedISO);
-      const mergedN = mergeCoupleRows(todays);
-      return { recv: mergedN.length, ret: 0 };
-    }
-
-    function pad2(n){
-      const s = (n == null) ? "" : String(n).trim();
-      if (!s) return "00";
-      return s.padStart(2, "0").slice(-2);
-    }
-    function fmtTime(v){ return (v == null) ? "" : String(v).trim(); }
-
-    function cremLineObjByDeadId(deadId, cremMap){
-      const did = (deadId ?? "").toString().trim();
-      const rec = did ? cremMap.get(did) : null;
-
-      if (!rec){
-        return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
-      }
-
-      const st = fmtTime(rec?.burnStrTime);
-      const en = fmtTime(rec?.burnEndTime);
-
-      if (!st){
-        return { type:'recv', chasu:0, start:'화장접수', end:'화장접수', text:'00회차, 화장접수' };
-      }
-
-      const chasu = parseInt(pad2(rec?.burnChasu), 10);
-      const safeChasu = isNaN(chasu) ? 0 : chasu;
-
-      if (st && !en){
-        return { type:'info', chasu:safeChasu, start:st, end:'화장중', text:`${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: 화장중` };
-      }
-
-      return { type:'info', chasu:safeChasu, start:st, end:en, text:`${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: ${en}` };
-    }
-
-    function getUniqueDeadIds(item){
-      const raws = Array.isArray(item?._raw) ? item._raw : [item];
-      const seen = new Set();
-      const ids = [];
-      for (const r of raws){
-        const did = (r?.deadId ?? "").toString().trim();
-        if (!did || seen.has(did)) continue;
-        seen.add(did);
-        ids.push(did);
-      }
-      return ids;
-    }
-
-    function itemChasuKeyForSort(item, cremMap){
-      const ids = getUniqueDeadIds(item);
-      if (ids.length === 0) return 0;
-
-      const chasus = ids
-        .map(id => cremLineObjByDeadId(id, cremMap).chasu)
-        .filter(n => typeof n === 'number' && isFinite(n));
-
-      if (chasus.length === 0) return 0;
-
-      const positives = chasus.filter(n => n > 0);
-      if (positives.length > 0) return Math.min(...positives);
-
-      return 0;
-    }
-
-    function buildCremLinesHTML(item, cremMap, mode){
-      if (mode === 'ret') return '';
-      if (!cremMap) return '';
-
-      const ids = getUniqueDeadIds(item);
-
-      if (ids.length === 0){
-        return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
-      }
-
-      const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
-
-      const allPay = lineObjs.length > 0 && lineObjs.every(o => o && o.type === 'pay');
-      if (allPay){
-        return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
-      }
-
-      const htmlLines = lineObjs.map(o => `<div class="cremLine">${escapeHtml(o.text)}</div>`).join("");
-      return `<div class="cremWrap">${htmlLines}</div>`;
-    }
-
-    function buildCremTimesForModal(item, cremMap){
-      if (!cremMap) return null;
-
-      const ids = getUniqueDeadIds(item);
-      if (ids.length === 0) {
-        return { startLine: '화장시작: 선결제', endLine: '화장종료: 선결제' };
-      }
-
-      const objs = ids.map(id => cremLineObjByDeadId(id, cremMap));
-      const starts = objs.map(o => o.start || '선결제');
-      const ends = objs.map(o => o.end || '선결제');
-
-      return {
-        startLine: `화장시작: ${starts.join(' / ')}`,
-        endLine: `화장종료: ${ends.join(' / ')}`
-      };
-    }
-
-    function retKeyHouse(id){ return `ret_house_${id}`; }
-    function getRetStatusHouse(id){
-      const v = localStorage.getItem(retKeyHouse(id));
+    const retKey = (id) => `ret_house_${id}`;
+    const getRet = (id) => {
+      const v = localStorage.getItem(retKey(id));
       if (!v) return '반출대기';
       if (v === '반출') return '반출대기';
       return v;
-    }
-    function setRetStatusHouse(id, val){ localStorage.setItem(retKeyHouse(id), val); }
+    };
+    const setRet = (id, v) => localStorage.setItem(retKey(id), v);
 
-    function sortByWorkPriorityStable(arr, selectedISO, cremMap){
+    const leftCls = (src, mode, status) => {
+      if (mode === 'ret') return (status === '반출완료') ? 'retDone' : 'ret';
+      return (status === recvDone(src)) ? 'done' : 'recv';
+    };
+
+    const pad2 = (n) => String(n ?? '').trim().padStart(2,'0').slice(-2) || '00';
+    const fmtTime = (v) => String(v ?? '').trim();
+
+    const cremObj = (deadId, cremMap) => {
+      const did = String(deadId ?? '').trim();
+      const rec = did ? cremMap.get(did) : null;
+      if (!rec) return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
+
+      const st = fmtTime(rec?.burnStrTime);
+      const en = fmtTime(rec?.burnEndTime);
+      if (!st) return { type:'recv', chasu:0, start:'화장접수', end:'화장접수', text:'00회차, 화장접수' };
+
+      const chasu = parseInt(pad2(rec?.burnChasu), 10);
+      const safe = isNaN(chasu) ? 0 : chasu;
+
+      if (st && !en) return { type:'info', chasu:safe, start:st, end:'화장중', text:`${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: 화장중` };
+      return { type:'info', chasu:safe, start:st, end:en, text:`${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: ${en}` };
+    };
+
+    const uniqDeadIds = (item) => {
+      const raws = Array.isArray(item?._raw) ? item._raw : [item];
+      const seen = new Set(), ids = [];
+      for (const r of raws){
+        const did = String(r?.deadId ?? '').trim();
+        if (!did || seen.has(did)) continue;
+        seen.add(did); ids.push(did);
+      }
+      return ids;
+    };
+
+    const chasuKey = (item, cremMap) => {
+      const ids = uniqDeadIds(item);
+      if (!ids.length) return 0;
+      const nums = ids.map(id => cremObj(id, cremMap).chasu).filter(n => Number.isFinite(n));
+      const pos = nums.filter(n => n > 0);
+      return pos.length ? Math.min(...pos) : 0;
+    };
+
+    const cremLinesHTML = (item, cremMap, mode) => {
+      if (mode === 'ret' || !cremMap) return '';
+      const ids = uniqDeadIds(item);
+      if (!ids.length) return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
+      const objs = ids.map(id => cremObj(id, cremMap));
+      const allPay = objs.length && objs.every(o => o.type === 'pay');
+      if (allPay) return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
+      return `<div class="cremWrap">${objs.map(o => `<div class="cremLine">${esc(o.text)}</div>`).join('')}</div>`;
+    };
+
+    const cremTimes = (item, cremMap) => {
+      if (!cremMap) return null;
+      const ids = uniqDeadIds(item);
+      if (!ids.length) return { a:'화장시작: 선결제', b:'화장종료: 선결제' };
+      const objs = ids.map(id => cremObj(id, cremMap));
+      const starts = objs.map(o => o.start || '선결제');
+      const ends   = objs.map(o => o.end   || '선결제');
+      return { a:`화장시작: ${starts.join(' / ')}`, b:`화장종료: ${ends.join(' / ')}` };
+    };
+
+    const kv = (k, v) => `
+      <div class="kv">
+        <div class="k">${esc(k)}</div>
+        <div class="v">${esc(v)}</div>
+      </div>
+    `;
+
+    const kvLines = (k, lines) => {
+      const arr = (Array.isArray(lines) ? lines : []).map(esc).filter(Boolean);
+      if (!arr.length) return '';
+      return `
+        <div class="kv">
+          <div class="k">${esc(k)}</div>
+          <div class="v">${arr.join('<br>')}</div>
+        </div>
+      `;
+    };
+
+    /* =========
+       App state
+       ========= */
+    let currentSource = 'house';
+    let currentSelectedDate = TODAY;
+    let currentDisplayData = [];
+    let loadToken = 0;
+    let isRefreshing = false;
+
+    /* =========
+       Rendering
+       ========= */
+    const renderHead = (shown, total) => `
+      <div class="list-head">
+        <div class="hint">${esc(SOURCES[currentSource].label)} 접수목록</div>
+        <div class="badge">${shown.toLocaleString()} / ${total.toLocaleString()}</div>
+      </div>
+    `;
+
+    const calcCounts = (src, data, iso) => {
+      const dateKey = SOURCES[src].dateKey;
+      if (src === 'house'){
+        const rows = (Array.isArray(data)?data:[]).filter(x => {
+          const s = String(x?.[dateKey] ?? '');
+          const r = normISO(pickRetDate(x));
+          return (s === iso) || (r === iso);
+        });
+        const merged = mergeEnsRows(rows);
+        let recv = 0, ret = 0;
+        for (const it of merged){
+          const isR = isRetOn(it, iso);
+          const isS = String(it.strDate ?? '') === iso;
+          if (isR) ret++;
+          else if (isS) recv++;
+        }
+        return { recv, ret };
+      }
+      const todays = (Array.isArray(data)?data:[]).filter(x => String(x?.[dateKey] ?? '') === iso);
+      return { recv: mergeCoupleRows(todays).length, ret: 0 };
+    };
+
+    const sortStable = (arr, iso, cremMap) => {
       const clone = arr.slice();
       clone.forEach((it, i) => { it._pos = (it._pos ?? i); });
 
       clone.sort((a, b) => {
         const isHouse = (currentSource === 'house');
-        const isRetA = isHouse && isRetOnDate(a, selectedISO);
-        const isRetB = isHouse && isRetOnDate(b, selectedISO);
+        const retA = isHouse && isRetOn(a, iso);
+        const retB = isHouse && isRetOn(b, iso);
 
-        const aId = itemStatusId(currentSource, a);
-        const bId = itemStatusId(currentSource, b);
+        const aId = itemId(currentSource, a);
+        const bId = itemId(currentSource, b);
 
-        const aRetDone = isRetA ? (getRetStatusHouse(aId) === '반출완료') : false;
-        const bRetDone = isRetB ? (getRetStatusHouse(bId) === '반출완료') : false;
+        const aRetDone = retA ? (getRet(aId) === '반출완료') : false;
+        const bRetDone = retB ? (getRet(bId) === '반출완료') : false;
 
-        const grpA = isRetA ? (aRetDone ? 2 : 0) : 1;
-        const grpB = isRetB ? (bRetDone ? 2 : 0) : 1;
+        const grpA = retA ? (aRetDone ? 2 : 0) : 1;
+        const grpB = retB ? (bRetDone ? 2 : 0) : 1;
         if (grpA !== grpB) return grpA - grpB;
 
         if (grpA === 1 && grpB === 1 && cremMap){
-          const ca = itemChasuKeyForSort(a, cremMap);
-          const cb = itemChasuKeyForSort(b, cremMap);
+          const ca = chasuKey(a, cremMap);
+          const cb = chasuKey(b, cremMap);
           if (ca !== cb) return ca - cb;
         }
 
@@ -1159,205 +1049,111 @@
       });
 
       return clone;
-    }
+    };
 
-    const datePicker = document.getElementById('datePicker');
-    const listArea = document.getElementById('listArea');
-
-    const tabHouse = document.getElementById('tabHouse');
-    const tabNature = document.getElementById('tabNature');
-
-    const countTitle = document.getElementById('countTitle');
-    const countText = document.getElementById('countText');
-
-    const overlay = document.getElementById('overlay');
-    const mTitleLine = document.getElementById('mTitleLine');
-    const mFields = document.getElementById('mFields');
-
-    const scrollArea = document.getElementById('scrollArea');
-    const refreshBtn = document.getElementById('refreshBtn');
-
-    const TODAY = getLocalISODate(new Date());
-
-    let currentSource = 'house';
-    let currentDisplayData = [];
-    let currentSelectedDate = TODAY;
-
-    let cremMapCache = null;
-    const dataCache = { house: null, nature: null };
-    let loadToken = 0;
-
-    function renderListHead(shownCount, totalCount){
-      const sLabel = SOURCES[currentSource].label;
-      return `
-        <div class="list-head">
-          <div class="hint">${escapeHtml(sLabel)} 접수목록</div>
-          <div class="badge">${shownCount.toLocaleString()} / ${totalCount.toLocaleString()}</div>
-        </div>
-      `;
-    }
-
-    async function ensureCremMap(force = false){
-      if (cremMapCache && !force) return cremMapCache;
-      const raw = await fetchJson("./data/crem.json", force);
-      const arr = Array.isArray(raw) ? raw : [];
-      const map = new Map();
-      for (const r of arr){
-        const id = (r?.deadId ?? "").toString().trim();
-        if (!id) continue;
-        map.set(id, r);
-      }
-      cremMapCache = map;
-      return cremMapCache;
-    }
-
-    async function ensureData(sourceKey, force = false){
-      if (dataCache[sourceKey] && !force) return dataCache[sourceKey];
-      const raw = await fetchJson(SOURCES[sourceKey].url, force);
-      dataCache[sourceKey] = Array.isArray(raw) ? raw : [];
-      return dataCache[sourceKey];
-    }
-
-    function buildFields(item, cremMap){
-      let fieldsHTML = '';
-      const isRetModal = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate));
-
-      if (currentSource === 'house'){
-        fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
-        fieldsHTML += kvRow('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
-        fieldsHTML += kvRow('신청자', item.applname ?? item.applName ?? '-');
-
-        const rdISO = normalizeToISODate(pickRetDate(item));
-        const rdRaw = pickRetDate(item);
-        if (rdISO) fieldsHTML += kvRow('반출일자', String(rdRaw ?? rdISO));
-      } else {
-        fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
-        fieldsHTML += kvRow('고인명', item.deadName ?? '-');
-        fieldsHTML += kvRow('신청자', item.applName ?? '-');
-      }
-
-      if (!isRetModal){
-        const t = buildCremTimesForModal(item, cremMap);
-        if (t) fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
-      }
-
-      return fieldsHTML;
-    }
-
-    async function load(force = false){
+    async function load(force=false){
       const myToken = ++loadToken;
 
-      const source = SOURCES[currentSource];
-      const selectedDate = datePicker.value || TODAY;
-      currentSelectedDate = selectedDate;
+      const selected = datePicker.value || TODAY;
+      currentSelectedDate = selected;
 
-      const showCrem = (selectedDate === TODAY);
+      const showCrem = (selected === TODAY);
+      let cremMap = null;
 
       try{
-        let cremMap = null;
         if (showCrem){
-          cremMap = await ensureCremMap(force);
+          cremMap = await ensureCrem(force);
           if (myToken !== loadToken) return;
         }
 
         const data = await ensureData(currentSource, force);
         if (myToken !== loadToken) return;
 
-        const c = calcSelectedCounts(currentSource, data, selectedDate);
+        const c = calcCounts(currentSource, data, selected);
+        countText.textContent = (currentSource === 'house')
+          ? `안치 ${c.recv}건 · 반출 ${c.ret}건`
+          : `안장 ${c.recv}건`;
 
-        countTitle.textContent = '현황';
-        if (currentSource === 'house'){
-          countText.textContent = `안치 ${c.recv}건 · 반출 ${c.ret}건`;
-        } else {
-          countText.textContent = `안장 ${c.recv}건`;
-        }
-
-        const dateKey = source.dateKey;
+        const dateKey = SOURCES[currentSource].dateKey;
         let filtered = [];
 
         if (currentSource === 'house'){
           filtered = data.filter(x => {
-            const str = String(x?.[dateKey] ?? '');
-            const ret = normalizeToISODate(pickRetDate(x));
-            return (str === selectedDate) || (ret === selectedDate);
+            const s = String(x?.[dateKey] ?? '');
+            const r = normISO(pickRetDate(x));
+            return (s === selected) || (r === selected);
           });
         } else {
-          filtered = data.filter(x => String(x?.[dateKey] ?? '') === selectedDate);
+          filtered = data.filter(x => String(x?.[dateKey] ?? '') === selected);
         }
 
-        let displayData = filtered;
-        if (currentSource === 'house') displayData = mergeEnsRows(filtered);
-        if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
+        let display = filtered;
+        if (currentSource === 'house') display = mergeEnsRows(filtered);
+        if (currentSource === 'nature') display = mergeCoupleRows(filtered);
 
-        displayData.forEach((it, i) => { it._pos = i; });
-        displayData = sortByWorkPriorityStable(displayData, selectedDate, cremMap);
-        currentDisplayData = displayData;
+        display.forEach((it, i) => it._pos = i);
+        display = sortStable(display, selected, cremMap);
+        currentDisplayData = display;
 
-        if (displayData.length === 0){
+        if (!display.length){
           listArea.innerHTML = `<div class="no-data">표시할 데이터가 없습니다.</div>`;
           return;
         }
 
         const limit = 80;
-        const shown = displayData.slice(0, limit);
+        const shown = display.slice(0, limit);
 
-        let html = `<div class="list">`;
-        html += renderListHead(Math.min(limit, displayData.length), displayData.length);
-        html += `<ul>`;
+        let html = `<div class="list">${renderHead(Math.min(limit, display.length), display.length)}<ul>`;
 
         shown.forEach((item, idx) => {
-          const sid = itemStatusId(currentSource, item);
-          const mode = (currentSource === 'house' && isRetOnDate(item, selectedDate)) ? 'ret' : 'recv';
+          const sid = itemId(currentSource, item);
+          const mode = (currentSource === 'house' && isRetOn(item, selected)) ? 'ret' : 'recv';
 
-          let statusText = '';
+          let status = '';
           let isOn = false;
-          let rowLabel = '';
+          let label = '';
           let swCls = 'sw';
 
           if (mode === 'ret'){
-            statusText = getRetStatusHouse(sid);
-            isOn = (statusText === '반출완료');
-            rowLabel = isOn ? '반출완료' : '반출대기';
+            status = getRet(sid);
+            isOn = (status === '반출완료');
+            label = isOn ? '반출완료' : '반출대기';
             swCls = isOn ? 'sw on' : 'sw';
           } else {
-            statusText = getRecvStatus(currentSource, sid);
-            isOn = isRecvDone(currentSource, statusText);
-            rowLabel = isOn ? recvDoneText(currentSource) : recvPendingText(currentSource);
+            status = getRecv(currentSource, sid);
+            const done = recvDone(currentSource);
+            const pending = recvPending(currentSource);
+            isOn = (status === done);
+            label = isOn ? done : pending;
             swCls = isOn ? 'sw on' : 'sw';
           }
 
-          let displayId = '-';
-          let displayName = '-';
+          const displayId = (currentSource === 'house')
+            ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+            : String(item.natNo ?? '-');
 
-          if (currentSource === 'house'){
-            displayId = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
-            displayName = (item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
-          } else {
-            displayId = String(item.natNo ?? '-');
-            displayName = String(item.deadName ?? '-');
-          }
-
-          const leftCls = leftClsForMode(currentSource, mode, statusText);
-          const cremHTML = buildCremLinesHTML(item, cremMap, mode);
+          const displayName = (currentSource === 'house')
+            ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
+            : String(item.deadName ?? '-');
 
           html += `
             <li>
-              <div class="row ${leftCls}">
+              <div class="row ${leftCls(currentSource, mode, status)}">
                 <div class="barL"></div>
                 <div class="rowR">
                   <div class="rowTop">
-                    <button class="mainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
+                    <button class="mainBtn" type="button" data-open="${idx}" aria-label="상세 보기">
                       <div class="main">
-                        <div class="no">${escapeHtml(displayId)}</div>
-                        <div class="name">${escapeHtml(displayName)}</div>
+                        <div class="no">${esc(displayId)}</div>
+                        <div class="name">${esc(displayName)}</div>
                       </div>
                     </button>
-                    <div class="toggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
+                    <div class="toggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" data-toggle="${idx}">
                       <div class="${swCls}"></div>
-                      <span>${escapeHtml(rowLabel)}</span>
+                      <span>${esc(label)}</span>
                     </div>
                   </div>
-                  ${cremHTML}
+                  ${cremLinesHTML(item, cremMap, mode)}
                 </div>
               </div>
             </li>
@@ -1367,110 +1163,74 @@
         html += `</ul></div>`;
         listArea.innerHTML = html;
 
-        if (displayData.length > limit){
+        if (display.length > limit){
           listArea.insertAdjacentHTML(
             'beforeend',
             `<div class="no-data" style="margin-top:10px; padding:10px 12px;">상위 ${limit}건만 표시 중</div>`
           );
         }
 
-      }catch(err){
-        listArea.innerHTML = `<div class="no-data">오류: ${escapeHtml(err.message)}</div>`;
+      } catch (err){
+        listArea.innerHTML = `<div class="no-data">오류: ${esc(err.message)}</div>`;
       }
     }
 
-    function switchSource(sourceKey){
-      currentSource = sourceKey;
-      localStorage.setItem(STORAGE_KEYS.source, sourceKey);
-      tabHouse.classList.toggle('active', sourceKey === 'house');
-      tabNature.classList.toggle('active', sourceKey === 'nature');
-      load();
-    }
-
+    /* =========
+       Modal
+       ========= */
     function openSheet(index){
       const item = currentDisplayData[index];
       if (!item) return;
 
-      const selectedDate = datePicker.value || TODAY;
-      const showCrem = (selectedDate === TODAY);
+      const selected = datePicker.value || TODAY;
+      const showCrem = (selected === TODAY);
       const cremMap = showCrem ? cremMapCache : null;
 
-      const sourceLabelText = SOURCES[currentSource].label;
       const headerNo = (currentSource === 'house')
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
 
-      mTitleLine.textContent = `${sourceLabelText} · ${headerNo}`;
-      mFields.innerHTML = buildFields(item, cremMap);
+      mTitleLine.textContent = `${SOURCES[currentSource].label} · ${headerNo}`;
+
+      let html = '';
+      const isRetModal = (currentSource === 'house' && isRetOn(item, currentSelectedDate));
+
+      if (currentSource === 'house'){
+        html += kv('안치일자', item.strDate ?? '-');
+        html += kv('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
+        html += kv('신청자', item.applname ?? item.applName ?? '-');
+        const rdISO = normISO(pickRetDate(item));
+        const rdRaw = pickRetDate(item);
+        if (rdISO) html += kv('반출일자', String(rdRaw ?? rdISO));
+      } else {
+        html += kv('안치일자', item.natDate ?? '-');
+        html += kv('고인명', item.deadName ?? '-');
+        html += kv('신청자', item.applName ?? '-');
+      }
+
+      if (!isRetModal){
+        const t = cremTimes(item, cremMap);
+        if (t) html += kvLines('화장시간', [t.a, t.b]);
+      }
+
+      mFields.innerHTML = html;
 
       overlay.classList.add('show');
-      overlay.setAttribute('aria-hidden','false');
+      overlay.setAttribute('aria-hidden', 'false');
     }
 
     function closeSheet(){
       overlay.classList.remove('show');
-      overlay.setAttribute('aria-hidden','true');
+      overlay.setAttribute('aria-hidden', 'true');
     }
 
-    function applyRowToggle(index, e){
-      if (e) { e.preventDefault(); e.stopPropagation(); }
-
-      const item = currentDisplayData[index];
-      if (!item) return;
-
-      const sid = itemStatusId(currentSource, item);
-      const mode = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)) ? 'ret' : 'recv';
-
-      const headerNo = (currentSource === 'house')
-        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
-        : String(item.natNo ?? '-');
-
-      if (mode === 'ret'){
-        const cur = getRetStatusHouse(sid);
-        const next = (cur === '반출완료') ? '반출대기' : '반출완료';
-        setRetStatusHouse(sid, next);
-        showToast(`${headerNo} : ${next}`, 2200);
-      } else {
-        const cur = getRecvStatus(currentSource, sid);
-        const done = recvDoneText(currentSource);
-        const pending = recvPendingText(currentSource);
-        const next = (cur === done) ? pending : done;
-        setRecvStatus(currentSource, sid, next);
-        showToast(`${headerNo} : ${next}`, 2200);
-      }
-
-      load();
-    }
-
-    datePicker.addEventListener('change', () => { load(); });
-
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
-
-    window.switchSource = switchSource;
-    window.openSheet = openSheet;
-    window.closeSheet = closeSheet;
-    window.applyRowToggle = applyRowToggle;
-
-    /* =========================
-       ✅ 새로고침 버튼 스핀/스프링 토글
-       ========================= */
-    function setRefreshBtnSpinning(on){
-      if (!refreshBtn) return;
-      refreshBtn.classList.toggle('refreshing', !!on);
-      refreshBtn.disabled = !!on;
-    }
-
-    /* =========================
-       ✅ 새로고침(아이콘/PTR 공용)
-       ========================= */
-    let isRefreshing = false; // PTR/버튼 공용 플래그
-
+    /* =========
+       Refresh (button + PTR common)
+       ========= */
     async function doRefresh(){
       if (isRefreshing) return;
-
       isRefreshing = true;
-      setRefreshBtnSpinning(true);
+      setSpin(true);
 
       try{
         dataCache.house = null;
@@ -1478,37 +1238,22 @@
         cremMapCache = null;
 
         await load(true);
-        showToast('새로고침 완료', 1400);
+        toast('새로고침 완료', 1400);
       } finally {
-        setRefreshBtnSpinning(false);
+        setSpin(false);
         isRefreshing = false;
       }
     }
-    window.manualRefresh = () => { doRefresh(); };
 
-    /* =========================
-       ✅ PTR (내부 스크롤: .content overflow)
-       - window.scrollY 대신 scrollArea.scrollTop 사용
-       - PTR로 새로고침 시에도 버튼 아이콘 같이 회전/스프링
-       ========================= */
-    const ptrEl = document.getElementById('pull-to-refresh');
-    const statusEl = document.getElementById('ptr-status');
-    const loaderEl = document.getElementById('ptr-loader');
-    const contentEl = document.getElementById('content');
+    /* =========
+       PTR (scroll container 기반)
+       ========= */
+    let startY = 0, pulling = false, pullDist = 0;
+    const PTR_MAX = 60, PTR_TH = 60, DAMP = 0.5;
 
-    let startY = 0;
-    let pulling = false;
-    let pullDist = 0;
+    const canPTR = () => scrollArea && scrollArea.scrollTop === 0 && !isRefreshing;
 
-    const PTR_MAX = 60;
-    const PTR_THRESHOLD = 60;
-    const DAMPING = 0.5;
-
-    function canStartPTR(){
-      return scrollArea && scrollArea.scrollTop === 0;
-    }
-
-    function setPullUI(dist){
+    const setPullUI = (dist) => {
       const d = Math.max(0, Math.min(dist, PTR_MAX));
       pullDist = d;
 
@@ -1516,45 +1261,99 @@
         ptrEl.classList.add('visible');
         ptrEl.setAttribute('aria-hidden', 'false');
       }
-
       contentEl.style.transform = `translateY(${d}px)`;
-
-      if (d >= PTR_THRESHOLD){
+      if (d >= PTR_TH){
         statusEl.textContent = '놓아서 새로고침';
         loaderEl.style.opacity = '1';
       } else {
         statusEl.textContent = '당겨서 새로고침';
         loaderEl.style.opacity = '0';
       }
-    }
+    };
 
-    function resetPullUI(){
+    const resetPullUI = () => {
       ptrEl.classList.remove('visible');
       ptrEl.setAttribute('aria-hidden', 'true');
       contentEl.style.transform = '';
       pullDist = 0;
+    };
+
+    /* =========
+       Events
+       ========= */
+    function setSource(src){
+      currentSource = src;
+      localStorage.setItem(STORAGE_KEYS.source, src);
+      tabHouse.classList.toggle('active', src === 'house');
+      tabNature.classList.toggle('active', src === 'nature');
+      load();
     }
 
-    scrollArea.addEventListener('touchstart', (e) => {
-      if (isRefreshing) return;
-      if (e.touches.length !== 1) return;
+    tabHouse.addEventListener('click', () => setSource('house'));
+    tabNature.addEventListener('click', () => setSource('nature'));
 
-      if (canStartPTR()){
-        startY = e.touches[0].clientY;
-        pulling = true;
-      } else {
-        startY = 0;
-        pulling = false;
+    datePicker.addEventListener('change', load);
+
+    refreshBtn.addEventListener('click', doRefresh);
+
+    sheetOkBtn.addEventListener('click', closeSheet);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
+
+    /* 리스트 이벤트 위임 (길이/성능) */
+    listArea.addEventListener('click', (e) => {
+      const openBtn = e.target.closest('[data-open]');
+      if (openBtn){
+        openSheet(parseInt(openBtn.getAttribute('data-open'), 10));
+        return;
       }
+      const tg = e.target.closest('[data-toggle]');
+      if (!tg) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const idx = parseInt(tg.getAttribute('data-toggle'), 10);
+      const item = currentDisplayData[idx];
+      if (!item) return;
+
+      const sid = itemId(currentSource, item);
+      const mode = (currentSource === 'house' && isRetOn(item, currentSelectedDate)) ? 'ret' : 'recv';
+
+      const headerNo = (currentSource === 'house')
+        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+        : String(item.natNo ?? '-');
+
+      if (mode === 'ret'){
+        const cur = getRet(sid);
+        const next = (cur === '반출완료') ? '반출대기' : '반출완료';
+        setRet(sid, next);
+        toast(`${headerNo} : ${next}`, 2200);
+      } else {
+        const done = recvDone(currentSource);
+        const pending = recvPending(currentSource);
+        const cur = getRecv(currentSource, sid);
+        const next = (cur === done) ? pending : done;
+        setRecv(currentSource, sid, next);
+        toast(`${headerNo} : ${next}`, 2200);
+      }
+
+      load();
+    });
+
+    /* PTR touch */
+    scrollArea.addEventListener('touchstart', (e) => {
+      if (!canPTR()) return;
+      if (e.touches.length !== 1) return;
+      startY = e.touches[0].clientY;
+      pulling = true;
     }, { passive: true });
 
     scrollArea.addEventListener('touchmove', (e) => {
-      if (!pulling || isRefreshing) return;
+      if (!pulling || !canPTR()) return;
       if (e.touches.length !== 1) return;
-      if (!canStartPTR()) return;
 
-      const currentY = e.touches[0].clientY;
-      const diff = (currentY - startY) * DAMPING;
+      const diff = (e.touches[0].clientY - startY) * DAMP;
       if (diff <= 0) return;
 
       e.preventDefault();
@@ -1565,33 +1364,17 @@
       if (!pulling) return;
       pulling = false;
 
-      if (isRefreshing) return;
-
-      if (pullDist >= PTR_THRESHOLD){
-        // ✅ PTR 새로고침 시작 + 버튼도 같이 회전/스프링
-        isRefreshing = true;
-        setRefreshBtnSpinning(true);
-
+      if (pullDist >= PTR_TH){
         statusEl.textContent = '새로고침 중...';
         loaderEl.style.opacity = '1';
-
         contentEl.style.transform = `translateY(${PTR_MAX}px)`;
         ptrEl.classList.add('visible');
         ptrEl.setAttribute('aria-hidden', 'false');
 
         try{
-          dataCache.house = null;
-          dataCache.nature = null;
-          cremMapCache = null;
-
-          await load(true);
-          showToast('새로고침 완료', 1400);
+          await doRefresh();          // PTR도 버튼도 동일 동작 + 동일 애니메이션
         } finally {
-          // ✅ PTR 종료 직전에 버튼도 멈춤
-          setRefreshBtnSpinning(false);
-
           resetPullUI();
-          isRefreshing = false;
           startY = 0;
         }
       } else {
@@ -1602,13 +1385,8 @@
 
     window.addEventListener('load', () => {
       const saved = localStorage.getItem(STORAGE_KEYS.source);
-      const initial = (saved === 'nature' || saved === 'house') ? saved : 'house';
-      currentSource = initial;
-
-      tabHouse.classList.toggle('active', initial === 'house');
-      tabNature.classList.toggle('active', initial === 'nature');
-
-      datePicker.value = getLocalISODate(new Date());
+      setSource((saved === 'nature' || saved === 'house') ? saved : 'house');
+      datePicker.value = TODAY;
       load();
     });
   </script>
