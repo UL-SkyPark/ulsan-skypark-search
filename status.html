@@ -912,9 +912,16 @@
     }
     function fmtTime(v){ return (v == null) ? "" : String(v).trim(); }
 
+    // crem.json은 "당일 화장접수 파일" 전제
+    // - deadId가 cremMap에 아예 없으면: "00회차, 선결제" (요청 반영: 선결제는 00회차)
+    // - deadId는 있는데 시작시간이 없으면: "00회차, 화장접수"
     function cremLineObjByDeadId(deadId, cremMap){
       const did = (deadId ?? "").toString().trim();
       const rec = did ? cremMap.get(did) : null;
+
+      if (!rec){
+        return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'00회차, 선결제' };
+      }
 
       const st = fmtTime(rec?.burnStrTime);
       const en = fmtTime(rec?.burnEndTime);
@@ -946,12 +953,20 @@
       return ids;
     }
 
-    function itemChasuKey(item, cremMap){
+    // 정렬키 규칙(요청 반영):
+    // - 부부단 등에서 00회차(선결제/접수) + 다른 회차가 섞이면, "00이 아닌 회차"를 따라 정렬
+    // - 즉: (회차>0 중 최솟값) 우선, 없으면 0
+    function itemChasuKeyForSort(item, cremMap){
       const ids = getUniqueDeadIds(item);
-      if (ids.length === 0) return 9999;
-      const objs = ids.map(id => cremLineObjByDeadId(id, cremMap));
-      const minChasu = Math.min(...objs.map(o => (typeof o.chasu === 'number' ? o.chasu : 9999)));
-      return isFinite(minChasu) ? minChasu : 9999;
+      if (ids.length === 0) return 0;
+
+      const chasus = ids.map(id => cremLineObjByDeadId(id, cremMap).chasu).filter(n => typeof n === 'number' && isFinite(n));
+      if (chasus.length === 0) return 0;
+
+      const positives = chasus.filter(n => n > 0);
+      if (positives.length > 0) return Math.min(...positives);
+
+      return 0;
     }
 
     function buildCremLinesHTML(item, cremMap, mode){
@@ -960,7 +975,7 @@
 
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0){
-        return `<div class="cremWrap"><div class="cremLine">00회차, 화장접수</div></div>`;
+        return `<div class="cremWrap"><div class="cremLine">00회차, 선결제</div></div>`;
       }
 
       const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
@@ -973,12 +988,12 @@
 
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0) {
-        return { startLine: '화장시작: 화장접수', endLine: '화장종료: 화장접수' };
+        return { startLine: '화장시작: 선결제', endLine: '화장종료: 선결제' };
       }
 
       const objs = ids.map(id => cremLineObjByDeadId(id, cremMap));
-      const starts = objs.map(o => o.start || '화장접수');
-      const ends = objs.map(o => o.end || '화장접수');
+      const starts = objs.map(o => o.start || '선결제');
+      const ends = objs.map(o => o.end || '선결제');
 
       return {
         startLine: `화장시작: ${starts.join(' / ')}`,
@@ -995,13 +1010,17 @@
     }
     function setRetStatusHouse(id, val){ localStorage.setItem(retKeyHouse(id), val); }
 
+    // 정렬 규칙:
+    // - 추모의집: 반출대기(0) → 접수/안치(1, 회차정렬) → 반출완료(2)
+    // - 자연장지: 접수만(1, 회차정렬)
     function sortByWorkPriorityStable(arr, selectedISO, cremMap){
       const clone = arr.slice();
       clone.forEach((it, i) => { it._pos = (it._pos ?? i); });
 
       clone.sort((a, b) => {
-        const isRetA = (currentSource === 'house' && isRetOnDate(a, selectedISO));
-        const isRetB = (currentSource === 'house' && isRetOnDate(b, selectedISO));
+        const isHouse = (currentSource === 'house');
+        const isRetA = isHouse && isRetOnDate(a, selectedISO);
+        const isRetB = isHouse && isRetOnDate(b, selectedISO);
 
         const aId = itemStatusId(currentSource, a);
         const bId = itemStatusId(currentSource, b);
@@ -1013,9 +1032,10 @@
         const grpB = isRetB ? (bRetDone ? 2 : 0) : 1;
         if (grpA !== grpB) return grpA - grpB;
 
+        // grp=1(접수/안치)은 추모의집/자연장지 모두 회차 오름차순
         if (grpA === 1 && grpB === 1 && cremMap){
-          const ca = itemChasuKey(a, cremMap);
-          const cb = itemChasuKey(b, cremMap);
+          const ca = itemChasuKeyForSort(a, cremMap);
+          const cb = itemChasuKeyForSort(b, cremMap);
           if (ca !== cb) return ca - cb;
         }
 
@@ -1091,9 +1111,7 @@
 
         const rdISO = normalizeToISODate(pickRetDate(item));
         const rdRaw = pickRetDate(item);
-        if (rdISO){
-          fieldsHTML += kvRow('반출일자', String(rdRaw ?? rdISO));
-        }
+        if (rdISO) fieldsHTML += kvRow('반출일자', String(rdRaw ?? rdISO));
       } else {
         fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
         fieldsHTML += kvRow('고인명', item.deadName ?? '-');
@@ -1102,9 +1120,7 @@
 
       if (!isRetModal){
         const t = buildCremTimesForModal(item, cremMap);
-        if (t){
-          fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
-        }
+        if (t) fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
       }
 
       return fieldsHTML;
@@ -1117,6 +1133,7 @@
       const selectedDate = datePicker.value || TODAY;
       currentSelectedDate = selectedDate;
 
+      // 과거 날짜 조회 시: crem(화장진행상황) 표시/정렬 모두 비활성(요청 반영)
       const showCrem = (selectedDate === TODAY);
 
       try{
