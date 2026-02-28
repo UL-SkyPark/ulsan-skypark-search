@@ -224,7 +224,7 @@
     .itemRow{
       padding: 12px 12px;
       display:flex;
-      align-items:center;
+      align-items:flex-start; /* ✅ 토글이 아래로 끌려가지 않게 상단 정렬 */
       justify-content:space-between;
       gap: 10px;
       border-bottom: 1px solid rgba(148,163,184,0.18);
@@ -298,28 +298,30 @@
       word-break: keep-all;
     }
 
-    /* 리스트 우측 토글 */
+    /* ✅ 리스트 우측 토글: 살짝 작게 + 위로 올림 */
     .rowToggle{
       flex: 0 0 auto;
       display:inline-flex;
       align-items:center;
-      gap: 8px;
-      padding: 7px 10px;
+      gap: 6px;                 /* 조금 더 타이트 */
+      padding: 5px 8px;         /* ✅ 작게 */
       border-radius: 999px;
       border: 1px solid rgba(148,163,184,0.22);
       background: rgba(255,255,255,0.72);
       user-select: none;
       cursor: pointer;
       white-space: nowrap;
+      margin-top: -2px;         /* ✅ 위로 살짝 */
     }
     .rowToggle span{
-      font-size: .86rem;
+      font-size: .82rem;        /* ✅ 작게 */
       font-weight: 950;
       color: rgba(15,23,42,.72);
+      line-height: 1;
     }
     .rowSwitch{
-      width: 44px;
-      height: 26px;
+      width: 38px;              /* ✅ 작게 */
+      height: 22px;             /* ✅ 작게 */
       border-radius: 999px;
       border: 1px solid rgba(148,163,184,0.25);
       background: rgba(148,163,184,0.18);
@@ -332,8 +334,8 @@
       top: 50%;
       left: 3px;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
+      width: 17px;              /* ✅ 작게 */
+      height: 17px;             /* ✅ 작게 */
       border-radius: 999px;
       background: rgba(255,255,255,0.92);
       border: 1px solid rgba(148,163,184,0.22);
@@ -343,7 +345,7 @@
       background: rgba(134,239,172,.28);
       border-color: rgba(134,239,172,.38);
     }
-    .rowSwitch.on::after{ left: 21px; }
+    .rowSwitch.on::after{ left: 18px; } /* ✅ 크기 변경에 맞춰 이동값 조정 */
 
     .no-data{
       text-align:center;
@@ -764,9 +766,6 @@
 
     function recvKey(sourceKey, id){ return `recv_${sourceKey}_${id}`; }
 
-    // ✅ 자연장지는 "반출" 자체가 없음 (키/상태/토글 삭제)
-    //    추모의집만 반출토글 존재
-
     function recvPendingText(sourceKey){ return (sourceKey === 'nature') ? '안장대기' : '안치대기'; }
     function recvDoneText(sourceKey){ return (sourceKey === 'nature') ? '안장완료' : '안치완료'; }
 
@@ -832,15 +831,11 @@
         return { recv, ret };
       }
 
-      // 자연장지: 반출 없음
       const todays = (Array.isArray(rawData) ? rawData : []).filter(x => String(x?.[dateKey] ?? '') === selectedISO);
       const mergedN = mergeCoupleRows(todays);
       return { recv: mergedN.length, ret: 0 };
     }
 
-    // -----------------------------
-    // 🔥 crem.json 연동 (요구사항 반영)
-    // -----------------------------
     let CREM_MAP = null;
 
     async function ensureCremMap(){
@@ -894,13 +889,8 @@
       return { type: 'info', text: `${chasu}회차, 화장시작: ${st}, 화장종료: ${en}` };
     }
 
-    // ✅ 반출행(mode=ret)에는 아무것도 표시하지 않음(빈 문자열 반환)
-    // ✅ 부부단 규칙:
-    // - 2명 중 1명만 선결재 -> 각각 1줄씩(총 2줄)
-    // - 2명 다 선결재 -> "선결재" 1줄만
-    // - 2명 다 info -> 2줄
     function buildCremLinesHTML(item, cremMap, mode){
-      if (mode === 'ret') return ''; // ⭐ 반출행은 표시 안 함
+      if (mode === 'ret') return '';
 
       const raws = Array.isArray(item?._raw) ? item._raw : [item];
 
@@ -932,8 +922,6 @@
 
       return `<div class="cremWrap">${htmlLines}</div>`;
     }
-
-    // -----------------------------
 
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
@@ -1001,13 +989,10 @@
         fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
         fieldsHTML += kvRow('고인명', item.deadName ?? '-');
         fieldsHTML += kvRow('신청자', item.applName ?? '-');
-        // ✅ 자연장지: 반출 관련 항목 없음(추가 없음)
       }
       return fieldsHTML;
     }
 
-    // ✅ 정렬: 반출은 "추모의집"에서만 상단 그룹
-    // ✅ 자연장지는 전부 recv로 취급
     function sortByWorkPriorityStable(arr, selectedISO){
       const clone = arr.slice();
 
@@ -1034,7 +1019,6 @@
       return clone;
     }
 
-    // ✅ 추모의집 반출 상태는 계속 유지 (자연장지는 관련 로직 없음)
     function retKeyHouse(id){ return `ret_house_${id}`; }
     function getRetStatusHouse(id){
       const v = localStorage.getItem(retKeyHouse(id));
@@ -1063,7 +1047,6 @@
         if (currentSource === 'house'){
           countText.innerHTML = `안치${c.recv}건, 반출${c.ret}건`;
         } else {
-          // ✅ 자연장지: 반출 문구 삭제
           countText.innerHTML = `안장${c.recv}건`;
         }
 
@@ -1104,18 +1087,14 @@
           let displayName = '-';
           const sid = itemStatusId(currentSource, item);
 
-          // ✅ 모드 결정: 추모의집만 ret 존재
           const mode = (currentSource === 'house' && isRetOnDate(item, selectedDate)) ? 'ret' : 'recv';
 
-          // ✅ 좌측 바 색상/클래스: ret이면 ret/retDone, recv면 recv/done
-          // ✅ 자연장지는 ret 없음
           let statusText = '';
           let isOn = false;
           let rowLabel = '';
           let rowSwitchCls = 'rowSwitch';
 
           if (mode === 'ret'){
-            // 추모의집 반출 토글
             statusText = getRetStatusHouse(sid);
             isOn = (statusText === '반출완료');
             rowLabel = isOn ? '반출완료' : '반출대기';
@@ -1209,7 +1188,6 @@
 
       const sid = itemStatusId(currentSource, item);
 
-      // ✅ 모드 결정: 추모의집만 ret 존재
       const mode = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)) ? 'ret' : 'recv';
 
       const headerNo = (currentSource === 'house')
@@ -1217,7 +1195,6 @@
         : String(item.natNo ?? '-');
 
       if (mode === 'ret'){
-        // ✅ 자연장지에서는 ret가 될 수 없음
         const cur = getRetStatusHouse(sid);
         const next = (cur === '반출완료') ? '반출대기' : '반출완료';
         setRetStatusHouse(sid, next);
