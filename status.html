@@ -17,20 +17,14 @@
       --line2:#c9d2df;
       --text:#1f2a37;
       --muted:#6b7280;
-      --muted2:#94a3b8;
 
       --primary:#1f4e79;
       --primary2:#2f6fad;
-      --ok:#2e7d32;
-      --warn:#b45309;
-      --info:#334155;
 
       --shadow: 0 8px 24px rgba(15,23,42,0.08);
       --shadow2: 0 14px 40px rgba(15,23,42,0.10);
 
       --radius: 14px;
-      --radius2: 10px;
-      --radius3: 8px;
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
@@ -94,6 +88,7 @@
       font-weight: 800;
       font-size: .86rem;
       white-space: nowrap;
+      flex-wrap: wrap;
     }
     .chip{
       display:inline-flex;
@@ -104,7 +99,7 @@
       border-radius: 999px;
       background: #fff;
       font-weight: 900;
-      color: var(--info);
+      color: rgba(31,42,55,.84);
     }
     .chip strong{
       color: var(--primary);
@@ -148,10 +143,11 @@
     }
 
     .group{
-      display:flex;
-      gap: 10px;
       flex: 1 1 520px;
       min-width: 320px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
       align-items: stretch;
     }
 
@@ -164,21 +160,23 @@
       flex-direction:column;
       gap: 8px;
       min-height: 64px;
-      flex: 1 1 220px;
+      min-width: 0;
     }
     .field .k{
       color: var(--muted);
       font-weight: 900;
       font-size: .82rem;
       letter-spacing: -0.01em;
+      white-space: nowrap;
     }
     .field .v{
       display:flex;
       align-items:center;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 8px;
+      flex-wrap: nowrap;
       font-weight: 950;
       color: rgba(31,42,55,.92);
+      min-width: 0;
     }
     .field input[type="date"]{
       width: 100%;
@@ -193,62 +191,33 @@
       -webkit-appearance:none;
       min-height: 40px;
     }
-    .count{
+
+    .countLine{
+      width: 100%;
       display:flex;
       align-items:baseline;
-      gap: 10px;
-      white-space: nowrap;
-      flex-wrap: nowrap;
-      font-size: 1.02rem;
-      line-height: 1.2;
-    }
-    .count b{
-      font-size: 1.06rem;
-      color: #0f172a;
-    }
-    .count span{
-      color: rgba(31,42,55,.85);
-      font-weight: 950;
-    }
-
-    .searchbar{
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 10px 12px;
-      display:flex;
+      justify-content:space-between;
       gap: 8px;
-      align-items:center;
-      flex: 1 1 260px;
-      min-width: 220px;
+      white-space: nowrap;
+      min-width: 0;
     }
-    .searchbar input{
-      border:0;
-      outline:none;
-      width: 100%;
-      font-weight: 900;
-      font-size: .94rem;
-      color: var(--text);
-      background: transparent;
-    }
-    .searchbar .icon{
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border: 1px solid var(--line);
-      background: var(--panel2);
-      color: var(--muted);
+    .countLine .t{
       font-weight: 950;
-      flex: 0 0 auto;
+      color: rgba(31,42,55,.75);
+      font-size: .92rem;
+    }
+    .countLine .n{
+      font-weight: 950;
+      color: #0f172a;
+      font-size: 1.02rem;
+      letter-spacing: -0.01em;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     @media (max-width: 560px){
       .seg{ flex: 1 1 100%; min-width: 0; }
-      .group{ flex: 1 1 100%; min-width: 0; }
-      .searchbar{ flex: 1 1 100%; }
+      .group{ min-width: 0; grid-template-columns: 1fr 1fr; }
     }
 
     .content{
@@ -273,6 +242,7 @@
       gap: 10px;
       border-bottom: 1px solid var(--line);
       background: #f8fafc;
+      flex-wrap: wrap;
     }
     .list-head .hint{
       font-weight: 950;
@@ -292,6 +262,7 @@
       font-size: .84rem;
       font-weight: 950;
       color: rgba(31,42,55,.75);
+      white-space: nowrap;
     }
     .badge{
       font-size: .86rem;
@@ -308,7 +279,7 @@
 
     .row{
       display:grid;
-      grid-template-columns: 10px 1fr auto;
+      grid-template-columns: 10px 1fr;
       gap: 10px;
       padding: 10px 12px;
       border-bottom: 1px solid var(--line);
@@ -328,6 +299,21 @@
     .row.ret .barL{ background: rgba(180,83,9,.40); }
     .row.retDone .barL{ background: rgba(47,111,173,.45); }
 
+    .rowR{
+      min-width: 0;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+    }
+
+    .rowTop{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      justify-content:space-between;
+      min-width: 0;
+    }
+
     .mainBtn{
       border:0;
       background: transparent;
@@ -336,6 +322,7 @@
       margin: 0;
       cursor: pointer;
       min-width: 0;
+      flex: 1;
     }
     .mainBtn:active{ background: rgba(31,78,121,.06); }
 
@@ -343,14 +330,6 @@
       display:flex;
       flex-direction:column;
       gap: 5px;
-      min-width: 0;
-    }
-
-    .topline{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      flex-wrap: wrap;
       min-width: 0;
     }
 
@@ -370,24 +349,6 @@
       min-width: 0;
     }
 
-    .cremWrap{
-      margin-top: 4px;
-      display:flex;
-      flex-direction:column;
-      gap: 2px;
-    }
-    .cremLine{
-      font-weight: 850;
-      font-size: .86rem;
-      color: rgba(31,42,55,.62);
-      line-height: 1.22;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      user-select: none;
-      cursor: default;
-    }
-
     .toggle{
       display:flex;
       align-items:center;
@@ -400,6 +361,7 @@
       white-space: nowrap;
       user-select:none;
       margin-top: 2px;
+      flex: 0 0 auto;
     }
     .toggle span{
       font-size: .82rem;
@@ -433,6 +395,25 @@
       border-color: rgba(46,125,50,.22);
     }
     .sw.on::after{ left: 18px; }
+
+    .cremWrap{
+      margin-top: 2px;
+      border-top: 1px dashed rgba(201,210,223,.75);
+      padding-top: 8px;
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+    .cremLine{
+      font-weight: 850;
+      font-size: .88rem;
+      color: rgba(31,42,55,.70);
+      line-height: 1.35;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      word-break: keep-all;
+    }
 
     .no-data{
       text-align:center;
@@ -595,10 +576,6 @@
             <span class="chip"><strong id="sourceLabel">추모의집</strong></span>
           </div>
         </div>
-        <div class="chip" id="countPill">
-          <span id="countTitle">현황</span>
-          <strong id="countText" style="margin-left:8px;">-</strong>
-        </div>
       </div>
 
       <div class="toolbar">
@@ -615,11 +592,17 @@
             </div>
           </div>
 
-          <div class="searchbar" role="search">
-            <div class="icon">⌕</div>
-            <input id="searchInput" type="text" placeholder="봉안번호/고인명 검색" autocomplete="off" />
+          <div class="field" id="countPill">
+            <div class="k" id="countTitle">현황</div>
+            <div class="v" style="width:100%;">
+              <div class="countLine">
+                <div class="t" id="countSub">-</div>
+                <div class="n" id="countText">-</div>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -967,7 +950,7 @@
       const rec = did ? cremMap.get(did) : null;
 
       if (!rec){
-        return { type: 'pay', chasu: 9999, start: '', end: '', text: '선결재' };
+        return { type: 'pay', chasu: 9999, start: '선결제', end: '선결제', text: '선결제' };
       }
 
       const chasu = parseInt(pad2(rec?.burnChasu), 10);
@@ -975,7 +958,7 @@
       const en = fmtTime(rec?.burnEndTime);
 
       if (!st){
-        return { type: 'info', chasu: isNaN(chasu) ? 9999 : chasu, start: '접수', end: '-', text: `${pad2(rec?.burnChasu)}회차, 화장시작: 접수, 화장종료: -` };
+        return { type: 'pay', chasu: isNaN(chasu) ? 9999 : chasu, start: '선결제', end: '선결제', text: '선결제' };
       }
       if (st && !en){
         return { type: 'info', chasu: isNaN(chasu) ? 9999 : chasu, start: st, end: '화장중', text: `${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: 화장중` };
@@ -1009,8 +992,7 @@
 
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0){
-        const t = '선결재';
-        return `<div class="cremWrap"><div class="cremLine" data-full="${escapeHtml(t)}" title="${escapeHtml(t)}">${escapeHtml(t)}</div></div>`;
+        return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
       }
 
       const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
@@ -1018,13 +1000,12 @@
       if (lineObjs.length >= 2){
         const allPay = lineObjs.every(o => o.type === 'pay');
         if (allPay){
-          const t = '선결재';
-          return `<div class="cremWrap"><div class="cremLine" data-full="${escapeHtml(t)}" title="${escapeHtml(t)}">${escapeHtml(t)}</div></div>`;
+          return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
         }
       }
 
       const htmlLines = lineObjs
-        .map(o => `<div class="cremLine" data-full="${escapeHtml(o.text)}" title="${escapeHtml(o.text)}">${escapeHtml(o.text)}</div>`)
+        .map(o => `<div class="cremLine">${escapeHtml(o.text)}</div>`)
         .join("");
 
       return `<div class="cremWrap">${htmlLines}</div>`;
@@ -1032,17 +1013,17 @@
 
     function buildCremTimesForModal(item, cremMap){
       const ids = getUniqueDeadIds(item);
-      if (ids.length === 0) return { startLine: '화장시작: -', endLine: '화장종료: -' };
+      if (ids.length === 0) return { startLine: '화장시작: 선결제', endLine: '화장종료: 선결제' };
 
       const objs = ids.map(id => cremLineObjByDeadId(id, cremMap));
       const allPay = (objs.length >= 1) && objs.every(o => o.type === 'pay');
 
       if (allPay){
-        return { startLine: '화장시작: 선결재', endLine: '화장종료: 선결재' };
+        return { startLine: '화장시작: 선결제', endLine: '화장종료: 선결제' };
       }
 
-      const starts = objs.map(o => o.start || '-');
-      const ends = objs.map(o => o.end || '-');
+      const starts = objs.map(o => o.start || '선결제');
+      const ends = objs.map(o => o.end || '선결제');
 
       const startText = starts.join(' / ');
       const endText = ends.join(' / ');
@@ -1058,21 +1039,18 @@
     const tabNature = document.getElementById('tabNature');
 
     const countTitle = document.getElementById('countTitle');
+    const countSub = document.getElementById('countSub');
     const countText = document.getElementById('countText');
     const sourceLabel = document.getElementById('sourceLabel');
 
     const overlay = document.getElementById('overlay');
-
     const mTitleLine = document.getElementById('mTitleLine');
     const mFields = document.getElementById('mFields');
-
-    const searchInput = document.getElementById('searchInput');
 
     let currentSource = 'house';
     let currentDisplayData = [];
     let currentModalItem = null;
     let currentSelectedDate = '';
-    let currentSearch = '';
 
     const TODAY = getLocalISODate(new Date());
     datePicker.value = TODAY;
@@ -1080,11 +1058,6 @@
 
     datePicker.addEventListener('change', () => {
       todayLabel.textContent = `${datePicker.value || TODAY}`;
-      load();
-    });
-
-    searchInput.addEventListener('input', () => {
-      currentSearch = (searchInput.value ?? '').toString().trim();
       load();
     });
 
@@ -1096,8 +1069,6 @@
       tabNature.classList.toggle('active', sourceKey === 'nature');
 
       sourceLabel.textContent = SOURCES[sourceKey].label;
-      searchInput.value = '';
-      currentSearch = '';
       load();
     }
 
@@ -1117,6 +1088,8 @@
     function buildFields(item){
       let fieldsHTML = '';
 
+      const isRetModal = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate));
+
       if (currentSource === 'house'){
         fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
         fieldsHTML += kvRow('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
@@ -1133,10 +1106,12 @@
         fieldsHTML += kvRow('신청자', item.applName ?? '-');
       }
 
-      const cremMap = LAST_CREM_MAP;
-      if (cremMap){
-        const t = buildCremTimesForModal(item, cremMap);
-        fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
+      if (!isRetModal){
+        const cremMap = LAST_CREM_MAP;
+        if (cremMap){
+          const t = buildCremTimesForModal(item, cremMap);
+          fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
+        }
       }
 
       return fieldsHTML;
@@ -1176,65 +1151,6 @@
       localStorage.setItem(retKeyHouse(id), val);
     }
 
-    function attachLongPressForCremLines(){
-      const els = listArea.querySelectorAll('.cremLine[data-full]');
-      const HOLD_MS = 420;
-
-      els.forEach(el => {
-        let timer = null;
-        let fired = false;
-
-        const full = () => (el.getAttribute('data-full') || '').trim();
-        const start = () => {
-          fired = false;
-          clearTimeout(timer);
-          timer = setTimeout(() => {
-            fired = true;
-            const txt = full();
-            if (txt) showToast(txt, 4500);
-          }, HOLD_MS);
-        };
-        const end = () => {
-          clearTimeout(timer);
-          timer = null;
-        };
-
-        el.addEventListener('touchstart', start, { passive: true });
-        el.addEventListener('touchend', end);
-        el.addEventListener('touchcancel', end);
-
-        el.addEventListener('mousedown', start);
-        el.addEventListener('mouseup', end);
-        el.addEventListener('mouseleave', end);
-
-        el.addEventListener('click', (e) => {
-          if (fired) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        });
-      });
-    }
-
-    function filterBySearch(displayData){
-      const q = (currentSearch ?? '').toString().trim();
-      if (!q) return displayData;
-
-      const qq = q.replace(/\s+/g,'').toLowerCase();
-
-      return displayData.filter(item => {
-        if (currentSource === 'house'){
-          const no = formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-').replace(/\s+/g,'').toLowerCase();
-          const nm = String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-').replace(/\s+/g,'').toLowerCase();
-          return no.includes(qq) || nm.includes(qq);
-        } else {
-          const no = String(item.natNo ?? '-').replace(/\s+/g,'').toLowerCase();
-          const nm = String(item.deadName ?? '-').replace(/\s+/g,'').toLowerCase();
-          return no.includes(qq) || nm.includes(qq);
-        }
-      });
-    }
-
     async function load(){
       const source = SOURCES[currentSource];
       const selectedDate = datePicker.value || TODAY;
@@ -1250,6 +1166,8 @@
         const c = calcSelectedCounts(currentSource, data, selectedDate);
 
         countTitle.textContent = `현황`;
+        countSub.textContent = SOURCES[currentSource].label;
+
         if (currentSource === 'house'){
           countText.textContent = `안치 ${c.recv} · 반출 ${c.ret}`;
         } else {
@@ -1276,8 +1194,6 @@
         displayData.forEach((it, i) => { it._pos = i; });
 
         displayData = sortByWorkPriorityStable(displayData, selectedDate, cremMap);
-        displayData = filterBySearch(displayData);
-
         currentDisplayData = displayData;
 
         if (displayData.length === 0){
@@ -1332,19 +1248,22 @@
               <div class="row ${leftCls}">
                 <div class="barL"></div>
 
-                <button class="mainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
-                  <div class="main">
-                    <div class="topline">
-                      <div class="no">${escapeHtml(displayId)}</div>
-                    </div>
-                    <div class="name">${escapeHtml(displayName)}</div>
-                    ${cremHTML}
-                  </div>
-                </button>
+                <div class="rowR">
+                  <div class="rowTop">
+                    <button class="mainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
+                      <div class="main">
+                        <div class="no">${escapeHtml(displayId)}</div>
+                        <div class="name">${escapeHtml(displayName)}</div>
+                      </div>
+                    </button>
 
-                <div class="toggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
-                  <div class="${swCls}"></div>
-                  <span>${escapeHtml(rowLabel)}</span>
+                    <div class="toggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
+                      <div class="${swCls}"></div>
+                      <span>${escapeHtml(rowLabel)}</span>
+                    </div>
+                  </div>
+
+                  ${cremHTML}
                 </div>
               </div>
             </li>
@@ -1357,8 +1276,6 @@
         if (displayData.length > limit){
           listArea.insertAdjacentHTML('beforeend', `<div class="no-data" style="margin-top:10px; padding:10px 12px;">상위 ${limit}건만 표시 중</div>`);
         }
-
-        attachLongPressForCremLines();
 
       }catch(err){
         listArea.innerHTML = `<div class="no-data">오류: ${escapeHtml(err.message)}</div>`;
@@ -1399,7 +1316,6 @@
       if (!item) return;
 
       const sid = itemStatusId(currentSource, item);
-
       const mode = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate)) ? 'ret' : 'recv';
 
       const headerNo = (currentSource === 'house')
