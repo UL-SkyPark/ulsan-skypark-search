@@ -16,6 +16,14 @@
     "burnChasu": "03"
   },
   {
+    "deadId": "1653364",
+    "deadName": "황인남",
+    "burnDate": "2026-03-01",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
     "deadId": "1653383",
     "deadName": "강맹금",
     "burnDate": "2026-03-01",
@@ -36,7 +44,7 @@
     "deadName": "김병권",
     "burnDate": "2026-03-01",
     "burnStrTime": "07:27",
-    "burnEndTime": null,
+    "burnEndTime": "08:48",
     "burnChasu": "01"
   },
   {
@@ -44,7 +52,7 @@
     "deadName": "윤영덕",
     "burnDate": "2026-03-01",
     "burnStrTime": "07:39",
-    "burnEndTime": null,
+    "burnEndTime": "08:51",
     "burnChasu": "01"
   },
   {
