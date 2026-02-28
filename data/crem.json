@@ -1,19 +1,11 @@
 [
   {
-    "deadId": "1653332",
-    "deadName": "이정희",
+    "deadId": "1653330",
+    "deadName": "이성희",
     "burnDate": "2026-03-01",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
-    "deadId": "1653350",
-    "deadName": "신정희",
-    "burnDate": "2026-03-01",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
+    "burnChasu": "03"
   },
   {
     "deadId": "1653383",
@@ -46,5 +38,37 @@
     "burnStrTime": "07:39",
     "burnEndTime": null,
     "burnChasu": "01"
+  },
+  {
+    "deadId": "1653350",
+    "deadName": "신정희",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "08:17",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653332",
+    "deadName": "이정희",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "08:21",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653340",
+    "deadName": "박귀남",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "08:26",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653374",
+    "deadName": "최진식",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "08:30",
+    "burnEndTime": null,
+    "burnChasu": "02"
   }
 ]
