@@ -33,7 +33,9 @@
       padding: 12px;
     }
 
-    /* ✅ PTR */
+    /* =========================
+       ✅ PTR
+       ========================= */
     .pull-to-refresh{
       position: fixed;
       top: 0;
@@ -140,7 +142,11 @@
       margin-left: auto;
     }
 
-    /* ✅ 우측상단 새로고침 아이콘 버튼 */
+    /* =========================
+       ✅ 우측상단 새로고침 버튼 + 스프링 느낌 애니메이션
+       - 눌렀을 때: 살짝 축소/튕김
+       - refreshing 상태: 아이콘 회전 + 펄스(스케일)
+       ========================= */
     .iconBtn{
       width: 42px;
       height: 42px;
@@ -153,8 +159,13 @@
       cursor: pointer;
       box-shadow: 0 6px 16px rgba(15,23,42,0.08);
       user-select: none;
+      -webkit-user-select: none;
+      transform: translateZ(0);
+      transition: transform 140ms cubic-bezier(.2,.8,.2,1), opacity 140ms ease;
     }
-    .iconBtn:active{ transform: translateY(1px); }
+    .iconBtn:active{
+      transform: scale(0.94);
+    }
     .iconBtn svg{
       width: 22px;
       height: 22px;
@@ -163,6 +174,30 @@
       stroke-width: 2.2;
       stroke-linecap: round;
       stroke-linejoin: round;
+      transform-origin: 50% 50%;
+    }
+
+    @keyframes iconSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* “살짝 튕기면서 도는” 느낌: 스케일을 주기적으로 살짝 올렸다 내림 */
+    @keyframes iconSpringPulse {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(1.08); }
+      70%  { transform: scale(0.98); }
+      100% { transform: scale(1); }
+    }
+
+    /* refreshing: 버튼은 살짝 펄스, 아이콘은 회전 */
+    .iconBtn.refreshing{
+      cursor: default;
+      opacity: .88;
+      transform: scale(1.02);
+      animation: iconSpringPulse 520ms cubic-bezier(.2, 1.1, .2, 1) infinite;
+    }
+    .iconBtn.refreshing svg{
+      animation: iconSpin 0.9s linear infinite;
     }
 
     .toolbar{
@@ -621,6 +656,12 @@
       opacity: 1;
       transform: translateX(-50%) translateY(-6px);
     }
+
+    /* 접근성: 모션 최소화 설정 시 애니메이션 끄기 */
+    @media (prefers-reduced-motion: reduce){
+      .pull-to-refresh, .pullable-content, .iconBtn{ transition: none !important; }
+      .loader, .iconBtn.refreshing, .iconBtn.refreshing svg{ animation: none !important; }
+    }
   </style>
 </head>
 
@@ -640,9 +681,9 @@
             <h1>울산하늘공원 접수 현황</h1>
           </div>
 
-          <!-- ✅ 우측상단 날짜 대신 새로고침 아이콘 -->
+          <!-- ✅ 우측상단 새로고침 아이콘(애니메이션 적용) -->
           <div class="rightInfo">
-            <button class="iconBtn" type="button" aria-label="새로고침" onclick="manualRefresh()">
+            <button id="refreshBtn" class="iconBtn" type="button" aria-label="새로고침" onclick="manualRefresh()">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M20 12a8 8 0 1 1-2.34-5.66"></path>
                 <path d="M20 4v6h-6"></path>
@@ -1133,8 +1174,8 @@
     const mTitleLine = document.getElementById('mTitleLine');
     const mFields = document.getElementById('mFields');
 
-    /* ✅ 내부 스크롤 컨테이너(overflow) */
     const scrollArea = document.getElementById('scrollArea');
+    const refreshBtn = document.getElementById('refreshBtn');
 
     const TODAY = getLocalISODate(new Date());
 
@@ -1203,7 +1244,6 @@
       return fieldsHTML;
     }
 
-    /* ✅ force=true면 캐시 무효화 + 데이터 강제 갱신 */
     async function load(force = false){
       const myToken = ++loadToken;
 
@@ -1402,9 +1442,7 @@
       load();
     }
 
-    datePicker.addEventListener('change', () => {
-      load();
-    });
+    datePicker.addEventListener('change', () => { load(); });
 
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
@@ -1415,21 +1453,43 @@
     window.applyRowToggle = applyRowToggle;
 
     /* =========================
+       ✅ 새로고침 버튼 스핀/스프링 토글
+       ========================= */
+    function setRefreshBtnSpinning(on){
+      if (!refreshBtn) return;
+      refreshBtn.classList.toggle('refreshing', !!on);
+      refreshBtn.disabled = !!on;
+    }
+
+    /* =========================
        ✅ 새로고침(아이콘/PTR 공용)
        ========================= */
-    async function doRefresh(){
-      dataCache.house = null;
-      dataCache.nature = null;
-      cremMapCache = null;
+    let isRefreshing = false; // PTR/버튼 공용 플래그
 
-      await load(true);
-      showToast('새로고침 완료', 1400);
+    async function doRefresh(){
+      if (isRefreshing) return;
+
+      isRefreshing = true;
+      setRefreshBtnSpinning(true);
+
+      try{
+        dataCache.house = null;
+        dataCache.nature = null;
+        cremMapCache = null;
+
+        await load(true);
+        showToast('새로고침 완료', 1400);
+      } finally {
+        setRefreshBtnSpinning(false);
+        isRefreshing = false;
+      }
     }
     window.manualRefresh = () => { doRefresh(); };
 
     /* =========================
        ✅ PTR (내부 스크롤: .content overflow)
        - window.scrollY 대신 scrollArea.scrollTop 사용
+       - PTR로 새로고침 시에도 버튼 아이콘 같이 회전/스프링
        ========================= */
     const ptrEl = document.getElementById('pull-to-refresh');
     const statusEl = document.getElementById('ptr-status');
@@ -1438,7 +1498,6 @@
 
     let startY = 0;
     let pulling = false;
-    let isRefreshing = false;
     let pullDist = 0;
 
     const PTR_MAX = 60;
@@ -1446,7 +1505,6 @@
     const DAMPING = 0.5;
 
     function canStartPTR(){
-      // ✅ 내부 스크롤이 최상단일 때만
       return scrollArea && scrollArea.scrollTop === 0;
     }
 
@@ -1477,8 +1535,6 @@
       pullDist = 0;
     }
 
-    // iOS PWA에서 overscroll bounce 방지 + 부드러운 PTR
-    // ✅ touch는 scrollArea(.content)에 걸어야 내부 스크롤 기반으로 제스처가 정확합니다.
     scrollArea.addEventListener('touchstart', (e) => {
       if (isRefreshing) return;
       if (e.touches.length !== 1) return;
@@ -1499,10 +1555,8 @@
 
       const currentY = e.touches[0].clientY;
       const diff = (currentY - startY) * DAMPING;
-
       if (diff <= 0) return;
 
-      // ✅ 내부 스크롤이 최상단에서 아래로 당길 때만 기본 스크롤을 막고 PTR 제스처로 처리
       e.preventDefault();
       setPullUI(diff);
     }, { passive: false });
@@ -1514,7 +1568,10 @@
       if (isRefreshing) return;
 
       if (pullDist >= PTR_THRESHOLD){
+        // ✅ PTR 새로고침 시작 + 버튼도 같이 회전/스프링
         isRefreshing = true;
+        setRefreshBtnSpinning(true);
+
         statusEl.textContent = '새로고침 중...';
         loaderEl.style.opacity = '1';
 
@@ -1523,8 +1580,16 @@
         ptrEl.setAttribute('aria-hidden', 'false');
 
         try{
-          await doRefresh();
+          dataCache.house = null;
+          dataCache.nature = null;
+          cremMapCache = null;
+
+          await load(true);
+          showToast('새로고침 완료', 1400);
         } finally {
+          // ✅ PTR 종료 직전에 버튼도 멈춤
+          setRefreshBtnSpinning(false);
+
           resetPullUI();
           isRefreshing = false;
           startY = 0;
