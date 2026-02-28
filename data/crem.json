@@ -1,21 +1,5 @@
 [
   {
-    "deadId": "1653073",
-    "deadName": "최해용",
-    "burnDate": "2026-02-28",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
-    "deadId": "1653075",
-    "deadName": "김무선",
-    "burnDate": "2026-02-28",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
     "deadId": "1653312",
     "deadName": "이중선",
     "burnDate": "2026-02-28",
@@ -156,7 +140,7 @@
     "deadName": "박수용",
     "burnDate": "2026-02-28",
     "burnStrTime": "11:23",
-    "burnEndTime": null,
+    "burnEndTime": "12:50",
     "burnChasu": "05"
   },
   {
@@ -164,7 +148,7 @@
     "deadName": "이극기",
     "burnDate": "2026-02-28",
     "burnStrTime": "11:31",
-    "burnEndTime": null,
+    "burnEndTime": "12:53",
     "burnChasu": "05"
   },
   {
@@ -176,19 +160,19 @@
     "burnChasu": "05"
   },
   {
-    "deadId": "1653369",
-    "deadName": "한영희사산",
-    "burnDate": "2026-02-28",
-    "burnStrTime": "12:07",
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
     "deadId": "1653370",
     "deadName": "이주예사산",
     "burnDate": "2026-02-28",
     "burnStrTime": "12:07",
     "burnEndTime": "12:35",
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653369",
+    "deadName": "한영희사산",
+    "burnDate": "2026-02-28",
+    "burnStrTime": "12:07",
+    "burnEndTime": "12:47",
     "burnChasu": "07"
   },
   {
@@ -198,5 +182,21 @@
     "burnStrTime": "12:32",
     "burnEndTime": null,
     "burnChasu": "06"
+  },
+  {
+    "deadId": "1653073",
+    "deadName": "최해용",
+    "burnDate": "2026-02-28",
+    "burnStrTime": "12:54",
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653075",
+    "deadName": "김무선",
+    "burnDate": "2026-02-28",
+    "burnStrTime": "12:54",
+    "burnEndTime": null,
+    "burnChasu": "07"
   }
 ]
