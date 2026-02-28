@@ -23,23 +23,16 @@
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { height:100%; }
 
-    /* ✅ 페이지(바깥) 스크롤 제거 + iOS 100vh 튐 완화 */
-    html, body { height:100%; overflow:hidden; }
-    body{ height: 100dvh; }
-
+    /* ✅ 바깥(페이지) 스크롤 제거 */
     body{
       margin:0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       padding: 12px;
-    }
-
-    /* ✅ iOS 구형 fallback(필요시) */
-    @supports (-webkit-touch-callout: none){
-      body{ height: -webkit-fill-available; }
-      .pullable-content{ height: calc(-webkit-fill-available - 24px); }
+      overflow: hidden;
     }
 
     /* PTR */
@@ -69,10 +62,10 @@
     }
     @keyframes spin{ to { transform: rotate(360deg); } }
 
-    /* 당김 대상 래퍼 */
+    /* ✅ (핵심) 바깥영역을 무조건 화면에 꽉 차게: fixed + inset */
     .pullable-content{
-      /* ✅ 100vh 대신 100dvh 사용(주소창 변화 대응) */
-      height: calc(100dvh - 24px);
+      position: fixed;
+      top: 12px; left: 12px; right: 12px; bottom: 12px; /* body padding과 동일 */
       transition: transform 0.22s ease;
       will-change: transform;
     }
@@ -90,7 +83,7 @@
       flex-direction: column;
     }
 
-    /* ✅ (변경 1) 내용이 적어도 카드 높이는 유지(100%), 스크롤만 비활성화 */
+    /* ✅ 내용이 적어도 카드 높이는 유지(100%), 스크롤만 비활성화 */
     .app.fit{ height: 100%; }
     .app.fit .content{
       overflow: hidden;
@@ -143,7 +136,6 @@
       margin-left: auto;
     }
 
-    /* 우측상단 새로고침 버튼 (스프링/스핀) */
     .iconBtn{
       width: 42px; height: 42px;
       border-radius: 999px;
@@ -294,7 +286,6 @@
       .countCenter{ font-size: .92rem; }
     }
 
-    /* 내부 스크롤 구조 */
     .content{
       padding: 12px 16px 16px;
       background: linear-gradient(180deg, #ffffff, #f6f8fb);
@@ -758,7 +749,7 @@
     };
 
     /* =========
-       ✅ (변경 2) 내용이 적을 때: fit(스크롤 잠금)만 하고 카드 높이는 유지
+       ✅ 내용이 적을 때: fit(스크롤 잠금)만 하고 카드 높이는 유지
        ========= */
     function adjustFit(){
       requestAnimationFrame(() => {
@@ -766,11 +757,8 @@
         if (!app || !scrollArea) return;
 
         const needsScroll = scrollArea.scrollHeight > scrollArea.clientHeight + 2;
-
-        // 내용이 적으면 fit(스크롤 잠금), 많으면 normal(스크롤 허용)
         app.classList.toggle('fit', !needsScroll);
 
-        // fit일 때 스크롤 위치도 0으로 고정(미세 스크롤 방지)
         if (!needsScroll) scrollArea.scrollTop = 0;
       });
     }
@@ -942,20 +930,32 @@
     const pad2 = (n) => String(n ?? '').trim().padStart(2,'0').slice(-2) || '00';
     const fmtTime = (v) => String(v ?? '').trim();
 
+    /* ✅ (요청 반영) 화장접수 단계에도 회차정보 표시: burnChasu 있으면 그 값 사용 */
     const cremObj = (deadId, cremMap) => {
       const did = String(deadId ?? '').trim();
       const rec = did ? cremMap.get(did) : null;
       if (!rec) return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
 
+      const chasuRaw = rec?.burnChasu;
+      const chasuNum = parseInt(pad2(chasuRaw), 10);
+      const safeChasu = isNaN(chasuNum) ? 0 : chasuNum;
+
       const st = fmtTime(rec?.burnStrTime);
       const en = fmtTime(rec?.burnEndTime);
-      if (!st) return { type:'recv', chasu:0, start:'화장접수', end:'화장접수', text:'00회차, 화장접수' };
 
-      const chasu = parseInt(pad2(rec?.burnChasu), 10);
-      const safe = isNaN(chasu) ? 0 : chasu;
+      /* 화장 시작 시간이 없으면 "화장접수"지만 회차는 burnChasu가 있으면 표시 */
+      if (!st){
+        const label = safeChasu > 0 ? `${pad2(chasuRaw)}회차, 화장접수` : `회차미정, 화장접수`;
+        return { type:'recv', chasu:safeChasu, start:'화장접수', end:'화장접수', text: label };
+      }
 
-      if (st && !en) return { type:'info', chasu:safe, start:st, end:'화장중', text:`${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: 화장중` };
-      return { type:'info', chasu:safe, start:st, end:en, text:`${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: ${en}` };
+      if (st && !en){
+        const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : `회차미정`;
+        return { type:'info', chasu:safeChasu, start:st, end:'화장중', text:`${chLabel}, 화장시작: ${st}, 화장종료: 화장중` };
+      }
+
+      const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : `회차미정`;
+      return { type:'info', chasu:safeChasu, start:st, end:en, text:`${chLabel}, 화장시작: ${st}, 화장종료: ${en}` };
     };
 
     const uniqDeadIds = (item) => {
@@ -1340,7 +1340,6 @@
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
 
-    /* 리스트 이벤트 위임 (길이/성능) */
     listArea.addEventListener('click', (e) => {
       const openBtn = e.target.closest('[data-open]');
       if (openBtn){
