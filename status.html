@@ -20,18 +20,25 @@
       --shadow: 0 8px 24px rgba(15,23,42,0.08);
       --shadow2: 0 14px 40px rgba(15,23,42,0.10);
       --radius: 14px;
+
+      /* ✅ 바깥 여백 / 하단 힌트 공간 */
+      --outerPad: 12px;
+      --bottomHintSpace: 44px; /* 힌트(텍스트+화살표)가 목록을 가리지 않도록 확보 */
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     html, body { height:100%; }
 
-    /* ✅ 바깥(페이지) 스크롤 제거 */
+    /* ✅ 바깥(페이지) 스크롤 제거 + 하단 힌트 공간 확보 */
     body{
       margin:0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      padding: 12px;
+
+      padding: var(--outerPad);
+      padding-bottom: calc(var(--outerPad) + var(--bottomHintSpace) + env(safe-area-inset-bottom));
+
       overflow: hidden;
     }
 
@@ -62,10 +69,14 @@
     }
     @keyframes spin{ to { transform: rotate(360deg); } }
 
-    /* ✅ (핵심) 바깥영역을 무조건 화면에 꽉 차게: fixed + inset */
+    /* ✅ (핵심) 바깥영역을 무조건 화면에 꽉 차게: fixed + inset
+       - 하단은 힌트 공간만큼 더 띄워서 "접수목록"이 하단 힌트에 가려지지 않음 */
     .pullable-content{
       position: fixed;
-      top: 12px; left: 12px; right: 12px; bottom: 12px; /* body padding과 동일 */
+      top: var(--outerPad);
+      left: var(--outerPad);
+      right: var(--outerPad);
+      bottom: calc(var(--outerPad) + var(--bottomHintSpace) + env(safe-area-inset-bottom));
       transition: transform 0.22s ease;
       will-change: transform;
     }
@@ -588,6 +599,40 @@
       transform: translateX(-50%) translateY(-6px);
     }
 
+    /* ✅ 하단 바깥 영역 힌트: 작고 희미하게 */
+    .bottomHint{
+      position: fixed;
+      left: 0; right: 0;
+      bottom: calc(8px + env(safe-area-inset-bottom));
+      display: none;              /* 기본 숨김 */
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      z-index: 2;                /* overlay/toast보다 낮고, 앱과 무관 (앱은 위 inset 영역) */
+      pointer-events: none;
+      opacity: 0.22;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    body.showBottomHint .bottomHint{ display:flex; }
+
+    .bottomHintText{
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+    .bottomHintArrow{
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: #0f172a;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.7;
+    }
+
     @media (prefers-reduced-motion: reduce){
       .pull-to-refresh, .pullable-content, .iconBtn{ transition: none !important; }
       .loader, .iconBtn.refreshing, .iconBtn.refreshing svg{ animation: none !important; }
@@ -647,6 +692,15 @@
         <div id="listArea"></div>
       </div>
     </div>
+  </div>
+
+  <!-- ✅ 하단 바깥 영역 안내(목록 안 가리도록 위에서 공간 확보됨) -->
+  <div class="bottomHint" aria-hidden="true">
+    <div class="bottomHintText">아래로 당겨 새로고침</div>
+    <svg class="bottomHintArrow" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 5v12"></path>
+      <path d="M7 13l5 5 5-5"></path>
+    </svg>
   </div>
 
   <div class="overlay" id="overlay" aria-hidden="true">
@@ -750,6 +804,7 @@
 
     /* =========
        ✅ 내용이 적을 때: fit(스크롤 잠금)만 하고 카드 높이는 유지
+       + ✅ 하단 힌트는 "스크롤이 필요없을 때"만 노출 (목록 방해 최소화)
        ========= */
     function adjustFit(){
       requestAnimationFrame(() => {
@@ -758,6 +813,9 @@
 
         const needsScroll = scrollArea.scrollHeight > scrollArea.clientHeight + 2;
         app.classList.toggle('fit', !needsScroll);
+
+        /* ✅ 스크롤이 없을 때만 힌트 표시 */
+        document.body.classList.toggle('showBottomHint', !needsScroll);
 
         if (!needsScroll) scrollArea.scrollTop = 0;
       });
@@ -930,7 +988,7 @@
     const pad2 = (n) => String(n ?? '').trim().padStart(2,'0').slice(-2) || '00';
     const fmtTime = (v) => String(v ?? '').trim();
 
-    /* ✅ (요청 반영) 화장접수 단계에도 회차정보 표시: burnChasu 있으면 그 값 사용 */
+    /* ✅ (적용) 목록: 시작만 있으면 '화장종료:' 없이 '화장중'만 표기 */
     const cremObj = (deadId, cremMap) => {
       const did = String(deadId ?? '').trim();
       const rec = did ? cremMap.get(did) : null;
@@ -943,15 +1001,14 @@
       const st = fmtTime(rec?.burnStrTime);
       const en = fmtTime(rec?.burnEndTime);
 
-      /* 화장 시작 시간이 없으면 "화장접수"지만 회차는 burnChasu가 있으면 표시 */
       if (!st){
         const label = safeChasu > 0 ? `${pad2(chasuRaw)}회차, 화장접수` : `회차미정, 화장접수`;
-        return { type:'recv', chasu:safeChasu, start:'화장접수', end:'화장접수', text: label };
+        return { type:'recv', chasu:safeChasu, start:'화장접수', end:'', text: label };
       }
 
       if (st && !en){
         const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : `회차미정`;
-        return { type:'info', chasu:safeChasu, start:st, end:'화장중', text:`${chLabel}, 화장시작: ${st}, 화장종료: 화장중` };
+        return { type:'info', chasu:safeChasu, start:st, end:'', text:`${chLabel}, 화장시작: ${st}, 화장중` };
       }
 
       const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : `회차미정`;
@@ -987,13 +1044,27 @@
       return `<div class="cremWrap">${objs.map(o => `<div class="cremLine">${esc(o.text)}</div>`).join('')}</div>`;
     };
 
+    /* ✅ (적용) 모달: '화장종료: -'로 표시 (화장중 표기 안 씀) */
     const cremTimes = (item, cremMap) => {
       if (!cremMap) return null;
       const ids = uniqDeadIds(item);
-      if (!ids.length) return { a:'화장시작: 선결제', b:'화장종료: 선결제' };
-      const objs = ids.map(id => cremObj(id, cremMap));
-      const starts = objs.map(o => o.start || '선결제');
-      const ends   = objs.map(o => o.end   || '선결제');
+
+      if (!ids.length){
+        return { a:'화장시작: 선결제', b:'화장종료: 선결제' };
+      }
+
+      const raws = ids.map(id => {
+        const did = String(id ?? '').trim();
+        const rec = did ? cremMap.get(did) : null;
+        const st = fmtTime(rec?.burnStrTime);
+        const en = fmtTime(rec?.burnEndTime);
+        if (!rec) return { st:'선결제', en:'선결제' };
+        return { st: st || '화장접수', en: en || '-' };
+      });
+
+      const starts = raws.map(x => x.st);
+      const ends   = raws.map(x => x.en);
+
       return { a:`화장시작: ${starts.join(' / ')}`, b:`화장종료: ${ends.join(' / ')}` };
     };
 
