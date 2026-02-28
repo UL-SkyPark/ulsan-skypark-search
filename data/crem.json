@@ -1,5 +1,21 @@
 [
   {
+    "deadId": "1653073",
+    "deadName": "최해용",
+    "burnDate": "2026-02-28",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653075",
+    "deadName": "김무선",
+    "burnDate": "2026-02-28",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
     "deadId": "1653312",
     "deadName": "이중선",
     "burnDate": "2026-02-28",
@@ -132,7 +148,7 @@
     "deadName": "지순이",
     "burnDate": "2026-02-28",
     "burnStrTime": "11:18",
-    "burnEndTime": null,
+    "burnEndTime": "12:41",
     "burnChasu": "05"
   },
   {
