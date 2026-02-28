@@ -199,27 +199,23 @@
       min-height: 40px;
     }
 
-    .countLine{
+    /* ✅ 현황 카드: 시설명 제거 + 중앙 표시 + 글자 잘림 방지 */
+    .countCenter{
       width: 100%;
-      display:flex;
-      align-items:baseline;
-      justify-content:space-between;
-      gap: 8px;
-      white-space: nowrap;
-      min-width: 0;
-    }
-    .countLine .t{
-      font-weight: 950;
-      color: rgba(31,42,55,.75);
-      font-size: .92rem;
-    }
-    .countLine .n{
+      text-align: center;
       font-weight: 950;
       color: #0f172a;
-      font-size: 1.02rem;
+      font-size: 1.08rem;
       letter-spacing: -0.01em;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;      /* 줄바꿈 허용 */
+      overflow: visible;         /* 잘림 방지 */
+      text-overflow: clip;       /* 말줄임 제거 */
+      line-height: 1.25;
+      padding: 2px 0;
+      word-break: keep-all;
+    }
+    @media (max-width: 560px){
+      .countCenter{ font-size: 1.15rem; }
     }
 
     @media (max-width: 560px){
@@ -278,7 +274,7 @@
       gap: 10px;
       padding: 10px 12px;
       border-bottom: 1px solid var(--line);
-      align-items:start;
+      align-items: stretch;  /* ✅ barL 포함 전체 높이 맞춤 */
       background: #fff;
     }
     .row:last-child{ border-bottom:0; }
@@ -286,8 +282,9 @@
     .barL{
       width: 10px;
       border-radius: 6px;
-      min-height: 52px;
       background: #e2e8f0;
+      height: 100%;          /* ✅ 행 전체(화장정보 포함)로 늘림 */
+      align-self: stretch;   /* ✅ 확실히 stretch */
     }
     .row.recv .barL{ background: rgba(31,78,121,.35); }
     .row.done .barL{ background: rgba(46,125,50,.45); }
@@ -391,18 +388,19 @@
     }
     .sw.on::after{ left: 18px; }
 
+    /* ✅ 화장 정보: 안치정보와 한 덩어리처럼 보이게(점선 제거/간격 정리) */
     .cremWrap{
-      margin-top: 2px;
-      border-top: 1px dashed rgba(201,210,223,.75);
-      padding-top: 8px;
+      margin-top: 0;                 /* 기존 분리감 감소 */
+      padding-top: 0;
+      border-top: 0;                 /* 점선 제거 */
       display:flex;
       flex-direction:column;
-      gap: 6px;
+      gap: 4px;
     }
     .cremLine{
       font-weight: 850;
       font-size: .88rem;
-      color: rgba(31,42,55,.70);
+      color: rgba(31,42,55,.72);
       line-height: 1.35;
       white-space: normal;
       overflow: visible;
@@ -590,10 +588,8 @@
           <div class="field" id="countPill">
             <div class="k" id="countTitle">현황</div>
             <div class="v" style="width:100%;">
-              <div class="countLine">
-                <div class="t" id="countSub">-</div>
-                <div class="n" id="countText">-</div>
-              </div>
+              <!-- ✅ 시설명 제거하고 '안치/안장/반출'만 중앙 표기 -->
+              <div class="countCenter" id="countText">-</div>
             </div>
           </div>
         </div>
@@ -1034,7 +1030,6 @@
     const tabNature = document.getElementById('tabNature');
 
     const countTitle = document.getElementById('countTitle');
-    const countSub = document.getElementById('countSub');
     const countText = document.getElementById('countText');
     const sourceLabel = document.getElementById('sourceLabel');
 
@@ -1157,12 +1152,12 @@
         const c = calcSelectedCounts(currentSource, data, selectedDate);
 
         countTitle.textContent = `현황`;
-        countSub.textContent = SOURCES[currentSource].label;
 
+        // ✅ 시설명 빼고, 중앙에 "안치/안장/반출"만 표시
         if (currentSource === 'house'){
-          countText.textContent = `안치 ${c.recv} · 반출 ${c.ret}`;
+          countText.textContent = `안치 ${c.recv}건 · 반출 ${c.ret}건`;
         } else {
-          countText.textContent = `안장 ${c.recv}`;
+          countText.textContent = `안장 ${c.recv}건`;
         }
 
         const dateKey = source.dateKey;
