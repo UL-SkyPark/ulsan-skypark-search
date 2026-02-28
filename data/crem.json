@@ -180,16 +180,8 @@
     "deadName": "김춘해",
     "burnDate": "2026-02-28",
     "burnStrTime": "12:32",
-    "burnEndTime": null,
+    "burnEndTime": "13:30",
     "burnChasu": "06"
-  },
-  {
-    "deadId": "1653075",
-    "deadName": "김무선",
-    "burnDate": "2026-02-28",
-    "burnStrTime": "12:54",
-    "burnEndTime": null,
-    "burnChasu": "07"
   },
   {
     "deadId": "1653073",
@@ -197,6 +189,14 @@
     "burnDate": "2026-02-28",
     "burnStrTime": "12:54",
     "burnEndTime": "13:25",
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653075",
+    "deadName": "김무선",
+    "burnDate": "2026-02-28",
+    "burnStrTime": "12:54",
+    "burnEndTime": "13:45",
     "burnChasu": "07"
   }
 ]
