@@ -33,14 +33,58 @@
       padding: 12px;
     }
 
+    /* ✅ PTR */
+    .pull-to-refresh{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transform: translateY(-100%);
+      transition: transform 0.22s ease;
+      z-index: 10001;
+      border-bottom: 1px solid var(--line);
+      padding-top: env(safe-area-inset-top);
+    }
+    .pull-to-refresh.visible{ transform: translateY(0); }
+
+    .loader{
+      width: 20px;
+      height: 20px;
+      border: 2px solid #cbd5e1;
+      border-top: 2px solid #0f172a;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      opacity: 0;
+    }
+    @keyframes spin{
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ✅ 스크롤/당김 대상 래퍼 */
+    .pullable-content{
+      height: calc(100vh - 24px);
+      transition: transform 0.22s ease;
+      will-change: transform;
+    }
+
     .app{
       max-width: 980px;
+      height: 100%;
       margin: 0 auto;
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: calc(var(--radius) + 4px);
       box-shadow: var(--shadow2);
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .top{
@@ -96,21 +140,29 @@
       margin-left: auto;
     }
 
-    .dateText{
-      font-weight: 950;
-      color: rgba(31,42,55,.84);
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-      padding-top: 2px;
-      font-size: 0.98rem;
+    /* ✅ 우측상단 새로고침 아이콘 버튼 */
+    .iconBtn{
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(15,23,42,0.08);
+      user-select: none;
     }
-    .dateText strong{
-      color: var(--primary);
-      font-weight: 950;
-    }
-
-    @media (max-width: 560px){
-      .dateText{ font-size: 0.96rem; }
+    .iconBtn:active{ transform: translateY(1px); }
+    .iconBtn svg{
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .toolbar{
@@ -230,10 +282,14 @@
       .group{ min-width: 0; grid-template-columns: 1fr 1fr; }
     }
 
+    /* ✅ .content 내부 스크롤(overflow) */
     .content{
       padding: 12px 16px 16px;
       background: linear-gradient(180deg, #ffffff, #f6f8fb);
-      min-height: 50vh;
+      flex: 1 1 auto;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      min-height: 0;
     }
 
     .list{
@@ -569,43 +625,60 @@
 </head>
 
 <body>
-  <div class="app" id="app">
-    <div class="top" id="topBar">
-      <div class="header">
-        <div class="brand">
-          <h1>울산하늘공원 접수 현황</h1>
+  <!-- ✅ Pull to Refresh 영역 -->
+  <div id="pull-to-refresh" class="pull-to-refresh" aria-hidden="true">
+    <div id="ptr-loader" class="loader" aria-hidden="true"></div>
+    <div id="ptr-status">당겨서 새로고침</div>
+  </div>
+
+  <!-- ✅ PTR 당김 대상(콘텐츠 래퍼) -->
+  <div id="content" class="pullable-content">
+    <div class="app" id="app">
+      <div class="top" id="topBar">
+        <div class="header">
+          <div class="brand">
+            <h1>울산하늘공원 접수 현황</h1>
+          </div>
+
+          <!-- ✅ 우측상단 날짜 대신 새로고침 아이콘 -->
+          <div class="rightInfo">
+            <button class="iconBtn" type="button" aria-label="새로고침" onclick="manualRefresh()">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 12a8 8 0 1 1-2.34-5.66"></path>
+                <path d="M20 4v6h-6"></path>
+              </svg>
+            </button>
+          </div>
         </div>
-        <div class="rightInfo">
-          <div class="dateText"><strong id="todayLabel">-</strong></div>
+
+        <div class="toolbar">
+          <div class="seg" role="tablist" aria-label="시설 선택">
+            <button id="tabHouse" class="active" onclick="switchSource('house')">추모의집</button>
+            <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
+          </div>
+
+          <div class="group">
+            <div class="field" id="datePill">
+              <div class="k">날짜 선택</div>
+              <div class="v">
+                <input type="date" id="datePicker" />
+              </div>
+            </div>
+
+            <div class="field" id="countPill">
+              <div class="k" id="countTitle">현황</div>
+              <div class="v" style="width:100%;">
+                <div class="countCenter" id="countText">-</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="toolbar">
-        <div class="seg" role="tablist" aria-label="시설 선택">
-          <button id="tabHouse" class="active" onclick="switchSource('house')">추모의집</button>
-          <button id="tabNature" onclick="switchSource('nature')">자연장지</button>
-        </div>
-
-        <div class="group">
-          <div class="field" id="datePill">
-            <div class="k">날짜 선택</div>
-            <div class="v">
-              <input type="date" id="datePicker" />
-            </div>
-          </div>
-
-          <div class="field" id="countPill">
-            <div class="k" id="countTitle">현황</div>
-            <div class="v" style="width:100%;">
-              <div class="countCenter" id="countText">-</div>
-            </div>
-          </div>
-        </div>
+      <!-- ✅ 내부 스크롤 영역(.content overflow) -->
+      <div class="content" id="scrollArea">
+        <div id="listArea"></div>
       </div>
-    </div>
-
-    <div class="content">
-      <div id="listArea"></div>
     </div>
   </div>
 
@@ -669,8 +742,10 @@
         .replaceAll("'","&#039;");
     }
 
-    async function fetchJson(url){
-      const res = await fetch(url);
+    /* ✅ 캐시 무효화 옵션(bust) 추가 */
+    async function fetchJson(url, bust = false){
+      const u = bust ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
+      const res = await fetch(u, { cache: bust ? 'no-store' : 'default' });
       if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
       return res.json();
     }
@@ -912,9 +987,6 @@
     }
     function fmtTime(v){ return (v == null) ? "" : String(v).trim(); }
 
-    // crem.json은 "당일 화장접수 파일" 전제
-    // - deadId가 cremMap에 아예 없으면: "선결제"
-    // - deadId는 있는데 시작시간이 없으면: "00회차, 화장접수"
     function cremLineObjByDeadId(deadId, cremMap){
       const did = (deadId ?? "").toString().trim();
       const rec = did ? cremMap.get(did) : null;
@@ -953,9 +1025,6 @@
       return ids;
     }
 
-    // 정렬키 규칙:
-    // - 부부단 등에서 00회차(선결제/접수) + 다른 회차가 섞이면, "00이 아닌 회차"를 따라 정렬
-    // - 즉: (회차>0 중 최솟값) 우선, 없으면 0
     function itemChasuKeyForSort(item, cremMap){
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0) return 0;
@@ -972,23 +1041,18 @@
       return 0;
     }
 
-    // ✅ 요청 반영:
-    // - deadId가 2개(부부단)인데 둘 다 cremMap에 없으면 "선결제"가 2줄로 뜨는 문제 → 1줄로만 표시
-    // - "00회차, 화장접수"는 그대로(중복되면 중복대로 표시)
     function buildCremLinesHTML(item, cremMap, mode){
       if (mode === 'ret') return '';
       if (!cremMap) return '';
 
       const ids = getUniqueDeadIds(item);
 
-      // deadId 자체가 없어서 crem 매칭 불가: "선결제" 1줄
       if (ids.length === 0){
         return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
       }
 
       const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
 
-      // 모두 선결제(pay)라면 1줄만
       const allPay = lineObjs.length > 0 && lineObjs.every(o => o && o.type === 'pay');
       if (allPay){
         return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
@@ -1025,9 +1089,6 @@
     }
     function setRetStatusHouse(id, val){ localStorage.setItem(retKeyHouse(id), val); }
 
-    // 정렬 규칙:
-    // - 추모의집: 반출대기(0) → 접수/안치(1, 회차정렬) → 반출완료(2)
-    // - 자연장지: 접수만(1, 회차정렬)
     function sortByWorkPriorityStable(arr, selectedISO, cremMap){
       const clone = arr.slice();
       clone.forEach((it, i) => { it._pos = (it._pos ?? i); });
@@ -1047,7 +1108,6 @@
         const grpB = isRetB ? (bRetDone ? 2 : 0) : 1;
         if (grpA !== grpB) return grpA - grpB;
 
-        // grp=1(접수/안치)은 추모의집/자연장지 모두 회차 오름차순
         if (grpA === 1 && grpB === 1 && cremMap){
           const ca = itemChasuKeyForSort(a, cremMap);
           const cb = itemChasuKeyForSort(b, cremMap);
@@ -1061,7 +1121,6 @@
     }
 
     const datePicker = document.getElementById('datePicker');
-    const todayLabel = document.getElementById('todayLabel');
     const listArea = document.getElementById('listArea');
 
     const tabHouse = document.getElementById('tabHouse');
@@ -1073,6 +1132,9 @@
     const overlay = document.getElementById('overlay');
     const mTitleLine = document.getElementById('mTitleLine');
     const mFields = document.getElementById('mFields');
+
+    /* ✅ 내부 스크롤 컨테이너(overflow) */
+    const scrollArea = document.getElementById('scrollArea');
 
     const TODAY = getLocalISODate(new Date());
 
@@ -1094,9 +1156,9 @@
       `;
     }
 
-    async function ensureCremMap(){
-      if (cremMapCache) return cremMapCache;
-      const raw = await fetchJson("./data/crem.json");
+    async function ensureCremMap(force = false){
+      if (cremMapCache && !force) return cremMapCache;
+      const raw = await fetchJson("./data/crem.json", force);
       const arr = Array.isArray(raw) ? raw : [];
       const map = new Map();
       for (const r of arr){
@@ -1108,9 +1170,9 @@
       return cremMapCache;
     }
 
-    async function ensureData(sourceKey){
-      if (dataCache[sourceKey]) return dataCache[sourceKey];
-      const raw = await fetchJson(SOURCES[sourceKey].url);
+    async function ensureData(sourceKey, force = false){
+      if (dataCache[sourceKey] && !force) return dataCache[sourceKey];
+      const raw = await fetchJson(SOURCES[sourceKey].url, force);
       dataCache[sourceKey] = Array.isArray(raw) ? raw : [];
       return dataCache[sourceKey];
     }
@@ -1141,24 +1203,24 @@
       return fieldsHTML;
     }
 
-    async function load(){
+    /* ✅ force=true면 캐시 무효화 + 데이터 강제 갱신 */
+    async function load(force = false){
       const myToken = ++loadToken;
 
       const source = SOURCES[currentSource];
       const selectedDate = datePicker.value || TODAY;
       currentSelectedDate = selectedDate;
 
-      // 과거 날짜 조회 시: crem(화장진행상황) 표시/정렬 모두 비활성
       const showCrem = (selectedDate === TODAY);
 
       try{
         let cremMap = null;
         if (showCrem){
-          cremMap = await ensureCremMap();
+          cremMap = await ensureCremMap(force);
           if (myToken !== loadToken) return;
         }
 
-        const data = await ensureData(currentSource);
+        const data = await ensureData(currentSource, force);
         if (myToken !== loadToken) return;
 
         const c = calcSelectedCounts(currentSource, data, selectedDate);
@@ -1341,7 +1403,6 @@
     }
 
     datePicker.addEventListener('change', () => {
-      todayLabel.textContent = `${datePicker.value || TODAY}`;
       load();
     });
 
@@ -1353,6 +1414,127 @@
     window.closeSheet = closeSheet;
     window.applyRowToggle = applyRowToggle;
 
+    /* =========================
+       ✅ 새로고침(아이콘/PTR 공용)
+       ========================= */
+    async function doRefresh(){
+      dataCache.house = null;
+      dataCache.nature = null;
+      cremMapCache = null;
+
+      await load(true);
+      showToast('새로고침 완료', 1400);
+    }
+    window.manualRefresh = () => { doRefresh(); };
+
+    /* =========================
+       ✅ PTR (내부 스크롤: .content overflow)
+       - window.scrollY 대신 scrollArea.scrollTop 사용
+       ========================= */
+    const ptrEl = document.getElementById('pull-to-refresh');
+    const statusEl = document.getElementById('ptr-status');
+    const loaderEl = document.getElementById('ptr-loader');
+    const contentEl = document.getElementById('content');
+
+    let startY = 0;
+    let pulling = false;
+    let isRefreshing = false;
+    let pullDist = 0;
+
+    const PTR_MAX = 60;
+    const PTR_THRESHOLD = 60;
+    const DAMPING = 0.5;
+
+    function canStartPTR(){
+      // ✅ 내부 스크롤이 최상단일 때만
+      return scrollArea && scrollArea.scrollTop === 0;
+    }
+
+    function setPullUI(dist){
+      const d = Math.max(0, Math.min(dist, PTR_MAX));
+      pullDist = d;
+
+      if (d > 0){
+        ptrEl.classList.add('visible');
+        ptrEl.setAttribute('aria-hidden', 'false');
+      }
+
+      contentEl.style.transform = `translateY(${d}px)`;
+
+      if (d >= PTR_THRESHOLD){
+        statusEl.textContent = '놓아서 새로고침';
+        loaderEl.style.opacity = '1';
+      } else {
+        statusEl.textContent = '당겨서 새로고침';
+        loaderEl.style.opacity = '0';
+      }
+    }
+
+    function resetPullUI(){
+      ptrEl.classList.remove('visible');
+      ptrEl.setAttribute('aria-hidden', 'true');
+      contentEl.style.transform = '';
+      pullDist = 0;
+    }
+
+    // iOS PWA에서 overscroll bounce 방지 + 부드러운 PTR
+    // ✅ touch는 scrollArea(.content)에 걸어야 내부 스크롤 기반으로 제스처가 정확합니다.
+    scrollArea.addEventListener('touchstart', (e) => {
+      if (isRefreshing) return;
+      if (e.touches.length !== 1) return;
+
+      if (canStartPTR()){
+        startY = e.touches[0].clientY;
+        pulling = true;
+      } else {
+        startY = 0;
+        pulling = false;
+      }
+    }, { passive: true });
+
+    scrollArea.addEventListener('touchmove', (e) => {
+      if (!pulling || isRefreshing) return;
+      if (e.touches.length !== 1) return;
+      if (!canStartPTR()) return;
+
+      const currentY = e.touches[0].clientY;
+      const diff = (currentY - startY) * DAMPING;
+
+      if (diff <= 0) return;
+
+      // ✅ 내부 스크롤이 최상단에서 아래로 당길 때만 기본 스크롤을 막고 PTR 제스처로 처리
+      e.preventDefault();
+      setPullUI(diff);
+    }, { passive: false });
+
+    scrollArea.addEventListener('touchend', async () => {
+      if (!pulling) return;
+      pulling = false;
+
+      if (isRefreshing) return;
+
+      if (pullDist >= PTR_THRESHOLD){
+        isRefreshing = true;
+        statusEl.textContent = '새로고침 중...';
+        loaderEl.style.opacity = '1';
+
+        contentEl.style.transform = `translateY(${PTR_MAX}px)`;
+        ptrEl.classList.add('visible');
+        ptrEl.setAttribute('aria-hidden', 'false');
+
+        try{
+          await doRefresh();
+        } finally {
+          resetPullUI();
+          isRefreshing = false;
+          startY = 0;
+        }
+      } else {
+        resetPullUI();
+        startY = 0;
+      }
+    }, { passive: true });
+
     window.addEventListener('load', () => {
       const saved = localStorage.getItem(STORAGE_KEYS.source);
       const initial = (saved === 'nature' || saved === 'house') ? saved : 'house';
@@ -1362,8 +1544,6 @@
       tabNature.classList.toggle('active', initial === 'nature');
 
       datePicker.value = getLocalISODate(new Date());
-      todayLabel.textContent = `${datePicker.value}`;
-
       load();
     });
   </script>
