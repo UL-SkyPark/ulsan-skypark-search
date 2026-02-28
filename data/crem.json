@@ -8,11 +8,19 @@
     "burnChasu": "03"
   },
   {
+    "deadId": "1653341",
+    "deadName": "최문영",
+    "burnDate": "2026-03-01",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
     "deadId": "1653383",
     "deadName": "강맹금",
     "burnDate": "2026-03-01",
     "burnStrTime": "07:19",
-    "burnEndTime": null,
+    "burnEndTime": "08:41",
     "burnChasu": "01"
   },
   {
@@ -20,7 +28,7 @@
     "deadName": "이상곤",
     "burnDate": "2026-03-01",
     "burnStrTime": "07:22",
-    "burnEndTime": null,
+    "burnEndTime": "08:42",
     "burnChasu": "01"
   },
   {
