@@ -23,7 +23,10 @@
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-    html, body { height:100%; }
+
+    /* ✅ 페이지(바깥) 스크롤 제거 + iOS 100vh 튐 완화 */
+    html, body { height:100%; overflow:hidden; }
+    body{ height: 100dvh; }
 
     body{
       margin:0;
@@ -31,6 +34,12 @@
       background: var(--bg);
       color: var(--text);
       padding: 12px;
+    }
+
+    /* ✅ iOS 구형 fallback(필요시) */
+    @supports (-webkit-touch-callout: none){
+      body{ height: -webkit-fill-available; }
+      .pullable-content{ height: calc(-webkit-fill-available - 24px); }
     }
 
     /* PTR */
@@ -62,7 +71,8 @@
 
     /* 당김 대상 래퍼 */
     .pullable-content{
-      height: calc(100vh - 24px);
+      /* ✅ 100vh 대신 100dvh 사용(주소창 변화 대응) */
+      height: calc(100dvh - 24px);
       transition: transform 0.22s ease;
       will-change: transform;
     }
@@ -79,6 +89,10 @@
       display: flex;
       flex-direction: column;
     }
+
+    /* ✅ 내용이 적으면 앱 높이를 내용만큼 줄이고, 내부 스크롤 제거 */
+    .app.fit{ height: auto; }
+    .app.fit .content{ overflow: visible; }
 
     .top{
       position: sticky;
@@ -285,6 +299,9 @@
       overflow: auto;
       -webkit-overflow-scrolling: touch;
       min-height: 0;
+
+      /* ✅ iOS 바운스/오버스크롤 느낌 완화(선택이지만 추천) */
+      overscroll-behavior: contain;
     }
 
     .list{
@@ -740,6 +757,19 @@
     };
 
     /* =========
+       ✅ 내용이 적을 때: 카드 높이 자동 축소(스크롤 제거)
+       ========= */
+    function adjustFit(){
+      requestAnimationFrame(() => {
+        const app = $('#app');
+        if (!app || !scrollArea) return;
+        // 스크롤이 필요한지 여부 판단
+        const needsScroll = scrollArea.scrollHeight > scrollArea.clientHeight + 2;
+        app.classList.toggle('fit', !needsScroll);
+      });
+    }
+
+    /* =========
        Data cache
        ========= */
     const dataCache = { house: null, nature: null };
@@ -1097,6 +1127,7 @@
 
         if (!display.length){
           listArea.innerHTML = `<div class="no-data">표시할 데이터가 없습니다.</div>`;
+          adjustFit(); /* ✅ */
           return;
         }
 
@@ -1170,8 +1201,11 @@
           );
         }
 
+        adjustFit(); /* ✅ 렌더 후 fit 판단 */
+
       } catch (err){
         listArea.innerHTML = `<div class="no-data">오류: ${esc(err.message)}</div>`;
+        adjustFit(); /* ✅ */
       }
     }
 
