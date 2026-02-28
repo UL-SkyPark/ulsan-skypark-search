@@ -180,9 +180,7 @@
       .date-row{ flex: 1 1 100%; }
     }
 
-    .content{
-      padding: 12px 12px 14px;
-    }
+    .content{ padding: 12px 12px 14px; }
 
     .list{
       background: var(--card);
@@ -233,9 +231,8 @@
     .itemRow{
       padding: 12px 12px;
       display:flex;
-      align-items:flex-start; /* ✅ 토글 위치 유지 */
-      justify-content:space-between;
-      gap: 10px;
+      flex-direction:column; /* ✅ 화장정보를 토글 아래(전체폭)로 내리기 */
+      gap: 8px;
       border-bottom: 1px solid rgba(148,163,184,0.18);
       position: relative;
       background: transparent;
@@ -254,6 +251,14 @@
     .itemRow.done::before{ background: rgba(134,239,172,.65); }
     .itemRow.ret::before{ background: rgba(148,163,184,.55); }
     .itemRow.retDone::before{ background: rgba(165,180,252,.70); }
+
+    .rowTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      min-width: 0;
+    }
 
     .itemMainBtn{
       flex: 1;
@@ -292,9 +297,9 @@
       line-height: 1.25;
     }
 
-    /* 🔥 화장정보 라인 */
+    /* ✅ 리스트의 화장정보: 말줄임(ellipsis) + 길게 누르면 전체보기(토스트) */
     .cremWrap{
-      margin-top: 4px;
+      padding-left: 6px; /* 왼쪽 정렬감 유지 */
       display:flex;
       flex-direction:column;
       gap: 2px;
@@ -305,22 +310,11 @@
       color: rgba(15,23,42,0.62);
       line-height: 1.22;
 
-      /* ✅ 무조건 1줄 유지 + ... 대신 가로스크롤 */
       white-space: nowrap;
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-
-      /* 스크롤바가 너무 튀면 얇게(지원 브라우저에서만 적용) */
-      scrollbar-width: thin;
-    }
-    .cremLine::-webkit-scrollbar{ height: 6px; }
-    .cremLine::-webkit-scrollbar-thumb{
-      background: rgba(148,163,184,0.35);
-      border-radius: 999px;
-    }
-    .cremLine::-webkit-scrollbar-track{
-      background: transparent;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      user-select: none;
+      cursor: default;
     }
 
     /* 리스트 우측 토글 */
@@ -511,22 +505,26 @@
       color: rgba(15,23,42,.88);
     }
 
+    /* ✅ 토스트: 전체보기용(줄바꿈 허용) */
     .toast{
       position: fixed;
       left: 50%;
       bottom: 22px;
       transform: translateX(-50%);
-      background: rgba(15,23,42,0.80);
+      background: rgba(15,23,42,0.86);
       color: white;
       padding: 10px 14px;
-      border-radius: 999px;
+      border-radius: 18px;
       font-size: .92rem;
       font-weight: 850;
       opacity: 0;
       transition: opacity .16s ease, transform .16s ease;
       z-index: 10000;
       max-width: 92%;
-      text-align:center;
+      text-align:left;
+      white-space: normal;
+      line-height: 1.25;
+      word-break: keep-all;
     }
     .toast.show{
       opacity: 1;
@@ -599,9 +597,7 @@
       return `${y}-${m}-${day}`;
     }
 
-    const STORAGE_KEYS = {
-      source: "uic_source_selected"
-    };
+    const STORAGE_KEYS = { source: "uic_source_selected" };
 
     const SOURCES = {
       house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
@@ -654,11 +650,12 @@
       return res.json();
     }
 
-    function showToast(msg){
+    function showToast(msg, ms = 2000){
       const t = document.getElementById('toast');
       t.textContent = msg;
       t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2000);
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => t.classList.remove('show'), ms);
     }
 
     function formatEnsNo(val){
@@ -833,7 +830,6 @@
       `;
     }
 
-    /* ✅ 모달에 화장정보 여러 줄 표시용 */
     function kvRowLines(k, lines){
       const safeLines = (Array.isArray(lines) ? lines : [])
         .map(x => escapeHtml(x))
@@ -882,7 +878,7 @@
     // 🔥 crem.json 연동
     // -----------------------------
     let CREM_MAP = null;
-    let LAST_CREM_MAP = null; // ✅ 모달에서도 사용
+    let LAST_CREM_MAP = null;
 
     async function ensureCremMap(){
       if (CREM_MAP) return CREM_MAP;
@@ -919,39 +915,53 @@
       const rec = did ? cremMap.get(did) : null;
 
       if (!rec){
-        return { type: 'pay', text: '선결재' };
+        return { type: 'pay', chasu: 9999, start: '', end: '', text: '선결재' };
       }
 
-      const chasu = pad2(rec?.burnChasu);
+      const chasu = parseInt(pad2(rec?.burnChasu), 10);
       const st = fmtTime(rec?.burnStrTime);
       const en = fmtTime(rec?.burnEndTime);
 
       if (!st){
-        return { type: 'info', text: `${chasu}회차, 화장시작: 접수, 화장종료: -` };
+        return { type: 'info', chasu: isNaN(chasu) ? 9999 : chasu, start: '접수', end: '-', text: `${pad2(rec?.burnChasu)}회차, 화장시작: 접수, 화장종료: -` };
       }
       if (st && !en){
-        return { type: 'info', text: `${chasu}회차, 화장시작: ${st}, 화장종료: 화장중` };
+        return { type: 'info', chasu: isNaN(chasu) ? 9999 : chasu, start: st, end: '화장중', text: `${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: 화장중` };
       }
-      return { type: 'info', text: `${chasu}회차, 화장시작: ${st}, 화장종료: ${en}` };
+      return { type: 'info', chasu: isNaN(chasu) ? 9999 : chasu, start: st, end: en, text: `${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: ${en}` };
     }
 
-    // ✅ 리스트 표시용(기존 규칙 유지: 반출행은 표시 안 함)
-    function buildCremLinesHTML(item, cremMap, mode){
-      if (mode === 'ret') return '';
-
+    function getUniqueDeadIds(item){
       const raws = Array.isArray(item?._raw) ? item._raw : [item];
-
       const seen = new Set();
       const ids = [];
       for (const r of raws){
         const did = (r?.deadId ?? "").toString().trim();
-        if (seen.has(did)) continue;
+        if (!did || seen.has(did)) continue;
         seen.add(did);
-        if (did) ids.push(did);
+        ids.push(did);
       }
+      return ids;
+    }
 
+    /* ✅ 정렬키: (반출 최상단) > '00회차' 기준 오름차순
+       완료/대기 토글은 정렬에 영향 없음(그자리 유지) */
+    function itemChasuKey(item, cremMap){
+      const ids = getUniqueDeadIds(item);
+      if (ids.length === 0) return 9999;
+      const objs = ids.map(id => cremLineObjByDeadId(id, cremMap));
+      const minChasu = Math.min(...objs.map(o => (typeof o.chasu === 'number' ? o.chasu : 9999)));
+      return isFinite(minChasu) ? minChasu : 9999;
+    }
+
+    // ✅ 리스트 표시용: 말줄임 텍스트 + data-full로 전체보기(길게누름)
+    function buildCremLinesHTML(item, cremMap, mode){
+      if (mode === 'ret') return ''; // 리스트에서는 반출행 화장정보 숨김(원하시면 여기 제거)
+
+      const ids = getUniqueDeadIds(item);
       if (ids.length === 0){
-        return `<div class="cremWrap"><div class="cremLine">${escapeHtml('선결재')}</div></div>`;
+        const t = '선결재';
+        return `<div class="cremWrap"><div class="cremLine" data-full="${escapeHtml(t)}" title="${escapeHtml(t)}">${escapeHtml(t)}</div></div>`;
       }
 
       const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
@@ -959,41 +969,38 @@
       if (lineObjs.length >= 2){
         const allPay = lineObjs.every(o => o.type === 'pay');
         if (allPay){
-          return `<div class="cremWrap"><div class="cremLine">${escapeHtml('선결재')}</div></div>`;
+          const t = '선결재';
+          return `<div class="cremWrap"><div class="cremLine" data-full="${escapeHtml(t)}" title="${escapeHtml(t)}">${escapeHtml(t)}</div></div>`;
         }
       }
 
       const htmlLines = lineObjs
-        .map(o => `<div class="cremLine">${escapeHtml(o.text)}</div>`)
+        .map(o => `<div class="cremLine" data-full="${escapeHtml(o.text)}" title="${escapeHtml(o.text)}">${escapeHtml(o.text)}</div>`)
         .join("");
 
       return `<div class="cremWrap">${htmlLines}</div>`;
     }
 
-    // ✅ 모달 표시용(반출행이어도 상세에는 보여줌)
-    // 규칙: 부부단 2명 모두 선결재면 1줄만 "선결재", 아니면 각 1줄씩
-    function buildCremLinesForModal(item, cremMap){
-      const raws = Array.isArray(item?._raw) ? item._raw : [item];
+    // ✅ 모달 표시용: '00회차' 제거 + (화장시작 1줄, 화장종료 1줄)
+    // 여러 명이면 " / "로 합쳐서 2줄만 유지
+    function buildCremTimesForModal(item, cremMap){
+      const ids = getUniqueDeadIds(item);
+      if (ids.length === 0) return { startLine: '화장시작: -', endLine: '화장종료: -' };
 
-      const seen = new Set();
-      const ids = [];
-      for (const r of raws){
-        const did = (r?.deadId ?? "").toString().trim();
-        if (seen.has(did)) continue;
-        seen.add(did);
-        if (did) ids.push(did);
+      const objs = ids.map(id => cremLineObjByDeadId(id, cremMap));
+      const allPay = (objs.length >= 1) && objs.every(o => o.type === 'pay');
+
+      if (allPay){
+        return { startLine: '화장시작: 선결재', endLine: '화장종료: 선결재' };
       }
 
-      if (ids.length === 0) return ['선결재'];
+      const starts = objs.map(o => o.start || '-');
+      const ends = objs.map(o => o.end || '-');
 
-      const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
+      const startText = starts.join(' / ');
+      const endText = ends.join(' / ');
 
-      if (lineObjs.length >= 2){
-        const allPay = lineObjs.every(o => o.type === 'pay');
-        if (allPay) return ['선결재'];
-      }
-
-      return lineObjs.map(o => o.text).filter(Boolean);
+      return { startLine: `화장시작: ${startText}`, endLine: `화장종료: ${endText}` };
     }
 
     // -----------------------------
@@ -1067,27 +1074,21 @@
         fieldsHTML += kvRow('신청자', item.applName ?? '-');
       }
 
-      // ✅ 모달에도 화장정보 표시
+      // ✅ 모달에도 화장시간(2줄) 표시
       const cremMap = LAST_CREM_MAP;
       if (cremMap){
-        const lines = buildCremLinesForModal(item, cremMap);
-        if (lines && lines.length){
-          fieldsHTML += kvRowLines('화장정보', lines);
-        }
+        const t = buildCremTimesForModal(item, cremMap);
+        fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
       }
 
       return fieldsHTML;
     }
 
-    function sortByWorkPriorityStable(arr, selectedISO){
+    // ✅ 정렬: 반출 최상단 > '00회차'(burnChasu) 오름차순 > 원래순서(안정정렬)
+    function sortByWorkPriorityStable(arr, selectedISO, cremMap){
       const clone = arr.slice();
 
-      function displayIdOf(item){
-        if (currentSource === 'house'){
-          return formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-');
-        }
-        return String(item.natNo ?? '-');
-      }
+      clone.forEach((it, i) => { it._pos = (it._pos ?? i); });
 
       clone.sort((a, b) => {
         const modeA = (currentSource === 'house' && isRetOnDate(a, selectedISO)) ? 'ret' : 'recv';
@@ -1097,14 +1098,18 @@
         const grpB = (modeB === 'ret') ? 0 : 1;
         if (grpA !== grpB) return grpA - grpB;
 
-        const da = displayIdOf(a);
-        const db = displayIdOf(b);
-        return da.localeCompare(db, 'ko');
+        const ca = itemChasuKey(a, cremMap);
+        const cb = itemChasuKey(b, cremMap);
+        if (ca !== cb) return ca - cb;
+
+        // ✅ 완료/대기 상태는 정렬에 반영하지 않음(그자리 유지)
+        return (a._pos ?? 0) - (b._pos ?? 0);
       });
 
       return clone;
     }
 
+    // ✅ 추모의집 반출 상태 유지
     function retKeyHouse(id){ return `ret_house_${id}`; }
     function getRetStatusHouse(id){
       const v = localStorage.getItem(retKeyHouse(id));
@@ -1116,6 +1121,48 @@
       localStorage.setItem(retKeyHouse(id), val);
     }
 
+    // ✅ 길게누르면 화장정보 전체보기(토스트)
+    function attachLongPressForCremLines(){
+      const els = listArea.querySelectorAll('.cremLine[data-full]');
+      const HOLD_MS = 420;
+
+      els.forEach(el => {
+        let timer = null;
+        let fired = false;
+
+        const full = () => (el.getAttribute('data-full') || '').trim();
+        const start = (e) => {
+          fired = false;
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            fired = true;
+            const txt = full();
+            if (txt) showToast(txt, 4500);
+          }, HOLD_MS);
+        };
+        const end = () => {
+          clearTimeout(timer);
+          timer = null;
+        };
+
+        el.addEventListener('touchstart', start, { passive: true });
+        el.addEventListener('touchend', end);
+        el.addEventListener('touchcancel', end);
+
+        el.addEventListener('mousedown', start);
+        el.addEventListener('mouseup', end);
+        el.addEventListener('mouseleave', end);
+
+        // ✅ 클릭 시(짧게) 아무 동작 없음(상세보기는 위쪽 버튼에서만)
+        el.addEventListener('click', (e) => {
+          if (fired) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+      });
+    }
+
     async function load(){
       const source = SOURCES[currentSource];
       const selectedDate = datePicker.value || TODAY;
@@ -1123,7 +1170,7 @@
 
       try{
         const cremMap = await ensureCremMap();
-        LAST_CREM_MAP = cremMap; // ✅ 모달에서도 사용
+        LAST_CREM_MAP = cremMap;
 
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
@@ -1154,7 +1201,10 @@
         if (currentSource === 'house') displayData = mergeEnsRows(filtered);
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
-        displayData = sortByWorkPriorityStable(displayData, selectedDate);
+        // ✅ 안정정렬 기준용 원래 위치 저장
+        displayData.forEach((it, i) => { it._pos = i; });
+
+        displayData = sortByWorkPriorityStable(displayData, selectedDate, cremMap);
         currentDisplayData = displayData;
 
         if (displayData.length === 0){
@@ -1202,24 +1252,26 @@
           }
 
           const leftCls = leftClsForMode(currentSource, mode, statusText);
+          const cremHTML = buildCremLinesHTML(item, cremMap, mode);
 
           html += `
             <li>
               <div class="itemRow ${leftCls}">
-                <button class="itemMainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
-                  <div class="main">
-                    <div class="id">
-                      ${escapeHtml(displayId)}
+                <div class="rowTop">
+                  <button class="itemMainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
+                    <div class="main">
+                      <div class="id">${escapeHtml(displayId)}</div>
+                      <div class="name">${escapeHtml(displayName)}</div>
                     </div>
-                    <div class="name">${escapeHtml(displayName)}</div>
-                    ${buildCremLinesHTML(item, cremMap, mode)}
-                  </div>
-                </button>
+                  </button>
 
-                <div class="rowToggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
-                  <div class="${rowSwitchCls}"></div>
-                  <span>${escapeHtml(rowLabel)}</span>
+                  <div class="rowToggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
+                    <div class="${rowSwitchCls}"></div>
+                    <span>${escapeHtml(rowLabel)}</span>
+                  </div>
                 </div>
+
+                ${cremHTML}
               </div>
             </li>
           `;
@@ -1231,6 +1283,9 @@
         if (displayData.length > limit){
           listArea.insertAdjacentHTML('beforeend', `<div class="no-data" style="padding:10px 0 0;">(상위 ${limit}건만 표시 중)</div>`);
         }
+
+        // ✅ 길게 누르면 전체보기 연결
+        attachLongPressForCremLines();
 
       }catch(err){
         listArea.innerHTML = `<div class="no-data">❌ 오류: ${escapeHtml(err.message)}</div>`;
@@ -1244,7 +1299,6 @@
       currentModalItem = item;
 
       const sourceLabel = SOURCES[currentSource].label;
-
       const headerNo = (currentSource === 'house')
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
@@ -1285,16 +1339,17 @@
         const cur = getRetStatusHouse(sid);
         const next = (cur === '반출완료') ? '반출대기' : '반출완료';
         setRetStatusHouse(sid, next);
-        showToast(`✅ ${headerNo} : ${next}`);
+        showToast(`✅ ${headerNo} : ${next}`, 2200);
       } else {
         const cur = getRecvStatus(currentSource, sid);
         const done = recvDoneText(currentSource);
         const pending = recvPendingText(currentSource);
         const next = (cur === done) ? pending : done;
         setRecvStatus(currentSource, sid, next);
-        showToast(`✅ ${headerNo} : ${next}`);
+        showToast(`✅ ${headerNo} : ${next}`, 2200);
       }
 
+      // ✅ 정렬이 상태에 영향 없어서 위치 유지됨
       load();
     }
 
