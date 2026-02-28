@@ -16,12 +16,9 @@
       --line2:#c9d2df;
       --text:#1f2a37;
       --muted:#6b7280;
-
       --primary:#1f4e79;
-
       --shadow: 0 8px 24px rgba(15,23,42,0.08);
       --shadow2: 0 14px 40px rgba(15,23,42,0.10);
-
       --radius: 14px;
     }
 
@@ -54,14 +51,13 @@
       border-bottom: 1px solid var(--line);
     }
 
-    /* ✅ 헤더: 우측상단 날짜만(캡슐 삭제), 제목 폰트 크게 + 모바일 잘림 방지 */
     .header{
       padding: 14px 16px 10px;
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
       gap: 12px;
-      flex-wrap: wrap; /* ✅ 좁은 화면에서 줄바꿈 허용 */
+      flex-wrap: wrap;
     }
 
     .brand{
@@ -76,19 +72,14 @@
       font-weight: 950;
       letter-spacing: -0.03em;
       color: #0f172a;
-
-      /* ✅ 잘림 방지: nowrap/ellipsis 제거하고, 필요 시 줄바꿈 */
       white-space: normal;
       overflow: visible;
       text-overflow: clip;
       word-break: keep-all;
-
-      /* ✅ 제목 크게 */
       font-size: 1.40rem;
       line-height: 1.15;
     }
 
-    /* 모바일에서 제목 더 크게 + 여백 확보 */
     @media (max-width: 560px){
       .brand h1{
         font-size: 1.55rem;
@@ -105,7 +96,6 @@
       margin-left: auto;
     }
 
-    /* ✅ 캡슐(Chip) 제거용: 날짜만 텍스트로 표시 */
     .dateText{
       font-weight: 950;
       color: rgba(31,42,55,.84);
@@ -120,9 +110,7 @@
     }
 
     @media (max-width: 560px){
-      .dateText{
-        font-size: 0.96rem;
-      }
+      .dateText{ font-size: 0.96rem; }
     }
 
     .toolbar{
@@ -220,7 +208,6 @@
       min-height: 40px;
     }
 
-    /* ✅ 현황: 모바일에서도 줄바꿈 금지 + 폰트 크기 자동 축소 */
     .countCenter{
       width: 100%;
       text-align: center;
@@ -416,9 +403,6 @@
     .sw.on::after{ left: 18px; }
 
     .cremWrap{
-      margin-top: 0;
-      padding-top: 0;
-      border-top: 0;
       display:flex;
       flex-direction:column;
       gap: 4px;
@@ -591,8 +575,6 @@
         <div class="brand">
           <h1>울산하늘공원 접수 현황</h1>
         </div>
-
-        <!-- ✅ 캡슐 삭제 + '기준일' 삭제: 날짜만 표시 -->
         <div class="rightInfo">
           <div class="dateText"><strong id="todayLabel">-</strong></div>
         </div>
@@ -664,20 +646,10 @@
       if (!s) return '';
 
       const m1 = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
-      if (m1) {
-        const y = m1[1];
-        const m = String(m1[2]).padStart(2,'0');
-        const d = String(m1[3]).padStart(2,'0');
-        return `${y}-${m}-${d}`;
-      }
+      if (m1) return `${m1[1]}-${String(m1[2]).padStart(2,'0')}-${String(m1[3]).padStart(2,'0')}`;
 
       const m2 = s.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})/);
-      if (m2) {
-        const y = m2[1];
-        const m = String(m2[2]).padStart(2,'0');
-        const d = String(m2[3]).padStart(2,'0');
-        return `${y}-${m}-${d}`;
-      }
+      if (m2) return `${m2[1]}-${String(m2[2]).padStart(2,'0')}-${String(m2[3]).padStart(2,'0')}`;
 
       const m3 = s.match(/^(\d{4})(\d{2})(\d{2})$/);
       if (m3) return `${m3[1]}-${m3[2]}-${m3[3]}`;
@@ -753,8 +725,20 @@
         const num = digits.slice(-5);
         return `${room}실 ${num}`;
       }
-
       return raw;
+    }
+
+    function safeKeyPart(v){ return (v == null) ? '' : String(v).trim(); }
+
+    function ensMergeKey(r){
+      const ens = safeKeyPart(r.ensNO ?? r.ensNo ?? r.ensno);
+      if (ens) return `ENS:${ens}`;
+
+      const deadId = safeKeyPart(r.deadId);
+      const strDate = safeKeyPart(r.strDate);
+      const appl = safeKeyPart(r.applname ?? r.applName);
+      const dead = safeKeyPart(r.deadname ?? r.deadName ?? r.deceasedName);
+      return `ALT:${deadId}|${strDate}|${appl}|${dead}`;
     }
 
     function mergeEnsRows(rows){
@@ -762,12 +746,11 @@
       const order = [];
 
       for (const r of rows){
-        const ens2 = (r.ensNO ?? r.ensNo ?? r.ensno ?? '').toString().trim();
-        const key = ens2 || '__NO_ENS__';
+        const key = ensMergeKey(r);
 
         if (!map.has(key)){
           map.set(key, {
-            ensNO: ens2 || '-',
+            ensNO: safeKeyPart(r.ensNO ?? r.ensNo ?? r.ensno) || '-',
             strDate: (r.strDate ?? '-'),
             deadname: (r.deadname ?? r.deadName ?? r.deceasedName ?? '-'),
             applname: (r.applname ?? r.applName ?? '-'),
@@ -805,9 +788,10 @@
       const map = new Map();
       const order = [];
       for (const r of rows) {
-        const natNo = (r.natNo ?? '').toString();
-        const applName = (r.applName ?? '').toString();
+        const natNo = (r.natNo ?? '').toString().trim();
+        const applName = (r.applName ?? '').toString().trim();
         const key = `${natNo}||${applName}`;
+
         if (!map.has(key)) {
           map.set(key, {
             natNo: r.natNo ?? '-',
@@ -860,6 +844,7 @@
 
       return v;
     }
+
     function setRecvStatus(sourceKey, id, val){
       localStorage.setItem(recvKey(sourceKey, id), val);
     }
@@ -928,28 +913,6 @@
       return { recv: mergedN.length, ret: 0 };
     }
 
-    let CREM_MAP = null;
-    let LAST_CREM_MAP = null;
-
-    async function ensureCremMap(){
-      if (CREM_MAP) return CREM_MAP;
-      try{
-        const raw = await fetchJson("./data/crem.json");
-        const arr = Array.isArray(raw) ? raw : [];
-        const map = new Map();
-        for (const r of arr){
-          const id = (r?.deadId ?? "").toString().trim();
-          if (!id) continue;
-          map.set(id, r);
-        }
-        CREM_MAP = map;
-        return map;
-      }catch(e){
-        CREM_MAP = new Map();
-        return CREM_MAP;
-      }
-    }
-
     function pad2(n){
       const s = (n == null) ? "" : String(n).trim();
       if (!s) return "00";
@@ -965,21 +928,39 @@
       const did = (deadId ?? "").toString().trim();
       const rec = did ? cremMap.get(did) : null;
 
-      if (!rec){
-        return { type: 'pay', chasu: 9999, start: '선결제', end: '선결제', text: '선결제' };
-      }
-
-      const chasu = parseInt(pad2(rec?.burnChasu), 10);
       const st = fmtTime(rec?.burnStrTime);
       const en = fmtTime(rec?.burnEndTime);
 
       if (!st){
-        return { type: 'pay', chasu: isNaN(chasu) ? 9999 : chasu, start: '선결제', end: '선결제', text: '선결제' };
+        return {
+          type: 'recv',
+          chasu: 0,
+          start: '화장접수',
+          end: '화장접수',
+          text: '00회차, 화장접수'
+        };
       }
+
+      const chasu = parseInt(pad2(rec?.burnChasu), 10);
+      const safeChasu = isNaN(chasu) ? 0 : chasu;
+
       if (st && !en){
-        return { type: 'info', chasu: isNaN(chasu) ? 9999 : chasu, start: st, end: '화장중', text: `${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: 화장중` };
+        return {
+          type: 'info',
+          chasu: safeChasu,
+          start: st,
+          end: '화장중',
+          text: `${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: 화장중`
+        };
       }
-      return { type: 'info', chasu: isNaN(chasu) ? 9999 : chasu, start: st, end: en, text: `${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: ${en}` };
+
+      return {
+        type: 'info',
+        chasu: safeChasu,
+        start: st,
+        end: en,
+        text: `${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: ${en}`
+      };
     }
 
     function getUniqueDeadIds(item){
@@ -1008,18 +989,10 @@
 
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0){
-        return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
+        return `<div class="cremWrap"><div class="cremLine">00회차, 화장접수</div></div>`;
       }
 
       const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
-
-      if (lineObjs.length >= 2){
-        const allPay = lineObjs.every(o => o.type === 'pay');
-        if (allPay){
-          return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
-        }
-      }
-
       const htmlLines = lineObjs
         .map(o => `<div class="cremLine">${escapeHtml(o.text)}</div>`)
         .join("");
@@ -1029,101 +1002,19 @@
 
     function buildCremTimesForModal(item, cremMap){
       const ids = getUniqueDeadIds(item);
-      if (ids.length === 0) return { startLine: '화장시작: 선결제', endLine: '화장종료: 선결제' };
-
-      const objs = ids.map(id => cremLineObjByDeadId(id, cremMap));
-      const allPay = (objs.length >= 1) && objs.every(o => o.type === 'pay');
-
-      if (allPay){
-        return { startLine: '화장시작: 선결제', endLine: '화장종료: 선결제' };
+      if (ids.length === 0) {
+        return { startLine: '화장시작: 화장접수', endLine: '화장종료: 화장접수' };
       }
 
-      const starts = objs.map(o => o.start || '선결제');
-      const ends = objs.map(o => o.end || '선결제');
+      const objs = ids.map(id => cremLineObjByDeadId(id, cremMap));
+
+      const starts = objs.map(o => o.start || '화장접수');
+      const ends = objs.map(o => o.end || '화장접수');
 
       return {
         startLine: `화장시작: ${starts.join(' / ')}`,
         endLine: `화장종료: ${ends.join(' / ')}`
       };
-    }
-
-    const datePicker = document.getElementById('datePicker');
-    const todayLabel = document.getElementById('todayLabel');
-    const listArea = document.getElementById('listArea');
-
-    const tabHouse = document.getElementById('tabHouse');
-    const tabNature = document.getElementById('tabNature');
-
-    const countTitle = document.getElementById('countTitle');
-    const countText = document.getElementById('countText');
-
-    const overlay = document.getElementById('overlay');
-    const mTitleLine = document.getElementById('mTitleLine');
-    const mFields = document.getElementById('mFields');
-
-    let currentSource = 'house';
-    let currentDisplayData = [];
-    let currentSelectedDate = '';
-
-    const TODAY = getLocalISODate(new Date());
-    datePicker.value = TODAY;
-    todayLabel.textContent = `${TODAY}`;
-
-    datePicker.addEventListener('change', () => {
-      todayLabel.textContent = `${datePicker.value || TODAY}`;
-      load();
-    });
-
-    function switchSource(sourceKey){
-      currentSource = sourceKey;
-      localStorage.setItem(STORAGE_KEYS.source, sourceKey);
-
-      tabHouse.classList.toggle('active', sourceKey === 'house');
-      tabNature.classList.toggle('active', sourceKey === 'nature');
-
-      load();
-    }
-
-    function renderListHead(shownCount, totalCount){
-      const sLabel = SOURCES[currentSource].label;
-      return `
-        <div class="list-head">
-          <div class="hint">${escapeHtml(sLabel)} 접수목록</div>
-          <div class="badge">${shownCount.toLocaleString()} / ${totalCount.toLocaleString()}</div>
-        </div>
-      `;
-    }
-
-    function buildFields(item){
-      let fieldsHTML = '';
-
-      const isRetModal = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate));
-
-      if (currentSource === 'house'){
-        fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
-        fieldsHTML += kvRow('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
-        fieldsHTML += kvRow('신청자', item.applname ?? item.applName ?? '-');
-
-        const rdISO = normalizeToISODate(pickRetDate(item));
-        const rdRaw = pickRetDate(item);
-        if (rdISO){
-          fieldsHTML += kvRow('반출일자', String(rdRaw ?? rdISO));
-        }
-      } else {
-        fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
-        fieldsHTML += kvRow('고인명', item.deadName ?? '-');
-        fieldsHTML += kvRow('신청자', item.applName ?? '-');
-      }
-
-      if (!isRetModal){
-        const cremMap = LAST_CREM_MAP;
-        if (cremMap){
-          const t = buildCremTimesForModal(item, cremMap);
-          fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
-        }
-      }
-
-      return fieldsHTML;
     }
 
     function retKeyHouse(id){ return `ret_house_${id}`; }
@@ -1167,21 +1058,111 @@
       return clone;
     }
 
+    const datePicker = document.getElementById('datePicker');
+    const todayLabel = document.getElementById('todayLabel');
+    const listArea = document.getElementById('listArea');
+
+    const tabHouse = document.getElementById('tabHouse');
+    const tabNature = document.getElementById('tabNature');
+
+    const countTitle = document.getElementById('countTitle');
+    const countText = document.getElementById('countText');
+
+    const overlay = document.getElementById('overlay');
+    const mTitleLine = document.getElementById('mTitleLine');
+    const mFields = document.getElementById('mFields');
+
+    const TODAY = getLocalISODate(new Date());
+
+    let currentSource = 'house';
+    let currentDisplayData = [];
+    let currentSelectedDate = TODAY;
+
+    let cremMapCache = null;
+    const dataCache = { house: null, nature: null };
+    let loadToken = 0;
+
+    function renderListHead(shownCount, totalCount){
+      const sLabel = SOURCES[currentSource].label;
+      return `
+        <div class="list-head">
+          <div class="hint">${escapeHtml(sLabel)} 접수목록</div>
+          <div class="badge">${shownCount.toLocaleString()} / ${totalCount.toLocaleString()}</div>
+        </div>
+      `;
+    }
+
+    async function ensureCremMap(){
+      if (cremMapCache) return cremMapCache;
+      try{
+        const raw = await fetchJson("./data/crem.json");
+        const arr = Array.isArray(raw) ? raw : [];
+        const map = new Map();
+        for (const r of arr){
+          const id = (r?.deadId ?? "").toString().trim();
+          if (!id) continue;
+          map.set(id, r);
+        }
+        cremMapCache = map;
+        return cremMapCache;
+      }catch(e){
+        cremMapCache = new Map();
+        return cremMapCache;
+      }
+    }
+
+    async function ensureData(sourceKey){
+      if (dataCache[sourceKey]) return dataCache[sourceKey];
+      const raw = await fetchJson(SOURCES[sourceKey].url);
+      dataCache[sourceKey] = Array.isArray(raw) ? raw : [];
+      return dataCache[sourceKey];
+    }
+
+    function buildFields(item){
+      let fieldsHTML = '';
+      const isRetModal = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate));
+
+      if (currentSource === 'house'){
+        fieldsHTML += kvRow('안치일자', item.strDate ?? '-');
+        fieldsHTML += kvRow('고인명', item.deadname ?? item.deadName ?? item.deceasedName ?? '-');
+        fieldsHTML += kvRow('신청자', item.applname ?? item.applName ?? '-');
+
+        const rdISO = normalizeToISODate(pickRetDate(item));
+        const rdRaw = pickRetDate(item);
+        if (rdISO){
+          fieldsHTML += kvRow('반출일자', String(rdRaw ?? rdISO));
+        }
+      } else {
+        fieldsHTML += kvRow('안치일자', item.natDate ?? '-');
+        fieldsHTML += kvRow('고인명', item.deadName ?? '-');
+        fieldsHTML += kvRow('신청자', item.applName ?? '-');
+      }
+
+      if (!isRetModal && cremMapCache){
+        const t = buildCremTimesForModal(item, cremMapCache);
+        fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
+      }
+
+      return fieldsHTML;
+    }
+
     async function load(){
+      const myToken = ++loadToken;
+
       const source = SOURCES[currentSource];
       const selectedDate = datePicker.value || TODAY;
       currentSelectedDate = selectedDate;
 
       try{
         const cremMap = await ensureCremMap();
-        LAST_CREM_MAP = cremMap;
+        if (myToken !== loadToken) return;
 
-        const raw = await fetchJson(source.url);
-        const data = Array.isArray(raw) ? raw : [];
+        const data = await ensureData(currentSource);
+        if (myToken !== loadToken) return;
 
         const c = calcSelectedCounts(currentSource, data, selectedDate);
 
-        countTitle.textContent = `현황`;
+        countTitle.textContent = '현황';
         if (currentSource === 'house'){
           countText.textContent = `안치 ${c.recv}건 · 반출 ${c.ret}건`;
         } else {
@@ -1288,12 +1269,25 @@
         listArea.innerHTML = html;
 
         if (displayData.length > limit){
-          listArea.insertAdjacentHTML('beforeend', `<div class="no-data" style="margin-top:10px; padding:10px 12px;">상위 ${limit}건만 표시 중</div>`);
+          listArea.insertAdjacentHTML(
+            'beforeend',
+            `<div class="no-data" style="margin-top:10px; padding:10px 12px;">상위 ${limit}건만 표시 중</div>`
+          );
         }
 
       }catch(err){
         listArea.innerHTML = `<div class="no-data">오류: ${escapeHtml(err.message)}</div>`;
       }
+    }
+
+    function switchSource(sourceKey){
+      currentSource = sourceKey;
+      localStorage.setItem(STORAGE_KEYS.source, sourceKey);
+
+      tabHouse.classList.toggle('active', sourceKey === 'house');
+      tabNature.classList.toggle('active', sourceKey === 'nature');
+
+      load();
     }
 
     function openSheet(index){
@@ -1350,8 +1344,18 @@
       load();
     }
 
+    datePicker.addEventListener('change', () => {
+      todayLabel.textContent = `${datePicker.value || TODAY}`;
+      load();
+    });
+
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
+
+    window.switchSource = switchSource;
+    window.openSheet = openSheet;
+    window.closeSheet = closeSheet;
+    window.applyRowToggle = applyRowToggle;
 
     window.addEventListener('load', () => {
       const saved = localStorage.getItem(STORAGE_KEYS.source);
@@ -1366,11 +1370,6 @@
 
       load();
     });
-
-    window.switchSource = switchSource;
-    window.openSheet = openSheet;
-    window.closeSheet = closeSheet;
-    window.applyRowToggle = applyRowToggle;
   </script>
 </body>
 </html>
