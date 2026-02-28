@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653335",
-    "deadName": "김춘해",
-    "burnDate": "2026-02-28",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653312",
     "deadName": "이중선",
     "burnDate": "2026-02-28",
@@ -180,7 +172,15 @@
     "deadName": "이주예사산",
     "burnDate": "2026-02-28",
     "burnStrTime": "12:07",
-    "burnEndTime": null,
+    "burnEndTime": "12:35",
     "burnChasu": "07"
+  },
+  {
+    "deadId": "1653335",
+    "deadName": "김춘해",
+    "burnDate": "2026-02-28",
+    "burnStrTime": "12:32",
+    "burnEndTime": null,
+    "burnChasu": "06"
   }
 ]
