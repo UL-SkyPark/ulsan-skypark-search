@@ -184,19 +184,19 @@
     "burnChasu": "06"
   },
   {
-    "deadId": "1653073",
-    "deadName": "최해용",
+    "deadId": "1653075",
+    "deadName": "김무선",
     "burnDate": "2026-02-28",
     "burnStrTime": "12:54",
     "burnEndTime": null,
     "burnChasu": "07"
   },
   {
-    "deadId": "1653075",
-    "deadName": "김무선",
+    "deadId": "1653073",
+    "deadName": "최해용",
     "burnDate": "2026-02-28",
     "burnStrTime": "12:54",
-    "burnEndTime": null,
+    "burnEndTime": "13:25",
     "burnChasu": "07"
   }
 ]
