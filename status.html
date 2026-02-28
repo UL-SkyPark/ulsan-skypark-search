@@ -12,14 +12,12 @@
     :root{
       --bg:#f4f6f9;
       --panel:#ffffff;
-      --panel2:#fbfcfe;
       --line:#d9e0ea;
       --line2:#c9d2df;
       --text:#1f2a37;
       --muted:#6b7280;
 
       --primary:#1f4e79;
-      --primary2:#2f6fad;
 
       --shadow: 0 8px 24px rgba(15,23,42,0.08);
       --shadow2: 0 14px 40px rgba(15,23,42,0.10);
@@ -132,14 +130,23 @@
       font-weight: 950;
       color: rgba(31,42,55,.75);
       cursor: pointer;
-      min-height: 40px;
+      min-height: 44px;
       flex: 1;
       white-space: nowrap;
+      font-size: 1.02rem;
     }
     .seg button.active{
       background: linear-gradient(180deg, rgba(31,78,121,.14), rgba(47,111,173,.10));
       color: var(--primary);
       box-shadow: inset 0 0 0 1px rgba(31,78,121,.25);
+    }
+
+    @media (max-width: 560px){
+      .seg button{
+        font-size: 1.12rem;
+        padding: 12px 12px;
+        min-height: 48px;
+      }
     }
 
     .group{
@@ -250,18 +257,6 @@
       display:flex;
       align-items:center;
       gap: 10px;
-      white-space: nowrap;
-    }
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      padding: 5px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #fff;
-      font-size: .84rem;
-      font-weight: 950;
-      color: rgba(31,42,55,.75);
       white-space: nowrap;
     }
     .badge{
@@ -1049,7 +1044,6 @@
 
     let currentSource = 'house';
     let currentDisplayData = [];
-    let currentModalItem = null;
     let currentSelectedDate = '';
 
     const TODAY = getLocalISODate(new Date());
@@ -1076,10 +1070,7 @@
       const sLabel = SOURCES[currentSource].label;
       return `
         <div class="list-head">
-          <div class="hint">
-            <span>${escapeHtml(sLabel)} 접수목록</span>
-            <span class="tag">정렬: 반출 우선 · 회차(오름차순)</span>
-          </div>
+          <div class="hint">${escapeHtml(sLabel)} 접수목록</div>
           <div class="badge">${shownCount.toLocaleString()} / ${totalCount.toLocaleString()}</div>
         </div>
       `;
@@ -1286,8 +1277,6 @@
       const item = currentDisplayData[index];
       if (!item) return;
 
-      currentModalItem = item;
-
       const sourceLabelText = SOURCES[currentSource].label;
       const headerNo = (currentSource === 'house')
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
@@ -1303,7 +1292,6 @@
     function closeSheet(){
       overlay.classList.remove('show');
       overlay.setAttribute('aria-hidden','true');
-      currentModalItem = null;
     }
 
     function applyRowToggle(index, e){
