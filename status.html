@@ -913,14 +913,14 @@
     function fmtTime(v){ return (v == null) ? "" : String(v).trim(); }
 
     // crem.json은 "당일 화장접수 파일" 전제
-    // - deadId가 cremMap에 아예 없으면: "00회차, 선결제" (요청 반영: 선결제는 00회차)
+    // - deadId가 cremMap에 아예 없으면: "선결제"
     // - deadId는 있는데 시작시간이 없으면: "00회차, 화장접수"
     function cremLineObjByDeadId(deadId, cremMap){
       const did = (deadId ?? "").toString().trim();
       const rec = did ? cremMap.get(did) : null;
 
       if (!rec){
-        return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'00회차, 선결제' };
+        return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
       }
 
       const st = fmtTime(rec?.burnStrTime);
@@ -953,14 +953,17 @@
       return ids;
     }
 
-    // 정렬키 규칙(요청 반영):
+    // 정렬키 규칙:
     // - 부부단 등에서 00회차(선결제/접수) + 다른 회차가 섞이면, "00이 아닌 회차"를 따라 정렬
     // - 즉: (회차>0 중 최솟값) 우선, 없으면 0
     function itemChasuKeyForSort(item, cremMap){
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0) return 0;
 
-      const chasus = ids.map(id => cremLineObjByDeadId(id, cremMap).chasu).filter(n => typeof n === 'number' && isFinite(n));
+      const chasus = ids
+        .map(id => cremLineObjByDeadId(id, cremMap).chasu)
+        .filter(n => typeof n === 'number' && isFinite(n));
+
       if (chasus.length === 0) return 0;
 
       const positives = chasus.filter(n => n > 0);
@@ -969,16 +972,28 @@
       return 0;
     }
 
+    // ✅ 요청 반영:
+    // - deadId가 2개(부부단)인데 둘 다 cremMap에 없으면 "선결제"가 2줄로 뜨는 문제 → 1줄로만 표시
+    // - "00회차, 화장접수"는 그대로(중복되면 중복대로 표시)
     function buildCremLinesHTML(item, cremMap, mode){
       if (mode === 'ret') return '';
       if (!cremMap) return '';
 
       const ids = getUniqueDeadIds(item);
+
+      // deadId 자체가 없어서 crem 매칭 불가: "선결제" 1줄
       if (ids.length === 0){
-        return `<div class="cremWrap"><div class="cremLine">00회차, 선결제</div></div>`;
+        return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
       }
 
       const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
+
+      // 모두 선결제(pay)라면 1줄만
+      const allPay = lineObjs.length > 0 && lineObjs.every(o => o && o.type === 'pay');
+      if (allPay){
+        return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
+      }
+
       const htmlLines = lineObjs.map(o => `<div class="cremLine">${escapeHtml(o.text)}</div>`).join("");
       return `<div class="cremWrap">${htmlLines}</div>`;
     }
@@ -1133,7 +1148,7 @@
       const selectedDate = datePicker.value || TODAY;
       currentSelectedDate = selectedDate;
 
-      // 과거 날짜 조회 시: crem(화장진행상황) 표시/정렬 모두 비활성(요청 반영)
+      // 과거 날짜 조회 시: crem(화장진행상황) 표시/정렬 모두 비활성
       const showCrem = (selectedDate === TODAY);
 
       try{
