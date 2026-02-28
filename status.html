@@ -284,6 +284,21 @@
       line-height: 1.25;
     }
 
+    /* 🔥 화장정보 라인 */
+    .cremWrap{
+      margin-top: 4px;
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+    }
+    .cremLine{
+      font-weight: 850;
+      font-size: .86rem;
+      color: rgba(15,23,42,0.62);
+      line-height: 1.22;
+      word-break: keep-all;
+    }
+
     /* 리스트 우측 토글 */
     .rowToggle{
       flex: 0 0 auto;
@@ -836,6 +851,106 @@
       return { recv: mergedN.length, ret: 0 };
     }
 
+    // -----------------------------
+    // 🔥 crem.json 연동 (요구사항 반영)
+    // -----------------------------
+    let CREM_MAP = null;
+
+    async function ensureCremMap(){
+      if (CREM_MAP) return CREM_MAP;
+      try{
+        const raw = await fetchJson("./data/crem.json");
+        const arr = Array.isArray(raw) ? raw : [];
+        const map = new Map();
+        for (const r of arr){
+          const id = (r?.deadId ?? "").toString().trim();
+          if (!id) continue;
+          map.set(id, r);
+        }
+        CREM_MAP = map;
+        return map;
+      }catch(e){
+        CREM_MAP = new Map();
+        return CREM_MAP;
+      }
+    }
+
+    function pad2(n){
+      const s = (n == null) ? "" : String(n).trim();
+      if (!s) return "00";
+      return s.padStart(2, "0").slice(-2);
+    }
+
+    function fmtTime(v){
+      if (v == null) return "";
+      return String(v).trim();
+    }
+
+    // deadId 1개 -> { type, text }
+    // type: 'pay' (선결재) | 'info' (회차/시간)
+    function cremLineObjByDeadId(deadId, cremMap){
+      const did = (deadId ?? "").toString().trim();
+      const rec = did ? cremMap.get(did) : null;
+
+      if (!rec){
+        return { type: 'pay', text: '선결재' };
+      }
+
+      const chasu = pad2(rec?.burnChasu);
+      const st = fmtTime(rec?.burnStrTime);
+      const en = fmtTime(rec?.burnEndTime);
+
+      if (!st){
+        return { type: 'info', text: `${chasu}회차, 화장시작: 접수, 화장종료: -` };
+      }
+      if (st && !en){
+        return { type: 'info', text: `${chasu}회차, 화장시작: ${st}, 화장종료: 화장중` };
+      }
+      return { type: 'info', text: `${chasu}회차, 화장시작: ${st}, 화장종료: ${en}` };
+    }
+
+    // ✅ 부부단 규칙
+    // - 2명 중 1명만 선결재 -> 각각 1줄씩(총 2줄)
+    // - 2명 다 선결재 -> "선결재" 1줄만
+    // - 2명 다 화장시간(=info) -> 2줄
+    // - 1명만 존재하면 그 1줄
+    function buildCremLinesHTML(item, cremMap){
+      const raws = Array.isArray(item?._raw) ? item._raw : [item];
+
+      // deadId 중복 제거 + 순서 유지
+      const seen = new Set();
+      const ids = [];
+      for (const r of raws){
+        const did = (r?.deadId ?? "").toString().trim();
+        if (seen.has(did)) continue;
+        seen.add(did);
+        if (did) ids.push(did);
+      }
+
+      // deadId가 아예 없으면: 선결재 1줄
+      if (ids.length === 0){
+        return `<div class="cremWrap"><div class="cremLine">${escapeHtml('선결재')}</div></div>`;
+      }
+
+      const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
+
+      // 부부단(2명 이상)인 경우: "둘다 선결재면 1줄"만 예외 처리
+      if (lineObjs.length >= 2){
+        const allPay = lineObjs.every(o => o.type === 'pay');
+        if (allPay){
+          return `<div class="cremWrap"><div class="cremLine">${escapeHtml('선결재')}</div></div>`;
+        }
+      }
+
+      const htmlLines = lineObjs
+        .map(o => `<div class="cremLine">${escapeHtml(o.text)}</div>`)
+        .join("");
+
+      return `<div class="cremWrap">${htmlLines}</div>`;
+    }
+
+    // -----------------------------
+
     const datePicker = document.getElementById('datePicker');
     const todayLabel = document.getElementById('todayLabel');
     const listArea = document.getElementById('listArea');
@@ -943,6 +1058,8 @@
       currentSelectedDate = selectedDate;
 
       try{
+        const cremMap = await ensureCremMap();
+
         const raw = await fetchJson(source.url);
         const data = Array.isArray(raw) ? raw : [];
 
@@ -1024,6 +1141,7 @@
                       ${escapeHtml(displayId)}
                     </div>
                     <div class="name">${escapeHtml(displayName)}</div>
+                    ${buildCremLinesHTML(item, cremMap)}
                   </div>
                 </button>
 
