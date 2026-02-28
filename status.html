@@ -165,7 +165,11 @@
       -webkit-appearance:none;
       width: 100%;
     }
-
+#countPill .v{
+  margin-top: 6px;     /* ✅ 아래로 조금 내림 */
+  font-size: 1.06rem;  /* ✅ 살짝 키움 */
+  line-height: 1.2;
+}
     @media (max-width: 520px){
       .seg{ min-width: 0; flex: 1 1 100%; }
       .date-row{ flex: 1 1 100%; }
@@ -290,12 +294,16 @@
       flex-direction:column;
       gap: 2px;
     }
-    .cremLine{
-      font-weight: 850;
-      font-size: .86rem;
-      color: rgba(15,23,42,0.62);
-      line-height: 1.22;
-      word-break: keep-all;
+.cremLine{
+  font-weight: 850;
+  font-size: .86rem;
+  color: rgba(15,23,42,0.62);
+  line-height: 1.22;
+
+  /* ✅ 1줄 고정 + 넘치면 ... */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
     }
 
     /* ✅ 리스트 우측 토글: 살짝 작게 + 위로 올림 */
