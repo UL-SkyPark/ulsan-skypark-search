@@ -54,10 +54,11 @@
       border-bottom: 1px solid var(--line);
     }
 
+    /* ✅ 헤더: 기준일을 오른쪽 상단으로 */
     .header{
       padding: 14px 16px 10px;
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
       gap: 12px;
     }
@@ -78,16 +79,15 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .sub{
+
+    .rightInfo{
       display:flex;
-      align-items:center;
+      align-items:flex-start;
+      justify-content:flex-end;
       gap: 10px;
-      color: var(--muted);
-      font-weight: 800;
-      font-size: .86rem;
-      white-space: nowrap;
-      flex-wrap: wrap;
+      flex: 0 0 auto;
     }
+
     .chip{
       display:inline-flex;
       align-items:center;
@@ -98,6 +98,7 @@
       background: #fff;
       font-weight: 900;
       color: rgba(31,42,55,.84);
+      white-space: nowrap;
     }
     .chip strong{
       color: var(--primary);
@@ -199,23 +200,24 @@
       min-height: 40px;
     }
 
-    /* ✅ 현황 카드: 시설명 제거 + 중앙 표시 + 글자 잘림 방지 */
+    /* ✅ 현황: 모바일에서도 줄바꿈 금지 + 폰트 크기 자동 축소 */
     .countCenter{
       width: 100%;
       text-align: center;
       font-weight: 950;
       color: #0f172a;
-      font-size: 1.08rem;
       letter-spacing: -0.01em;
-      white-space: normal;      /* 줄바꿈 허용 */
-      overflow: visible;         /* 잘림 방지 */
-      text-overflow: clip;       /* 말줄임 제거 */
-      line-height: 1.25;
+      white-space: nowrap;   /* 줄바꿈 금지 */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
       padding: 2px 0;
-      word-break: keep-all;
+      font-size: 1.02rem;
     }
     @media (max-width: 560px){
-      .countCenter{ font-size: 1.15rem; }
+      .countCenter{
+        font-size: .92rem;   /* ✅ 폰트 줄여서 "안치 0건 · 반출 0건" 한 줄 유지 */
+      }
     }
 
     @media (max-width: 560px){
@@ -274,7 +276,7 @@
       gap: 10px;
       padding: 10px 12px;
       border-bottom: 1px solid var(--line);
-      align-items: stretch;  /* ✅ barL 포함 전체 높이 맞춤 */
+      align-items: stretch;   /* ✅ barL이 화장정보까지 포함해 늘어나도록 */
       background: #fff;
     }
     .row:last-child{ border-bottom:0; }
@@ -283,13 +285,13 @@
       width: 10px;
       border-radius: 6px;
       background: #e2e8f0;
-      height: 100%;          /* ✅ 행 전체(화장정보 포함)로 늘림 */
-      align-self: stretch;   /* ✅ 확실히 stretch */
+      height: 100%;
+      align-self: stretch;
     }
-    .row.recv .barL{ background: rgba(31,78,121,.35); }
-    .row.done .barL{ background: rgba(46,125,50,.45); }
-    .row.ret .barL{ background: rgba(180,83,9,.40); }
-    .row.retDone .barL{ background: rgba(47,111,173,.45); }
+    .row.recv .barL{ background: rgba(31,78,121,.35); }   /* 안치/안장 대기 */
+    .row.done .barL{ background: rgba(46,125,50,.45); }   /* 안치/안장 완료 */
+    .row.ret .barL{ background: rgba(180,83,9,.40); }     /* 반출 대기(상단) */
+    .row.retDone .barL{ background: rgba(126,34,206,.48); }/* ✅ 반출 완료(하단) - 확실히 다른색 */
 
     .rowR{
       min-width: 0;
@@ -321,24 +323,32 @@
     .main{
       display:flex;
       flex-direction:column;
-      gap: 5px;
+      gap: 6px;
       min-width: 0;
     }
 
     .no{
       font-weight: 950;
       color: #0f172a;
-      font-size: 1.01rem;
+      font-size: 1.02rem;
       letter-spacing: -0.01em;
       white-space: nowrap;
     }
+
+    /* ✅ 고인명 가독성 강화 */
     .name{
-      font-weight: 850;
-      color: rgba(31,42,55,.82);
-      font-size: .95rem;
-      line-height: 1.25;
+      font-weight: 950;
+      color: rgba(15,23,42,.92);
+      font-size: 1.05rem;
+      line-height: 1.28;
       word-break: keep-all;
-      min-width: 0;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      letter-spacing: -0.01em;
+    }
+    @media (max-width: 560px){
+      .name{ font-size: 1.10rem; }
     }
 
     .toggle{
@@ -388,18 +398,18 @@
     }
     .sw.on::after{ left: 18px; }
 
-    /* ✅ 화장 정보: 안치정보와 한 덩어리처럼 보이게(점선 제거/간격 정리) */
+    /* 화장 정보: 한 덩어리 느낌 유지 */
     .cremWrap{
-      margin-top: 0;                 /* 기존 분리감 감소 */
+      margin-top: 0;
       padding-top: 0;
-      border-top: 0;                 /* 점선 제거 */
+      border-top: 0;
       display:flex;
       flex-direction:column;
       gap: 4px;
     }
     .cremLine{
-      font-weight: 850;
-      font-size: .88rem;
+      font-weight: 900;
+      font-size: .90rem;
       color: rgba(31,42,55,.72);
       line-height: 1.35;
       white-space: normal;
@@ -564,10 +574,11 @@
       <div class="header">
         <div class="brand">
           <h1>울산하늘공원 접수 현황</h1>
-          <div class="sub">
-            <span class="chip">기준일 <strong id="todayLabel">-</strong></span>
-            <span class="chip"><strong id="sourceLabel">추모의집</strong></span>
-          </div>
+        </div>
+
+        <!-- ✅ 기준일 오른쪽 상단 / ✅ '추모의집/자연장지' 표시칩 삭제 -->
+        <div class="rightInfo">
+          <span class="chip">기준일 <strong id="todayLabel">-</strong></span>
         </div>
       </div>
 
@@ -588,12 +599,10 @@
           <div class="field" id="countPill">
             <div class="k" id="countTitle">현황</div>
             <div class="v" style="width:100%;">
-              <!-- ✅ 시설명 제거하고 '안치/안장/반출'만 중앙 표기 -->
               <div class="countCenter" id="countText">-</div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -1016,10 +1025,10 @@
       const starts = objs.map(o => o.start || '선결제');
       const ends = objs.map(o => o.end || '선결제');
 
-      const startText = starts.join(' / ');
-      const endText = ends.join(' / ');
-
-      return { startLine: `화장시작: ${startText}`, endLine: `화장종료: ${endText}` };
+      return {
+        startLine: `화장시작: ${starts.join(' / ')}`,
+        endLine: `화장종료: ${ends.join(' / ')}`
+      };
     }
 
     const datePicker = document.getElementById('datePicker');
@@ -1031,7 +1040,6 @@
 
     const countTitle = document.getElementById('countTitle');
     const countText = document.getElementById('countText');
-    const sourceLabel = document.getElementById('sourceLabel');
 
     const overlay = document.getElementById('overlay');
     const mTitleLine = document.getElementById('mTitleLine');
@@ -1057,7 +1065,6 @@
       tabHouse.classList.toggle('active', sourceKey === 'house');
       tabNature.classList.toggle('active', sourceKey === 'nature');
 
-      sourceLabel.textContent = SOURCES[sourceKey].label;
       load();
     }
 
@@ -1103,29 +1110,6 @@
       return fieldsHTML;
     }
 
-    function sortByWorkPriorityStable(arr, selectedISO, cremMap){
-      const clone = arr.slice();
-
-      clone.forEach((it, i) => { it._pos = (it._pos ?? i); });
-
-      clone.sort((a, b) => {
-        const modeA = (currentSource === 'house' && isRetOnDate(a, selectedISO)) ? 'ret' : 'recv';
-        const modeB = (currentSource === 'house' && isRetOnDate(b, selectedISO)) ? 'ret' : 'recv';
-
-        const grpA = (modeA === 'ret') ? 0 : 1;
-        const grpB = (modeB === 'ret') ? 0 : 1;
-        if (grpA !== grpB) return grpA - grpB;
-
-        const ca = itemChasuKey(a, cremMap);
-        const cb = itemChasuKey(b, cremMap);
-        if (ca !== cb) return ca - cb;
-
-        return (a._pos ?? 0) - (b._pos ?? 0);
-      });
-
-      return clone;
-    }
-
     function retKeyHouse(id){ return `ret_house_${id}`; }
     function getRetStatusHouse(id){
       const v = localStorage.getItem(retKeyHouse(id));
@@ -1135,6 +1119,44 @@
     }
     function setRetStatusHouse(id, val){
       localStorage.setItem(retKeyHouse(id), val);
+    }
+
+    /* ✅ 정렬 규칙
+       1) 반출(대기) 최상단 유지
+       2) 안치/안장 목록 (기존 우선순위: 회차/안정정렬)
+       3) 반출완료 최하단
+    */
+    function sortByWorkPriorityStable(arr, selectedISO, cremMap){
+      const clone = arr.slice();
+      clone.forEach((it, i) => { it._pos = (it._pos ?? i); });
+
+      clone.sort((a, b) => {
+        const isRetA = (currentSource === 'house' && isRetOnDate(a, selectedISO));
+        const isRetB = (currentSource === 'house' && isRetOnDate(b, selectedISO));
+
+        const aId = itemStatusId(currentSource, a);
+        const bId = itemStatusId(currentSource, b);
+
+        const aRetDone = isRetA ? (getRetStatusHouse(aId) === '반출완료') : false;
+        const bRetDone = isRetB ? (getRetStatusHouse(bId) === '반출완료') : false;
+
+        // 그룹: 0=반출대기, 1=안치/안장, 2=반출완료
+        const grpA = isRetA ? (aRetDone ? 2 : 0) : 1;
+        const grpB = isRetB ? (bRetDone ? 2 : 0) : 1;
+        if (grpA !== grpB) return grpA - grpB;
+
+        // 안치/안장 그룹에서만 회차 우선 정렬 유지
+        if (grpA === 1 && grpB === 1){
+          const ca = itemChasuKey(a, cremMap);
+          const cb = itemChasuKey(b, cremMap);
+          if (ca !== cb) return ca - cb;
+        }
+
+        // 그 외는 기존 순서 유지(안정)
+        return (a._pos ?? 0) - (b._pos ?? 0);
+      });
+
+      return clone;
     }
 
     async function load(){
@@ -1152,8 +1174,6 @@
         const c = calcSelectedCounts(currentSource, data, selectedDate);
 
         countTitle.textContent = `현황`;
-
-        // ✅ 시설명 빼고, 중앙에 "안치/안장/반출"만 표시
         if (currentSource === 'house'){
           countText.textContent = `안치 ${c.recv}건 · 반출 ${c.ret}건`;
         } else {
@@ -1335,8 +1355,6 @@
 
       datePicker.value = getLocalISODate(new Date());
       todayLabel.textContent = `${datePicker.value}`;
-
-      sourceLabel.textContent = SOURCES[initial].label;
 
       load();
     });
