@@ -54,13 +54,14 @@
       border-bottom: 1px solid var(--line);
     }
 
-    /* ✅ 헤더: 기준일을 오른쪽 상단으로 */
+    /* ✅ 헤더: 우측상단 날짜만(캡슐 삭제), 제목 폰트 크게 + 모바일 잘림 방지 */
     .header{
       padding: 14px 16px 10px;
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
       gap: 12px;
+      flex-wrap: wrap; /* ✅ 좁은 화면에서 줄바꿈 허용 */
     }
 
     .brand{
@@ -68,16 +69,31 @@
       flex-direction:column;
       gap: 4px;
       min-width: 0;
+      flex: 1 1 auto;
     }
     .brand h1{
       margin:0;
-      font-size: 1.08rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
+      font-weight: 950;
+      letter-spacing: -0.03em;
       color: #0f172a;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+
+      /* ✅ 잘림 방지: nowrap/ellipsis 제거하고, 필요 시 줄바꿈 */
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      word-break: keep-all;
+
+      /* ✅ 제목 크게 */
+      font-size: 1.40rem;
+      line-height: 1.15;
+    }
+
+    /* 모바일에서 제목 더 크게 + 여백 확보 */
+    @media (max-width: 560px){
+      .brand h1{
+        font-size: 1.55rem;
+        line-height: 1.18;
+      }
     }
 
     .rightInfo{
@@ -86,23 +102,27 @@
       justify-content:flex-end;
       gap: 10px;
       flex: 0 0 auto;
+      margin-left: auto;
     }
 
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap: 6px;
-      padding: 6px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #fff;
-      font-weight: 900;
+    /* ✅ 캡슐(Chip) 제거용: 날짜만 텍스트로 표시 */
+    .dateText{
+      font-weight: 950;
       color: rgba(31,42,55,.84);
+      letter-spacing: -0.01em;
       white-space: nowrap;
+      padding-top: 2px;
+      font-size: 0.98rem;
     }
-    .chip strong{
+    .dateText strong{
       color: var(--primary);
       font-weight: 950;
+    }
+
+    @media (max-width: 560px){
+      .dateText{
+        font-size: 0.96rem;
+      }
     }
 
     .toolbar{
@@ -207,7 +227,7 @@
       font-weight: 950;
       color: #0f172a;
       letter-spacing: -0.01em;
-      white-space: nowrap;   /* 줄바꿈 금지 */
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: 1.2;
@@ -215,9 +235,7 @@
       font-size: 1.02rem;
     }
     @media (max-width: 560px){
-      .countCenter{
-        font-size: .92rem;   /* ✅ 폰트 줄여서 "안치 0건 · 반출 0건" 한 줄 유지 */
-      }
+      .countCenter{ font-size: .92rem; }
     }
 
     @media (max-width: 560px){
@@ -276,7 +294,7 @@
       gap: 10px;
       padding: 10px 12px;
       border-bottom: 1px solid var(--line);
-      align-items: stretch;   /* ✅ barL이 화장정보까지 포함해 늘어나도록 */
+      align-items: stretch;
       background: #fff;
     }
     .row:last-child{ border-bottom:0; }
@@ -288,10 +306,10 @@
       height: 100%;
       align-self: stretch;
     }
-    .row.recv .barL{ background: rgba(31,78,121,.35); }   /* 안치/안장 대기 */
-    .row.done .barL{ background: rgba(46,125,50,.45); }   /* 안치/안장 완료 */
-    .row.ret .barL{ background: rgba(180,83,9,.40); }     /* 반출 대기(상단) */
-    .row.retDone .barL{ background: rgba(126,34,206,.48); }/* ✅ 반출 완료(하단) - 확실히 다른색 */
+    .row.recv .barL{ background: rgba(31,78,121,.35); }
+    .row.done .barL{ background: rgba(46,125,50,.45); }
+    .row.ret .barL{ background: rgba(180,83,9,.40); }
+    .row.retDone .barL{ background: rgba(126,34,206,.48); }
 
     .rowR{
       min-width: 0;
@@ -335,7 +353,6 @@
       white-space: nowrap;
     }
 
-    /* ✅ 고인명 가독성 강화 */
     .name{
       font-weight: 950;
       color: rgba(15,23,42,.92);
@@ -398,7 +415,6 @@
     }
     .sw.on::after{ left: 18px; }
 
-    /* 화장 정보: 한 덩어리 느낌 유지 */
     .cremWrap{
       margin-top: 0;
       padding-top: 0;
@@ -576,9 +592,9 @@
           <h1>울산하늘공원 접수 현황</h1>
         </div>
 
-        <!-- ✅ 기준일 오른쪽 상단 / ✅ '추모의집/자연장지' 표시칩 삭제 -->
+        <!-- ✅ 캡슐 삭제 + '기준일' 삭제: 날짜만 표시 -->
         <div class="rightInfo">
-          <span class="chip">기준일 <strong id="todayLabel">-</strong></span>
+          <div class="dateText"><strong id="todayLabel">-</strong></div>
         </div>
       </div>
 
@@ -1121,11 +1137,6 @@
       localStorage.setItem(retKeyHouse(id), val);
     }
 
-    /* ✅ 정렬 규칙
-       1) 반출(대기) 최상단 유지
-       2) 안치/안장 목록 (기존 우선순위: 회차/안정정렬)
-       3) 반출완료 최하단
-    */
     function sortByWorkPriorityStable(arr, selectedISO, cremMap){
       const clone = arr.slice();
       clone.forEach((it, i) => { it._pos = (it._pos ?? i); });
@@ -1140,19 +1151,16 @@
         const aRetDone = isRetA ? (getRetStatusHouse(aId) === '반출완료') : false;
         const bRetDone = isRetB ? (getRetStatusHouse(bId) === '반출완료') : false;
 
-        // 그룹: 0=반출대기, 1=안치/안장, 2=반출완료
         const grpA = isRetA ? (aRetDone ? 2 : 0) : 1;
         const grpB = isRetB ? (bRetDone ? 2 : 0) : 1;
         if (grpA !== grpB) return grpA - grpB;
 
-        // 안치/안장 그룹에서만 회차 우선 정렬 유지
         if (grpA === 1 && grpB === 1){
           const ca = itemChasuKey(a, cremMap);
           const cb = itemChasuKey(b, cremMap);
           if (ca !== cb) return ca - cb;
         }
 
-        // 그 외는 기존 순서 유지(안정)
         return (a._pos ?? 0) - (b._pos ?? 0);
       });
 
