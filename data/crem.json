@@ -1,7 +1,7 @@
 [
   {
-    "deadId": "1653373",
-    "deadName": "이상곤",
+    "deadId": "1653371",
+    "deadName": "김병권",
     "burnDate": "2026-03-01",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -11,7 +11,15 @@
     "deadId": "1653383",
     "deadName": "강맹금",
     "burnDate": "2026-03-01",
-    "burnStrTime": null,
+    "burnStrTime": "07:19",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653373",
+    "deadName": "이상곤",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "07:22",
     "burnEndTime": null,
     "burnChasu": "01"
   }
