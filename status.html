@@ -22,12 +22,17 @@
       --radius: 14px;
 
       --outerPad: 12px;
-      --bottomHintSpace: 44px;
+
+      --fabSize: 54px;
+      --fabGap: 10px;
+      --fabRight: 14px;
+      --fabBottom: 14px;
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     html, body { height:100%; }
 
+    /* ✅ 외부 스크롤: body는 스크롤 가능 */
     body{
       margin:0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
@@ -35,11 +40,14 @@
       color: var(--text);
 
       padding: var(--outerPad);
-      padding-bottom: calc(var(--outerPad) + var(--bottomHintSpace) + env(safe-area-inset-bottom));
-      overflow: hidden;
+      padding-bottom: calc(var(--outerPad) + 16px + env(safe-area-inset-bottom));
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain; /* 바운스 과도 방지 */
     }
 
-    /* ✅ PTR: 캡슐 + 진행률 */
+    /* ✅ PTR: 캡슐 + 진행률 (페이지 최상단에서만) */
     .pull-to-refresh{
       position: fixed;
       top: calc(10px + env(safe-area-inset-top));
@@ -59,6 +67,7 @@
       z-index: 10001;
       transition: transform 240ms cubic-bezier(.2,.9,.2,1);
       will-change: transform;
+      pointer-events: none; /* 터치 방해 방지 */
     }
     .pull-to-refresh.visible{ transform: translate(-50%, 0); }
 
@@ -98,19 +107,9 @@
     }
     @keyframes spin{ to { transform: rotate(360deg); } }
 
-    .pullable-content{
-      position: fixed;
-      top: var(--outerPad);
-      left: var(--outerPad);
-      right: var(--outerPad);
-      bottom: calc(var(--outerPad) + var(--bottomHintSpace) + env(safe-area-inset-bottom));
-      transition: transform 220ms cubic-bezier(.2,.9,.2,1);
-      will-change: transform;
-    }
-
+    /* ✅ 앱 컨테이너: 외부 스크롤이므로 높이 고정 금지 */
     .app{
       max-width: 980px;
-      height: 100%;
       margin: 0 auto;
       background: var(--panel);
       border: 1px solid var(--line);
@@ -121,15 +120,18 @@
       flex-direction: column;
     }
 
-    .app.fit{ height: 100%; }
-    .app.fit .content{ overflow: hidden; -webkit-overflow-scrolling: auto; }
-
+    /* ✅ 상단 sticky */
     .top{
       position: sticky;
-      top: 0;
+      top: calc(var(--outerPad) * -1); /* body padding 상쇄 느낌 */
       z-index: 50;
       background: linear-gradient(180deg, #ffffff, #f8fafc);
       border-bottom: 1px solid var(--line);
+      /* sticky 영역이 body padding 위로 살짝 붙는 느낌 */
+      margin: calc(var(--outerPad) * -1);
+      margin-bottom: 0;
+      padding: var(--outerPad);
+      padding-top: calc(var(--outerPad) + env(safe-area-inset-top) * 0);
     }
 
     .header{
@@ -161,22 +163,21 @@
       .brand h1{ font-size: 1.55rem; line-height: 1.18; }
     }
 
-    /* ✅ 우측 상단: 기준날짜 표시 */
     .rightInfo{
       display:flex;
-      align-items:flex-start; /* 타이틀 첫 줄 기준 정렬 */
+      align-items:flex-start;
       justify-content:flex-end;
       flex: 0 0 auto;
       margin-left: auto;
-      padding-top: 2px; /* 타이틀과 줄 맞춤 미세조정 */
+      padding-top: 2px;
     }
     .refDate{
       font-weight: 900;
-      font-size: 0.98rem; /* 타이틀보다 작게 */
+      font-size: 0.98rem;
       letter-spacing: -0.01em;
-      color: rgba(15,23,42,0.56); /* 타이틀보다 살짝 연하게 */
+      color: rgba(15,23,42,0.56);
       white-space: nowrap;
-      line-height: 1.15; /* 타이틀과 줄 느낌 맞춤 */
+      line-height: 1.15;
     }
     @media (max-width: 560px){
       .refDate{ font-size: 0.96rem; }
@@ -292,14 +293,10 @@
       .countCenter{ font-size: .92rem; }
     }
 
+    /* ✅ content는 더 이상 내부 스크롤 아님 */
     .content{
       padding: 12px 16px 16px;
       background: linear-gradient(180deg, #ffffff, #f6f8fb);
-      flex: 1 1 auto;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-      min-height: 0;
-      overscroll-behavior: contain;
     }
 
     .list{
@@ -572,7 +569,7 @@
     .toast{
       position: fixed;
       left: 50%;
-      bottom: 22px;
+      bottom: calc(22px + env(safe-area-inset-bottom));
       transform: translateX(-50%);
       background: rgba(15,23,42,0.92);
       color: #fff;
@@ -594,47 +591,60 @@
       transform: translateX(-50%) translateY(-6px);
     }
 
-    .bottomHint{
+    /* ✅ 플로팅 버튼 */
+    .fabs{
       position: fixed;
-      left: 0; right: 0;
-      bottom: calc(8px + env(safe-area-inset-bottom));
-      display: none;
+      right: var(--fabRight);
+      bottom: calc(var(--fabBottom) + env(safe-area-inset-bottom));
+      display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      z-index: 2;
-      pointer-events: none;
-      opacity: 0.22;
+      gap: var(--fabGap);
+      z-index: 10002;
+      pointer-events: none; /* 컨테이너는 클릭 막고, 버튼만 허용 */
+    }
+    .fab{
+      width: var(--fabSize);
+      height: var(--fabSize);
+      border-radius: 999px;
+      border: 1px solid rgba(217,224,234,.92);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.14);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+      color: rgba(15,23,42,0.86);
+      pointer-events: auto; /* 버튼만 클릭 가능 */
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .18s ease, transform .18s ease;
       user-select: none;
       -webkit-user-select: none;
     }
-    body.showBottomHint .bottomHint{ display:flex; }
+    .fab.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fab:active{ transform: translateY(0) scale(0.98); }
+    .fab svg{ width: 22px; height: 22px; stroke: rgba(15,23,42,0.84); }
 
-    .bottomHintText{
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #0f172a;
+    .fab.refresh{
+      border-color: rgba(31,78,121,.25);
     }
-    .bottomHintArrow{
-      width: 16px;
-      height: 16px;
-      fill: none;
-      stroke: #0f172a;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0.7;
-    }
+    .fab.refresh svg{ stroke: rgba(31,78,121,0.92); }
 
     @media (prefers-reduced-motion: reduce){
-      .pull-to-refresh, .pullable-content{ transition: none !important; }
+      .pull-to-refresh{ transition: none !important; }
       .ptr-ring .spin{ animation: none !important; }
+      .fab{ transition: none !important; }
     }
   </style>
 </head>
 
 <body>
+  <!-- PTR capsule -->
   <div id="pull-to-refresh" class="pull-to-refresh" aria-hidden="true">
     <div id="ptrRing" class="ptr-ring" aria-hidden="true">
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -647,58 +657,49 @@
     <div id="ptr-status" class="ptr-status">당겨서 새로고침</div>
   </div>
 
-  <div id="content" class="pullable-content">
-    <div class="app" id="app">
-      <div class="top" id="topBar">
-        <div class="header">
-          <div class="brand">
-            <h1>울산하늘공원 접수 현황</h1>
-          </div>
-
-          <!-- ✅ 새로고침 버튼 삭제 → 기준날짜(YYYY-MM-DD) 표시 -->
-          <div class="rightInfo" aria-label="기준날짜">
-            <div class="refDate" id="refDateText">0000-00-00</div>
-          </div>
+  <!-- App -->
+  <div class="app" id="app">
+    <div class="top" id="topBar">
+      <div class="header">
+        <div class="brand">
+          <h1>울산하늘공원 접수 현황</h1>
         </div>
 
-        <div class="toolbar">
-          <div class="seg" role="tablist" aria-label="시설 선택">
-            <button id="tabHouse" class="active" type="button">추모의집</button>
-            <button id="tabNature" type="button">자연장지</button>
+        <div class="rightInfo" aria-label="기준날짜">
+          <div class="refDate" id="refDateText">0000-00-00</div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="seg" role="tablist" aria-label="시설 선택">
+          <button id="tabHouse" class="active" type="button">추모의집</button>
+          <button id="tabNature" type="button">자연장지</button>
+        </div>
+
+        <div class="group">
+          <div class="field" id="datePill">
+            <div class="k">날짜 선택</div>
+            <div class="v">
+              <input type="date" id="datePicker" />
+            </div>
           </div>
 
-          <div class="group">
-            <div class="field" id="datePill">
-              <div class="k">날짜 선택</div>
-              <div class="v">
-                <input type="date" id="datePicker" />
-              </div>
-            </div>
-
-            <div class="field" id="countPill">
-              <div class="k" id="countTitle">현황</div>
-              <div class="v" style="width:100%;">
-                <div class="countCenter" id="countText">-</div>
-              </div>
+          <div class="field" id="countPill">
+            <div class="k" id="countTitle">현황</div>
+            <div class="v" style="width:100%;">
+              <div class="countCenter" id="countText">-</div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="content" id="scrollArea">
-        <div id="listArea"></div>
-      </div>
+    <div class="content" id="contentArea">
+      <div id="listArea"></div>
     </div>
   </div>
 
-  <div class="bottomHint" aria-hidden="true">
-    <div class="bottomHintText">아래로 당겨 새로고침</div>
-    <svg class="bottomHintArrow" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 5v12"></path>
-      <path d="M7 13l5 5 5-5"></path>
-    </svg>
-  </div>
-
+  <!-- Modal -->
   <div class="overlay" id="overlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true">
       <div class="sheet-head">
@@ -715,6 +716,25 @@
 
   <div class="toast" id="toast">-</div>
 
+  <!-- Floating buttons -->
+  <div class="fabs" aria-hidden="false">
+    <button id="fabRefresh" class="fab refresh" type="button" aria-label="새로고침">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12a9 9 0 0 1-15.2 6.4"></path>
+        <path d="M3 12a9 9 0 0 1 15.2-6.4"></path>
+        <path d="M21 3v6h-6"></path>
+        <path d="M3 21v-6h6"></path>
+      </svg>
+    </button>
+
+    <button id="fabTop" class="fab" type="button" aria-label="맨 위로">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V6"></path>
+        <path d="M7 11l5-5 5 5"></path>
+      </svg>
+    </button>
+  </div>
+
   <script>
     /* =========
        DOM
@@ -723,7 +743,6 @@
 
     const datePicker  = $('#datePicker');
     const listArea    = $('#listArea');
-    const scrollArea  = $('#scrollArea');
 
     const tabHouse    = $('#tabHouse');
     const tabNature   = $('#tabNature');
@@ -739,10 +758,11 @@
 
     const ptrEl       = $('#pull-to-refresh');
     const statusEl    = $('#ptr-status');
-    const contentEl   = $('#content');
-
     const ptrRing     = $('#ptrRing');
     const ptrProg     = $('#ptrProg');
+
+    const fabTop      = $('#fabTop');
+    const fabRefresh  = $('#fabRefresh');
 
     /* =========
        Utils
@@ -796,27 +816,11 @@
     };
 
     /* =========
-       ✅ 기준날짜 표시: "날짜 선택"값(없으면 TODAY)
+       기준날짜 표시
        ========= */
     function updateRefDate(){
       const selected = datePicker?.value || TODAY;
       if (refDateText) refDateText.textContent = selected;
-    }
-
-    /* =========
-       ✅ fit + 하단 힌트
-       ========= */
-    function adjustFit(){
-      requestAnimationFrame(() => {
-        const app = $('#app');
-        if (!app || !scrollArea) return;
-
-        const needsScroll = scrollArea.scrollHeight > scrollArea.clientHeight + 2;
-        app.classList.toggle('fit', !needsScroll);
-        document.body.classList.toggle('showBottomHint', !needsScroll);
-
-        if (!needsScroll) scrollArea.scrollTop = 0;
-      });
     }
 
     /* =========
@@ -1082,6 +1086,9 @@
       `;
     };
 
+    /* =========
+       State
+       ========= */
     let currentSource = 'house';
     let currentSelectedDate = TODAY;
     let currentDisplayData = [];
@@ -1148,13 +1155,15 @@
       return clone;
     };
 
+    /* =========
+       Load + Render
+       ========= */
     async function load(force=false){
       const myToken = ++loadToken;
 
       const selected = datePicker.value || TODAY;
       currentSelectedDate = selected;
 
-      // ✅ 기준날짜 표시 갱신
       updateRefDate();
 
       const showCrem = (selected === TODAY);
@@ -1197,7 +1206,6 @@
 
         if (!display.length){
           listArea.innerHTML = `<div class="no-data">표시할 데이터가 없습니다.</div>`;
-          adjustFit();
           return;
         }
 
@@ -1270,12 +1278,8 @@
             `<div class="no-data" style="margin-top:10px; padding:10px 12px;">상위 ${limit}건만 표시 중</div>`
           );
         }
-
-        adjustFit();
-
       } catch (err){
         listArea.innerHTML = `<div class="no-data">오류: ${esc(err.message)}</div>`;
-        adjustFit();
       }
     }
 
@@ -1325,7 +1329,7 @@
       overlay.setAttribute('aria-hidden', 'true');
     }
 
-    async function doRefresh(){
+    async function doRefresh(fromUI=true){
       if (isRefreshing) return;
       isRefreshing = true;
 
@@ -1335,56 +1339,11 @@
         cremMapCache = null;
 
         await load(true);
-        toast('새로고침 완료', 1400);
+        if (fromUI) toast('새로고침 완료', 1400);
       } finally {
         isRefreshing = false;
       }
     }
-
-    /* =========
-       PTR + 진행률
-       ========= */
-    let startY = 0, pulling = false, pullDist = 0;
-    const PTR_MAX = 64, PTR_TH = 60, DAMP = 0.52;
-
-    const R = 9;
-    const CIRC = 2 * Math.PI * R;
-
-    const canPTR = () => scrollArea && scrollArea.scrollTop === 0 && !isRefreshing;
-
-    const setPullProgress = (ratio) => {
-      const p = Math.max(0, Math.min(ratio, 1));
-      ptrProg.style.strokeDasharray = String(CIRC.toFixed(2));
-      ptrProg.style.strokeDashoffset = String((CIRC * (1 - p)).toFixed(2));
-    };
-
-    const setPullUI = (dist) => {
-      const d = Math.max(0, Math.min(dist, PTR_MAX));
-      pullDist = d;
-
-      if (d > 0){
-        ptrEl.classList.add('visible');
-        ptrEl.setAttribute('aria-hidden', 'false');
-      }
-
-      contentEl.style.transform = `translateY(${d}px)`;
-
-      const p = d / PTR_TH;
-      setPullProgress(p);
-
-      statusEl.textContent = (d >= PTR_TH) ? '놓아서 새로고침' : '당겨서 새로고침';
-    };
-
-    const resetPullUI = () => {
-      ptrEl.classList.remove('visible');
-      ptrEl.setAttribute('aria-hidden', 'true');
-      contentEl.style.transform = '';
-      pullDist = 0;
-
-      setPullProgress(0);
-      ptrRing.classList.remove('loading');
-      statusEl.textContent = '당겨서 새로고침';
-    };
 
     function setSource(src){
       currentSource = src;
@@ -1446,8 +1405,77 @@
       load();
     });
 
-    /* PTR touch */
-    scrollArea.addEventListener('touchstart', (e) => {
+    /* =========
+       ✅ 외부 스크롤 기반 FAB 표시
+       ========= */
+    function updateFAB(){
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const show = y > 220;
+
+      fabTop.classList.toggle('show', show);
+      fabRefresh.classList.toggle('show', show || true); // 새로고침은 항상 보이게 하고 싶으면 true 유지
+    }
+
+    fabTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    fabRefresh.addEventListener('click', async () => {
+      await doRefresh(true);
+    });
+
+    window.addEventListener('scroll', updateFAB, { passive:true });
+
+    /* =========
+       ✅ PTR: 외부 스크롤에서 "최상단일 때만" 동작
+       ========= */
+    let startY = 0, pulling = false, pullDist = 0;
+    const PTR_MAX = 64, PTR_TH = 60, DAMP = 0.52;
+
+    const R = 9;
+    const CIRC = 2 * Math.PI * R;
+
+    const atTop = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      return y <= 0;
+    };
+
+    const canPTR = () => atTop() && !isRefreshing && !overlay.classList.contains('show');
+
+    const setPullProgress = (ratio) => {
+      const p = Math.max(0, Math.min(ratio, 1));
+      ptrProg.style.strokeDasharray = String(CIRC.toFixed(2));
+      ptrProg.style.strokeDashoffset = String((CIRC * (1 - p)).toFixed(2));
+    };
+
+    const setPullUI = (dist) => {
+      const d = Math.max(0, Math.min(dist, PTR_MAX));
+      pullDist = d;
+
+      if (d > 0){
+        ptrEl.classList.add('visible');
+        ptrEl.setAttribute('aria-hidden', 'false');
+      }
+
+      const p = d / PTR_TH;
+      setPullProgress(p);
+
+      statusEl.textContent = (d >= PTR_TH) ? '놓아서 새로고침' : '당겨서 새로고침';
+    };
+
+    const resetPullUI = () => {
+      ptrEl.classList.remove('visible');
+      ptrEl.setAttribute('aria-hidden', 'true');
+      pullDist = 0;
+
+      setPullProgress(0);
+      ptrRing.classList.remove('loading');
+      statusEl.textContent = '당겨서 새로고침';
+    };
+
+    // iOS에서 "최상단 바운스" 중에도 안정적으로 잡기 위해, document에 걸되
+    // 반드시 최상단 + 아래로 당기는 동작만 preventDefault
+    document.addEventListener('touchstart', (e) => {
       if (!canPTR()) return;
       if (e.touches.length !== 1) return;
       startY = e.touches[0].clientY;
@@ -1455,30 +1483,31 @@
       ptrRing.classList.remove('loading');
     }, { passive: true });
 
-    scrollArea.addEventListener('touchmove', (e) => {
+    document.addEventListener('touchmove', (e) => {
       if (!pulling || !canPTR()) return;
       if (e.touches.length !== 1) return;
 
       const diff = (e.touches[0].clientY - startY) * DAMP;
       if (diff <= 0) return;
 
+      // 최상단에서 아래로 당길 때만 기본 스크롤/바운스 억제
       e.preventDefault();
       setPullUI(diff);
     }, { passive: false });
 
-    scrollArea.addEventListener('touchend', async () => {
+    document.addEventListener('touchend', async () => {
       if (!pulling) return;
       pulling = false;
 
       if (pullDist >= PTR_TH){
         statusEl.textContent = '새로고침 중...';
         ptrRing.classList.add('loading');
-        contentEl.style.transform = `translateY(${PTR_MAX}px)`;
         ptrEl.classList.add('visible');
         ptrEl.setAttribute('aria-hidden', 'false');
 
         try{
-          await doRefresh();
+          await doRefresh(false);
+          toast('새로고침 완료', 1400);
         } finally {
           resetPullUI();
           startY = 0;
@@ -1489,6 +1518,9 @@
       }
     }, { passive: true });
 
+    /* =========
+       Init
+       ========= */
     window.addEventListener('load', () => {
       const saved = localStorage.getItem(STORAGE_KEYS.source);
       setSource((saved === 'nature' || saved === 'house') ? saved : 'house');
@@ -1498,6 +1530,8 @@
 
       setPullProgress(0);
       load();
+
+      updateFAB();
     });
   </script>
 </body>
