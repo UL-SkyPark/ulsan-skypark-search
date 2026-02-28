@@ -21,15 +21,13 @@
       --shadow2: 0 14px 40px rgba(15,23,42,0.10);
       --radius: 14px;
 
-      /* ✅ 바깥 여백 / 하단 힌트 공간 */
       --outerPad: 12px;
-      --bottomHintSpace: 44px; /* 힌트(텍스트+화살표)가 목록을 가리지 않도록 확보 */
+      --bottomHintSpace: 44px;
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     html, body { height:100%; }
 
-    /* ✅ 바깥(페이지) 스크롤 제거 + 하단 힌트 공간 확보 */
     body{
       margin:0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
@@ -38,46 +36,75 @@
 
       padding: var(--outerPad);
       padding-bottom: calc(var(--outerPad) + var(--bottomHintSpace) + env(safe-area-inset-bottom));
-
       overflow: hidden;
     }
 
-    /* PTR */
+    /* ✅ PTR: 캡슐 + 진행률 */
     .pull-to-refresh{
       position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 60px;
-      background: #fff;
-      display: flex;
+      top: calc(10px + env(safe-area-inset-top));
+      left: 50%;
+      transform: translate(-50%, -140%);
+      height: 44px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(217,224,234,0.90);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.12);
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 10px;
-      transform: translateY(-100%);
-      transition: transform 0.22s ease;
       z-index: 10001;
-      border-bottom: 1px solid var(--line);
-      padding-top: env(safe-area-inset-top);
+      transition: transform 240ms cubic-bezier(.2,.9,.2,1);
+      will-change: transform;
     }
-    .pull-to-refresh.visible{ transform: translateY(0); }
-    .loader{
-      width: 20px; height: 20px;
-      border: 2px solid #cbd5e1;
-      border-top: 2px solid #0f172a;
+    .pull-to-refresh.visible{ transform: translate(-50%, 0); }
+
+    .ptr-ring{
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .ptr-ring svg{
+      width: 22px;
+      height: 22px;
+      display:block;
+      transform: rotate(-90deg);
+      transition: opacity 120ms ease;
+    }
+    .ptr-ring .spin{
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      border: 2px solid rgba(203,213,225,0.9);
+      border-top-color: rgba(15,23,42,0.9);
       opacity: 0;
+      animation: spin 0.9s linear infinite;
+      transition: opacity 120ms ease;
+    }
+    .ptr-ring.loading .spin{ opacity: 1; }
+    .ptr-ring.loading svg{ opacity: 0; }
+
+    .ptr-status{
+      font-weight: 900;
+      font-size: 0.92rem;
+      color: rgba(15,23,42,0.86);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
     }
     @keyframes spin{ to { transform: rotate(360deg); } }
 
-    /* ✅ (핵심) 바깥영역을 무조건 화면에 꽉 차게: fixed + inset
-       - 하단은 힌트 공간만큼 더 띄워서 "접수목록"이 하단 힌트에 가려지지 않음 */
     .pullable-content{
       position: fixed;
       top: var(--outerPad);
       left: var(--outerPad);
       right: var(--outerPad);
       bottom: calc(var(--outerPad) + var(--bottomHintSpace) + env(safe-area-inset-bottom));
-      transition: transform 0.22s ease;
+      transition: transform 220ms cubic-bezier(.2,.9,.2,1);
       will-change: transform;
     }
 
@@ -94,12 +121,8 @@
       flex-direction: column;
     }
 
-    /* ✅ 내용이 적어도 카드 높이는 유지(100%), 스크롤만 비활성화 */
     .app.fit{ height: 100%; }
-    .app.fit .content{
-      overflow: hidden;
-      -webkit-overflow-scrolling: auto;
-    }
+    .app.fit .content{ overflow: hidden; -webkit-overflow-scrolling: auto; }
 
     .top{
       position: sticky;
@@ -138,54 +161,26 @@
       .brand h1{ font-size: 1.55rem; line-height: 1.18; }
     }
 
+    /* ✅ 우측 상단: 기준날짜 표시 */
     .rightInfo{
       display:flex;
-      align-items:flex-start;
+      align-items:flex-start; /* 타이틀 첫 줄 기준 정렬 */
       justify-content:flex-end;
-      gap: 10px;
       flex: 0 0 auto;
       margin-left: auto;
+      padding-top: 2px; /* 타이틀과 줄 맞춤 미세조정 */
     }
-
-    .iconBtn{
-      width: 42px; height: 42px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #fff;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(15,23,42,0.08);
-      user-select: none;
-      -webkit-user-select: none;
-      transform: translateZ(0);
-      transition: transform 140ms cubic-bezier(.2,.8,.2,1), opacity 140ms ease;
+    .refDate{
+      font-weight: 900;
+      font-size: 0.98rem; /* 타이틀보다 작게 */
+      letter-spacing: -0.01em;
+      color: rgba(15,23,42,0.56); /* 타이틀보다 살짝 연하게 */
+      white-space: nowrap;
+      line-height: 1.15; /* 타이틀과 줄 느낌 맞춤 */
     }
-    .iconBtn:active{ transform: scale(0.94); }
-    .iconBtn svg{
-      width: 22px; height: 22px;
-      fill: none;
-      stroke: var(--primary);
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transform-origin: 50% 50%;
+    @media (max-width: 560px){
+      .refDate{ font-size: 0.96rem; }
     }
-    @keyframes iconSpin{ to{ transform: rotate(360deg); } }
-    @keyframes iconSpringPulse{
-      0%{ transform: scale(1); }
-      35%{ transform: scale(1.08); }
-      70%{ transform: scale(0.98); }
-      100%{ transform: scale(1); }
-    }
-    .iconBtn.refreshing{
-      cursor: default;
-      opacity: .88;
-      transform: scale(1.02);
-      animation: iconSpringPulse 520ms cubic-bezier(.2, 1.1, .2, 1) infinite;
-    }
-    .iconBtn.refreshing svg{ animation: iconSpin 0.9s linear infinite; }
 
     .toolbar{
       padding: 10px 16px 14px;
@@ -599,16 +594,15 @@
       transform: translateX(-50%) translateY(-6px);
     }
 
-    /* ✅ 하단 바깥 영역 힌트: 작고 희미하게 */
     .bottomHint{
       position: fixed;
       left: 0; right: 0;
       bottom: calc(8px + env(safe-area-inset-bottom));
-      display: none;              /* 기본 숨김 */
+      display: none;
       flex-direction: column;
       align-items: center;
       gap: 3px;
-      z-index: 2;                /* overlay/toast보다 낮고, 앱과 무관 (앱은 위 inset 영역) */
+      z-index: 2;
       pointer-events: none;
       opacity: 0.22;
       user-select: none;
@@ -634,16 +628,23 @@
     }
 
     @media (prefers-reduced-motion: reduce){
-      .pull-to-refresh, .pullable-content, .iconBtn{ transition: none !important; }
-      .loader, .iconBtn.refreshing, .iconBtn.refreshing svg{ animation: none !important; }
+      .pull-to-refresh, .pullable-content{ transition: none !important; }
+      .ptr-ring .spin{ animation: none !important; }
     }
   </style>
 </head>
 
 <body>
   <div id="pull-to-refresh" class="pull-to-refresh" aria-hidden="true">
-    <div id="ptr-loader" class="loader" aria-hidden="true"></div>
-    <div id="ptr-status">당겨서 새로고침</div>
+    <div id="ptrRing" class="ptr-ring" aria-hidden="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" stroke="rgba(203,213,225,0.85)" stroke-width="2.4" fill="none"></circle>
+        <circle id="ptrProg" cx="12" cy="12" r="9" stroke="rgba(15,23,42,0.88)" stroke-width="2.4" fill="none"
+                stroke-linecap="round" stroke-dasharray="56.55" stroke-dashoffset="56.55"></circle>
+      </svg>
+      <div class="spin" aria-hidden="true"></div>
+    </div>
+    <div id="ptr-status" class="ptr-status">당겨서 새로고침</div>
   </div>
 
   <div id="content" class="pullable-content">
@@ -654,13 +655,9 @@
             <h1>울산하늘공원 접수 현황</h1>
           </div>
 
-          <div class="rightInfo">
-            <button id="refreshBtn" class="iconBtn" type="button" aria-label="새로고침">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M20 12a8 8 0 1 1-2.34-5.66"></path>
-                <path d="M20 4v6h-6"></path>
-              </svg>
-            </button>
+          <!-- ✅ 새로고침 버튼 삭제 → 기준날짜(YYYY-MM-DD) 표시 -->
+          <div class="rightInfo" aria-label="기준날짜">
+            <div class="refDate" id="refDateText">0000-00-00</div>
           </div>
         </div>
 
@@ -694,7 +691,6 @@
     </div>
   </div>
 
-  <!-- ✅ 하단 바깥 영역 안내(목록 안 가리도록 위에서 공간 확보됨) -->
   <div class="bottomHint" aria-hidden="true">
     <div class="bottomHintText">아래로 당겨 새로고침</div>
     <svg class="bottomHintArrow" viewBox="0 0 24 24" aria-hidden="true">
@@ -725,26 +721,28 @@
        ========= */
     const $ = (s) => document.querySelector(s);
 
-    const datePicker = $('#datePicker');
-    const listArea   = $('#listArea');
-    const scrollArea = $('#scrollArea');
+    const datePicker  = $('#datePicker');
+    const listArea    = $('#listArea');
+    const scrollArea  = $('#scrollArea');
 
-    const tabHouse   = $('#tabHouse');
-    const tabNature  = $('#tabNature');
+    const tabHouse    = $('#tabHouse');
+    const tabNature   = $('#tabNature');
 
-    const countText  = $('#countText');
+    const countText   = $('#countText');
 
-    const overlay    = $('#overlay');
-    const mTitleLine = $('#mTitleLine');
-    const mFields    = $('#mFields');
-    const sheetOkBtn = $('#sheetOkBtn');
+    const overlay     = $('#overlay');
+    const mTitleLine  = $('#mTitleLine');
+    const mFields     = $('#mFields');
+    const sheetOkBtn  = $('#sheetOkBtn');
 
-    const refreshBtn = $('#refreshBtn');
+    const refDateText = $('#refDateText');
 
-    const ptrEl      = $('#pull-to-refresh');
-    const statusEl   = $('#ptr-status');
-    const loaderEl   = $('#ptr-loader');
-    const contentEl  = $('#content');
+    const ptrEl       = $('#pull-to-refresh');
+    const statusEl    = $('#ptr-status');
+    const contentEl   = $('#content');
+
+    const ptrRing     = $('#ptrRing');
+    const ptrProg     = $('#ptrProg');
 
     /* =========
        Utils
@@ -797,14 +795,16 @@
       return res.json();
     };
 
-    const setSpin = (on) => {
-      refreshBtn?.classList.toggle('refreshing', !!on);
-      if (refreshBtn) refreshBtn.disabled = !!on;
-    };
+    /* =========
+       ✅ 기준날짜 표시: "날짜 선택"값(없으면 TODAY)
+       ========= */
+    function updateRefDate(){
+      const selected = datePicker?.value || TODAY;
+      if (refDateText) refDateText.textContent = selected;
+    }
 
     /* =========
-       ✅ 내용이 적을 때: fit(스크롤 잠금)만 하고 카드 높이는 유지
-       + ✅ 하단 힌트는 "스크롤이 필요없을 때"만 노출 (목록 방해 최소화)
+       ✅ fit + 하단 힌트
        ========= */
     function adjustFit(){
       requestAnimationFrame(() => {
@@ -813,8 +813,6 @@
 
         const needsScroll = scrollArea.scrollHeight > scrollArea.clientHeight + 2;
         app.classList.toggle('fit', !needsScroll);
-
-        /* ✅ 스크롤이 없을 때만 힌트 표시 */
         document.body.classList.toggle('showBottomHint', !needsScroll);
 
         if (!needsScroll) scrollArea.scrollTop = 0;
@@ -988,7 +986,6 @@
     const pad2 = (n) => String(n ?? '').trim().padStart(2,'0').slice(-2) || '00';
     const fmtTime = (v) => String(v ?? '').trim();
 
-    /* ✅ (적용) 목록: 시작만 있으면 '화장종료:' 없이 '화장중'만 표기 */
     const cremObj = (deadId, cremMap) => {
       const did = String(deadId ?? '').trim();
       const rec = did ? cremMap.get(did) : null;
@@ -1044,7 +1041,6 @@
       return `<div class="cremWrap">${objs.map(o => `<div class="cremLine">${esc(o.text)}</div>`).join('')}</div>`;
     };
 
-    /* ✅ (적용) 모달: '화장종료: -'로 표시 (화장중 표기 안 씀) */
     const cremTimes = (item, cremMap) => {
       if (!cremMap) return null;
       const ids = uniqDeadIds(item);
@@ -1086,18 +1082,12 @@
       `;
     };
 
-    /* =========
-       App state
-       ========= */
     let currentSource = 'house';
     let currentSelectedDate = TODAY;
     let currentDisplayData = [];
     let loadToken = 0;
     let isRefreshing = false;
 
-    /* =========
-       Rendering
-       ========= */
     const renderHead = (shown, total) => `
       <div class="list-head">
         <div class="hint">${esc(SOURCES[currentSource].label)} 접수목록</div>
@@ -1163,6 +1153,9 @@
 
       const selected = datePicker.value || TODAY;
       currentSelectedDate = selected;
+
+      // ✅ 기준날짜 표시 갱신
+      updateRefDate();
 
       const showCrem = (selected === TODAY);
       let cremMap = null;
@@ -1286,9 +1279,6 @@
       }
     }
 
-    /* =========
-       Modal
-       ========= */
     function openSheet(index){
       const item = currentDisplayData[index];
       if (!item) return;
@@ -1335,13 +1325,9 @@
       overlay.setAttribute('aria-hidden', 'true');
     }
 
-    /* =========
-       Refresh (button + PTR common)
-       ========= */
     async function doRefresh(){
       if (isRefreshing) return;
       isRefreshing = true;
-      setSpin(true);
 
       try{
         dataCache.house = null;
@@ -1351,18 +1337,26 @@
         await load(true);
         toast('새로고침 완료', 1400);
       } finally {
-        setSpin(false);
         isRefreshing = false;
       }
     }
 
     /* =========
-       PTR (scroll container 기반)
+       PTR + 진행률
        ========= */
     let startY = 0, pulling = false, pullDist = 0;
-    const PTR_MAX = 60, PTR_TH = 60, DAMP = 0.5;
+    const PTR_MAX = 64, PTR_TH = 60, DAMP = 0.52;
+
+    const R = 9;
+    const CIRC = 2 * Math.PI * R;
 
     const canPTR = () => scrollArea && scrollArea.scrollTop === 0 && !isRefreshing;
+
+    const setPullProgress = (ratio) => {
+      const p = Math.max(0, Math.min(ratio, 1));
+      ptrProg.style.strokeDasharray = String(CIRC.toFixed(2));
+      ptrProg.style.strokeDashoffset = String((CIRC * (1 - p)).toFixed(2));
+    };
 
     const setPullUI = (dist) => {
       const d = Math.max(0, Math.min(dist, PTR_MAX));
@@ -1372,14 +1366,13 @@
         ptrEl.classList.add('visible');
         ptrEl.setAttribute('aria-hidden', 'false');
       }
+
       contentEl.style.transform = `translateY(${d}px)`;
-      if (d >= PTR_TH){
-        statusEl.textContent = '놓아서 새로고침';
-        loaderEl.style.opacity = '1';
-      } else {
-        statusEl.textContent = '당겨서 새로고침';
-        loaderEl.style.opacity = '0';
-      }
+
+      const p = d / PTR_TH;
+      setPullProgress(p);
+
+      statusEl.textContent = (d >= PTR_TH) ? '놓아서 새로고침' : '당겨서 새로고침';
     };
 
     const resetPullUI = () => {
@@ -1387,11 +1380,12 @@
       ptrEl.setAttribute('aria-hidden', 'true');
       contentEl.style.transform = '';
       pullDist = 0;
+
+      setPullProgress(0);
+      ptrRing.classList.remove('loading');
+      statusEl.textContent = '당겨서 새로고침';
     };
 
-    /* =========
-       Events
-       ========= */
     function setSource(src){
       currentSource = src;
       localStorage.setItem(STORAGE_KEYS.source, src);
@@ -1403,9 +1397,10 @@
     tabHouse.addEventListener('click', () => setSource('house'));
     tabNature.addEventListener('click', () => setSource('nature'));
 
-    datePicker.addEventListener('change', load);
-
-    refreshBtn.addEventListener('click', doRefresh);
+    datePicker.addEventListener('change', () => {
+      updateRefDate();
+      load();
+    });
 
     sheetOkBtn.addEventListener('click', closeSheet);
     overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
@@ -1457,6 +1452,7 @@
       if (e.touches.length !== 1) return;
       startY = e.touches[0].clientY;
       pulling = true;
+      ptrRing.classList.remove('loading');
     }, { passive: true });
 
     scrollArea.addEventListener('touchmove', (e) => {
@@ -1476,7 +1472,7 @@
 
       if (pullDist >= PTR_TH){
         statusEl.textContent = '새로고침 중...';
-        loaderEl.style.opacity = '1';
+        ptrRing.classList.add('loading');
         contentEl.style.transform = `translateY(${PTR_MAX}px)`;
         ptrEl.classList.add('visible');
         ptrEl.setAttribute('aria-hidden', 'false');
@@ -1496,7 +1492,11 @@
     window.addEventListener('load', () => {
       const saved = localStorage.getItem(STORAGE_KEYS.source);
       setSource((saved === 'nature' || saved === 'house') ? saved : 'house');
+
       datePicker.value = TODAY;
+      updateRefDate();
+
+      setPullProgress(0);
       load();
     });
   </script>
