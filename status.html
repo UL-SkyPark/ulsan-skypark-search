@@ -634,7 +634,6 @@
     }
 
     const STORAGE_KEYS = { source: "uic_source_selected" };
-
     const SOURCES = {
       house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
@@ -826,13 +825,9 @@
     }
 
     function recvKey(sourceKey, id){ return `recv_${sourceKey}_${id}`; }
-
     function recvPendingText(sourceKey){ return (sourceKey === 'nature') ? '안장대기' : '안치대기'; }
     function recvDoneText(sourceKey){ return (sourceKey === 'nature') ? '안장완료' : '안치완료'; }
-
-    function isRecvDone(sourceKey, statusText){
-      return statusText === recvDoneText(sourceKey);
-    }
+    function isRecvDone(sourceKey, statusText){ return statusText === recvDoneText(sourceKey); }
 
     function getRecvStatus(sourceKey, id){
       const v = localStorage.getItem(recvKey(sourceKey, id));
@@ -844,10 +839,7 @@
 
       return v;
     }
-
-    function setRecvStatus(sourceKey, id, val){
-      localStorage.setItem(recvKey(sourceKey, id), val);
-    }
+    function setRecvStatus(sourceKey, id, val){ localStorage.setItem(recvKey(sourceKey, id), val); }
 
     function isRetOnDate(item, isoDate){
       return normalizeToISODate(pickRetDate(item)) === isoDate;
@@ -918,11 +910,7 @@
       if (!s) return "00";
       return s.padStart(2, "0").slice(-2);
     }
-
-    function fmtTime(v){
-      if (v == null) return "";
-      return String(v).trim();
-    }
+    function fmtTime(v){ return (v == null) ? "" : String(v).trim(); }
 
     function cremLineObjByDeadId(deadId, cremMap){
       const did = (deadId ?? "").toString().trim();
@@ -932,35 +920,17 @@
       const en = fmtTime(rec?.burnEndTime);
 
       if (!st){
-        return {
-          type: 'recv',
-          chasu: 0,
-          start: '화장접수',
-          end: '화장접수',
-          text: '00회차, 화장접수'
-        };
+        return { type:'recv', chasu:0, start:'화장접수', end:'화장접수', text:'00회차, 화장접수' };
       }
 
       const chasu = parseInt(pad2(rec?.burnChasu), 10);
       const safeChasu = isNaN(chasu) ? 0 : chasu;
 
       if (st && !en){
-        return {
-          type: 'info',
-          chasu: safeChasu,
-          start: st,
-          end: '화장중',
-          text: `${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: 화장중`
-        };
+        return { type:'info', chasu:safeChasu, start:st, end:'화장중', text:`${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: 화장중` };
       }
 
-      return {
-        type: 'info',
-        chasu: safeChasu,
-        start: st,
-        end: en,
-        text: `${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: ${en}`
-      };
+      return { type:'info', chasu:safeChasu, start:st, end:en, text:`${pad2(rec?.burnChasu)}회차, 화장시작: ${st}, 화장종료: ${en}` };
     }
 
     function getUniqueDeadIds(item){
@@ -986,6 +956,7 @@
 
     function buildCremLinesHTML(item, cremMap, mode){
       if (mode === 'ret') return '';
+      if (!cremMap) return '';
 
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0){
@@ -993,21 +964,19 @@
       }
 
       const lineObjs = ids.map(did => cremLineObjByDeadId(did, cremMap));
-      const htmlLines = lineObjs
-        .map(o => `<div class="cremLine">${escapeHtml(o.text)}</div>`)
-        .join("");
-
+      const htmlLines = lineObjs.map(o => `<div class="cremLine">${escapeHtml(o.text)}</div>`).join("");
       return `<div class="cremWrap">${htmlLines}</div>`;
     }
 
     function buildCremTimesForModal(item, cremMap){
+      if (!cremMap) return null;
+
       const ids = getUniqueDeadIds(item);
       if (ids.length === 0) {
         return { startLine: '화장시작: 화장접수', endLine: '화장종료: 화장접수' };
       }
 
       const objs = ids.map(id => cremLineObjByDeadId(id, cremMap));
-
       const starts = objs.map(o => o.start || '화장접수');
       const ends = objs.map(o => o.end || '화장접수');
 
@@ -1024,9 +993,7 @@
       if (v === '반출') return '반출대기';
       return v;
     }
-    function setRetStatusHouse(id, val){
-      localStorage.setItem(retKeyHouse(id), val);
-    }
+    function setRetStatusHouse(id, val){ localStorage.setItem(retKeyHouse(id), val); }
 
     function sortByWorkPriorityStable(arr, selectedISO, cremMap){
       const clone = arr.slice();
@@ -1046,7 +1013,7 @@
         const grpB = isRetB ? (bRetDone ? 2 : 0) : 1;
         if (grpA !== grpB) return grpA - grpB;
 
-        if (grpA === 1 && grpB === 1){
+        if (grpA === 1 && grpB === 1 && cremMap){
           const ca = itemChasuKey(a, cremMap);
           const cb = itemChasuKey(b, cremMap);
           if (ca !== cb) return ca - cb;
@@ -1094,21 +1061,16 @@
 
     async function ensureCremMap(){
       if (cremMapCache) return cremMapCache;
-      try{
-        const raw = await fetchJson("./data/crem.json");
-        const arr = Array.isArray(raw) ? raw : [];
-        const map = new Map();
-        for (const r of arr){
-          const id = (r?.deadId ?? "").toString().trim();
-          if (!id) continue;
-          map.set(id, r);
-        }
-        cremMapCache = map;
-        return cremMapCache;
-      }catch(e){
-        cremMapCache = new Map();
-        return cremMapCache;
+      const raw = await fetchJson("./data/crem.json");
+      const arr = Array.isArray(raw) ? raw : [];
+      const map = new Map();
+      for (const r of arr){
+        const id = (r?.deadId ?? "").toString().trim();
+        if (!id) continue;
+        map.set(id, r);
       }
+      cremMapCache = map;
+      return cremMapCache;
     }
 
     async function ensureData(sourceKey){
@@ -1118,7 +1080,7 @@
       return dataCache[sourceKey];
     }
 
-    function buildFields(item){
+    function buildFields(item, cremMap){
       let fieldsHTML = '';
       const isRetModal = (currentSource === 'house' && isRetOnDate(item, currentSelectedDate));
 
@@ -1138,9 +1100,11 @@
         fieldsHTML += kvRow('신청자', item.applName ?? '-');
       }
 
-      if (!isRetModal && cremMapCache){
-        const t = buildCremTimesForModal(item, cremMapCache);
-        fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
+      if (!isRetModal){
+        const t = buildCremTimesForModal(item, cremMap);
+        if (t){
+          fieldsHTML += kvRowLines('화장시간', [t.startLine, t.endLine]);
+        }
       }
 
       return fieldsHTML;
@@ -1153,9 +1117,14 @@
       const selectedDate = datePicker.value || TODAY;
       currentSelectedDate = selectedDate;
 
+      const showCrem = (selectedDate === TODAY);
+
       try{
-        const cremMap = await ensureCremMap();
-        if (myToken !== loadToken) return;
+        let cremMap = null;
+        if (showCrem){
+          cremMap = await ensureCremMap();
+          if (myToken !== loadToken) return;
+        }
 
         const data = await ensureData(currentSource);
         if (myToken !== loadToken) return;
@@ -1187,7 +1156,6 @@
         if (currentSource === 'nature') displayData = mergeCoupleRows(filtered);
 
         displayData.forEach((it, i) => { it._pos = i; });
-
         displayData = sortByWorkPriorityStable(displayData, selectedDate, cremMap);
         currentDisplayData = displayData;
 
@@ -1242,7 +1210,6 @@
             <li>
               <div class="row ${leftCls}">
                 <div class="barL"></div>
-
                 <div class="rowR">
                   <div class="rowTop">
                     <button class="mainBtn" onclick="openSheet(${idx})" aria-label="상세 보기">
@@ -1251,13 +1218,11 @@
                         <div class="name">${escapeHtml(displayName)}</div>
                       </div>
                     </button>
-
                     <div class="toggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" onclick="applyRowToggle(${idx}, event)">
                       <div class="${swCls}"></div>
                       <span>${escapeHtml(rowLabel)}</span>
                     </div>
                   </div>
-
                   ${cremHTML}
                 </div>
               </div>
@@ -1283,10 +1248,8 @@
     function switchSource(sourceKey){
       currentSource = sourceKey;
       localStorage.setItem(STORAGE_KEYS.source, sourceKey);
-
       tabHouse.classList.toggle('active', sourceKey === 'house');
       tabNature.classList.toggle('active', sourceKey === 'nature');
-
       load();
     }
 
@@ -1294,13 +1257,17 @@
       const item = currentDisplayData[index];
       if (!item) return;
 
+      const selectedDate = datePicker.value || TODAY;
+      const showCrem = (selectedDate === TODAY);
+      const cremMap = showCrem ? cremMapCache : null;
+
       const sourceLabelText = SOURCES[currentSource].label;
       const headerNo = (currentSource === 'house')
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
 
       mTitleLine.textContent = `${sourceLabelText} · ${headerNo}`;
-      mFields.innerHTML = buildFields(item);
+      mFields.innerHTML = buildFields(item, cremMap);
 
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden','false');
@@ -1312,10 +1279,7 @@
     }
 
     function applyRowToggle(index, e){
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
+      if (e) { e.preventDefault(); e.stopPropagation(); }
 
       const item = currentDisplayData[index];
       if (!item) return;
