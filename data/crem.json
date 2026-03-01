@@ -1,35 +1,11 @@
 [
   {
-    "deadId": "1653354",
-    "deadName": "황상근",
+    "deadId": "1653378",
+    "deadName": "김인찬",
     "burnDate": "2026-03-01",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
-    "deadId": "1653376",
-    "deadName": "김영술",
-    "burnDate": "2026-03-01",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
-    "deadId": "1653377",
-    "deadName": "정영출",
-    "burnDate": "2026-03-01",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
-    "deadId": "1653389",
-    "deadName": "심재호",
-    "burnDate": "2026-03-01",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
+    "burnChasu": "06"
   },
   {
     "deadId": "1653382",
@@ -38,6 +14,14 @@
     "burnStrTime": null,
     "burnEndTime": null,
     "burnChasu": "06"
+  },
+  {
+    "deadId": "1653384",
+    "deadName": "유춘옥",
+    "burnDate": "2026-03-01",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "07"
   },
   {
     "deadId": "1653383",
@@ -166,5 +150,37 @@
     "burnStrTime": "10:28",
     "burnEndTime": null,
     "burnChasu": "04"
+  },
+  {
+    "deadId": "1653377",
+    "deadName": "정영출",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "11:17",
+    "burnEndTime": null,
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653354",
+    "deadName": "황상근",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "11:19",
+    "burnEndTime": null,
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653389",
+    "deadName": "심재호",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "11:21",
+    "burnEndTime": null,
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653376",
+    "deadName": "김영술",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "11:25",
+    "burnEndTime": null,
+    "burnChasu": "05"
   }
 ]
