@@ -172,15 +172,7 @@
     "deadName": "김인찬",
     "burnDate": "2026-03-01",
     "burnStrTime": "12:21",
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
-    "deadId": "1653342",
-    "deadName": "최판숙",
-    "burnDate": "2026-03-01",
-    "burnStrTime": "12:24",
-    "burnEndTime": null,
+    "burnEndTime": "13:28",
     "burnChasu": "06"
   },
   {
@@ -190,5 +182,13 @@
     "burnStrTime": "12:24",
     "burnEndTime": "12:56",
     "burnChasu": "07"
+  },
+  {
+    "deadId": "1653342",
+    "deadName": "최판숙",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "12:24",
+    "burnEndTime": "13:33",
+    "burnChasu": "06"
   }
 ]
