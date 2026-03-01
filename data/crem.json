@@ -8,24 +8,8 @@
     "burnChasu": "02"
   },
   {
-    "deadId": "1653388",
-    "deadName": "박화선",
-    "burnDate": "2026-03-02",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653392",
     "deadName": "김시한",
-    "burnDate": "2026-03-02",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
-    "deadId": "1653394",
-    "deadName": "이재석",
     "burnDate": "2026-03-02",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -62,5 +46,21 @@
     "burnStrTime": "07:25",
     "burnEndTime": null,
     "burnChasu": "01"
+  },
+  {
+    "deadId": "1653394",
+    "deadName": "이재석",
+    "burnDate": "2026-03-02",
+    "burnStrTime": "08:17",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653388",
+    "deadName": "박화선",
+    "burnDate": "2026-03-02",
+    "burnStrTime": "08:19",
+    "burnEndTime": null,
+    "burnChasu": "02"
   }
 ]
