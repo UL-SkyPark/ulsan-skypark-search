@@ -1,5 +1,21 @@
 [
   {
+    "deadId": "1653345",
+    "deadName": "박경현",
+    "burnDate": "2026-03-01",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653365",
+    "deadName": "정해원",
+    "burnDate": "2026-03-01",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
     "deadId": "1653367",
     "deadName": "손순남",
     "burnDate": "2026-03-01",
@@ -60,7 +76,7 @@
     "deadName": "박귀남",
     "burnDate": "2026-03-01",
     "burnStrTime": "08:26",
-    "burnEndTime": null,
+    "burnEndTime": "09:46",
     "burnChasu": "02"
   },
   {
@@ -68,7 +84,7 @@
     "deadName": "최진식",
     "burnDate": "2026-03-01",
     "burnStrTime": "08:30",
-    "burnEndTime": null,
+    "burnEndTime": "09:51",
     "burnChasu": "02"
   },
   {
