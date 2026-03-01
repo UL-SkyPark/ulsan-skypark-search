@@ -8,20 +8,20 @@
     "burnChasu": "04"
   },
   {
-    "deadId": "1653345",
-    "deadName": "박경현",
+    "deadId": "1653354",
+    "deadName": "황상근",
     "burnDate": "2026-03-01",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "04"
+    "burnChasu": "05"
   },
   {
-    "deadId": "1653365",
-    "deadName": "정해원",
+    "deadId": "1653377",
+    "deadName": "정영출",
     "burnDate": "2026-03-01",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "04"
+    "burnChasu": "05"
   },
   {
     "deadId": "1653383",
@@ -124,6 +124,22 @@
     "deadName": "손순남",
     "burnDate": "2026-03-01",
     "burnStrTime": "10:15",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653365",
+    "deadName": "정해원",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "10:18",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653345",
+    "deadName": "박경현",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "10:22",
     "burnEndTime": null,
     "burnChasu": "04"
   }
