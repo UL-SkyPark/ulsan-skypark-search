@@ -8,6 +8,14 @@
     "burnChasu": "03"
   },
   {
+    "deadId": "1653385",
+    "deadName": "김말식",
+    "burnDate": "2026-03-02",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
     "deadId": "1653426",
     "deadName": "배성민",
     "burnDate": "2026-03-02",
@@ -28,7 +36,7 @@
     "deadName": "전경자",
     "burnDate": "2026-03-02",
     "burnStrTime": "07:21",
-    "burnEndTime": null,
+    "burnEndTime": "08:53",
     "burnChasu": "01"
   },
   {
@@ -36,7 +44,7 @@
     "deadName": "임재봉",
     "burnDate": "2026-03-02",
     "burnStrTime": "07:25",
-    "burnEndTime": null,
+    "burnEndTime": "08:53",
     "burnChasu": "01"
   },
   {
