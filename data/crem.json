@@ -16,18 +16,26 @@
     "burnChasu": "01"
   },
   {
-    "deadId": "1653396",
-    "deadName": "이성윤",
+    "deadId": "1653394",
+    "deadName": "이재석",
     "burnDate": "2026-03-02",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "01"
+    "burnChasu": "02"
   },
   {
     "deadId": "1653426",
     "deadName": "배성민",
     "burnDate": "2026-03-02",
     "burnStrTime": "07:14",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653396",
+    "deadName": "이성윤",
+    "burnDate": "2026-03-02",
+    "burnStrTime": "07:18",
     "burnEndTime": null,
     "burnChasu": "01"
   }
