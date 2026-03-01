@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653330",
-    "deadName": "이성희",
-    "burnDate": "2026-03-01",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653341",
     "deadName": "최문영",
     "burnDate": "2026-03-01",
@@ -86,5 +78,13 @@
     "burnStrTime": "08:30",
     "burnEndTime": null,
     "burnChasu": "02"
+  },
+  {
+    "deadId": "1653330",
+    "deadName": "이성희",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "09:13",
+    "burnEndTime": null,
+    "burnChasu": "03"
   }
 ]
