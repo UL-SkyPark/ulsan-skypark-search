@@ -1,11 +1,11 @@
 [
   {
-    "deadId": "1653362",
-    "deadName": "김동하",
+    "deadId": "1653367",
+    "deadName": "손순남",
     "burnDate": "2026-03-01",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "03"
+    "burnChasu": "04"
   },
   {
     "deadId": "1653383",
@@ -92,6 +92,14 @@
     "deadName": "황인남",
     "burnDate": "2026-03-01",
     "burnStrTime": "09:22",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653362",
+    "deadName": "김동하",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "09:31",
     "burnEndTime": null,
     "burnChasu": "03"
   }
