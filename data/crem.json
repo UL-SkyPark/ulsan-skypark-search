@@ -1,15 +1,7 @@
 [
   {
-    "deadId": "1653341",
-    "deadName": "최문영",
-    "burnDate": "2026-03-01",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
-    "deadId": "1653364",
-    "deadName": "황인남",
+    "deadId": "1653362",
+    "deadName": "김동하",
     "burnDate": "2026-03-01",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -84,6 +76,22 @@
     "deadName": "이성희",
     "burnDate": "2026-03-01",
     "burnStrTime": "09:13",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653341",
+    "deadName": "최문영",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "09:17",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653364",
+    "deadName": "황인남",
+    "burnDate": "2026-03-01",
+    "burnStrTime": "09:22",
     "burnEndTime": null,
     "burnChasu": "03"
   }
