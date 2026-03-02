@@ -8,14 +8,6 @@
     "burnChasu": "04"
   },
   {
-    "deadId": "1653401",
-    "deadName": "최윤자",
-    "burnDate": "2026-03-02",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653402",
     "deadName": "안희숙",
     "burnDate": "2026-03-02",
@@ -126,5 +118,13 @@
     "burnStrTime": "09:30",
     "burnEndTime": null,
     "burnChasu": "03"
+  },
+  {
+    "deadId": "1653401",
+    "deadName": "최윤자",
+    "burnDate": "2026-03-02",
+    "burnStrTime": "10:19",
+    "burnEndTime": null,
+    "burnChasu": "04"
   }
 ]
