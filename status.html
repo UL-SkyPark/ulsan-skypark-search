@@ -388,6 +388,43 @@
       letter-spacing: var(--ls-base);
     }
 
+    /* ✅ 고인명 옆 배지 */
+    .nameLine{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .nameLine .name{
+      min-width: 0;
+    }
+    .tag{
+      flex: 0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,224,234,.95);
+      background: rgba(255,255,255,.92);
+      font-weight: 950;
+      font-size: var(--fs-xs);
+      line-height: var(--lh-tight);
+      letter-spacing: var(--ls-base);
+      color: rgba(15,23,42,.78);
+      white-space: nowrap;
+    }
+    .tag.self{
+      border-color: rgba(31,78,121,.28);
+      background: linear-gradient(180deg, rgba(31,78,121,.14), rgba(47,111,173,.10));
+      color: rgba(31,78,121,.95);
+    }
+    .tag.orphan{
+      border-color: rgba(180,83,9,.28);
+      background: linear-gradient(180deg, rgba(180,83,9,.16), rgba(245,158,11,.10));
+      color: rgba(180,83,9,.95);
+    }
+
     ul{ list-style:none; padding:0; margin:0; }
 
     .row{
@@ -940,6 +977,9 @@
     const dataCache = { house: null, nature: null };
     let cremMapCache = null;
 
+    // ✅ funeral cache 추가
+    let funeralMapCache = null;
+
     const ensureData = async (key, force=false) => {
       if (dataCache[key] && !force) return dataCache[key];
       const raw = await fetchJson(SOURCES[key].url, force);
@@ -957,6 +997,25 @@
         if (id) map.set(id, r);
       }
       cremMapCache = map;
+      return map;
+    };
+
+    // ✅ funeral.json 로드: deadId -> {deadName, dcGubun}
+    const ensureFuneral = async (force=false) => {
+      if (funeralMapCache && !force) return funeralMapCache;
+      const raw = await fetchJson("./data/funeral.json", force);
+      const arr = Array.isArray(raw) ? raw : [];
+      const map = new Map();
+      for (const r of arr){
+        const id = String(r?.deadId ?? '').trim();
+        if (!id) continue;
+        map.set(id, {
+          deadId: id,
+          deadName: String(r?.deadName ?? '').trim(),
+          dcGubun: String(r?.dcGubun ?? '').trim(),
+        });
+      }
+      funeralMapCache = map;
       return map;
     };
 
@@ -1114,7 +1173,7 @@
       const en = fmtTime(rec?.burnEndTime);
 
       if (!st){
-        const label = safeChasu > 0 ? `${pad2(chasuRaw)}회차, 화장접수` : `회차미정, 화장접수`;
+        const label = safeChasu > 0 ? `${pad2(chasuRaw)}회차, 화장접수` : `${pad2(chasuRaw)}회차, 화장접수`;
         return { type:'recv', chasu:safeChasu, start:'화장접수', end:'', text: label };
       }
 
@@ -1197,6 +1256,54 @@
       `;
     };
 
+    // ✅ 이름/ID 기준 “자체/무연고” 배지 판별
+    const normNameKey = (s) => String(s ?? '').replace(/\s+/g,'').trim();
+    const nameKeySetFromDisplay = (displayName) => {
+      const parts = String(displayName ?? '')
+        .split('/')
+        .map(x => normNameKey(x));
+      const set = new Set();
+      for (const p of parts){
+        if (p) set.add(p);
+      }
+      return set;
+    };
+
+    const funeralBadgeLabelForItem = (item, displayName, funeralMap) => {
+      if (!funeralMap) return null;
+
+      const ids = uniqDeadIds(item);
+      if (!ids.length) return null;
+
+      const nameSet = nameKeySetFromDisplay(displayName);
+
+      let hasSelf = false;
+      for (const id of ids){
+        const rec = funeralMap.get(String(id ?? '').trim());
+        if (!rec) continue;
+
+        const recNameKey = normNameKey(rec.deadName);
+        if (!recNameKey) continue;
+
+        // 조건: deadId + deadName 둘 다 일치해야 “자체”
+        if (!nameSet.has(recNameKey)) continue;
+
+        // 무연고 우선
+        if (String(rec.dcGubun ?? '').trim() === 'TCM1200099'){
+          return '무연고';
+        }
+        hasSelf = true;
+      }
+
+      return hasSelf ? '자체' : null;
+    };
+
+    const badgeHTML = (label) => {
+      if (!label) return '';
+      const cls = (label === '무연고') ? 'tag orphan' : 'tag self';
+      return `<span class="${cls}">${esc(label)}</span>`;
+    };
+
     /* =========
        State
        ========= */
@@ -1276,6 +1383,7 @@
     let renderedCount = 0;
     let observer = null;
     let lastCremMapForRender = null;
+    let lastFuneralMapForRender = null;
 
     const resetInfinite = () => {
       renderedCount = 0;
@@ -1325,7 +1433,7 @@
       `;
     };
 
-    const rowHTML = (item, idx, selected, cremMap) => {
+    const rowHTML = (item, idx, selected, cremMap, funeralMap) => {
       const sid = itemId(currentSource, item);
       const mode = (currentSource === 'house' && isRetOn(item, selected)) ? 'ret' : 'recv';
 
@@ -1356,6 +1464,9 @@
         ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
         : String(item.deadName ?? '-');
 
+      const badgeLabel = funeralBadgeLabelForItem(item, displayName, funeralMap);
+      const tag = badgeHTML(badgeLabel);
+
       return `
         <li>
           <div class="row ${leftCls(currentSource, mode, status)}">
@@ -1365,7 +1476,10 @@
                 <button class="mainBtn" type="button" data-open="${idx}" aria-label="상세 보기">
                   <div class="main">
                     <div class="no">${esc(displayId)}</div>
-                    <div class="name">${esc(displayName)}</div>
+                    <div class="nameLine">
+                      <div class="name">${esc(displayName)}</div>
+                      ${tag}
+                    </div>
                   </div>
                 </button>
                 <div class="toggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" data-toggle="${idx}">
@@ -1391,6 +1505,8 @@
       if (!total) return;
 
       const cremMap = lastCremMapForRender;
+      const funeralMap = lastFuneralMapForRender;
+
       const ul = document.getElementById('listUL');
       if (!ul) return;
 
@@ -1406,7 +1522,7 @@
 
       let chunk = '';
       for (let i = from; i < to; i++){
-        chunk += rowHTML(currentDisplayData[i], i, selected, cremMap);
+        chunk += rowHTML(currentDisplayData[i], i, selected, cremMap, funeralMap);
       }
       ul.insertAdjacentHTML('beforeend', chunk);
 
@@ -1436,8 +1552,14 @@
 
       const showCrem = (selected === TODAY);
       let cremMap = null;
+      let funeralMap = null;
 
       try{
+        // ✅ funeral은 배지 판별용이므로 항상 로드
+        funeralMap = await ensureFuneral(force);
+        if (myToken !== loadToken) return;
+
+        // crem은 "오늘"만
         if (showCrem){
           cremMap = await ensureCrem(force);
           if (myToken !== loadToken) return;
@@ -1480,6 +1602,7 @@
 
         resetInfinite();
         lastCremMapForRender = cremMap;
+        lastFuneralMapForRender = funeralMap;
 
         listArea.innerHTML = `
           <div class="list">
@@ -1554,6 +1677,7 @@
         dataCache.house = null;
         dataCache.nature = null;
         cremMapCache = null;
+        funeralMapCache = null;
 
         await load(true);
         if (fromUI) toast('새로고침 완료', 1400);
