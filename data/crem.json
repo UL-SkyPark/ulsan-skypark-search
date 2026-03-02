@@ -16,14 +16,6 @@
     "burnChasu": "04"
   },
   {
-    "deadId": "1653403",
-    "deadName": "변재복",
-    "burnDate": "2026-03-02",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653426",
     "deadName": "배성민",
     "burnDate": "2026-03-02",
@@ -124,6 +116,14 @@
     "deadName": "최윤자",
     "burnDate": "2026-03-02",
     "burnStrTime": "10:19",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653403",
+    "deadName": "변재복",
+    "burnDate": "2026-03-02",
+    "burnStrTime": "10:24",
     "burnEndTime": null,
     "burnChasu": "04"
   }
