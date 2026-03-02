@@ -8,32 +8,16 @@
     "burnChasu": "03"
   },
   {
-    "deadId": "1653380",
-    "deadName": "설길수",
-    "burnDate": "2026-03-02",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
-    "deadId": "1653385",
-    "deadName": "김말식",
-    "burnDate": "2026-03-02",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
-    "deadId": "1653427",
-    "deadName": "이인순",
-    "burnDate": "2026-03-02",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653401",
     "deadName": "최윤자",
+    "burnDate": "2026-03-02",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653403",
+    "deadName": "변재복",
     "burnDate": "2026-03-02",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -102,5 +86,29 @@
     "burnStrTime": "08:25",
     "burnEndTime": null,
     "burnChasu": "02"
+  },
+  {
+    "deadId": "1653380",
+    "deadName": "설길수",
+    "burnDate": "2026-03-02",
+    "burnStrTime": "09:16",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653385",
+    "deadName": "김말식",
+    "burnDate": "2026-03-02",
+    "burnStrTime": "09:22",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653427",
+    "deadName": "이인순",
+    "burnDate": "2026-03-02",
+    "burnStrTime": "09:24",
+    "burnEndTime": null,
+    "burnChasu": "03"
   }
 ]
