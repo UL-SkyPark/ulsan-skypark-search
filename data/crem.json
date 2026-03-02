@@ -8,8 +8,8 @@
     "burnChasu": "02"
   },
   {
-    "deadId": "1653459",
-    "deadName": "정영자",
+    "deadId": "1653456",
+    "deadName": "유영찬",
     "burnDate": "2026-03-03",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -46,5 +46,13 @@
     "burnStrTime": "07:57",
     "burnEndTime": null,
     "burnChasu": "01"
+  },
+  {
+    "deadId": "1653459",
+    "deadName": "정영자",
+    "burnDate": "2026-03-03",
+    "burnStrTime": "08:23",
+    "burnEndTime": null,
+    "burnChasu": "02"
   }
 ]
