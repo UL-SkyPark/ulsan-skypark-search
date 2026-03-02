@@ -1,18 +1,10 @@
 [
   {
-    "deadId": "1653457",
-    "deadName": "이범열",
-    "burnDate": "2026-03-03",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653460",
     "deadName": "김순례",
     "burnDate": "2026-03-03",
     "burnStrTime": "07:18",
-    "burnEndTime": null,
+    "burnEndTime": "08:43",
     "burnChasu": "01"
   },
   {
@@ -20,7 +12,7 @@
     "deadName": "김무식",
     "burnDate": "2026-03-03",
     "burnStrTime": "07:33",
-    "burnEndTime": null,
+    "burnEndTime": "08:43",
     "burnChasu": "01"
   },
   {
@@ -60,6 +52,14 @@
     "deadName": "유영찬",
     "burnDate": "2026-03-03",
     "burnStrTime": "08:34",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653457",
+    "deadName": "이범열",
+    "burnDate": "2026-03-03",
+    "burnStrTime": "08:41",
     "burnEndTime": null,
     "burnChasu": "02"
   }
