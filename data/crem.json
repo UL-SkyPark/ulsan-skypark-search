@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653453",
-    "deadName": "고인섭",
-    "burnDate": "2026-03-03",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653460",
     "deadName": "김순례",
     "burnDate": "2026-03-03",
@@ -102,5 +94,13 @@
     "burnStrTime": "09:45",
     "burnEndTime": null,
     "burnChasu": "03"
+  },
+  {
+    "deadId": "1653453",
+    "deadName": "고인섭",
+    "burnDate": "2026-03-03",
+    "burnStrTime": "10:18",
+    "burnEndTime": null,
+    "burnChasu": "04"
   }
 ]
