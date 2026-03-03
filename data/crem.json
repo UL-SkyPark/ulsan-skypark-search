@@ -1,21 +1,5 @@
 [
   {
-    "deadId": "1653444",
-    "deadName": "최경옥",
-    "burnDate": "2026-03-03",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
-    "deadId": "1653468",
-    "deadName": "임서운",
-    "burnDate": "2026-03-03",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653460",
     "deadName": "김순례",
     "burnDate": "2026-03-03",
@@ -92,6 +76,22 @@
     "deadName": "임순득",
     "burnDate": "2026-03-03",
     "burnStrTime": "09:24",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653468",
+    "deadName": "임서운",
+    "burnDate": "2026-03-03",
+    "burnStrTime": "09:41",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653444",
+    "deadName": "최경옥",
+    "burnDate": "2026-03-03",
+    "burnStrTime": "09:45",
     "burnEndTime": null,
     "burnChasu": "03"
   }
