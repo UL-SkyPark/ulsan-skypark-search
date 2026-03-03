@@ -8,14 +8,6 @@
     "burnChasu": "03"
   },
   {
-    "deadId": "1653465",
-    "deadName": "이홍우",
-    "burnDate": "2026-03-03",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653460",
     "deadName": "김순례",
     "burnDate": "2026-03-03",
@@ -44,7 +36,7 @@
     "deadName": "김한욱",
     "burnDate": "2026-03-03",
     "burnStrTime": "07:57",
-    "burnEndTime": null,
+    "burnEndTime": "09:19",
     "burnChasu": "01"
   },
   {
@@ -78,5 +70,13 @@
     "burnStrTime": "08:41",
     "burnEndTime": null,
     "burnChasu": "02"
+  },
+  {
+    "deadId": "1653465",
+    "deadName": "이홍우",
+    "burnDate": "2026-03-03",
+    "burnStrTime": "09:18",
+    "burnEndTime": null,
+    "burnChasu": "03"
   }
 ]
