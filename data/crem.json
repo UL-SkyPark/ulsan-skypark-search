@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653469",
-    "deadName": "방옥태",
-    "burnDate": "2026-03-03",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653460",
     "deadName": "김순례",
     "burnDate": "2026-03-03",
@@ -134,5 +126,13 @@
     "burnStrTime": "11:58",
     "burnEndTime": null,
     "burnChasu": "07"
+  },
+  {
+    "deadId": "1653469",
+    "deadName": "방옥태",
+    "burnDate": "2026-03-03",
+    "burnStrTime": "12:17",
+    "burnEndTime": null,
+    "burnChasu": "06"
   }
 ]
