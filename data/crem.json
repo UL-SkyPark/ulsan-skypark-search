@@ -1,11 +1,11 @@
 [
   {
-    "deadId": "1653391",
-    "deadName": "신종구",
+    "deadId": "1653469",
+    "deadName": "방옥태",
     "burnDate": "2026-03-03",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "07"
+    "burnChasu": "06"
   },
   {
     "deadId": "1653460",
@@ -126,5 +126,13 @@
     "burnStrTime": "11:33",
     "burnEndTime": null,
     "burnChasu": "05"
+  },
+  {
+    "deadId": "1653391",
+    "deadName": "신종구",
+    "burnDate": "2026-03-03",
+    "burnStrTime": "11:58",
+    "burnEndTime": null,
+    "burnChasu": "07"
   }
 ]
