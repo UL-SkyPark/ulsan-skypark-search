@@ -1,5 +1,13 @@
 [
   {
+    "deadId": "1653391",
+    "deadName": "신종구",
+    "burnDate": "2026-03-03",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
     "deadId": "1653460",
     "deadName": "김순례",
     "burnDate": "2026-03-03",
@@ -100,7 +108,7 @@
     "deadName": "고인섭",
     "burnDate": "2026-03-03",
     "burnStrTime": "10:18",
-    "burnEndTime": null,
+    "burnEndTime": "11:42",
     "burnChasu": "04"
   },
   {
@@ -108,7 +116,7 @@
     "deadName": "김난희",
     "burnDate": "2026-03-03",
     "burnStrTime": "10:34",
-    "burnEndTime": null,
+    "burnEndTime": "11:42",
     "burnChasu": "04"
   },
   {
