@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653490",
-    "deadName": "이금자",
-    "burnDate": "2026-03-04",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653482",
     "deadName": "김재학",
     "burnDate": "2026-03-04",
@@ -52,6 +44,14 @@
     "deadName": "김달용",
     "burnDate": "2026-03-04",
     "burnStrTime": "08:27",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653490",
+    "deadName": "이금자",
+    "burnDate": "2026-03-04",
+    "burnStrTime": "08:33",
     "burnEndTime": null,
     "burnChasu": "02"
   }
