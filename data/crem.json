@@ -1,17 +1,17 @@
 [
   {
-    "deadId": "1653458",
-    "deadName": "정경열",
-    "burnDate": "2026-03-04",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "01"
-  },
-  {
     "deadId": "1653482",
     "deadName": "김재학",
     "burnDate": "2026-03-04",
     "burnStrTime": "07:34",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653458",
+    "deadName": "정경열",
+    "burnDate": "2026-03-04",
+    "burnStrTime": "07:44",
     "burnEndTime": null,
     "burnChasu": "01"
   }
