@@ -8,6 +8,14 @@
     "burnChasu": "03"
   },
   {
+    "deadId": "1653523",
+    "deadName": "장동호",
+    "burnDate": "2026-03-05",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
     "deadId": "1653512",
     "deadName": "김정배",
     "burnDate": "2026-03-05",
@@ -28,7 +36,7 @@
     "deadName": "안상모",
     "burnDate": "2026-03-05",
     "burnStrTime": "07:22",
-    "burnEndTime": null,
+    "burnEndTime": "08:41",
     "burnChasu": "01"
   },
   {
