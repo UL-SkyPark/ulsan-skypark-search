@@ -1,15 +1,15 @@
 [
   {
-    "deadId": "1653480",
-    "deadName": "안상모",
+    "deadId": "1653514",
+    "deadName": "윤병민",
     "burnDate": "2026-03-05",
     "burnStrTime": null,
     "burnEndTime": null,
     "burnChasu": "01"
   },
   {
-    "deadId": "1653514",
-    "deadName": "윤병민",
+    "deadId": "1653521",
+    "deadName": "강명순",
     "burnDate": "2026-03-05",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -20,6 +20,14 @@
     "deadName": "홍순모",
     "burnDate": "2026-03-05",
     "burnStrTime": "07:18",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653480",
+    "deadName": "안상모",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "07:22",
     "burnEndTime": null,
     "burnChasu": "01"
   }
