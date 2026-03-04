@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653519",
-    "deadName": "김태경",
-    "burnDate": "2026-03-05",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653500",
     "deadName": "차의자",
     "burnDate": "2026-03-05",
@@ -28,7 +20,7 @@
     "deadName": "홍순모",
     "burnDate": "2026-03-05",
     "burnStrTime": "07:18",
-    "burnEndTime": null,
+    "burnEndTime": "08:38",
     "burnChasu": "01"
   },
   {
@@ -76,6 +68,14 @@
     "deadName": "손병수",
     "burnDate": "2026-03-05",
     "burnStrTime": "08:27",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653519",
+    "deadName": "김태경",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "08:38",
     "burnEndTime": null,
     "burnChasu": "02"
   }
