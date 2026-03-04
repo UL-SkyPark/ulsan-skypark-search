@@ -8,10 +8,18 @@
     "burnChasu": "01"
   },
   {
+    "deadId": "1653514",
+    "deadName": "윤병민",
+    "burnDate": "2026-03-05",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
     "deadId": "1653492",
     "deadName": "홍순모",
     "burnDate": "2026-03-05",
-    "burnStrTime": null,
+    "burnStrTime": "07:18",
     "burnEndTime": null,
     "burnChasu": "01"
   }
