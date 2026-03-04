@@ -208992,19 +208992,19 @@
     "retDate": null
   },
   {
-    "deadId": "1653472",
-    "strDate": "2026-03-04",
-    "ensNo": null,
-    "deadName": "유재구",
-    "applName": "유종호",
-    "retDate": null
-  },
-  {
     "deadId": "1653453",
     "strDate": "2026-03-04",
     "ensNo": "1추모의집-52실-개인단-17302",
     "deadName": "고인섭",
     "applName": "고우람",
+    "retDate": null
+  },
+  {
+    "deadId": "1653472",
+    "strDate": "2026-03-04",
+    "ensNo": "1추모의집-62실-개인단-21986",
+    "deadName": "유재구",
+    "applName": "유종호",
     "retDate": null
   }
 ]
