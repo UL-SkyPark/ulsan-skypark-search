@@ -8,14 +8,6 @@
     "burnChasu": "02"
   },
   {
-    "deadId": "1653517",
-    "deadName": "김기선",
-    "burnDate": "2026-03-05",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653519",
     "deadName": "김태경",
     "burnDate": "2026-03-05",
@@ -62,5 +54,13 @@
     "burnStrTime": "07:38",
     "burnEndTime": null,
     "burnChasu": "01"
+  },
+  {
+    "deadId": "1653517",
+    "deadName": "김기선",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "08:19",
+    "burnEndTime": null,
+    "burnChasu": "02"
   }
 ]
