@@ -16,12 +16,12 @@
     "burnChasu": "02"
   },
   {
-    "deadId": "1653520",
-    "deadName": "이순이",
+    "deadId": "1653500",
+    "deadName": "차의자",
     "burnDate": "2026-03-05",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "02"
+    "burnChasu": "03"
   },
   {
     "deadId": "1653492",
@@ -60,6 +60,14 @@
     "deadName": "김기선",
     "burnDate": "2026-03-05",
     "burnStrTime": "08:19",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653520",
+    "deadName": "이순이",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "08:23",
     "burnEndTime": null,
     "burnChasu": "02"
   }
