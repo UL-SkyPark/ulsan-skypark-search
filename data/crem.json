@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653524",
-    "deadName": "이안발",
-    "burnDate": "2026-03-05",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653492",
     "deadName": "홍순모",
     "burnDate": "2026-03-05",
@@ -100,7 +92,7 @@
     "deadName": "민태식",
     "burnDate": "2026-03-05",
     "burnStrTime": "09:27",
-    "burnEndTime": null,
+    "burnEndTime": "10:40",
     "burnChasu": "03"
   },
   {
@@ -108,7 +100,7 @@
     "deadName": "조영숙",
     "burnDate": "2026-03-05",
     "burnStrTime": "09:31",
-    "burnEndTime": null,
+    "burnEndTime": "10:42",
     "burnChasu": "03"
   },
   {
@@ -116,7 +108,7 @@
     "deadName": "김두국",
     "burnDate": "2026-03-05",
     "burnStrTime": "10:20",
-    "burnEndTime": null,
+    "burnEndTime": "11:41",
     "burnChasu": "04"
   },
   {
@@ -124,7 +116,7 @@
     "deadName": "강영화",
     "burnDate": "2026-03-05",
     "burnStrTime": "10:28",
-    "burnEndTime": null,
+    "burnEndTime": "11:42",
     "burnChasu": "04"
   },
   {
@@ -132,7 +124,7 @@
     "deadName": "김태원",
     "burnDate": "2026-03-05",
     "burnStrTime": "10:28",
-    "burnEndTime": null,
+    "burnEndTime": "11:52",
     "burnChasu": "07"
   },
   {
@@ -140,7 +132,111 @@
     "deadName": "김인도",
     "burnDate": "2026-03-05",
     "burnStrTime": "10:36",
-    "burnEndTime": null,
+    "burnEndTime": "12:00",
     "burnChasu": "04"
+  },
+  {
+    "deadId": "1653524",
+    "deadName": "이안발",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "10:44",
+    "burnEndTime": "12:10",
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653527",
+    "deadName": "백승태",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "11:19",
+    "burnEndTime": "12:33",
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653528",
+    "deadName": "이채익",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "11:22",
+    "burnEndTime": "12:39",
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653526",
+    "deadName": "이점심",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "11:27",
+    "burnEndTime": "12:42",
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653525",
+    "deadName": "손성우",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "11:31",
+    "burnEndTime": "12:48",
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653532",
+    "deadName": "박원근",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "12:18",
+    "burnEndTime": "12:54",
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653485",
+    "deadName": "황순녀",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "12:18",
+    "burnEndTime": "13:34",
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653476",
+    "deadName": "이배남",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "12:21",
+    "burnEndTime": "13:44",
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653479",
+    "deadName": "김왕중",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "12:28",
+    "burnEndTime": "13:44",
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653508",
+    "deadName": "김문찬",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "12:41",
+    "burnEndTime": "13:23",
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653531",
+    "deadName": "신정은",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "12:41",
+    "burnEndTime": "14:01",
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653544",
+    "deadName": "김수임",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "12:46",
+    "burnEndTime": "13:10",
+    "burnChasu": "08"
+  },
+  {
+    "deadId": "1653545",
+    "deadName": "김도성",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "12:46",
+    "burnEndTime": "13:10",
+    "burnChasu": "08"
   }
 ]
