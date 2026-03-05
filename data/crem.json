@@ -8,14 +8,6 @@
     "burnChasu": "04"
   },
   {
-    "deadId": "1653510",
-    "deadName": "김두국",
-    "burnDate": "2026-03-05",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653513",
     "deadName": "김인도",
     "burnDate": "2026-03-05",
@@ -134,5 +126,13 @@
     "burnStrTime": "09:31",
     "burnEndTime": null,
     "burnChasu": "03"
+  },
+  {
+    "deadId": "1653510",
+    "deadName": "김두국",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "10:20",
+    "burnEndTime": null,
+    "burnChasu": "04"
   }
 ]
