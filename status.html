@@ -28,7 +28,7 @@
       --fabRight: 14px;
       --fabBottom: 14px;
 
-      /* ✅ 전체 타이포 스케일(기기/해상도에 따라 자동 조절) */
+      /* ✅ 타입 스케일 */
       --fs-xxs: clamp(.74rem, 2.6vw, .82rem);
       --fs-xs : clamp(.80rem, 2.8vw, .90rem);
       --fs-sm : clamp(.88rem, 3.0vw, .98rem);
@@ -43,24 +43,33 @@
       --ls-tight: -0.015em;
       --ls-base : -0.01em;
 
-      /* ✅ iOS 보정용 스케일 (기본 1 = 변경 없음) */
-      --scale-font: 1;
+      /* ✅ iOS 최적화 스케일(기본=변경없음) */
+      --scale-font: 1; /* 글자 */
+      --scale-ui  : 1; /* 간격/패딩/버튼 */
+      --scale-lh  : 1; /* 줄간격 */
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     html, body { height:100%; }
 
-    /* ✅ 화면 폭에 따라 “기본 rem”을 자동 보정 + iOS에서만 % 확대 */
+    /* ✅ iOS 보정은 html 클래스에서 걸어야 font-size에 반영됨 */
     html{
       font-size: calc(clamp(14px, 3.6vw, 16px) * var(--scale-font));
       text-size-adjust: 100%;
       -webkit-text-size-adjust: 100%;
     }
 
-    /* ✅ iPhone(iOS 폰): +22% */
-    body.ios-iphone{ --scale-font: 1.22; }
-    /* ✅ iPad(iOS 태블릿): +30% */
-    body.ios-ipad{ --scale-font: 1.30; }
+    /* ✅ iPhone/iPad 스케일 (원하시면 여기 숫자만 조절) */
+    html.ios-iphone{
+      --scale-font: 1.24; /* 폰트 +24% */
+      --scale-ui  : 1.16; /* 간격 +16% */
+      --scale-lh  : 1.10; /* 줄간격 +10% */
+    }
+    html.ios-ipad{
+      --scale-font: 1.18; /* 폰트 +18% */
+      --scale-ui  : 1.10; /* 간격 +10% */
+      --scale-lh  : 1.08; /* 줄간격 +8% */
+    }
 
     body{
       margin:0;
@@ -68,13 +77,12 @@
       background: var(--bg);
       color: var(--text);
 
-      padding: var(--outerPad);
-      padding-bottom: calc(var(--outerPad) + 16px + env(safe-area-inset-bottom));
+      padding: calc(var(--outerPad) * var(--scale-ui));
+      padding-bottom: calc((var(--outerPad) * var(--scale-ui)) + 16px + env(safe-area-inset-bottom));
       overflow-x: hidden;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-y: contain;
-
       text-rendering: optimizeLegibility;
     }
 
@@ -158,32 +166,31 @@
 
     .top{
       position: sticky;
-      top: calc(var(--outerPad) * -1);
+      top: calc((var(--outerPad) * var(--scale-ui)) * -1);
       z-index: 50;
       background: linear-gradient(180deg, #ffffff, #f8fafc);
       border-bottom: 1px solid var(--line);
-      margin: calc(var(--outerPad) * -1);
+      margin: calc((var(--outerPad) * var(--scale-ui)) * -1);
       margin-bottom: 0;
-      padding: var(--outerPad);
-      padding-top: calc(var(--outerPad) + env(safe-area-inset-top) * 0);
+      padding: calc(var(--outerPad) * var(--scale-ui));
+      padding-top: calc((var(--outerPad) * var(--scale-ui)) + env(safe-area-inset-top) * 0);
     }
 
     .header{
-      padding: 14px 16px 10px;
+      padding: calc(14px * var(--scale-ui)) calc(16px * var(--scale-ui)) calc(10px * var(--scale-ui));
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap: 12px;
+      gap: calc(12px * var(--scale-ui));
       flex-wrap: wrap;
     }
 
-    /* ✅ flex overflow 안정화 */
     .brand, .rightInfo, .rowR, .rowTop, .main, .field .v{ min-width: 0; }
 
     .brand{
       display:flex;
       flex-direction:column;
-      gap: 4px;
+      gap: calc(4px * var(--scale-ui));
       min-width: 0;
       flex: 1 1 auto;
     }
@@ -194,7 +201,7 @@
       color: #0f172a;
       word-break: keep-all;
       font-size: var(--fs-xl);
-      line-height: 1.18;
+      line-height: calc(1.18 * var(--scale-lh));
     }
 
     .rightInfo{
@@ -203,7 +210,7 @@
       justify-content:flex-end;
       flex: 0 0 auto;
       margin-left: auto;
-      padding-top: 2px;
+      padding-top: calc(2px * var(--scale-ui));
       min-width: 0;
     }
     .refDate{
@@ -216,9 +223,9 @@
     }
 
     .toolbar{
-      padding: 10px 16px 14px;
+      padding: calc(10px * var(--scale-ui)) calc(16px * var(--scale-ui)) calc(14px * var(--scale-ui));
       display:flex;
-      gap: 10px;
+      gap: calc(10px * var(--scale-ui));
       flex-wrap: wrap;
       align-items: stretch;
     }
@@ -239,12 +246,12 @@
     .seg button{
       border:0;
       background: transparent;
-      padding: 11px 12px;
+      padding: calc(11px * var(--scale-ui)) calc(12px * var(--scale-ui));
       border-radius: 10px;
       font-weight: 950;
       color: rgba(31,42,55,.75);
       cursor: pointer;
-      min-height: 44px;
+      min-height: calc(44px * var(--scale-ui));
       flex: 1;
       white-space: nowrap;
 
@@ -266,7 +273,7 @@
       min-width: 320px;
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: calc(10px * var(--scale-ui));
       align-items: stretch;
     }
 
@@ -274,11 +281,11 @@
       background: #fff;
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: calc(10px * var(--scale-ui)) calc(12px * var(--scale-ui));
       display:flex;
       flex-direction:column;
-      gap: 8px;
-      min-height: 64px;
+      gap: calc(8px * var(--scale-ui));
+      min-height: calc(64px * var(--scale-ui));
       min-width: 0;
     }
     .field .k{
@@ -292,14 +299,13 @@
     .field .v{
       display:flex;
       align-items:center;
-      gap: 8px;
+      gap: calc(8px * var(--scale-ui));
       font-weight: 950;
       color: rgba(31,42,55,.92);
       min-width: 0;
       line-height: var(--lh-tight);
     }
 
-    /* ✅ 날짜 input: “사각 박스(테두리)” 제거 */
     .field input[type="date"]{
       width: 100%;
       border: 0;
@@ -308,7 +314,7 @@
       background: transparent;
       border-radius: 0;
 
-      padding: 6px 0;
+      padding: calc(6px * var(--scale-ui)) 0;
       font-weight: 950;
       color: var(--text);
       font-size: var(--fs-md);
@@ -317,7 +323,7 @@
 
       -webkit-appearance:none;
       appearance:none;
-      min-height: 40px;
+      min-height: calc(40px * var(--scale-ui));
       min-width: 0;
     }
     .field input[type="date"]:focus{
@@ -340,13 +346,13 @@
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: var(--lh-tight);
-      padding: 2px 0;
+      padding: calc(2px * var(--scale-ui)) 0;
       font-size: var(--fs-md);
       min-width: 0;
     }
 
     .content{
-      padding: 12px 16px 16px;
+      padding: calc(12px * var(--scale-ui)) calc(16px * var(--scale-ui)) calc(16px * var(--scale-ui));
       background: linear-gradient(180deg, #ffffff, #f6f8fb);
     }
 
@@ -362,11 +368,11 @@
     }
 
     .list-head{
-      padding: 10px 12px;
+      padding: calc(10px * var(--scale-ui)) calc(12px * var(--scale-ui));
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 10px;
+      gap: calc(10px * var(--scale-ui));
       border-bottom: 1px solid var(--line);
       background: #f8fafc;
       flex-wrap: wrap;
@@ -376,7 +382,7 @@
       color: #0f172a;
       display:flex;
       align-items:center;
-      gap: 10px;
+      gap: calc(10px * var(--scale-ui));
       white-space: nowrap;
 
       font-size: var(--fs-md);
@@ -388,7 +394,7 @@
       font-weight: 950;
       background: #fff;
       border: 1px solid var(--line);
-      padding: 7px 10px;
+      padding: calc(7px * var(--scale-ui)) calc(10px * var(--scale-ui));
       border-radius: 999px;
       color: rgba(31,42,55,.78);
       white-space: nowrap;
@@ -396,22 +402,20 @@
       letter-spacing: var(--ls-base);
     }
 
-    /* ✅ 고인명 옆 배지 */
     .nameLine{
       display:flex;
       align-items:center;
-      gap: 8px;
+      gap: calc(8px * var(--scale-ui));
       min-width: 0;
     }
-    .nameLine .name{
-      min-width: 0;
-    }
+    .nameLine .name{ min-width: 0; }
+
     .tag{
       flex: 0 0 auto;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding: 4px 9px;
+      padding: calc(4px * var(--scale-ui)) calc(9px * var(--scale-ui));
       border-radius: 999px;
       border: 1px solid rgba(217,224,234,.95);
       background: rgba(255,255,255,.92);
@@ -438,8 +442,8 @@
     .row{
       display:grid;
       grid-template-columns: 10px 1fr;
-      gap: 10px;
-      padding: 10px 12px;
+      gap: calc(10px * var(--scale-ui));
+      padding: calc(12px * var(--scale-ui)) calc(12px * var(--scale-ui));
       border-bottom: 1px solid var(--line);
       align-items: stretch;
       background: #fff;
@@ -462,12 +466,12 @@
       min-width: 0;
       display:flex;
       flex-direction:column;
-      gap: 8px;
+      gap: calc(8px * var(--scale-ui));
     }
 
     .rowTop{
       display:flex;
-      gap: 10px;
+      gap: calc(10px * var(--scale-ui));
       align-items:flex-start;
       justify-content:space-between;
       min-width: 0;
@@ -485,7 +489,12 @@
     }
     .mainBtn:active{ background: rgba(31,78,121,.06); }
 
-    .main{ display:flex; flex-direction:column; gap: 6px; min-width: 0; }
+    .main{
+      display:flex;
+      flex-direction:column;
+      gap: calc(6px * var(--scale-ui));
+      min-width: 0;
+    }
 
     .no{
       font-weight: 950;
@@ -500,7 +509,7 @@
       font-weight: 950;
       color: rgba(15,23,42,.92);
       font-size: var(--fs-lg);
-      line-height: 1.22;
+      line-height: calc(1.22 * var(--scale-lh));
       word-break: keep-all;
       letter-spacing: var(--ls-base);
       min-width: 0;
@@ -509,16 +518,17 @@
     .toggle{
       display:flex;
       align-items:center;
-      gap: 8px;
+      gap: calc(8px * var(--scale-ui));
       border: 1px solid var(--line);
       background: #fff;
       border-radius: 999px;
-      padding: 6px 10px;
+      padding: calc(6px * var(--scale-ui)) calc(10px * var(--scale-ui));
       cursor: pointer;
       white-space: nowrap;
       user-select:none;
-      margin-top: 2px;
+      margin-top: calc(2px * var(--scale-ui));
       flex: 0 0 auto;
+      min-height: calc(40px * var(--scale-ui));
     }
     .toggle span{
       font-size: var(--fs-xs);
@@ -528,8 +538,8 @@
       letter-spacing: var(--ls-base);
     }
     .sw{
-      width: 38px;
-      height: 22px;
+      width: calc(38px * var(--scale-ui));
+      height: calc(22px * var(--scale-ui));
       border-radius: 999px;
       border: 1px solid var(--line2);
       background: #eef2f7;
@@ -540,10 +550,10 @@
       content:"";
       position:absolute;
       top: 50%;
-      left: 3px;
+      left: calc(3px * var(--scale-ui));
       transform: translateY(-50%);
-      width: 17px;
-      height: 17px;
+      width: calc(17px * var(--scale-ui));
+      height: calc(17px * var(--scale-ui));
       border-radius: 999px;
       background: #fff;
       border: 1px solid var(--line2);
@@ -553,15 +563,14 @@
       background: rgba(46,125,50,.14);
       border-color: rgba(46,125,50,.22);
     }
-    .sw.on::after{ left: 18px; }
+    .sw.on::after{ left: calc(18px * var(--scale-ui)); }
 
-    /* ✅ 화장 시작/종료 등 정보 라인 안정화 */
-    .cremWrap{ display:flex; flex-direction:column; gap: 4px; min-width:0; }
+    .cremWrap{ display:flex; flex-direction:column; gap: calc(4px * var(--scale-ui)); min-width:0; }
     .cremLine{
       font-weight: 900;
       font-size: var(--fs-sm);
       color: rgba(31,42,55,.72);
-      line-height: var(--lh-loose);
+      line-height: calc(var(--lh-loose) * var(--scale-lh));
       letter-spacing: var(--ls-base);
       word-break: keep-all;
       min-width: 0;
@@ -569,7 +578,7 @@
 
     .no-data{
       text-align:center;
-      padding: 26px 14px;
+      padding: calc(26px * var(--scale-ui)) calc(14px * var(--scale-ui));
       color: rgba(31,42,55,0.56);
       font-weight: 900;
       background: #fff;
@@ -577,7 +586,7 @@
       border-radius: var(--radius);
 
       font-size: var(--fs-md);
-      line-height: var(--lh-base);
+      line-height: calc(var(--lh-base) * var(--scale-lh));
       letter-spacing: var(--ls-base);
     }
 
@@ -591,7 +600,7 @@
       display:none;
       align-items:center;
       justify-content:center;
-      padding: 14px;
+      padding: calc(14px * var(--scale-ui));
       z-index: 9999;
     }
     .overlay.show{ display:flex; }
@@ -610,14 +619,14 @@
     .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
 
     .sheet-head{
-      padding: 12px 14px;
+      padding: calc(12px * var(--scale-ui)) calc(14px * var(--scale-ui));
       background: #f8fafc;
       border-bottom: 1px solid var(--line);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 12px;
-      min-height: 58px;
+      gap: calc(12px * var(--scale-ui));
+      min-height: calc(58px * var(--scale-ui));
     }
     .sheet-title{
       font-weight: 950;
@@ -631,24 +640,29 @@
       white-space: nowrap;
     }
 
-    .sheet-body{ padding: 12px 14px 14px; display:grid; gap: 10px; background: #fff; }
+    .sheet-body{
+      padding: calc(12px * var(--scale-ui)) calc(14px * var(--scale-ui)) calc(14px * var(--scale-ui));
+      display:grid;
+      gap: calc(10px * var(--scale-ui));
+      background: #fff;
+    }
 
     .kv{
       display:flex;
-      gap: 12px;
+      gap: calc(12px * var(--scale-ui));
       align-items:flex-start;
       border: 1px solid var(--line);
       background: #fff;
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: calc(10px * var(--scale-ui)) calc(12px * var(--scale-ui));
       min-width: 0;
     }
     .kv .k{
-      flex: 0 0 92px;
+      flex: 0 0 calc(92px * var(--scale-ui));
       color: var(--muted);
       font-weight: 950;
       font-size: var(--fs-xs);
-      padding-top: 2px;
+      padding-top: calc(2px * var(--scale-ui));
       letter-spacing: var(--ls-base);
       line-height: var(--lh-tight);
     }
@@ -658,25 +672,30 @@
       color: rgba(31,42,55,.86);
       font-weight: 900;
       font-size: var(--fs-sm);
-      line-height: var(--lh-loose);
+      line-height: calc(var(--lh-loose) * var(--scale-lh));
       letter-spacing: var(--ls-base);
       word-break: keep-all;
     }
 
     @media (min-width: 720px){
-      #mFields{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      #mFields{ display:grid; grid-template-columns: 1fr 1fr; gap: calc(10px * var(--scale-ui)); }
     }
 
-    .sheet-actions{ padding: 0 14px 14px; display:flex; gap: 10px; background: #fff; }
+    .sheet-actions{
+      padding: 0 calc(14px * var(--scale-ui)) calc(14px * var(--scale-ui));
+      display:flex;
+      gap: calc(10px * var(--scale-ui));
+      background: #fff;
+    }
 
     .btn{
       flex: 1;
       border: 1px solid var(--line2);
       border-radius: 12px;
-      padding: 10px 10px;
+      padding: calc(10px * var(--scale-ui)) calc(10px * var(--scale-ui));
       font-weight: 950;
       cursor:pointer;
-      min-height: 42px;
+      min-height: calc(42px * var(--scale-ui));
       background: #fff;
       color: rgba(31,42,55,.9);
 
@@ -700,7 +719,7 @@
       transform: translateX(-50%);
       background: rgba(15,23,42,0.92);
       color: #fff;
-      padding: 10px 14px;
+      padding: calc(10px * var(--scale-ui)) calc(14px * var(--scale-ui));
       border-radius: 14px;
       font-size: var(--fs-sm);
       font-weight: 850;
@@ -710,7 +729,7 @@
       max-width: 92%;
       text-align:left;
       white-space: normal;
-      line-height: var(--lh-base);
+      line-height: calc(var(--lh-base) * var(--scale-lh));
       letter-spacing: var(--ls-base);
       word-break: keep-all;
     }
@@ -769,13 +788,13 @@
        Infinite scroll status
        ========================= */
     .inf {
-      margin-top: 10px;
+      margin-top: calc(10px * var(--scale-ui));
       display: grid;
-      gap: 10px;
+      gap: calc(10px * var(--scale-ui));
     }
     .infCard{
       text-align:center;
-      padding: 12px 14px;
+      padding: calc(12px * var(--scale-ui)) calc(14px * var(--scale-ui));
       color: rgba(31,42,55,0.62);
       font-weight: 900;
       background: #fff;
@@ -784,7 +803,7 @@
       box-shadow: var(--shadow);
 
       font-size: var(--fs-md);
-      line-height: var(--lh-base);
+      line-height: calc(var(--lh-base) * var(--scale-lh));
       letter-spacing: var(--ls-base);
     }
     .infCard strong{
@@ -895,9 +914,8 @@
 
   <script>
     /* =========================
-       ✅ iOS / iPhone / iPad 감지 후 body 클래스 부여
-       - iPhone: ios-iphone  (+8%)
-       - iPad  : ios-ipad    (+12%)
+       ✅ iOS / iPhone / iPad 감지 → html(documentElement)에 클래스 부여
+       - 중요: html에 붙여야 html font-size에 변수가 적용됩니다.
        ========================= */
     (function(){
       const ua = navigator.userAgent || '';
@@ -912,9 +930,7 @@
         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
         (Math.max(screen.width, screen.height) >= 768);
 
-      document.addEventListener('DOMContentLoaded', () => {
-        document.body.classList.add(isIPad ? 'ios-ipad' : 'ios-iphone');
-      });
+      document.documentElement.classList.add(isIPad ? 'ios-ipad' : 'ios-iphone');
     })();
 
     /* =========
@@ -1086,6 +1102,7 @@
     }
 
     const safeKey = (v) => String(v ?? '').trim();
+
     const ensMergeKey = (r) => {
       const ens = safeKey(r.ensNO ?? r.ensNo ?? r.ensno);
       if (ens) return `ENS:${ens}`;
@@ -1201,7 +1218,7 @@
       const en = fmtTime(rec?.burnEndTime);
 
       if (!st){
-        const label = safeChasu > 0 ? `${pad2(chasuRaw)}회차, 화장접수` : `${pad2(chasuRaw)}회차, 화장접수`;
+        const label = `${pad2(chasuRaw)}회차, 화장접수`;
         return { type:'recv', chasu:safeChasu, start:'화장접수', end:'', text: label };
       }
 
@@ -1284,7 +1301,7 @@
       `;
     };
 
-    // ✅ 이름/ID 기준 “자체/무연고” 배지 판별
+    /* ✅ 배지 판별 */
     const normNameKey = (s) => String(s ?? '').replace(/\s+/g,'').trim();
     const nameKeySetFromDisplay = (displayName) => {
       const parts = String(displayName ?? '')
@@ -1313,16 +1330,13 @@
         const recNameKey = normNameKey(rec.deadName);
         if (!recNameKey) continue;
 
-        // 조건: deadId + deadName 둘 다 일치해야 “자체”
         if (!nameSet.has(recNameKey)) continue;
 
-        // 무연고 우선
         if (String(rec.dcGubun ?? '').trim() === 'TCM1200099'){
           return '무연고';
         }
         hasSelf = true;
       }
-
       return hasSelf ? '자체' : null;
     };
 
@@ -1395,7 +1409,7 @@
     };
 
     /* =========
-       ✅ Page size auto (small: 28~32, large: 40)
+       Page size auto
        ========= */
     const computePageSize = () => {
       const w = Math.min(window.innerWidth || 0, window.screen?.width || 0) || 360;
@@ -1405,7 +1419,7 @@
     };
 
     /* =========
-       ✅ Infinite scroll renderer
+       Infinite scroll
        ========= */
     let pageSize = computePageSize();
     let renderedCount = 0;
@@ -1492,7 +1506,7 @@
         ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
         : String(item.deadName ?? '-');
 
-      /* ✅ 반출(ret) 건에는 배지 표시 안 함 */
+      /* ✅ 반출(ret) 건은 배지 표시 금지 */
       const badgeLabel = (mode === 'ret') ? null : funeralBadgeLabelForItem(item, displayName, funeralMap);
       const tag = badgeHTML(badgeLabel);
 
@@ -1883,7 +1897,7 @@
     }, { passive: true });
 
     /* =========
-       PageSize recalculation on resize/orientation change
+       PageSize recalculation
        ========= */
     const onResize = () => {
       const next = computePageSize();
