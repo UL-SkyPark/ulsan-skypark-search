@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653541",
-    "deadName": "이미숙",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653549",
     "deadName": "김덕조",
     "burnDate": "2026-03-06",
@@ -62,5 +54,13 @@
     "burnStrTime": "07:36",
     "burnEndTime": null,
     "burnChasu": "01"
+  },
+  {
+    "deadId": "1653541",
+    "deadName": "이미숙",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "08:18",
+    "burnEndTime": null,
+    "burnChasu": "02"
   }
 ]
