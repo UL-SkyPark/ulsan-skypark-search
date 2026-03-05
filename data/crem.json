@@ -8,14 +8,6 @@
     "burnChasu": "03"
   },
   {
-    "deadId": "1653500",
-    "deadName": "차의자",
-    "burnDate": "2026-03-05",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653522",
     "deadName": "민태식",
     "burnDate": "2026-03-05",
@@ -30,14 +22,6 @@
     "burnStrTime": null,
     "burnEndTime": null,
     "burnChasu": "03"
-  },
-  {
-    "deadId": "1653512",
-    "deadName": "김정배",
-    "burnDate": "2026-03-05",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
   },
   {
     "deadId": "1653492",
@@ -102,5 +86,21 @@
     "burnStrTime": "08:38",
     "burnEndTime": null,
     "burnChasu": "02"
+  },
+  {
+    "deadId": "1653500",
+    "deadName": "차의자",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "09:19",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653512",
+    "deadName": "김정배",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "09:19",
+    "burnEndTime": null,
+    "burnChasu": "07"
   }
 ]
