@@ -15,6 +15,30 @@
       overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
     }
 
+    /* =========================
+       스크롤바 "보이지 않게" (스크롤은 유지)
+       - Firefox: scrollbar-width
+       - IE/Edge Legacy: -ms-overflow-style
+       - WebKit: ::-webkit-scrollbar
+    ========================== */
+    html, body{
+      -ms-overflow-style: none;     /* IE/old Edge */
+      scrollbar-width: none;        /* Firefox */
+    }
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar{
+      width:0; height:0; display:none; /* Chrome/Safari */
+    }
+
+    /* 스크롤이 필요한 특정 컨테이너에도 적용 */
+    .table-wrapper{
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .table-wrapper::-webkit-scrollbar{
+      width:0; height:0; display:none;
+    }
+
     body{
       font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",Arial,sans-serif;
       min-height:100vh;
@@ -33,6 +57,7 @@
       padding:22px;
       padding-bottom:110px;
       padding-top:60px;
+      overflow-y:auto;  /* 스크롤은 되되, 스크롤바는 숨김 */
     }
 
     @media (max-width:768px){
@@ -262,11 +287,27 @@
       .result-sub{ white-space:nowrap; font-size:16px; line-height:1.6; }
     }
 
+    /* =========================
+       [핵심 수정]
+       - PC: 결과 영역 내부 세로 스크롤 유지(최대높이 520)
+       - 모바일: 결과창 내부 세로 스크롤 "없애고"(overflow-y: visible)
+                페이지(전체) 스크롤만 사용
+       - 가로 스크롤은 유지(overflow-x:auto) + 스크롤바 숨김
+    ========================== */
     .table-wrapper{
-      max-height:520px;
-      overflow-y:auto;
-      overflow-x:auto;
+      max-height:520px;        /* PC 기본 */
+      overflow-y:auto;         /* PC: 내부 세로 스크롤 */
+      overflow-x:auto;         /* 공통: 가로 스크롤 */
       -webkit-overflow-scrolling:touch;
+      touch-action:pan-x pan-y;
+    }
+
+    @media (max-width:768px){
+      .table-wrapper{
+        max-height:none;       /* 모바일: 높이 제한 해제 */
+        overflow-y:visible;    /* 모바일: 내부 세로 스크롤 제거 */
+        overflow-x:auto;       /* 모바일: 가로 스크롤만 */
+      }
     }
 
     table{
@@ -338,7 +379,12 @@
       box-shadow:0 22px 70px rgba(0,0,0,0.42);
       background:#fff;
       z-index:1000;
+
+      /* 모달 스크롤바도 숨김(스크롤은 유지) */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
+    .detail-modal::-webkit-scrollbar{ width:0; height:0; display:none; }
 
     .detail-modal::backdrop{ background:rgba(0,0,0,0.55); }
 
@@ -514,29 +560,22 @@
       }
     }
 
-/* 기본: 모바일에서 줄바꿈 */
-.m-br{
-  display:block;
-}
-
-/* PC에서는 줄바꿈 제거 */
-@media (min-width:1024px){
-  .m-br{
-    display:none;
-  }
-}
+    /* 기본: 모바일에서 줄바꿈 */
+    .m-br{ display:block; }
+    /* PC에서는 줄바꿈 제거 */
+    @media (min-width:1024px){
+      .m-br{ display:none; }
+    }
   </style>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z3J7675CCE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-Z3J7675CCE');
-</script>
-
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z3J7675CCE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Z3J7675CCE');
+  </script>
 </head>
 
 <body>
