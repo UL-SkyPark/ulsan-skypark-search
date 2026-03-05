@@ -42,17 +42,25 @@
 
       --ls-tight: -0.015em;
       --ls-base : -0.01em;
+
+      /* ✅ iOS 보정용 스케일 (기본 1 = 변경 없음) */
+      --scale-font: 1;
     }
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     html, body { height:100%; }
 
-    /* ✅ 화면 폭에 따라 “기본 rem”을 자동 보정 */
+    /* ✅ 화면 폭에 따라 “기본 rem”을 자동 보정 + iOS에서만 % 확대 */
     html{
-      font-size: clamp(14px, 3.6vw, 16px);
+      font-size: calc(clamp(14px, 3.6vw, 16px) * var(--scale-font));
       text-size-adjust: 100%;
       -webkit-text-size-adjust: 100%;
     }
+
+    /* ✅ iPhone(iOS 폰): +8% */
+    body.ios-iphone{ --scale-font: 1.08; }
+    /* ✅ iPad(iOS 태블릿): +12% */
+    body.ios-ipad{ --scale-font: 1.12; }
 
     body{
       margin:0;
@@ -886,6 +894,30 @@
   </div>
 
   <script>
+    /* =========================
+       ✅ iOS / iPhone / iPad 감지 후 body 클래스 부여
+       - iPhone: ios-iphone  (+8%)
+       - iPad  : ios-ipad    (+12%)
+       ========================= */
+    (function(){
+      const ua = navigator.userAgent || '';
+      const isIOS =
+        /iPhone|iPad|iPod/i.test(ua) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+      if (!isIOS) return;
+
+      const isIPad =
+        /iPad/i.test(ua) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+        (Math.max(screen.width, screen.height) >= 768);
+
+      // body가 생긴 뒤 클래스 부여
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add(isIPad ? 'ios-ipad' : 'ios-iphone');
+      });
+    })();
+
     /* =========
        DOM
        ========= */
