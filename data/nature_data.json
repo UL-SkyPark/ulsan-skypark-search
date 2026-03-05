@@ -67580,8 +67580,12 @@
     "natDate": "2026-03-05",
     "natNo": null,
     "applName": "이동환",
-    "deadId": "1653484",
-    "deadName": "조영숙"
+    "deadId": [
+      "1653484"
+    ],
+    "deadName": [
+      "조영숙"
+    ]
   },
   {
     "natDate": "2026-03-05",
