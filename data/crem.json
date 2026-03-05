@@ -16,14 +16,6 @@
     "burnChasu": "03"
   },
   {
-    "deadId": "1653523",
-    "deadName": "장동호",
-    "burnDate": "2026-03-05",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653492",
     "deadName": "홍순모",
     "burnDate": "2026-03-05",
@@ -102,5 +94,13 @@
     "burnStrTime": "09:19",
     "burnEndTime": null,
     "burnChasu": "07"
+  },
+  {
+    "deadId": "1653523",
+    "deadName": "장동호",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "09:21",
+    "burnEndTime": null,
+    "burnChasu": "03"
   }
 ]
