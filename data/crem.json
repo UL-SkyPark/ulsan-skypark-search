@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653513",
-    "deadName": "김인도",
-    "burnDate": "2026-03-05",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653524",
     "deadName": "이안발",
     "burnDate": "2026-03-05",
@@ -100,7 +92,7 @@
     "deadName": "장동호",
     "burnDate": "2026-03-05",
     "burnStrTime": "09:21",
-    "burnEndTime": null,
+    "burnEndTime": "10:35",
     "burnChasu": "03"
   },
   {
@@ -142,5 +134,13 @@
     "burnStrTime": "10:28",
     "burnEndTime": null,
     "burnChasu": "07"
+  },
+  {
+    "deadId": "1653513",
+    "deadName": "김인도",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "10:36",
+    "burnEndTime": null,
+    "burnChasu": "04"
   }
 ]
