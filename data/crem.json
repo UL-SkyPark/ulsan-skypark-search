@@ -1,11 +1,11 @@
 [
   {
-    "deadId": "1653484",
-    "deadName": "조영숙",
+    "deadId": "1653510",
+    "deadName": "김두국",
     "burnDate": "2026-03-05",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "03"
+    "burnChasu": "04"
   },
   {
     "deadId": "1653492",
@@ -100,6 +100,14 @@
     "deadName": "민태식",
     "burnDate": "2026-03-05",
     "burnStrTime": "09:27",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653484",
+    "deadName": "조영숙",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "09:31",
     "burnEndTime": null,
     "burnChasu": "03"
   }
