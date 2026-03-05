@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653549",
-    "deadName": "김덕조",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653554",
     "deadName": "김창기",
     "burnDate": "2026-03-06",
@@ -18,6 +10,14 @@
   {
     "deadId": "1653539",
     "deadName": "최봉춘",
+    "burnDate": "2026-03-06",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653547",
+    "deadName": "배윤수",
     "burnDate": "2026-03-06",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -68,6 +68,14 @@
     "deadName": "이순미",
     "burnDate": "2026-03-06",
     "burnStrTime": "08:22",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653549",
+    "deadName": "김덕조",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "08:27",
     "burnEndTime": null,
     "burnChasu": "02"
   }
