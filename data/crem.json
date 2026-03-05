@@ -8,14 +8,6 @@
     "burnChasu": "03"
   },
   {
-    "deadId": "1653522",
-    "deadName": "민태식",
-    "burnDate": "2026-03-05",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653492",
     "deadName": "홍순모",
     "burnDate": "2026-03-05",
@@ -100,6 +92,14 @@
     "deadName": "장동호",
     "burnDate": "2026-03-05",
     "burnStrTime": "09:21",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653522",
+    "deadName": "민태식",
+    "burnDate": "2026-03-05",
+    "burnStrTime": "09:27",
     "burnEndTime": null,
     "burnChasu": "03"
   }
