@@ -16,12 +16,12 @@
     "burnChasu": "02"
   },
   {
-    "deadId": "1653559",
-    "deadName": "이순미",
+    "deadId": "1653539",
+    "deadName": "최봉춘",
     "burnDate": "2026-03-06",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "02"
+    "burnChasu": "03"
   },
   {
     "deadId": "1653574",
@@ -60,6 +60,14 @@
     "deadName": "이미숙",
     "burnDate": "2026-03-06",
     "burnStrTime": "08:18",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653559",
+    "deadName": "이순미",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "08:22",
     "burnEndTime": null,
     "burnChasu": "02"
   }
