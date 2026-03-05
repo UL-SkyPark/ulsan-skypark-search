@@ -209010,8 +209010,16 @@
   {
     "deadId": "1653502",
     "strDate": "2026-03-05",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-01890",
     "deadName": "강영화",
+    "applName": "김황록",
+    "retDate": null
+  },
+  {
+    "deadId": "1653518",
+    "strDate": "2026-03-05",
+    "ensNo": "1추모의집-09실-부부단-01890",
+    "deadName": "김태원",
     "applName": "김황록",
     "retDate": null
   },
@@ -209021,6 +209029,14 @@
     "ensNo": "1추모의집-62실-개인단-21987",
     "deadName": "김태경",
     "applName": "김신의",
+    "retDate": null
+  },
+  {
+    "deadId": "1653513",
+    "strDate": "2026-03-05",
+    "ensNo": "1추모의집-62실-개인단-21988",
+    "deadName": "김인도",
+    "applName": "김효원",
     "retDate": null
   }
 ]
