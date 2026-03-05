@@ -8,10 +8,18 @@
     "burnChasu": "01"
   },
   {
+    "deadId": "1653574",
+    "deadName": "조덕래",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "07:22",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
     "deadId": "1653564",
     "deadName": "김삼순",
     "burnDate": "2026-03-06",
-    "burnStrTime": null,
+    "burnStrTime": "07:27",
     "burnEndTime": null,
     "burnChasu": "01"
   },
@@ -19,15 +27,7 @@
     "deadId": "1653569",
     "deadName": "최정숙",
     "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "01"
-  },
-  {
-    "deadId": "1653574",
-    "deadName": "조덕래",
-    "burnDate": "2026-03-06",
-    "burnStrTime": "07:22",
+    "burnStrTime": "07:30",
     "burnEndTime": null,
     "burnChasu": "01"
   }
