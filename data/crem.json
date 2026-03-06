@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653618",
-    "deadName": "김임규",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653574",
     "deadName": "조덕래",
     "burnDate": "2026-03-06",
@@ -140,7 +132,7 @@
     "deadName": "정청",
     "burnDate": "2026-03-06",
     "burnStrTime": "11:18",
-    "burnEndTime": null,
+    "burnEndTime": "12:44",
     "burnChasu": "05"
   },
   {
@@ -148,7 +140,7 @@
     "deadName": "한춘도",
     "burnDate": "2026-03-06",
     "burnStrTime": "11:22",
-    "burnEndTime": null,
+    "burnEndTime": "12:44",
     "burnChasu": "05"
   },
   {
@@ -212,6 +204,14 @@
     "deadName": "정정태",
     "burnDate": "2026-03-06",
     "burnStrTime": "12:40",
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653618",
+    "deadName": "김임규",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "12:41",
     "burnEndTime": null,
     "burnChasu": "06"
   }
