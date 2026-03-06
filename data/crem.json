@@ -8,14 +8,6 @@
     "burnChasu": "06"
   },
   {
-    "deadId": "1653571",
-    "deadName": "박숙이",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653618",
     "deadName": "김임규",
     "burnDate": "2026-03-06",
@@ -26,14 +18,6 @@
   {
     "deadId": "1653619",
     "deadName": "정정태",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
-    "deadId": "1653628",
-    "deadName": "김상성",
     "burnDate": "2026-03-06",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -212,6 +196,22 @@
     "deadName": "김혜자",
     "burnDate": "2026-03-06",
     "burnStrTime": "12:15",
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653571",
+    "deadName": "박숙이",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "12:21",
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653628",
+    "deadName": "김상성",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "12:25",
     "burnEndTime": null,
     "burnChasu": "06"
   }
