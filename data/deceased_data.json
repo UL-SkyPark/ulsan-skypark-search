@@ -209056,6 +209056,22 @@
     "retDate": null
   },
   {
+    "deadId": "1653618",
+    "strDate": "2026-03-06",
+    "ensNo": "1추모의집-11실-무연고-02637",
+    "deadName": "김임규",
+    "applName": "원형석",
+    "retDate": null
+  },
+  {
+    "deadId": "1653619",
+    "strDate": "2026-03-06",
+    "ensNo": "1추모의집-15실-무연고-04167",
+    "deadName": "정정태",
+    "applName": "원형석",
+    "retDate": null
+  },
+  {
     "deadId": "1653550",
     "strDate": "2026-03-06",
     "ensNo": "1추모의집-62실-개인단-21991",
@@ -209077,6 +209093,14 @@
     "ensNo": "1추모의집-62실-개인단-21993",
     "deadName": "조선화",
     "applName": "신태준",
+    "retDate": null
+  },
+  {
+    "deadId": "1653628",
+    "strDate": "2026-03-06",
+    "ensNo": "1추모의집-62실-개인단-21994",
+    "deadName": "김상성",
+    "applName": "김영숙",
     "retDate": null
   }
 ]
