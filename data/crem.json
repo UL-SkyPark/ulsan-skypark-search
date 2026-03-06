@@ -8,6 +8,14 @@
     "burnChasu": "03"
   },
   {
+    "deadId": "1653530",
+    "deadName": "이순근",
+    "burnDate": "2026-03-06",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
     "deadId": "1653539",
     "deadName": "최봉춘",
     "burnDate": "2026-03-06",
@@ -22,6 +30,14 @@
     "burnStrTime": null,
     "burnEndTime": null,
     "burnChasu": "03"
+  },
+  {
+    "deadId": "1653538",
+    "deadName": "김영숙",
+    "burnDate": "2026-03-06",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "04"
   },
   {
     "deadId": "1653574",
@@ -44,7 +60,7 @@
     "deadName": "최정숙",
     "burnDate": "2026-03-06",
     "burnStrTime": "07:30",
-    "burnEndTime": null,
+    "burnEndTime": "08:54",
     "burnChasu": "01"
   },
   {
@@ -52,7 +68,7 @@
     "deadName": "정의태",
     "burnDate": "2026-03-06",
     "burnStrTime": "07:36",
-    "burnEndTime": null,
+    "burnEndTime": "08:55",
     "burnChasu": "01"
   },
   {
