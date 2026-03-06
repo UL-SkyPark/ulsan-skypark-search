@@ -8,14 +8,6 @@
     "burnChasu": "02"
   },
   {
-    "deadId": "1653572",
-    "deadName": "신언미",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653637",
     "deadName": "이신출",
     "burnDate": "2026-03-07",
@@ -68,6 +60,14 @@
     "deadName": "윤석준",
     "burnDate": "2026-03-07",
     "burnStrTime": "08:25",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653572",
+    "deadName": "신언미",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "08:27",
     "burnEndTime": null,
     "burnChasu": "02"
   }
