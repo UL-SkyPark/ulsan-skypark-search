@@ -209056,18 +209056,18 @@
     "retDate": null
   },
   {
-    "deadId": "1653619",
-    "strDate": "2026-03-06",
-    "ensNo": null,
-    "deadName": "정정태",
-    "applName": "원형석",
-    "retDate": null
-  },
-  {
     "deadId": "1653618",
     "strDate": "2026-03-06",
     "ensNo": "1추모의집-11실-무연고-02637",
     "deadName": "김임규",
+    "applName": "원형석",
+    "retDate": null
+  },
+  {
+    "deadId": "1653619",
+    "strDate": "2026-03-06",
+    "ensNo": "1추모의집-15실-무연고-04167",
+    "deadName": "정정태",
     "applName": "원형석",
     "retDate": null
   },
