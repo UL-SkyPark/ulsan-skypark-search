@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653558",
-    "deadName": "안맹식",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653556",
     "deadName": "정청",
     "burnDate": "2026-03-06",
@@ -132,6 +124,14 @@
     "deadName": "조선화",
     "burnDate": "2026-03-06",
     "burnStrTime": "10:23",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653558",
+    "deadName": "안맹식",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "10:30",
     "burnEndTime": null,
     "burnChasu": "04"
   }
