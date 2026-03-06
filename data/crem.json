@@ -1,21 +1,5 @@
 [
   {
-    "deadId": "1653538",
-    "deadName": "김영숙",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
-    "deadId": "1653542",
-    "deadName": "이장한",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653543",
     "deadName": "조선화",
     "burnDate": "2026-03-06",
@@ -30,6 +14,14 @@
     "burnStrTime": null,
     "burnEndTime": null,
     "burnChasu": "04"
+  },
+  {
+    "deadId": "1653556",
+    "deadName": "정청",
+    "burnDate": "2026-03-06",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "05"
   },
   {
     "deadId": "1653574",
@@ -126,5 +118,21 @@
     "burnStrTime": "09:28",
     "burnEndTime": null,
     "burnChasu": "03"
+  },
+  {
+    "deadId": "1653538",
+    "deadName": "김영숙",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "10:17",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653542",
+    "deadName": "이장한",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "10:20",
+    "burnEndTime": null,
+    "burnChasu": "04"
   }
 ]
