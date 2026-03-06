@@ -1,7 +1,23 @@
 [
   {
+    "deadId": "1653572",
+    "deadName": "신언미",
+    "burnDate": "2026-03-07",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
     "deadId": "1653587",
     "deadName": "조기철",
+    "burnDate": "2026-03-07",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653600",
+    "deadName": "윤석준",
     "burnDate": "2026-03-07",
     "burnStrTime": null,
     "burnEndTime": null,
