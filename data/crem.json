@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653556",
-    "deadName": "정청",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
     "deadId": "1653563",
     "deadName": "한춘도",
     "burnDate": "2026-03-06",
@@ -182,5 +174,13 @@
     "burnStrTime": "10:30",
     "burnEndTime": null,
     "burnChasu": "04"
+  },
+  {
+    "deadId": "1653556",
+    "deadName": "정청",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "11:18",
+    "burnEndTime": null,
+    "burnChasu": "05"
   }
 ]
