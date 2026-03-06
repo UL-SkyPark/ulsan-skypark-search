@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653575",
-    "deadName": "권도근",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "01"
-  },
-  {
     "deadId": "1653585",
     "deadName": "서정희",
     "burnDate": "2026-03-07",
@@ -28,6 +20,14 @@
     "deadName": "이칠성",
     "burnDate": "2026-03-07",
     "burnStrTime": "07:18",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653575",
+    "deadName": "권도근",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "07:23",
     "burnEndTime": null,
     "burnChasu": "01"
   }
