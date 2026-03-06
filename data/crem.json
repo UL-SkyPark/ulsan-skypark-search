@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653537",
-    "deadName": "권혁주",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653618",
     "deadName": "김임규",
     "burnDate": "2026-03-06",
@@ -212,6 +204,14 @@
     "deadName": "김상성",
     "burnDate": "2026-03-06",
     "burnStrTime": "12:25",
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653537",
+    "deadName": "권혁주",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "12:33",
     "burnEndTime": null,
     "burnChasu": "06"
   }
