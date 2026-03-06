@@ -8,22 +8,6 @@
     "burnChasu": "06"
   },
   {
-    "deadId": "1653619",
-    "deadName": "정정태",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
-    "deadId": "1653536",
-    "deadName": "조한구",
-    "burnDate": "2026-03-06",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
     "deadId": "1653574",
     "deadName": "조덕래",
     "burnDate": "2026-03-06",
@@ -212,6 +196,22 @@
     "deadName": "권혁주",
     "burnDate": "2026-03-06",
     "burnStrTime": "12:33",
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653536",
+    "deadName": "조한구",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "12:37",
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653619",
+    "deadName": "정정태",
+    "burnDate": "2026-03-06",
+    "burnStrTime": "12:40",
     "burnEndTime": null,
     "burnChasu": "06"
   }
