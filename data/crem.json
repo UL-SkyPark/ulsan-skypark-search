@@ -8,6 +8,14 @@
     "burnChasu": "05"
   },
   {
+    "deadId": "1653552",
+    "deadName": "김혜자",
+    "burnDate": "2026-03-06",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
     "deadId": "1653574",
     "deadName": "조덕래",
     "burnDate": "2026-03-06",
@@ -76,7 +84,7 @@
     "deadName": "최봉춘",
     "burnDate": "2026-03-06",
     "burnStrTime": "09:17",
-    "burnEndTime": null,
+    "burnEndTime": "10:31",
     "burnChasu": "03"
   },
   {
