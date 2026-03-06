@@ -1,19 +1,11 @@
 [
   {
-    "deadId": "1653565",
-    "deadName": "허필순",
+    "deadId": "1653594",
+    "deadName": "박주호",
     "burnDate": "2026-03-07",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
-    "deadId": "1653637",
-    "deadName": "이신출",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "08"
+    "burnChasu": "03"
   },
   {
     "deadId": "1653597",
@@ -70,5 +62,21 @@
     "burnStrTime": "08:27",
     "burnEndTime": null,
     "burnChasu": "02"
+  },
+  {
+    "deadId": "1653565",
+    "deadName": "허필순",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "08:38",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653637",
+    "deadName": "이신출",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "08:38",
+    "burnEndTime": null,
+    "burnChasu": "08"
   }
 ]
