@@ -28,7 +28,6 @@
       --fabRight: 14px;
       --fabBottom: 14px;
 
-      /* ✅ 타이포 스케일 */
       --fs-xxs: clamp(.72rem, 2.5vw, .80rem);
       --fs-xs : clamp(.78rem, 2.7vw, .88rem);
       --fs-sm : clamp(.86rem, 2.9vw, .96rem);
@@ -43,12 +42,10 @@
       --ls-tight: -0.015em;
       --ls-base : -0.01em;
 
-      /* ✅ iOS 최적화 스케일(기본=변경없음) */
       --scale-font: 1;
       --scale-ui  : 1;
       --scale-lh  : 1;
 
-      /* ✅ 전체 ‘컴팩트 톤’(전 행 공통) */
       --pad-xxs: 6px;
       --pad-xs : 8px;
       --pad-sm : 10px;
@@ -62,22 +59,27 @@
       --row-pad-x: 12px;
     }
 
-    *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-    html, body { height:100%; }
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    /* ✅ iOS 보정은 html 클래스에서 걸어야 font-size에 반영 */
+    html, body{
+      height:100%;
+    }
+
     html{
       font-size: calc(clamp(14px, 3.6vw, 16px) * var(--scale-font));
       text-size-adjust: 100%;
       -webkit-text-size-adjust: 100%;
     }
 
-    /* ✅ iOS는 ‘조금 더 크게’ 하되, 레이아웃은 1줄 유지되도록 과하지 않게 */
     html.ios-iphone{
       --scale-font: 1.18;
       --scale-ui  : 1.10;
       --scale-lh  : 1.08;
     }
+
     html.ios-ipad{
       --scale-font: 1.14;
       --scale-ui  : 1.08;
@@ -89,9 +91,8 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-
       padding: calc(var(--outerPad) * var(--scale-ui));
-      padding-bottom: calc((var(--outerPad) * var(--scale-ui)) + 16px + env(safe-area-inset-bottom));
+      padding-bottom: calc((var(--outerPad) * var(--scale-ui)) + 18px + env(safe-area-inset-bottom));
       overflow-x: hidden;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
@@ -99,9 +100,7 @@
       text-rendering: optimizeLegibility;
     }
 
-    /* =========================
-       Pull to Refresh
-       ========================= */
+    /* pull to refresh */
     .pull-to-refresh{
       position: fixed;
       top: calc(10px + env(safe-area-inset-top));
@@ -110,9 +109,7 @@
       height: 44px;
       padding: 0 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.96);
       border: 1px solid rgba(217,224,234,0.90);
       box-shadow: 0 10px 30px rgba(15,23,42,0.12);
       display: inline-flex;
@@ -123,7 +120,9 @@
       will-change: transform;
       pointer-events: none;
     }
-    .pull-to-refresh.visible{ transform: translate(-50%, 0); }
+    .pull-to-refresh.visible{
+      transform: translate(-50%, 0);
+    }
 
     .ptr-ring{
       width: 22px;
@@ -149,8 +148,12 @@
       animation: spin 0.9s linear infinite;
       transition: opacity 120ms ease;
     }
-    .ptr-ring.loading .spin{ opacity: 1; }
-    .ptr-ring.loading svg{ opacity: 0; }
+    .ptr-ring.loading .spin{
+      opacity: 1;
+    }
+    .ptr-ring.loading svg{
+      opacity: 0;
+    }
 
     .ptr-status{
       font-weight: 900;
@@ -160,11 +163,12 @@
       white-space: nowrap;
       line-height: var(--lh-tight);
     }
-    @keyframes spin{ to { transform: rotate(360deg); } }
 
-    /* =========================
-       App shell
-       ========================= */
+    @keyframes spin{
+      to { transform: rotate(360deg); }
+    }
+
+    /* app */
     .app{
       max-width: 980px;
       margin: 0 auto;
@@ -197,7 +201,9 @@
       flex-wrap: wrap;
     }
 
-    .brand, .rightInfo, .rowR, .rowTop, .main, .field .v{ min-width: 0; }
+    .brand, .rightInfo, .rowR, .rowTop, .main, .field .v{
+      min-width: 0;
+    }
 
     .brand{
       display:flex;
@@ -206,6 +212,7 @@
       min-width: 0;
       flex: 1 1 auto;
     }
+
     .brand h1{
       margin:0;
       font-weight: 950;
@@ -225,6 +232,7 @@
       padding-top: calc(2px * var(--scale-ui));
       min-width: 0;
     }
+
     .refDate{
       font-weight: 900;
       font-size: var(--fs-sm);
@@ -242,9 +250,6 @@
       align-items: stretch;
     }
 
-    /* =========================
-       Segmented tabs
-       ========================= */
     .seg{
       display:flex;
       gap: 4px;
@@ -255,6 +260,7 @@
       min-width: 260px;
       flex: 0 0 auto;
     }
+
     .seg button{
       border:0;
       background: transparent;
@@ -266,20 +272,17 @@
       min-height: calc(42px * var(--scale-ui));
       flex: 1;
       white-space: nowrap;
-
       font-size: var(--fs-md);
       line-height: var(--lh-tight);
       letter-spacing: var(--ls-base);
     }
+
     .seg button.active{
       background: linear-gradient(180deg, rgba(31,78,121,.14), rgba(47,111,173,.10));
       color: var(--primary);
       box-shadow: inset 0 0 0 1px rgba(31,78,121,.25);
     }
 
-    /* =========================
-       Fields group
-       ========================= */
     .group{
       flex: 1 1 520px;
       min-width: 320px;
@@ -300,6 +303,7 @@
       min-height: calc(60px * var(--scale-ui));
       min-width: 0;
     }
+
     .field .k{
       color: var(--muted);
       font-weight: 900;
@@ -309,7 +313,6 @@
       line-height: var(--lh-tight);
     }
 
-    /* ✅ 날짜선택/현황 줄맞춤(공통 baseline) */
     .field .v{
       display:flex;
       align-items:center;
@@ -329,30 +332,18 @@
       box-shadow: none;
       background: transparent;
       border-radius: 0;
-
       padding: 0;
       font-weight: 950;
       color: var(--text);
       font-size: var(--fs-md);
       line-height: var(--lh-tight);
       letter-spacing: var(--ls-base);
-
       -webkit-appearance:none;
       appearance:none;
       min-height: calc(38px * var(--scale-ui));
       min-width: 0;
-
       display:flex;
       align-items:center;
-    }
-    .field input[type="date"]:focus{
-      outline: none;
-      box-shadow: none;
-    }
-    .field input[type="date"]::-webkit-calendar-picker-indicator{
-      opacity: .75;
-      padding: 0;
-      margin: 0;
     }
 
     .countCenter{
@@ -368,7 +359,6 @@
       padding: 0;
       font-size: var(--fs-md);
       min-width: 0;
-
       min-height: calc(38px * var(--scale-ui));
       display:flex;
       align-items:center;
@@ -380,9 +370,6 @@
       background: linear-gradient(180deg, #ffffff, #f6f8fb);
     }
 
-    /* =========================
-       List
-       ========================= */
     .list{
       background: #fff;
       border: 1px solid var(--line);
@@ -401,6 +388,7 @@
       background: #f8fafc;
       flex-wrap: wrap;
     }
+
     .list-head .hint{
       font-weight: 950;
       color: #0f172a;
@@ -408,11 +396,11 @@
       align-items:center;
       gap: calc(10px * var(--scale-ui));
       white-space: nowrap;
-
       font-size: var(--fs-md);
       line-height: var(--lh-tight);
       letter-spacing: var(--ls-base);
     }
+
     .badge{
       font-size: var(--fs-sm);
       font-weight: 950;
@@ -426,7 +414,6 @@
       letter-spacing: var(--ls-base);
     }
 
-    /* ✅ 이름+배지 1줄 강제 */
     .nameLine{
       display:flex;
       align-items:center;
@@ -435,7 +422,6 @@
       flex-wrap: nowrap;
     }
 
-    /* ✅ 이름 텍스트 바로 뒤에 배지가 붙도록 nameWrap 도입 */
     .nameWrap{
       display: inline-flex;
       align-items: center;
@@ -444,17 +430,16 @@
       max-width: 100%;
       flex: 1 1 auto;
     }
+
     .nameText{
       font-weight: 950;
       color: rgba(15,23,42,.92);
       font-size: var(--fs-lg);
       line-height: calc(1.18 * var(--scale-lh));
       letter-spacing: var(--ls-base);
-
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-
       min-width: 0;
       max-width: 100%;
       flex: 1 1 auto;
@@ -465,7 +450,6 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-
       padding: calc(3px * var(--scale-ui)) calc(7px * var(--scale-ui));
       border-radius: 999px;
       border: 1px solid rgba(217,224,234,.95);
@@ -477,18 +461,24 @@
       color: rgba(15,23,42,.78);
       white-space: nowrap;
     }
+
     .tag.self{
       border-color: rgba(31,78,121,.28);
       background: linear-gradient(180deg, rgba(31,78,121,.12), rgba(47,111,173,.08));
       color: rgba(31,78,121,.95);
     }
+
     .tag.orphan{
       border-color: rgba(180,83,9,.28);
       background: linear-gradient(180deg, rgba(180,83,9,.14), rgba(245,158,11,.08));
       color: rgba(180,83,9,.95);
     }
 
-    ul{ list-style:none; padding:0; margin:0; }
+    ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
 
     .row{
       display:grid;
@@ -499,7 +489,10 @@
       align-items: stretch;
       background: #fff;
     }
-    .row:last-child{ border-bottom:0; }
+
+    .row:last-child{
+      border-bottom:0;
+    }
 
     .barL{
       width: 10px;
@@ -508,6 +501,7 @@
       height: 100%;
       align-self: stretch;
     }
+
     .row.recv .barL{ background: rgba(31,78,121,.35); }
     .row.done .barL{ background: rgba(46,125,50,.45); }
     .row.ret .barL{ background: rgba(180,83,9,.40); }
@@ -538,7 +532,10 @@
       min-width: 0;
       flex: 1;
     }
-    .mainBtn:active{ background: rgba(31,78,121,.06); }
+
+    .mainBtn:active{
+      background: rgba(31,78,121,.06);
+    }
 
     .main{
       display:flex;
@@ -554,7 +551,6 @@
       white-space: nowrap;
       line-height: var(--lh-tight);
       letter-spacing: var(--ls-base);
-
       overflow: hidden;
       text-overflow: ellipsis;
       min-width: 0;
@@ -575,6 +571,7 @@
       flex: 0 0 auto;
       min-height: calc(36px * var(--scale-ui));
     }
+
     .toggle span{
       font-size: var(--fs-xxs);
       font-weight: 950;
@@ -592,6 +589,7 @@
       position: relative;
       flex: 0 0 auto;
     }
+
     .sw::after{
       content:"";
       position:absolute;
@@ -605,13 +603,23 @@
       border: 1px solid var(--line2);
       transition: left .14s ease;
     }
+
     .sw.on{
       background: rgba(46,125,50,.14);
       border-color: rgba(46,125,50,.22);
     }
-    .sw.on::after{ left: calc(16px * var(--scale-ui)); }
 
-    .cremWrap{ display:flex; flex-direction:column; gap: calc(4px * var(--scale-ui)); min-width:0; }
+    .sw.on::after{
+      left: calc(16px * var(--scale-ui));
+    }
+
+    .cremWrap{
+      display:flex;
+      flex-direction:column;
+      gap: calc(4px * var(--scale-ui));
+      min-width:0;
+    }
+
     .cremLine{
       font-weight: 900;
       font-size: var(--fs-sm);
@@ -630,15 +638,12 @@
       background: #fff;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-
       font-size: var(--fs-md);
       line-height: calc(var(--lh-base) * var(--scale-lh));
       letter-spacing: var(--ls-base);
     }
 
-    /* =========================
-       Modal sheet
-       ========================= */
+    /* modal */
     .overlay{
       position: fixed;
       inset: 0;
@@ -649,7 +654,10 @@
       padding: calc(14px * var(--scale-ui));
       z-index: 9999;
     }
-    .overlay.show{ display:flex; }
+
+    .overlay.show{
+      display:flex;
+    }
 
     .sheet{
       width: min(560px, 94vw);
@@ -662,7 +670,11 @@
       opacity: 0;
       transition: transform .16s ease, opacity .16s ease;
     }
-    .overlay.show .sheet{ transform: translateY(0); opacity: 1; }
+
+    .overlay.show .sheet{
+      transform: translateY(0);
+      opacity: 1;
+    }
 
     .sheet-head{
       padding: calc(12px * var(--scale-ui)) calc(14px * var(--scale-ui));
@@ -674,6 +686,7 @@
       gap: calc(12px * var(--scale-ui));
       min-height: calc(56px * var(--scale-ui));
     }
+
     .sheet-title{
       font-weight: 950;
       color: #0f172a;
@@ -703,6 +716,7 @@
       padding: calc(9px * var(--scale-ui)) calc(12px * var(--scale-ui));
       min-width: 0;
     }
+
     .kv .k{
       flex: 0 0 calc(92px * var(--scale-ui));
       color: var(--muted);
@@ -712,6 +726,7 @@
       letter-spacing: var(--ls-base);
       line-height: var(--lh-tight);
     }
+
     .kv .v{
       flex: 1;
       min-width: 0;
@@ -724,7 +739,11 @@
     }
 
     @media (min-width: 720px){
-      #mFields{ display:grid; grid-template-columns: 1fr 1fr; gap: calc(10px * var(--scale-ui)); }
+      #mFields{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(10px * var(--scale-ui));
+      }
     }
 
     .sheet-actions{
@@ -744,20 +763,18 @@
       min-height: calc(42px * var(--scale-ui));
       background: #fff;
       color: rgba(31,42,55,.9);
-
       font-size: var(--fs-md);
       line-height: var(--lh-tight);
       letter-spacing: var(--ls-base);
     }
+
     .btn.primary{
       border-color: rgba(31,78,121,.30);
       background: linear-gradient(180deg, rgba(31,78,121,.14), rgba(47,111,173,.10));
       color: var(--primary);
     }
 
-    /* =========================
-       Toast
-       ========================= */
+    /* toast */
     .toast{
       position: fixed;
       left: 50%;
@@ -779,14 +796,13 @@
       letter-spacing: var(--ls-base);
       word-break: keep-all;
     }
+
     .toast.show{
       opacity: 1;
       transform: translateX(-50%) translateY(-6px);
     }
 
-    /* =========================
-       FABs
-       ========================= */
+    /* FAB - 안정화 버전 */
     .fabs{
       position: fixed;
       right: var(--fabRight);
@@ -796,15 +812,16 @@
       gap: var(--fabGap);
       z-index: 10002;
       pointer-events: none;
+      transform: translateZ(0);
+      will-change: transform;
     }
+
     .fab{
       width: var(--fabSize);
       height: var(--fabSize);
       border-radius: 999px;
       border: 1px solid rgba(217,224,234,.92);
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.98);
       box-shadow: 0 10px 30px rgba(15,23,42,0.14);
       cursor: pointer;
       display: grid;
@@ -813,31 +830,40 @@
       color: rgba(15,23,42,0.86);
       pointer-events: auto;
       opacity: 0;
-      transform: translateY(8px);
-      transition: opacity .18s ease, transform .18s ease;
+      transition: opacity .18s ease;
       user-select: none;
       -webkit-user-select: none;
     }
+
     .fab.show{
       opacity: 1;
-      transform: translateY(0);
     }
-    .fab:active{ transform: translateY(0) scale(0.98); }
-    .fab svg{ width: 22px; height: 22px; stroke: rgba(15,23,42,0.84); }
+
+    .fab:active{
+      transform: scale(0.98);
+    }
+
+    .fab svg{
+      width: 22px;
+      height: 22px;
+      stroke: rgba(15,23,42,0.84);
+    }
 
     .fab.refresh{
       border-color: rgba(31,78,121,.25);
     }
-    .fab.refresh svg{ stroke: rgba(31,78,121,0.92); }
 
-    /* =========================
-       Infinite scroll status
-       ========================= */
-    .inf {
+    .fab.refresh svg{
+      stroke: rgba(31,78,121,0.92);
+    }
+
+    /* infinite */
+    .inf{
       margin-top: calc(10px * var(--scale-ui));
       display: grid;
       gap: calc(10px * var(--scale-ui));
     }
+
     .infCard{
       text-align:center;
       padding: calc(12px * var(--scale-ui)) calc(14px * var(--scale-ui));
@@ -847,25 +873,39 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-
       font-size: var(--fs-md);
       line-height: calc(var(--lh-base) * var(--scale-lh));
       letter-spacing: var(--ls-base);
     }
+
     .infCard strong{
       color: rgba(15,23,42,0.86);
     }
-    #sentinel{ height: 1px; }
+
+    #sentinel{
+      height: 1px;
+    }
 
     @media (max-width: 560px){
-      .seg{ flex: 1 1 100%; min-width: 0; }
-      .group{ min-width: 0; grid-template-columns: 1fr 1fr; }
+      .seg{
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+      .group{
+        min-width: 0;
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
-      .pull-to-refresh{ transition: none !important; }
-      .ptr-ring .spin{ animation: none !important; }
-      .fab{ transition: none !important; }
+      .pull-to-refresh,
+      .fab,
+      .sheet{
+        transition: none !important;
+      }
+      .ptr-ring .spin{
+        animation: none !important;
+      }
     }
   </style>
 </head>
@@ -941,7 +981,7 @@
   <div class="toast" id="toast">-</div>
 
   <div class="fabs" aria-hidden="false">
-    <button id="fabRefresh" class="fab refresh" type="button" aria-label="새로고침">
+    <button id="fabRefresh" class="fab refresh show" type="button" aria-label="새로고침">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 12a9 9 0 0 1-15.2 6.4"></path>
         <path d="M3 12a9 9 0 0 1 15.2-6.4"></path>
@@ -959,9 +999,7 @@
   </div>
 
   <script>
-    /* =========================
-       ✅ iOS 감지 → html(documentElement)에 클래스 부여
-       ========================= */
+    /* iOS 감지 */
     (function(){
       const ua = navigator.userAgent || '';
       const isIOS =
@@ -978,9 +1016,7 @@
       document.documentElement.classList.add(isIPad ? 'ios-ipad' : 'ios-iphone');
     })();
 
-    /* =========
-       DOM
-       ========= */
+    /* DOM */
     const $ = (s) => document.querySelector(s);
 
     const datePicker   = $('#datePicker');
@@ -1007,10 +1043,9 @@
     const fabTop      = $('#fabTop');
     const fabRefresh  = $('#fabRefresh');
 
-    /* =========
-       Utils
-       ========= */
+    /* 기본값 */
     const STORAGE_KEYS = { source: "uic_source_selected" };
+
     const SOURCES = {
       house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
@@ -1031,23 +1066,30 @@
     };
 
     function updateHeaderMeta(){
-      if (refDateText) refDateText.textContent = `업데이트 ${fmtHHMM(new Date())}`;
+      refDateText.textContent = `업데이트 ${fmtHHMM(new Date())}`;
     }
 
     const esc = (v) => String(v ?? '')
-      .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
-      .replaceAll('"','&quot;').replaceAll("'","&#039;");
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'","&#039;");
 
     const normISO = (v) => {
       if (v == null) return '';
       const s = String(v).trim();
       if (!s) return '';
+
       let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
       if (m) return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+
       m = s.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})/);
       if (m) return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+
       m = s.match(/^(\d{4})(\d{2})(\d{2})$/);
       if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+
       return '';
     };
 
@@ -1061,68 +1103,67 @@
       toast._t = setTimeout(() => t.classList.remove('show'), ms);
     };
 
-    const fetchJson = async (url, bust=false) => {
-      const u = bust ? `${url}${url.includes('?')?'&':'?'}_=${Date.now()}` : url;
-      const res = await fetch(u, { cache: bust ? 'no-store' : 'default' });
+    async function fetchJson(url, bust=false){
+      const finalUrl = bust ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
+      const res = await fetch(finalUrl, { cache: bust ? 'no-store' : 'default' });
       if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
       return res.json();
-    };
+    }
 
-    /* ✅ 자연장지 부부단 이름 콤마 -> 슬래시 통일 */
     const normalizeCoupleName = (s) => {
       const raw = String(s ?? '').trim();
       if (!raw) return '-';
       return raw.replace(/\s*,\s*/g, ' / ');
     };
 
-    /* =========
-       Data cache
-       ========= */
+    /* 캐시 */
     const dataCache = { house: null, nature: null };
     let cremMapCache = null;
     let funeralMapCache = null;
 
-    const ensureData = async (key, force=false) => {
+    async function ensureData(key, force=false){
       if (dataCache[key] && !force) return dataCache[key];
       const raw = await fetchJson(SOURCES[key].url, force);
       dataCache[key] = Array.isArray(raw) ? raw : [];
       return dataCache[key];
-    };
+    }
 
-    const ensureCrem = async (force=false) => {
+    async function ensureCrem(force=false){
       if (cremMapCache && !force) return cremMapCache;
       const raw = await fetchJson("./data/crem.json", force);
       const arr = Array.isArray(raw) ? raw : [];
       const map = new Map();
+
       for (const r of arr){
         const id = String(r?.deadId ?? '').trim();
         if (id) map.set(id, r);
       }
+
       cremMapCache = map;
       return map;
-    };
+    }
 
-    const ensureFuneral = async (force=false) => {
+    async function ensureFuneral(force=false){
       if (funeralMapCache && !force) return funeralMapCache;
       const raw = await fetchJson("./data/funeral.json", force);
       const arr = Array.isArray(raw) ? raw : [];
       const map = new Map();
+
       for (const r of arr){
         const id = String(r?.deadId ?? '').trim();
         if (!id) continue;
         map.set(id, {
           deadId: id,
           deadName: String(r?.deadName ?? '').trim(),
-          dcGubun: String(r?.dcGubun ?? '').trim(),
+          dcGubun: String(r?.dcGubun ?? '').trim()
         });
       }
+
       funeralMapCache = map;
       return map;
-    };
+    }
 
-    /* =========
-       Domain helpers
-       ========= */
+    /* 도우미 */
     function formatEnsNo(val){
       if (val == null) return '-';
       const raw = String(val).trim();
@@ -1132,11 +1173,13 @@
         const parts = raw.split('-').map(x => x.trim()).filter(Boolean);
         const roomPart = parts.find(p => /\d+\s*실/.test(p));
         const numPart  = parts.find(p => /^\d{1,6}$/.test(p) || /^\d{5}$/.test(p));
+
         if (roomPart && numPart){
           const room = roomPart.replace(/\D/g,'').padStart(2,'0').slice(-2);
           const num  = numPart.replace(/\D/g,'').padStart(5,'0').slice(-5);
           return `${room}실 ${num}`;
         }
+
         if (roomPart){
           const tail = parts.slice().reverse().find(p => p.replace(/\D/g,'').length >= 5);
           if (tail){
@@ -1166,10 +1209,13 @@
       return `ALT:${safeKey(r.deadId)}|${safeKey(r.strDate)}|${safeKey(r.applname ?? r.applName)}|${safeKey(r.deadname ?? r.deadName ?? r.deceasedName)}`;
     };
 
-    const mergeEnsRows = (rows) => {
-      const map = new Map(), order = [];
+    function mergeEnsRows(rows){
+      const map = new Map();
+      const order = [];
+
       for (const r of rows){
         const key = ensMergeKey(r);
+
         if (!map.has(key)){
           map.set(key, {
             ensNO: safeKey(r.ensNO ?? r.ensNo ?? r.ensno) || '-',
@@ -1184,24 +1230,34 @@
           const cur = map.get(key);
           const dn = String(r.deadname ?? r.deadName ?? r.deceasedName ?? '-');
           const an = String(r.applname ?? r.applName ?? '-');
-          if (dn && dn !== '-' && !String(cur.deadname).split(' / ').includes(dn))
+
+          if (dn && dn !== '-' && !String(cur.deadname).split(' / ').includes(dn)){
             cur.deadname = (cur.deadname && cur.deadname !== '-') ? `${cur.deadname} / ${dn}` : dn;
-          if (an && an !== '-' && !String(cur.applname).split(' / ').includes(an))
+          }
+
+          if (an && an !== '-' && !String(cur.applname).split(' / ').includes(an)){
             cur.applname = (cur.applname && cur.applname !== '-') ? `${cur.applname} / ${an}` : an;
+          }
+
           const rd = pickRetDate(r);
           if (!cur.retDate && rd) cur.retDate = rd;
+
           cur._raw.push(r);
         }
       }
-      return order.map(k => map.get(k));
-    };
 
-    const mergeCoupleRows = (rows) => {
-      const map = new Map(), order = [];
+      return order.map(k => map.get(k));
+    }
+
+    function mergeCoupleRows(rows){
+      const map = new Map();
+      const order = [];
+
       for (const r of rows){
         const natNo = safeKey(r.natNo);
         const appl  = safeKey(r.applName);
         const key = `${natNo}||${appl}`;
+
         if (!map.has(key)){
           map.set(key, {
             natNo: r.natNo ?? '-',
@@ -1214,16 +1270,21 @@
         } else {
           const cur = map.get(key);
           const dn = String(r.deadName ?? r.deadname ?? '-');
-          if (dn && dn !== '-' && !cur.deadName.split(' / ').includes(dn))
+          if (dn && dn !== '-' && !cur.deadName.split(' / ').includes(dn)){
             cur.deadName = (cur.deadName && cur.deadName !== '-') ? `${cur.deadName} / ${dn}` : dn;
+          }
+
           const dt = String(r.natDate ?? '-');
-          if (dt && dt !== '-' && !cur.natDate.split(', ').includes(dt))
+          if (dt && dt !== '-' && !cur.natDate.split(', ').includes(dt)){
             cur.natDate = (cur.natDate && cur.natDate !== '-') ? `${cur.natDate}, ${dt}` : dt;
+          }
+
           cur._raw.push(r);
         }
       }
+
       return order.map(k => map.get(k));
-    };
+    }
 
     const itemId = (src, item) => src === 'house'
       ? String(item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-')
@@ -1233,36 +1294,45 @@
     const recvPending = (src) => (src === 'nature') ? '안장대기' : '안치대기';
     const recvDone    = (src) => (src === 'nature') ? '안장완료' : '안치완료';
 
-    const getRecv = (src, id) => {
+    function getRecv(src, id){
       const v = localStorage.getItem(recvKey(src, id));
       if (!v) return recvPending(src);
       if (src !== 'nature' && v === '접수') return '안치대기';
       if (src === 'nature' && v === '안치대기') return '안장대기';
       if (src === 'nature' && v === '안치완료') return '안장완료';
       return v;
-    };
-    const setRecv = (src, id, v) => localStorage.setItem(recvKey(src, id), v);
+    }
 
-    const isRetOn = (item, iso) => normISO(pickRetDate(item)) === iso;
+    function setRecv(src, id, v){
+      localStorage.setItem(recvKey(src, id), v);
+    }
+
+    function isRetOn(item, iso){
+      return normISO(pickRetDate(item)) === iso;
+    }
 
     const retKey = (id) => `ret_house_${id}`;
-    const getRet = (id) => {
+
+    function getRet(id){
       const v = localStorage.getItem(retKey(id));
       if (!v) return '반출대기';
       if (v === '반출') return '반출대기';
       return v;
-    };
-    const setRet = (id, v) => localStorage.setItem(retKey(id), v);
+    }
 
-    const leftCls = (src, mode, status) => {
+    function setRet(id, v){
+      localStorage.setItem(retKey(id), v);
+    }
+
+    function leftCls(src, mode, status){
       if (mode === 'ret') return (status === '반출완료') ? 'retDone' : 'ret';
       return (status === recvDone(src)) ? 'done' : 'recv';
-    };
+    }
 
     const pad2 = (n) => String(n ?? '').trim().padStart(2,'0').slice(-2) || '00';
     const fmtTime = (v) => String(v ?? '').trim();
 
-    const cremObj = (deadId, cremMap) => {
+    function cremObj(deadId, cremMap){
       const did = String(deadId ?? '').trim();
       const rec = did ? cremMap.get(did) : null;
       if (!rec) return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
@@ -1286,39 +1356,48 @@
 
       const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : `회차미정`;
       return { type:'info', chasu:safeChasu, start:st, end:en, text:`${chLabel}, 화장시작: ${st}, 화장종료: ${en}` };
-    };
+    }
 
-    const uniqDeadIds = (item) => {
+    function uniqDeadIds(item){
       const raws = Array.isArray(item?._raw) ? item._raw : [item];
-      const seen = new Set(), ids = [];
+      const seen = new Set();
+      const ids = [];
+
       for (const r of raws){
         const did = String(r?.deadId ?? '').trim();
         if (!did || seen.has(did)) continue;
-        seen.add(did); ids.push(did);
+        seen.add(did);
+        ids.push(did);
       }
-      return ids;
-    };
 
-    const chasuKey = (item, cremMap) => {
+      return ids;
+    }
+
+    function chasuKey(item, cremMap){
       const ids = uniqDeadIds(item);
       if (!ids.length) return 0;
+
       const nums = ids.map(id => cremObj(id, cremMap).chasu).filter(n => Number.isFinite(n));
       const pos = nums.filter(n => n > 0);
       return pos.length ? Math.min(...pos) : 0;
-    };
+    }
 
-    const cremLinesHTML = (item, cremMap, mode) => {
+    function cremLinesHTML(item, cremMap, mode){
       if (mode === 'ret' || !cremMap) return '';
+
       const ids = uniqDeadIds(item);
       if (!ids.length) return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
+
       const objs = ids.map(id => cremObj(id, cremMap));
       const allPay = objs.length && objs.every(o => o.type === 'pay');
       if (allPay) return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
-      return `<div class="cremWrap">${objs.map(o => `<div class="cremLine">${esc(o.text)}</div>`).join('')}</div>`;
-    };
 
-    const cremTimes = (item, cremMap) => {
+      return `<div class="cremWrap">${objs.map(o => `<div class="cremLine">${esc(o.text)}</div>`).join('')}</div>`;
+    }
+
+    function cremTimes(item, cremMap){
       if (!cremMap) return null;
+
       const ids = uniqDeadIds(item);
 
       if (!ids.length){
@@ -1330,6 +1409,7 @@
         const rec = did ? cremMap.get(did) : null;
         const st = fmtTime(rec?.burnStrTime);
         const en = fmtTime(rec?.burnEndTime);
+
         if (!rec) return { st:'선결제', en:'선결제' };
         return { st: st || '화장접수', en: en || '-' };
       });
@@ -1337,8 +1417,11 @@
       const starts = raws.map(x => x.st);
       const ends   = raws.map(x => x.en);
 
-      return { a:`화장시작: ${starts.join(' / ')}`, b:`화장종료: ${ends.join(' / ')}` };
-    };
+      return {
+        a:`화장시작: ${starts.join(' / ')}`,
+        b:`화장종료: ${ends.join(' / ')}`
+      };
+    }
 
     const kv = (k, v) => `
       <div class="kv">
@@ -1347,7 +1430,6 @@
       </div>
     `;
 
-    /* ✅ HTML을 value에 넣고 싶을 때(모달 이름+배지) */
     const kvHTML = (k, html) => `
       <div class="kv">
         <div class="k">${esc(k)}</div>
@@ -1366,83 +1448,86 @@
       `;
     };
 
-    /* ✅ 배지 판별 */
     const normNameKey = (s) => String(s ?? '').replace(/\s+/g,'').trim();
-    const nameKeySetFromDisplay = (displayName) => {
-      const parts = String(displayName ?? '')
-        .split('/')
-        .map(x => normNameKey(x));
+
+    function nameKeySetFromDisplay(displayName){
+      const parts = String(displayName ?? '').split('/').map(x => normNameKey(x));
       const set = new Set();
       for (const p of parts){
         if (p) set.add(p);
       }
       return set;
-    };
+    }
 
-    const funeralBadgeLabelForItem = (item, displayName, funeralMap) => {
+    function funeralBadgeLabelForItem(item, displayName, funeralMap){
       if (!funeralMap) return null;
 
       const ids = uniqDeadIds(item);
       if (!ids.length) return null;
 
       const nameSet = nameKeySetFromDisplay(displayName);
-
       let hasSelf = false;
+
       for (const id of ids){
         const rec = funeralMap.get(String(id ?? '').trim());
         if (!rec) continue;
 
         const recNameKey = normNameKey(rec.deadName);
         if (!recNameKey) continue;
-
         if (!nameSet.has(recNameKey)) continue;
 
         if (String(rec.dcGubun ?? '').trim() === 'TCM1200099'){
           return '무연고';
         }
+
         hasSelf = true;
       }
-      return hasSelf ? '자체' : null;
-    };
 
-    const badgeHTML = (label) => {
+      return hasSelf ? '자체' : null;
+    }
+
+    function badgeHTML(label){
       if (!label) return '';
       const cls = (label === '무연고') ? 'tag orphan' : 'tag self';
       return `<span class="${cls}">${esc(label)}</span>`;
-    };
+    }
 
-    /* =========
-       State
-       ========= */
+    /* 상태 */
     let currentSource = 'house';
     let currentSelectedDate = TODAY;
     let currentDisplayData = [];
     let loadToken = 0;
     let isRefreshing = false;
 
-    const calcCounts = (src, data, iso) => {
+    function calcCounts(src, data, iso){
       const dateKey = SOURCES[src].dateKey;
+
       if (src === 'house'){
-        const rows = (Array.isArray(data)?data:[]).filter(x => {
+        const rows = (Array.isArray(data) ? data : []).filter(x => {
           const s = String(x?.[dateKey] ?? '');
           const r = normISO(pickRetDate(x));
           return (s === iso) || (r === iso);
         });
+
         const merged = mergeEnsRows(rows);
-        let recv = 0, ret = 0;
+        let recv = 0;
+        let ret = 0;
+
         for (const it of merged){
           const isR = isRetOn(it, iso);
           const isS = String(it.strDate ?? '') === iso;
           if (isR) ret++;
           else if (isS) recv++;
         }
+
         return { recv, ret };
       }
-      const todays = (Array.isArray(data)?data:[]).filter(x => String(x?.[dateKey] ?? '') === iso);
-      return { recv: mergeCoupleRows(todays).length, ret: 0 };
-    };
 
-    const sortStable = (arr, iso, cremMap) => {
+      const todays = (Array.isArray(data) ? data : []).filter(x => String(x?.[dateKey] ?? '') === iso);
+      return { recv: mergeCoupleRows(todays).length, ret: 0 };
+    }
+
+    function sortStable(arr, iso, cremMap){
       const clone = arr.slice();
       clone.forEach((it, i) => { it._pos = (it._pos ?? i); });
 
@@ -1459,6 +1544,7 @@
 
         const grpA = retA ? (aRetDone ? 2 : 0) : 1;
         const grpB = retB ? (bRetDone ? 2 : 0) : 1;
+
         if (grpA !== grpB) return grpA - grpB;
 
         if (grpA === 1 && grpB === 1 && cremMap){
@@ -1466,38 +1552,36 @@
           const cb = chasuKey(b, cremMap);
           if (ca !== cb) return ca - cb;
         }
+
         return (a._pos ?? 0) - (b._pos ?? 0);
       });
 
       return clone;
-    };
+    }
 
-    /* =========
-       Page size auto
-       ========= */
-    const computePageSize = () => {
+    function computePageSize(){
       const w = Math.min(window.innerWidth || 0, window.screen?.width || 0) || 360;
       if (w <= 390) return 28;
       if (w <= 430) return 32;
       return 40;
-    };
+    }
 
-    /* =========
-       Infinite scroll
-       ========= */
     let pageSize = computePageSize();
     let renderedCount = 0;
     let observer = null;
     let lastCremMapForRender = null;
     let lastFuneralMapForRender = null;
 
-    const resetInfinite = () => {
+    function resetInfinite(){
       renderedCount = 0;
       infiniteArea.innerHTML = '';
-      if (observer) { observer.disconnect(); observer = null; }
-    };
+      if (observer){
+        observer.disconnect();
+        observer = null;
+      }
+    }
 
-    const ensureObserver = () => {
+    function ensureObserver(){
       const sentinel = document.getElementById('sentinel');
       if (!sentinel) return;
 
@@ -1514,15 +1598,16 @@
       });
 
       observer.observe(sentinel);
-    };
+    }
 
-    const setInfiniteUI = ({ mode, shown, total }) => {
+    function setInfiniteUI({ mode, shown, total }){
       if (mode === 'empty'){
         infiniteArea.innerHTML = '';
         return;
       }
 
       let msg = '';
+
       if (mode === 'loading'){
         msg = `<div class="infCard">불러오는 중…</div>`;
       } else if (mode === 'more'){
@@ -1537,9 +1622,9 @@
           <div id="sentinel"></div>
         </div>
       `;
-    };
+    }
 
-    const rowHTML = (item, idx, selected, cremMap, funeralMap) => {
+    function rowHTML(item, idx, selected, cremMap, funeralMap){
       const sid = itemId(currentSource, item);
       const mode = (currentSource === 'house' && isRetOn(item, selected)) ? 'ret' : 'recv';
 
@@ -1570,10 +1655,8 @@
         ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
         : String(item.deadName ?? '-');
 
-      /* ✅ 자연장지: 콤마 → 슬래시 통일 */
       if (currentSource === 'nature') displayName = normalizeCoupleName(displayName);
 
-      /* ✅ 반출(ret) 건은 배지 표시 금지 */
       const badgeLabel = (mode === 'ret') ? null : funeralBadgeLabelForItem(item, displayName, funeralMap);
       const tag = badgeHTML(badgeLabel);
 
@@ -1604,14 +1687,14 @@
           </div>
         </li>
       `;
-    };
+    }
 
-    const updateHeadShown = (shown, total) => {
+    function updateHeadShown(shown, total){
       const badge = document.getElementById('headBadge');
       if (badge) badge.textContent = `${shown.toLocaleString()} / ${total.toLocaleString()}`;
-    };
+    }
 
-    const renderNextPage = () => {
+    function renderNextPage(){
       const selected = datePicker.value || TODAY;
       const total = currentDisplayData.length;
       if (!total) return;
@@ -1636,8 +1719,8 @@
       for (let i = from; i < to; i++){
         chunk += rowHTML(currentDisplayData[i], i, selected, cremMap, funeralMap);
       }
-      ul.insertAdjacentHTML('beforeend', chunk);
 
+      ul.insertAdjacentHTML('beforeend', chunk);
       renderedCount = to;
 
       updateHeadShown(renderedCount, total);
@@ -1649,11 +1732,8 @@
         setInfiniteUI({ mode: 'end', shown: total, total });
         if (observer) observer.disconnect();
       }
-    };
+    }
 
-    /* =========
-       Load + Render
-       ========= */
     async function load(force=false){
       const myToken = ++loadToken;
 
@@ -1677,6 +1757,7 @@
         if (myToken !== loadToken) return;
 
         const c = calcCounts(currentSource, data, selected);
+
         countText.textContent = (currentSource === 'house')
           ? `안치 ${c.recv}건 · 반출 ${c.ret}건`
           : `안장 ${c.recv}건`;
@@ -1705,7 +1786,7 @@
         if (!display.length){
           listArea.innerHTML = `<div class="no-data">표시할 데이터가 없습니다.</div>`;
           resetInfinite();
-          updateHeaderMeta(); /* ✅ 메타 업데이트 */
+          updateHeaderMeta();
           return;
         }
 
@@ -1725,13 +1806,12 @@
 
         setInfiniteUI({ mode: 'loading', shown: 0, total: display.length });
         renderNextPage();
-
-        updateHeaderMeta(); /* ✅ 로드 완료 시각 표시 */
+        updateHeaderMeta();
 
       } catch (err){
         listArea.innerHTML = `<div class="no-data">오류: ${esc(err.message)}</div>`;
         resetInfinite();
-        updateHeaderMeta(); /* ✅ 실패해도 시각은 갱신 */
+        updateHeaderMeta();
       }
     }
 
@@ -1752,42 +1832,36 @@
       let html = '';
       const isRetModal = (currentSource === 'house' && isRetOn(item, currentSelectedDate));
 
-      /* ✅ 모달 표시용 이름(자연장지 콤마 -> 슬래시) */
       let displayNameForModal = (currentSource === 'house')
         ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
         : String(item.deadName ?? '-');
+
       if (currentSource === 'nature') displayNameForModal = normalizeCoupleName(displayNameForModal);
 
-      /* ✅ 모달 배지(반출건 제외) */
       const badgeLabelModal = isRetModal ? null : funeralBadgeLabelForItem(item, displayNameForModal, funeralMapCache);
       const tagModal = badgeHTML(badgeLabelModal);
 
       if (currentSource === 'house'){
         html += kv('안치일자', item.strDate ?? '-');
-
-        /* ✅ 고인명 + 배지 */
         html += kvHTML('고인명', `
           <span style="display:inline-flex;align-items:center;gap:6px;min-width:0;max-width:100%;">
             <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayNameForModal)}</span>
             ${tagModal}
           </span>
         `);
-
         html += kv('신청자', item.applname ?? item.applName ?? '-');
+
         const rdISO = normISO(pickRetDate(item));
         const rdRaw = pickRetDate(item);
         if (rdISO) html += kv('반출일자', String(rdRaw ?? rdISO));
       } else {
         html += kv('안치일자', item.natDate ?? '-');
-
-        /* ✅ 고인명 + 배지 */
         html += kvHTML('고인명', `
           <span style="display:inline-flex;align-items:center;gap:6px;min-width:0;max-width:100%;">
             <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayNameForModal)}</span>
             ${tagModal}
           </span>
         `);
-
         html += kv('신청자', item.applName ?? '-');
       }
 
@@ -1797,7 +1871,6 @@
       }
 
       mFields.innerHTML = html;
-
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden', 'false');
     }
@@ -1829,8 +1902,10 @@
     function setSource(src){
       currentSource = src;
       localStorage.setItem(STORAGE_KEYS.source, src);
+
       tabHouse.classList.toggle('active', src === 'house');
       tabNature.classList.toggle('active', src === 'nature');
+
       load();
     }
 
@@ -1842,8 +1917,14 @@
     });
 
     sheetOkBtn.addEventListener('click', closeSheet);
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeSheet(); });
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeSheet();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet();
+    });
 
     listArea.addEventListener('click', (e) => {
       const openBtn = e.target.closest('[data-open]');
@@ -1851,6 +1932,7 @@
         openSheet(parseInt(openBtn.getAttribute('data-open'), 10));
         return;
       }
+
       const tg = e.target.closest('[data-toggle]');
       if (!tg) return;
 
@@ -1885,14 +1967,11 @@
       load();
     });
 
-    /* =========
-       FAB show/hide
-       ========= */
     function updateFAB(){
       const y = window.scrollY || document.documentElement.scrollTop || 0;
-      const show = y > 220;
-      fabTop.classList.toggle('show', show);
-      fabRefresh.classList.toggle('show', true);
+      const showTop = y > 220;
+      fabTop.classList.toggle('show', showTop);
+      fabRefresh.classList.add('show');
     }
 
     fabTop.addEventListener('click', () => {
@@ -1905,29 +1984,34 @@
 
     window.addEventListener('scroll', updateFAB, { passive:true });
 
-    /* =========
-       PTR (top only)
-       ========= */
-    let startY = 0, pulling = false, pullDist = 0;
-    const PTR_MAX = 64, PTR_TH = 60, DAMP = 0.52;
+    /* pull to refresh */
+    let startY = 0;
+    let pulling = false;
+    let pullDist = 0;
+
+    const PTR_MAX = 64;
+    const PTR_TH = 60;
+    const DAMP = 0.52;
 
     const R = 9;
     const CIRC = 2 * Math.PI * R;
 
-    const atTop = () => {
+    function atTop(){
       const y = window.scrollY || document.documentElement.scrollTop || 0;
       return y <= 0;
-    };
+    }
 
-    const canPTR = () => atTop() && !isRefreshing && !overlay.classList.contains('show');
+    function canPTR(){
+      return atTop() && !isRefreshing && !overlay.classList.contains('show');
+    }
 
-    const setPullProgress = (ratio) => {
+    function setPullProgress(ratio){
       const p = Math.max(0, Math.min(ratio, 1));
       ptrProg.style.strokeDasharray = String(CIRC.toFixed(2));
       ptrProg.style.strokeDashoffset = String((CIRC * (1 - p)).toFixed(2));
-    };
+    }
 
-    const setPullUI = (dist) => {
+    function setPullUI(dist){
       const d = Math.max(0, Math.min(dist, PTR_MAX));
       pullDist = d;
 
@@ -1938,19 +2022,17 @@
 
       const p = d / PTR_TH;
       setPullProgress(p);
-
       statusEl.textContent = (d >= PTR_TH) ? '놓아서 새로고침' : '당겨서 새로고침';
-    };
+    }
 
-    const resetPullUI = () => {
+    function resetPullUI(){
       ptrEl.classList.remove('visible');
       ptrEl.setAttribute('aria-hidden', 'true');
       pullDist = 0;
-
       setPullProgress(0);
       ptrRing.classList.remove('loading');
       statusEl.textContent = '당겨서 새로고침';
-    };
+    }
 
     document.addEventListener('touchstart', (e) => {
       if (!canPTR()) return;
@@ -1994,34 +2076,35 @@
       }
     }, { passive: true });
 
-    /* =========
-       PageSize recalculation
-       ========= */
-    const onResize = () => {
+    function onResize(){
       const next = computePageSize();
       if (next !== pageSize){
         pageSize = next;
       }
-    };
+      updateFAB();
+    }
+
     window.addEventListener('resize', onResize, { passive:true });
     window.addEventListener('orientationchange', onResize, { passive:true });
 
-    /* =========
-       Init
-       ========= */
+    /* 초기 실행 */
     window.addEventListener('load', () => {
       pageSize = computePageSize();
 
       const saved = localStorage.getItem(STORAGE_KEYS.source);
-      setSource((saved === 'nature' || saved === 'house') ? saved : 'house');
-
       datePicker.value = TODAY;
 
-      setPullProgress(0);
-      load();
+      const initialSource = (saved === 'nature' || saved === 'house') ? saved : 'house';
+      currentSource = initialSource;
 
+      tabHouse.classList.toggle('active', initialSource === 'house');
+      tabNature.classList.toggle('active', initialSource === 'nature');
+
+      setPullProgress(0);
       updateFAB();
       updateHeaderMeta();
+
+      load();
     });
   </script>
 </body>
