@@ -8,8 +8,8 @@
     "burnChasu": "02"
   },
   {
-    "deadId": "1653640",
-    "deadName": "조인출",
+    "deadId": "1653644",
+    "deadName": "정갑식",
     "burnDate": "2026-03-08",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -62,5 +62,13 @@
     "burnStrTime": "07:43",
     "burnEndTime": null,
     "burnChasu": "01"
+  },
+  {
+    "deadId": "1653640",
+    "deadName": "조인출",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "08:18",
+    "burnEndTime": null,
+    "burnChasu": "02"
   }
 ]
