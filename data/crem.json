@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653642",
-    "deadName": "장정순",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653254",
     "deadName": "이규일",
     "burnDate": "2026-03-07",
@@ -26,14 +18,6 @@
   {
     "deadId": "1653256",
     "deadName": "이종길",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
-    "deadId": "1653322",
-    "deadName": "이순이",
     "burnDate": "2026-03-07",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -204,7 +188,7 @@
     "deadName": "이희석",
     "burnDate": "2026-03-07",
     "burnStrTime": "11:27",
-    "burnEndTime": null,
+    "burnEndTime": "12:54",
     "burnChasu": "05"
   },
   {
@@ -238,5 +222,21 @@
     "burnStrTime": "12:32",
     "burnEndTime": null,
     "burnChasu": "06"
+  },
+  {
+    "deadId": "1653642",
+    "deadName": "장정순",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "12:54",
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653322",
+    "deadName": "이순이",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "12:54",
+    "burnEndTime": null,
+    "burnChasu": "07"
   }
 ]
