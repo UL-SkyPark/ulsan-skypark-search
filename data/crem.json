@@ -1,15 +1,15 @@
 [
   {
-    "deadId": "1653604",
-    "deadName": "이희석",
+    "deadId": "1653566",
+    "deadName": "임준오",
     "burnDate": "2026-03-07",
     "burnStrTime": null,
     "burnEndTime": null,
     "burnChasu": "05"
   },
   {
-    "deadId": "1653606",
-    "deadName": "김순금",
+    "deadId": "1653604",
+    "deadName": "이희석",
     "burnDate": "2026-03-07",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -158,5 +158,13 @@
     "burnStrTime": "10:31",
     "burnEndTime": null,
     "burnChasu": "04"
+  },
+  {
+    "deadId": "1653606",
+    "deadName": "김순금",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "11:16",
+    "burnEndTime": null,
+    "burnChasu": "05"
   }
 ]
