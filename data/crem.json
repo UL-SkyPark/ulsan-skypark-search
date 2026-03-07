@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653638",
-    "deadName": "이철근",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653644",
     "deadName": "정갑식",
     "burnDate": "2026-03-08",
@@ -68,6 +60,14 @@
     "deadName": "조인출",
     "burnDate": "2026-03-08",
     "burnStrTime": "08:18",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653638",
+    "deadName": "이철근",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "08:23",
     "burnEndTime": null,
     "burnChasu": "02"
   }
