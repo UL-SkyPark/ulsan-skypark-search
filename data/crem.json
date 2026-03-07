@@ -1,11 +1,11 @@
 [
   {
-    "deadId": "1653620",
-    "deadName": "김귀봉",
+    "deadId": "1653640",
+    "deadName": "조인출",
     "burnDate": "2026-03-08",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "01"
+    "burnChasu": "02"
   },
   {
     "deadId": "1653624",
@@ -28,6 +28,14 @@
     "deadName": "송순덕",
     "burnDate": "2026-03-08",
     "burnStrTime": "07:36",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653620",
+    "deadName": "김귀봉",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "07:43",
     "burnEndTime": null,
     "burnChasu": "01"
   }
