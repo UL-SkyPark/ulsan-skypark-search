@@ -16,14 +16,6 @@
     "burnChasu": "06"
   },
   {
-    "deadId": "1653622",
-    "deadName": "박점곤",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653322",
     "deadName": "이순이",
     "burnDate": "2026-03-07",
@@ -198,5 +190,13 @@
     "burnStrTime": "11:34",
     "burnEndTime": null,
     "burnChasu": "05"
+  },
+  {
+    "deadId": "1653622",
+    "deadName": "박점곤",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "12:22",
+    "burnEndTime": null,
+    "burnChasu": "06"
   }
 ]
