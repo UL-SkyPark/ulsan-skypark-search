@@ -1,23 +1,7 @@
 [
   {
-    "deadId": "1653590",
-    "deadName": "김옥희",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653601",
     "deadName": "조준형",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
-    "deadId": "1653603",
-    "deadName": "김수택",
     "burnDate": "2026-03-07",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -132,6 +116,22 @@
     "deadName": "전한이",
     "burnDate": "2026-03-07",
     "burnStrTime": "10:18",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653590",
+    "deadName": "김옥희",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "10:22",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653603",
+    "deadName": "김수택",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "10:25",
     "burnEndTime": null,
     "burnChasu": "04"
   }
