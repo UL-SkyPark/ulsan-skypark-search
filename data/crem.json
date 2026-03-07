@@ -8,6 +8,14 @@
     "burnChasu": "06"
   },
   {
+    "deadId": "1653622",
+    "deadName": "박점곤",
+    "burnDate": "2026-03-07",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
     "deadId": "1653597",
     "deadName": "이칠성",
     "burnDate": "2026-03-07",
@@ -116,7 +124,7 @@
     "deadName": "전한이",
     "burnDate": "2026-03-07",
     "burnStrTime": "10:18",
-    "burnEndTime": null,
+    "burnEndTime": "11:38",
     "burnChasu": "04"
   },
   {
@@ -124,7 +132,7 @@
     "deadName": "김옥희",
     "burnDate": "2026-03-07",
     "burnStrTime": "10:22",
-    "burnEndTime": null,
+    "burnEndTime": "11:40",
     "burnChasu": "04"
   },
   {
