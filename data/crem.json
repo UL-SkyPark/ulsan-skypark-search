@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653566",
-    "deadName": "임준오",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
     "deadId": "1653579",
     "deadName": "우일찬",
     "burnDate": "2026-03-07",
@@ -172,6 +164,14 @@
     "deadName": "이희석",
     "burnDate": "2026-03-07",
     "burnStrTime": "11:27",
+    "burnEndTime": null,
+    "burnChasu": "05"
+  },
+  {
+    "deadId": "1653566",
+    "deadName": "임준오",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "11:34",
     "burnEndTime": null,
     "burnChasu": "05"
   }
