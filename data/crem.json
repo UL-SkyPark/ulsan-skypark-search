@@ -224,8 +224,8 @@
     "burnChasu": "07"
   },
   {
-    "deadId": "1653254",
-    "deadName": "이규일",
+    "deadId": "1653256",
+    "deadName": "이종길",
     "burnDate": "2026-03-07",
     "burnStrTime": "13:02",
     "burnEndTime": null,
@@ -236,15 +236,15 @@
     "deadName": "이윤화",
     "burnDate": "2026-03-07",
     "burnStrTime": "13:02",
-    "burnEndTime": null,
+    "burnEndTime": "13:19",
     "burnChasu": "07"
   },
   {
-    "deadId": "1653256",
-    "deadName": "이종길",
+    "deadId": "1653254",
+    "deadName": "이규일",
     "burnDate": "2026-03-07",
     "burnStrTime": "13:02",
-    "burnEndTime": null,
+    "burnEndTime": "13:20",
     "burnChasu": "07"
   }
 ]
