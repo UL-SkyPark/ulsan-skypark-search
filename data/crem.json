@@ -1,11 +1,11 @@
 [
   {
-    "deadId": "1653690",
-    "deadName": "점검중",
+    "deadId": "1653609",
+    "deadName": "신순례",
     "burnDate": "2026-03-08",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "10"
+    "burnChasu": "02"
   },
   {
     "deadId": "1653690",
@@ -28,7 +28,7 @@
     "deadName": "박동주",
     "burnDate": "2026-03-08",
     "burnStrTime": "07:30",
-    "burnEndTime": null,
+    "burnEndTime": "08:46",
     "burnChasu": "01"
   },
   {
