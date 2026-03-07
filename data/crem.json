@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653567",
-    "deadName": "김순이",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653589",
     "deadName": "문명자",
     "burnDate": "2026-03-07",
@@ -92,7 +84,7 @@
     "deadName": "이신출",
     "burnDate": "2026-03-07",
     "burnStrTime": "08:38",
-    "burnEndTime": null,
+    "burnEndTime": "09:29",
     "burnChasu": "08"
   },
   {
@@ -108,6 +100,14 @@
     "deadName": "김주영",
     "burnDate": "2026-03-07",
     "burnStrTime": "09:25",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653567",
+    "deadName": "김순이",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "09:29",
     "burnEndTime": null,
     "burnChasu": "03"
   }
