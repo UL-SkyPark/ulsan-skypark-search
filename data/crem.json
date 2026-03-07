@@ -1,7 +1,7 @@
 [
   {
-    "deadId": "1653624",
-    "deadName": "박옥남",
+    "deadId": "1653620",
+    "deadName": "김귀봉",
     "burnDate": "2026-03-08",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -20,6 +20,14 @@
     "deadName": "송순덕",
     "burnDate": "2026-03-08",
     "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653624",
+    "deadName": "박옥남",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "07:23",
     "burnEndTime": null,
     "burnChasu": "01"
   }
