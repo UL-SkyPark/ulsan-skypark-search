@@ -232,19 +232,19 @@
     "burnChasu": "07"
   },
   {
-    "deadId": "1653626",
-    "deadName": "이창구",
-    "burnDate": "2026-03-07",
-    "burnStrTime": "13:41",
-    "burnEndTime": null,
-    "burnChasu": "08"
-  },
-  {
     "deadId": "1653643",
     "deadName": "양혜인사산",
     "burnDate": "2026-03-07",
     "burnStrTime": "13:41",
     "burnEndTime": "14:05",
+    "burnChasu": "08"
+  },
+  {
+    "deadId": "1653626",
+    "deadName": "이창구",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "13:41",
+    "burnEndTime": "14:07",
     "burnChasu": "08"
   },
   {
