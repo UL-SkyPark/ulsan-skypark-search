@@ -8,14 +8,6 @@
     "burnChasu": "01"
   },
   {
-    "deadId": "1653651",
-    "deadName": "박동주",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "01"
-  },
-  {
     "deadId": "1653656",
     "deadName": "송순덕",
     "burnDate": "2026-03-08",
@@ -28,6 +20,14 @@
     "deadName": "박옥남",
     "burnDate": "2026-03-08",
     "burnStrTime": "07:23",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653651",
+    "deadName": "박동주",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "07:30",
     "burnEndTime": null,
     "burnChasu": "01"
   }
