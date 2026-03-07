@@ -1,23 +1,7 @@
 [
   {
-    "deadId": "1653626",
-    "deadName": "이창구",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "08"
-  },
-  {
     "deadId": "1653627",
     "deadName": "유재수",
-    "burnDate": "2026-03-07",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "08"
-  },
-  {
-    "deadId": "1653643",
-    "deadName": "양혜인사산",
     "burnDate": "2026-03-07",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -204,7 +188,7 @@
     "deadName": "우일찬",
     "burnDate": "2026-03-07",
     "burnStrTime": "12:26",
-    "burnEndTime": null,
+    "burnEndTime": "13:42",
     "burnChasu": "06"
   },
   {
@@ -254,5 +238,21 @@
     "burnStrTime": "13:02",
     "burnEndTime": "13:24",
     "burnChasu": "07"
+  },
+  {
+    "deadId": "1653626",
+    "deadName": "이창구",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "13:41",
+    "burnEndTime": null,
+    "burnChasu": "08"
+  },
+  {
+    "deadId": "1653643",
+    "deadName": "양혜인사산",
+    "burnDate": "2026-03-07",
+    "burnStrTime": "13:41",
+    "burnEndTime": null,
+    "burnChasu": "08"
   }
 ]
