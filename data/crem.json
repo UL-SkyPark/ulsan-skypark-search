@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653702",
-    "deadName": "박준우",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653059",
     "deadName": "문장걸",
     "burnDate": "2026-03-08",
@@ -204,6 +196,14 @@
     "deadName": "조창술",
     "burnDate": "2026-03-08",
     "burnStrTime": "12:19",
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653702",
+    "deadName": "박준우",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "12:27",
     "burnEndTime": null,
     "burnChasu": "06"
   }
