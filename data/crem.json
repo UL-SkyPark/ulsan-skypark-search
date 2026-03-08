@@ -1,11 +1,11 @@
 [
   {
-    "deadId": "1653609",
-    "deadName": "신순례",
+    "deadId": "1653607",
+    "deadName": "박득용",
     "burnDate": "2026-03-08",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "02"
+    "burnChasu": "03"
   },
   {
     "deadId": "1653690",
@@ -44,7 +44,7 @@
     "deadName": "김귀봉",
     "burnDate": "2026-03-08",
     "burnStrTime": "07:43",
-    "burnEndTime": null,
+    "burnEndTime": "08:58",
     "burnChasu": "01"
   },
   {
@@ -68,6 +68,14 @@
     "deadName": "정갑식",
     "burnDate": "2026-03-08",
     "burnStrTime": "08:40",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653609",
+    "deadName": "신순례",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "09:00",
     "burnEndTime": null,
     "burnChasu": "02"
   }
