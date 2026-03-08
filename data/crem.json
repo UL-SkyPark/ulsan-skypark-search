@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653646",
-    "deadName": "김지설",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653623",
     "deadName": "엄주일",
     "burnDate": "2026-03-08",
@@ -76,7 +68,7 @@
     "deadName": "정갑식",
     "burnDate": "2026-03-08",
     "burnStrTime": "08:40",
-    "burnEndTime": null,
+    "burnEndTime": "09:50",
     "burnChasu": "02"
   },
   {
@@ -108,6 +100,14 @@
     "deadName": "이계출",
     "burnDate": "2026-03-08",
     "burnStrTime": "09:41",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653646",
+    "deadName": "김지설",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "09:47",
     "burnEndTime": null,
     "burnChasu": "03"
   }
