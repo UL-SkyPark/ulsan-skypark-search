@@ -1,7 +1,7 @@
 [
   {
-    "deadId": "1653607",
-    "deadName": "박득용",
+    "deadId": "1653612",
+    "deadName": "이계출",
     "burnDate": "2026-03-08",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -86,5 +86,13 @@
     "burnStrTime": "09:00",
     "burnEndTime": null,
     "burnChasu": "02"
+  },
+  {
+    "deadId": "1653607",
+    "deadName": "박득용",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "09:19",
+    "burnEndTime": null,
+    "burnChasu": "03"
   }
 ]
