@@ -1,5 +1,13 @@
 [
   {
+    "deadId": "1653676",
+    "deadName": "조창술",
+    "burnDate": "2026-03-08",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
     "deadId": "1653059",
     "deadName": "문장걸",
     "burnDate": "2026-03-08",
@@ -180,7 +188,7 @@
     "deadName": "김영태",
     "burnDate": "2026-03-08",
     "burnStrTime": "11:29",
-    "burnEndTime": null,
+    "burnEndTime": "12:10",
     "burnChasu": "07"
   },
   {
