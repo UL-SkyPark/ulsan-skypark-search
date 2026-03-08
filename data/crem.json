@@ -8,8 +8,8 @@
     "burnChasu": "03"
   },
   {
-    "deadId": "1653621",
-    "deadName": "이형준",
+    "deadId": "1653646",
+    "deadName": "김지설",
     "burnDate": "2026-03-08",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -92,6 +92,14 @@
     "deadName": "박득용",
     "burnDate": "2026-03-08",
     "burnStrTime": "09:19",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653621",
+    "deadName": "이형준",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "09:23",
     "burnEndTime": null,
     "burnChasu": "03"
   }
