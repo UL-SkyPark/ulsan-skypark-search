@@ -8,14 +8,6 @@
     "burnChasu": "01"
   },
   {
-    "deadId": "1653746",
-    "deadName": "황문상",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "01"
-  },
-  {
     "deadId": "1653747",
     "deadName": "점검중",
     "burnDate": "2026-03-09",
@@ -36,6 +28,14 @@
     "deadName": "이근일",
     "burnDate": "2026-03-09",
     "burnStrTime": "07:22",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653746",
+    "deadName": "황문상",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "07:30",
     "burnEndTime": null,
     "burnChasu": "01"
   }
