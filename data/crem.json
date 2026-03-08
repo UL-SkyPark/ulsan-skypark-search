@@ -1,5 +1,13 @@
 [
   {
+    "deadId": "1653634",
+    "deadName": "안복연",
+    "burnDate": "2026-03-09",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
     "deadId": "1653747",
     "deadName": "점검중",
     "burnDate": "2026-03-09",
