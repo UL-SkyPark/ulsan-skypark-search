@@ -2017,11 +2017,16 @@
   {
     "deadId": "1653676",
     "deadName": "조창술",
-    "dcGubun": "TCM1200001"
+    "dcGubun": "TCM1200002"
   },
   {
     "deadId": "1653700",
     "deadName": "김영복",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1653702",
+    "deadName": "박준우",
+    "dcGubun": "TCM1200002"
   }
 ]
