@@ -67696,13 +67696,6 @@
   },
   {
     "natDate": "2026-03-08",
-    "natNo": null,
-    "applName": "엄승환",
-    "deadId": "1653623",
-    "deadName": "엄주일"
-  },
-  {
-    "natDate": "2026-03-08",
     "natNo": "잔디장-2-9-0190",
     "applName": "이태헌",
     "deadId": "1653638",
@@ -67721,5 +67714,12 @@
     "applName": "박용걸",
     "deadId": "1653607",
     "deadName": "박득용"
+  },
+  {
+    "natDate": "2026-03-08",
+    "natNo": "잔디장-2-9-0193",
+    "applName": "엄승환",
+    "deadId": "1653623",
+    "deadName": "엄주일"
   }
 ]
