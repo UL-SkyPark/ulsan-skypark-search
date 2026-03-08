@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653645",
-    "deadName": "이경호",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653690",
     "deadName": "점검중",
     "burnDate": "2026-03-08",
@@ -116,6 +108,14 @@
     "deadName": "엄주일",
     "burnDate": "2026-03-08",
     "burnStrTime": "10:17",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653645",
+    "deadName": "이경호",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "10:23",
     "burnEndTime": null,
     "burnChasu": "04"
   }
