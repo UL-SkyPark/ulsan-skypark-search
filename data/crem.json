@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1652437",
-    "deadName": "김영태",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
     "deadId": "1653059",
     "deadName": "문장걸",
     "burnDate": "2026-03-08",
@@ -182,5 +174,13 @@
     "burnStrTime": "11:15",
     "burnEndTime": null,
     "burnChasu": "05"
+  },
+  {
+    "deadId": "1652437",
+    "deadName": "김영태",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "11:29",
+    "burnEndTime": null,
+    "burnChasu": "07"
   }
 ]
