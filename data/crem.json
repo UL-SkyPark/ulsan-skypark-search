@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653671",
-    "deadName": "이성자",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
     "deadId": "1653059",
     "deadName": "문장걸",
     "burnDate": "2026-03-08",
@@ -156,7 +148,7 @@
     "deadName": "이경호",
     "burnDate": "2026-03-08",
     "burnStrTime": "10:23",
-    "burnEndTime": null,
+    "burnEndTime": "11:47",
     "burnChasu": "04"
   },
   {
@@ -190,5 +182,13 @@
     "burnStrTime": "11:29",
     "burnEndTime": null,
     "burnChasu": "07"
+  },
+  {
+    "deadId": "1653671",
+    "deadName": "이성자",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "11:48",
+    "burnEndTime": null,
+    "burnChasu": "05"
   }
 ]
