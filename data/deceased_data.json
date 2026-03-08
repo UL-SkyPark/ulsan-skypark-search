@@ -64320,14 +64320,6 @@
     "retDate": null
   },
   {
-    "deadId": "1460966",
-    "strDate": "2018-02-13",
-    "ensNo": null,
-    "deadName": "김동진",
-    "applName": "박재현",
-    "retDate": null
-  },
-  {
     "deadId": "1460961",
     "strDate": "2018-02-13",
     "ensNo": "1추모의집-03실-부부단-00435",
@@ -64357,6 +64349,14 @@
     "ensNo": "1추모의집-03실-부부단-00436",
     "deadName": "김두호",
     "applName": "김현구",
+    "retDate": null
+  },
+  {
+    "deadId": "1460966",
+    "strDate": "2018-02-13",
+    "ensNo": "1추모의집-12실-무연고-03204",
+    "deadName": "김동진",
+    "applName": "박재현",
     "retDate": null
   },
   {
