@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653639",
-    "deadName": "김창겸",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653648",
     "deadName": "이수옥",
     "burnDate": "2026-03-08",
@@ -164,6 +156,14 @@
     "deadName": "이경호",
     "burnDate": "2026-03-08",
     "burnStrTime": "10:23",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653639",
+    "deadName": "김창겸",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "10:42",
     "burnEndTime": null,
     "burnChasu": "04"
   }
