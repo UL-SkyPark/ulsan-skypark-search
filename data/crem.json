@@ -1,15 +1,23 @@
 [
   {
-    "deadId": "1653634",
-    "deadName": "안복연",
+    "deadId": "1653650",
+    "deadName": "이진국",
     "burnDate": "2026-03-09",
     "burnStrTime": null,
     "burnEndTime": null,
     "burnChasu": "02"
   },
   {
-    "deadId": "1653650",
-    "deadName": "이진국",
+    "deadId": "1653677",
+    "deadName": "이순연",
+    "burnDate": "2026-03-09",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653680",
+    "deadName": "박종자",
     "burnDate": "2026-03-09",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -54,5 +62,13 @@
     "burnStrTime": "07:34",
     "burnEndTime": null,
     "burnChasu": "01"
+  },
+  {
+    "deadId": "1653634",
+    "deadName": "안복연",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "08:20",
+    "burnEndTime": null,
+    "burnChasu": "02"
   }
 ]
