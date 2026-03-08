@@ -8,6 +8,14 @@
     "burnChasu": "07"
   },
   {
+    "deadId": "1653059",
+    "deadName": "문장걸",
+    "burnDate": "2026-03-08",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
     "deadId": "1653690",
     "deadName": "점검중",
     "burnDate": "2026-03-08",
@@ -176,22 +184,6 @@
     "burnChasu": "06"
   },
   {
-    "deadId": "1653060",
-    "deadName": "김복순",
-    "burnDate": "2026-03-08",
-    "burnStrTime": "13:10",
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
-    "deadId": "1653061",
-    "deadName": "문규현",
-    "burnDate": "2026-03-08",
-    "burnStrTime": "13:10",
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
     "deadId": "1653062",
     "deadName": "김양자",
     "burnDate": "2026-03-08",
@@ -200,11 +192,19 @@
     "burnChasu": "08"
   },
   {
-    "deadId": "1653059",
-    "deadName": "문장걸",
+    "deadId": "1653060",
+    "deadName": "김복순",
     "burnDate": "2026-03-08",
-    "burnStrTime": "13:11",
-    "burnEndTime": null,
+    "burnStrTime": "13:10",
+    "burnEndTime": "13:40",
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653061",
+    "deadName": "문규현",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "13:10",
+    "burnEndTime": "13:40",
     "burnChasu": "07"
   },
   {
