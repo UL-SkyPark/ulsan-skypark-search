@@ -8,30 +8,6 @@
     "burnChasu": "07"
   },
   {
-    "deadId": "1653059",
-    "deadName": "문장걸",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
-    "deadId": "1653113",
-    "deadName": "강향산",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "08"
-  },
-  {
-    "deadId": "1653114",
-    "deadName": "이사중",
-    "burnDate": "2026-03-08",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "08"
-  },
-  {
     "deadId": "1653690",
     "deadName": "점검중",
     "burnDate": "2026-03-08",
@@ -180,7 +156,7 @@
     "deadName": "이성자",
     "burnDate": "2026-03-08",
     "burnStrTime": "11:48",
-    "burnEndTime": null,
+    "burnEndTime": "13:15",
     "burnChasu": "05"
   },
   {
@@ -220,6 +196,30 @@
     "deadName": "김양자",
     "burnDate": "2026-03-08",
     "burnStrTime": "13:10",
+    "burnEndTime": null,
+    "burnChasu": "08"
+  },
+  {
+    "deadId": "1653059",
+    "deadName": "문장걸",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "13:11",
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653113",
+    "deadName": "강향산",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "13:11",
+    "burnEndTime": null,
+    "burnChasu": "08"
+  },
+  {
+    "deadId": "1653114",
+    "deadName": "이사중",
+    "burnDate": "2026-03-08",
+    "burnStrTime": "13:11",
     "burnEndTime": null,
     "burnChasu": "08"
   }
