@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653740",
-    "deadName": "정훈",
-    "burnDate": "2026-03-10",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "01"
-  },
-  {
     "deadId": "1653705",
     "deadName": "장상범",
     "burnDate": "2026-03-10",
@@ -28,6 +20,14 @@
     "deadName": "김옥순",
     "burnDate": "2026-03-10",
     "burnStrTime": "07:22",
+    "burnEndTime": null,
+    "burnChasu": "01"
+  },
+  {
+    "deadId": "1653740",
+    "deadName": "정훈",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "07:29",
     "burnEndTime": null,
     "burnChasu": "01"
   }
