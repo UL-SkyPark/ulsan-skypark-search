@@ -1,15 +1,15 @@
 [
   {
-    "deadId": "1653663",
-    "deadName": "홍봉희",
+    "deadId": "1653649",
+    "deadName": "LIN SHUNJI",
     "burnDate": "2026-03-09",
     "burnStrTime": null,
     "burnEndTime": null,
     "burnChasu": "04"
   },
   {
-    "deadId": "1653664",
-    "deadName": "엄성운",
+    "deadId": "1653663",
+    "deadName": "홍봉희",
     "burnDate": "2026-03-09",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -126,5 +126,13 @@
     "burnStrTime": "09:41",
     "burnEndTime": null,
     "burnChasu": "03"
+  },
+  {
+    "deadId": "1653664",
+    "deadName": "엄성운",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "10:18",
+    "burnEndTime": null,
+    "burnChasu": "04"
   }
 ]
