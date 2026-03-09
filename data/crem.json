@@ -8,14 +8,6 @@
     "burnChasu": "02"
   },
   {
-    "deadId": "1653699",
-    "deadName": "최근도",
-    "burnDate": "2026-03-10",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "02"
-  },
-  {
     "deadId": "1653696",
     "deadName": "김태선",
     "burnDate": "2026-03-10",
@@ -68,6 +60,14 @@
     "deadName": "김성대",
     "burnDate": "2026-03-10",
     "burnStrTime": "08:19",
+    "burnEndTime": null,
+    "burnChasu": "02"
+  },
+  {
+    "deadId": "1653699",
+    "deadName": "최근도",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "08:23",
     "burnEndTime": null,
     "burnChasu": "02"
   }
