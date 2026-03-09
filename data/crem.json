@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653647",
-    "deadName": "이복선",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653693",
     "deadName": "김선기",
     "burnDate": "2026-03-09",
@@ -196,6 +188,14 @@
     "deadName": "권민지",
     "burnDate": "2026-03-09",
     "burnStrTime": "12:25",
+    "burnEndTime": null,
+    "burnChasu": "06"
+  },
+  {
+    "deadId": "1653647",
+    "deadName": "이복선",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "12:35",
     "burnEndTime": null,
     "burnChasu": "06"
   }
