@@ -1,5 +1,21 @@
 [
   {
+    "deadId": "1653665",
+    "deadName": "박복순",
+    "burnDate": "2026-03-10",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653683",
+    "deadName": "성차복",
+    "burnDate": "2026-03-10",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
     "deadId": "1653686",
     "deadName": "김득선",
     "burnDate": "2026-03-10",
@@ -20,7 +36,7 @@
     "deadName": "장상범",
     "burnDate": "2026-03-10",
     "burnStrTime": "07:16",
-    "burnEndTime": null,
+    "burnEndTime": "08:46",
     "burnChasu": "01"
   },
   {
@@ -28,7 +44,7 @@
     "deadName": "김분이",
     "burnDate": "2026-03-10",
     "burnStrTime": "07:19",
-    "burnEndTime": null,
+    "burnEndTime": "08:46",
     "burnChasu": "01"
   },
   {
