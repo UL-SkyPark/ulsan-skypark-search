@@ -1247,25 +1247,39 @@
         const appl  = safeKey(r.applName);
         const key = `${natNo}||${appl}`;
 
+        const rowNames = Array.isArray(r?.deadName)
+          ? r.deadName.map(x => String(x ?? '').trim()).filter(Boolean)
+          : [String(r?.deadName ?? r?.deadname ?? '-').trim()].filter(Boolean);
+
+        const rowDate = String(r.natDate ?? '-');
+
         if (!map.has(key)){
           map.set(key, {
             natNo: r.natNo ?? '-',
-            deadName: String(r.deadName ?? r.deadname ?? '-'),
+            deadName: rowNames.join(' / ') || '-',
             applName: r.applName ?? '-',
-            natDate: String(r.natDate ?? '-'),
+            natDate: rowDate,
             _raw: [r]
           });
           order.push(key);
         } else {
           const cur = map.get(key);
-          const dn = String(r.deadName ?? r.deadname ?? '-');
-          if (dn && dn !== '-' && !cur.deadName.split(' / ').includes(dn)){
-            cur.deadName = (cur.deadName && cur.deadName !== '-') ? `${cur.deadName} / ${dn}` : dn;
+
+          const existingNames = String(cur.deadName ?? '')
+            .split(' / ')
+            .map(x => x.trim())
+            .filter(Boolean);
+
+          for (const nm of rowNames){
+            if (!existingNames.includes(nm)){
+              existingNames.push(nm);
+            }
           }
 
-          const dt = String(r.natDate ?? '-');
-          if (dt && dt !== '-' && !cur.natDate.split(', ').includes(dt)){
-            cur.natDate = (cur.natDate && cur.natDate !== '-') ? `${cur.natDate}, ${dt}` : dt;
+          cur.deadName = existingNames.join(' / ') || '-';
+
+          if (rowDate && rowDate !== '-' && !String(cur.natDate).split(', ').includes(rowDate)){
+            cur.natDate = (cur.natDate && cur.natDate !== '-') ? `${cur.natDate}, ${rowDate}` : rowDate;
           }
 
           cur._raw.push(r);
@@ -1324,7 +1338,10 @@
     function cremObj(deadId, cremMap){
       const did = String(deadId ?? '').trim();
       const rec = did ? cremMap.get(did) : null;
-      if (!rec) return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
+
+      if (!rec) {
+        return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
+      }
 
       const chasuRaw = rec?.burnChasu;
       const chasuNum = parseInt(pad2(chasuRaw), 10);
@@ -1349,17 +1366,41 @@
 
     function deceasedEntries(item){
       const raws = Array.isArray(item?._raw) ? item._raw : [item];
-      const map = new Map();
+      const entries = [];
 
       for (const r of raws){
-        const deadId = String(r?.deadId ?? '').trim();
-        if (!deadId) continue;
-        if (!map.has(deadId)){
-          map.set(deadId, { deadId });
+        const deadIds = Array.isArray(r?.deadId)
+          ? r.deadId
+          : (r?.deadId != null && String(r.deadId).trim() !== '' ? [r.deadId] : []);
+
+        const deadNames = Array.isArray(r?.deadName)
+          ? r.deadName
+          : (r?.deadName != null && String(r.deadName).trim() !== '' ? [r.deadName] : []);
+
+        if (deadIds.length){
+          for (let i = 0; i < deadIds.length; i++){
+            const did = String(deadIds[i] ?? '').trim();
+            const dnm = String(deadNames[i] ?? '').trim();
+            entries.push({
+              deadId: did,
+              deadName: dnm
+            });
+          }
+          continue;
+        }
+
+        const singleDeadId = String(r?.deadId ?? '').trim();
+        const singleDeadName = String(r?.deadName ?? r?.deadname ?? r?.deceasedName ?? '').trim();
+
+        if (singleDeadId || singleDeadName){
+          entries.push({
+            deadId: singleDeadId,
+            deadName: singleDeadName
+          });
         }
       }
 
-      return Array.from(map.values());
+      return entries;
     }
 
     function chasuKey(item, cremMap){
@@ -1474,14 +1515,14 @@
     function funeralBadgeLabelForItem(item, displayName, funeralMap){
       if (!funeralMap) return null;
 
-      const raws = Array.isArray(item?._raw) ? item._raw : [item];
-      if (!raws.length) return null;
+      const entries = deceasedEntries(item);
+      if (!entries.length) return null;
 
       const nameSet = nameKeySetFromDisplay(displayName);
       let hasSelf = false;
 
-      for (const row of raws){
-        const id = String(row?.deadId ?? '').trim();
+      for (const entry of entries){
+        const id = String(entry.deadId ?? '').trim();
         if (!id) continue;
 
         const rec = funeralMap.get(id);
