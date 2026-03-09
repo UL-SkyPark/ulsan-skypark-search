@@ -100,7 +100,6 @@
       text-rendering: optimizeLegibility;
     }
 
-    /* pull to refresh */
     .pull-to-refresh{
       position: fixed;
       top: calc(10px + env(safe-area-inset-top));
@@ -168,7 +167,6 @@
       to { transform: rotate(360deg); }
     }
 
-    /* app */
     .app{
       max-width: 980px;
       margin: 0 auto;
@@ -643,7 +641,6 @@
       letter-spacing: var(--ls-base);
     }
 
-    /* modal */
     .overlay{
       position: fixed;
       inset: 0;
@@ -774,7 +771,6 @@
       color: var(--primary);
     }
 
-    /* toast */
     .toast{
       position: fixed;
       left: 50%;
@@ -802,7 +798,6 @@
       transform: translateX(-50%) translateY(-6px);
     }
 
-    /* FAB - 안정화 버전 */
     .fabs{
       position: fixed;
       right: var(--fabRight);
@@ -857,7 +852,6 @@
       stroke: rgba(31,78,121,0.92);
     }
 
-    /* infinite */
     .inf{
       margin-top: calc(10px * var(--scale-ui));
       display: grid;
@@ -999,7 +993,6 @@
   </div>
 
   <script>
-    /* iOS 감지 */
     (function(){
       const ua = navigator.userAgent || '';
       const isIOS =
@@ -1016,7 +1009,6 @@
       document.documentElement.classList.add(isIPad ? 'ios-ipad' : 'ios-iphone');
     })();
 
-    /* DOM */
     const $ = (s) => document.querySelector(s);
 
     const datePicker   = $('#datePicker');
@@ -1043,7 +1035,6 @@
     const fabTop      = $('#fabTop');
     const fabRefresh  = $('#fabRefresh');
 
-    /* 기본값 */
     const STORAGE_KEYS = { source: "uic_source_selected" };
 
     const SOURCES = {
@@ -1116,7 +1107,6 @@
       return raw.replace(/\s*,\s*/g, ' / ');
     };
 
-    /* 캐시 */
     const dataCache = { house: null, nature: null };
     let cremMapCache = null;
     let funeralMapCache = null;
@@ -1163,7 +1153,6 @@
       return map;
     }
 
-    /* 도우미 */
     function formatEnsNo(val){
       if (val == null) return '-';
       const raw = String(val).trim();
@@ -1358,69 +1347,98 @@
       return { type:'info', chasu:safeChasu, start:st, end:en, text:`${chLabel}, 화장시작: ${st}, 화장종료: ${en}` };
     }
 
-    function uniqDeadIds(item){
+    function deceasedEntries(item){
       const raws = Array.isArray(item?._raw) ? item._raw : [item];
-      const seen = new Set();
-      const ids = [];
+      const map = new Map();
 
       for (const r of raws){
-        const did = String(r?.deadId ?? '').trim();
-        if (!did || seen.has(did)) continue;
-        seen.add(did);
-        ids.push(did);
+        const deadId = String(r?.deadId ?? '').trim();
+        const deadName =
+          String(r?.deadName ?? r?.deadname ?? r?.deceasedName ?? '').trim() || '고인';
+
+        const key = deadId || `NAME:${deadName}`;
+        if (!key) continue;
+
+        if (!map.has(key)){
+          map.set(key, {
+            deadId,
+            deadName
+          });
+        }
       }
 
-      return ids;
+      return Array.from(map.values());
     }
 
     function chasuKey(item, cremMap){
-      const ids = uniqDeadIds(item);
-      if (!ids.length) return 0;
+      const entries = deceasedEntries(item);
+      if (!entries.length) return 0;
 
-      const nums = ids.map(id => cremObj(id, cremMap).chasu).filter(n => Number.isFinite(n));
+      const nums = entries
+        .map(x => cremObj(x.deadId, cremMap).chasu)
+        .filter(n => Number.isFinite(n));
+
       const pos = nums.filter(n => n > 0);
       return pos.length ? Math.min(...pos) : 0;
+    }
+
+    function cremDetailLines(item, cremMap){
+      if (!cremMap) return [];
+
+      const entries = deceasedEntries(item);
+      if (!entries.length){
+        return ['선결제'];
+      }
+
+      return entries.map(({ deadId, deadName }) => {
+        const info = cremObj(deadId, cremMap);
+        return `${deadName} : ${info.text}`;
+      });
     }
 
     function cremLinesHTML(item, cremMap, mode){
       if (mode === 'ret' || !cremMap) return '';
 
-      const ids = uniqDeadIds(item);
-      if (!ids.length) return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
+      const lines = cremDetailLines(item, cremMap);
+      if (!lines.length) return '';
 
-      const objs = ids.map(id => cremObj(id, cremMap));
-      const allPay = objs.length && objs.every(o => o.type === 'pay');
-      if (allPay) return `<div class="cremWrap"><div class="cremLine">선결제</div></div>`;
-
-      return `<div class="cremWrap">${objs.map(o => `<div class="cremLine">${esc(o.text)}</div>`).join('')}</div>`;
+      return `
+        <div class="cremWrap">
+          ${lines.map(line => `<div class="cremLine">${esc(line)}</div>`).join('')}
+        </div>
+      `;
     }
 
     function cremTimes(item, cremMap){
       if (!cremMap) return null;
 
-      const ids = uniqDeadIds(item);
-
-      if (!ids.length){
-        return { a:'화장시작: 선결제', b:'화장종료: 선결제' };
+      const entries = deceasedEntries(item);
+      if (!entries.length){
+        return ['선결제'];
       }
 
-      const raws = ids.map(id => {
-        const did = String(id ?? '').trim();
+      return entries.map(({ deadId, deadName }) => {
+        const did = String(deadId ?? '').trim();
         const rec = did ? cremMap.get(did) : null;
+
+        if (!rec){
+          return `${deadName} : 선결제`;
+        }
+
         const st = fmtTime(rec?.burnStrTime);
         const en = fmtTime(rec?.burnEndTime);
+        const ch = pad2(rec?.burnChasu);
 
-        if (!rec) return { st:'선결제', en:'선결제' };
-        return { st: st || '화장접수', en: en || '-' };
+        if (!st){
+          return `${deadName} : ${ch}회차, 화장접수`;
+        }
+
+        if (st && !en){
+          return `${deadName} : ${ch}회차, 화장시작 ${st}, 화장중`;
+        }
+
+        return `${deadName} : ${ch}회차, 화장시작 ${st}, 화장종료 ${en}`;
       });
-
-      const starts = raws.map(x => x.st);
-      const ends   = raws.map(x => x.en);
-
-      return {
-        a:`화장시작: ${starts.join(' / ')}`,
-        b:`화장종료: ${ends.join(' / ')}`
-      };
     }
 
     const kv = (k, v) => `
@@ -1462,14 +1480,15 @@
     function funeralBadgeLabelForItem(item, displayName, funeralMap){
       if (!funeralMap) return null;
 
-      const ids = uniqDeadIds(item);
-      if (!ids.length) return null;
+      const entries = deceasedEntries(item);
+      if (!entries.length) return null;
 
       const nameSet = nameKeySetFromDisplay(displayName);
       let hasSelf = false;
 
-      for (const id of ids){
-        const rec = funeralMap.get(String(id ?? '').trim());
+      for (const entry of entries){
+        const id = String(entry.deadId ?? '').trim();
+        const rec = funeralMap.get(id);
         if (!rec) continue;
 
         const recNameKey = normNameKey(rec.deadName);
@@ -1492,7 +1511,6 @@
       return `<span class="${cls}">${esc(label)}</span>`;
     }
 
-    /* 상태 */
     let currentSource = 'house';
     let currentSelectedDate = TODAY;
     let currentDisplayData = [];
@@ -1867,7 +1885,7 @@
 
       if (!isRetModal){
         const t = cremTimes(item, cremMap);
-        if (t) html += kvLines('화장시간', [t.a, t.b]);
+        if (t && t.length) html += kvLines('화장시간', t);
       }
 
       mFields.innerHTML = html;
@@ -1984,7 +2002,6 @@
 
     window.addEventListener('scroll', updateFAB, { passive:true });
 
-    /* pull to refresh */
     let startY = 0;
     let pulling = false;
     let pullDist = 0;
@@ -2087,7 +2104,6 @@
     window.addEventListener('resize', onResize, { passive:true });
     window.addEventListener('orientationchange', onResize, { passive:true });
 
-    /* 초기 실행 */
     window.addEventListener('load', () => {
       pageSize = computePageSize();
 
