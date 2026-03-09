@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653649",
-    "deadName": "LIN SHUNJI",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653747",
     "deadName": "점검중",
     "burnDate": "2026-03-09",
@@ -84,7 +76,7 @@
     "deadName": "정유식",
     "burnDate": "2026-03-09",
     "burnStrTime": "09:19",
-    "burnEndTime": null,
+    "burnEndTime": "10:35",
     "burnChasu": "03"
   },
   {
@@ -132,6 +124,14 @@
     "deadName": "정금옥",
     "burnDate": "2026-03-09",
     "burnStrTime": "10:26",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653649",
+    "deadName": "LIN SHUNJI",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "10:32",
     "burnEndTime": null,
     "burnChasu": "04"
   }
