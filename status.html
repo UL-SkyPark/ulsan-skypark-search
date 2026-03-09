@@ -1353,17 +1353,9 @@
 
       for (const r of raws){
         const deadId = String(r?.deadId ?? '').trim();
-        const deadName =
-          String(r?.deadName ?? r?.deadname ?? r?.deceasedName ?? '').trim() || '고인';
-
-        const key = deadId || `NAME:${deadName}`;
-        if (!key) continue;
-
-        if (!map.has(key)){
-          map.set(key, {
-            deadId,
-            deadName
-          });
+        if (!deadId) continue;
+        if (!map.has(deadId)){
+          map.set(deadId, { deadId });
         }
       }
 
@@ -1386,13 +1378,14 @@
       if (!cremMap) return [];
 
       const entries = deceasedEntries(item);
+
       if (!entries.length){
         return ['선결제'];
       }
 
-      return entries.map(({ deadId, deadName }) => {
+      return entries.map(({ deadId }) => {
         const info = cremObj(deadId, cremMap);
-        return `${deadName} : ${info.text}`;
+        return info.text;
       });
     }
 
@@ -1413,16 +1406,17 @@
       if (!cremMap) return null;
 
       const entries = deceasedEntries(item);
+
       if (!entries.length){
         return ['선결제'];
       }
 
-      return entries.map(({ deadId, deadName }) => {
+      return entries.map(({ deadId }) => {
         const did = String(deadId ?? '').trim();
         const rec = did ? cremMap.get(did) : null;
 
         if (!rec){
-          return `${deadName} : 선결제`;
+          return '선결제';
         }
 
         const st = fmtTime(rec?.burnStrTime);
@@ -1430,14 +1424,14 @@
         const ch = pad2(rec?.burnChasu);
 
         if (!st){
-          return `${deadName} : ${ch}회차, 화장접수`;
+          return `${ch}회차, 화장접수`;
         }
 
         if (st && !en){
-          return `${deadName} : ${ch}회차, 화장시작 ${st}, 화장중`;
+          return `${ch}회차, 화장시작 ${st}, 화장중`;
         }
 
-        return `${deadName} : ${ch}회차, 화장시작 ${st}, 화장종료 ${en}`;
+        return `${ch}회차, 화장시작 ${st}, 화장종료 ${en}`;
       });
     }
 
@@ -1480,14 +1474,16 @@
     function funeralBadgeLabelForItem(item, displayName, funeralMap){
       if (!funeralMap) return null;
 
-      const entries = deceasedEntries(item);
-      if (!entries.length) return null;
+      const raws = Array.isArray(item?._raw) ? item._raw : [item];
+      if (!raws.length) return null;
 
       const nameSet = nameKeySetFromDisplay(displayName);
       let hasSelf = false;
 
-      for (const entry of entries){
-        const id = String(entry.deadId ?? '').trim();
+      for (const row of raws){
+        const id = String(row?.deadId ?? '').trim();
+        if (!id) continue;
+
         const rec = funeralMap.get(id);
         if (!rec) continue;
 
