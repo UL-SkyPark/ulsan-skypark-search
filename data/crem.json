@@ -8,14 +8,6 @@
     "burnChasu": "04"
   },
   {
-    "deadId": "1653674",
-    "deadName": "정금옥",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653747",
     "deadName": "점검중",
     "burnDate": "2026-03-09",
@@ -132,6 +124,14 @@
     "deadName": "홍봉희",
     "burnDate": "2026-03-09",
     "burnStrTime": "10:22",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653674",
+    "deadName": "정금옥",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "10:26",
     "burnEndTime": null,
     "burnChasu": "04"
   }
