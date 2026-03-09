@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653652",
-    "deadName": "정유식",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653659",
     "deadName": "김수자",
     "burnDate": "2026-03-09",
@@ -94,5 +86,13 @@
     "burnStrTime": "08:41",
     "burnEndTime": null,
     "burnChasu": "02"
+  },
+  {
+    "deadId": "1653652",
+    "deadName": "정유식",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "09:19",
+    "burnEndTime": null,
+    "burnChasu": "03"
   }
 ]
