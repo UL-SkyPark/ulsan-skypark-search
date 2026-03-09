@@ -8,14 +8,6 @@
     "burnChasu": "03"
   },
   {
-    "deadId": "1653695",
-    "deadName": "최해조",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653664",
     "deadName": "엄성운",
     "burnDate": "2026-03-09",
@@ -108,6 +100,14 @@
     "deadName": "김수자",
     "burnDate": "2026-03-09",
     "burnStrTime": "09:25",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653695",
+    "deadName": "최해조",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "09:33",
     "burnEndTime": null,
     "burnChasu": "03"
   }
