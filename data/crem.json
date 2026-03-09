@@ -16,14 +16,6 @@
     "burnChasu": "04"
   },
   {
-    "deadId": "1653664",
-    "deadName": "엄성운",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653674",
     "deadName": "정금옥",
     "burnDate": "2026-03-09",
@@ -134,5 +126,13 @@
     "burnStrTime": "09:41",
     "burnEndTime": null,
     "burnChasu": "03"
+  },
+  {
+    "deadId": "1653664",
+    "deadName": "엄성운",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "10:18",
+    "burnEndTime": null,
+    "burnChasu": "04"
   }
 ]
