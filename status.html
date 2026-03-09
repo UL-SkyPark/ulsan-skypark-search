@@ -415,7 +415,7 @@
     .nameLine{
       display:flex;
       align-items:center;
-      gap: calc(6px * var(--scale-ui));
+      gap: calc(4px * var(--scale-ui));
       min-width: 0;
       flex-wrap: nowrap;
     }
@@ -423,10 +423,11 @@
     .nameWrap{
       display: inline-flex;
       align-items: center;
-      gap: calc(6px * var(--scale-ui));
+      gap: calc(3px * var(--scale-ui));
       min-width: 0;
       max-width: 100%;
-      flex: 1 1 auto;
+      flex: 0 1 auto;
+      width: fit-content;
     }
 
     .nameText{
@@ -440,7 +441,7 @@
       text-overflow: ellipsis;
       min-width: 0;
       max-width: 100%;
-      flex: 1 1 auto;
+      flex: 0 1 auto;
     }
 
     .tag{
@@ -448,7 +449,8 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding: calc(3px * var(--scale-ui)) calc(7px * var(--scale-ui));
+      padding: calc(2px * var(--scale-ui)) calc(6px * var(--scale-ui));
+      margin-left: 0;
       border-radius: 999px;
       border: 1px solid rgba(217,224,234,.95);
       background: rgba(255,255,255,.92);
@@ -458,6 +460,7 @@
       letter-spacing: var(--ls-base);
       color: rgba(15,23,42,.78);
       white-space: nowrap;
+      vertical-align: middle;
     }
 
     .tag.self{
@@ -1443,7 +1446,7 @@
       `;
     }
 
-    function cremTimes(item, cremMap){
+    function cremTimesForModal(item, cremMap){
       if (!cremMap) return null;
 
       const entries = deceasedEntries(item);
@@ -1462,17 +1465,16 @@
 
         const st = fmtTime(rec?.burnStrTime);
         const en = fmtTime(rec?.burnEndTime);
-        const ch = pad2(rec?.burnChasu);
 
         if (!st){
-          return `${ch}회차, 화장접수`;
+          return '화장접수';
         }
 
         if (st && !en){
-          return `${ch}회차, 화장시작 ${st}, 화장중`;
+          return `화장시작 ${st}, 화장중`;
         }
 
-        return `${ch}회차, 화장시작 ${st}, 화장종료 ${en}`;
+        return `화장시작 ${st}, 화장종료 ${en}`;
       });
     }
 
@@ -1899,7 +1901,7 @@
       if (currentSource === 'house'){
         html += kv('안치일자', item.strDate ?? '-');
         html += kvHTML('고인명', `
-          <span style="display:inline-flex;align-items:center;gap:6px;min-width:0;max-width:100%;">
+          <span style="display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;width:fit-content;">
             <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayNameForModal)}</span>
             ${tagModal}
           </span>
@@ -1912,7 +1914,7 @@
       } else {
         html += kv('안치일자', item.natDate ?? '-');
         html += kvHTML('고인명', `
-          <span style="display:inline-flex;align-items:center;gap:6px;min-width:0;max-width:100%;">
+          <span style="display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;width:fit-content;">
             <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayNameForModal)}</span>
             ${tagModal}
           </span>
@@ -1921,7 +1923,7 @@
       }
 
       if (!isRetModal){
-        const t = cremTimes(item, cremMap);
+        const t = cremTimesForModal(item, cremMap);
         if (t && t.length) html += kvLines('화장시간', t);
       }
 
