@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653658",
-    "deadName": "최곡지",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "03"
-  },
-  {
     "deadId": "1653663",
     "deadName": "홍봉희",
     "burnDate": "2026-03-09",
@@ -18,6 +10,14 @@
   {
     "deadId": "1653664",
     "deadName": "엄성운",
+    "burnDate": "2026-03-09",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653674",
+    "deadName": "정금옥",
     "burnDate": "2026-03-09",
     "burnStrTime": null,
     "burnEndTime": null,
@@ -68,7 +68,7 @@
     "deadName": "안복연",
     "burnDate": "2026-03-09",
     "burnStrTime": "08:20",
-    "burnEndTime": null,
+    "burnEndTime": "09:41",
     "burnChasu": "02"
   },
   {
@@ -76,7 +76,7 @@
     "deadName": "이진국",
     "burnDate": "2026-03-09",
     "burnStrTime": "08:24",
-    "burnEndTime": null,
+    "burnEndTime": "09:42",
     "burnChasu": "02"
   },
   {
@@ -116,6 +116,14 @@
     "deadName": "최해조",
     "burnDate": "2026-03-09",
     "burnStrTime": "09:33",
+    "burnEndTime": null,
+    "burnChasu": "03"
+  },
+  {
+    "deadId": "1653658",
+    "deadName": "최곡지",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "09:41",
     "burnEndTime": null,
     "burnChasu": "03"
   }
