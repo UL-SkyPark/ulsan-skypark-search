@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653667",
-    "deadName": "백성환",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "05"
-  },
-  {
     "deadId": "1653675",
     "deadName": "윤종대",
     "burnDate": "2026-03-09",
@@ -166,5 +158,13 @@
     "burnStrTime": "10:32",
     "burnEndTime": null,
     "burnChasu": "04"
+  },
+  {
+    "deadId": "1653667",
+    "deadName": "백성환",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "11:18",
+    "burnEndTime": null,
+    "burnChasu": "05"
   }
 ]
