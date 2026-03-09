@@ -16,6 +16,14 @@
     "burnChasu": "05"
   },
   {
+    "deadId": "1653679",
+    "deadName": "윤귀자",
+    "burnDate": "2026-03-09",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "05"
+  },
+  {
     "deadId": "1653747",
     "deadName": "점검중",
     "burnDate": "2026-03-09",
@@ -116,7 +124,7 @@
     "deadName": "최곡지",
     "burnDate": "2026-03-09",
     "burnStrTime": "09:41",
-    "burnEndTime": null,
+    "burnEndTime": "10:54",
     "burnChasu": "03"
   },
   {
