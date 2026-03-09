@@ -8,14 +8,6 @@
     "burnChasu": "06"
   },
   {
-    "deadId": "1653688",
-    "deadName": "박동우",
-    "burnDate": "2026-03-09",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "06"
-  },
-  {
     "deadId": "1653693",
     "deadName": "김선기",
     "burnDate": "2026-03-09",
@@ -198,5 +190,13 @@
     "burnStrTime": "11:43",
     "burnEndTime": null,
     "burnChasu": "05"
+  },
+  {
+    "deadId": "1653688",
+    "deadName": "박동우",
+    "burnDate": "2026-03-09",
+    "burnStrTime": "12:20",
+    "burnEndTime": null,
+    "burnChasu": "06"
   }
 ]
