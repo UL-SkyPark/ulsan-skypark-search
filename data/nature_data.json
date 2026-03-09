@@ -67731,6 +67731,17 @@
   },
   {
     "natDate": "2026-03-09",
+    "natNo": null,
+    "applName": "최정식",
+    "deadId": [
+      "1653695"
+    ],
+    "deadName": [
+      "최해조"
+    ]
+  },
+  {
+    "natDate": "2026-03-09",
     "natNo": "잔디장-2-9-0195",
     "applName": "이종회",
     "deadId": "1653681",
