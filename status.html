@@ -660,7 +660,7 @@
     }
 
     .sheet{
-      width: min(560px, 94vw);
+      width: min(640px, 96vw);
       background: #fff;
       border: 1px solid var(--line);
       border-radius: 16px;
@@ -708,7 +708,7 @@
 
     .kv{
       display:flex;
-      gap: calc(12px * var(--scale-ui));
+      gap: calc(10px * var(--scale-ui));
       align-items:flex-start;
       border: 1px solid var(--line);
       background: #fff;
@@ -718,17 +718,18 @@
     }
 
     .kv .k{
-      flex: 0 0 calc(92px * var(--scale-ui));
+      flex: 0 0 calc(68px * var(--scale-ui));
       color: var(--muted);
       font-weight: 950;
       font-size: var(--fs-xs);
       padding-top: calc(2px * var(--scale-ui));
       letter-spacing: var(--ls-base);
       line-height: var(--lh-tight);
+      white-space: nowrap;
     }
 
     .kv .v{
-      flex: 1;
+      flex: 1 1 auto;
       min-width: 0;
       color: rgba(31,42,55,.86);
       font-weight: 900;
@@ -738,12 +739,19 @@
       word-break: keep-all;
     }
 
-    @media (min-width: 720px){
-      #mFields{
-        display:grid;
-        grid-template-columns: 1fr 1fr;
-        gap: calc(10px * var(--scale-ui));
-      }
+    .kv .v .time-line{
+      display:block;
+      white-space:nowrap;
+      word-break:normal;
+      overflow-wrap:normal;
+      font-size: var(--fs-xs);
+      line-height: calc(var(--lh-tight) * var(--scale-lh));
+    }
+
+    #mFields{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: calc(10px * var(--scale-ui));
     }
 
     .sheet-actions{
@@ -891,6 +899,18 @@
       .group{
         min-width: 0;
         grid-template-columns: 1fr 1fr;
+      }
+
+      .sheet{
+        width: min(96vw, 640px);
+      }
+
+      .kv .k{
+        flex: 0 0 calc(62px * var(--scale-ui));
+      }
+
+      .kv .v .time-line{
+        font-size: var(--fs-xxs);
       }
     }
 
@@ -1044,6 +1064,8 @@
       house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
     };
+
+    const STATUS_API_URL = 'https://script.google.com/macros/s/AKfycbxdQfi1Hqj6NX84BSz7gm8vwJK7Y8Abq4UMwCSBeqSLxiRlqxmmNYcKXu4b_bIkI6Pc/exec';
 
     const TODAY = (() => {
       const d = new Date();
@@ -1296,12 +1318,18 @@
       ? String(item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-')
       : String(item?.natNo ?? '-');
 
-    const recvKey = (src, id) => `recv_${src}_${id}`;
     const recvPending = (src) => (src === 'nature') ? '안장대기' : '안치대기';
     const recvDone    = (src) => (src === 'nature') ? '안장완료' : '안치완료';
 
+    let sharedStatusMap = new Map();
+
+    function statusKey(src, id, mode){
+      return `${src}||${mode}||${id}`;
+    }
+
     function getRecv(src, id){
-      const v = localStorage.getItem(recvKey(src, id));
+      const key = statusKey(src, id, 'recv');
+      const v = sharedStatusMap.get(key);
       if (!v) return recvPending(src);
       if (src !== 'nature' && v === '접수') return '안치대기';
       if (src === 'nature' && v === '안치대기') return '안장대기';
@@ -1309,25 +1337,70 @@
       return v;
     }
 
-    function setRecv(src, id, v){
-      localStorage.setItem(recvKey(src, id), v);
-    }
-
     function isRetOn(item, iso){
       return normISO(pickRetDate(item)) === iso;
     }
 
-    const retKey = (id) => `ret_house_${id}`;
-
     function getRet(id){
-      const v = localStorage.getItem(retKey(id));
+      const key = statusKey('house', id, 'ret');
+      const v = sharedStatusMap.get(key);
       if (!v) return '반출대기';
       if (v === '반출') return '반출대기';
       return v;
     }
 
-    function setRet(id, v){
-      localStorage.setItem(retKey(id), v);
+    async function loadSharedStatuses(force=false){
+      if (!STATUS_API_URL || STATUS_API_URL.includes('여기에_앱스크립트_웹앱_URL_입력')){
+        sharedStatusMap = new Map();
+        return;
+      }
+
+      const url = force
+        ? `${STATUS_API_URL}?action=list&_=${Date.now()}`
+        : `${STATUS_API_URL}?action=list`;
+
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('공유 상태 정보를 불러오지 못했습니다.');
+
+      const json = await res.json();
+      const items = Array.isArray(json?.items) ? json.items : [];
+
+      const map = new Map();
+      for (const row of items){
+        const src = String(row?.src ?? '').trim();
+        const mode = String(row?.mode ?? '').trim();
+        const id = String(row?.id ?? '').trim();
+        const status = String(row?.status ?? '').trim();
+        if (!src || !mode || !id) continue;
+        map.set(statusKey(src, id, mode), status);
+      }
+
+      sharedStatusMap = map;
+    }
+
+    async function saveSharedStatus({ src, id, mode, status }){
+      if (!STATUS_API_URL || STATUS_API_URL.includes('여기에_앱스크립트_웹앱_URL_입력')){
+        throw new Error('공유 저장 API 주소가 설정되지 않았습니다.');
+      }
+
+      const res = await fetch(STATUS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'save',
+          src,
+          id,
+          mode,
+          status
+        })
+      });
+
+      if (!res.ok) throw new Error('공유 상태 저장에 실패했습니다.');
+
+      const json = await res.json();
+      if (!json?.ok) throw new Error(json?.message || '공유 상태 저장에 실패했습니다.');
+
+      sharedStatusMap.set(statusKey(src, id, mode), status);
     }
 
     function leftCls(src, mode, status){
@@ -1471,10 +1544,10 @@
         }
 
         if (st && !en){
-          return `화장시작 ${st}, 화장중`;
+          return `화장시작: ${st}, 화장중`;
         }
 
-        return `화장시작 ${st}, 화장종료 ${en}`;
+        return `화장시작: ${st}, 화장종료: ${en}`;
       });
     }
 
@@ -1495,10 +1568,15 @@
     const kvLines = (k, lines) => {
       const arr = (Array.isArray(lines) ? lines : []).map(esc).filter(Boolean);
       if (!arr.length) return '';
+
+      const html = arr
+        .map(line => `<span class="time-line">${line}</span>`)
+        .join('');
+
       return `
         <div class="kv">
           <div class="k">${esc(k)}</div>
-          <div class="v">${arr.join('<br>')}</div>
+          <div class="v">${html}</div>
         </div>
       `;
     };
@@ -1802,6 +1880,9 @@
       let funeralMap = null;
 
       try{
+        await loadSharedStatuses(force);
+        if (myToken !== loadToken) return;
+
         funeralMap = await ensureFuneral(force);
         if (myToken !== loadToken) return;
 
@@ -1983,7 +2064,7 @@
       if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet();
     });
 
-    listArea.addEventListener('click', (e) => {
+    listArea.addEventListener('click', async (e) => {
       const openBtn = e.target.closest('[data-open]');
       if (openBtn){
         openSheet(parseInt(openBtn.getAttribute('data-open'), 10));
@@ -2010,18 +2091,44 @@
       if (mode === 'ret'){
         const cur = getRet(sid);
         const next = (cur === '반출완료') ? '반출대기' : '반출완료';
-        setRet(sid, next);
-        toast(`${headerNo} : ${next}`, 2200);
+
+        const ok = window.confirm(`${headerNo}\n상태를 "${next}"로 변경하시겠습니까?`);
+        if (!ok) return;
+
+        try{
+          await saveSharedStatus({
+            src: 'house',
+            id: sid,
+            mode: 'ret',
+            status: next
+          });
+          toast(`${headerNo} : ${next}`, 2200);
+          await load(true);
+        } catch (err){
+          toast(`저장 실패: ${err.message}`, 2400);
+        }
       } else {
         const done = recvDone(currentSource);
         const pending = recvPending(currentSource);
         const cur = getRecv(currentSource, sid);
         const next = (cur === done) ? pending : done;
-        setRecv(currentSource, sid, next);
-        toast(`${headerNo} : ${next}`, 2200);
-      }
 
-      load();
+        const ok = window.confirm(`${headerNo}\n상태를 "${next}"로 변경하시겠습니까?`);
+        if (!ok) return;
+
+        try{
+          await saveSharedStatus({
+            src: currentSource,
+            id: sid,
+            mode: 'recv',
+            status: next
+          });
+          toast(`${headerNo} : ${next}`, 2200);
+          await load(true);
+        } catch (err){
+          toast(`저장 실패: ${err.message}`, 2400);
+        }
+      }
     });
 
     function updateFAB(){
