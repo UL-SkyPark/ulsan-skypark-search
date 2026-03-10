@@ -1151,6 +1151,7 @@
       sharedStatusLoadError: '공유 상태 정보를 불러오지 못했습니다.',
       sharedStatusSaveError: '공유 상태 저장에 실패했습니다.',
       sharedApiNotConfigured: '공유 저장 API 주소가 설정되지 않았습니다.',
+      sharedApiInvalid: '공유 저장 API 주소 형식이 올바르지 않습니다.',
       dataFileNotFound: '데이터 파일을 찾을 수 없습니다.'
     };
 
@@ -1206,35 +1207,38 @@
       .replaceAll("'", '&#039;');
 
     const toTrimmedString = (v) => String(v ?? '').trim();
-
     const safeKey = (v) => toTrimmedString(v);
 
-    const isConfiguredStatusApi = () => {
-      const url = APP_CONFIG.statusApiUrl;
-      return !!url && !url.includes(APP_CONFIG.placeholderWebAppUrl);
-    };
+    function isConfiguredStatusApi(){
+      const url = String(APP_CONFIG.statusApiUrl || '').trim();
+      const placeholder = String(APP_CONFIG.placeholderWebAppUrl || '').trim();
 
-    const getTodayIso = () => {
+      if (!url) return false;
+      if (url === placeholder) return false;
+      if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec(\?.*)?$/.test(url)) return false;
+
+      return true;
+    }
+
+    function getTodayIso(){
       const d = new Date();
       const y = d.getFullYear();
       const m = String(d.getMonth() + 1).padStart(2, '0');
       const day = String(d.getDate()).padStart(2, '0');
       return `${y}-${m}-${day}`;
-    };
+    }
 
-    const fmtHHMM = (date) => {
+    function fmtHHMM(date){
       const hh = String(date.getHours()).padStart(2, '0');
       const mm = String(date.getMinutes()).padStart(2, '0');
       return `${hh}:${mm}`;
-    };
+    }
 
     const pad2 = (n) => String(n ?? '').trim().padStart(2, '0').slice(-2) || '00';
-
     const fmtTime = (v) => String(v ?? '').trim();
-
     const normNameKey = (s) => String(s ?? '').replace(/\s+/g, '').trim();
 
-    const normISO = (v) => {
+    function normISO(v){
       if (v == null) return '';
       const s = String(v).trim();
       if (!s) return '';
@@ -1249,15 +1253,17 @@
       if (m) return `${m[1]}-${m[2]}-${m[3]}`;
 
       return '';
-    };
+    }
 
-    const pickRetDate = (o) => o?.retDate ?? o?.retdate ?? o?.RETDATE ?? o?.RetDate ?? '';
+    function pickRetDate(o){
+      return o?.retDate ?? o?.retdate ?? o?.RETDATE ?? o?.RetDate ?? '';
+    }
 
-    const normalizeCoupleName = (s) => {
+    function normalizeCoupleName(s){
       const raw = String(s ?? '').trim();
       if (!raw) return '-';
       return raw.replace(/\s*,\s*/g, ' / ');
-    };
+    }
 
     function formatEnsNo(val){
       if (val == null) return '-';
@@ -1293,7 +1299,6 @@
 
       let digits = raw.replace(/\D/g, '');
       if (!digits) return raw;
-
       if (digits.length === 6) digits = digits.padStart(7, '0');
       if (digits.length === 5) return `00실 ${digits}`;
       if (digits.length >= 7) return `${digits.slice(0, 2)}실 ${digits.slice(-5)}`;
@@ -1544,7 +1549,7 @@
 
     async function saveSharedStatus({ src, id, mode, status }){
       if (!isConfiguredStatusApi()){
-        throw new Error(UI_TEXT.sharedApiNotConfigured);
+        throw new Error(UI_TEXT.sharedApiInvalid);
       }
 
       const res = await fetch(APP_CONFIG.statusApiUrl, {
@@ -1769,7 +1774,7 @@
 
       const chasuRaw = rec?.burnChasu;
       const chasuNum = parseInt(pad2(chasuRaw), 10);
-      const safeChasu = isNaN(chasuNum) ? 0 : chasuNum;
+      const safeChasu = Number.isNaN(chasuNum) ? 0 : chasuNum;
 
       const st = fmtTime(rec?.burnStrTime);
       const en = fmtTime(rec?.burnEndTime);
@@ -1843,7 +1848,6 @@
 
         if (!st) return '화장접수';
         if (st && !en) return `화장시작: ${st}, 화장중}`;
-
         return `화장시작: ${st}, 화장종료: ${en}`;
       }).map(line => line.replace('화장중}', '화장중'));
     }
@@ -1963,6 +1967,18 @@
         return (status === STATUS_TEXT.retDone) ? 'retDone' : 'ret';
       }
       return (status === getRecvDoneBySource(src)) ? 'done' : 'recv';
+    }
+
+    function getRecvPendingBySource(src){
+      return src === FACILITY.nature.key
+        ? STATUS_TEXT.recvPendingNature
+        : STATUS_TEXT.recvPendingHouse;
+    }
+
+    function getRecvDoneBySource(src){
+      return src === FACILITY.nature.key
+        ? STATUS_TEXT.recvDoneNature
+        : STATUS_TEXT.recvDoneHouse;
     }
 
     function statusPillClass(mode, status){
