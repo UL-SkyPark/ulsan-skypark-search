@@ -1348,7 +1348,7 @@
     const APP_CONFIG = {
       placeholderWebAppUrl: '여기에_앱스크립트_웹앱_URL_입력',
       statusApiUrl: 'https://script.google.com/macros/s/AKfycbzC8L_toqBCmy-SBcqzzJZJA68bfq3dtIDi_TG--hWsr6rajcdq8yMNivtces8ehLiO/exec',
-      sharedStatusCacheMs: 10000,
+      sharedStatusCacheMs: 180000,
       pageSizeSmall: 28,
       pageSizeMedium: 32,
       pageSizeLarge: 40
@@ -1356,7 +1356,8 @@
 
     const STORAGE_KEYS = {
       source: 'uic_source_selected',
-      cremDoneSeen: 'uic_crem_done_seen'
+      cremDoneSeen: 'uic_crem_done_seen',
+      sharedStatusCache: 'uic_shared_status_cache'
     };
 
     const UI_TEXT = {
@@ -1843,6 +1844,7 @@
 
       sharedStatusMap: new Map(),
       sharedStatusFetchedAt: 0,
+      sharedStatusLoadingPromise: null,
 
       dataCache: {
         house: null,
@@ -1908,6 +1910,54 @@
         };
         localStorage.setItem(STORAGE_KEYS.cremDoneSeen, JSON.stringify(payload));
       } catch {}
+    }
+
+    function cloneSharedStatusMap(map){
+      return new Map(map instanceof Map ? map : []);
+    }
+
+    function serializeSharedStatusMap(map){
+      return Array.from(map.entries()).map(([key, value]) => [String(key), String(value)]);
+    }
+
+    function loadSharedStatusCache(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEYS.sharedStatusCache);
+        if (!raw) return;
+
+        const parsed = JSON.parse(raw);
+        const items = Array.isArray(parsed?.items) ? parsed.items : [];
+        const nextMap = new Map();
+
+        for (const row of items){
+          if (!Array.isArray(row) || row.length < 2) continue;
+          nextMap.set(String(row[0] ?? ''), String(row[1] ?? ''));
+        }
+
+        state.sharedStatusMap = nextMap;
+        state.sharedStatusFetchedAt = Number(parsed?.fetchedAt || 0) || 0;
+      } catch {
+        state.sharedStatusMap = new Map();
+        state.sharedStatusFetchedAt = 0;
+      }
+    }
+
+    function saveSharedStatusCache(){
+      try{
+        const payload = {
+          fetchedAt: state.sharedStatusFetchedAt || Date.now(),
+          items: serializeSharedStatusMap(state.sharedStatusMap)
+        };
+        localStorage.setItem(STORAGE_KEYS.sharedStatusCache, JSON.stringify(payload));
+      } catch {}
+    }
+
+    function sharedStatusMapsEqual(a, b){
+      if (a.size !== b.size) return false;
+      for (const [key, value] of a.entries()){
+        if (b.get(key) !== value) return false;
+      }
+      return true;
     }
 
     function updateHeaderMeta(){
@@ -2074,8 +2124,7 @@
         ensureData(FACILITY.house.key, force),
         ensureData(FACILITY.nature.key, force),
         ensureCrem(force),
-        ensureFuneral(force),
-        loadSharedStatuses(force)
+        ensureFuneral(force)
       ]);
 
       return {
@@ -2086,6 +2135,16 @@
       };
     }
 
+    function hasAllCoreDataCached(){
+      return Boolean(
+        state.dataCache.house &&
+        state.dataCache.nature &&
+        state.cremRawCache &&
+        state.cremMapCache &&
+        state.funeralMapCache
+      );
+    }
+
     function statusKey(src, id, mode){
       return `${src}||${mode}||${id}`;
     }
@@ -2093,6 +2152,7 @@
     async function loadSharedStatuses(force = false){
       if (!isConfiguredStatusApi()){
         state.sharedStatusMap = new Map();
+        state.sharedStatusFetchedAt = Date.now();
         return;
       }
 
@@ -2101,29 +2161,42 @@
         return;
       }
 
-      const url = force
-        ? `${APP_CONFIG.statusApiUrl}?action=list&_=${Date.now()}`
-        : `${APP_CONFIG.statusApiUrl}?action=list`;
-
-      const res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) throw new Error(UI_TEXT.sharedStatusLoadError);
-
-      const json = await res.json();
-      const items = Array.isArray(json?.items) ? json.items : [];
-
-      const map = new Map();
-      for (const row of items){
-        const src = toTrimmedString(row?.src);
-        const mode = toTrimmedString(row?.mode);
-        const id = toTrimmedString(row?.id);
-        const status = toTrimmedString(row?.status);
-
-        if (!src || !mode || !id) continue;
-        map.set(statusKey(src, id, mode), status);
+      if (state.sharedStatusLoadingPromise){
+        return state.sharedStatusLoadingPromise;
       }
 
-      state.sharedStatusMap = map;
-      state.sharedStatusFetchedAt = now;
+      state.sharedStatusLoadingPromise = (async () => {
+        const url = force
+          ? `${APP_CONFIG.statusApiUrl}?action=list&_=${Date.now()}`
+          : `${APP_CONFIG.statusApiUrl}?action=list`;
+
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) throw new Error(UI_TEXT.sharedStatusLoadError);
+
+        const json = await res.json();
+        const items = Array.isArray(json?.items) ? json.items : [];
+
+        const map = new Map();
+        for (const row of items){
+          const src = toTrimmedString(row?.src);
+          const mode = toTrimmedString(row?.mode);
+          const id = toTrimmedString(row?.id);
+          const status = toTrimmedString(row?.status);
+
+          if (!src || !mode || !id) continue;
+          map.set(statusKey(src, id, mode), status);
+        }
+
+        state.sharedStatusMap = map;
+        state.sharedStatusFetchedAt = Date.now();
+        saveSharedStatusCache();
+      })();
+
+      try{
+        await state.sharedStatusLoadingPromise;
+      } finally {
+        state.sharedStatusLoadingPromise = null;
+      }
     }
 
     async function saveSharedStatus({ src, id, mode, status }){
@@ -2144,6 +2217,23 @@
 
       state.sharedStatusMap.set(statusKey(src, id, mode), status);
       state.sharedStatusFetchedAt = Date.now();
+      saveSharedStatusCache();
+    }
+
+    async function syncSharedStatusesInBackground(force = false){
+      if (!isConfiguredStatusApi()) return;
+
+      const before = cloneSharedStatusMap(state.sharedStatusMap);
+
+      try{
+        await loadSharedStatuses(force);
+      } catch {
+        return;
+      }
+
+      if (!sharedStatusMapsEqual(before, state.sharedStatusMap)){
+        rerenderCurrentView();
+      }
     }
 
     function getRecvPendingBySource(src){
@@ -3044,11 +3134,17 @@
 
     async function load(force = false, loadingMsg = UI_TEXT.loading){
       const myToken = ++state.currentLoadingToken;
-      showLoading(loadingMsg);
+      const shouldShowBlockingLoading = force || !hasAllCoreDataCached();
+      if (shouldShowBlockingLoading){
+        showLoading(loadingMsg);
+      }
 
       const selected = dom.datePicker.value || state.today;
       state.currentSelectedDate = selected;
       const showCremTimesOnOtherTabs = (selected === state.today);
+      const shouldSyncSharedStatuses =
+        isConfiguredStatusApi() &&
+        (force || !state.sharedStatusFetchedAt || (Date.now() - state.sharedStatusFetchedAt) >= APP_CONFIG.sharedStatusCacheMs);
 
       try{
         const allData = await ensureAllData(force);
@@ -3136,9 +3232,17 @@
         resetInfinite();
       } finally {
         if (myToken === state.currentLoadingToken){
-          hideLoading();
+          if (shouldShowBlockingLoading){
+            hideLoading();
+          }
           updateHeaderMeta();
           updateFAB();
+
+          if (shouldSyncSharedStatuses){
+            setTimeout(() => {
+              syncSharedStatusesInBackground(force);
+            }, 0);
+          }
 
           if (!state.initialPaintDone){
             state.initialPaintDone = true;
@@ -3329,6 +3433,7 @@
     function init(){
       state.pageSize = computePageSize();
       loadCremDoneSeen();
+      loadSharedStatusCache();
 
       const saved = localStorage.getItem(STORAGE_KEYS.source);
       const initialSource = (
