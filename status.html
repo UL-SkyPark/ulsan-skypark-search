@@ -456,7 +456,9 @@
     .row.done .barL{ background: rgba(46,125,50,.45); }
     .row.ret .barL{ background: rgba(180,83,9,.40); }
     .row.retDone .barL{ background: rgba(126,34,206,.48); }
-    .row.crem .barL{ background: rgba(15,23,42,.20); }
+    .row.cremRecv .barL{ background: rgba(100,116,139,.45); }
+    .row.cremProgress .barL{ background: rgba(220,38,38,.52); }
+    .row.cremDone .barL{ background: rgba(22,163,74,.48); }
 
     .rowR{
       min-width: 0;
@@ -555,28 +557,40 @@
     }
 
     .cremLine{
+      display:grid;
+      grid-template-columns: auto 4.5em 8.5em 3.5em;
+      align-items:center;
+      gap: 6px;
+      min-width:0;
       font-weight: 900;
       font-size: var(--fs-sm);
       color: rgba(31,42,55,.78);
       line-height: calc(var(--lh-loose) * var(--scale-lh));
       letter-spacing: var(--ls-base);
-      word-break: keep-all;
-      min-width: 0;
-      display:flex;
-      align-items:flex-start;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-
-    .cremLine strong{
-      color:#0f172a;
-      font-weight:950;
-      margin-right:4px;
     }
 
     .cremName{
       color:#0f172a;
       font-weight:950;
+      width:4.5em;
+      max-width:4.5em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      display:block;
+    }
+
+    .cremTime{
+      white-space:nowrap;
+      color:rgba(31,42,55,.82);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0;
+    }
+
+    .cremDisp{
+      white-space:nowrap;
+      text-align:right;
+      color:#334155;
     }
 
     .no-data{
@@ -935,6 +949,20 @@
       to { transform: rotate(360deg); }
     }
 
+    @media (max-width: 640px){
+      .cremLine{
+        grid-template-columns: auto 4.2em 7.5em 3em;
+        gap: 4px;
+      }
+      .cremName{
+        width:4.2em;
+        max-width:4.2em;
+      }
+      .cremTime{
+        font-size: var(--fs-xs);
+      }
+    }
+
     @media (max-width: 560px){
       .seg{
         flex: 1 1 100%;
@@ -1142,6 +1170,20 @@
       A002: '사산아'
     };
 
+    const CREM_DISPOSAL_SHORT = {
+      '추모의집': '봉안',
+      '시설내자연장': '자연',
+      '유택동산': '유택'
+    };
+
+    const CREM_STAGE_ORDER = {
+      '접수': 1,
+      '운구중': 2,
+      '화장시작': 3,
+      '화장종료': 4,
+      '유골인도': 5
+    };
+
     const $ = (selector) => document.querySelector(selector);
 
     const esc = (v) => String(v ?? '')
@@ -1276,13 +1318,31 @@
       return fmtTime(r?.hwaBrazier?.burnEndTime ?? r?.burnEndTime);
     }
 
-    function cremStatusOf(r){
+    function cremRawStatusOf(r){
       return toTrimmedString(
         r?.hwaBrazier?.burnStatusCode?.name ??
         r?.burnStatusCode?.name ??
         r?.hwaBrazier?.burnStatus ??
         r?.burnStatus
-      ) || '-';
+      ) || '';
+    }
+
+    function normalizeCremStage(r){
+      const raw = cremRawStatusOf(r);
+      const st = cremStartOf(r);
+      const en = cremEndOf(r);
+
+      if (!st){
+        if (raw.includes('운구')) return '운구중';
+        return '접수';
+      }
+
+      if (st && !en){
+        return '화장시작';
+      }
+
+      if (raw.includes('유골인도')) return '유골인도';
+      return '화장종료';
     }
 
     function cremObjtOf(r){
@@ -1291,11 +1351,12 @@
     }
 
     function cremDisposalOf(r){
-      return toTrimmedString(
+      const raw = toTrimmedString(
         r?.scatterPlaceCode?.name ??
         r?.scatterPlaceName ??
         r?.scatterPlace
       ) || '-';
+      return CREM_DISPOSAL_SHORT[raw] || raw;
     }
 
     function cremDeadNameOf(r){
@@ -1324,8 +1385,21 @@
         objt: cremObjtOf(r),
         timeRange: cremTimeRangeOf(r),
         disposal: cremDisposalOf(r),
-        progress: `${cremObjtOf(r)} · ${cremStatusOf(r)}`
+        stage: normalizeCremStage(r)
       }));
+    }
+
+    function cremGroupState(group){
+      const stages = (group.records || []).map(normalizeCremStage);
+      if (!stages.length) return 'cremRecv';
+
+      const allDone = stages.every(s => s === '화장종료' || s === '유골인도');
+      if (allDone) return 'cremDone';
+
+      const allRecv = stages.every(s => s === '접수' || s === '운구중');
+      if (allRecv) return 'cremRecv';
+
+      return 'cremProgress';
     }
 
     function groupCremRows(rows){
@@ -1930,7 +2004,7 @@
     }
 
     function leftCls(src, mode, status){
-      if (src === FACILITY.crem.key) return 'crem';
+      if (src === FACILITY.crem.key) return 'cremRecv';
       if (mode === 'ret') return (status === STATUS_TEXT.retDone) ? 'retDone' : 'ret';
       return (status === getRecvDoneBySource(src)) ? 'done' : 'recv';
     }
@@ -2008,10 +2082,11 @@
 
     function cremGroupRowHTML(group, idx){
       const persons = cremPersonLines(group);
+      const rowCls = cremGroupState(group);
 
       return `
         <li>
-          <div class="row crem">
+          <div class="row ${rowCls}">
             <div class="barL"></div>
             <div class="rowR">
               <button class="mainBtn" type="button" data-open="${idx}" aria-label="상세 보기">
@@ -2020,9 +2095,10 @@
                   <div class="cremWrap">
                     ${persons.map(p => `
                       <div class="cremLine">
-                        ${cremObjtBadgeHTML(p.objt)}
-                        <span class="cremName">${esc(p.name)}</span>
-                        <span>${esc(p.timeRange)} · ${esc(p.disposal)}</span>
+                        <span>${cremObjtBadgeHTML(p.objt)}</span>
+                        <span class="cremName" title="${esc(p.name)}">${esc(p.name)}</span>
+                        <span class="cremTime">${esc(p.timeRange)}</span>
+                        <span class="cremDisp">${esc(p.disposal)}</span>
                       </div>
                     `).join('')}
                   </div>
@@ -2246,7 +2322,7 @@
             <div class="k">고인 ${i + 1}</div>
             <div class="v">
               <span class="time-line"><strong>고인명</strong> ${cremObjtBadgeHTML(p.objt)}${esc(p.name)}</span>
-              <span class="time-line"><strong>화장진행</strong> ${esc(p.progress)}</span>
+              <span class="time-line"><strong>화장진행</strong> ${esc(p.stage)}</span>
               <span class="time-line"><strong>화장시간</strong> ${esc(p.timeRange)}</span>
               <span class="time-line"><strong>유골처리</strong> ${esc(p.disposal)}</span>
             </div>
