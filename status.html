@@ -188,7 +188,7 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       background: #fff;
-      min-width: 260px;
+      min-width: 320px;
       flex: 0 0 auto;
     }
 
@@ -393,7 +393,6 @@
       align-items:center;
       justify-content:center;
       padding: calc(2px * var(--scale-ui)) calc(6px * var(--scale-ui));
-      margin-left: 0;
       border-radius: 999px;
       border: 1px solid rgba(217,224,234,.95);
       background: rgba(255,255,255,.92);
@@ -416,6 +415,13 @@
       border-color: rgba(180,83,9,.28);
       background: linear-gradient(180deg, rgba(180,83,9,.14), rgba(245,158,11,.08));
       color: rgba(180,83,9,.95);
+    }
+
+    .tag.objt{
+      border-color: rgba(15,23,42,.16);
+      background: linear-gradient(180deg, rgba(15,23,42,.08), rgba(15,23,42,.04));
+      color: rgba(15,23,42,.88);
+      margin-right: 6px;
     }
 
     ul{
@@ -450,6 +456,7 @@
     .row.done .barL{ background: rgba(46,125,50,.45); }
     .row.ret .barL{ background: rgba(180,83,9,.40); }
     .row.retDone .barL{ background: rgba(126,34,206,.48); }
+    .row.crem .barL{ background: rgba(15,23,42,.20); }
 
     .rowR{
       min-width: 0;
@@ -543,18 +550,33 @@
     .cremWrap{
       display:flex;
       flex-direction:column;
-      gap: calc(4px * var(--scale-ui));
+      gap: calc(6px * var(--scale-ui));
       min-width:0;
     }
 
     .cremLine{
       font-weight: 900;
       font-size: var(--fs-sm);
-      color: rgba(31,42,55,.72);
+      color: rgba(31,42,55,.78);
       line-height: calc(var(--lh-loose) * var(--scale-lh));
       letter-spacing: var(--ls-base);
       word-break: keep-all;
       min-width: 0;
+      display:flex;
+      align-items:flex-start;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .cremLine strong{
+      color:#0f172a;
+      font-weight:950;
+      margin-right:4px;
+    }
+
+    .cremName{
+      color:#0f172a;
+      font-weight:950;
     }
 
     .no-data{
@@ -630,6 +652,8 @@
       display:grid;
       gap: calc(10px * var(--scale-ui));
       background: #fff;
+      max-height: min(72vh, 780px);
+      overflow-y: auto;
     }
 
     .kv{
@@ -644,7 +668,7 @@
     }
 
     .kv .k{
-      flex: 0 0 calc(68px * var(--scale-ui));
+      flex: 0 0 calc(72px * var(--scale-ui));
       color: var(--muted);
       font-weight: 950;
       font-size: var(--fs-xs);
@@ -665,13 +689,23 @@
       word-break: keep-all;
     }
 
+    .kv .v strong{
+      color:#0f172a;
+      font-weight:950;
+      margin-right:4px;
+    }
+
     .kv .v .time-line{
       display:block;
-      white-space:nowrap;
-      word-break:normal;
-      overflow-wrap:normal;
+      white-space:normal;
+      word-break:keep-all;
+      overflow-wrap:anywhere;
       font-size: inherit;
       line-height: calc(var(--lh-loose) * var(--scale-lh));
+    }
+
+    .kv .v .time-line + .time-line{
+      margin-top:4px;
     }
 
     #mFields{
@@ -917,11 +951,7 @@
       }
 
       .kv .k{
-        flex: 0 0 calc(62px * var(--scale-ui));
-      }
-
-      .kv .v .time-line{
-        font-size: inherit;
+        flex: 0 0 calc(64px * var(--scale-ui));
       }
     }
 
@@ -953,6 +983,7 @@
 
       <div class="toolbar">
         <div class="seg" role="tablist" aria-label="시설 선택">
+          <button id="tabCrem" type="button">화장진행</button>
           <button id="tabHouse" class="active" type="button">추모의집</button>
           <button id="tabNature" type="button">자연장지</button>
         </div>
@@ -1033,9 +1064,6 @@
   </div>
 
   <script>
-    /* =========================================
-     * 1) 환경 / 설정
-     * ========================================= */
     const APP_CONFIG = {
       placeholderWebAppUrl: '여기에_앱스크립트_웹앱_URL_입력',
       statusApiUrl: 'https://script.google.com/macros/s/AKfycbzC8L_toqBCmy-SBcqzzJZJA68bfq3dtIDi_TG--hWsr6rajcdq8yMNivtces8ehLiO/exec',
@@ -1053,6 +1081,7 @@
       loading: '데이터 불러오는 중...',
       loadingInitial: '초기 데이터 불러오는 중...',
       loadingRefresh: '새로고침 중...',
+      loadingCrem: '화장진행 데이터 불러오는 중...',
       loadingHouse: '추모의집 데이터 불러오는 중...',
       loadingNature: '자연장지 데이터 불러오는 중...',
       refreshComplete: '새로고침 완료',
@@ -1077,6 +1106,12 @@
     };
 
     const FACILITY = {
+      crem: {
+        key: 'crem',
+        label: '화장진행',
+        url: './data/crem.json',
+        dateKey: 'cremDate'
+      },
       house: {
         key: 'house',
         label: '추모의집',
@@ -1101,9 +1136,12 @@
       orphan: '무연고'
     };
 
-    /* =========================================
-     * 2) 기본 유틸
-     * ========================================= */
+    const CREM_OBJT_LABEL = {
+      A001: '시신',
+      B001: '개장유골',
+      A002: '사산아'
+    };
+
     const $ = (selector) => document.querySelector(selector);
 
     const esc = (v) => String(v ?? '')
@@ -1115,6 +1153,7 @@
 
     const toTrimmedString = (v) => String(v ?? '').trim();
     const safeKey = (v) => toTrimmedString(v);
+    const uniq = (arr) => [...new Set((Array.isArray(arr) ? arr : []).filter(Boolean))];
 
     function isConfiguredStatusApi(){
       const url = String(APP_CONFIG.statusApiUrl || '').trim();
@@ -1158,6 +1197,14 @@
 
       m = s.match(/^(\d{4})(\d{2})(\d{2})$/);
       if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+
+      const d = new Date(s);
+      if (!Number.isNaN(d.getTime())){
+        const y = d.getFullYear();
+        const mo = String(d.getMonth() + 1).padStart(2, '0');
+        const da = String(d.getDate()).padStart(2, '0');
+        return `${y}-${mo}-${da}`;
+      }
 
       return '';
     }
@@ -1213,14 +1260,102 @@
       return raw;
     }
 
-    /* =========================================
-     * 3) DOM 참조
-     * ========================================= */
+    function cremDateOf(r){
+      return normISO(r?.cremDate) || normISO(r?.burnDate) || '';
+    }
+
+    function cremChasuOf(r){
+      return pad2(r?.burnChasu ?? r?.hwaBrazier?.burnChasu);
+    }
+
+    function cremStartOf(r){
+      return fmtTime(r?.hwaBrazier?.burnStrTime ?? r?.burnStrTime);
+    }
+
+    function cremEndOf(r){
+      return fmtTime(r?.hwaBrazier?.burnEndTime ?? r?.burnEndTime);
+    }
+
+    function cremStatusOf(r){
+      return toTrimmedString(
+        r?.hwaBrazier?.burnStatusCode?.name ??
+        r?.burnStatusCode?.name ??
+        r?.hwaBrazier?.burnStatus ??
+        r?.burnStatus
+      ) || '-';
+    }
+
+    function cremObjtOf(r){
+      const code = toTrimmedString(r?.objtCode ?? r?.objt);
+      return CREM_OBJT_LABEL[code] || toTrimmedString(r?.objtName) || '-';
+    }
+
+    function cremDisposalOf(r){
+      return toTrimmedString(
+        r?.scatterPlaceCode?.name ??
+        r?.scatterPlaceName ??
+        r?.scatterPlace
+      ) || '-';
+    }
+
+    function cremDeadNameOf(r){
+      return toTrimmedString(
+        r?.thedead?.deadName ??
+        r?.deadName
+      ) || '-';
+    }
+
+    function cremTimeRangeOf(r){
+      const st = cremStartOf(r);
+      const en = cremEndOf(r);
+
+      if (!st) return '화장접수';
+      if (st && en) return `${st} ~ ${en}`;
+      return `${st} ~ 진행중`;
+    }
+
+    function cremObjtBadgeHTML(label){
+      return `<span class="tag objt">${esc(label)}</span>`;
+    }
+
+    function cremPersonLines(group){
+      return (group.records || []).map(r => ({
+        name: cremDeadNameOf(r),
+        objt: cremObjtOf(r),
+        timeRange: cremTimeRangeOf(r),
+        disposal: cremDisposalOf(r),
+        progress: `${cremObjtOf(r)} · ${cremStatusOf(r)}`
+      }));
+    }
+
+    function groupCremRows(rows){
+      const map = new Map();
+      const order = [];
+
+      for (const r of (Array.isArray(rows) ? rows : [])){
+        const chasu = cremChasuOf(r) || '00';
+        if (!map.has(chasu)){
+          map.set(chasu, {
+            burnChasu: chasu,
+            chasuLabel: `${chasu}회차`,
+            records: []
+          });
+          order.push(chasu);
+        }
+        map.get(chasu).records.push(r);
+      }
+
+      return order
+        .map(k => map.get(k))
+        .sort((a, b) => parseInt(a.burnChasu, 10) - parseInt(b.burnChasu, 10));
+    }
+
     const dom = {
       datePicker: $('#datePicker'),
       listArea: $('#listArea'),
       infiniteArea: $('#infiniteArea'),
 
+      tabCrem: $('#tabCrem'),
       tabHouse: $('#tabHouse'),
       tabNature: $('#tabNature'),
 
@@ -1244,9 +1379,6 @@
       loadingText: $('#loadingText')
     };
 
-    /* =========================================
-     * 4) iOS UI 보정
-     * ========================================= */
     (function applyIosClass(){
       const ua = navigator.userAgent || '';
       const isIOS =
@@ -1263,9 +1395,6 @@
       document.documentElement.classList.add(isIPad ? 'ios-ipad' : 'ios-iphone');
     })();
 
-    /* =========================================
-     * 5) 앱 상태
-     * ========================================= */
     const state = {
       today: getTodayIso(),
       currentSource: FACILITY.house.key,
@@ -1281,6 +1410,7 @@
         house: null,
         nature: null
       },
+      cremRawCache: null,
       cremMapCache: null,
       funeralMapCache: null,
 
@@ -1296,13 +1426,11 @@
         id: '',
         mode: '',
         currentStatus: '',
-        headerNo: ''
+        headerNo: '',
+        kind: 'default'
       }
     };
 
-    /* =========================================
-     * 6) 공통 UI
-     * ========================================= */
     function updateHeaderMeta(){
       dom.refDateText.textContent = `업데이트 ${fmtHHMM(new Date())}`;
     }
@@ -1312,6 +1440,7 @@
     }
 
     function setUIBusy(busy){
+      dom.tabCrem.disabled = busy;
       dom.tabHouse.disabled = busy;
       dom.tabNature.disabled = busy;
       dom.datePicker.disabled = busy;
@@ -1341,9 +1470,6 @@
       toast._t = setTimeout(() => t.classList.remove('show'), ms);
     };
 
-    /* =========================================
-     * 7) 데이터 로드
-     * ========================================= */
     async function fetchJson(url, bust = false){
       const finalUrl = bust ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
       const res = await fetch(finalUrl, { cache: bust ? 'no-store' : 'default' });
@@ -1352,6 +1478,7 @@
     }
 
     async function ensureData(key, force = false){
+      if (key === FACILITY.crem.key) return [];
       if (state.dataCache[key] && !force) return state.dataCache[key];
       const raw = await fetchJson(FACILITY[key].url, force);
       state.dataCache[key] = Array.isArray(raw) ? raw : [];
@@ -1359,19 +1486,22 @@
     }
 
     async function ensureCrem(force = false){
-      if (state.cremMapCache && !force) return state.cremMapCache;
+      if (state.cremRawCache && state.cremMapCache && !force){
+        return { rows: state.cremRawCache, map: state.cremMapCache };
+      }
 
       const raw = await fetchJson(DATA_URLS.crem, force);
       const arr = Array.isArray(raw) ? raw : [];
       const map = new Map();
 
       for (const r of arr){
-        const id = toTrimmedString(r?.deadId);
+        const id = toTrimmedString(r?.deadId ?? r?.thedead?.deadId);
         if (id) map.set(id, r);
       }
 
+      state.cremRawCache = arr;
       state.cremMapCache = map;
-      return map;
+      return { rows: arr, map };
     }
 
     async function ensureFuneral(force = false){
@@ -1396,9 +1526,6 @@
       return map;
     }
 
-    /* =========================================
-     * 8) 상태 저장 API
-     * ========================================= */
     function statusKey(src, id, mode){
       return `${src}||${mode}||${id}`;
     }
@@ -1410,11 +1537,7 @@
       }
 
       const now = Date.now();
-      if (
-        !force &&
-        state.sharedStatusFetchedAt &&
-        (now - state.sharedStatusFetchedAt) < APP_CONFIG.sharedStatusCacheMs
-      ){
+      if (!force && state.sharedStatusFetchedAt && (now - state.sharedStatusFetchedAt) < APP_CONFIG.sharedStatusCacheMs){
         return;
       }
 
@@ -1451,13 +1574,7 @@
       const res = await fetch(APP_CONFIG.statusApiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          action: 'save',
-          src,
-          id,
-          mode,
-          status
-        })
+        body: JSON.stringify({ action: 'save', src, id, mode, status })
       });
 
       if (!res.ok) throw new Error(UI_TEXT.sharedStatusSaveError);
@@ -1469,19 +1586,12 @@
       state.sharedStatusFetchedAt = Date.now();
     }
 
-    /* =========================================
-     * 9) 데이터 가공
-     * ========================================= */
     function getRecvPendingBySource(src){
-      return src === FACILITY.nature.key
-        ? STATUS_TEXT.recvPendingNature
-        : STATUS_TEXT.recvPendingHouse;
+      return src === FACILITY.nature.key ? STATUS_TEXT.recvPendingNature : STATUS_TEXT.recvPendingHouse;
     }
 
     function getRecvDoneBySource(src){
-      return src === FACILITY.nature.key
-        ? STATUS_TEXT.recvDoneNature
-        : STATUS_TEXT.recvDoneHouse;
+      return src === FACILITY.nature.key ? STATUS_TEXT.recvDoneNature : STATUS_TEXT.recvDoneHouse;
     }
 
     function getRecv(src, id){
@@ -1489,19 +1599,9 @@
       const value = state.sharedStatusMap.get(key);
 
       if (!value) return getRecvPendingBySource(src);
-
-      if (src !== FACILITY.nature.key && value === STATUS_TEXT.legacyRecvHouse){
-        return STATUS_TEXT.recvPendingHouse;
-      }
-
-      if (src === FACILITY.nature.key && value === STATUS_TEXT.recvPendingHouse){
-        return STATUS_TEXT.recvPendingNature;
-      }
-
-      if (src === FACILITY.nature.key && value === STATUS_TEXT.recvDoneHouse){
-        return STATUS_TEXT.recvDoneNature;
-      }
-
+      if (src !== FACILITY.nature.key && value === STATUS_TEXT.legacyRecvHouse) return STATUS_TEXT.recvPendingHouse;
+      if (src === FACILITY.nature.key && value === STATUS_TEXT.recvPendingHouse) return STATUS_TEXT.recvPendingNature;
+      if (src === FACILITY.nature.key && value === STATUS_TEXT.recvDoneHouse) return STATUS_TEXT.recvDoneNature;
       return value;
     }
 
@@ -1511,7 +1611,6 @@
 
       if (!value) return STATUS_TEXT.retPending;
       if (value === STATUS_TEXT.legacyRet) return STATUS_TEXT.retPending;
-
       return value;
     }
 
@@ -1528,7 +1627,6 @@
     function ensMergeKey(r){
       const ens = safeKey(r.ensNO ?? r.ensNo ?? r.ensno);
       if (ens) return `ENS:${ens}`;
-
       return `ALT:${safeKey(r.deadId)}|${safeKey(r.strDate)}|${safeKey(r.applname ?? r.applName)}|${safeKey(r.deadname ?? r.deadName ?? r.deceasedName)}`;
     }
 
@@ -1598,16 +1696,10 @@
           order.push(key);
         } else {
           const cur = map.get(key);
-
-          const existingNames = String(cur.deadName ?? '')
-            .split(' / ')
-            .map(x => x.trim())
-            .filter(Boolean);
+          const existingNames = String(cur.deadName ?? '').split(' / ').map(x => x.trim()).filter(Boolean);
 
           for (const nm of rowNames){
-            if (!existingNames.includes(nm)){
-              existingNames.push(nm);
-            }
+            if (!existingNames.includes(nm)) existingNames.push(nm);
           }
 
           cur.deadName = existingNames.join(' / ') || '-';
@@ -1650,10 +1742,7 @@
         const singleDeadName = String(r?.deadName ?? r?.deadname ?? r?.deceasedName ?? '').trim();
 
         if (singleDeadId || singleDeadName){
-          entries.push({
-            deadId: singleDeadId,
-            deadName: singleDeadName
-          });
+          entries.push({ deadId: singleDeadId, deadName: singleDeadName });
         }
       }
 
@@ -1668,12 +1757,12 @@
         return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
       }
 
-      const chasuRaw = rec?.burnChasu;
+      const chasuRaw = rec?.burnChasu ?? rec?.hwaBrazier?.burnChasu;
       const chasuNum = parseInt(pad2(chasuRaw), 10);
       const safeChasu = Number.isNaN(chasuNum) ? 0 : chasuNum;
 
-      const st = fmtTime(rec?.burnStrTime);
-      const en = fmtTime(rec?.burnEndTime);
+      const st = cremStartOf(rec);
+      const en = cremEndOf(rec);
 
       if (!st){
         return {
@@ -1710,10 +1799,7 @@
       const entries = deceasedEntries(item);
       if (!entries.length) return 0;
 
-      const nums = entries
-        .map(x => cremObj(x.deadId, cremMap).chasu)
-        .filter(n => Number.isFinite(n));
-
+      const nums = entries.map(x => cremObj(x.deadId, cremMap).chasu).filter(n => Number.isFinite(n));
       const pos = nums.filter(n => n > 0);
       return pos.length ? Math.min(...pos) : 0;
     }
@@ -1736,26 +1822,15 @@
       return entries.map(({ deadId }) => {
         const did = String(deadId ?? '').trim();
         const rec = did ? cremMap.get(did) : null;
-
         if (!rec) return '선결제';
-
-        const st = fmtTime(rec?.burnStrTime);
-        const en = fmtTime(rec?.burnEndTime);
-
-        if (!st) return '화장접수';
-        if (st && !en) return `화장시작: ${st}, 화장중`;
-        return `화장시작: ${st}, 화장종료: ${en}`;
+        return cremTimeRangeOf(rec);
       });
     }
 
     function nameKeySetFromDisplay(displayName){
       const parts = String(displayName ?? '').split('/').map(x => normNameKey(x));
       const set = new Set();
-
-      for (const p of parts){
-        if (p) set.add(p);
-      }
-
+      for (const p of parts){ if (p) set.add(p); }
       return set;
     }
 
@@ -1776,8 +1851,7 @@
         if (!rec) continue;
 
         const recNameKey = normNameKey(rec.deadName);
-        if (!recNameKey) continue;
-        if (!nameSet.has(recNameKey)) continue;
+        if (!recNameKey || !nameSet.has(recNameKey)) continue;
 
         if (String(rec.dcGubun ?? '').trim() === 'TCM1200099'){
           return TAG_LABEL.orphan;
@@ -1849,9 +1923,6 @@
       return clone;
     }
 
-    /* =========================================
-     * 10) 렌더용 헬퍼
-     * ========================================= */
     function badgeHTML(label){
       if (!label) return '';
       const cls = (label === TAG_LABEL.orphan) ? 'tag orphan' : 'tag self';
@@ -1859,16 +1930,13 @@
     }
 
     function leftCls(src, mode, status){
-      if (mode === 'ret'){
-        return (status === STATUS_TEXT.retDone) ? 'retDone' : 'ret';
-      }
+      if (src === FACILITY.crem.key) return 'crem';
+      if (mode === 'ret') return (status === STATUS_TEXT.retDone) ? 'retDone' : 'ret';
       return (status === getRecvDoneBySource(src)) ? 'done' : 'recv';
     }
 
     function statusPillClass(mode, status){
-      if (mode === 'ret'){
-        return status === STATUS_TEXT.retDone ? 'statusPill retDone' : 'statusPill ret';
-      }
+      if (mode === 'ret') return status === STATUS_TEXT.retDone ? 'statusPill retDone' : 'statusPill ret';
       return status === getRecvDoneBySource(state.currentSource) ? 'statusPill done' : 'statusPill';
     }
 
@@ -1897,7 +1965,6 @@
     function getItemStatus(item, selectedDate){
       const sid = itemId(state.currentSource, item);
       const mode = getItemMode(item, selectedDate);
-
       if (mode === 'ret') return getRet(sid);
       return getRecv(state.currentSource, sid);
     }
@@ -1923,9 +1990,7 @@
     function kvLines(k, lines){
       const arr = (Array.isArray(lines) ? lines : []).map(esc).filter(Boolean);
       if (!arr.length) return '';
-
       const html = arr.map(line => `<span class="time-line">${line}</span>`).join('');
-
       return `
         <div class="kv">
           <div class="k">${esc(k)}</div>
@@ -1936,67 +2001,44 @@
 
     function cremLinesHTML(item, cremMap, mode){
       if (mode === 'ret' || !cremMap) return '';
-
       const lines = cremDetailLines(item, cremMap);
       if (!lines.length) return '';
+      return `<div class="cremWrap">${lines.map(line => `<div class="cremLine">${esc(line)}</div>`).join('')}</div>`;
+    }
+
+    function cremGroupRowHTML(group, idx){
+      const persons = cremPersonLines(group);
 
       return `
-        <div class="cremWrap">
-          ${lines.map(line => `<div class="cremLine">${esc(line)}</div>`).join('')}
-        </div>
-      `;
-    }
-
-    /* =========================================
-     * 11) 리스트 렌더링
-     * ========================================= */
-    function computePageSize(){
-      const w = Math.min(window.innerWidth || 0, window.screen?.width || 0) || 360;
-      if (w <= 390) return APP_CONFIG.pageSizeSmall;
-      if (w <= 430) return APP_CONFIG.pageSizeMedium;
-      return APP_CONFIG.pageSizeLarge;
-    }
-
-    function resetInfinite(){
-      state.renderedCount = 0;
-      dom.infiniteArea.innerHTML = '';
-
-      if (state.observer){
-        state.observer.disconnect();
-        state.observer = null;
-      }
-    }
-
-    function updateHeadShown(shown, total){
-      const badge = document.getElementById('headBadge');
-      if (badge) badge.textContent = `${shown.toLocaleString()} / ${total.toLocaleString()}`;
-    }
-
-    function setInfiniteUI({ mode, shown, total }){
-      if (mode === 'empty'){
-        dom.infiniteArea.innerHTML = '';
-        return;
-      }
-
-      let msg = '';
-
-      if (mode === 'loading'){
-        msg = `<div class="infCard">불러오는 중…</div>`;
-      } else if (mode === 'more'){
-        msg = `<div class="infCard"><strong>${shown.toLocaleString()}</strong> / ${total.toLocaleString()}건 표시 중 · 아래로 스크롤하면 더 불러옵니다</div>`;
-      } else if (mode === 'end'){
-        msg = `<div class="infCard">전체 <strong>${total.toLocaleString()}</strong>건 표시 완료</div>`;
-      }
-
-      dom.infiniteArea.innerHTML = `
-        <div class="inf">
-          ${msg}
-          <div id="sentinel"></div>
-        </div>
+        <li>
+          <div class="row crem">
+            <div class="barL"></div>
+            <div class="rowR">
+              <button class="mainBtn" type="button" data-open="${idx}" aria-label="상세 보기">
+                <div class="main">
+                  <div class="no">${esc(group.chasuLabel)}</div>
+                  <div class="cremWrap">
+                    ${persons.map(p => `
+                      <div class="cremLine">
+                        ${cremObjtBadgeHTML(p.objt)}
+                        <span class="cremName">${esc(p.name)}</span>
+                        <span>${esc(p.timeRange)} · ${esc(p.disposal)}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </li>
       `;
     }
 
     function rowHTML(item, idx, selected, cremMap, funeralMap){
+      if (state.currentSource === FACILITY.crem.key){
+        return cremGroupRowHTML(item, idx);
+      }
+
       const mode = getItemMode(item, selected);
       const status = getItemStatus(item, selected);
       const displayId = getDisplayId(item);
@@ -2040,6 +2082,52 @@
             <div class="badge" id="headBadge">0 / ${display.length.toLocaleString()}</div>
           </div>
           <ul id="listUL"></ul>
+        </div>
+      `;
+    }
+
+    function computePageSize(){
+      const w = Math.min(window.innerWidth || 0, window.screen?.width || 0) || 360;
+      if (w <= 390) return APP_CONFIG.pageSizeSmall;
+      if (w <= 430) return APP_CONFIG.pageSizeMedium;
+      return APP_CONFIG.pageSizeLarge;
+    }
+
+    function resetInfinite(){
+      state.renderedCount = 0;
+      dom.infiniteArea.innerHTML = '';
+
+      if (state.observer){
+        state.observer.disconnect();
+        state.observer = null;
+      }
+    }
+
+    function updateHeadShown(shown, total){
+      const badge = document.getElementById('headBadge');
+      if (badge) badge.textContent = `${shown.toLocaleString()} / ${total.toLocaleString()}`;
+    }
+
+    function setInfiniteUI({ mode, shown, total }){
+      if (mode === 'empty'){
+        dom.infiniteArea.innerHTML = '';
+        return;
+      }
+
+      let msg = '';
+
+      if (mode === 'loading'){
+        msg = `<div class="infCard">불러오는 중…</div>`;
+      } else if (mode === 'more'){
+        msg = `<div class="infCard"><strong>${shown.toLocaleString()}</strong> / ${total.toLocaleString()}건 표시 중 · 아래로 스크롤하면 더 불러옵니다</div>`;
+      } else if (mode === 'end'){
+        msg = `<div class="infCard">전체 <strong>${total.toLocaleString()}</strong>건 표시 완료</div>`;
+      }
+
+      dom.infiniteArea.innerHTML = `
+        <div class="inf">
+          ${msg}
+          <div id="sentinel"></div>
         </div>
       `;
     }
@@ -2104,8 +2192,27 @@
 
     function rerenderCurrentView(){
       const selected = dom.datePicker.value || state.today;
-      const cremMap = (selected === state.today) ? state.cremMapCache : null;
 
+      if (state.currentSource === FACILITY.crem.key){
+        const groups = groupCremRows((state.cremRawCache || []).filter(r => cremDateOf(r) === selected));
+        state.currentDisplayData = groups;
+        resetInfinite();
+        state.lastCremMapForRender = null;
+        state.lastFuneralMapForRender = null;
+
+        if (!groups.length){
+          dom.listArea.innerHTML = `<div class="no-data">${UI_TEXT.noData}</div>`;
+          return;
+        }
+
+        renderListShell(groups);
+        setInfiniteUI({ mode: 'loading', shown: 0, total: groups.length });
+        renderNextPage();
+        updateHeaderMeta();
+        return;
+      }
+
+      const cremMap = (selected === state.today) ? state.cremMapCache : null;
       let display = state.currentDisplayData.slice();
       display = sortStable(display, selected, cremMap);
       state.currentDisplayData = display;
@@ -2120,15 +2227,31 @@
       updateHeaderMeta();
     }
 
-    /* =========================================
-     * 12) 모달 렌더링
-     * ========================================= */
     function buildModalNameHTML(displayName, badgeLabel){
       return `
         <span style="display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;width:fit-content;">
           <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayName)}</span>
           ${badgeHTML(badgeLabel)}
         </span>
+      `;
+    }
+
+    function buildCremModalFields(group){
+      const persons = cremPersonLines(group);
+
+      return `
+        ${kv('회차', group.chasuLabel)}
+        ${persons.map((p, i) => `
+          <div class="kv">
+            <div class="k">고인 ${i + 1}</div>
+            <div class="v">
+              <span class="time-line"><strong>고인명</strong> ${cremObjtBadgeHTML(p.objt)}${esc(p.name)}</span>
+              <span class="time-line"><strong>화장진행</strong> ${esc(p.progress)}</span>
+              <span class="time-line"><strong>화장시간</strong> ${esc(p.timeRange)}</span>
+              <span class="time-line"><strong>유골처리</strong> ${esc(p.disposal)}</span>
+            </div>
+          </div>
+        `).join('')}
       `;
     }
 
@@ -2167,20 +2290,34 @@
     }
 
     function getModalStatusOptions(mode){
-      if (mode === 'ret'){
-        return [STATUS_TEXT.retPending, STATUS_TEXT.retDone];
-      }
-
-      if (state.currentSource === FACILITY.nature.key){
-        return [STATUS_TEXT.recvPendingNature, STATUS_TEXT.recvDoneNature];
-      }
-
+      if (mode === 'ret') return [STATUS_TEXT.retPending, STATUS_TEXT.retDone];
+      if (state.currentSource === FACILITY.nature.key) return [STATUS_TEXT.recvPendingNature, STATUS_TEXT.recvDoneNature];
       return [STATUS_TEXT.recvPendingHouse, STATUS_TEXT.recvDoneHouse];
     }
 
     function openSheet(index){
       const item = state.currentDisplayData[index];
       if (!item) return;
+
+      if (state.currentSource === FACILITY.crem.key){
+        state.modal = {
+          index,
+          src: FACILITY.crem.key,
+          id: item.burnChasu,
+          mode: '',
+          currentStatus: '',
+          headerNo: item.chasuLabel,
+          kind: 'crem'
+        };
+
+        dom.mTitleLine.textContent = `${FACILITY.crem.label} · ${item.chasuLabel}`;
+        dom.mFields.innerHTML = buildCremModalFields(item);
+        dom.statusEditorBox.style.display = 'none';
+        dom.sheetSaveBtn.style.display = 'none';
+        dom.overlay.classList.add('show');
+        dom.overlay.setAttribute('aria-hidden', 'false');
+        return;
+      }
 
       const selected = dom.datePicker.value || state.today;
       const sid = itemId(state.currentSource, item);
@@ -2194,7 +2331,8 @@
         id: sid,
         mode,
         currentStatus,
-        headerNo
+        headerNo,
+        kind: 'default'
       };
 
       dom.mTitleLine.textContent = `${FACILITY[state.currentSource].label} · ${headerNo}`;
@@ -2208,6 +2346,7 @@
       dom.modalStatusSelect.value = currentStatus;
       dom.modalCurrentStatusText.textContent = `현재 상태 ${currentStatus}`;
       dom.statusEditorBox.style.display = 'flex';
+      dom.sheetSaveBtn.style.display = '';
       dom.sheetSaveBtn.disabled = false;
 
       dom.overlay.classList.add('show');
@@ -2224,18 +2363,18 @@
         id: '',
         mode: '',
         currentStatus: '',
-        headerNo: ''
+        headerNo: '',
+        kind: 'default'
       };
     }
 
     async function saveModalStatus(){
-      if (state.modal.index < 0) return;
+      if (state.modal.index < 0 || state.modal.kind === 'crem') return;
 
       const next = String(dom.modalStatusSelect.value || '').trim();
       const cur = String(state.modal.currentStatus || '').trim();
 
       if (!next) return;
-
       if (next === cur){
         toast(UI_TEXT.noChanges, 1400);
         return;
@@ -2264,25 +2403,48 @@
       }
     }
 
-    /* =========================================
-     * 13) 메인 로드
-     * ========================================= */
     async function load(force = false, loadingMsg = UI_TEXT.loading){
       const myToken = ++state.currentLoadingToken;
       showLoading(loadingMsg);
 
       const selected = dom.datePicker.value || state.today;
       state.currentSelectedDate = selected;
-      const showCrem = (selected === state.today);
+      const showCremTimesOnOtherTabs = (selected === state.today);
 
       try{
+        if (state.currentSource === FACILITY.crem.key){
+          const cremResult = await ensureCrem(force);
+          if (myToken !== state.currentLoadingToken) return;
+
+          const filteredRaw = (cremResult.rows || []).filter(r => cremDateOf(r) === selected);
+          const grouped = groupCremRows(filteredRaw);
+
+          dom.countText.textContent = `접수 ${filteredRaw.length}건`;
+          state.currentDisplayData = grouped;
+
+          if (!grouped.length){
+            dom.listArea.innerHTML = `<div class="no-data">${UI_TEXT.noData}</div>`;
+            resetInfinite();
+            return;
+          }
+
+          resetInfinite();
+          state.lastCremMapForRender = null;
+          state.lastFuneralMapForRender = null;
+
+          renderListShell(grouped);
+          setInfiniteUI({ mode: 'loading', shown: 0, total: grouped.length });
+          renderNextPage();
+          return;
+        }
+
         const tasks = [
           loadSharedStatuses(force),
           ensureFuneral(force),
           ensureData(state.currentSource, force)
         ];
 
-        if (showCrem){
+        if (showCremTimesOnOtherTabs){
           tasks.push(ensureCrem(force));
         }
 
@@ -2291,7 +2453,7 @@
 
         const funeralMap = results[1];
         const data = results[2];
-        const cremMap = showCrem ? results[3] : null;
+        const cremMap = showCremTimesOnOtherTabs ? results[3]?.map : null;
 
         const c = calcCounts(state.currentSource, data, selected);
 
@@ -2349,6 +2511,7 @@
       try{
         state.dataCache.house = null;
         state.dataCache.nature = null;
+        state.cremRawCache = null;
         state.cremMapCache = null;
         state.funeralMapCache = null;
         state.sharedStatusFetchedAt = 0;
@@ -2356,9 +2519,7 @@
         await load(true, UI_TEXT.loadingRefresh);
         updateHeaderMeta();
 
-        if (fromUI){
-          toast(UI_TEXT.refreshComplete, 1400);
-        }
+        if (fromUI) toast(UI_TEXT.refreshComplete, 1400);
       } finally {
         state.isRefreshing = false;
       }
@@ -2368,19 +2529,18 @@
       state.currentSource = src;
       localStorage.setItem(STORAGE_KEYS.source, src);
 
+      dom.tabCrem.classList.toggle('active', src === FACILITY.crem.key);
       dom.tabHouse.classList.toggle('active', src === FACILITY.house.key);
       dom.tabNature.classList.toggle('active', src === FACILITY.nature.key);
 
-      const msg = src === FACILITY.house.key
-        ? UI_TEXT.loadingHouse
-        : UI_TEXT.loadingNature;
+      const msg =
+        src === FACILITY.crem.key ? UI_TEXT.loadingCrem :
+        src === FACILITY.house.key ? UI_TEXT.loadingHouse :
+        UI_TEXT.loadingNature;
 
       load(false, msg);
     }
 
-    /* =========================================
-     * 14) FAB / 스크롤
-     * ========================================= */
     function updateFAB(){
       const y = window.scrollY || document.documentElement.scrollTop || 0;
       dom.fabTop.classList.toggle('show', y > 220);
@@ -2395,10 +2555,12 @@
       updateFAB();
     }
 
-    /* =========================================
-     * 15) 이벤트 바인딩
-     * ========================================= */
     function bindEvents(){
+      dom.tabCrem.addEventListener('click', () => {
+        if (state.currentSource === FACILITY.crem.key) return;
+        setSource(FACILITY.crem.key);
+      });
+
       dom.tabHouse.addEventListener('click', () => {
         if (state.currentSource === FACILITY.house.key) return;
         setSource(FACILITY.house.key);
@@ -2446,22 +2608,22 @@
       window.addEventListener('orientationchange', onResize, { passive:true });
     }
 
-    /* =========================================
-     * 16) 초기화
-     * ========================================= */
     function init(){
       state.pageSize = computePageSize();
 
       const saved = localStorage.getItem(STORAGE_KEYS.source);
-      const initialSource = (saved === FACILITY.nature.key || saved === FACILITY.house.key)
-        ? saved
-        : FACILITY.house.key;
+      const initialSource = (
+        saved === FACILITY.crem.key ||
+        saved === FACILITY.nature.key ||
+        saved === FACILITY.house.key
+      ) ? saved : FACILITY.house.key;
 
       state.currentSource = initialSource;
       state.currentSelectedDate = state.today;
 
       dom.datePicker.value = state.today;
 
+      dom.tabCrem.classList.toggle('active', initialSource === FACILITY.crem.key);
       dom.tabHouse.classList.toggle('active', initialSource === FACILITY.house.key);
       dom.tabNature.classList.toggle('active', initialSource === FACILITY.nature.key);
 
