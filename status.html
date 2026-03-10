@@ -3152,7 +3152,9 @@
         if (myToken !== state.currentLoadingToken) return;
 
         if (isInitialLoad){
-          await loadSharedStatuses(true);
+          try{
+            await loadSharedStatuses(true);
+          } catch {}
           if (myToken !== state.currentLoadingToken) return;
         }
 
