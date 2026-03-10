@@ -100,7 +100,7 @@
     "deadName": "정영덕",
     "burnDate": "2026-03-10",
     "burnStrTime": "10:19",
-    "burnEndTime": null,
+    "burnEndTime": "11:43",
     "burnChasu": "04"
   },
   {
@@ -108,7 +108,7 @@
     "deadName": "서정달",
     "burnDate": "2026-03-10",
     "burnStrTime": "10:23",
-    "burnEndTime": null,
+    "burnEndTime": "11:45",
     "burnChasu": "04"
   },
   {
@@ -116,7 +116,7 @@
     "deadName": "장혜숙",
     "burnDate": "2026-03-10",
     "burnStrTime": "10:27",
-    "burnEndTime": null,
+    "burnEndTime": "11:57",
     "burnChasu": "04"
   },
   {
@@ -124,7 +124,7 @@
     "deadName": "이병학",
     "burnDate": "2026-03-10",
     "burnStrTime": "10:33",
-    "burnEndTime": null,
+    "burnEndTime": "11:58",
     "burnChasu": "04"
   },
   {
@@ -142,5 +142,29 @@
     "burnStrTime": "11:22",
     "burnEndTime": null,
     "burnChasu": "05"
+  },
+  {
+    "deadId": "1653635",
+    "deadName": "조성도",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "12:11",
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653636",
+    "deadName": "유차비",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "12:11",
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653712",
+    "deadName": "미상(6기)",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "12:11",
+    "burnEndTime": null,
+    "burnChasu": "07"
   }
 ]
