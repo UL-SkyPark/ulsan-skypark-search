@@ -1028,6 +1028,7 @@
     }
 
     .savingDesc{
+      display:none;
       margin-top: 4px;
       color: rgba(31,42,55,.64);
       font-weight: 900;
@@ -1970,7 +1971,7 @@
 
     function showSaving(title = UI_TEXT.saving, desc = UI_TEXT.savingDesc){
       dom.savingTitle.textContent = title;
-      dom.savingDesc.textContent = desc;
+      dom.savingDesc.textContent = '';
       dom.savingOverlay.classList.add('show');
       dom.savingOverlay.setAttribute('aria-hidden', 'false');
     }
