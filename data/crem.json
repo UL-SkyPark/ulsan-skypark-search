@@ -14,7 +14,7 @@
       "new": false
     },
     "applId": 1400525,
-    "scatterPlace": "TMC0600001",
+    "scatterPlace": "TMC0600099",
     "hwaBrazier": {
       "burnDate": 1773154800000,
       "burnChasu": "01",
@@ -43,11 +43,11 @@
     "burnChasuName": "1회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
-      "code": "TMC0600001",
-      "name": "추모의집",
+      "code": "TMC0600099",
+      "name": "반출",
       "id": {
         "basicCd": "TMC06",
-        "code": "TMC0600001"
+        "code": "TMC0600099"
       }
     },
     "id": {
@@ -109,6 +109,62 @@
     "id": {
       "cremDate": 1773154800000,
       "cremSeq": 2
+    }
+  },
+  {
+    "cremDate": "2026-03-11",
+    "cremSeq": 3,
+    "objt": "A001",
+    "burnDate": 1773154800000,
+    "burnNo": "03",
+    "burnChasu": "01",
+    "deadId": 1653766,
+    "thedead": {
+      "deadId": 1653766,
+      "deadName": "조타순",
+      "id": 1653766,
+      "new": false
+    },
+    "applId": 1400527,
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1773154800000,
+      "burnChasu": "01",
+      "burnNo": "03",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1773154800000,
+        "burnChasu": "01",
+        "burnNo": "03"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1773154800000,
+      "cremSeq": 3
     }
   }
 ]
