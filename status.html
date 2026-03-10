@@ -188,7 +188,7 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       background: #fff;
-      min-width: 260px;
+      min-width: 320px;
       flex: 0 0 auto;
     }
 
@@ -953,6 +953,7 @@
 
       <div class="toolbar">
         <div class="seg" role="tablist" aria-label="시설 선택">
+          <button id="tabCrem" type="button">화장진행</button>
           <button id="tabHouse" class="active" type="button">추모의집</button>
           <button id="tabNature" type="button">자연장지</button>
         </div>
@@ -1053,6 +1054,7 @@
       loading: '데이터 불러오는 중...',
       loadingInitial: '초기 데이터 불러오는 중...',
       loadingRefresh: '새로고침 중...',
+      loadingCrem: '화장진행 화면 불러오는 중...',
       loadingHouse: '추모의집 데이터 불러오는 중...',
       loadingNature: '자연장지 데이터 불러오는 중...',
       refreshComplete: '새로고침 완료',
@@ -1062,7 +1064,8 @@
       sharedStatusSaveError: '공유 상태 저장에 실패했습니다.',
       sharedApiNotConfigured: '공유 저장 API 주소가 설정되지 않았습니다.',
       sharedApiInvalid: '공유 저장 API 주소 형식이 올바르지 않습니다.',
-      dataFileNotFound: '데이터 파일을 찾을 수 없습니다.'
+      dataFileNotFound: '데이터 파일을 찾을 수 없습니다.',
+      cremPreparing: '준비중입니다.'
     };
 
     const STATUS_TEXT = {
@@ -1077,6 +1080,12 @@
     };
 
     const FACILITY = {
+      crem: {
+        key: 'crem',
+        label: '화장진행',
+        url: null,
+        dateKey: 'cremDate'
+      },
       house: {
         key: 'house',
         label: '추모의집',
@@ -1221,6 +1230,7 @@
       listArea: $('#listArea'),
       infiniteArea: $('#infiniteArea'),
 
+      tabCrem: $('#tabCrem'),
       tabHouse: $('#tabHouse'),
       tabNature: $('#tabNature'),
 
@@ -1312,6 +1322,7 @@
     }
 
     function setUIBusy(busy){
+      dom.tabCrem.disabled = busy;
       dom.tabHouse.disabled = busy;
       dom.tabNature.disabled = busy;
       dom.datePicker.disabled = busy;
@@ -1352,6 +1363,7 @@
     }
 
     async function ensureData(key, force = false){
+      if (key === FACILITY.crem.key) return [];
       if (state.dataCache[key] && !force) return state.dataCache[key];
       const raw = await fetchJson(FACILITY[key].url, force);
       state.dataCache[key] = Array.isArray(raw) ? raw : [];
@@ -1668,12 +1680,12 @@
         return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
       }
 
-      const chasuRaw = rec?.burnChasu;
+      const chasuRaw = rec?.burnChasu ?? rec?.hwaBrazier?.burnChasu;
       const chasuNum = parseInt(pad2(chasuRaw), 10);
       const safeChasu = Number.isNaN(chasuNum) ? 0 : chasuNum;
 
-      const st = fmtTime(rec?.burnStrTime);
-      const en = fmtTime(rec?.burnEndTime);
+      const st = fmtTime(rec?.hwaBrazier?.burnStrTime ?? rec?.burnStrTime);
+      const en = fmtTime(rec?.hwaBrazier?.burnEndTime ?? rec?.burnEndTime);
 
       if (!st){
         return {
@@ -1739,8 +1751,8 @@
 
         if (!rec) return '선결제';
 
-        const st = fmtTime(rec?.burnStrTime);
-        const en = fmtTime(rec?.burnEndTime);
+        const st = fmtTime(rec?.hwaBrazier?.burnStrTime ?? rec?.burnStrTime);
+        const en = fmtTime(rec?.hwaBrazier?.burnEndTime ?? rec?.burnEndTime);
 
         if (!st) return '화장접수';
         if (st && !en) return `화장시작: ${st}, 화장중`;
@@ -1813,8 +1825,12 @@
         return { recv, ret };
       }
 
-      const todays = (Array.isArray(data) ? data : []).filter(x => String(x?.[dateKey] ?? '') === iso);
-      return { recv: mergeCoupleRows(todays).length, ret: 0 };
+      if (src === FACILITY.nature.key){
+        const todays = (Array.isArray(data) ? data : []).filter(x => String(x?.[dateKey] ?? '') === iso);
+        return { recv: mergeCoupleRows(todays).length, ret: 0 };
+      }
+
+      return { recv: 0, ret: 0 };
     }
 
     function sortStable(arr, iso, cremMap){
@@ -2276,6 +2292,19 @@
       const showCrem = (selected === state.today);
 
       try{
+        if (state.currentSource === FACILITY.crem.key){
+          const countTitleEl = document.getElementById('countTitle');
+          if (countTitleEl) countTitleEl.textContent = '안내';
+
+          dom.countText.textContent = '준비중';
+          dom.listArea.innerHTML = `<div class="no-data">${UI_TEXT.cremPreparing}</div>`;
+          resetInfinite();
+          return;
+        }
+
+        const countTitleEl = document.getElementById('countTitle');
+        if (countTitleEl) countTitleEl.textContent = '현황';
+
         const tasks = [
           loadSharedStatuses(force),
           ensureFuneral(force),
@@ -2368,12 +2397,19 @@
       state.currentSource = src;
       localStorage.setItem(STORAGE_KEYS.source, src);
 
+      dom.tabCrem.classList.toggle('active', src === FACILITY.crem.key);
       dom.tabHouse.classList.toggle('active', src === FACILITY.house.key);
       dom.tabNature.classList.toggle('active', src === FACILITY.nature.key);
 
-      const msg = src === FACILITY.house.key
-        ? UI_TEXT.loadingHouse
-        : UI_TEXT.loadingNature;
+      const countTitleEl = document.getElementById('countTitle');
+      if (countTitleEl){
+        countTitleEl.textContent = src === FACILITY.crem.key ? '안내' : '현황';
+      }
+
+      const msg =
+        src === FACILITY.crem.key ? UI_TEXT.loadingCrem :
+        src === FACILITY.house.key ? UI_TEXT.loadingHouse :
+        UI_TEXT.loadingNature;
 
       load(false, msg);
     }
@@ -2399,6 +2435,11 @@
      * 15) 이벤트 바인딩
      * ========================================= */
     function bindEvents(){
+      dom.tabCrem.addEventListener('click', () => {
+        if (state.currentSource === FACILITY.crem.key) return;
+        setSource(FACILITY.crem.key);
+      });
+
       dom.tabHouse.addEventListener('click', () => {
         if (state.currentSource === FACILITY.house.key) return;
         setSource(FACILITY.house.key);
@@ -2453,7 +2494,11 @@
       state.pageSize = computePageSize();
 
       const saved = localStorage.getItem(STORAGE_KEYS.source);
-      const initialSource = (saved === FACILITY.nature.key || saved === FACILITY.house.key)
+      const initialSource = (
+        saved === FACILITY.crem.key ||
+        saved === FACILITY.nature.key ||
+        saved === FACILITY.house.key
+      )
         ? saved
         : FACILITY.house.key;
 
@@ -2462,8 +2507,14 @@
 
       dom.datePicker.value = state.today;
 
+      dom.tabCrem.classList.toggle('active', initialSource === FACILITY.crem.key);
       dom.tabHouse.classList.toggle('active', initialSource === FACILITY.house.key);
       dom.tabNature.classList.toggle('active', initialSource === FACILITY.nature.key);
+
+      const countTitleEl = document.getElementById('countTitle');
+      if (countTitleEl){
+        countTitleEl.textContent = initialSource === FACILITY.crem.key ? '안내' : '현황';
+      }
 
       updateFAB();
       setHeaderLoading(UI_TEXT.loadingInitial);
