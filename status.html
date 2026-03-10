@@ -57,6 +57,9 @@
 
       --row-pad-y: 10px;
       --row-pad-x: 12px;
+
+      --ptrMax: 84px;
+      --ptrTrigger: 64px;
     }
 
     *{
@@ -98,6 +101,72 @@
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-y: contain;
       text-rendering: optimizeLegibility;
+      transition: transform .16s ease;
+    }
+
+    body.ptr-ready .ptrArrow{
+      transform: rotate(180deg);
+    }
+
+    .ptr{
+      position: fixed;
+      left: 50%;
+      top: calc(8px + env(safe-area-inset-top));
+      transform: translateX(-50%);
+      z-index: 12000;
+      min-width: 180px;
+      max-width: 92vw;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .16s ease, transform .16s ease;
+    }
+
+    .ptr.show{
+      opacity: 1;
+    }
+
+    .ptrCard{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,224,234,.95);
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.12);
+      color:#0f172a;
+      font-weight:900;
+      font-size: var(--fs-sm);
+      letter-spacing: var(--ls-base);
+      line-height: var(--lh-tight);
+      white-space: nowrap;
+    }
+
+    .ptrArrow{
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+      transition: transform .16s ease;
+    }
+
+    .ptrSpinner{
+      width: 16px;
+      height: 16px;
+      border-radius:50%;
+      border:2px solid #dbe4ef;
+      border-top-color:#1f4e79;
+      animation:spin .8s linear infinite;
+      display:none;
+      flex: 0 0 auto;
+    }
+
+    .ptr.refreshing .ptrArrow{
+      display:none;
+    }
+
+    .ptr.refreshing .ptrSpinner{
+      display:block;
     }
 
     .app{
@@ -358,6 +427,7 @@
       max-width: 100%;
       flex: 0 1 auto;
       width: fit-content;
+      flex-wrap: wrap;
     }
 
     .nameText{
@@ -411,6 +481,42 @@
       margin-right: 0;
     }
 
+    .statusBadge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-weight: 950;
+      font-size: var(--fs-xxs);
+      line-height: 1;
+      letter-spacing: var(--ls-base);
+      white-space: nowrap;
+      color: rgba(31,42,55,.78);
+      flex: 0 0 auto;
+    }
+
+    .statusBadge.done{
+      border-color: rgba(46,125,50,.22);
+      background: linear-gradient(180deg, rgba(46,125,50,.14), rgba(46,125,50,.08));
+      color: rgba(46,125,50,.95);
+    }
+
+    .statusBadge.retDone{
+      border-color: rgba(126,34,206,.22);
+      background: linear-gradient(180deg, rgba(126,34,206,.14), rgba(126,34,206,.08));
+      color: rgba(126,34,206,.95);
+    }
+
+    .statusBadge.ret{
+      border-color: rgba(180,83,9,.22);
+      background: linear-gradient(180deg, rgba(180,83,9,.14), rgba(180,83,9,.08));
+      color: rgba(180,83,9,.95);
+    }
+
     ul{
       list-style:none;
       padding:0;
@@ -458,7 +564,7 @@
       display:flex;
       gap: calc(10px * var(--scale-ui));
       align-items:flex-start;
-      justify-content:space-between;
+      justify-content:flex-start;
       min-width: 0;
     }
 
@@ -471,6 +577,7 @@
       cursor: pointer;
       min-width: 0;
       flex: 1;
+      width: 100%;
     }
 
     .mainBtn:active{
@@ -482,6 +589,7 @@
       flex-direction:column;
       gap: calc(5px * var(--scale-ui));
       min-width: 0;
+      width: 100%;
     }
 
     .no{
@@ -541,12 +649,14 @@
       flex-direction:column;
       gap: calc(6px * var(--scale-ui));
       min-width:0;
+      width:100%;
     }
 
     .cremLine{
       display:grid;
-      grid-template-columns: minmax(0, 1fr) 8.5em 4.8em;
+      grid-template-columns: 8.4em 7.9em 5.8em;
       align-items:center;
+      justify-content:start;
       gap: 6px;
       min-width:0;
       font-weight: 900;
@@ -554,6 +664,30 @@
       color: rgba(31,42,55,.78);
       line-height: calc(var(--lh-loose) * var(--scale-lh));
       letter-spacing: var(--ls-base);
+      text-align:left;
+    }
+
+    .cremSubWrap{
+      display:flex;
+      flex-direction:column;
+      gap: 3px;
+      min-width:0;
+      width:100%;
+    }
+
+    .cremSubLine{
+      display:block;
+      width:100%;
+      min-width:0;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      color: rgba(31,42,55,.78);
+      font-weight:900;
+      font-size: var(--fs-sm);
+      line-height: calc(var(--lh-loose) * var(--scale-lh));
+      letter-spacing: var(--ls-base);
+      text-align:left;
     }
 
     .cremPerson{
@@ -561,6 +695,7 @@
       align-items:center;
       gap:4px;
       min-width:0;
+      justify-content:flex-start;
     }
 
     .cremName{
@@ -572,6 +707,7 @@
       overflow:hidden;
       text-overflow:ellipsis;
       display:block;
+      text-align:left;
     }
 
     .cremTime{
@@ -579,12 +715,15 @@
       color:rgba(31,42,55,.82);
       font-variant-numeric: tabular-nums;
       letter-spacing: 0;
+      text-align:left;
+      justify-self:start;
     }
 
     .cremDisp{
       white-space:nowrap;
-      text-align:right;
+      text-align:left;
       font-weight:950;
+      justify-self:start;
     }
 
     .cremDisp.house{
@@ -957,7 +1096,7 @@
 
     @media (max-width: 640px){
       .cremLine{
-        grid-template-columns: minmax(0, 1fr) 7.5em 4.2em;
+        grid-template-columns: 7.9em 7.1em 4.9em;
         gap: 4px;
       }
 
@@ -994,11 +1133,15 @@
     @media (prefers-reduced-motion: reduce){
       .fab,
       .sheet,
-      .loadingOverlay{
+      .loadingOverlay,
+      body,
+      .ptr,
+      .ptrArrow{
         transition: none !important;
       }
 
-      .spinner{
+      .spinner,
+      .ptrSpinner{
         animation: none !important;
       }
     }
@@ -1006,6 +1149,17 @@
 </head>
 
 <body>
+  <div id="pullToRefresh" class="ptr" aria-hidden="true">
+    <div class="ptrCard">
+      <svg class="ptrArrow" viewBox="0 0 24 24" fill="none" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 5v14"></path>
+        <path d="M6 13l6 6 6-6"></path>
+      </svg>
+      <div class="ptrSpinner" aria-hidden="true"></div>
+      <span id="ptrText">아래로 당겨 새로고침</span>
+    </div>
+  </div>
+
   <div class="app" id="app">
     <div class="top" id="topBar">
       <div class="header">
@@ -1387,16 +1541,6 @@
       return `<span class="tag objt">${esc(label)}</span>`;
     }
 
-    function cremPersonLines(group){
-      return (group.records || []).map(r => ({
-        name: cremDeadNameOf(r),
-        objt: cremObjtOf(r),
-        timeRange: cremTimeRangeOf(r),
-        disposal: cremDisposalOf(r),
-        stage: normalizeCremStage(r)
-      }));
-    }
-
     function cremGroupState(group){
       const stages = (group.records || []).map(normalizeCremStage);
       if (!stages.length) return 'cremRecv';
@@ -1458,7 +1602,10 @@
       fabRefresh: $('#fabRefresh'),
 
       loadingOverlay: $('#loadingOverlay'),
-      loadingText: $('#loadingText')
+      loadingText: $('#loadingText'),
+
+      ptr: $('#pullToRefresh'),
+      ptrText: $('#ptrText')
     };
 
     (function applyIosClass(){
@@ -1510,6 +1657,13 @@
         currentStatus: '',
         headerNo: '',
         kind: 'default'
+      },
+
+      ptr: {
+        active: false,
+        startY: 0,
+        distance: 0,
+        refreshing: false
       }
     };
 
@@ -1542,6 +1696,37 @@
       dom.loadingOverlay.classList.remove('show');
       dom.loadingOverlay.setAttribute('aria-hidden', 'true');
       setUIBusy(false);
+    }
+
+    function setPTRVisual(distance = 0, mode = 'idle'){
+      const capped = Math.max(0, Math.min(distance, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ptrMax')) || 84));
+
+      if (mode === 'hide'){
+        document.body.style.transform = '';
+        document.body.classList.remove('ptr-ready');
+        dom.ptr.classList.remove('show', 'refreshing');
+        dom.ptr.setAttribute('aria-hidden', 'true');
+        dom.ptrText.textContent = '아래로 당겨 새로고침';
+        return;
+      }
+
+      dom.ptr.classList.add('show');
+      dom.ptr.setAttribute('aria-hidden', 'false');
+      document.body.style.transform = `translateY(${capped}px)`;
+
+      if (mode === 'ready'){
+        document.body.classList.add('ptr-ready');
+        dom.ptr.classList.remove('refreshing');
+        dom.ptrText.textContent = '놓으면 새로고침';
+      } else if (mode === 'refreshing'){
+        document.body.classList.remove('ptr-ready');
+        dom.ptr.classList.add('refreshing');
+        dom.ptrText.textContent = '새로고침 중...';
+      } else {
+        document.body.classList.remove('ptr-ready');
+        dom.ptr.classList.remove('refreshing');
+        dom.ptrText.textContent = '아래로 당겨 새로고침';
+      }
     }
 
     const toast = (msg, ms = 1600) => {
@@ -1845,6 +2030,7 @@
 
       const st = cremStartOf(rec);
       const en = cremEndOf(rec);
+      const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : '회차미정';
 
       if (!st){
         return {
@@ -1852,28 +2038,26 @@
           chasu:safeChasu,
           start:'화장접수',
           end:'',
-          text:`${pad2(chasuRaw)}회차, 화장접수`
+          text:`${chLabel} · 화장접수`
         };
       }
 
       if (st && !en){
-        const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : '회차미정';
         return {
           type:'info',
           chasu:safeChasu,
           start:st,
           end:'',
-          text:`${chLabel}, 화장시작: ${st}, 화장중`
+          text:`${chLabel} · 화장시작 ${st} · 화장중`
         };
       }
 
-      const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : '회차미정';
       return {
         type:'info',
         chasu:safeChasu,
         start:st,
         end:en,
-        text:`${chLabel}, 화장시작: ${st}, 화장종료: ${en}`
+        text:`${chLabel} · 화장시작 ${st} · 화장종료 ${en}`
       };
     }
 
@@ -2017,9 +2201,9 @@
       return (status === getRecvDoneBySource(src)) ? 'done' : 'recv';
     }
 
-    function statusPillClass(mode, status){
-      if (mode === 'ret') return status === STATUS_TEXT.retDone ? 'statusPill retDone' : 'statusPill ret';
-      return status === getRecvDoneBySource(state.currentSource) ? 'statusPill done' : 'statusPill';
+    function getStatusBadgeClass(mode, status){
+      if (mode === 'ret') return status === STATUS_TEXT.retDone ? 'statusBadge retDone' : 'statusBadge ret';
+      return status === getRecvDoneBySource(state.currentSource) ? 'statusBadge done' : 'statusBadge';
     }
 
     function getDisplayId(item){
@@ -2085,7 +2269,7 @@
       if (mode === 'ret' || !cremMap) return '';
       const lines = cremDetailLines(item, cremMap);
       if (!lines.length) return '';
-      return `<div class="cremWrap">${lines.map(line => `<div class="cremLine">${esc(line)}</div>`).join('')}</div>`;
+      return `<div class="cremSubWrap">${lines.map(line => `<div class="cremSubLine">${esc(line)}</div>`).join('')}</div>`;
     }
 
     function cremGroupRowHTML(group, idx){
@@ -2150,22 +2334,20 @@
                       <div class="nameWrap" title="${esc(displayName)}">
                         <span class="nameText">${esc(displayName)}</span>
                         ${tag}
+                        <span class="${getStatusBadgeClass(mode, status)}">${esc(status)}</span>
                       </div>
                     </div>
+                    ${cremLinesHTML(item, cremMap, mode)}
                   </div>
                 </button>
-                <button class="${statusPillClass(mode, status)}" type="button" data-open="${idx}" aria-label="상태 상세 보기">
-                  ${esc(status)}
-                </button>
               </div>
-              ${cremLinesHTML(item, cremMap, mode)}
             </div>
           </div>
         </li>
       `;
     }
 
-    function renderListShell(display){
+    function renderListShell(){
       dom.listArea.innerHTML = `
         <div class="list">
           <div class="list-head">
@@ -2312,7 +2494,7 @@
           return;
         }
 
-        renderListShell(groups);
+        renderListShell();
         setInfiniteUI({ mode: 'loading', shown: 0, total: getDisplayTotalCount() });
         renderNextPage();
         updateHeaderMeta();
@@ -2328,7 +2510,7 @@
       state.lastCremMapForRender = cremMap;
       state.lastFuneralMapForRender = state.funeralMapCache;
 
-      renderListShell(display);
+      renderListShell();
       setInfiniteUI({ mode: 'loading', shown: 0, total: display.length });
       renderNextPage();
       updateHeaderMeta();
@@ -2336,7 +2518,7 @@
 
     function buildModalNameHTML(displayName, badgeLabel){
       return `
-        <span style="display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;width:fit-content;">
+        <span style="display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;width:fit-content;flex-wrap:wrap;">
           <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayName)}</span>
           ${badgeHTML(badgeLabel)}
         </span>
@@ -2387,7 +2569,7 @@
         const rdRaw = pickRetDate(item);
         if (rdISO) html += kv('반출일자', String(rdRaw ?? rdISO));
       } else {
-        html += kv('안치일자', item.natDate ?? '-');
+        html += kv('안장일자', item.natDate ?? '-');
         html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabel));
         html += kv('신청자', item.applName ?? '-');
       }
@@ -2545,7 +2727,7 @@
           state.lastCremMapForRender = null;
           state.lastFuneralMapForRender = null;
 
-          renderListShell(grouped);
+          renderListShell();
           setInfiniteUI({ mode: 'loading', shown: 0, total: getDisplayTotalCount() });
           renderNextPage();
           return;
@@ -2602,7 +2784,7 @@
         state.lastCremMapForRender = cremMap;
         state.lastFuneralMapForRender = funeralMap;
 
-        renderListShell(state.currentDisplayData);
+        renderListShell();
         setInfiniteUI({ mode: 'loading', shown: 0, total: state.currentDisplayData.length });
         renderNextPage();
 
@@ -2668,6 +2850,73 @@
       updateFAB();
     }
 
+    function bindPullToRefresh(){
+      const trigger = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ptrTrigger')) || 64;
+
+      window.addEventListener('touchstart', (e) => {
+        if (state.isRefreshing || dom.overlay.classList.contains('show')) return;
+        if (window.scrollY > 0) return;
+        if (!e.touches || !e.touches.length) return;
+
+        state.ptr.active = true;
+        state.ptr.startY = e.touches[0].clientY;
+        state.ptr.distance = 0;
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!state.ptr.active || state.isRefreshing || dom.overlay.classList.contains('show')) return;
+        if (!e.touches || !e.touches.length) return;
+        if (window.scrollY > 0){
+          state.ptr.active = false;
+          setPTRVisual(0, 'hide');
+          return;
+        }
+
+        const delta = e.touches[0].clientY - state.ptr.startY;
+        if (delta <= 0){
+          setPTRVisual(0, 'hide');
+          return;
+        }
+
+        const eased = Math.min(delta * 0.5, 84);
+        state.ptr.distance = eased;
+        setPTRVisual(eased, eased >= trigger ? 'ready' : 'idle');
+
+        if (delta > 8) e.preventDefault();
+      }, { passive: false });
+
+      async function releasePTR(){
+        if (!state.ptr.active) return;
+
+        const shouldRefresh = state.ptr.distance >= trigger && !state.isRefreshing;
+        state.ptr.active = false;
+
+        if (!shouldRefresh){
+          state.ptr.distance = 0;
+          setPTRVisual(0, 'hide');
+          return;
+        }
+
+        state.ptr.refreshing = true;
+        setPTRVisual(trigger, 'refreshing');
+
+        try{
+          await doRefresh(true);
+        } finally {
+          state.ptr.distance = 0;
+          state.ptr.refreshing = false;
+          setPTRVisual(0, 'hide');
+        }
+      }
+
+      window.addEventListener('touchend', releasePTR, { passive: true });
+      window.addEventListener('touchcancel', () => {
+        state.ptr.active = false;
+        state.ptr.distance = 0;
+        if (!state.ptr.refreshing) setPTRVisual(0, 'hide');
+      }, { passive: true });
+    }
+
     function bindEvents(){
       dom.tabCrem.addEventListener('click', () => {
         if (state.currentSource === FACILITY.crem.key) return;
@@ -2719,6 +2968,8 @@
       window.addEventListener('scroll', updateFAB, { passive:true });
       window.addEventListener('resize', onResize, { passive:true });
       window.addEventListener('orientationchange', onResize, { passive:true });
+
+      bindPullToRefresh();
     }
 
     function init(){
