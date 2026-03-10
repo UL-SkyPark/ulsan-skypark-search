@@ -119,6 +119,7 @@
       will-change: transform;
       pointer-events: none;
     }
+
     .pull-to-refresh.visible{
       transform: translate(-50%, 0);
     }
@@ -130,6 +131,7 @@
       position: relative;
       flex: 0 0 auto;
     }
+
     .ptr-ring svg{
       width: 22px;
       height: 22px;
@@ -137,6 +139,7 @@
       transform: rotate(-90deg);
       transition: opacity 120ms ease;
     }
+
     .ptr-ring .spin{
       position:absolute;
       inset:0;
@@ -147,9 +150,11 @@
       animation: spin 0.9s linear infinite;
       transition: opacity 120ms ease;
     }
+
     .ptr-ring.loading .spin{
       opacity: 1;
     }
+
     .ptr-ring.loading svg{
       opacity: 0;
     }
@@ -733,8 +738,8 @@
       white-space:nowrap;
       word-break:normal;
       overflow-wrap:normal;
-      font-size: var(--fs-xs);
-      line-height: calc(var(--lh-tight) * var(--scale-lh));
+      font-size: inherit;
+      line-height: calc(var(--lh-loose) * var(--scale-lh));
     }
 
     #mFields{
@@ -973,6 +978,7 @@
         flex: 1 1 100%;
         min-width: 0;
       }
+
       .group{
         min-width: 0;
         grid-template-columns: 1fr 1fr;
@@ -987,7 +993,7 @@
       }
 
       .kv .v .time-line{
-        font-size: var(--fs-xxs);
+        font-size: inherit;
       }
     }
 
@@ -998,6 +1004,7 @@
       .loadingOverlay{
         transition: none !important;
       }
+
       .ptr-ring .spin,
       .spinner{
         animation: none !important;
@@ -1080,7 +1087,7 @@
       </div>
       <div class="sheet-actions">
         <button class="btn" type="button" id="sheetCancelBtn">닫기</button>
-        <button class="btn primary" type="button" id="sheetSaveBtn">상태 저장</button>
+        <button class="btn primary" type="button" id="sheetSaveBtn">저장</button>
       </div>
     </div>
   </div>
@@ -1135,32 +1142,32 @@
     const listArea     = $('#listArea');
     const infiniteArea = $('#infiniteArea');
 
-    const tabHouse    = $('#tabHouse');
-    const tabNature   = $('#tabNature');
+    const tabHouse     = $('#tabHouse');
+    const tabNature    = $('#tabNature');
 
-    const countText   = $('#countText');
+    const countText    = $('#countText');
 
-    const overlay     = $('#overlay');
-    const mTitleLine  = $('#mTitleLine');
-    const mFields     = $('#mFields');
+    const overlay      = $('#overlay');
+    const mTitleLine   = $('#mTitleLine');
+    const mFields      = $('#mFields');
     const sheetCancelBtn = $('#sheetCancelBtn');
     const sheetSaveBtn   = $('#sheetSaveBtn');
     const statusEditorBox = $('#statusEditorBox');
     const modalStatusSelect = $('#modalStatusSelect');
     const modalCurrentStatusText = $('#modalCurrentStatusText');
 
-    const refDateText = $('#refDateText');
+    const refDateText  = $('#refDateText');
 
-    const ptrEl       = $('#pull-to-refresh');
-    const statusEl    = $('#ptr-status');
-    const ptrRing     = $('#ptrRing');
-    const ptrProg     = $('#ptrProg');
+    const ptrEl        = $('#pull-to-refresh');
+    const statusEl     = $('#ptr-status');
+    const ptrRing      = $('#ptrRing');
+    const ptrProg      = $('#ptrProg');
 
-    const fabTop      = $('#fabTop');
-    const fabRefresh  = $('#fabRefresh');
+    const fabTop       = $('#fabTop');
+    const fabRefresh   = $('#fabRefresh');
 
     const loadingOverlay = $('#loadingOverlay');
-    const loadingText = $('#loadingText');
+    const loadingText    = $('#loadingText');
 
     const STORAGE_KEYS = { source: "uic_source_selected" };
 
@@ -1174,14 +1181,14 @@
     const TODAY = (() => {
       const d = new Date();
       const y = d.getFullYear();
-      const m = String(d.getMonth()+1).padStart(2,'0');
-      const day = String(d.getDate()).padStart(2,'0');
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
       return `${y}-${m}-${day}`;
     })();
 
     const fmtHHMM = (d) => {
-      const hh = String(d.getHours()).padStart(2,'0');
-      const mm = String(d.getMinutes()).padStart(2,'0');
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
       return `${hh}:${mm}`;
     };
 
@@ -1194,11 +1201,11 @@
     }
 
     const esc = (v) => String(v ?? '')
-      .replaceAll('&','&amp;')
-      .replaceAll('<','&lt;')
-      .replaceAll('>','&gt;')
-      .replaceAll('"','&quot;')
-      .replaceAll("'","&#039;");
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
 
     const normISO = (v) => {
       if (v == null) return '';
@@ -1206,10 +1213,10 @@
       if (!s) return '';
 
       let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
-      if (m) return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+      if (m) return `${m[1]}-${String(m[2]).padStart(2, '0')}-${String(m[3]).padStart(2, '0')}`;
 
       m = s.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})/);
-      if (m) return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+      if (m) return `${m[1]}-${String(m[2]).padStart(2, '0')}-${String(m[3]).padStart(2, '0')}`;
 
       m = s.match(/^(\d{4})(\d{2})(\d{2})$/);
       if (m) return `${m[1]}-${m[2]}-${m[3]}`;
@@ -1219,7 +1226,7 @@
 
     const pickRetDate = (o) => o?.retDate ?? o?.retdate ?? o?.RETDATE ?? o?.RetDate ?? '';
 
-    const toast = (msg, ms=1600) => {
+    const toast = (msg, ms = 1600) => {
       const t = $('#toast');
       t.textContent = msg;
       t.classList.add('show');
@@ -1249,7 +1256,7 @@
       fabRefresh.disabled = busy;
     }
 
-    async function fetchJson(url, bust=false){
+    async function fetchJson(url, bust = false){
       const finalUrl = bust ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
       const res = await fetch(finalUrl, { cache: bust ? 'no-store' : 'default' });
       if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
@@ -1266,14 +1273,14 @@
     let cremMapCache = null;
     let funeralMapCache = null;
 
-    async function ensureData(key, force=false){
+    async function ensureData(key, force = false){
       if (dataCache[key] && !force) return dataCache[key];
       const raw = await fetchJson(SOURCES[key].url, force);
       dataCache[key] = Array.isArray(raw) ? raw : [];
       return dataCache[key];
     }
 
-    async function ensureCrem(force=false){
+    async function ensureCrem(force = false){
       if (cremMapCache && !force) return cremMapCache;
       const raw = await fetchJson("./data/crem.json", force);
       const arr = Array.isArray(raw) ? raw : [];
@@ -1288,7 +1295,7 @@
       return map;
     }
 
-    async function ensureFuneral(force=false){
+    async function ensureFuneral(force = false){
       if (funeralMapCache && !force) return funeralMapCache;
       const raw = await fetchJson("./data/funeral.json", force);
       const arr = Array.isArray(raw) ? raw : [];
@@ -1319,29 +1326,29 @@
         const numPart  = parts.find(p => /^\d{1,6}$/.test(p) || /^\d{5}$/.test(p));
 
         if (roomPart && numPart){
-          const room = roomPart.replace(/\D/g,'').padStart(2,'0').slice(-2);
-          const num  = numPart.replace(/\D/g,'').padStart(5,'0').slice(-5);
+          const room = roomPart.replace(/\D/g, '').padStart(2, '0').slice(-2);
+          const num  = numPart.replace(/\D/g, '').padStart(5, '0').slice(-5);
           return `${room}실 ${num}`;
         }
 
         if (roomPart){
-          const tail = parts.slice().reverse().find(p => p.replace(/\D/g,'').length >= 5);
+          const tail = parts.slice().reverse().find(p => p.replace(/\D/g, '').length >= 5);
           if (tail){
-            const room = roomPart.replace(/\D/g,'').padStart(2,'0').slice(-2);
-            const num  = tail.replace(/\D/g,'').slice(-5).padStart(5,'0');
+            const room = roomPart.replace(/\D/g, '').padStart(2, '0').slice(-2);
+            const num  = tail.replace(/\D/g, '').slice(-5).padStart(5, '0');
             return `${room}실 ${num}`;
           }
         }
       }
 
       const m1 = raw.match(/(\d{1,2})\s*실\s*(\d{1,5})/);
-      if (m1) return `${String(m1[1]).padStart(2,'0')}실 ${String(m1[2]).padStart(5,'0')}`;
+      if (m1) return `${String(m1[1]).padStart(2, '0')}실 ${String(m1[2]).padStart(5, '0')}`;
 
-      let digits = raw.replace(/\D/g,'');
+      let digits = raw.replace(/\D/g, '');
       if (!digits) return raw;
-      if (digits.length === 6) digits = digits.padStart(7,'0');
+      if (digits.length === 6) digits = digits.padStart(7, '0');
       if (digits.length === 5) return `00실 ${digits}`;
-      if (digits.length >= 7) return `${digits.slice(0,2)}실 ${digits.slice(-5)}`;
+      if (digits.length >= 7) return `${digits.slice(0, 2)}실 ${digits.slice(-5)}`;
       return raw;
     }
 
@@ -1481,7 +1488,7 @@
       return v;
     }
 
-    async function loadSharedStatuses(force=false){
+    async function loadSharedStatuses(force = false){
       if (!STATUS_API_URL || STATUS_API_URL.includes('여기에_앱스크립트_웹앱_URL_입력')){
         sharedStatusMap = new Map();
         return;
@@ -1554,7 +1561,7 @@
       return status === recvDone(currentSource) ? 'statusPill done' : 'statusPill';
     }
 
-    const pad2 = (n) => String(n ?? '').trim().padStart(2,'0').slice(-2) || '00';
+    const pad2 = (n) => String(n ?? '').trim().padStart(2, '0').slice(-2) || '00';
     const fmtTime = (v) => String(v ?? '').trim();
 
     function cremObj(deadId, cremMap){
@@ -1725,7 +1732,7 @@
       `;
     };
 
-    const normNameKey = (s) => String(s ?? '').replace(/\s+/g,'').trim();
+    const normNameKey = (s) => String(s ?? '').replace(/\s+/g, '').trim();
 
     function nameKeySetFromDisplay(displayName){
       const parts = String(displayName ?? '').split('/').map(x => normNameKey(x));
@@ -2041,7 +2048,7 @@
       updateHeaderMeta();
     }
 
-    async function load(force=false, loadingMsg='데이터 불러오는 중...'){
+    async function load(force = false, loadingMsg = '데이터 불러오는 중...'){
       const myToken = ++loadToken;
 
       showLoading(loadingMsg);
@@ -2110,8 +2117,10 @@
         listArea.innerHTML = `<div class="no-data">오류: ${esc(err.message)}</div>`;
         resetInfinite();
       } finally {
-        hideLoading();
-        updateHeaderMeta();
+        if (myToken === loadToken){
+          hideLoading();
+          updateHeaderMeta();
+        }
       }
     }
 
@@ -2260,7 +2269,7 @@
       }
     }
 
-    async function doRefresh(fromUI=true){
+    async function doRefresh(fromUI = true){
       if (isRefreshing) return;
       isRefreshing = true;
 
@@ -2296,18 +2305,15 @@
 
     tabHouse.addEventListener('click', () => {
       if (currentSource === 'house') return;
-      showLoading('추모의집 데이터 불러오는 중...');
       setSource('house');
     });
 
     tabNature.addEventListener('click', () => {
       if (currentSource === 'nature') return;
-      showLoading('자연장지 데이터 불러오는 중...');
       setSource('nature');
     });
 
     datePicker.addEventListener('change', () => {
-      showLoading('데이터 불러오는 중...');
       load(false, '데이터 불러오는 중...');
     });
 
