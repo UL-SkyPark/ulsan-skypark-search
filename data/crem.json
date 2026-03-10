@@ -8,6 +8,14 @@
     "burnChasu": "04"
   },
   {
+    "deadId": "1653710",
+    "deadName": "이병학",
+    "burnDate": "2026-03-10",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
     "deadId": "1653711",
     "deadName": "서정달",
     "burnDate": "2026-03-10",
@@ -22,6 +30,14 @@
     "burnStrTime": null,
     "burnEndTime": null,
     "burnChasu": "04"
+  },
+  {
+    "deadId": "1653745",
+    "deadName": "박지환",
+    "burnDate": "2026-03-10",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "05"
   },
   {
     "deadId": "1653705",
