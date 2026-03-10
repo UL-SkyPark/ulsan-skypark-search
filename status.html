@@ -723,6 +723,10 @@
       padding-right: 0.5ch;
     }
 
+    .cremName.twoChar{
+      padding-right: 1ch;
+    }
+
     .cremTime{
       white-space:nowrap;
       color:rgba(31,42,55,.82);
@@ -1626,7 +1630,8 @@
         return {
           text: chars.slice(0, 4).join(''),
           short: false,
-          halfPad: true
+          halfPad: true,
+          twoChar: false
         };
       }
 
@@ -1635,11 +1640,12 @@
         return {
           text: `${raw}${pad}`,
           short: true,
-          halfPad: (len === 2) || hasSpecial
+          halfPad: (len === 2) || hasSpecial,
+          twoChar: (len === 2)
         };
       }
 
-      return { text: raw, short: false, halfPad: hasSpecial };
+      return { text: raw, short: false, halfPad: hasSpecial, twoChar: false };
     }
 
     function cremTimeRangeOf(r){
@@ -2565,7 +2571,7 @@
                       <div class="cremLine">
                         <span class="cremPerson">
                           ${cremObjtBadgeHTML(p.objt)}
-                          <span class="cremName ${p.short ? 'short' : ''} ${p.halfPad ? 'halfPad' : ''}" title="${esc(p.name)}">${esc(p.text)}</span>
+                          <span class="cremName ${p.short ? 'short' : ''} ${p.halfPad ? 'halfPad' : ''} ${p.twoChar ? 'twoChar' : ''}" title="${esc(p.name)}">${esc(p.text)}</span>
                         </span>
                         <span class="cremTimeWrap">
                           <span class="cremTime">${esc(p.timeRange)}</span><span class="cremGap">&nbsp;</span><span class="cremDisp ${cremDisposalClass(p.disposal)}">${esc(p.disposal)}</span>
