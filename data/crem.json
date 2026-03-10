@@ -1,29 +1,5 @@
 [
   {
-    "deadId": "1653635",
-    "deadName": "조성도",
-    "burnDate": "2026-03-10",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
-    "deadId": "1653636",
-    "deadName": "유차비",
-    "burnDate": "2026-03-10",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
-    "deadId": "1653712",
-    "deadName": "미상(6기)",
-    "burnDate": "2026-03-10",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "07"
-  },
-  {
     "deadId": "1653705",
     "deadName": "장상범",
     "burnDate": "2026-03-10",
@@ -166,5 +142,29 @@
     "burnStrTime": "11:22",
     "burnEndTime": null,
     "burnChasu": "05"
+  },
+  {
+    "deadId": "1653635",
+    "deadName": "조성도",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "12:11",
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653636",
+    "deadName": "유차비",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "12:11",
+    "burnEndTime": null,
+    "burnChasu": "07"
+  },
+  {
+    "deadId": "1653712",
+    "deadName": "미상(6기)",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "12:11",
+    "burnEndTime": null,
+    "burnChasu": "07"
   }
 ]
