@@ -1867,6 +1867,7 @@
         mode: '',
         currentStatus: '',
         headerNo: '',
+        displayName: '',
         kind: 'default'
       },
 
@@ -2914,6 +2915,7 @@
           mode: '',
           currentStatus: '',
           headerNo: item.chasuLabel,
+          displayName: '',
           kind: 'crem'
         };
 
@@ -2931,6 +2933,7 @@
       const mode = getItemMode(item, selected);
       const currentStatus = getItemStatus(item, selected);
       const headerNo = getDisplayId(item);
+      const displayName = getDisplayName(item);
 
       state.modal = {
         index,
@@ -2939,6 +2942,7 @@
         mode,
         currentStatus,
         headerNo,
+        displayName,
         kind: 'default'
       };
 
@@ -2971,8 +2975,17 @@
         mode: '',
         currentStatus: '',
         headerNo: '',
+        displayName: '',
         kind: 'default'
       };
+    }
+
+    function getSavingDescTarget(){
+      if (state.modal.src === FACILITY.house.key || state.modal.src === FACILITY.nature.key){
+        const name = String(state.modal.displayName || '').trim();
+        if (name) return `고인 ${name}님`;
+      }
+      return state.modal.headerNo;
     }
 
     async function saveModalStatus(){
@@ -2989,7 +3002,7 @@
 
       try{
         dom.sheetSaveBtn.disabled = true;
-        showSaving('저장중', `${state.modal.headerNo} 상태를 저장하고 있습니다...`);
+        showSaving('저장중', `${getSavingDescTarget()} 상태를 저장하고 있습니다.`);
 
         await saveSharedStatus({
           src: state.modal.src,
