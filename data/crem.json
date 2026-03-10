@@ -140,7 +140,7 @@
     "deadName": "박은자",
     "burnDate": "2026-03-10",
     "burnStrTime": "11:22",
-    "burnEndTime": null,
+    "burnEndTime": "12:37",
     "burnChasu": "05"
   },
   {
@@ -148,7 +148,7 @@
     "deadName": "조성도",
     "burnDate": "2026-03-10",
     "burnStrTime": "12:11",
-    "burnEndTime": null,
+    "burnEndTime": "12:40",
     "burnChasu": "07"
   },
   {
@@ -156,7 +156,7 @@
     "deadName": "유차비",
     "burnDate": "2026-03-10",
     "burnStrTime": "12:11",
-    "burnEndTime": null,
+    "burnEndTime": "12:40",
     "burnChasu": "07"
   },
   {
@@ -164,7 +164,7 @@
     "deadName": "미상(6기)",
     "burnDate": "2026-03-10",
     "burnStrTime": "12:11",
-    "burnEndTime": null,
+    "burnEndTime": "12:40",
     "burnChasu": "07"
   }
 ]
