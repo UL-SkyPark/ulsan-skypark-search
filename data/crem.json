@@ -24,14 +24,6 @@
     "burnChasu": "04"
   },
   {
-    "deadId": "1653739",
-    "deadName": "정영덕",
-    "burnDate": "2026-03-10",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653745",
     "deadName": "박지환",
     "burnDate": "2026-03-10",
@@ -134,5 +126,13 @@
     "burnStrTime": "09:25",
     "burnEndTime": null,
     "burnChasu": "03"
+  },
+  {
+    "deadId": "1653739",
+    "deadName": "정영덕",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "10:19",
+    "burnEndTime": null,
+    "burnChasu": "04"
   }
 ]
