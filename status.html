@@ -28,11 +28,11 @@
       --fabRight: 14px;
       --fabBottom: 14px;
 
-      --fs-xxs: clamp(.72rem, 2.5vw, .80rem);
-      --fs-xs : clamp(.78rem, 2.7vw, .88rem);
-      --fs-sm : clamp(.86rem, 2.9vw, .96rem);
-      --fs-md : clamp(.94rem, 3.1vw, 1.04rem);
-      --fs-lg : clamp(1.02rem, 3.4vw, 1.14rem);
+      --fs-xxs: clamp(.68rem, 2.3vw, .78rem);
+      --fs-xs : clamp(.74rem, 2.5vw, .84rem);
+      --fs-sm : clamp(.82rem, 2.7vw, .92rem);
+      --fs-md : clamp(.92rem, 3.0vw, 1.02rem);
+      --fs-lg : clamp(.98rem, 3.2vw, 1.10rem);
       --fs-xl : clamp(1.18rem, 4.2vw, 1.48rem);
 
       --lh-tight: 1.14;
@@ -676,17 +676,17 @@
       display:block;
       width:100%;
       min-width:0;
-      white-space:normal;
-      overflow:visible;
-      text-overflow:clip;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
       color: rgba(31,42,55,.74);
       font-weight:900;
-      font-size: var(--fs-xs);
-      line-height: calc(1.28 * var(--scale-lh));
-      letter-spacing: -0.02em;
+      font-size: clamp(.68rem, 2.15vw, .78rem);
+      line-height: calc(1.18 * var(--scale-lh));
+      letter-spacing: -0.03em;
       text-align:left;
-      word-break: keep-all;
-      overflow-wrap: anywhere;
+      word-break: normal;
+      overflow-wrap: normal;
     }
 
     .cremPerson{
@@ -986,13 +986,15 @@
       color: rgba(15,23,42,0.86);
       pointer-events: auto;
       opacity: 0;
-      transition: opacity .18s ease;
+      visibility: hidden;
+      transition: opacity .18s ease, visibility .18s ease;
       user-select: none;
       -webkit-user-select: none;
     }
 
     .fab.show{
       opacity: 1;
+      visibility: visible;
     }
 
     .fab:active{
@@ -1007,6 +1009,8 @@
 
     .fab.refresh{
       border-color: rgba(31,78,121,.25);
+      opacity: 1;
+      visibility: visible;
     }
 
     .fab.refresh svg{
@@ -1102,6 +1106,10 @@
       .cremTime{
         font-size: var(--fs-xs);
       }
+
+      .cremSubLine{
+        font-size: clamp(.64rem, 2.0vw, .74rem);
+      }
     }
 
     @media (max-width: 560px){
@@ -1121,6 +1129,11 @@
 
       .kv .k{
         flex: 0 0 calc(64px * var(--scale-ui));
+      }
+
+      .cremSubLine{
+        font-size: clamp(.62rem, 1.95vw, .70rem);
+        letter-spacing: -0.04em;
       }
     }
 
@@ -1224,6 +1237,13 @@
         <path d="M3 12a9 9 0 0 1 15.2-6.4"></path>
         <path d="M21 3v6h-6"></path>
         <path d="M3 21v-6h6"></path>
+      </svg>
+    </button>
+
+    <button id="fabTop" class="fab" type="button" aria-label="맨 위로">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V6"></path>
+        <path d="M7 11l5-5 5 5"></path>
       </svg>
     </button>
   </div>
@@ -1581,6 +1601,7 @@
       refDateText: $('#refDateText'),
 
       fabRefresh: $('#fabRefresh'),
+      fabTop: $('#fabTop'),
 
       loadingOverlay: $('#loadingOverlay'),
       loadingText: $('#loadingText'),
@@ -1661,6 +1682,7 @@
       dom.tabNature.disabled = busy;
       dom.datePicker.disabled = busy;
       dom.fabRefresh.disabled = busy;
+      dom.fabTop.disabled = busy;
     }
 
     function showLoading(msg){
@@ -2239,7 +2261,7 @@
       if (mode === 'ret' || !cremMap) return '';
       const lines = cremDetailLines(item, cremMap);
       if (!lines.length) return '';
-      return `<div class="cremSubWrap">${lines.map(line => `<div class="cremSubLine">${esc(line)}</div>`).join('')}</div>`;
+      return `<div class="cremSubWrap">${lines.map(line => `<div class="cremSubLine" title="${esc(line)}">${esc(line)}</div>`).join('')}</div>`;
     }
 
     function cremGroupRowHTML(group, idx){
@@ -2450,6 +2472,8 @@
         setInfiniteUI({ mode: 'end', shown: totalCount, total: totalCount });
         if (state.observer) state.observer.disconnect();
       }
+
+      updateFAB();
     }
 
     function rerenderCurrentView(){
@@ -2464,6 +2488,7 @@
 
         if (!groups.length){
           dom.listArea.innerHTML = `<div class="no-data">${UI_TEXT.noData}</div>`;
+          updateFAB();
           return;
         }
 
@@ -2768,6 +2793,7 @@
         if (myToken === state.currentLoadingToken){
           hideLoading();
           updateHeaderMeta();
+          updateFAB();
         }
       }
     }
@@ -2790,6 +2816,7 @@
         if (fromUI) toast(UI_TEXT.refreshComplete, 1400);
       } finally {
         state.isRefreshing = false;
+        updateFAB();
       }
     }
 
@@ -2810,7 +2837,12 @@
     }
 
     function updateFAB(){
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const doc = document.documentElement;
+      const hasScroll = (doc.scrollHeight - window.innerHeight) > 40;
+
       dom.fabRefresh.classList.add('show');
+      dom.fabTop.classList.toggle('show', hasScroll && y > 220);
     }
 
     function onResize(){
@@ -2930,6 +2962,10 @@
 
       dom.fabRefresh.addEventListener('click', async () => {
         await doRefresh(true);
+      });
+
+      dom.fabTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
       window.addEventListener('scroll', updateFAB, { passive:true });
