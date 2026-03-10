@@ -1120,85 +1120,83 @@
   </div>
 
   <script>
-    (function(){
-      const ua = navigator.userAgent || '';
-      const isIOS =
-        /iPhone|iPad|iPod/i.test(ua) ||
-        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-      if (!isIOS) return;
-
-      const isIPad =
-        /iPad/i.test(ua) ||
-        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
-        (Math.max(screen.width, screen.height) >= 768);
-
-      document.documentElement.classList.add(isIPad ? 'ios-ipad' : 'ios-iphone');
-    })();
-
-    const $ = (s) => document.querySelector(s);
-
-    const datePicker   = $('#datePicker');
-    const listArea     = $('#listArea');
-    const infiniteArea = $('#infiniteArea');
-
-    const tabHouse     = $('#tabHouse');
-    const tabNature    = $('#tabNature');
-
-    const countText    = $('#countText');
-
-    const overlay      = $('#overlay');
-    const mTitleLine   = $('#mTitleLine');
-    const mFields      = $('#mFields');
-    const sheetCancelBtn = $('#sheetCancelBtn');
-    const sheetSaveBtn   = $('#sheetSaveBtn');
-    const statusEditorBox = $('#statusEditorBox');
-    const modalStatusSelect = $('#modalStatusSelect');
-    const modalCurrentStatusText = $('#modalCurrentStatusText');
-
-    const refDateText  = $('#refDateText');
-
-    const ptrEl        = $('#pull-to-refresh');
-    const statusEl     = $('#ptr-status');
-    const ptrRing      = $('#ptrRing');
-    const ptrProg      = $('#ptrProg');
-
-    const fabTop       = $('#fabTop');
-    const fabRefresh   = $('#fabRefresh');
-
-    const loadingOverlay = $('#loadingOverlay');
-    const loadingText    = $('#loadingText');
-
-    const STORAGE_KEYS = { source: "uic_source_selected" };
-
-    const SOURCES = {
-      house:  { label: "추모의집", url: "./data/deceased_data.json", dateKey: "strDate" },
-      nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
+    /* =========================================
+     * 1) 환경 / 설정
+     * ========================================= */
+    const APP_CONFIG = {
+      placeholderWebAppUrl: '여기에_앱스크립트_웹앱_URL_입력',
+      statusApiUrl: 'https://script.google.com/macros/s/AKfycbyjhskRxpL7clgA4dpWoKV4viDwMJhxnJKFuNRVGaaJOWFY3su36ZjpIC1EWIGqiaP0/exec',
+      sharedStatusCacheMs: 10000,
+      pageSizeSmall: 28,
+      pageSizeMedium: 32,
+      pageSizeLarge: 40,
+      ptrMax: 64,
+      ptrThreshold: 60,
+      ptrDamp: 0.52
     };
 
-    const STATUS_API_URL = 'https://script.google.com/macros/s/AKfycbyjhskRxpL7clgA4dpWoKV4viDwMJhxnJKFuNRVGaaJOWFY3su36ZjpIC1EWIGqiaP0/exec';
-
-    const TODAY = (() => {
-      const d = new Date();
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${y}-${m}-${day}`;
-    })();
-
-    const fmtHHMM = (d) => {
-      const hh = String(d.getHours()).padStart(2, '0');
-      const mm = String(d.getMinutes()).padStart(2, '0');
-      return `${hh}:${mm}`;
+    const STORAGE_KEYS = {
+      source: 'uic_source_selected'
     };
 
-    function updateHeaderMeta(){
-      refDateText.textContent = `업데이트 ${fmtHHMM(new Date())}`;
-    }
+    const UI_TEXT = {
+      loading: '데이터 불러오는 중...',
+      loadingInitial: '초기 데이터 불러오는 중...',
+      loadingRefresh: '새로고침 중...',
+      loadingHouse: '추모의집 데이터 불러오는 중...',
+      loadingNature: '자연장지 데이터 불러오는 중...',
+      refreshComplete: '새로고침 완료',
+      noData: '표시할 데이터가 없습니다.',
+      noChanges: '변경된 상태가 없습니다.',
+      sharedStatusLoadError: '공유 상태 정보를 불러오지 못했습니다.',
+      sharedStatusSaveError: '공유 상태 저장에 실패했습니다.',
+      sharedApiNotConfigured: '공유 저장 API 주소가 설정되지 않았습니다.',
+      dataFileNotFound: '데이터 파일을 찾을 수 없습니다.'
+    };
 
-    function setHeaderLoading(text){
-      refDateText.textContent = text || '데이터 불러오는 중...';
-    }
+    const STATUS_TEXT = {
+      recvPendingHouse: '안치대기',
+      recvDoneHouse: '안치완료',
+      recvPendingNature: '안장대기',
+      recvDoneNature: '안장완료',
+      retPending: '반출대기',
+      retDone: '반출완료',
+      legacyRecvHouse: '접수',
+      legacyRet: '반출'
+    };
+
+    const FACILITY = {
+      house: {
+        key: 'house',
+        label: '추모의집',
+        url: './data/deceased_data.json',
+        dateKey: 'strDate'
+      },
+      nature: {
+        key: 'nature',
+        label: '자연장지',
+        url: './data/nature_data.json',
+        dateKey: 'natDate'
+      }
+    };
+
+    const DATA_URLS = {
+      crem: './data/crem.json',
+      funeral: './data/funeral.json'
+    };
+
+    const TAG_LABEL = {
+      self: '자체',
+      orphan: '무연고'
+    };
+
+    const PTR_RING_RADIUS = 9;
+    const PTR_RING_CIRC = 2 * Math.PI * PTR_RING_RADIUS;
+
+    /* =========================================
+     * 2) 기본 유틸
+     * ========================================= */
+    const $ = (selector) => document.querySelector(selector);
 
     const esc = (v) => String(v ?? '')
       .replaceAll('&', '&amp;')
@@ -1206,6 +1204,35 @@
       .replaceAll('>', '&gt;')
       .replaceAll('"', '&quot;')
       .replaceAll("'", '&#039;');
+
+    const toTrimmedString = (v) => String(v ?? '').trim();
+
+    const safeKey = (v) => toTrimmedString(v);
+
+    const isConfiguredStatusApi = () => {
+      const url = APP_CONFIG.statusApiUrl;
+      return !!url && !url.includes(APP_CONFIG.placeholderWebAppUrl);
+    };
+
+    const getTodayIso = () => {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    };
+
+    const fmtHHMM = (date) => {
+      const hh = String(date.getHours()).padStart(2, '0');
+      const mm = String(date.getMinutes()).padStart(2, '0');
+      return `${hh}:${mm}`;
+    };
+
+    const pad2 = (n) => String(n ?? '').trim().padStart(2, '0').slice(-2) || '00';
+
+    const fmtTime = (v) => String(v ?? '').trim();
+
+    const normNameKey = (s) => String(s ?? '').replace(/\s+/g, '').trim();
 
     const normISO = (v) => {
       if (v == null) return '';
@@ -1226,97 +1253,15 @@
 
     const pickRetDate = (o) => o?.retDate ?? o?.retdate ?? o?.RETDATE ?? o?.RetDate ?? '';
 
-    const toast = (msg, ms = 1600) => {
-      const t = $('#toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      clearTimeout(toast._t);
-      toast._t = setTimeout(() => t.classList.remove('show'), ms);
-    };
-
-    function showLoading(msg){
-      const text = msg || '데이터 불러오는 중...';
-      loadingText.textContent = text;
-      loadingOverlay.classList.add('show');
-      loadingOverlay.setAttribute('aria-hidden', 'false');
-      setHeaderLoading(text);
-      setUIBusy(true);
-    }
-
-    function hideLoading(){
-      loadingOverlay.classList.remove('show');
-      loadingOverlay.setAttribute('aria-hidden', 'true');
-      setUIBusy(false);
-    }
-
-    function setUIBusy(busy){
-      tabHouse.disabled = busy;
-      tabNature.disabled = busy;
-      datePicker.disabled = busy;
-      fabRefresh.disabled = busy;
-    }
-
-    async function fetchJson(url, bust = false){
-      const finalUrl = bust ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
-      const res = await fetch(finalUrl, { cache: bust ? 'no-store' : 'default' });
-      if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다.');
-      return res.json();
-    }
-
     const normalizeCoupleName = (s) => {
       const raw = String(s ?? '').trim();
       if (!raw) return '-';
       return raw.replace(/\s*,\s*/g, ' / ');
     };
 
-    const dataCache = { house: null, nature: null };
-    let cremMapCache = null;
-    let funeralMapCache = null;
-
-    async function ensureData(key, force = false){
-      if (dataCache[key] && !force) return dataCache[key];
-      const raw = await fetchJson(SOURCES[key].url, force);
-      dataCache[key] = Array.isArray(raw) ? raw : [];
-      return dataCache[key];
-    }
-
-    async function ensureCrem(force = false){
-      if (cremMapCache && !force) return cremMapCache;
-      const raw = await fetchJson("./data/crem.json", force);
-      const arr = Array.isArray(raw) ? raw : [];
-      const map = new Map();
-
-      for (const r of arr){
-        const id = String(r?.deadId ?? '').trim();
-        if (id) map.set(id, r);
-      }
-
-      cremMapCache = map;
-      return map;
-    }
-
-    async function ensureFuneral(force = false){
-      if (funeralMapCache && !force) return funeralMapCache;
-      const raw = await fetchJson("./data/funeral.json", force);
-      const arr = Array.isArray(raw) ? raw : [];
-      const map = new Map();
-
-      for (const r of arr){
-        const id = String(r?.deadId ?? '').trim();
-        if (!id) continue;
-        map.set(id, {
-          deadId: id,
-          deadName: String(r?.deadName ?? '').trim(),
-          dcGubun: String(r?.dcGubun ?? '').trim()
-        });
-      }
-
-      funeralMapCache = map;
-      return map;
-    }
-
     function formatEnsNo(val){
       if (val == null) return '-';
+
       const raw = String(val).trim();
       if (!raw) return '-';
 
@@ -1342,23 +1287,349 @@
       }
 
       const m1 = raw.match(/(\d{1,2})\s*실\s*(\d{1,5})/);
-      if (m1) return `${String(m1[1]).padStart(2, '0')}실 ${String(m1[2]).padStart(5, '0')}`;
+      if (m1){
+        return `${String(m1[1]).padStart(2, '0')}실 ${String(m1[2]).padStart(5, '0')}`;
+      }
 
       let digits = raw.replace(/\D/g, '');
       if (!digits) return raw;
+
       if (digits.length === 6) digits = digits.padStart(7, '0');
       if (digits.length === 5) return `00실 ${digits}`;
       if (digits.length >= 7) return `${digits.slice(0, 2)}실 ${digits.slice(-5)}`;
+
       return raw;
     }
 
-    const safeKey = (v) => String(v ?? '').trim();
+    /* =========================================
+     * 3) DOM 참조
+     * ========================================= */
+    const dom = {
+      datePicker: $('#datePicker'),
+      listArea: $('#listArea'),
+      infiniteArea: $('#infiniteArea'),
 
-    const ensMergeKey = (r) => {
+      tabHouse: $('#tabHouse'),
+      tabNature: $('#tabNature'),
+
+      countText: $('#countText'),
+
+      overlay: $('#overlay'),
+      mTitleLine: $('#mTitleLine'),
+      mFields: $('#mFields'),
+      sheetCancelBtn: $('#sheetCancelBtn'),
+      sheetSaveBtn: $('#sheetSaveBtn'),
+      statusEditorBox: $('#statusEditorBox'),
+      modalStatusSelect: $('#modalStatusSelect'),
+      modalCurrentStatusText: $('#modalCurrentStatusText'),
+
+      refDateText: $('#refDateText'),
+
+      ptrEl: $('#pull-to-refresh'),
+      ptrStatus: $('#ptr-status'),
+      ptrRing: $('#ptrRing'),
+      ptrProg: $('#ptrProg'),
+
+      fabTop: $('#fabTop'),
+      fabRefresh: $('#fabRefresh'),
+
+      loadingOverlay: $('#loadingOverlay'),
+      loadingText: $('#loadingText')
+    };
+
+    /* =========================================
+     * 4) iOS UI 보정
+     * ========================================= */
+    (function applyIosClass(){
+      const ua = navigator.userAgent || '';
+      const isIOS =
+        /iPhone|iPad|iPod/i.test(ua) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+      if (!isIOS) return;
+
+      const isIPad =
+        /iPad/i.test(ua) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+        (Math.max(screen.width, screen.height) >= 768);
+
+      document.documentElement.classList.add(isIPad ? 'ios-ipad' : 'ios-iphone');
+    })();
+
+    /* =========================================
+     * 5) 앱 상태
+     * ========================================= */
+    const state = {
+      today: getTodayIso(),
+      currentSource: FACILITY.house.key,
+      currentSelectedDate: getTodayIso(),
+      currentDisplayData: [],
+      currentLoadingToken: 0,
+      isRefreshing: false,
+
+      sharedStatusMap: new Map(),
+      sharedStatusFetchedAt: 0,
+
+      dataCache: {
+        house: null,
+        nature: null
+      },
+      cremMapCache: null,
+      funeralMapCache: null,
+
+      pageSize: 40,
+      renderedCount: 0,
+      observer: null,
+      lastCremMapForRender: null,
+      lastFuneralMapForRender: null,
+
+      pull: {
+        startY: 0,
+        pulling: false,
+        pullDist: 0
+      },
+
+      modal: {
+        index: -1,
+        src: '',
+        id: '',
+        mode: '',
+        currentStatus: '',
+        headerNo: ''
+      }
+    };
+
+    /* =========================================
+     * 6) 공통 UI
+     * ========================================= */
+    function updateHeaderMeta(){
+      dom.refDateText.textContent = `업데이트 ${fmtHHMM(new Date())}`;
+    }
+
+    function setHeaderLoading(text){
+      dom.refDateText.textContent = text || UI_TEXT.loading;
+    }
+
+    function setUIBusy(busy){
+      dom.tabHouse.disabled = busy;
+      dom.tabNature.disabled = busy;
+      dom.datePicker.disabled = busy;
+      dom.fabRefresh.disabled = busy;
+    }
+
+    function showLoading(msg){
+      const text = msg || UI_TEXT.loading;
+      dom.loadingText.textContent = text;
+      dom.loadingOverlay.classList.add('show');
+      dom.loadingOverlay.setAttribute('aria-hidden', 'false');
+      setHeaderLoading(text);
+      setUIBusy(true);
+    }
+
+    function hideLoading(){
+      dom.loadingOverlay.classList.remove('show');
+      dom.loadingOverlay.setAttribute('aria-hidden', 'true');
+      setUIBusy(false);
+    }
+
+    const toast = (msg, ms = 1600) => {
+      const t = $('#toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => t.classList.remove('show'), ms);
+    };
+
+    /* =========================================
+     * 7) 데이터 로드
+     * ========================================= */
+    async function fetchJson(url, bust = false){
+      const finalUrl = bust ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
+      const res = await fetch(finalUrl, { cache: bust ? 'no-store' : 'default' });
+      if (!res.ok) throw new Error(UI_TEXT.dataFileNotFound);
+      return res.json();
+    }
+
+    async function ensureData(key, force = false){
+      if (state.dataCache[key] && !force) return state.dataCache[key];
+      const raw = await fetchJson(FACILITY[key].url, force);
+      state.dataCache[key] = Array.isArray(raw) ? raw : [];
+      return state.dataCache[key];
+    }
+
+    async function ensureCrem(force = false){
+      if (state.cremMapCache && !force) return state.cremMapCache;
+
+      const raw = await fetchJson(DATA_URLS.crem, force);
+      const arr = Array.isArray(raw) ? raw : [];
+      const map = new Map();
+
+      for (const r of arr){
+        const id = toTrimmedString(r?.deadId);
+        if (id) map.set(id, r);
+      }
+
+      state.cremMapCache = map;
+      return map;
+    }
+
+    async function ensureFuneral(force = false){
+      if (state.funeralMapCache && !force) return state.funeralMapCache;
+
+      const raw = await fetchJson(DATA_URLS.funeral, force);
+      const arr = Array.isArray(raw) ? raw : [];
+      const map = new Map();
+
+      for (const r of arr){
+        const id = toTrimmedString(r?.deadId);
+        if (!id) continue;
+
+        map.set(id, {
+          deadId: id,
+          deadName: toTrimmedString(r?.deadName),
+          dcGubun: toTrimmedString(r?.dcGubun)
+        });
+      }
+
+      state.funeralMapCache = map;
+      return map;
+    }
+
+    /* =========================================
+     * 8) 상태 저장 API
+     * ========================================= */
+    function statusKey(src, id, mode){
+      return `${src}||${mode}||${id}`;
+    }
+
+    async function loadSharedStatuses(force = false){
+      if (!isConfiguredStatusApi()){
+        state.sharedStatusMap = new Map();
+        return;
+      }
+
+      const now = Date.now();
+      if (
+        !force &&
+        state.sharedStatusFetchedAt &&
+        (now - state.sharedStatusFetchedAt) < APP_CONFIG.sharedStatusCacheMs
+      ){
+        return;
+      }
+
+      const url = force
+        ? `${APP_CONFIG.statusApiUrl}?action=list&_=${Date.now()}`
+        : `${APP_CONFIG.statusApiUrl}?action=list`;
+
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error(UI_TEXT.sharedStatusLoadError);
+
+      const json = await res.json();
+      const items = Array.isArray(json?.items) ? json.items : [];
+
+      const map = new Map();
+      for (const row of items){
+        const src = toTrimmedString(row?.src);
+        const mode = toTrimmedString(row?.mode);
+        const id = toTrimmedString(row?.id);
+        const status = toTrimmedString(row?.status);
+
+        if (!src || !mode || !id) continue;
+        map.set(statusKey(src, id, mode), status);
+      }
+
+      state.sharedStatusMap = map;
+      state.sharedStatusFetchedAt = now;
+    }
+
+    async function saveSharedStatus({ src, id, mode, status }){
+      if (!isConfiguredStatusApi()){
+        throw new Error(UI_TEXT.sharedApiNotConfigured);
+      }
+
+      const res = await fetch(APP_CONFIG.statusApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'save',
+          src,
+          id,
+          mode,
+          status
+        })
+      });
+
+      if (!res.ok) throw new Error(UI_TEXT.sharedStatusSaveError);
+
+      const json = await res.json();
+      if (!json?.ok) throw new Error(json?.message || UI_TEXT.sharedStatusSaveError);
+
+      state.sharedStatusMap.set(statusKey(src, id, mode), status);
+      state.sharedStatusFetchedAt = Date.now();
+    }
+
+    /* =========================================
+     * 9) 데이터 가공
+     * ========================================= */
+    function getRecvPendingBySource(src){
+      return src === FACILITY.nature.key
+        ? STATUS_TEXT.recvPendingNature
+        : STATUS_TEXT.recvPendingHouse;
+    }
+
+    function getRecvDoneBySource(src){
+      return src === FACILITY.nature.key
+        ? STATUS_TEXT.recvDoneNature
+        : STATUS_TEXT.recvDoneHouse;
+    }
+
+    function getRecv(src, id){
+      const key = statusKey(src, id, 'recv');
+      const value = state.sharedStatusMap.get(key);
+
+      if (!value) return getRecvPendingBySource(src);
+
+      if (src !== FACILITY.nature.key && value === STATUS_TEXT.legacyRecvHouse){
+        return STATUS_TEXT.recvPendingHouse;
+      }
+
+      if (src === FACILITY.nature.key && value === STATUS_TEXT.recvPendingHouse){
+        return STATUS_TEXT.recvPendingNature;
+      }
+
+      if (src === FACILITY.nature.key && value === STATUS_TEXT.recvDoneHouse){
+        return STATUS_TEXT.recvDoneNature;
+      }
+
+      return value;
+    }
+
+    function getRet(id){
+      const key = statusKey(FACILITY.house.key, id, 'ret');
+      const value = state.sharedStatusMap.get(key);
+
+      if (!value) return STATUS_TEXT.retPending;
+      if (value === STATUS_TEXT.legacyRet) return STATUS_TEXT.retPending;
+
+      return value;
+    }
+
+    function isRetOn(item, iso){
+      return normISO(pickRetDate(item)) === iso;
+    }
+
+    function itemId(src, item){
+      return src === FACILITY.house.key
+        ? String(item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-')
+        : String(item?.natNo ?? '-');
+    }
+
+    function ensMergeKey(r){
       const ens = safeKey(r.ensNO ?? r.ensNo ?? r.ensno);
       if (ens) return `ENS:${ens}`;
+
       return `ALT:${safeKey(r.deadId)}|${safeKey(r.strDate)}|${safeKey(r.applname ?? r.applName)}|${safeKey(r.deadname ?? r.deadName ?? r.deceasedName)}`;
-    };
+    }
 
     function mergeEnsRows(rows){
       const map = new Map();
@@ -1406,7 +1677,7 @@
 
       for (const r of rows){
         const natNo = safeKey(r.natNo);
-        const appl  = safeKey(r.applName);
+        const appl = safeKey(r.applName);
         const key = `${natNo}||${appl}`;
 
         const rowNames = Array.isArray(r?.deadName)
@@ -1451,148 +1722,6 @@
       return order.map(k => map.get(k));
     }
 
-    const itemId = (src, item) => src === 'house'
-      ? String(item?.ensNO ?? item?.ensNo ?? item?.ensno ?? '-')
-      : String(item?.natNo ?? '-');
-
-    const recvPending = (src) => (src === 'nature') ? '안장대기' : '안치대기';
-    const recvDone    = (src) => (src === 'nature') ? '안장완료' : '안치완료';
-
-    let sharedStatusMap = new Map();
-    let sharedStatusFetchedAt = 0;
-    const SHARED_STATUS_CACHE_MS = 10000;
-
-    function statusKey(src, id, mode){
-      return `${src}||${mode}||${id}`;
-    }
-
-    function getRecv(src, id){
-      const key = statusKey(src, id, 'recv');
-      const v = sharedStatusMap.get(key);
-      if (!v) return recvPending(src);
-      if (src !== 'nature' && v === '접수') return '안치대기';
-      if (src === 'nature' && v === '안치대기') return '안장대기';
-      if (src === 'nature' && v === '안치완료') return '안장완료';
-      return v;
-    }
-
-    function isRetOn(item, iso){
-      return normISO(pickRetDate(item)) === iso;
-    }
-
-    function getRet(id){
-      const key = statusKey('house', id, 'ret');
-      const v = sharedStatusMap.get(key);
-      if (!v) return '반출대기';
-      if (v === '반출') return '반출대기';
-      return v;
-    }
-
-    async function loadSharedStatuses(force = false){
-      if (!STATUS_API_URL || STATUS_API_URL.includes('https://script.google.com/macros/s/AKfycbyjhskRxpL7clgA4dpWoKV4viDwMJhxnJKFuNRVGaaJOWFY3su36ZjpIC1EWIGqiaP0/exec')){
-        sharedStatusMap = new Map();
-        return;
-      }
-
-      const now = Date.now();
-      if (!force && sharedStatusFetchedAt && (now - sharedStatusFetchedAt) < SHARED_STATUS_CACHE_MS){
-        return;
-      }
-
-      const url = force
-        ? `${STATUS_API_URL}?action=list&_=${Date.now()}`
-        : `${STATUS_API_URL}?action=list`;
-
-      const res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) throw new Error('공유 상태 정보를 불러오지 못했습니다.');
-
-      const json = await res.json();
-      const items = Array.isArray(json?.items) ? json.items : [];
-
-      const map = new Map();
-      for (const row of items){
-        const src = String(row?.src ?? '').trim();
-        const mode = String(row?.mode ?? '').trim();
-        const id = String(row?.id ?? '').trim();
-        const status = String(row?.status ?? '').trim();
-        if (!src || !mode || !id) continue;
-        map.set(statusKey(src, id, mode), status);
-      }
-
-      sharedStatusMap = map;
-      sharedStatusFetchedAt = now;
-    }
-
-    async function saveSharedStatus({ src, id, mode, status }){
-      if (!STATUS_API_URL || STATUS_API_URL.includes('https://script.google.com/macros/s/AKfycbyjhskRxpL7clgA4dpWoKV4viDwMJhxnJKFuNRVGaaJOWFY3su36ZjpIC1EWIGqiaP0/exec')){
-        throw new Error('공유 저장 API 주소가 설정되지 않았습니다.');
-      }
-
-      const res = await fetch(STATUS_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          action: 'save',
-          src,
-          id,
-          mode,
-          status
-        })
-      });
-
-      if (!res.ok) throw new Error('공유 상태 저장에 실패했습니다.');
-
-      const json = await res.json();
-      if (!json?.ok) throw new Error(json?.message || '공유 상태 저장에 실패했습니다.');
-
-      sharedStatusMap.set(statusKey(src, id, mode), status);
-      sharedStatusFetchedAt = Date.now();
-    }
-
-    function leftCls(src, mode, status){
-      if (mode === 'ret') return (status === '반출완료') ? 'retDone' : 'ret';
-      return (status === recvDone(src)) ? 'done' : 'recv';
-    }
-
-    function statusPillClass(mode, status){
-      if (mode === 'ret'){
-        return status === '반출완료' ? 'statusPill retDone' : 'statusPill ret';
-      }
-      return status === recvDone(currentSource) ? 'statusPill done' : 'statusPill';
-    }
-
-    const pad2 = (n) => String(n ?? '').trim().padStart(2, '0').slice(-2) || '00';
-    const fmtTime = (v) => String(v ?? '').trim();
-
-    function cremObj(deadId, cremMap){
-      const did = String(deadId ?? '').trim();
-      const rec = did ? cremMap.get(did) : null;
-
-      if (!rec) {
-        return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
-      }
-
-      const chasuRaw = rec?.burnChasu;
-      const chasuNum = parseInt(pad2(chasuRaw), 10);
-      const safeChasu = isNaN(chasuNum) ? 0 : chasuNum;
-
-      const st = fmtTime(rec?.burnStrTime);
-      const en = fmtTime(rec?.burnEndTime);
-
-      if (!st){
-        const label = `${pad2(chasuRaw)}회차, 화장접수`;
-        return { type:'recv', chasu:safeChasu, start:'화장접수', end:'', text: label };
-      }
-
-      if (st && !en){
-        const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : `회차미정`;
-        return { type:'info', chasu:safeChasu, start:st, end:'', text:`${chLabel}, 화장시작: ${st}, 화장중` };
-      }
-
-      const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : `회차미정`;
-      return { type:'info', chasu:safeChasu, start:st, end:en, text:`${chLabel}, 화장시작: ${st}, 화장종료: ${en}` };
-    }
-
     function deceasedEntries(item){
       const raws = Array.isArray(item?._raw) ? item._raw : [item];
       const entries = [];
@@ -1608,11 +1737,9 @@
 
         if (deadIds.length){
           for (let i = 0; i < deadIds.length; i++){
-            const did = String(deadIds[i] ?? '').trim();
-            const dnm = String(deadNames[i] ?? '').trim();
             entries.push({
-              deadId: did,
-              deadName: dnm
+              deadId: String(deadIds[i] ?? '').trim(),
+              deadName: String(deadNames[i] ?? '').trim()
             });
           }
           continue;
@@ -1632,6 +1759,52 @@
       return entries;
     }
 
+    function cremObj(deadId, cremMap){
+      const did = String(deadId ?? '').trim();
+      const rec = did ? cremMap.get(did) : null;
+
+      if (!rec){
+        return { type:'pay', chasu:0, start:'선결제', end:'선결제', text:'선결제' };
+      }
+
+      const chasuRaw = rec?.burnChasu;
+      const chasuNum = parseInt(pad2(chasuRaw), 10);
+      const safeChasu = isNaN(chasuNum) ? 0 : chasuNum;
+
+      const st = fmtTime(rec?.burnStrTime);
+      const en = fmtTime(rec?.burnEndTime);
+
+      if (!st){
+        return {
+          type:'recv',
+          chasu:safeChasu,
+          start:'화장접수',
+          end:'',
+          text:`${pad2(chasuRaw)}회차, 화장접수`
+        };
+      }
+
+      if (st && !en){
+        const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : '회차미정';
+        return {
+          type:'info',
+          chasu:safeChasu,
+          start:st,
+          end:'',
+          text:`${chLabel}, 화장시작: ${st}, 화장중`
+        };
+      }
+
+      const chLabel = safeChasu > 0 ? `${pad2(chasuRaw)}회차` : '회차미정';
+      return {
+        type:'info',
+        chasu:safeChasu,
+        start:st,
+        end:en,
+        text:`${chLabel}, 화장시작: ${st}, 화장종료: ${en}`
+      };
+    }
+
     function chasuKey(item, cremMap){
       const entries = deceasedEntries(item);
       if (!entries.length) return 0;
@@ -1648,98 +1821,41 @@
       if (!cremMap) return [];
 
       const entries = deceasedEntries(item);
+      if (!entries.length) return ['선결제'];
 
-      if (!entries.length){
-        return ['선결제'];
-      }
-
-      return entries.map(({ deadId }) => {
-        const info = cremObj(deadId, cremMap);
-        return info.text;
-      });
-    }
-
-    function cremLinesHTML(item, cremMap, mode){
-      if (mode === 'ret' || !cremMap) return '';
-
-      const lines = cremDetailLines(item, cremMap);
-      if (!lines.length) return '';
-
-      return `
-        <div class="cremWrap">
-          ${lines.map(line => `<div class="cremLine">${esc(line)}</div>`).join('')}
-        </div>
-      `;
+      return entries.map(({ deadId }) => cremObj(deadId, cremMap).text);
     }
 
     function cremTimesForModal(item, cremMap){
       if (!cremMap) return null;
 
       const entries = deceasedEntries(item);
-
-      if (!entries.length){
-        return ['선결제'];
-      }
+      if (!entries.length) return ['선결제'];
 
       return entries.map(({ deadId }) => {
         const did = String(deadId ?? '').trim();
         const rec = did ? cremMap.get(did) : null;
 
-        if (!rec){
-          return '선결제';
-        }
+        if (!rec) return '선결제';
 
         const st = fmtTime(rec?.burnStrTime);
         const en = fmtTime(rec?.burnEndTime);
 
-        if (!st){
-          return '화장접수';
-        }
-
-        if (st && !en){
-          return `화장시작: ${st}, 화장중`;
-        }
+        if (!st) return '화장접수';
+        if (st && !en) return `화장시작: ${st}, 화장중}`;
 
         return `화장시작: ${st}, 화장종료: ${en}`;
-      });
+      }).map(line => line.replace('화장중}', '화장중'));
     }
-
-    const kv = (k, v) => `
-      <div class="kv">
-        <div class="k">${esc(k)}</div>
-        <div class="v">${esc(v)}</div>
-      </div>
-    `;
-
-    const kvHTML = (k, html) => `
-      <div class="kv">
-        <div class="k">${esc(k)}</div>
-        <div class="v">${html}</div>
-      </div>
-    `;
-
-    const kvLines = (k, lines) => {
-      const arr = (Array.isArray(lines) ? lines : []).map(esc).filter(Boolean);
-      if (!arr.length) return '';
-
-      const html = arr.map(line => `<span class="time-line">${line}</span>`).join('');
-
-      return `
-        <div class="kv">
-          <div class="k">${esc(k)}</div>
-          <div class="v">${html}</div>
-        </div>
-      `;
-    };
-
-    const normNameKey = (s) => String(s ?? '').replace(/\s+/g, '').trim();
 
     function nameKeySetFromDisplay(displayName){
       const parts = String(displayName ?? '').split('/').map(x => normNameKey(x));
       const set = new Set();
+
       for (const p of parts){
         if (p) set.add(p);
       }
+
       return set;
     }
 
@@ -1764,40 +1880,19 @@
         if (!nameSet.has(recNameKey)) continue;
 
         if (String(rec.dcGubun ?? '').trim() === 'TCM1200099'){
-          return '무연고';
+          return TAG_LABEL.orphan;
         }
 
         hasSelf = true;
       }
 
-      return hasSelf ? '자체' : null;
+      return hasSelf ? TAG_LABEL.self : null;
     }
-
-    function badgeHTML(label){
-      if (!label) return '';
-      const cls = (label === '무연고') ? 'tag orphan' : 'tag self';
-      return `<span class="${cls}">${esc(label)}</span>`;
-    }
-
-    let currentSource = 'house';
-    let currentSelectedDate = TODAY;
-    let currentDisplayData = [];
-    let loadToken = 0;
-    let isRefreshing = false;
-
-    let modalState = {
-      index: -1,
-      src: '',
-      id: '',
-      mode: '',
-      currentStatus: '',
-      headerNo: ''
-    };
 
     function calcCounts(src, data, iso){
-      const dateKey = SOURCES[src].dateKey;
+      const dateKey = FACILITY[src].dateKey;
 
-      if (src === 'house'){
+      if (src === FACILITY.house.key){
         const rows = (Array.isArray(data) ? data : []).filter(x => {
           const s = String(x?.[dateKey] ?? '');
           const r = normISO(pickRetDate(x));
@@ -1827,15 +1922,15 @@
       clone.forEach((it, i) => { it._pos = (it._pos ?? i); });
 
       clone.sort((a, b) => {
-        const isHouse = (currentSource === 'house');
+        const isHouse = (state.currentSource === FACILITY.house.key);
         const retA = isHouse && isRetOn(a, iso);
         const retB = isHouse && isRetOn(b, iso);
 
-        const aId = itemId(currentSource, a);
-        const bId = itemId(currentSource, b);
+        const aId = itemId(state.currentSource, a);
+        const bId = itemId(state.currentSource, b);
 
-        const aRetDone = retA ? (getRet(aId) === '반출완료') : false;
-        const bRetDone = retB ? (getRet(bId) === '반출완료') : false;
+        const aRetDone = retA ? (getRet(aId) === STATUS_TEXT.retDone) : false;
+        const bRetDone = retB ? (getRet(bId) === STATUS_TEXT.retDone) : false;
 
         const grpA = retA ? (aRetDone ? 2 : 0) : 1;
         const grpB = retB ? (bRetDone ? 2 : 0) : 1;
@@ -1854,50 +1949,132 @@
       return clone;
     }
 
-    function computePageSize(){
-      const w = Math.min(window.innerWidth || 0, window.screen?.width || 0) || 360;
-      if (w <= 390) return 28;
-      if (w <= 430) return 32;
-      return 40;
+    /* =========================================
+     * 10) 렌더용 헬퍼
+     * ========================================= */
+    function badgeHTML(label){
+      if (!label) return '';
+      const cls = (label === TAG_LABEL.orphan) ? 'tag orphan' : 'tag self';
+      return `<span class="${cls}">${esc(label)}</span>`;
     }
 
-    let pageSize = computePageSize();
-    let renderedCount = 0;
-    let observer = null;
-    let lastCremMapForRender = null;
-    let lastFuneralMapForRender = null;
+    function leftCls(src, mode, status){
+      if (mode === 'ret'){
+        return (status === STATUS_TEXT.retDone) ? 'retDone' : 'ret';
+      }
+      return (status === getRecvDoneBySource(src)) ? 'done' : 'recv';
+    }
+
+    function statusPillClass(mode, status){
+      if (mode === 'ret'){
+        return status === STATUS_TEXT.retDone ? 'statusPill retDone' : 'statusPill ret';
+      }
+      return status === getRecvDoneBySource(state.currentSource) ? 'statusPill done' : 'statusPill';
+    }
+
+    function getDisplayId(item){
+      return state.currentSource === FACILITY.house.key
+        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
+        : String(item.natNo ?? '-');
+    }
+
+    function getDisplayName(item){
+      let displayName = state.currentSource === FACILITY.house.key
+        ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
+        : String(item.deadName ?? '-');
+
+      if (state.currentSource === FACILITY.nature.key){
+        displayName = normalizeCoupleName(displayName);
+      }
+
+      return displayName;
+    }
+
+    function getItemMode(item, selectedDate){
+      return (state.currentSource === FACILITY.house.key && isRetOn(item, selectedDate)) ? 'ret' : 'recv';
+    }
+
+    function getItemStatus(item, selectedDate){
+      const sid = itemId(state.currentSource, item);
+      const mode = getItemMode(item, selectedDate);
+
+      if (mode === 'ret') return getRet(sid);
+      return getRecv(state.currentSource, sid);
+    }
+
+    function kv(k, v){
+      return `
+        <div class="kv">
+          <div class="k">${esc(k)}</div>
+          <div class="v">${esc(v)}</div>
+        </div>
+      `;
+    }
+
+    function kvHTML(k, html){
+      return `
+        <div class="kv">
+          <div class="k">${esc(k)}</div>
+          <div class="v">${html}</div>
+        </div>
+      `;
+    }
+
+    function kvLines(k, lines){
+      const arr = (Array.isArray(lines) ? lines : []).map(esc).filter(Boolean);
+      if (!arr.length) return '';
+
+      const html = arr.map(line => `<span class="time-line">${line}</span>`).join('');
+
+      return `
+        <div class="kv">
+          <div class="k">${esc(k)}</div>
+          <div class="v">${html}</div>
+        </div>
+      `;
+    }
+
+    function cremLinesHTML(item, cremMap, mode){
+      if (mode === 'ret' || !cremMap) return '';
+
+      const lines = cremDetailLines(item, cremMap);
+      if (!lines.length) return '';
+
+      return `
+        <div class="cremWrap">
+          ${lines.map(line => `<div class="cremLine">${esc(line)}</div>`).join('')}
+        </div>
+      `;
+    }
+
+    /* =========================================
+     * 11) 리스트 렌더링
+     * ========================================= */
+    function computePageSize(){
+      const w = Math.min(window.innerWidth || 0, window.screen?.width || 0) || 360;
+      if (w <= 390) return APP_CONFIG.pageSizeSmall;
+      if (w <= 430) return APP_CONFIG.pageSizeMedium;
+      return APP_CONFIG.pageSizeLarge;
+    }
 
     function resetInfinite(){
-      renderedCount = 0;
-      infiniteArea.innerHTML = '';
-      if (observer){
-        observer.disconnect();
-        observer = null;
+      state.renderedCount = 0;
+      dom.infiniteArea.innerHTML = '';
+
+      if (state.observer){
+        state.observer.disconnect();
+        state.observer = null;
       }
     }
 
-    function ensureObserver(){
-      const sentinel = document.getElementById('sentinel');
-      if (!sentinel) return;
-
-      if (observer) observer.disconnect();
-
-      observer = new IntersectionObserver((entries) => {
-        const ent = entries[0];
-        if (!ent || !ent.isIntersecting) return;
-        renderNextPage();
-      }, {
-        root: null,
-        rootMargin: '900px 0px',
-        threshold: 0.01
-      });
-
-      observer.observe(sentinel);
+    function updateHeadShown(shown, total){
+      const badge = document.getElementById('headBadge');
+      if (badge) badge.textContent = `${shown.toLocaleString()} / ${total.toLocaleString()}`;
     }
 
     function setInfiniteUI({ mode, shown, total }){
       if (mode === 'empty'){
-        infiniteArea.innerHTML = '';
+        dom.infiniteArea.innerHTML = '';
         return;
       }
 
@@ -1911,7 +2088,7 @@
         msg = `<div class="infCard">전체 <strong>${total.toLocaleString()}</strong>건 표시 완료</div>`;
       }
 
-      infiniteArea.innerHTML = `
+      dom.infiniteArea.innerHTML = `
         <div class="inf">
           ${msg}
           <div id="sentinel"></div>
@@ -1920,32 +2097,16 @@
     }
 
     function rowHTML(item, idx, selected, cremMap, funeralMap){
-      const sid = itemId(currentSource, item);
-      const mode = (currentSource === 'house' && isRetOn(item, selected)) ? 'ret' : 'recv';
-
-      let status = '';
-      if (mode === 'ret'){
-        status = getRet(sid);
-      } else {
-        status = getRecv(currentSource, sid);
-      }
-
-      const displayId = (currentSource === 'house')
-        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
-        : String(item.natNo ?? '-');
-
-      let displayName = (currentSource === 'house')
-        ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
-        : String(item.deadName ?? '-');
-
-      if (currentSource === 'nature') displayName = normalizeCoupleName(displayName);
-
+      const mode = getItemMode(item, selected);
+      const status = getItemStatus(item, selected);
+      const displayId = getDisplayId(item);
+      const displayName = getDisplayName(item);
       const badgeLabel = (mode === 'ret') ? null : funeralBadgeLabelForItem(item, displayName, funeralMap);
       const tag = badgeHTML(badgeLabel);
 
       return `
         <li>
-          <div class="row ${leftCls(currentSource, mode, status)}">
+          <div class="row ${leftCls(state.currentSource, mode, status)}">
             <div class="barL"></div>
             <div class="rowR">
               <div class="rowTop">
@@ -1969,56 +2130,11 @@
       `;
     }
 
-    function updateHeadShown(shown, total){
-      const badge = document.getElementById('headBadge');
-      if (badge) badge.textContent = `${shown.toLocaleString()} / ${total.toLocaleString()}`;
-    }
-
-    function renderNextPage(){
-      const selected = datePicker.value || TODAY;
-      const total = currentDisplayData.length;
-      if (!total) return;
-
-      const cremMap = lastCremMapForRender;
-      const funeralMap = lastFuneralMapForRender;
-
-      const ul = document.getElementById('listUL');
-      if (!ul) return;
-
-      if (renderedCount >= total){
-        updateHeadShown(total, total);
-        setInfiniteUI({ mode: 'end', shown: total, total });
-        if (observer) observer.disconnect();
-        return;
-      }
-
-      const from = renderedCount;
-      const to = Math.min(renderedCount + pageSize, total);
-
-      let chunk = '';
-      for (let i = from; i < to; i++){
-        chunk += rowHTML(currentDisplayData[i], i, selected, cremMap, funeralMap);
-      }
-
-      ul.insertAdjacentHTML('beforeend', chunk);
-      renderedCount = to;
-
-      updateHeadShown(renderedCount, total);
-
-      if (renderedCount < total){
-        setInfiniteUI({ mode: 'more', shown: renderedCount, total });
-        ensureObserver();
-      } else {
-        setInfiniteUI({ mode: 'end', shown: total, total });
-        if (observer) observer.disconnect();
-      }
-    }
-
     function renderListShell(display){
-      listArea.innerHTML = `
+      dom.listArea.innerHTML = `
         <div class="list">
           <div class="list-head">
-            <div class="hint">${esc(SOURCES[currentSource].label)} 접수목록</div>
+            <div class="hint">${esc(FACILITY[state.currentSource].label)} 접수목록</div>
             <div class="badge" id="headBadge">0 / ${display.length.toLocaleString()}</div>
           </div>
           <ul id="listUL"></ul>
@@ -2026,21 +2142,75 @@
       `;
     }
 
-    function rerenderCurrentView(){
-      const selected = datePicker.value || TODAY;
-      let cremMap = null;
+    function ensureObserver(){
+      const sentinel = document.getElementById('sentinel');
+      if (!sentinel) return;
 
-      if (selected === TODAY){
-        cremMap = cremMapCache;
+      if (state.observer) state.observer.disconnect();
+
+      state.observer = new IntersectionObserver((entries) => {
+        const ent = entries[0];
+        if (!ent || !ent.isIntersecting) return;
+        renderNextPage();
+      }, {
+        root: null,
+        rootMargin: '900px 0px',
+        threshold: 0.01
+      });
+
+      state.observer.observe(sentinel);
+    }
+
+    function renderNextPage(){
+      const selected = dom.datePicker.value || state.today;
+      const total = state.currentDisplayData.length;
+      if (!total) return;
+
+      const cremMap = state.lastCremMapForRender;
+      const funeralMap = state.lastFuneralMapForRender;
+      const ul = document.getElementById('listUL');
+      if (!ul) return;
+
+      if (state.renderedCount >= total){
+        updateHeadShown(total, total);
+        setInfiniteUI({ mode: 'end', shown: total, total });
+        if (state.observer) state.observer.disconnect();
+        return;
       }
 
-      let display = currentDisplayData.slice();
+      const from = state.renderedCount;
+      const to = Math.min(state.renderedCount + state.pageSize, total);
+
+      let chunk = '';
+      for (let i = from; i < to; i++){
+        chunk += rowHTML(state.currentDisplayData[i], i, selected, cremMap, funeralMap);
+      }
+
+      ul.insertAdjacentHTML('beforeend', chunk);
+      state.renderedCount = to;
+
+      updateHeadShown(state.renderedCount, total);
+
+      if (state.renderedCount < total){
+        setInfiniteUI({ mode: 'more', shown: state.renderedCount, total });
+        ensureObserver();
+      } else {
+        setInfiniteUI({ mode: 'end', shown: total, total });
+        if (state.observer) state.observer.disconnect();
+      }
+    }
+
+    function rerenderCurrentView(){
+      const selected = dom.datePicker.value || state.today;
+      const cremMap = (selected === state.today) ? state.cremMapCache : null;
+
+      let display = state.currentDisplayData.slice();
       display = sortStable(display, selected, cremMap);
-      currentDisplayData = display;
+      state.currentDisplayData = display;
 
       resetInfinite();
-      lastCremMapForRender = cremMap;
-      lastFuneralMapForRender = funeralMapCache;
+      state.lastCremMapForRender = cremMap;
+      state.lastFuneralMapForRender = state.funeralMapCache;
 
       renderListShell(display);
       setInfiniteUI({ mode: 'loading', shown: 0, total: display.length });
@@ -2048,20 +2218,169 @@
       updateHeaderMeta();
     }
 
-    async function load(force = false, loadingMsg = '데이터 불러오는 중...'){
-      const myToken = ++loadToken;
+    /* =========================================
+     * 12) 모달 렌더링
+     * ========================================= */
+    function buildModalNameHTML(displayName, badgeLabel){
+      return `
+        <span style="display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;width:fit-content;">
+          <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayName)}</span>
+          ${badgeHTML(badgeLabel)}
+        </span>
+      `;
+    }
 
+    function buildModalFields(item, selectedDate){
+      const isRetModal = (state.currentSource === FACILITY.house.key && isRetOn(item, selectedDate));
+      const showCrem = selectedDate === state.today;
+      const cremMap = showCrem ? state.cremMapCache : null;
+
+      const displayName = getDisplayName(item);
+      const badgeLabel = isRetModal ? null : funeralBadgeLabelForItem(item, displayName, state.funeralMapCache);
+
+      let html = '';
+
+      if (state.currentSource === FACILITY.house.key){
+        html += kv('안치일자', item.strDate ?? '-');
+        html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabel));
+        html += kv('신청자', item.applname ?? item.applName ?? '-');
+
+        const rdISO = normISO(pickRetDate(item));
+        const rdRaw = pickRetDate(item);
+        if (rdISO) html += kv('반출일자', String(rdRaw ?? rdISO));
+      } else {
+        html += kv('안치일자', item.natDate ?? '-');
+        html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabel));
+        html += kv('신청자', item.applName ?? '-');
+      }
+
+      if (!isRetModal){
+        const cremLines = cremTimesForModal(item, cremMap);
+        if (cremLines && cremLines.length){
+          html += kvLines('화장시간', cremLines);
+        }
+      }
+
+      return html;
+    }
+
+    function getModalStatusOptions(mode){
+      if (mode === 'ret'){
+        return [STATUS_TEXT.retPending, STATUS_TEXT.retDone];
+      }
+
+      if (state.currentSource === FACILITY.nature.key){
+        return [STATUS_TEXT.recvPendingNature, STATUS_TEXT.recvDoneNature];
+      }
+
+      return [STATUS_TEXT.recvPendingHouse, STATUS_TEXT.recvDoneHouse];
+    }
+
+    function openSheet(index){
+      const item = state.currentDisplayData[index];
+      if (!item) return;
+
+      const selected = dom.datePicker.value || state.today;
+      const sid = itemId(state.currentSource, item);
+      const mode = getItemMode(item, selected);
+      const currentStatus = getItemStatus(item, selected);
+      const headerNo = getDisplayId(item);
+
+      state.modal = {
+        index,
+        src: mode === 'ret' ? FACILITY.house.key : state.currentSource,
+        id: sid,
+        mode,
+        currentStatus,
+        headerNo
+      };
+
+      dom.mTitleLine.textContent = `${FACILITY[state.currentSource].label} · ${headerNo}`;
+      dom.mFields.innerHTML = buildModalFields(item, selected);
+
+      const opts = getModalStatusOptions(mode);
+      dom.modalStatusSelect.innerHTML = opts
+        .map(v => `<option value="${esc(v)}">${esc(v)}</option>`)
+        .join('');
+
+      dom.modalStatusSelect.value = currentStatus;
+      dom.modalCurrentStatusText.textContent = `현재 상태 ${currentStatus}`;
+      dom.statusEditorBox.style.display = 'flex';
+      dom.sheetSaveBtn.disabled = false;
+
+      dom.overlay.classList.add('show');
+      dom.overlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeSheet(){
+      dom.overlay.classList.remove('show');
+      dom.overlay.setAttribute('aria-hidden', 'true');
+
+      state.modal = {
+        index: -1,
+        src: '',
+        id: '',
+        mode: '',
+        currentStatus: '',
+        headerNo: ''
+      };
+    }
+
+    async function saveModalStatus(){
+      if (state.modal.index < 0) return;
+
+      const next = String(dom.modalStatusSelect.value || '').trim();
+      const cur = String(state.modal.currentStatus || '').trim();
+
+      if (!next) return;
+
+      if (next === cur){
+        toast(UI_TEXT.noChanges, 1400);
+        return;
+      }
+
+      const ok = window.confirm(`${state.modal.headerNo}\n상태를 "${next}"로 변경하시겠습니까?`);
+      if (!ok) return;
+
+      try{
+        dom.sheetSaveBtn.disabled = true;
+
+        await saveSharedStatus({
+          src: state.modal.src,
+          id: state.modal.id,
+          mode: state.modal.mode,
+          status: next
+        });
+
+        state.modal.currentStatus = next;
+        dom.modalCurrentStatusText.textContent = `현재 상태 ${next}`;
+        toast(`${state.modal.headerNo} : ${next}`, 2200);
+
+        rerenderCurrentView();
+        closeSheet();
+      } catch (err){
+        toast(`저장 실패: ${err.message}`, 2400);
+      } finally {
+        dom.sheetSaveBtn.disabled = false;
+      }
+    }
+
+    /* =========================================
+     * 13) 메인 로드
+     * ========================================= */
+    async function load(force = false, loadingMsg = UI_TEXT.loading){
+      const myToken = ++state.currentLoadingToken;
       showLoading(loadingMsg);
 
-      const selected = datePicker.value || TODAY;
-      currentSelectedDate = selected;
-      const showCrem = (selected === TODAY);
+      const selected = dom.datePicker.value || state.today;
+      state.currentSelectedDate = selected;
+      const showCrem = (selected === state.today);
 
       try{
         const tasks = [
           loadSharedStatuses(force),
           ensureFuneral(force),
-          ensureData(currentSource, force)
+          ensureData(state.currentSource, force)
         ];
 
         if (showCrem){
@@ -2069,22 +2388,22 @@
         }
 
         const results = await Promise.all(tasks);
-        if (myToken !== loadToken) return;
+        if (myToken !== state.currentLoadingToken) return;
 
         const funeralMap = results[1];
         const data = results[2];
         const cremMap = showCrem ? results[3] : null;
 
-        const c = calcCounts(currentSource, data, selected);
+        const c = calcCounts(state.currentSource, data, selected);
 
-        countText.textContent = (currentSource === 'house')
+        dom.countText.textContent = (state.currentSource === FACILITY.house.key)
           ? `안치 ${c.recv}건 · 반출 ${c.ret}건`
           : `안장 ${c.recv}건`;
 
-        const dateKey = SOURCES[currentSource].dateKey;
+        const dateKey = FACILITY[state.currentSource].dateKey;
         let filtered = [];
 
-        if (currentSource === 'house'){
+        if (state.currentSource === FACILITY.house.key){
           filtered = data.filter(x => {
             const s = String(x?.[dateKey] ?? '');
             const r = normISO(pickRetDate(x));
@@ -2096,382 +2415,252 @@
           filtered = mergeCoupleRows(filtered);
         }
 
-        filtered.forEach((it, i) => it._pos = i);
-        currentDisplayData = sortStable(filtered, selected, cremMap);
+        filtered.forEach((it, i) => { it._pos = i; });
+        state.currentDisplayData = sortStable(filtered, selected, cremMap);
 
-        if (!currentDisplayData.length){
-          listArea.innerHTML = `<div class="no-data">표시할 데이터가 없습니다.</div>`;
+        if (!state.currentDisplayData.length){
+          dom.listArea.innerHTML = `<div class="no-data">${UI_TEXT.noData}</div>`;
           resetInfinite();
           return;
         }
 
         resetInfinite();
-        lastCremMapForRender = cremMap;
-        lastFuneralMapForRender = funeralMap;
+        state.lastCremMapForRender = cremMap;
+        state.lastFuneralMapForRender = funeralMap;
 
-        renderListShell(currentDisplayData);
-        setInfiniteUI({ mode: 'loading', shown: 0, total: currentDisplayData.length });
+        renderListShell(state.currentDisplayData);
+        setInfiniteUI({ mode: 'loading', shown: 0, total: state.currentDisplayData.length });
         renderNextPage();
 
       } catch (err){
-        listArea.innerHTML = `<div class="no-data">오류: ${esc(err.message)}</div>`;
+        dom.listArea.innerHTML = `<div class="no-data">오류: ${esc(err.message)}</div>`;
         resetInfinite();
       } finally {
-        if (myToken === loadToken){
+        if (myToken === state.currentLoadingToken){
           hideLoading();
           updateHeaderMeta();
         }
       }
     }
 
-    function getModalStatusOptions(mode){
-      if (mode === 'ret'){
-        return ['반출대기', '반출완료'];
-      }
-      if (currentSource === 'nature'){
-        return ['안장대기', '안장완료'];
-      }
-      return ['안치대기', '안치완료'];
-    }
-
-    function openSheet(index){
-      const item = currentDisplayData[index];
-      if (!item) return;
-
-      const selected = datePicker.value || TODAY;
-      const showCrem = (selected === TODAY);
-      const cremMap = showCrem ? cremMapCache : null;
-
-      const sid = itemId(currentSource, item);
-      const mode = (currentSource === 'house' && isRetOn(item, currentSelectedDate)) ? 'ret' : 'recv';
-
-      const headerNo = (currentSource === 'house')
-        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
-        : String(item.natNo ?? '-');
-
-      const currentStatus = (mode === 'ret') ? getRet(sid) : getRecv(currentSource, sid);
-
-      modalState = {
-        index,
-        src: mode === 'ret' ? 'house' : currentSource,
-        id: sid,
-        mode,
-        currentStatus,
-        headerNo
-      };
-
-      mTitleLine.textContent = `${SOURCES[currentSource].label} · ${headerNo}`;
-
-      let html = '';
-      const isRetModal = (currentSource === 'house' && isRetOn(item, currentSelectedDate));
-
-      let displayNameForModal = (currentSource === 'house')
-        ? String(item.deadname ?? item.deadName ?? item.deceasedName ?? '-')
-        : String(item.deadName ?? '-');
-
-      if (currentSource === 'nature') displayNameForModal = normalizeCoupleName(displayNameForModal);
-
-      const badgeLabelModal = isRetModal ? null : funeralBadgeLabelForItem(item, displayNameForModal, funeralMapCache);
-      const tagModal = badgeHTML(badgeLabelModal);
-
-      if (currentSource === 'house'){
-        html += kv('안치일자', item.strDate ?? '-');
-        html += kvHTML('고인명', `
-          <span style="display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;width:fit-content;">
-            <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayNameForModal)}</span>
-            ${tagModal}
-          </span>
-        `);
-        html += kv('신청자', item.applname ?? item.applName ?? '-');
-
-        const rdISO = normISO(pickRetDate(item));
-        const rdRaw = pickRetDate(item);
-        if (rdISO) html += kv('반출일자', String(rdRaw ?? rdISO));
-      } else {
-        html += kv('안치일자', item.natDate ?? '-');
-        html += kvHTML('고인명', `
-          <span style="display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;width:fit-content;">
-            <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayNameForModal)}</span>
-            ${tagModal}
-          </span>
-        `);
-        html += kv('신청자', item.applName ?? '-');
-      }
-
-      if (!isRetModal){
-        const t = cremTimesForModal(item, cremMap);
-        if (t && t.length) html += kvLines('화장시간', t);
-      }
-
-      mFields.innerHTML = html;
-
-      const opts = getModalStatusOptions(mode);
-      modalStatusSelect.innerHTML = opts
-        .map(v => `<option value="${esc(v)}">${esc(v)}</option>`)
-        .join('');
-      modalStatusSelect.value = currentStatus;
-      modalCurrentStatusText.textContent = `현재 상태 ${currentStatus}`;
-      statusEditorBox.style.display = 'flex';
-      sheetSaveBtn.disabled = false;
-
-      overlay.classList.add('show');
-      overlay.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeSheet(){
-      overlay.classList.remove('show');
-      overlay.setAttribute('aria-hidden', 'true');
-      modalState = {
-        index: -1,
-        src: '',
-        id: '',
-        mode: '',
-        currentStatus: '',
-        headerNo: ''
-      };
-    }
-
-    async function saveModalStatus(){
-      if (modalState.index < 0) return;
-
-      const next = String(modalStatusSelect.value || '').trim();
-      const cur = String(modalState.currentStatus || '').trim();
-      if (!next) return;
-
-      if (next === cur){
-        toast('변경된 상태가 없습니다.', 1400);
-        return;
-      }
-
-      const ok = window.confirm(`${modalState.headerNo}\n상태를 "${next}"로 변경하시겠습니까?`);
-      if (!ok) return;
-
-      try{
-        sheetSaveBtn.disabled = true;
-
-        await saveSharedStatus({
-          src: modalState.src,
-          id: modalState.id,
-          mode: modalState.mode,
-          status: next
-        });
-
-        modalState.currentStatus = next;
-        modalCurrentStatusText.textContent = `현재 상태 ${next}`;
-        toast(`${modalState.headerNo} : ${next}`, 2200);
-
-        rerenderCurrentView();
-        closeSheet();
-      } catch (err){
-        toast(`저장 실패: ${err.message}`, 2400);
-      } finally {
-        sheetSaveBtn.disabled = false;
-      }
-    }
-
     async function doRefresh(fromUI = true){
-      if (isRefreshing) return;
-      isRefreshing = true;
+      if (state.isRefreshing) return;
+      state.isRefreshing = true;
 
       try{
-        dataCache.house = null;
-        dataCache.nature = null;
-        cremMapCache = null;
-        funeralMapCache = null;
-        sharedStatusFetchedAt = 0;
+        state.dataCache.house = null;
+        state.dataCache.nature = null;
+        state.cremMapCache = null;
+        state.funeralMapCache = null;
+        state.sharedStatusFetchedAt = 0;
 
-        await load(true, '새로고침 중...');
+        await load(true, UI_TEXT.loadingRefresh);
         updateHeaderMeta();
 
-        if (fromUI) toast('새로고침 완료', 1400);
+        if (fromUI){
+          toast(UI_TEXT.refreshComplete, 1400);
+        }
       } finally {
-        isRefreshing = false;
+        state.isRefreshing = false;
       }
     }
 
     function setSource(src){
-      currentSource = src;
+      state.currentSource = src;
       localStorage.setItem(STORAGE_KEYS.source, src);
 
-      tabHouse.classList.toggle('active', src === 'house');
-      tabNature.classList.toggle('active', src === 'nature');
+      dom.tabHouse.classList.toggle('active', src === FACILITY.house.key);
+      dom.tabNature.classList.toggle('active', src === FACILITY.nature.key);
 
-      const msg = src === 'house'
-        ? '추모의집 데이터 불러오는 중...'
-        : '자연장지 데이터 불러오는 중...';
+      const msg = src === FACILITY.house.key
+        ? UI_TEXT.loadingHouse
+        : UI_TEXT.loadingNature;
 
       load(false, msg);
     }
 
-    tabHouse.addEventListener('click', () => {
-      if (currentSource === 'house') return;
-      setSource('house');
-    });
-
-    tabNature.addEventListener('click', () => {
-      if (currentSource === 'nature') return;
-      setSource('nature');
-    });
-
-    datePicker.addEventListener('change', () => {
-      load(false, '데이터 불러오는 중...');
-    });
-
-    sheetCancelBtn.addEventListener('click', closeSheet);
-    sheetSaveBtn.addEventListener('click', saveModalStatus);
-
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeSheet();
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet();
-    });
-
-    listArea.addEventListener('click', (e) => {
-      const openBtn = e.target.closest('[data-open]');
-      if (openBtn){
-        openSheet(parseInt(openBtn.getAttribute('data-open'), 10));
-      }
-    });
-
+    /* =========================================
+     * 14) FAB / 스크롤
+     * ========================================= */
     function updateFAB(){
       const y = window.scrollY || document.documentElement.scrollTop || 0;
-      const showTop = y > 220;
-      fabTop.classList.toggle('show', showTop);
-      fabRefresh.classList.add('show');
+      dom.fabTop.classList.toggle('show', y > 220);
+      dom.fabRefresh.classList.add('show');
     }
 
-    fabTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    function onResize(){
+      const next = computePageSize();
+      if (next !== state.pageSize){
+        state.pageSize = next;
+      }
+      updateFAB();
+    }
 
-    fabRefresh.addEventListener('click', async () => {
-      await doRefresh(true);
-    });
-
-    window.addEventListener('scroll', updateFAB, { passive:true });
-
-    let startY = 0;
-    let pulling = false;
-    let pullDist = 0;
-
-    const PTR_MAX = 64;
-    const PTR_TH = 60;
-    const DAMP = 0.52;
-
-    const R = 9;
-    const CIRC = 2 * Math.PI * R;
-
+    /* =========================================
+     * 15) PTR
+     * ========================================= */
     function atTop(){
       const y = window.scrollY || document.documentElement.scrollTop || 0;
       return y <= 0;
     }
 
     function canPTR(){
-      return atTop() && !isRefreshing && !overlay.classList.contains('show');
+      return atTop() && !state.isRefreshing && !dom.overlay.classList.contains('show');
     }
 
     function setPullProgress(ratio){
       const p = Math.max(0, Math.min(ratio, 1));
-      ptrProg.style.strokeDasharray = String(CIRC.toFixed(2));
-      ptrProg.style.strokeDashoffset = String((CIRC * (1 - p)).toFixed(2));
+      dom.ptrProg.style.strokeDasharray = String(PTR_RING_CIRC.toFixed(2));
+      dom.ptrProg.style.strokeDashoffset = String((PTR_RING_CIRC * (1 - p)).toFixed(2));
     }
 
     function setPullUI(dist){
-      const d = Math.max(0, Math.min(dist, PTR_MAX));
-      pullDist = d;
+      const d = Math.max(0, Math.min(dist, APP_CONFIG.ptrMax));
+      state.pull.pullDist = d;
 
       if (d > 0){
-        ptrEl.classList.add('visible');
-        ptrEl.setAttribute('aria-hidden', 'false');
+        dom.ptrEl.classList.add('visible');
+        dom.ptrEl.setAttribute('aria-hidden', 'false');
       }
 
-      const p = d / PTR_TH;
+      const p = d / APP_CONFIG.ptrThreshold;
       setPullProgress(p);
-      statusEl.textContent = (d >= PTR_TH) ? '놓아서 새로고침' : '당겨서 새로고침';
+      dom.ptrStatus.textContent = (d >= APP_CONFIG.ptrThreshold)
+        ? '놓아서 새로고침'
+        : '당겨서 새로고침';
     }
 
     function resetPullUI(){
-      ptrEl.classList.remove('visible');
-      ptrEl.setAttribute('aria-hidden', 'true');
-      pullDist = 0;
+      dom.ptrEl.classList.remove('visible');
+      dom.ptrEl.setAttribute('aria-hidden', 'true');
+      state.pull.pullDist = 0;
       setPullProgress(0);
-      ptrRing.classList.remove('loading');
-      statusEl.textContent = '당겨서 새로고침';
+      dom.ptrRing.classList.remove('loading');
+      dom.ptrStatus.textContent = '당겨서 새로고침';
     }
 
-    document.addEventListener('touchstart', (e) => {
-      if (!canPTR()) return;
-      if (e.touches.length !== 1) return;
-      startY = e.touches[0].clientY;
-      pulling = true;
-      ptrRing.classList.remove('loading');
-    }, { passive: true });
+    /* =========================================
+     * 16) 이벤트 바인딩
+     * ========================================= */
+    function bindEvents(){
+      dom.tabHouse.addEventListener('click', () => {
+        if (state.currentSource === FACILITY.house.key) return;
+        setSource(FACILITY.house.key);
+      });
 
-    document.addEventListener('touchmove', (e) => {
-      if (!pulling || !canPTR()) return;
-      if (e.touches.length !== 1) return;
+      dom.tabNature.addEventListener('click', () => {
+        if (state.currentSource === FACILITY.nature.key) return;
+        setSource(FACILITY.nature.key);
+      });
 
-      const diff = (e.touches[0].clientY - startY) * DAMP;
-      if (diff <= 0) return;
+      dom.datePicker.addEventListener('change', () => {
+        load(false, UI_TEXT.loading);
+      });
 
-      e.preventDefault();
-      setPullUI(diff);
-    }, { passive: false });
+      dom.sheetCancelBtn.addEventListener('click', closeSheet);
+      dom.sheetSaveBtn.addEventListener('click', saveModalStatus);
 
-    document.addEventListener('touchend', async () => {
-      if (!pulling) return;
-      pulling = false;
+      dom.overlay.addEventListener('click', (e) => {
+        if (e.target === dom.overlay) closeSheet();
+      });
 
-      if (pullDist >= PTR_TH){
-        statusEl.textContent = '새로고침 중...';
-        ptrRing.classList.add('loading');
-        ptrEl.classList.add('visible');
-        ptrEl.setAttribute('aria-hidden', 'false');
-
-        try{
-          await doRefresh(false);
-          toast('새로고침 완료', 1400);
-        } finally {
-          resetPullUI();
-          startY = 0;
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && dom.overlay.classList.contains('show')){
+          closeSheet();
         }
-      } else {
-        resetPullUI();
-        startY = 0;
-      }
-    }, { passive: true });
+      });
 
-    function onResize(){
-      const next = computePageSize();
-      if (next !== pageSize){
-        pageSize = next;
-      }
-      updateFAB();
+      dom.listArea.addEventListener('click', (e) => {
+        const openBtn = e.target.closest('[data-open]');
+        if (openBtn){
+          openSheet(parseInt(openBtn.getAttribute('data-open'), 10));
+        }
+      });
+
+      dom.fabTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      dom.fabRefresh.addEventListener('click', async () => {
+        await doRefresh(true);
+      });
+
+      window.addEventListener('scroll', updateFAB, { passive:true });
+      window.addEventListener('resize', onResize, { passive:true });
+      window.addEventListener('orientationchange', onResize, { passive:true });
+
+      document.addEventListener('touchstart', (e) => {
+        if (!canPTR()) return;
+        if (e.touches.length !== 1) return;
+
+        state.pull.startY = e.touches[0].clientY;
+        state.pull.pulling = true;
+        dom.ptrRing.classList.remove('loading');
+      }, { passive: true });
+
+      document.addEventListener('touchmove', (e) => {
+        if (!state.pull.pulling || !canPTR()) return;
+        if (e.touches.length !== 1) return;
+
+        const diff = (e.touches[0].clientY - state.pull.startY) * APP_CONFIG.ptrDamp;
+        if (diff <= 0) return;
+
+        e.preventDefault();
+        setPullUI(diff);
+      }, { passive: false });
+
+      document.addEventListener('touchend', async () => {
+        if (!state.pull.pulling) return;
+        state.pull.pulling = false;
+
+        if (state.pull.pullDist >= APP_CONFIG.ptrThreshold){
+          dom.ptrStatus.textContent = UI_TEXT.loadingRefresh;
+          dom.ptrRing.classList.add('loading');
+          dom.ptrEl.classList.add('visible');
+          dom.ptrEl.setAttribute('aria-hidden', 'false');
+
+          try{
+            await doRefresh(false);
+            toast(UI_TEXT.refreshComplete, 1400);
+          } finally {
+            resetPullUI();
+            state.pull.startY = 0;
+          }
+        } else {
+          resetPullUI();
+          state.pull.startY = 0;
+        }
+      }, { passive: true });
     }
 
-    window.addEventListener('resize', onResize, { passive:true });
-    window.addEventListener('orientationchange', onResize, { passive:true });
-
-    window.addEventListener('load', () => {
-      pageSize = computePageSize();
+    /* =========================================
+     * 17) 초기화
+     * ========================================= */
+    function init(){
+      state.pageSize = computePageSize();
 
       const saved = localStorage.getItem(STORAGE_KEYS.source);
-      datePicker.value = TODAY;
+      const initialSource = (saved === FACILITY.nature.key || saved === FACILITY.house.key)
+        ? saved
+        : FACILITY.house.key;
 
-      const initialSource = (saved === 'nature' || saved === 'house') ? saved : 'house';
-      currentSource = initialSource;
+      state.currentSource = initialSource;
+      state.currentSelectedDate = state.today;
 
-      tabHouse.classList.toggle('active', initialSource === 'house');
-      tabNature.classList.toggle('active', initialSource === 'nature');
+      dom.datePicker.value = state.today;
+
+      dom.tabHouse.classList.toggle('active', initialSource === FACILITY.house.key);
+      dom.tabNature.classList.toggle('active', initialSource === FACILITY.nature.key);
 
       setPullProgress(0);
       updateFAB();
-      setHeaderLoading('초기 데이터 불러오는 중...');
+      setHeaderLoading(UI_TEXT.loadingInitial);
 
-      load(false, '초기 데이터 불러오는 중...');
-    });
+      bindEvents();
+      load(false, UI_TEXT.loadingInitial);
+    }
+
+    window.addEventListener('load', init);
   </script>
 </body>
 </html>
