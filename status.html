@@ -650,29 +650,28 @@
     .cremSubWrap{
       display:flex;
       flex-direction:column;
-      gap: 4px;
+      gap: 6px;
       min-width:0;
       width:100%;
       padding-right: 0;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     .cremSubLine{
       display:block;
       width:100%;
       min-width:0;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      white-space:normal;
+      overflow:visible;
+      text-overflow:clip;
       color: rgba(31,42,55,.74);
       font-weight:900;
-      font-size: clamp(.80rem, 2.65vw, .92rem);
-      line-height: calc(1.18 * var(--scale-lh));
-      letter-spacing: -0.02em;
+      font-size: clamp(.92rem, 2.95vw, 1.02rem);
+      line-height: calc(1.28 * var(--scale-lh));
+      letter-spacing: -0.01em;
       text-align:left;
-      word-break: normal;
-      overflow-wrap: normal;
-      transform-origin: left center;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
     }
 
     .cremPerson{
@@ -1139,7 +1138,7 @@
       }
 
       .cremSubLine{
-        font-size: clamp(.76rem, 2.5vw, .88rem);
+        font-size: clamp(.88rem, 2.8vw, .98rem);
       }
     }
 
@@ -1163,8 +1162,8 @@
       }
 
       .cremSubLine{
-        font-size: clamp(.72rem, 2.35vw, .82rem);
-        letter-spacing: -0.025em;
+        font-size: clamp(.84rem, 2.7vw, .94rem);
+        letter-spacing: -0.015em;
       }
     }
 
@@ -2354,7 +2353,7 @@
       if (mode === 'ret' || !cremMap) return '';
       const lines = cremDetailLines(item, cremMap);
       if (!lines.length) return '';
-      return `<div class="cremSubWrap">${lines.map(line => `<div class="cremSubLine js-fit-text" data-max-scale="1" data-min-scale="0.8" title="${esc(line)}">${esc(line)}</div>`).join('')}</div>`;
+      return `<div class="cremSubWrap">${lines.map(line => `<div class="cremSubLine" title="${esc(line)}">${esc(line)}</div>`).join('')}</div>`;
     }
 
     function cremGroupRowHTML(group, idx){
