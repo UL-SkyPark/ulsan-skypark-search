@@ -24,12 +24,12 @@
     "burnChasu": "03"
   },
   {
-    "deadId": "1653696",
-    "deadName": "김태선",
+    "deadId": "1653739",
+    "deadName": "정영덕",
     "burnDate": "2026-03-10",
     "burnStrTime": null,
     "burnEndTime": null,
-    "burnChasu": "03"
+    "burnChasu": "04"
   },
   {
     "deadId": "1653705",
@@ -94,5 +94,13 @@
     "burnStrTime": "08:27",
     "burnEndTime": null,
     "burnChasu": "02"
+  },
+  {
+    "deadId": "1653696",
+    "deadName": "김태선",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "09:13",
+    "burnEndTime": null,
+    "burnChasu": "03"
   }
 ]
