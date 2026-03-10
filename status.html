@@ -100,78 +100,6 @@
       text-rendering: optimizeLegibility;
     }
 
-    .pull-to-refresh{
-      position: fixed;
-      top: calc(10px + env(safe-area-inset-top));
-      left: 50%;
-      transform: translate(-50%, -140%);
-      height: 44px;
-      padding: 0 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.96);
-      border: 1px solid rgba(217,224,234,0.90);
-      box-shadow: 0 10px 30px rgba(15,23,42,0.12);
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 10001;
-      transition: transform 240ms cubic-bezier(.2,.9,.2,1);
-      will-change: transform;
-      pointer-events: none;
-    }
-
-    .pull-to-refresh.visible{
-      transform: translate(-50%, 0);
-    }
-
-    .ptr-ring{
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      position: relative;
-      flex: 0 0 auto;
-    }
-
-    .ptr-ring svg{
-      width: 22px;
-      height: 22px;
-      display:block;
-      transform: rotate(-90deg);
-      transition: opacity 120ms ease;
-    }
-
-    .ptr-ring .spin{
-      position:absolute;
-      inset:0;
-      border-radius:50%;
-      border: 2px solid rgba(203,213,225,0.9);
-      border-top-color: rgba(15,23,42,0.9);
-      opacity: 0;
-      animation: spin 0.9s linear infinite;
-      transition: opacity 120ms ease;
-    }
-
-    .ptr-ring.loading .spin{
-      opacity: 1;
-    }
-
-    .ptr-ring.loading svg{
-      opacity: 0;
-    }
-
-    .ptr-status{
-      font-weight: 900;
-      font-size: var(--fs-sm);
-      color: rgba(15,23,42,0.86);
-      letter-spacing: var(--ls-base);
-      white-space: nowrap;
-      line-height: var(--lh-tight);
-    }
-
-    @keyframes spin{
-      to { transform: rotate(360deg); }
-    }
-
     .app{
       max-width: 980px;
       margin: 0 auto;
@@ -588,6 +516,10 @@
       letter-spacing: var(--ls-base);
       flex: 0 0 auto;
       margin-top: calc(1px * var(--scale-ui));
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
     }
 
     .statusPill.done{
@@ -773,14 +705,6 @@
       color: rgba(31,42,55,.92);
       background: #fff;
       outline: none;
-    }
-
-    .statusHint{
-      font-size: var(--fs-xxs);
-      color: rgba(31,42,55,.62);
-      line-height: calc(var(--lh-base) * var(--scale-lh));
-      font-weight: 900;
-      letter-spacing: var(--ls-base);
     }
 
     .sheet-actions{
@@ -973,6 +897,10 @@
       letter-spacing: var(--ls-base);
     }
 
+    @keyframes spin{
+      to { transform: rotate(360deg); }
+    }
+
     @media (max-width: 560px){
       .seg{
         flex: 1 1 100%;
@@ -998,14 +926,12 @@
     }
 
     @media (prefers-reduced-motion: reduce){
-      .pull-to-refresh,
       .fab,
       .sheet,
       .loadingOverlay{
         transition: none !important;
       }
 
-      .ptr-ring .spin,
       .spinner{
         animation: none !important;
       }
@@ -1014,18 +940,6 @@
 </head>
 
 <body>
-  <div id="pull-to-refresh" class="pull-to-refresh" aria-hidden="true">
-    <div id="ptrRing" class="ptr-ring" aria-hidden="true">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="9" stroke="rgba(203,213,225,0.85)" stroke-width="2.4" fill="none"></circle>
-        <circle id="ptrProg" cx="12" cy="12" r="9" stroke="rgba(15,23,42,0.88)" stroke-width="2.4" fill="none"
-                stroke-linecap="round" stroke-dasharray="56.55" stroke-dashoffset="56.55"></circle>
-      </svg>
-      <div class="spin" aria-hidden="true"></div>
-    </div>
-    <div id="ptr-status" class="ptr-status">당겨서 새로고침</div>
-  </div>
-
   <div class="app" id="app">
     <div class="top" id="topBar">
       <div class="header">
@@ -1080,7 +994,6 @@
             <div class="statusBox">
               <div class="statusLabel" id="modalCurrentStatusText">현재 상태 -</div>
               <select id="modalStatusSelect" class="statusSelect"></select>
-              <div class="statusHint">저장 시 다른 직원 화면에도 동일하게 반영됩니다.</div>
             </div>
           </div>
         </div>
@@ -1129,10 +1042,7 @@
       sharedStatusCacheMs: 10000,
       pageSizeSmall: 28,
       pageSizeMedium: 32,
-      pageSizeLarge: 40,
-      ptrMax: 64,
-      ptrThreshold: 60,
-      ptrDamp: 0.52
+      pageSizeLarge: 40
     };
 
     const STORAGE_KEYS = {
@@ -1190,9 +1100,6 @@
       self: '자체',
       orphan: '무연고'
     };
-
-    const PTR_RING_RADIUS = 9;
-    const PTR_RING_CIRC = 2 * Math.PI * PTR_RING_RADIUS;
 
     /* =========================================
      * 2) 기본 유틸
@@ -1330,11 +1237,6 @@
 
       refDateText: $('#refDateText'),
 
-      ptrEl: $('#pull-to-refresh'),
-      ptrStatus: $('#ptr-status'),
-      ptrRing: $('#ptrRing'),
-      ptrProg: $('#ptrProg'),
-
       fabTop: $('#fabTop'),
       fabRefresh: $('#fabRefresh'),
 
@@ -1387,12 +1289,6 @@
       observer: null,
       lastCremMapForRender: null,
       lastFuneralMapForRender: null,
-
-      pull: {
-        startY: 0,
-        pulling: false,
-        pullDist: 0
-      },
 
       modal: {
         index: -1,
@@ -1847,9 +1743,9 @@
         const en = fmtTime(rec?.burnEndTime);
 
         if (!st) return '화장접수';
-        if (st && !en) return `화장시작: ${st}, 화장중}`;
+        if (st && !en) return `화장시작: ${st}, 화장중`;
         return `화장시작: ${st}, 화장종료: ${en}`;
-      }).map(line => line.replace('화장중}', '화장중'));
+      });
     }
 
     function nameKeySetFromDisplay(displayName){
@@ -1967,18 +1863,6 @@
         return (status === STATUS_TEXT.retDone) ? 'retDone' : 'ret';
       }
       return (status === getRecvDoneBySource(src)) ? 'done' : 'recv';
-    }
-
-    function getRecvPendingBySource(src){
-      return src === FACILITY.nature.key
-        ? STATUS_TEXT.recvPendingNature
-        : STATUS_TEXT.recvPendingHouse;
-    }
-
-    function getRecvDoneBySource(src){
-      return src === FACILITY.nature.key
-        ? STATUS_TEXT.recvDoneNature
-        : STATUS_TEXT.recvDoneHouse;
     }
 
     function statusPillClass(mode, status){
@@ -2137,7 +2021,9 @@
                     </div>
                   </div>
                 </button>
-                <div class="${statusPillClass(mode, status)}">${esc(status)}</div>
+                <button class="${statusPillClass(mode, status)}" type="button" data-open="${idx}" aria-label="상태 상세 보기">
+                  ${esc(status)}
+                </button>
               </div>
               ${cremLinesHTML(item, cremMap, mode)}
             </div>
@@ -2355,9 +2241,6 @@
         return;
       }
 
-      const ok = window.confirm(`${state.modal.headerNo}\n상태를 "${next}"로 변경하시겠습니까?`);
-      if (!ok) return;
-
       try{
         dom.sheetSaveBtn.disabled = true;
 
@@ -2513,50 +2396,7 @@
     }
 
     /* =========================================
-     * 15) PTR
-     * ========================================= */
-    function atTop(){
-      const y = window.scrollY || document.documentElement.scrollTop || 0;
-      return y <= 0;
-    }
-
-    function canPTR(){
-      return atTop() && !state.isRefreshing && !dom.overlay.classList.contains('show');
-    }
-
-    function setPullProgress(ratio){
-      const p = Math.max(0, Math.min(ratio, 1));
-      dom.ptrProg.style.strokeDasharray = String(PTR_RING_CIRC.toFixed(2));
-      dom.ptrProg.style.strokeDashoffset = String((PTR_RING_CIRC * (1 - p)).toFixed(2));
-    }
-
-    function setPullUI(dist){
-      const d = Math.max(0, Math.min(dist, APP_CONFIG.ptrMax));
-      state.pull.pullDist = d;
-
-      if (d > 0){
-        dom.ptrEl.classList.add('visible');
-        dom.ptrEl.setAttribute('aria-hidden', 'false');
-      }
-
-      const p = d / APP_CONFIG.ptrThreshold;
-      setPullProgress(p);
-      dom.ptrStatus.textContent = (d >= APP_CONFIG.ptrThreshold)
-        ? '놓아서 새로고침'
-        : '당겨서 새로고침';
-    }
-
-    function resetPullUI(){
-      dom.ptrEl.classList.remove('visible');
-      dom.ptrEl.setAttribute('aria-hidden', 'true');
-      state.pull.pullDist = 0;
-      setPullProgress(0);
-      dom.ptrRing.classList.remove('loading');
-      dom.ptrStatus.textContent = '당겨서 새로고침';
-    }
-
-    /* =========================================
-     * 16) 이벤트 바인딩
+     * 15) 이벤트 바인딩
      * ========================================= */
     function bindEvents(){
       dom.tabHouse.addEventListener('click', () => {
@@ -2604,53 +2444,10 @@
       window.addEventListener('scroll', updateFAB, { passive:true });
       window.addEventListener('resize', onResize, { passive:true });
       window.addEventListener('orientationchange', onResize, { passive:true });
-
-      document.addEventListener('touchstart', (e) => {
-        if (!canPTR()) return;
-        if (e.touches.length !== 1) return;
-
-        state.pull.startY = e.touches[0].clientY;
-        state.pull.pulling = true;
-        dom.ptrRing.classList.remove('loading');
-      }, { passive: true });
-
-      document.addEventListener('touchmove', (e) => {
-        if (!state.pull.pulling || !canPTR()) return;
-        if (e.touches.length !== 1) return;
-
-        const diff = (e.touches[0].clientY - state.pull.startY) * APP_CONFIG.ptrDamp;
-        if (diff <= 0) return;
-
-        e.preventDefault();
-        setPullUI(diff);
-      }, { passive: false });
-
-      document.addEventListener('touchend', async () => {
-        if (!state.pull.pulling) return;
-        state.pull.pulling = false;
-
-        if (state.pull.pullDist >= APP_CONFIG.ptrThreshold){
-          dom.ptrStatus.textContent = UI_TEXT.loadingRefresh;
-          dom.ptrRing.classList.add('loading');
-          dom.ptrEl.classList.add('visible');
-          dom.ptrEl.setAttribute('aria-hidden', 'false');
-
-          try{
-            await doRefresh(false);
-            toast(UI_TEXT.refreshComplete, 1400);
-          } finally {
-            resetPullUI();
-            state.pull.startY = 0;
-          }
-        } else {
-          resetPullUI();
-          state.pull.startY = 0;
-        }
-      }, { passive: true });
     }
 
     /* =========================================
-     * 17) 초기화
+     * 16) 초기화
      * ========================================= */
     function init(){
       state.pageSize = computePageSize();
@@ -2668,7 +2465,6 @@
       dom.tabHouse.classList.toggle('active', initialSource === FACILITY.house.key);
       dom.tabNature.classList.toggle('active', initialSource === FACILITY.nature.key);
 
-      setPullProgress(0);
       updateFAB();
       setHeaderLoading(UI_TEXT.loadingInitial);
 
