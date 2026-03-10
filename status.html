@@ -306,114 +306,6 @@
       justify-content:center;
     }
 
-    .alertGroup{
-      flex: 1 1 100%;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: calc(10px * var(--scale-ui));
-      min-width: 0;
-    }
-
-    .alertField{
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: calc(9px * var(--scale-ui)) calc(11px * var(--scale-ui));
-      display:flex;
-      flex-direction:column;
-      gap: calc(8px * var(--scale-ui));
-      min-width: 0;
-    }
-
-    .alertHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: calc(10px * var(--scale-ui));
-    }
-
-    .alertTitle{
-      color: var(--muted);
-      font-weight: 900;
-      font-size: var(--fs-xs);
-      letter-spacing: var(--ls-base);
-      white-space: nowrap;
-      line-height: var(--lh-tight);
-    }
-
-    .alertLabel{
-      font-weight: 950;
-      color: rgba(31,42,55,.92);
-      font-size: var(--fs-md);
-      letter-spacing: var(--ls-base);
-      line-height: var(--lh-tight);
-    }
-
-    .switchWrap{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: calc(10px * var(--scale-ui));
-      min-height: calc(38px * var(--scale-ui));
-    }
-
-    .switch{
-      position: relative;
-      width: 54px;
-      height: 32px;
-      flex: 0 0 auto;
-    }
-
-    .switch input{
-      position:absolute;
-      inset:0;
-      opacity:0;
-      width:100%;
-      height:100%;
-      margin:0;
-      cursor:pointer;
-    }
-
-    .switchSlider{
-      position:absolute;
-      inset:0;
-      border-radius:999px;
-      background:#dbe3ee;
-      transition: background .18s ease;
-      border: 1px solid rgba(201,210,223,0.95);
-    }
-
-    .switchSlider::after{
-      content:"";
-      position:absolute;
-      top:3px;
-      left:3px;
-      width:24px;
-      height:24px;
-      border-radius:50%;
-      background:#fff;
-      box-shadow: 0 2px 8px rgba(15,23,42,0.18);
-      transition: transform .18s ease;
-    }
-
-    .switch input:checked + .switchSlider{
-      background: rgba(31,78,121,.88);
-      border-color: rgba(31,78,121,.88);
-    }
-
-    .switch input:checked + .switchSlider::after{
-      transform: translateX(22px);
-    }
-
-    .alertState{
-      font-size: var(--fs-xs);
-      color: rgba(31,42,55,.62);
-      font-weight: 900;
-      letter-spacing: var(--ls-base);
-      line-height: var(--lh-tight);
-      white-space: nowrap;
-    }
-
     .content{
       padding: calc(10px * var(--scale-ui)) calc(14px * var(--scale-ui)) calc(14px * var(--scale-ui));
       background: linear-gradient(180deg, #ffffff, #f6f8fb);
@@ -1020,10 +912,6 @@
         grid-template-columns: 1fr 1fr;
       }
 
-      .alertGroup{
-        grid-template-columns: 1fr;
-      }
-
       .sheet{
         width: min(96vw, 640px);
       }
@@ -1040,9 +928,7 @@
     @media (prefers-reduced-motion: reduce){
       .fab,
       .sheet,
-      .loadingOverlay,
-      .switchSlider,
-      .switchSlider::after{
+      .loadingOverlay{
         transition: none !important;
       }
 
@@ -1083,36 +969,6 @@
             <div class="k" id="countTitle">현황</div>
             <div class="v" style="width:100%;">
               <div class="countCenter" id="countText">-</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="alertGroup">
-          <div class="alertField">
-            <div class="alertHeader">
-              <div class="alertTitle">화장종료 알림</div>
-              <div class="alertState" id="alertStateHouse">OFF</div>
-            </div>
-            <div class="switchWrap">
-              <div class="alertLabel">추모의집</div>
-              <label class="switch" aria-label="추모의집 화장종료 알림">
-                <input type="checkbox" id="alertSwitchHouse">
-                <span class="switchSlider"></span>
-              </label>
-            </div>
-          </div>
-
-          <div class="alertField">
-            <div class="alertHeader">
-              <div class="alertTitle">화장종료 알림</div>
-              <div class="alertState" id="alertStateNature">OFF</div>
-            </div>
-            <div class="switchWrap">
-              <div class="alertLabel">자연장지</div>
-              <label class="switch" aria-label="자연장지 화장종료 알림">
-                <input type="checkbox" id="alertSwitchNature">
-                <span class="switchSlider"></span>
-              </label>
             </div>
           </div>
         </div>
@@ -1186,14 +1042,11 @@
       sharedStatusCacheMs: 10000,
       pageSizeSmall: 28,
       pageSizeMedium: 32,
-      pageSizeLarge: 40,
-      cremWatchIntervalMs: 15000
+      pageSizeLarge: 40
     };
 
     const STORAGE_KEYS = {
-      source: 'uic_source_selected',
-      alertHouse: 'uic_alert_house_enabled',
-      alertNature: 'uic_alert_nature_enabled'
+      source: 'uic_source_selected'
     };
 
     const UI_TEXT = {
@@ -1209,9 +1062,7 @@
       sharedStatusSaveError: '공유 상태 저장에 실패했습니다.',
       sharedApiNotConfigured: '공유 저장 API 주소가 설정되지 않았습니다.',
       sharedApiInvalid: '공유 저장 API 주소 형식이 올바르지 않습니다.',
-      dataFileNotFound: '데이터 파일을 찾을 수 없습니다.',
-      notifyPermissionDenied: '알림 권한이 차단되어 브라우저 알림은 표시되지 않습니다.',
-      notifyPermissionNeed: '알림 권한을 허용하면 브라우저 알림으로 받을 수 있습니다.'
+      dataFileNotFound: '데이터 파일을 찾을 수 없습니다.'
     };
 
     const STATUS_TEXT = {
@@ -1288,10 +1139,6 @@
       const hh = String(date.getHours()).padStart(2, '0');
       const mm = String(date.getMinutes()).padStart(2, '0');
       return `${hh}:${mm}`;
-    }
-
-    function facilityLabelFromKey(key){
-      return key === FACILITY.nature.key ? FACILITY.nature.label : FACILITY.house.label;
     }
 
     const pad2 = (n) => String(n ?? '').trim().padStart(2, '0').slice(-2) || '00';
@@ -1390,11 +1237,6 @@
 
       refDateText: $('#refDateText'),
 
-      alertSwitchHouse: $('#alertSwitchHouse'),
-      alertSwitchNature: $('#alertSwitchNature'),
-      alertStateHouse: $('#alertStateHouse'),
-      alertStateNature: $('#alertStateNature'),
-
       fabTop: $('#fabTop'),
       fabRefresh: $('#fabRefresh'),
 
@@ -1441,20 +1283,12 @@
       },
       cremMapCache: null,
       funeralMapCache: null,
-      deadFacilityMap: null,
 
       pageSize: 40,
       renderedCount: 0,
       observer: null,
       lastCremMapForRender: null,
       lastFuneralMapForRender: null,
-
-      alertPrefs: {
-        house: false,
-        nature: false
-      },
-      cremEndSnapshot: new Map(),
-      cremWatchTimer: null,
 
       modal: {
         index: -1,
@@ -1506,30 +1340,6 @@
       clearTimeout(toast._t);
       toast._t = setTimeout(() => t.classList.remove('show'), ms);
     };
-
-    function updateAlertSwitchUI(){
-      dom.alertSwitchHouse.checked = !!state.alertPrefs.house;
-      dom.alertSwitchNature.checked = !!state.alertPrefs.nature;
-      dom.alertStateHouse.textContent = state.alertPrefs.house ? 'ON' : 'OFF';
-      dom.alertStateNature.textContent = state.alertPrefs.nature ? 'ON' : 'OFF';
-    }
-
-    function loadAlertPrefs(){
-      state.alertPrefs.house = localStorage.getItem(STORAGE_KEYS.alertHouse) === '1';
-      state.alertPrefs.nature = localStorage.getItem(STORAGE_KEYS.alertNature) === '1';
-      updateAlertSwitchUI();
-    }
-
-    function saveAlertPref(key, enabled){
-      if (key === FACILITY.house.key){
-        state.alertPrefs.house = !!enabled;
-        localStorage.setItem(STORAGE_KEYS.alertHouse, enabled ? '1' : '0');
-      } else if (key === FACILITY.nature.key){
-        state.alertPrefs.nature = !!enabled;
-        localStorage.setItem(STORAGE_KEYS.alertNature, enabled ? '1' : '0');
-      }
-      updateAlertSwitchUI();
-    }
 
     /* =========================================
      * 7) 데이터 로드
@@ -1583,42 +1393,6 @@
       }
 
       state.funeralMapCache = map;
-      return map;
-    }
-
-    async function ensureDeadFacilityMap(force = false){
-      if (state.deadFacilityMap && !force) return state.deadFacilityMap;
-
-      const [houseData, natureData] = await Promise.all([
-        ensureData(FACILITY.house.key, force),
-        ensureData(FACILITY.nature.key, force)
-      ]);
-
-      const map = new Map();
-
-      const pushFacility = (deadId, facilityKey) => {
-        const id = toTrimmedString(deadId);
-        if (!id) return;
-
-        if (!map.has(id)){
-          map.set(id, new Set());
-        }
-        map.get(id).add(facilityKey);
-      };
-
-      for (const row of (Array.isArray(houseData) ? houseData : [])){
-        pushFacility(row?.deadId, FACILITY.house.key);
-      }
-
-      for (const row of (Array.isArray(natureData) ? natureData : [])){
-        if (Array.isArray(row?.deadId)){
-          row.deadId.forEach(id => pushFacility(id, FACILITY.nature.key));
-        } else {
-          pushFacility(row?.deadId, FACILITY.nature.key);
-        }
-      }
-
-      state.deadFacilityMap = map;
       return map;
     }
 
@@ -1696,160 +1470,7 @@
     }
 
     /* =========================================
-     * 9) 알림
-     * ========================================= */
-    async function requestNotificationPermissionIfNeeded(){
-      try{
-        if (!('Notification' in window)) return 'unsupported';
-        if (Notification.permission === 'granted') return 'granted';
-        if (Notification.permission === 'denied') return 'denied';
-        return await Notification.requestPermission();
-      } catch (err){
-        console.error(err);
-        return 'error';
-      }
-    }
-
-    function notifyCremEnd(deadId, name, endTime, facilities){
-      const facilityText = facilities.length ? `[${facilities.map(facilityLabelFromKey).join(', ')}] ` : '';
-      const msg = `${facilityText}${name || deadId} 화장종료 ${endTime}`;
-
-      toast(msg, 3200);
-
-      try{
-        if ('Notification' in window && Notification.permission === 'granted'){
-          new Notification('울산하늘공원 화장종료', {
-            body: msg,
-            icon: './images/symbol.png'
-          });
-        }
-      } catch (err){
-        console.error(err);
-      }
-    }
-
-    function buildCremEndSnapshot(cremMap, funeralMap){
-      const snap = new Map();
-
-      if (!cremMap) return snap;
-
-      for (const [deadId, rec] of cremMap.entries()){
-        const id = String(deadId ?? '').trim();
-        if (!id) continue;
-
-        const funeralRec = funeralMap?.get(id);
-        const deadName =
-          toTrimmedString(rec?.deadName) ||
-          toTrimmedString(funeralRec?.deadName) ||
-          '';
-
-        snap.set(id, {
-          endTime: String(rec?.burnEndTime ?? '').trim(),
-          deadName
-        });
-      }
-
-      return snap;
-    }
-
-    function getEnabledFacilitiesForDeadId(deadId){
-      const set = state.deadFacilityMap?.get(String(deadId ?? '').trim());
-      if (!set || !set.size) return [];
-
-      const enabled = [];
-      if (set.has(FACILITY.house.key) && state.alertPrefs.house) enabled.push(FACILITY.house.key);
-      if (set.has(FACILITY.nature.key) && state.alertPrefs.nature) enabled.push(FACILITY.nature.key);
-      return enabled;
-    }
-
-    function detectNewCremEnds(nextSnap){
-      for (const [deadId, nextInfo] of nextSnap.entries()){
-        const prevInfo = state.cremEndSnapshot.get(deadId);
-
-        const prevEnd = String(prevInfo?.endTime ?? '').trim();
-        const nextEnd = String(nextInfo?.endTime ?? '').trim();
-
-        if (!prevEnd && nextEnd){
-          const enabledFacilities = getEnabledFacilitiesForDeadId(deadId);
-          if (!enabledFacilities.length) continue;
-
-          notifyCremEnd(
-            deadId,
-            nextInfo.deadName || deadId,
-            nextEnd,
-            enabledFacilities
-          );
-        }
-      }
-
-      state.cremEndSnapshot = nextSnap;
-    }
-
-    async function watchCremEnds(){
-      try{
-        await ensureDeadFacilityMap(false);
-        const funeralMap = await ensureFuneral(false);
-
-        const raw = await fetchJson(DATA_URLS.crem, true);
-        const arr = Array.isArray(raw) ? raw : [];
-        const cremMap = new Map();
-
-        for (const r of arr){
-          const id = toTrimmedString(r?.deadId);
-          if (id) cremMap.set(id, r);
-        }
-
-        state.cremMapCache = cremMap;
-
-        const nextSnap = buildCremEndSnapshot(cremMap, funeralMap);
-
-        if (state.cremEndSnapshot.size === 0){
-          state.cremEndSnapshot = nextSnap;
-          return;
-        }
-
-        detectNewCremEnds(nextSnap);
-      } catch (err){
-        console.error('화장종료 감시 실패:', err);
-      }
-    }
-
-    function startCremWatch(){
-      if (state.cremWatchTimer){
-        clearInterval(state.cremWatchTimer);
-      }
-
-      watchCremEnds();
-      state.cremWatchTimer = setInterval(watchCremEnds, APP_CONFIG.cremWatchIntervalMs);
-    }
-
-    async function handleAlertToggle(facilityKey, checked){
-      if (checked){
-        const permission = await requestNotificationPermissionIfNeeded();
-
-        if (permission === 'denied'){
-          saveAlertPref(facilityKey, true);
-          toast(UI_TEXT.notifyPermissionDenied, 2200);
-          return;
-        }
-
-        if (permission === 'default' || permission === 'error'){
-          saveAlertPref(facilityKey, false);
-          toast(UI_TEXT.notifyPermissionNeed, 2200);
-          return;
-        }
-
-        saveAlertPref(facilityKey, true);
-        toast(`${facilityLabelFromKey(facilityKey)} 화장종료 알림 ON`, 1600);
-        return;
-      }
-
-      saveAlertPref(facilityKey, false);
-      toast(`${facilityLabelFromKey(facilityKey)} 화장종료 알림 OFF`, 1600);
-    }
-
-    /* =========================================
-     * 10) 데이터 가공
+     * 9) 데이터 가공
      * ========================================= */
     function getRecvPendingBySource(src){
       return src === FACILITY.nature.key
@@ -2229,7 +1850,7 @@
     }
 
     /* =========================================
-     * 11) 렌더용 헬퍼
+     * 10) 렌더용 헬퍼
      * ========================================= */
     function badgeHTML(label){
       if (!label) return '';
@@ -2327,7 +1948,7 @@
     }
 
     /* =========================================
-     * 12) 리스트 렌더링
+     * 11) 리스트 렌더링
      * ========================================= */
     function computePageSize(){
       const w = Math.min(window.innerWidth || 0, window.screen?.width || 0) || 360;
@@ -2500,7 +2121,7 @@
     }
 
     /* =========================================
-     * 13) 모달 렌더링
+     * 12) 모달 렌더링
      * ========================================= */
     function buildModalNameHTML(displayName, badgeLabel){
       return `
@@ -2644,7 +2265,7 @@
     }
 
     /* =========================================
-     * 14) 메인 로드
+     * 13) 메인 로드
      * ========================================= */
     async function load(force = false, loadingMsg = UI_TEXT.loading){
       const myToken = ++state.currentLoadingToken;
@@ -2658,8 +2279,7 @@
         const tasks = [
           loadSharedStatuses(force),
           ensureFuneral(force),
-          ensureData(state.currentSource, force),
-          ensureDeadFacilityMap(force)
+          ensureData(state.currentSource, force)
         ];
 
         if (showCrem){
@@ -2671,7 +2291,7 @@
 
         const funeralMap = results[1];
         const data = results[2];
-        const cremMap = showCrem ? results[4] : null;
+        const cremMap = showCrem ? results[3] : null;
 
         const c = calcCounts(state.currentSource, data, selected);
 
@@ -2731,11 +2351,9 @@
         state.dataCache.nature = null;
         state.cremMapCache = null;
         state.funeralMapCache = null;
-        state.deadFacilityMap = null;
         state.sharedStatusFetchedAt = 0;
 
         await load(true, UI_TEXT.loadingRefresh);
-        await watchCremEnds();
         updateHeaderMeta();
 
         if (fromUI){
@@ -2761,7 +2379,7 @@
     }
 
     /* =========================================
-     * 15) FAB / 스크롤
+     * 14) FAB / 스크롤
      * ========================================= */
     function updateFAB(){
       const y = window.scrollY || document.documentElement.scrollTop || 0;
@@ -2778,7 +2396,7 @@
     }
 
     /* =========================================
-     * 16) 이벤트 바인딩
+     * 15) 이벤트 바인딩
      * ========================================= */
     function bindEvents(){
       dom.tabHouse.addEventListener('click', () => {
@@ -2823,21 +2441,13 @@
         await doRefresh(true);
       });
 
-      dom.alertSwitchHouse.addEventListener('change', async (e) => {
-        await handleAlertToggle(FACILITY.house.key, !!e.target.checked);
-      });
-
-      dom.alertSwitchNature.addEventListener('change', async (e) => {
-        await handleAlertToggle(FACILITY.nature.key, !!e.target.checked);
-      });
-
       window.addEventListener('scroll', updateFAB, { passive:true });
       window.addEventListener('resize', onResize, { passive:true });
       window.addEventListener('orientationchange', onResize, { passive:true });
     }
 
     /* =========================================
-     * 17) 초기화
+     * 16) 초기화
      * ========================================= */
     function init(){
       state.pageSize = computePageSize();
@@ -2855,13 +2465,11 @@
       dom.tabHouse.classList.toggle('active', initialSource === FACILITY.house.key);
       dom.tabNature.classList.toggle('active', initialSource === FACILITY.nature.key);
 
-      loadAlertPrefs();
       updateFAB();
       setHeaderLoading(UI_TEXT.loadingInitial);
 
       bindEvents();
       load(false, UI_TEXT.loadingInitial);
-      startCremWatch();
     }
 
     window.addEventListener('load', init);
