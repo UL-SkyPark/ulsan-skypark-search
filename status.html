@@ -493,6 +493,24 @@
       margin-right: 0;
     }
 
+    .tag.objt.body{
+      border-color: rgba(185,28,28,.28);
+      background: linear-gradient(180deg, rgba(220,38,38,.14), rgba(239,68,68,.08));
+      color: rgba(153,27,27,.96);
+    }
+
+    .tag.objt.open{
+      border-color: rgba(30,64,175,.28);
+      background: linear-gradient(180deg, rgba(59,130,246,.14), rgba(96,165,250,.08));
+      color: rgba(30,64,175,.96);
+    }
+
+    .tag.objt.still{
+      border-color: rgba(67,56,202,.28);
+      background: linear-gradient(180deg, rgba(99,102,241,.14), rgba(129,140,248,.08));
+      color: rgba(67,56,202,.96);
+    }
+
     ul{
       list-style:none;
       padding:0;
@@ -695,6 +713,10 @@
       text-overflow:clip;
       display:block;
       text-align:left;
+    }
+
+    .cremName.short{
+      letter-spacing: 0.12em;
     }
 
     .cremTime{
@@ -1579,6 +1601,29 @@
       ) || '-';
     }
 
+    function formatCremNameDisplay(name){
+      const raw = toTrimmedString(name) || '-';
+      const chars = Array.from(raw);
+      const len = chars.length;
+
+      if (len > 4){
+        return {
+          text: `${chars.slice(0, 4).join('')}...`,
+          short: false
+        };
+      }
+
+      if (len <= 2 && raw !== '-'){
+        const pad = '\u00A0'.repeat((4 - len) * 2);
+        return {
+          text: `${raw}${pad}`,
+          short: true
+        };
+      }
+
+      return { text: raw, short: false };
+    }
+
     function cremTimeRangeOf(r){
       const st = cremStartOf(r);
       const en = cremEndOf(r);
@@ -1588,8 +1633,16 @@
       return `${st} ~ 진행중`;
     }
 
+    function cremObjtBadgeClass(label){
+      if (label === '시신') return 'body';
+      if (label === '개장') return 'open';
+      if (label === '사산') return 'still';
+      return '';
+    }
+
     function cremObjtBadgeHTML(label){
-      return `<span class="tag objt">${esc(label)}</span>`;
+      const tone = cremObjtBadgeClass(label);
+      return `<span class="tag objt ${tone}">${esc(label)}</span>`;
     }
 
     function cremGroupState(group){
@@ -2362,12 +2415,16 @@
     }
 
     function cremGroupRowHTML(group, idx){
-      const persons = (group.records || []).map(r => ({
-        name: cremDeadNameOf(r),
-        objt: cremObjtOf(r),
-        timeRange: cremTimeRangeOf(r),
-        disposal: cremDisposalOf(r)
-      }));
+      const persons = (group.records || []).map(r => {
+        const name = cremDeadNameOf(r);
+        return {
+          name,
+          objt: cremObjtOf(r),
+          timeRange: cremTimeRangeOf(r),
+          disposal: cremDisposalOf(r),
+          ...formatCremNameDisplay(name)
+        };
+      });
       const rowCls = cremGroupState(group);
 
       return `
@@ -2383,7 +2440,7 @@
                       <div class="cremLine">
                         <span class="cremPerson">
                           ${cremObjtBadgeHTML(p.objt)}
-                          <span class="cremName" title="${esc(p.name)}">${esc(p.name)}</span>
+                          <span class="cremName ${p.short ? 'short' : ''}" title="${esc(p.name)}">${esc(p.text)}</span>
                         </span>
                         <span class="cremTime">${esc(p.timeRange)}</span>
                         <span class="cremDisp ${cremDisposalClass(p.disposal)}">${esc(p.disposal)}</span>
