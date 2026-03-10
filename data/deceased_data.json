@@ -209248,14 +209248,6 @@
     "retDate": null
   },
   {
-    "deadId": "1653739",
-    "strDate": "2026-03-10",
-    "ensNo": null,
-    "deadName": "정영덕",
-    "applName": "오영미",
-    "retDate": null
-  },
-  {
     "deadId": "1653664",
     "strDate": "2026-03-10",
     "ensNo": "1추모의집-51실-개인단-17046",
@@ -209285,6 +209277,14 @@
     "ensNo": "1추모의집-62실-개인단-22011",
     "deadName": "최영희",
     "applName": "강전환",
+    "retDate": null
+  },
+  {
+    "deadId": "1653739",
+    "strDate": "2026-03-10",
+    "ensNo": "1추모의집-62실-개인단-22012",
+    "deadName": "정영덕",
+    "applName": "오영미",
     "retDate": null
   }
 ]
