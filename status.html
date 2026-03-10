@@ -1620,6 +1620,7 @@
       const raw = toTrimmedString(name) || '-';
       const chars = Array.from(raw);
       const len = chars.length;
+      const hasSpecial = (raw !== '-') && /[^0-9A-Za-z가-힣]/.test(raw);
 
       if (len > 4){
         return {
@@ -1634,11 +1635,11 @@
         return {
           text: `${raw}${pad}`,
           short: true,
-          halfPad: (len === 2)
+          halfPad: (len === 2) || hasSpecial
         };
       }
 
-      return { text: raw, short: false, halfPad: false };
+      return { text: raw, short: false, halfPad: hasSpecial };
     }
 
     function cremTimeRangeOf(r){
