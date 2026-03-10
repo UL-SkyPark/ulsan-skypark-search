@@ -741,10 +741,12 @@
       display:inline-flex;
       align-items:center;
       white-space:nowrap;
+      gap: 1.2ch;
     }
 
     .cremGap{
-      display:inline;
+      display:inline-block;
+      width: 0;
     }
 
     .cremDisp{
@@ -2574,7 +2576,7 @@
                           <span class="cremName ${p.short ? 'short' : ''} ${p.halfPad ? 'halfPad' : ''} ${p.twoChar ? 'twoChar' : ''}" title="${esc(p.name)}">${esc(p.text)}</span>
                         </span>
                         <span class="cremTimeWrap">
-                          <span class="cremTime">${esc(p.timeRange)}</span><span class="cremGap">&nbsp;</span><span class="cremDisp ${cremDisposalClass(p.disposal)}">${esc(p.disposal)}</span>
+                          <span class="cremTime">${esc(p.timeRange)}</span><span class="cremGap" aria-hidden="true"></span><span class="cremDisp ${cremDisposalClass(p.disposal)}">${esc(p.disposal)}</span>
                         </span>
                       </div>
                     `).join('')}
