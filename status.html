@@ -3134,7 +3134,8 @@
 
     async function load(force = false, loadingMsg = UI_TEXT.loading){
       const myToken = ++state.currentLoadingToken;
-      const shouldShowBlockingLoading = force || !hasAllCoreDataCached();
+      const isInitialLoad = !state.initialPaintDone;
+      const shouldShowBlockingLoading = force || isInitialLoad || !hasAllCoreDataCached();
       if (shouldShowBlockingLoading){
         showLoading(loadingMsg);
       }
@@ -3144,11 +3145,16 @@
       const showCremTimesOnOtherTabs = (selected === state.today);
       const shouldSyncSharedStatuses =
         isConfiguredStatusApi() &&
-        (force || !state.sharedStatusFetchedAt || (Date.now() - state.sharedStatusFetchedAt) >= APP_CONFIG.sharedStatusCacheMs);
+        (!isInitialLoad && (force || !state.sharedStatusFetchedAt || (Date.now() - state.sharedStatusFetchedAt) >= APP_CONFIG.sharedStatusCacheMs));
 
       try{
         const allData = await ensureAllData(force);
         if (myToken !== state.currentLoadingToken) return;
+
+        if (isInitialLoad){
+          await loadSharedStatuses(true);
+          if (myToken !== state.currentLoadingToken) return;
+        }
 
         if (state.currentSource === FACILITY.crem.key){
           const filteredRaw = (allData.crem.rows || []).filter(r => cremDateOf(r) === selected);
