@@ -126,39 +126,31 @@
     }
 
     .ptrCard{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(217,224,234,.95);
-      background: rgba(255,255,255,.98);
-      box-shadow: 0 10px 30px rgba(15,23,42,0.12);
-      color:#0f172a;
-      font-weight:900;
-      font-size: var(--fs-sm);
-      letter-spacing: var(--ls-base);
-      line-height: var(--lh-tight);
-      white-space: nowrap;
+      display:grid;
+      place-items:center;
+      width: 30px;
+      height: 30px;
     }
 
     .ptrArrow{
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       flex: 0 0 auto;
       transition: transform .16s ease;
+      opacity: .9;
     }
 
     .ptrSpinner{
-      width: 16px;
-      height: 16px;
+      width: 22px;
+      height: 22px;
       border-radius:50%;
-      border:2px solid #dbe4ef;
+      border:2.5px solid #dbe4ef;
       border-top-color:#1f4e79;
       animation:spin .8s linear infinite;
       display:none;
       flex: 0 0 auto;
+      box-shadow: 0 4px 14px rgba(15,23,42,0.08);
+      background: transparent;
     }
 
     .ptr.refreshing .ptrArrow{
@@ -1161,7 +1153,6 @@
         <path d="M6 13l6 6 6-6"></path>
       </svg>
       <div class="ptrSpinner" aria-hidden="true"></div>
-      <span id="ptrText">아래로 당겨 새로고침</span>
     </div>
   </div>
 
@@ -1178,7 +1169,7 @@
 
       <div class="toolbar">
         <div class="seg" role="tablist" aria-label="시설 선택">
-          <button id="tabCrem" type="button">화장</button>
+          <button id="tabCrem" type="button">화장진행</button>
           <button id="tabHouse" class="active" type="button">추모의집</button>
           <button id="tabNature" type="button">자연장지</button>
         </div>
@@ -1276,7 +1267,7 @@
       loading: '데이터 불러오는 중...',
       loadingInitial: '초기 데이터 불러오는 중...',
       loadingRefresh: '새로고침 중...',
-      loadingCrem: '화장 데이터 불러오는 중...',
+      loadingCrem: '화장진행 데이터 불러오는 중...',
       loadingHouse: '추모의집 데이터 불러오는 중...',
       loadingNature: '자연장지 데이터 불러오는 중...',
       refreshComplete: '새로고침 완료',
@@ -1303,7 +1294,7 @@
     const FACILITY = {
       crem: {
         key: 'crem',
-        label: '화장',
+        label: '화장진행',
         url: './data/crem.json',
         dateKey: 'cremDate'
       },
@@ -1609,8 +1600,7 @@
       loadingOverlay: $('#loadingOverlay'),
       loadingText: $('#loadingText'),
 
-      ptr: $('#pullToRefresh'),
-      ptrText: $('#ptrText')
+      ptr: $('#pullToRefresh')
     };
 
     (function applyIosClass(){
@@ -1711,7 +1701,6 @@
         document.body.classList.remove('ptr-ready');
         dom.ptr.classList.remove('show', 'refreshing');
         dom.ptr.setAttribute('aria-hidden', 'true');
-        dom.ptrText.textContent = '아래로 당겨 새로고침';
         return;
       }
 
@@ -1722,15 +1711,12 @@
       if (mode === 'ready'){
         document.body.classList.add('ptr-ready');
         dom.ptr.classList.remove('refreshing');
-        dom.ptrText.textContent = '놓으면 새로고침';
       } else if (mode === 'refreshing'){
         document.body.classList.remove('ptr-ready');
         dom.ptr.classList.add('refreshing');
-        dom.ptrText.textContent = '새로고침 중...';
       } else {
         document.body.classList.remove('ptr-ready');
         dom.ptr.classList.remove('refreshing');
-        dom.ptrText.textContent = '아래로 당겨 새로고침';
       }
     }
 
