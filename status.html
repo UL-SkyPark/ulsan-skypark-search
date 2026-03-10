@@ -29,8 +29,8 @@
       --fabBottom: 14px;
 
       --fs-xxs: clamp(.68rem, 2.3vw, .78rem);
-      --fs-xs : clamp(.74rem, 2.5vw, .84rem);
-      --fs-sm : clamp(.82rem, 2.7vw, .92rem);
+      --fs-xs : clamp(.78rem, 2.6vw, .88rem);
+      --fs-sm : clamp(.86rem, 2.9vw, .96rem);
       --fs-md : clamp(.92rem, 3.0vw, 1.02rem);
       --fs-lg : clamp(.98rem, 3.2vw, 1.10rem);
       --fs-xl : clamp(1.18rem, 4.2vw, 1.48rem);
@@ -58,7 +58,7 @@
       --row-pad-y: 10px;
       --row-pad-x: 12px;
 
-      --ptrMax: 84px;
+      --ptrMax: 88px;
       --ptrTrigger: 64px;
     }
 
@@ -129,19 +129,36 @@
       background: rgba(255,255,255,.94);
       border: 1px solid rgba(217,224,234,.95);
       box-shadow: 0 8px 20px rgba(15,23,42,0.10);
+      overflow: hidden;
+      position: relative;
     }
 
-    .ptrDot{
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #1f4e79;
-      opacity: .9;
-      transform: scale(.78);
-      transition: transform .16s ease, opacity .16s ease;
+    .ptrProgress{
+      width: 22px;
+      height: 22px;
+      transform: rotate(-90deg);
+    }
+
+    .ptrTrack{
+      fill: none;
+      stroke: #e2e8f0;
+      stroke-width: 2.6;
+    }
+
+    .ptrFill{
+      fill: none;
+      stroke: #1f4e79;
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      stroke-dasharray: 62.83;
+      stroke-dashoffset: 62.83;
+      transition: stroke-dashoffset .08s linear;
     }
 
     .ptrSpinner{
+      position:absolute;
+      inset: 0;
+      margin:auto;
       width: 18px;
       height: 18px;
       border-radius:50%;
@@ -152,7 +169,7 @@
       background: transparent;
     }
 
-    .ptr.refreshing .ptrDot{
+    .ptr.refreshing .ptrProgress{
       display:none;
     }
 
@@ -170,6 +187,8 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      content-visibility: auto;
+      contain-intrinsic-size: 1200px;
     }
 
     .top{
@@ -377,6 +396,8 @@
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: var(--shadow);
+      content-visibility: auto;
+      contain-intrinsic-size: 900px;
     }
 
     .list-head{
@@ -470,42 +491,6 @@
       background: linear-gradient(180deg, rgba(15,23,42,.08), rgba(15,23,42,.04));
       color: rgba(15,23,42,.88);
       margin-right: 0;
-    }
-
-    .statusBadge{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height: 24px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #fff;
-      font-weight: 950;
-      font-size: var(--fs-xxs);
-      line-height: 1;
-      letter-spacing: var(--ls-base);
-      white-space: nowrap;
-      color: rgba(31,42,55,.78);
-      flex: 0 0 auto;
-    }
-
-    .statusBadge.done{
-      border-color: rgba(46,125,50,.22);
-      background: linear-gradient(180deg, rgba(46,125,50,.14), rgba(46,125,50,.08));
-      color: rgba(46,125,50,.95);
-    }
-
-    .statusBadge.retDone{
-      border-color: rgba(126,34,206,.22);
-      background: linear-gradient(180deg, rgba(126,34,206,.14), rgba(126,34,206,.08));
-      color: rgba(126,34,206,.95);
-    }
-
-    .statusBadge.ret{
-      border-color: rgba(180,83,9,.22);
-      background: linear-gradient(180deg, rgba(180,83,9,.14), rgba(180,83,9,.08));
-      color: rgba(180,83,9,.95);
     }
 
     ul{
@@ -681,12 +666,13 @@
       text-overflow:ellipsis;
       color: rgba(31,42,55,.74);
       font-weight:900;
-      font-size: clamp(.68rem, 2.15vw, .78rem);
+      font-size: clamp(.80rem, 2.65vw, .92rem);
       line-height: calc(1.18 * var(--scale-lh));
-      letter-spacing: -0.03em;
+      letter-spacing: -0.02em;
       text-align:left;
       word-break: normal;
       overflow-wrap: normal;
+      transform-origin: left center;
     }
 
     .cremPerson{
@@ -725,17 +711,9 @@
       min-width:0;
     }
 
-    .cremDisp.house{
-      color:#1f4e79;
-    }
-
-    .cremDisp.nature{
-      color:#2e7d32;
-    }
-
-    .cremDisp.yutaek{
-      color:#b45309;
-    }
+    .cremDisp.house{ color:#1f4e79; }
+    .cremDisp.nature{ color:#2e7d32; }
+    .cremDisp.yutaek{ color:#b45309; }
 
     .no-data{
       text-align:center;
@@ -959,6 +937,59 @@
       transform: translateX(-50%) translateY(-6px);
     }
 
+    .savingOverlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.28);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index: 21000;
+      padding: 16px;
+    }
+
+    .savingOverlay.show{
+      display:flex;
+    }
+
+    .savingBox{
+      min-width: 220px;
+      max-width: 90vw;
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(217,224,234,.95);
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 18px 44px rgba(15,23,42,.14);
+      text-align:center;
+    }
+
+    .savingSpinner{
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 3px solid #e5e7eb;
+      border-top-color: #1f4e79;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    .savingTitle{
+      font-weight: 950;
+      color:#0f172a;
+      font-size: var(--fs-md);
+      line-height: var(--lh-tight);
+      letter-spacing: var(--ls-base);
+    }
+
+    .savingDesc{
+      margin-top: 4px;
+      color: rgba(31,42,55,.64);
+      font-weight: 900;
+      font-size: var(--fs-xs);
+      line-height: var(--lh-base);
+      letter-spacing: var(--ls-base);
+    }
+
     .fabs{
       position: fixed;
       right: var(--fabRight);
@@ -1108,7 +1139,7 @@
       }
 
       .cremSubLine{
-        font-size: clamp(.64rem, 2.0vw, .74rem);
+        font-size: clamp(.76rem, 2.5vw, .88rem);
       }
     }
 
@@ -1132,8 +1163,8 @@
       }
 
       .cremSubLine{
-        font-size: clamp(.62rem, 1.95vw, .70rem);
-        letter-spacing: -0.04em;
+        font-size: clamp(.72rem, 2.35vw, .82rem);
+        letter-spacing: -0.025em;
       }
     }
 
@@ -1147,7 +1178,8 @@
       }
 
       .spinner,
-      .ptrSpinner{
+      .ptrSpinner,
+      .savingSpinner{
         animation: none !important;
       }
     }
@@ -1157,7 +1189,10 @@
 <body>
   <div id="pullToRefresh" class="ptr" aria-hidden="true">
     <div class="ptrCard">
-      <div class="ptrDot" aria-hidden="true"></div>
+      <svg class="ptrProgress" viewBox="0 0 24 24" aria-hidden="true">
+        <circle class="ptrTrack" cx="12" cy="12" r="10"></circle>
+        <circle class="ptrFill" id="ptrFillCircle" cx="12" cy="12" r="10"></circle>
+      </svg>
       <div class="ptrSpinner" aria-hidden="true"></div>
     </div>
   </div>
@@ -1230,6 +1265,14 @@
 
   <div class="toast" id="toast">-</div>
 
+  <div id="savingOverlay" class="savingOverlay" aria-hidden="true">
+    <div class="savingBox">
+      <div class="savingSpinner" aria-hidden="true"></div>
+      <div class="savingTitle" id="savingTitle">저장중</div>
+      <div class="savingDesc" id="savingDesc">상태를 저장하고 있습니다...</div>
+    </div>
+  </div>
+
   <div class="fabs" aria-hidden="false">
     <button id="fabRefresh" class="fab refresh show" type="button" aria-label="새로고침">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1283,7 +1326,9 @@
       sharedStatusSaveError: '공유 상태 저장에 실패했습니다.',
       sharedApiNotConfigured: '공유 저장 API 주소가 설정되지 않았습니다.',
       sharedApiInvalid: '공유 저장 API 주소 형식이 올바르지 않습니다.',
-      dataFileNotFound: '데이터 파일을 찾을 수 없습니다.'
+      dataFileNotFound: '데이터 파일을 찾을 수 없습니다.',
+      saving: '저장중',
+      savingDesc: '상태를 저장하고 있습니다...'
     };
 
     const STATUS_TEXT = {
@@ -1291,8 +1336,8 @@
       recvDoneHouse: '안치완료',
       recvPendingNature: '안장대기',
       recvDoneNature: '안장완료',
-      retPending: '반출대기',
-      retDone: '반출완료',
+      retPending: '반환대기',
+      retDone: '반환완료',
       legacyRecvHouse: '접수',
       legacyRet: '반출'
     };
@@ -1606,7 +1651,12 @@
       loadingOverlay: $('#loadingOverlay'),
       loadingText: $('#loadingText'),
 
-      ptr: $('#pullToRefresh')
+      savingOverlay: $('#savingOverlay'),
+      savingTitle: $('#savingTitle'),
+      savingDesc: $('#savingDesc'),
+
+      ptr: $('#pullToRefresh'),
+      ptrFillCircle: $('#ptrFillCircle')
     };
 
     (function applyIosClass(){
@@ -1632,6 +1682,7 @@
       currentDisplayData: [],
       currentLoadingToken: 0,
       isRefreshing: false,
+      initialPaintDone: false,
 
       sharedStatusMap: new Map(),
       sharedStatusFetchedAt: 0,
@@ -1676,6 +1727,18 @@
       dom.refDateText.textContent = text || UI_TEXT.loading;
     }
 
+    function showSaving(title = UI_TEXT.saving, desc = UI_TEXT.savingDesc){
+      dom.savingTitle.textContent = title;
+      dom.savingDesc.textContent = desc;
+      dom.savingOverlay.classList.add('show');
+      dom.savingOverlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideSaving(){
+      dom.savingOverlay.classList.remove('show');
+      dom.savingOverlay.setAttribute('aria-hidden', 'true');
+    }
+
     function setUIBusy(busy){
       dom.tabCrem.disabled = busy;
       dom.tabHouse.disabled = busy;
@@ -1700,13 +1763,21 @@
       setUIBusy(false);
     }
 
+    function setPTRProgress(distance){
+      const max = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ptrTrigger')) || 64;
+      const progress = Math.max(0, Math.min(distance / max, 1));
+      const circumference = 62.83;
+      dom.ptrFillCircle.style.strokeDashoffset = String(circumference * (1 - progress));
+    }
+
     function setPTRVisual(distance = 0, mode = 'idle'){
-      const capped = Math.max(0, Math.min(distance, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ptrMax')) || 84));
+      const capped = Math.max(0, Math.min(distance, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ptrMax')) || 88));
 
       if (mode === 'hide'){
         document.body.style.transform = '';
         dom.ptr.classList.remove('show', 'refreshing');
         dom.ptr.setAttribute('aria-hidden', 'true');
+        setPTRProgress(0);
         return;
       }
 
@@ -1718,6 +1789,7 @@
         dom.ptr.classList.add('refreshing');
       } else {
         dom.ptr.classList.remove('refreshing');
+        setPTRProgress(capped);
       }
     }
 
@@ -1731,7 +1803,9 @@
 
     async function fetchJson(url, bust = false){
       const finalUrl = bust ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
-      const res = await fetch(finalUrl, { cache: bust ? 'no-store' : 'default' });
+      const res = await fetch(finalUrl, {
+        cache: bust ? 'no-store' : 'force-cache'
+      });
       if (!res.ok) throw new Error(UI_TEXT.dataFileNotFound);
       return res.json();
     }
@@ -1783,6 +1857,25 @@
 
       state.funeralMapCache = map;
       return map;
+    }
+
+    function warmCachesSoon(){
+      const runner = async () => {
+        try{
+          await Promise.allSettled([
+            ensureCrem(false),
+            ensureFuneral(false),
+            ensureData(FACILITY.house.key, false),
+            ensureData(FACILITY.nature.key, false)
+          ]);
+        } catch {}
+      };
+
+      if ('requestIdleCallback' in window){
+        requestIdleCallback(runner, { timeout: 1200 });
+      } else {
+        setTimeout(runner, 250);
+      }
     }
 
     function statusKey(src, id, mode){
@@ -2261,7 +2354,7 @@
       if (mode === 'ret' || !cremMap) return '';
       const lines = cremDetailLines(item, cremMap);
       if (!lines.length) return '';
-      return `<div class="cremSubWrap">${lines.map(line => `<div class="cremSubLine" title="${esc(line)}">${esc(line)}</div>`).join('')}</div>`;
+      return `<div class="cremSubWrap">${lines.map(line => `<div class="cremSubLine js-fit-text" data-max-scale="1" data-min-scale="0.8" title="${esc(line)}">${esc(line)}</div>`).join('')}</div>`;
     }
 
     function cremGroupRowHTML(group, idx){
@@ -2426,6 +2519,30 @@
       state.observer.observe(sentinel);
     }
 
+    function fitSingleLineText(root = document){
+      const nodes = root.querySelectorAll('.js-fit-text');
+      nodes.forEach(el => {
+        el.style.transform = 'scaleX(1)';
+        const maxScale = Number(el.dataset.maxScale || 1);
+        const minScale = Number(el.dataset.minScale || 0.8);
+        const available = el.clientWidth || el.parentElement?.clientWidth || 0;
+        const needed = el.scrollWidth || 0;
+
+        if (!available || !needed){
+          el.style.transform = 'scaleX(1)';
+          return;
+        }
+
+        if (needed <= available){
+          el.style.transform = 'scaleX(1)';
+          return;
+        }
+
+        const ratio = Math.max(minScale, Math.min(maxScale, available / needed));
+        el.style.transform = `scaleX(${ratio})`;
+      });
+    }
+
     function renderNextPage(){
       const selected = dom.datePicker.value || state.today;
       const totalRows = state.currentDisplayData.length;
@@ -2442,6 +2559,7 @@
         updateHeadShown(totalCount, totalCount);
         setInfiniteUI({ mode: 'end', shown: totalCount, total: totalCount });
         if (state.observer) state.observer.disconnect();
+        fitSingleLineText(dom.listArea);
         return;
       }
 
@@ -2473,6 +2591,7 @@
         if (state.observer) state.observer.disconnect();
       }
 
+      requestAnimationFrame(() => fitSingleLineText(dom.listArea));
       updateFAB();
     }
 
@@ -2565,7 +2684,7 @@
 
         const rdISO = normISO(pickRetDate(item));
         const rdRaw = pickRetDate(item);
-        if (rdISO) html += kv('반출일자', String(rdRaw ?? rdISO));
+        if (rdISO) html += kv('반환일자', String(rdRaw ?? rdISO));
       } else {
         html += kv('안장일자', item.natDate ?? '-');
         html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabel));
@@ -2675,6 +2794,7 @@
 
       try{
         dom.sheetSaveBtn.disabled = true;
+        showSaving('저장중', `${state.modal.headerNo} 상태를 저장하고 있습니다...`);
 
         await saveSharedStatus({
           src: state.modal.src,
@@ -2692,6 +2812,7 @@
       } catch (err){
         toast(`저장 실패: ${err.message}`, 2400);
       } finally {
+        hideSaving();
         dom.sheetSaveBtn.disabled = false;
       }
     }
@@ -2706,7 +2827,10 @@
 
       try{
         if (state.currentSource === FACILITY.crem.key){
-          const cremResult = await ensureCrem(force);
+          const cremPromise = ensureCrem(force);
+          const statusWarm = loadSharedStatuses(false).catch(() => {});
+          const funeralWarm = ensureFuneral(false).catch(() => {});
+          const cremResult = await cremPromise;
           if (myToken !== state.currentLoadingToken) return;
 
           const filteredRaw = (cremResult.rows || []).filter(r => cremDateOf(r) === selected);
@@ -2728,30 +2852,32 @@
           renderListShell();
           setInfiniteUI({ mode: 'loading', shown: 0, total: getDisplayTotalCount() });
           renderNextPage();
+
+          Promise.allSettled([statusWarm, funeralWarm]);
           return;
         }
 
-        const tasks = [
+        const primaryTasks = [
+          ensureData(state.currentSource, force),
           loadSharedStatuses(force),
-          ensureFuneral(force),
-          ensureData(state.currentSource, force)
+          ensureFuneral(force)
         ];
 
         if (showCremTimesOnOtherTabs){
-          tasks.push(ensureCrem(force));
+          primaryTasks.push(ensureCrem(force));
         }
 
-        const results = await Promise.all(tasks);
+        const results = await Promise.all(primaryTasks);
         if (myToken !== state.currentLoadingToken) return;
 
-        const funeralMap = results[1];
-        const data = results[2];
+        const data = results[0];
+        const funeralMap = results[2];
         const cremMap = showCremTimesOnOtherTabs ? results[3]?.map : null;
 
         const c = calcCounts(state.currentSource, data, selected);
 
         dom.countText.textContent = (state.currentSource === FACILITY.house.key)
-          ? `안치 ${c.recv}건 · 반출 ${c.ret}건`
+          ? `안치 ${c.recv}건 · 반환 ${c.ret}건`
           : `안장 ${c.recv}건`;
 
         const dateKey = FACILITY[state.currentSource].dateKey;
@@ -2794,6 +2920,11 @@
           hideLoading();
           updateHeaderMeta();
           updateFAB();
+
+          if (!state.initialPaintDone){
+            state.initialPaintDone = true;
+            warmCachesSoon();
+          }
         }
       }
     }
@@ -2850,6 +2981,7 @@
       if (next !== state.pageSize){
         state.pageSize = next;
       }
+      requestAnimationFrame(() => fitSingleLineText(dom.listArea));
       updateFAB();
     }
 
@@ -2857,7 +2989,7 @@
       const trigger = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ptrTrigger')) || 64;
 
       window.addEventListener('touchstart', (e) => {
-        if (state.isRefreshing || dom.overlay.classList.contains('show')) return;
+        if (state.isRefreshing || dom.overlay.classList.contains('show') || dom.savingOverlay.classList.contains('show')) return;
         if (window.scrollY > 0) return;
         if (!e.touches || !e.touches.length) return;
 
@@ -2867,7 +2999,7 @@
       }, { passive: true });
 
       window.addEventListener('touchmove', (e) => {
-        if (!state.ptr.active || state.isRefreshing || dom.overlay.classList.contains('show')) return;
+        if (!state.ptr.active || state.isRefreshing || dom.overlay.classList.contains('show') || dom.savingOverlay.classList.contains('show')) return;
         if (!e.touches || !e.touches.length) return;
         if (window.scrollY > 0){
           state.ptr.active = false;
@@ -2881,7 +3013,7 @@
           return;
         }
 
-        const eased = Math.min(delta * 0.5, 84);
+        const eased = Math.min(delta * 0.58, 88);
         state.ptr.distance = eased;
         setPTRVisual(eased, eased >= trigger ? 'ready' : 'idle');
 
@@ -2971,6 +3103,7 @@
       window.addEventListener('scroll', updateFAB, { passive:true });
       window.addEventListener('resize', onResize, { passive:true });
       window.addEventListener('orientationchange', onResize, { passive:true });
+      window.addEventListener('load', () => requestAnimationFrame(() => fitSingleLineText(dom.listArea)));
 
       bindPullToRefresh();
     }
