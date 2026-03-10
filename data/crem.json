@@ -1,5 +1,13 @@
 [
   {
+    "deadId": "1653711",
+    "deadName": "서정달",
+    "burnDate": "2026-03-10",
+    "burnStrTime": null,
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
     "deadId": "1653739",
     "deadName": "정영덕",
     "burnDate": "2026-03-10",
@@ -44,7 +52,7 @@
     "deadName": "박대길",
     "burnDate": "2026-03-10",
     "burnStrTime": "08:16",
-    "burnEndTime": null,
+    "burnEndTime": "09:32",
     "burnChasu": "02"
   },
   {
@@ -52,7 +60,7 @@
     "deadName": "김성대",
     "burnDate": "2026-03-10",
     "burnStrTime": "08:19",
-    "burnEndTime": null,
+    "burnEndTime": "09:33",
     "burnChasu": "02"
   },
   {
