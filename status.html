@@ -323,7 +323,7 @@
       padding: calc(9px * var(--scale-ui)) calc(12px * var(--scale-ui));
       display:flex;
       align-items:center;
-      justify-content:space-between;
+      justify-content:flex-start;
       gap: calc(10px * var(--scale-ui));
       border-bottom: 1px solid var(--line);
       background: #f8fafc;
@@ -338,19 +338,6 @@
       gap: calc(10px * var(--scale-ui));
       white-space: nowrap;
       font-size: var(--fs-md);
-      line-height: var(--lh-tight);
-      letter-spacing: var(--ls-base);
-    }
-
-    .badge{
-      font-size: var(--fs-sm);
-      font-weight: 950;
-      background: #fff;
-      border: 1px solid var(--line);
-      padding: calc(6px * var(--scale-ui)) calc(10px * var(--scale-ui));
-      border-radius: 999px;
-      color: rgba(31,42,55,.78);
-      white-space: nowrap;
       line-height: var(--lh-tight);
       letter-spacing: var(--ls-base);
     }
@@ -421,7 +408,7 @@
       border-color: rgba(15,23,42,.16);
       background: linear-gradient(180deg, rgba(15,23,42,.08), rgba(15,23,42,.04));
       color: rgba(15,23,42,.88);
-      margin-right: 6px;
+      margin-right: 0;
     }
 
     ul{
@@ -558,7 +545,7 @@
 
     .cremLine{
       display:grid;
-      grid-template-columns: auto 4.5em 8.5em 3.5em;
+      grid-template-columns: minmax(0, 1fr) 8.5em 4.8em;
       align-items:center;
       gap: 6px;
       min-width:0;
@@ -567,6 +554,13 @@
       color: rgba(31,42,55,.78);
       line-height: calc(var(--lh-loose) * var(--scale-lh));
       letter-spacing: var(--ls-base);
+    }
+
+    .cremPerson{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      min-width:0;
     }
 
     .cremName{
@@ -590,7 +584,19 @@
     .cremDisp{
       white-space:nowrap;
       text-align:right;
-      color:#334155;
+      font-weight:950;
+    }
+
+    .cremDisp.house{
+      color:#1f4e79;
+    }
+
+    .cremDisp.nature{
+      color:#2e7d32;
+    }
+
+    .cremDisp.yutaek{
+      color:#b45309;
     }
 
     .no-data{
@@ -951,13 +957,15 @@
 
     @media (max-width: 640px){
       .cremLine{
-        grid-template-columns: auto 4.2em 7.5em 3em;
+        grid-template-columns: minmax(0, 1fr) 7.5em 4.2em;
         gap: 4px;
       }
+
       .cremName{
         width:4.2em;
         max-width:4.2em;
       }
+
       .cremTime{
         font-size: var(--fs-xs);
       }
@@ -1170,18 +1178,14 @@
       A002: '사산아'
     };
 
-    const CREM_DISPOSAL_SHORT = {
-      '추모의집': '봉안',
-      '시설내자연장': '자연',
-      '유택동산': '유택'
-    };
-
-    const CREM_STAGE_ORDER = {
-      '접수': 1,
-      '운구중': 2,
-      '화장시작': 3,
-      '화장종료': 4,
-      '유골인도': 5
+    const CREM_DISPOSAL_LABEL = {
+      '추모의집': '추모의집',
+      '봉안': '추모의집',
+      '시설내자연장': '자연장지',
+      '자연': '자연장지',
+      '자연장지': '자연장지',
+      '유택동산': '유택동산',
+      '유택': '유택동산'
     };
 
     const $ = (selector) => document.querySelector(selector);
@@ -1195,7 +1199,6 @@
 
     const toTrimmedString = (v) => String(v ?? '').trim();
     const safeKey = (v) => toTrimmedString(v);
-    const uniq = (arr) => [...new Set((Array.isArray(arr) ? arr : []).filter(Boolean))];
 
     function isConfiguredStatusApi(){
       const url = String(APP_CONFIG.statusApiUrl || '').trim();
@@ -1337,10 +1340,7 @@
         return '접수';
       }
 
-      if (st && !en){
-        return '화장시작';
-      }
-
+      if (st && !en) return '화장시작';
       if (raw.includes('유골인도')) return '유골인도';
       return '화장종료';
     }
@@ -1356,7 +1356,15 @@
         r?.scatterPlaceName ??
         r?.scatterPlace
       ) || '-';
-      return CREM_DISPOSAL_SHORT[raw] || raw;
+
+      return CREM_DISPOSAL_LABEL[raw] || raw;
+    }
+
+    function cremDisposalClass(disposal){
+      if (disposal === '추모의집') return 'house';
+      if (disposal === '자연장지') return 'nature';
+      if (disposal === '유택동산') return 'yutaek';
+      return '';
     }
 
     function cremDeadNameOf(r){
@@ -2081,7 +2089,12 @@
     }
 
     function cremGroupRowHTML(group, idx){
-      const persons = cremPersonLines(group);
+      const persons = (group.records || []).map(r => ({
+        name: cremDeadNameOf(r),
+        objt: cremObjtOf(r),
+        timeRange: cremTimeRangeOf(r),
+        disposal: cremDisposalOf(r)
+      }));
       const rowCls = cremGroupState(group);
 
       return `
@@ -2095,10 +2108,12 @@
                   <div class="cremWrap">
                     ${persons.map(p => `
                       <div class="cremLine">
-                        <span>${cremObjtBadgeHTML(p.objt)}</span>
-                        <span class="cremName" title="${esc(p.name)}">${esc(p.name)}</span>
+                        <span class="cremPerson">
+                          ${cremObjtBadgeHTML(p.objt)}
+                          <span class="cremName" title="${esc(p.name)}">${esc(p.name)}</span>
+                        </span>
                         <span class="cremTime">${esc(p.timeRange)}</span>
-                        <span class="cremDisp">${esc(p.disposal)}</span>
+                        <span class="cremDisp ${cremDisposalClass(p.disposal)}">${esc(p.disposal)}</span>
                       </div>
                     `).join('')}
                   </div>
@@ -2155,7 +2170,6 @@
         <div class="list">
           <div class="list-head">
             <div class="hint">${esc(FACILITY[state.currentSource].label)} 접수목록</div>
-            <div class="badge" id="headBadge">0 / ${display.length.toLocaleString()}</div>
           </div>
           <ul id="listUL"></ul>
         </div>
@@ -2180,8 +2194,16 @@
     }
 
     function updateHeadShown(shown, total){
-      const badge = document.getElementById('headBadge');
-      if (badge) badge.textContent = `${shown.toLocaleString()} / ${total.toLocaleString()}`;
+      return;
+    }
+
+    function getDisplayTotalCount(){
+      if (state.currentSource === FACILITY.crem.key){
+        return state.currentDisplayData.reduce((sum, group) => {
+          return sum + (Array.isArray(group?.records) ? group.records.length : 0);
+        }, 0);
+      }
+      return state.currentDisplayData.length;
     }
 
     function setInfiniteUI({ mode, shown, total }){
@@ -2229,23 +2251,25 @@
 
     function renderNextPage(){
       const selected = dom.datePicker.value || state.today;
-      const total = state.currentDisplayData.length;
-      if (!total) return;
+      const totalRows = state.currentDisplayData.length;
+      const totalCount = getDisplayTotalCount();
+
+      if (!totalRows) return;
 
       const cremMap = state.lastCremMapForRender;
       const funeralMap = state.lastFuneralMapForRender;
       const ul = document.getElementById('listUL');
       if (!ul) return;
 
-      if (state.renderedCount >= total){
-        updateHeadShown(total, total);
-        setInfiniteUI({ mode: 'end', shown: total, total });
+      if (state.renderedCount >= totalRows){
+        updateHeadShown(totalCount, totalCount);
+        setInfiniteUI({ mode: 'end', shown: totalCount, total: totalCount });
         if (state.observer) state.observer.disconnect();
         return;
       }
 
       const from = state.renderedCount;
-      const to = Math.min(state.renderedCount + state.pageSize, total);
+      const to = Math.min(state.renderedCount + state.pageSize, totalRows);
 
       let chunk = '';
       for (let i = from; i < to; i++){
@@ -2255,13 +2279,20 @@
       ul.insertAdjacentHTML('beforeend', chunk);
       state.renderedCount = to;
 
-      updateHeadShown(state.renderedCount, total);
+      let shownCount = state.renderedCount;
+      if (state.currentSource === FACILITY.crem.key){
+        shownCount = state.currentDisplayData
+          .slice(0, state.renderedCount)
+          .reduce((sum, group) => sum + (Array.isArray(group?.records) ? group.records.length : 0), 0);
+      }
 
-      if (state.renderedCount < total){
-        setInfiniteUI({ mode: 'more', shown: state.renderedCount, total });
+      updateHeadShown(shownCount, totalCount);
+
+      if (state.renderedCount < totalRows){
+        setInfiniteUI({ mode: 'more', shown: shownCount, total: totalCount });
         ensureObserver();
       } else {
-        setInfiniteUI({ mode: 'end', shown: total, total });
+        setInfiniteUI({ mode: 'end', shown: totalCount, total: totalCount });
         if (state.observer) state.observer.disconnect();
       }
     }
@@ -2282,7 +2313,7 @@
         }
 
         renderListShell(groups);
-        setInfiniteUI({ mode: 'loading', shown: 0, total: groups.length });
+        setInfiniteUI({ mode: 'loading', shown: 0, total: getDisplayTotalCount() });
         renderNextPage();
         updateHeaderMeta();
         return;
@@ -2313,7 +2344,13 @@
     }
 
     function buildCremModalFields(group){
-      const persons = cremPersonLines(group);
+      const persons = (group.records || []).map(r => ({
+        name: cremDeadNameOf(r),
+        objt: cremObjtOf(r),
+        timeRange: cremTimeRangeOf(r),
+        disposal: cremDisposalOf(r),
+        stage: normalizeCremStage(r)
+      }));
 
       return `
         ${kv('회차', group.chasuLabel)}
@@ -2324,7 +2361,7 @@
               <span class="time-line"><strong>고인명</strong> ${cremObjtBadgeHTML(p.objt)}${esc(p.name)}</span>
               <span class="time-line"><strong>화장진행</strong> ${esc(p.stage)}</span>
               <span class="time-line"><strong>화장시간</strong> ${esc(p.timeRange)}</span>
-              <span class="time-line"><strong>유골처리</strong> ${esc(p.disposal)}</span>
+              <span class="time-line"><strong>유골처리</strong> <span class="cremDisp ${cremDisposalClass(p.disposal)}">${esc(p.disposal)}</span></span>
             </div>
           </div>
         `).join('')}
@@ -2509,7 +2546,7 @@
           state.lastFuneralMapForRender = null;
 
           renderListShell(grouped);
-          setInfiniteUI({ mode: 'loading', shown: 0, total: grouped.length });
+          setInfiniteUI({ mode: 'loading', shown: 0, total: getDisplayTotalCount() });
           renderNextPage();
           return;
         }
