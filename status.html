@@ -579,6 +579,12 @@
       font-weight:950;
     }
 
+    .cremLine strong{
+      color:#0f172a;
+      font-weight:950;
+      margin-right:4px;
+    }
+
     .no-data{
       text-align:center;
       padding: calc(22px * var(--scale-ui)) calc(14px * var(--scale-ui));
@@ -1305,6 +1311,7 @@
       ) || '-';
     }
 
+<<<<<<< HEAD
     function cremTimeRangeOf(r){
       const st = cremStartOf(r);
       const en = cremEndOf(r);
@@ -1328,6 +1335,8 @@
       }));
     }
 
+=======
+>>>>>>> 0362b8a1be2fdad7e92f294292696dfed77b3b80
     function groupCremRows(rows){
       const map = new Map();
       const order = [];
@@ -1338,15 +1347,46 @@
           map.set(chasu, {
             burnChasu: chasu,
             chasuLabel: `${chasu}회차`,
+<<<<<<< HEAD
+=======
+            names: [],
+            starts: [],
+            ends: [],
+            disposals: [],
+            progresses: [],
+>>>>>>> 0362b8a1be2fdad7e92f294292696dfed77b3b80
             records: []
           });
           order.push(chasu);
         }
+<<<<<<< HEAD
         map.get(chasu).records.push(r);
       }
 
       return order
         .map(k => map.get(k))
+=======
+
+        const g = map.get(chasu);
+        g.names.push(cremDeadNameOf(r));
+        g.starts.push(cremStartOf(r) || '미입력');
+        g.ends.push(cremEndOf(r) || '미입력');
+        g.disposals.push(cremDisposalOf(r));
+        g.progresses.push(`${cremDeadNameOf(r)} · ${cremObjtOf(r)} · ${cremStatusOf(r)}`);
+        g.records.push(r);
+      }
+
+      return order
+        .map(k => {
+          const g = map.get(k);
+          g.names = uniq(g.names);
+          g.starts = uniq(g.starts);
+          g.ends = uniq(g.ends);
+          g.disposals = uniq(g.disposals);
+          g.progresses = uniq(g.progresses);
+          return g;
+        })
+>>>>>>> 0362b8a1be2fdad7e92f294292696dfed77b3b80
         .sort((a, b) => parseInt(a.burnChasu, 10) - parseInt(b.burnChasu, 10));
     }
 
@@ -1823,7 +1863,17 @@
         const did = String(deadId ?? '').trim();
         const rec = did ? cremMap.get(did) : null;
         if (!rec) return '선결제';
+<<<<<<< HEAD
         return cremTimeRangeOf(rec);
+=======
+
+        const st = cremStartOf(rec);
+        const en = cremEndOf(rec);
+
+        if (!st) return '화장접수';
+        if (st && !en) return `화장시작: ${st}, 화장중`;
+        return `화장시작: ${st}, 화장종료: ${en}`;
+>>>>>>> 0362b8a1be2fdad7e92f294292696dfed77b3b80
       });
     }
 
@@ -2007,7 +2057,14 @@
     }
 
     function cremGroupRowHTML(group, idx){
+<<<<<<< HEAD
       const persons = cremPersonLines(group);
+=======
+      const names = group.names.join(' / ') || '-';
+      const starts = group.starts.join(' / ') || '미입력';
+      const ends = group.ends.join(' / ') || '미입력';
+      const disposals = group.disposals.join(' / ') || '-';
+>>>>>>> 0362b8a1be2fdad7e92f294292696dfed77b3b80
 
       return `
         <li>
@@ -2018,6 +2075,7 @@
                 <div class="main">
                   <div class="no">${esc(group.chasuLabel)}</div>
                   <div class="cremWrap">
+<<<<<<< HEAD
                     ${persons.map(p => `
                       <div class="cremLine">
                         ${cremObjtBadgeHTML(p.objt)}
@@ -2025,6 +2083,12 @@
                         <span>${esc(p.timeRange)} · ${esc(p.disposal)}</span>
                       </div>
                     `).join('')}
+=======
+                    <div class="cremLine"><strong>고인명</strong>${esc(names)}</div>
+                    <div class="cremLine"><strong>화장시작</strong>${esc(starts)}</div>
+                    <div class="cremLine"><strong>화장종료</strong>${esc(ends)}</div>
+                    <div class="cremLine"><strong>유골처리</strong>${esc(disposals)}</div>
+>>>>>>> 0362b8a1be2fdad7e92f294292696dfed77b3b80
                   </div>
                 </div>
               </button>
@@ -2237,6 +2301,7 @@
     }
 
     function buildCremModalFields(group){
+<<<<<<< HEAD
       const persons = cremPersonLines(group);
 
       return `
@@ -2253,6 +2318,22 @@
           </div>
         `).join('')}
       `;
+=======
+      const names = group.records.map(r => cremDeadNameOf(r));
+      const progresses = group.records.map(r => `${cremDeadNameOf(r)} · ${cremObjtOf(r)} · ${cremStatusOf(r)}`);
+      const starts = group.records.map(r => `${cremDeadNameOf(r)} · ${cremStartOf(r) || '미입력'}`);
+      const ends = group.records.map(r => `${cremDeadNameOf(r)} · ${cremEndOf(r) || '미입력'}`);
+      const disposals = group.records.map(r => `${cremDeadNameOf(r)} · ${cremDisposalOf(r)}`);
+
+      return [
+        kv('회차', group.chasuLabel),
+        kvLines('고인명', names),
+        kvLines('화장진행', progresses),
+        kvLines('화장시작', starts),
+        kvLines('화장종료', ends),
+        kvLines('유골처리', disposals)
+      ].join('');
+>>>>>>> 0362b8a1be2fdad7e92f294292696dfed77b3b80
     }
 
     function buildModalFields(item, selectedDate){
