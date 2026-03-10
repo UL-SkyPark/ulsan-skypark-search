@@ -557,61 +557,40 @@
       min-width: 0;
     }
 
-    .toggle{
-      display:flex;
+    .statusPill{
+      display:inline-flex;
       align-items:center;
-      gap: calc(6px * var(--scale-ui));
+      justify-content:center;
+      min-height: calc(36px * var(--scale-ui));
+      padding: calc(6px * var(--scale-ui)) calc(10px * var(--scale-ui));
+      border-radius: 999px;
       border: 1px solid var(--line);
       background: #fff;
-      border-radius: 999px;
-      padding: calc(5px * var(--scale-ui)) calc(8px * var(--scale-ui));
-      cursor: pointer;
       white-space: nowrap;
-      user-select:none;
-      margin-top: calc(1px * var(--scale-ui));
-      flex: 0 0 auto;
-      min-height: calc(36px * var(--scale-ui));
-    }
-
-    .toggle span{
-      font-size: var(--fs-xxs);
       font-weight: 950;
-      color: rgba(31,42,55,.74);
-      line-height: 1;
+      font-size: var(--fs-xxs);
+      color: rgba(31,42,55,.78);
       letter-spacing: var(--ls-base);
-    }
-
-    .sw{
-      width: calc(34px * var(--scale-ui));
-      height: calc(20px * var(--scale-ui));
-      border-radius: 999px;
-      border: 1px solid var(--line2);
-      background: #eef2f7;
-      position: relative;
       flex: 0 0 auto;
+      margin-top: calc(1px * var(--scale-ui));
     }
 
-    .sw::after{
-      content:"";
-      position:absolute;
-      top: 50%;
-      left: calc(3px * var(--scale-ui));
-      transform: translateY(-50%);
-      width: calc(15px * var(--scale-ui));
-      height: calc(15px * var(--scale-ui));
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid var(--line2);
-      transition: left .14s ease;
-    }
-
-    .sw.on{
-      background: rgba(46,125,50,.14);
+    .statusPill.done{
       border-color: rgba(46,125,50,.22);
+      background: linear-gradient(180deg, rgba(46,125,50,.14), rgba(46,125,50,.08));
+      color: rgba(46,125,50,.95);
     }
 
-    .sw.on::after{
-      left: calc(16px * var(--scale-ui));
+    .statusPill.retDone{
+      border-color: rgba(126,34,206,.22);
+      background: linear-gradient(180deg, rgba(126,34,206,.14), rgba(126,34,206,.08));
+      color: rgba(126,34,206,.95);
+    }
+
+    .statusPill.ret{
+      border-color: rgba(180,83,9,.22);
+      background: linear-gradient(180deg, rgba(180,83,9,.14), rgba(180,83,9,.08));
+      color: rgba(180,83,9,.95);
     }
 
     .cremWrap{
@@ -754,6 +733,41 @@
       gap: calc(10px * var(--scale-ui));
     }
 
+    .statusBox{
+      display:grid;
+      gap: calc(8px * var(--scale-ui));
+      width:100%;
+    }
+
+    .statusLabel{
+      color: var(--muted);
+      font-weight: 950;
+      font-size: var(--fs-xs);
+      letter-spacing: var(--ls-base);
+      line-height: var(--lh-tight);
+    }
+
+    .statusSelect{
+      width:100%;
+      min-height: calc(42px * var(--scale-ui));
+      border: 1px solid var(--line2);
+      border-radius: 12px;
+      padding: 0 calc(12px * var(--scale-ui));
+      font-size: var(--fs-md);
+      font-weight: 950;
+      color: rgba(31,42,55,.92);
+      background: #fff;
+      outline: none;
+    }
+
+    .statusHint{
+      font-size: var(--fs-xxs);
+      color: rgba(31,42,55,.62);
+      line-height: calc(var(--lh-base) * var(--scale-lh));
+      font-weight: 900;
+      letter-spacing: var(--ls-base);
+    }
+
     .sheet-actions{
       padding: 0 calc(14px * var(--scale-ui)) calc(14px * var(--scale-ui));
       display:flex;
@@ -780,6 +794,11 @@
       border-color: rgba(31,78,121,.30);
       background: linear-gradient(180deg, rgba(31,78,121,.14), rgba(47,111,173,.10));
       color: var(--primary);
+    }
+
+    .btn:disabled{
+      opacity:.55;
+      cursor: default;
     }
 
     .toast{
@@ -988,9 +1007,20 @@
       </div>
       <div class="sheet-body">
         <div id="mFields"></div>
+        <div class="kv" id="statusEditorBox" style="display:none;">
+          <div class="k">상태변경</div>
+          <div class="v">
+            <div class="statusBox">
+              <div class="statusLabel" id="modalCurrentStatusText">현재 상태 -</div>
+              <select id="modalStatusSelect" class="statusSelect"></select>
+              <div class="statusHint">저장 시 다른 직원 화면에도 동일하게 반영됩니다.</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="sheet-actions">
-        <button class="btn primary" type="button" id="sheetOkBtn">확인</button>
+        <button class="btn" type="button" id="sheetCancelBtn">닫기</button>
+        <button class="btn primary" type="button" id="sheetSaveBtn">상태 저장</button>
       </div>
     </div>
   </div>
@@ -1046,7 +1076,11 @@
     const overlay     = $('#overlay');
     const mTitleLine  = $('#mTitleLine');
     const mFields     = $('#mFields');
-    const sheetOkBtn  = $('#sheetOkBtn');
+    const sheetCancelBtn = $('#sheetCancelBtn');
+    const sheetSaveBtn   = $('#sheetSaveBtn');
+    const statusEditorBox = $('#statusEditorBox');
+    const modalStatusSelect = $('#modalStatusSelect');
+    const modalCurrentStatusText = $('#modalCurrentStatusText');
 
     const refDateText = $('#refDateText');
 
@@ -1322,6 +1356,8 @@
     const recvDone    = (src) => (src === 'nature') ? '안장완료' : '안치완료';
 
     let sharedStatusMap = new Map();
+    let sharedStatusFetchedAt = 0;
+    const SHARED_STATUS_CACHE_MS = 10000;
 
     function statusKey(src, id, mode){
       return `${src}||${mode}||${id}`;
@@ -1355,6 +1391,11 @@
         return;
       }
 
+      const now = Date.now();
+      if (!force && sharedStatusFetchedAt && (now - sharedStatusFetchedAt) < SHARED_STATUS_CACHE_MS){
+        return;
+      }
+
       const url = force
         ? `${STATUS_API_URL}?action=list&_=${Date.now()}`
         : `${STATUS_API_URL}?action=list`;
@@ -1376,6 +1417,7 @@
       }
 
       sharedStatusMap = map;
+      sharedStatusFetchedAt = now;
     }
 
     async function saveSharedStatus({ src, id, mode, status }){
@@ -1401,11 +1443,19 @@
       if (!json?.ok) throw new Error(json?.message || '공유 상태 저장에 실패했습니다.');
 
       sharedStatusMap.set(statusKey(src, id, mode), status);
+      sharedStatusFetchedAt = Date.now();
     }
 
     function leftCls(src, mode, status){
       if (mode === 'ret') return (status === '반출완료') ? 'retDone' : 'ret';
       return (status === recvDone(src)) ? 'done' : 'recv';
+    }
+
+    function statusPillClass(mode, status){
+      if (mode === 'ret'){
+        return status === '반출완료' ? 'statusPill retDone' : 'statusPill ret';
+      }
+      return status === recvDone(currentSource) ? 'statusPill done' : 'statusPill';
     }
 
     const pad2 = (n) => String(n ?? '').trim().padStart(2,'0').slice(-2) || '00';
@@ -1569,9 +1619,7 @@
       const arr = (Array.isArray(lines) ? lines : []).map(esc).filter(Boolean);
       if (!arr.length) return '';
 
-      const html = arr
-        .map(line => `<span class="time-line">${line}</span>`)
-        .join('');
+      const html = arr.map(line => `<span class="time-line">${line}</span>`).join('');
 
       return `
         <div class="kv">
@@ -1633,6 +1681,15 @@
     let currentDisplayData = [];
     let loadToken = 0;
     let isRefreshing = false;
+
+    let modalState = {
+      index: -1,
+      src: '',
+      id: '',
+      mode: '',
+      currentStatus: '',
+      headerNo: ''
+    };
 
     function calcCounts(src, data, iso){
       const dateKey = SOURCES[src].dateKey;
@@ -1764,22 +1821,10 @@
       const mode = (currentSource === 'house' && isRetOn(item, selected)) ? 'ret' : 'recv';
 
       let status = '';
-      let isOn = false;
-      let label = '';
-      let swCls = 'sw';
-
       if (mode === 'ret'){
         status = getRet(sid);
-        isOn = (status === '반출완료');
-        label = isOn ? '반출완료' : '반출대기';
-        swCls = isOn ? 'sw on' : 'sw';
       } else {
         status = getRecv(currentSource, sid);
-        const done = recvDone(currentSource);
-        const pending = recvPending(currentSource);
-        isOn = (status === done);
-        label = isOn ? done : pending;
-        swCls = isOn ? 'sw on' : 'sw';
       }
 
       const displayId = (currentSource === 'house')
@@ -1812,10 +1857,7 @@
                     </div>
                   </div>
                 </button>
-                <div class="toggle" role="switch" aria-checked="${isOn ? 'true' : 'false'}" data-toggle="${idx}">
-                  <div class="${swCls}"></div>
-                  <span>${esc(label)}</span>
-                </div>
+                <div class="${statusPillClass(mode, status)}">${esc(status)}</div>
               </div>
               ${cremLinesHTML(item, cremMap, mode)}
             </div>
@@ -1867,6 +1909,40 @@
         setInfiniteUI({ mode: 'end', shown: total, total });
         if (observer) observer.disconnect();
       }
+    }
+
+    function renderListShell(display){
+      listArea.innerHTML = `
+        <div class="list">
+          <div class="list-head">
+            <div class="hint">${esc(SOURCES[currentSource].label)} 접수목록</div>
+            <div class="badge" id="headBadge">0 / ${display.length.toLocaleString()}</div>
+          </div>
+          <ul id="listUL"></ul>
+        </div>
+      `;
+    }
+
+    function rerenderCurrentView(){
+      const selected = datePicker.value || TODAY;
+      let cremMap = null;
+
+      if (selected === TODAY){
+        cremMap = cremMapCache;
+      }
+
+      let display = currentDisplayData.slice();
+      display = sortStable(display, selected, cremMap);
+      currentDisplayData = display;
+
+      resetInfinite();
+      lastCremMapForRender = cremMap;
+      lastFuneralMapForRender = funeralMapCache;
+
+      renderListShell(display);
+      setInfiniteUI({ mode: 'loading', shown: 0, total: display.length });
+      renderNextPage();
+      updateHeaderMeta();
     }
 
     async function load(force=false){
@@ -1932,16 +2008,7 @@
         lastCremMapForRender = cremMap;
         lastFuneralMapForRender = funeralMap;
 
-        listArea.innerHTML = `
-          <div class="list">
-            <div class="list-head">
-              <div class="hint">${esc(SOURCES[currentSource].label)} 접수목록</div>
-              <div class="badge" id="headBadge">0 / ${display.length.toLocaleString()}</div>
-            </div>
-            <ul id="listUL"></ul>
-          </div>
-        `;
-
+        renderListShell(display);
         setInfiniteUI({ mode: 'loading', shown: 0, total: display.length });
         renderNextPage();
         updateHeaderMeta();
@@ -1953,6 +2020,16 @@
       }
     }
 
+    function getModalStatusOptions(mode){
+      if (mode === 'ret'){
+        return ['반출대기', '반출완료'];
+      }
+      if (currentSource === 'nature'){
+        return ['안장대기', '안장완료'];
+      }
+      return ['안치대기', '안치완료'];
+    }
+
     function openSheet(index){
       const item = currentDisplayData[index];
       if (!item) return;
@@ -1961,9 +2038,23 @@
       const showCrem = (selected === TODAY);
       const cremMap = showCrem ? cremMapCache : null;
 
+      const sid = itemId(currentSource, item);
+      const mode = (currentSource === 'house' && isRetOn(item, currentSelectedDate)) ? 'ret' : 'recv';
+
       const headerNo = (currentSource === 'house')
         ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
         : String(item.natNo ?? '-');
+
+      const currentStatus = (mode === 'ret') ? getRet(sid) : getRecv(currentSource, sid);
+
+      modalState = {
+        index,
+        src: mode === 'ret' ? 'house' : currentSource,
+        id: sid,
+        mode,
+        currentStatus,
+        headerNo
+      };
 
       mTitleLine.textContent = `${SOURCES[currentSource].label} · ${headerNo}`;
 
@@ -2009,6 +2100,16 @@
       }
 
       mFields.innerHTML = html;
+
+      const opts = getModalStatusOptions(mode);
+      modalStatusSelect.innerHTML = opts
+        .map(v => `<option value="${esc(v)}">${esc(v)}</option>`)
+        .join('');
+      modalStatusSelect.value = currentStatus;
+      modalCurrentStatusText.textContent = `현재 상태 ${currentStatus}`;
+      statusEditorBox.style.display = 'flex';
+      sheetSaveBtn.disabled = false;
+
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden', 'false');
     }
@@ -2016,6 +2117,52 @@
     function closeSheet(){
       overlay.classList.remove('show');
       overlay.setAttribute('aria-hidden', 'true');
+      modalState = {
+        index: -1,
+        src: '',
+        id: '',
+        mode: '',
+        currentStatus: '',
+        headerNo: ''
+      };
+    }
+
+    async function saveModalStatus(){
+      if (modalState.index < 0) return;
+
+      const next = String(modalStatusSelect.value || '').trim();
+      const cur = String(modalState.currentStatus || '').trim();
+      if (!next) return;
+
+      if (next === cur){
+        toast('변경된 상태가 없습니다.', 1400);
+        return;
+      }
+
+      const ok = window.confirm(`${modalState.headerNo}\n상태를 "${next}"로 변경하시겠습니까?`);
+      if (!ok) return;
+
+      try{
+        sheetSaveBtn.disabled = true;
+
+        await saveSharedStatus({
+          src: modalState.src,
+          id: modalState.id,
+          mode: modalState.mode,
+          status: next
+        });
+
+        modalState.currentStatus = next;
+        modalCurrentStatusText.textContent = `현재 상태 ${next}`;
+        toast(`${modalState.headerNo} : ${next}`, 2200);
+
+        rerenderCurrentView();
+        closeSheet();
+      } catch (err){
+        toast(`저장 실패: ${err.message}`, 2400);
+      } finally {
+        sheetSaveBtn.disabled = false;
+      }
     }
 
     async function doRefresh(fromUI=true){
@@ -2027,6 +2174,7 @@
         dataCache.nature = null;
         cremMapCache = null;
         funeralMapCache = null;
+        sharedStatusFetchedAt = 0;
 
         await load(true);
         updateHeaderMeta();
@@ -2044,17 +2192,18 @@
       tabHouse.classList.toggle('active', src === 'house');
       tabNature.classList.toggle('active', src === 'nature');
 
-      load();
+      load(false);
     }
 
     tabHouse.addEventListener('click', () => setSource('house'));
     tabNature.addEventListener('click', () => setSource('nature'));
 
     datePicker.addEventListener('change', () => {
-      load();
+      load(false);
     });
 
-    sheetOkBtn.addEventListener('click', closeSheet);
+    sheetCancelBtn.addEventListener('click', closeSheet);
+    sheetSaveBtn.addEventListener('click', saveModalStatus);
 
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) closeSheet();
@@ -2064,70 +2213,10 @@
       if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet();
     });
 
-    listArea.addEventListener('click', async (e) => {
+    listArea.addEventListener('click', (e) => {
       const openBtn = e.target.closest('[data-open]');
       if (openBtn){
         openSheet(parseInt(openBtn.getAttribute('data-open'), 10));
-        return;
-      }
-
-      const tg = e.target.closest('[data-toggle]');
-      if (!tg) return;
-
-      e.preventDefault();
-      e.stopPropagation();
-
-      const idx = parseInt(tg.getAttribute('data-toggle'), 10);
-      const item = currentDisplayData[idx];
-      if (!item) return;
-
-      const sid = itemId(currentSource, item);
-      const mode = (currentSource === 'house' && isRetOn(item, currentSelectedDate)) ? 'ret' : 'recv';
-
-      const headerNo = (currentSource === 'house')
-        ? formatEnsNo(item.ensNO ?? item.ensNo ?? item.ensno ?? '-')
-        : String(item.natNo ?? '-');
-
-      if (mode === 'ret'){
-        const cur = getRet(sid);
-        const next = (cur === '반출완료') ? '반출대기' : '반출완료';
-
-        const ok = window.confirm(`${headerNo}\n상태를 "${next}"로 변경하시겠습니까?`);
-        if (!ok) return;
-
-        try{
-          await saveSharedStatus({
-            src: 'house',
-            id: sid,
-            mode: 'ret',
-            status: next
-          });
-          toast(`${headerNo} : ${next}`, 2200);
-          await load(true);
-        } catch (err){
-          toast(`저장 실패: ${err.message}`, 2400);
-        }
-      } else {
-        const done = recvDone(currentSource);
-        const pending = recvPending(currentSource);
-        const cur = getRecv(currentSource, sid);
-        const next = (cur === done) ? pending : done;
-
-        const ok = window.confirm(`${headerNo}\n상태를 "${next}"로 변경하시겠습니까?`);
-        if (!ok) return;
-
-        try{
-          await saveSharedStatus({
-            src: currentSource,
-            id: sid,
-            mode: 'recv',
-            status: next
-          });
-          toast(`${headerNo} : ${next}`, 2200);
-          await load(true);
-        } catch (err){
-          toast(`저장 실패: ${err.message}`, 2400);
-        }
       }
     });
 
@@ -2266,7 +2355,7 @@
       updateFAB();
       updateHeaderMeta();
 
-      load();
+      load(false);
     });
   </script>
 </body>
