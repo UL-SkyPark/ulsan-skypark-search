@@ -281,6 +281,11 @@
       box-shadow: inset 0 0 0 1px rgba(31,78,121,.25);
     }
 
+    .seg button:disabled{
+      opacity:.6;
+      cursor:default;
+    }
+
     .group{
       flex: 1 1 520px;
       min-width: 320px;
@@ -342,6 +347,11 @@
       min-width: 0;
       display:flex;
       align-items:center;
+    }
+
+    .field input[type="date"]:disabled{
+      opacity:.6;
+      cursor:default;
     }
 
     .countCenter{
@@ -798,7 +808,7 @@
 
     .btn:disabled{
       opacity:.55;
-      cursor: default;
+      cursor:default;
     }
 
     .toast{
@@ -910,6 +920,54 @@
       height: 1px;
     }
 
+    .loadingOverlay{
+      position:fixed;
+      inset:0;
+      background:rgba(255,255,255,0.75);
+      backdrop-filter: blur(2px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:20000;
+      visibility:hidden;
+      opacity:0;
+      transition: opacity .16s ease;
+    }
+
+    .loadingOverlay.show{
+      visibility:visible;
+      opacity:1;
+    }
+
+    .loadingBox{
+      text-align:center;
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(217,224,234,.95);
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 16px 40px rgba(15,23,42,.12);
+      min-width: 220px;
+    }
+
+    .spinner{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      border:3px solid #e5e7eb;
+      border-top-color:#1f4e79;
+      animation:spin 0.8s linear infinite;
+      margin:auto;
+    }
+
+    .loadingText{
+      margin-top:10px;
+      font-weight:900;
+      color:#0f172a;
+      font-size: var(--fs-sm);
+      line-height: var(--lh-tight);
+      letter-spacing: var(--ls-base);
+    }
+
     @media (max-width: 560px){
       .seg{
         flex: 1 1 100%;
@@ -936,10 +994,12 @@
     @media (prefers-reduced-motion: reduce){
       .pull-to-refresh,
       .fab,
-      .sheet{
+      .sheet,
+      .loadingOverlay{
         transition: none !important;
       }
-      .ptr-ring .spin{
+      .ptr-ring .spin,
+      .spinner{
         animation: none !important;
       }
     }
@@ -1045,6 +1105,13 @@
     </button>
   </div>
 
+  <div id="loadingOverlay" class="loadingOverlay" aria-hidden="true">
+    <div class="loadingBox">
+      <div class="spinner" aria-hidden="true"></div>
+      <div id="loadingText" class="loadingText">데이터 불러오는 중...</div>
+    </div>
+  </div>
+
   <script>
     (function(){
       const ua = navigator.userAgent || '';
@@ -1092,6 +1159,9 @@
     const fabTop      = $('#fabTop');
     const fabRefresh  = $('#fabRefresh');
 
+    const loadingOverlay = $('#loadingOverlay');
+    const loadingText = $('#loadingText');
+
     const STORAGE_KEYS = { source: "uic_source_selected" };
 
     const SOURCES = {
@@ -1099,7 +1169,7 @@
       nature: { label: "자연장지", url: "./data/nature_data.json", dateKey: "natDate" }
     };
 
-    const STATUS_API_URL = 'https://script.google.com/macros/s/AKfycbyjhskRxpL7clgA4dpWoKV4viDwMJhxnJKFuNRVGaaJOWFY3su36ZjpIC1EWIGqiaP0/exec';
+    const STATUS_API_URL = '여기에_앱스크립트_웹앱_URL_입력';
 
     const TODAY = (() => {
       const d = new Date();
@@ -1117,6 +1187,10 @@
 
     function updateHeaderMeta(){
       refDateText.textContent = `업데이트 ${fmtHHMM(new Date())}`;
+    }
+
+    function setHeaderLoading(text){
+      refDateText.textContent = text || '데이터 불러오는 중...';
     }
 
     const esc = (v) => String(v ?? '')
@@ -1152,6 +1226,28 @@
       clearTimeout(toast._t);
       toast._t = setTimeout(() => t.classList.remove('show'), ms);
     };
+
+    function showLoading(msg){
+      const text = msg || '데이터 불러오는 중...';
+      loadingText.textContent = text;
+      loadingOverlay.classList.add('show');
+      loadingOverlay.setAttribute('aria-hidden', 'false');
+      setHeaderLoading(text);
+      setUIBusy(true);
+    }
+
+    function hideLoading(){
+      loadingOverlay.classList.remove('show');
+      loadingOverlay.setAttribute('aria-hidden', 'true');
+      setUIBusy(false);
+    }
+
+    function setUIBusy(busy){
+      tabHouse.disabled = busy;
+      tabNature.disabled = busy;
+      datePicker.disabled = busy;
+      fabRefresh.disabled = busy;
+    }
 
     async function fetchJson(url, bust=false){
       const finalUrl = bust ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
@@ -1945,30 +2041,32 @@
       updateHeaderMeta();
     }
 
-    async function load(force=false){
+    async function load(force=false, loadingMsg='데이터 불러오는 중...'){
       const myToken = ++loadToken;
+
+      showLoading(loadingMsg);
 
       const selected = datePicker.value || TODAY;
       currentSelectedDate = selected;
-
       const showCrem = (selected === TODAY);
-      let cremMap = null;
-      let funeralMap = null;
 
       try{
-        await loadSharedStatuses(force);
-        if (myToken !== loadToken) return;
-
-        funeralMap = await ensureFuneral(force);
-        if (myToken !== loadToken) return;
+        const tasks = [
+          loadSharedStatuses(force),
+          ensureFuneral(force),
+          ensureData(currentSource, force)
+        ];
 
         if (showCrem){
-          cremMap = await ensureCrem(force);
-          if (myToken !== loadToken) return;
+          tasks.push(ensureCrem(force));
         }
 
-        const data = await ensureData(currentSource, force);
+        const results = await Promise.all(tasks);
         if (myToken !== loadToken) return;
+
+        const funeralMap = results[1];
+        const data = results[2];
+        const cremMap = showCrem ? results[3] : null;
 
         const c = calcCounts(currentSource, data, selected);
 
@@ -1985,22 +2083,18 @@
             const r = normISO(pickRetDate(x));
             return (s === selected) || (r === selected);
           });
+          filtered = mergeEnsRows(filtered);
         } else {
           filtered = data.filter(x => String(x?.[dateKey] ?? '') === selected);
+          filtered = mergeCoupleRows(filtered);
         }
 
-        let display = filtered;
-        if (currentSource === 'house') display = mergeEnsRows(filtered);
-        if (currentSource === 'nature') display = mergeCoupleRows(filtered);
+        filtered.forEach((it, i) => it._pos = i);
+        currentDisplayData = sortStable(filtered, selected, cremMap);
 
-        display.forEach((it, i) => it._pos = i);
-        display = sortStable(display, selected, cremMap);
-        currentDisplayData = display;
-
-        if (!display.length){
+        if (!currentDisplayData.length){
           listArea.innerHTML = `<div class="no-data">표시할 데이터가 없습니다.</div>`;
           resetInfinite();
-          updateHeaderMeta();
           return;
         }
 
@@ -2008,14 +2102,15 @@
         lastCremMapForRender = cremMap;
         lastFuneralMapForRender = funeralMap;
 
-        renderListShell(display);
-        setInfiniteUI({ mode: 'loading', shown: 0, total: display.length });
+        renderListShell(currentDisplayData);
+        setInfiniteUI({ mode: 'loading', shown: 0, total: currentDisplayData.length });
         renderNextPage();
-        updateHeaderMeta();
 
       } catch (err){
         listArea.innerHTML = `<div class="no-data">오류: ${esc(err.message)}</div>`;
         resetInfinite();
+      } finally {
+        hideLoading();
         updateHeaderMeta();
       }
     }
@@ -2176,7 +2271,7 @@
         funeralMapCache = null;
         sharedStatusFetchedAt = 0;
 
-        await load(true);
+        await load(true, '새로고침 중...');
         updateHeaderMeta();
 
         if (fromUI) toast('새로고침 완료', 1400);
@@ -2192,14 +2287,28 @@
       tabHouse.classList.toggle('active', src === 'house');
       tabNature.classList.toggle('active', src === 'nature');
 
-      load(false);
+      const msg = src === 'house'
+        ? '추모의집 데이터 불러오는 중...'
+        : '자연장지 데이터 불러오는 중...';
+
+      load(false, msg);
     }
 
-    tabHouse.addEventListener('click', () => setSource('house'));
-    tabNature.addEventListener('click', () => setSource('nature'));
+    tabHouse.addEventListener('click', () => {
+      if (currentSource === 'house') return;
+      showLoading('추모의집 데이터 불러오는 중...');
+      setSource('house');
+    });
+
+    tabNature.addEventListener('click', () => {
+      if (currentSource === 'nature') return;
+      showLoading('자연장지 데이터 불러오는 중...');
+      setSource('nature');
+    });
 
     datePicker.addEventListener('change', () => {
-      load(false);
+      showLoading('데이터 불러오는 중...');
+      load(false, '데이터 불러오는 중...');
     });
 
     sheetCancelBtn.addEventListener('click', closeSheet);
@@ -2353,9 +2462,9 @@
 
       setPullProgress(0);
       updateFAB();
-      updateHeaderMeta();
+      setHeaderLoading('초기 데이터 불러오는 중...');
 
-      load(false);
+      load(false, '초기 데이터 불러오는 중...');
     });
   </script>
 </body>
