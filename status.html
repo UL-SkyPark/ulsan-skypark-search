@@ -235,14 +235,12 @@
 
     .rightInfo{
       display:flex;
-      flex-direction: column;
-      align-items:flex-end;
+      align-items:flex-start;
       justify-content:flex-end;
       flex: 0 0 auto;
       margin-left: auto;
       padding-top: calc(2px * var(--scale-ui));
       min-width: 0;
-      gap: calc(4px * var(--scale-ui));
     }
 
     .refDate{
@@ -252,17 +250,6 @@
       color: rgba(15,23,42,0.56);
       white-space: nowrap;
       line-height: var(--lh-tight);
-    }
-
-    .refMeta{
-      font-weight: 800;
-      font-size: var(--fs-xs);
-      letter-spacing: var(--ls-base);
-      color: rgba(15,23,42,0.58);
-      line-height: var(--lh-base);
-      text-align: right;
-      max-width: 240px;
-      word-break: keep-all;
     }
 
     .toolbar{
@@ -1168,42 +1155,11 @@
       }
 
       .sheet{
-        width: min(100vw, 640px);
-        max-height: min(86vh, 860px);
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
+        width: min(96vw, 640px);
       }
 
       .kv .k{
         flex: 0 0 calc(64px * var(--scale-ui));
-      }
-
-      .rightInfo{
-        width: 100%;
-        align-items: flex-start;
-      }
-
-      .refMeta{
-        max-width: none;
-        text-align: left;
-      }
-
-      .rowTop{
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .statusPill{
-        width: 100%;
-        min-height: calc(36px * var(--scale-ui));
-        margin-left: 0;
-      }
-
-      .sheet-actions{
-        position: sticky;
-        bottom: 0;
-        padding-bottom: calc(14px * var(--scale-ui) + env(safe-area-inset-bottom));
-        box-shadow: 0 -8px 24px rgba(15,23,42,0.06);
       }
 
       .cremSubLine{
