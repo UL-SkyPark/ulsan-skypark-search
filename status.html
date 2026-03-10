@@ -564,8 +564,9 @@
       display:flex;
       gap: calc(10px * var(--scale-ui));
       align-items:flex-start;
-      justify-content:flex-start;
+      justify-content:space-between;
       min-width: 0;
+      width: 100%;
     }
 
     .mainBtn{
@@ -576,8 +577,9 @@
       margin: 0;
       cursor: pointer;
       min-width: 0;
-      flex: 1;
+      flex: 1 1 auto;
       width: 100%;
+      max-width: 100%;
     }
 
     .mainBtn:active{
@@ -620,6 +622,7 @@
       letter-spacing: var(--ls-base);
       flex: 0 0 auto;
       margin-top: calc(1px * var(--scale-ui));
+      margin-left: auto;
       cursor: pointer;
       appearance: none;
       -webkit-appearance: none;
@@ -654,10 +657,11 @@
 
     .cremLine{
       display:grid;
-      grid-template-columns: 8.4em 7.9em 5.8em;
+      grid-template-columns: 7.2em 7.2em 7.2em;
       align-items:center;
       justify-content:start;
-      gap: 6px;
+      column-gap: 8px;
+      row-gap: 0;
       min-width:0;
       font-weight: 900;
       font-size: var(--fs-sm);
@@ -670,9 +674,10 @@
     .cremSubWrap{
       display:flex;
       flex-direction:column;
-      gap: 3px;
+      gap: 2px;
       min-width:0;
       width:100%;
+      padding-right: 2px;
     }
 
     .cremSubLine{
@@ -682,11 +687,11 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      color: rgba(31,42,55,.78);
+      color: rgba(31,42,55,.74);
       font-weight:900;
-      font-size: var(--fs-sm);
-      line-height: calc(var(--lh-loose) * var(--scale-lh));
-      letter-spacing: var(--ls-base);
+      font-size: var(--fs-xs);
+      line-height: calc(1.2 * var(--scale-lh));
+      letter-spacing: -0.02em;
       text-align:left;
     }
 
@@ -701,8 +706,8 @@
     .cremName{
       color:#0f172a;
       font-weight:950;
-      width:4.5em;
-      max-width:4.5em;
+      width:4em;
+      max-width:4em;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -1328,8 +1333,8 @@
 
     const CREM_OBJT_LABEL = {
       A001: '시신',
-      B001: '개장유골',
-      A002: '사산아'
+      B001: '개장',
+      A002: '사산'
     };
 
     const CREM_DISPOSAL_LABEL = {
@@ -2202,8 +2207,8 @@
     }
 
     function getStatusBadgeClass(mode, status){
-      if (mode === 'ret') return status === STATUS_TEXT.retDone ? 'statusBadge retDone' : 'statusBadge ret';
-      return status === getRecvDoneBySource(state.currentSource) ? 'statusBadge done' : 'statusBadge';
+      if (mode === 'ret') return status === STATUS_TEXT.retDone ? 'statusPill retDone' : 'statusPill ret';
+      return status === getRecvDoneBySource(state.currentSource) ? 'statusPill done' : 'statusPill';
     }
 
     function getDisplayId(item){
@@ -2334,11 +2339,13 @@
                       <div class="nameWrap" title="${esc(displayName)}">
                         <span class="nameText">${esc(displayName)}</span>
                         ${tag}
-                        <span class="${getStatusBadgeClass(mode, status)}">${esc(status)}</span>
                       </div>
                     </div>
                     ${cremLinesHTML(item, cremMap, mode)}
                   </div>
+                </button>
+                <button class="${getStatusBadgeClass(mode, status)}" type="button" data-open="${idx}" aria-label="상태 상세 보기">
+                  ${esc(status)}
                 </button>
               </div>
             </div>
