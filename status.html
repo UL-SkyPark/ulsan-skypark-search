@@ -653,7 +653,7 @@
 
     .cremLine{
       display:grid;
-      grid-template-columns: auto auto auto;
+      grid-template-columns: auto auto;
       align-items:center;
       width:max-content;
       min-width:100%;
@@ -727,6 +727,16 @@
       text-align:left;
       min-width:max-content;
       font-size: clamp(.98rem, 3.1vw, 1.08rem);
+    }
+
+    .cremTimeWrap{
+      display:inline-flex;
+      align-items:center;
+      white-space:nowrap;
+    }
+
+    .cremGap{
+      display:inline;
     }
 
     .cremDisp{
@@ -1156,7 +1166,7 @@
 
     @media (max-width: 640px){
       .cremLine{
-        grid-template-columns: auto auto auto;
+        grid-template-columns: auto auto;
         column-gap: 10px;
       }
 
@@ -1618,6 +1628,13 @@
         const pad = '\u00A0'.repeat((4 - len) * 2);
         return {
           text: `${raw}${pad}`,
+          short: true
+        };
+      }
+
+      if (len === 3 && raw !== '-'){
+        return {
+          text: `${raw}\u00A0`,
           short: true
         };
       }
@@ -2550,8 +2567,9 @@
                           ${cremObjtBadgeHTML(p.objt)}
                           <span class="cremName ${p.short ? 'short' : ''}" title="${esc(p.name)}">${esc(p.text)}</span>
                         </span>
-                        <span class="cremTime">${esc(p.timeRange)}</span>
-                        <span class="cremDisp ${cremDisposalClass(p.disposal)}">${esc(p.disposal)}</span>
+                        <span class="cremTimeWrap">
+                          <span class="cremTime">${esc(p.timeRange)}</span><span class="cremGap">&nbsp;</span><span class="cremDisp ${cremDisposalClass(p.disposal)}">${esc(p.disposal)}</span>
+                        </span>
                       </div>
                     `).join('')}
                   </div>
