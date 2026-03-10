@@ -2069,6 +2069,23 @@
       }
     }
 
+    async function ensureAllData(force = false){
+      const results = await Promise.all([
+        ensureData(FACILITY.house.key, force),
+        ensureData(FACILITY.nature.key, force),
+        ensureCrem(force),
+        ensureFuneral(force),
+        loadSharedStatuses(force)
+      ]);
+
+      return {
+        house: results[0],
+        nature: results[1],
+        crem: results[2],
+        funeral: results[3]
+      };
+    }
+
     function statusKey(src, id, mode){
       return `${src}||${mode}||${id}`;
     }
@@ -3034,14 +3051,11 @@
       const showCremTimesOnOtherTabs = (selected === state.today);
 
       try{
-        if (state.currentSource === FACILITY.crem.key){
-          const cremPromise = ensureCrem(force);
-          const statusWarm = loadSharedStatuses(false).catch(() => {});
-          const funeralWarm = ensureFuneral(false).catch(() => {});
-          const cremResult = await cremPromise;
-          if (myToken !== state.currentLoadingToken) return;
+        const allData = await ensureAllData(force);
+        if (myToken !== state.currentLoadingToken) return;
 
-          const filteredRaw = (cremResult.rows || []).filter(r => cremDateOf(r) === selected);
+        if (state.currentSource === FACILITY.crem.key){
+          const filteredRaw = (allData.crem.rows || []).filter(r => cremDateOf(r) === selected);
           const grouped = groupCremRows(filteredRaw);
 
           dom.countText.textContent = `접수 ${filteredRaw.length}건`;
@@ -3060,27 +3074,12 @@
           renderListShell();
           setInfiniteUI({ mode: 'loading', shown: 0, total: getDisplayTotalCount() });
           renderNextPage();
-
-          Promise.allSettled([statusWarm, funeralWarm]);
           return;
         }
 
-        const primaryTasks = [
-          ensureData(state.currentSource, force),
-          loadSharedStatuses(force),
-          ensureFuneral(force)
-        ];
-
-        if (showCremTimesOnOtherTabs){
-          primaryTasks.push(ensureCrem(force));
-        }
-
-        const results = await Promise.all(primaryTasks);
-        if (myToken !== state.currentLoadingToken) return;
-
-        const data = results[0];
-        const funeralMap = results[2];
-        const cremMap = showCremTimesOnOtherTabs ? results[3]?.map : null;
+        const data = state.currentSource === FACILITY.house.key ? allData.house : allData.nature;
+        const funeralMap = allData.funeral;
+        const cremMap = showCremTimesOnOtherTabs ? allData.crem.map : null;
 
         const c = calcCounts(state.currentSource, data, selected);
 
@@ -3143,7 +3142,6 @@
 
           if (!state.initialPaintDone){
             state.initialPaintDone = true;
-            warmCachesSoon();
           }
         }
       }
