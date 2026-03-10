@@ -1,13 +1,5 @@
 [
   {
-    "deadId": "1653703",
-    "deadName": "장혜숙",
-    "burnDate": "2026-03-10",
-    "burnStrTime": null,
-    "burnEndTime": null,
-    "burnChasu": "04"
-  },
-  {
     "deadId": "1653710",
     "deadName": "이병학",
     "burnDate": "2026-03-10",
@@ -140,6 +132,14 @@
     "deadName": "서정달",
     "burnDate": "2026-03-10",
     "burnStrTime": "10:23",
+    "burnEndTime": null,
+    "burnChasu": "04"
+  },
+  {
+    "deadId": "1653703",
+    "deadName": "장혜숙",
+    "burnDate": "2026-03-10",
+    "burnStrTime": "10:27",
     "burnEndTime": null,
     "burnChasu": "04"
   }
