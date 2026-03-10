@@ -1335,7 +1335,8 @@
     };
 
     const STORAGE_KEYS = {
-      source: 'uic_source_selected'
+      source: 'uic_source_selected',
+      cremDoneSeen: 'uic_crem_done_seen'
     };
 
     const UI_TEXT = {
@@ -1645,6 +1646,80 @@
       return `<span class="tag objt ${tone}">${esc(label)}</span>`;
     }
 
+    function cremDoneKey(deadId, deadName){
+      const did = String(deadId ?? '').trim();
+      if (did) return `ID:${did}`;
+      const nk = normNameKey(deadName);
+      if (nk) return `NAME:${nk}`;
+      return '';
+    }
+
+    function isCremDoneRecord(rec){
+      if (!rec) return false;
+      const st = cremStartOf(rec);
+      const en = cremEndOf(rec);
+      return Boolean(st && en);
+    }
+
+    function primeCremDoneSeenFromMap(cremMap){
+      if (!cremMap) return;
+
+      let changed = false;
+      for (const [deadId, rec] of cremMap.entries()){
+        if (!isCremDoneRecord(rec)) continue;
+        const key = cremDoneKey(deadId, cremDeadNameOf(rec));
+        if (!key || state.cremDoneSeen.has(key)) continue;
+        state.cremDoneSeen.add(key);
+        changed = true;
+      }
+
+      if (changed) saveCremDoneSeen();
+    }
+
+    function collectNewCremDoneAlerts(items, cremMap){
+      if (!Array.isArray(items) || !cremMap) return [];
+
+      const alerts = [];
+      let changed = false;
+
+      for (const item of items){
+        const entries = deceasedEntries(item);
+        for (const entry of entries){
+          const did = String(entry?.deadId ?? '').trim();
+          const rec = did ? cremMap.get(did) : null;
+          if (!isCremDoneRecord(rec)) continue;
+
+          const name = entry?.deadName || cremDeadNameOf(rec) || '-';
+          const key = cremDoneKey(did, name);
+          if (!key || state.cremDoneSeen.has(key)) continue;
+
+          state.cremDoneSeen.add(key);
+          changed = true;
+
+          alerts.push({
+            no: getDisplayId(item),
+            name: name,
+            timeRange: cremTimeRangeOf(rec)
+          });
+        }
+      }
+
+      if (changed) saveCremDoneSeen();
+      return alerts;
+    }
+
+    function showCremDoneAlert(items){
+      if (!Array.isArray(items) || !items.length) return;
+
+      const srcLabel = FACILITY[state.currentSource]?.label || 'list';
+      const lines = items.slice(0, 10).map(x => `- ${x.name} (${x.timeRange})`);
+      const more = items.length > 10 ? `\n\uC678 ${items.length - 10}\uAC74` : '';
+      const message = `[${srcLabel}] \uD654\uC7A5\uC885\uB8CC \uC54C\uB9BC\n${lines.join('\n')}${more}`;
+
+      alert(message);
+      toast(`\uD654\uC7A5\uC885\uB8CC ${items.length}\uAC74`, 2200);
+    }
+
     function cremGroupState(group){
       const stages = (group.records || []).map(normalizeCremStage);
       if (!stages.length) return 'cremRecv';
@@ -1751,6 +1826,8 @@
       cremRawCache: null,
       cremMapCache: null,
       funeralMapCache: null,
+      cremDoneSeen: new Set(),
+      cremDoneAlertReady: false,
 
       pageSize: 40,
       renderedCount: 0,
@@ -1775,6 +1852,37 @@
         refreshing: false
       }
     };
+
+    function loadCremDoneSeen(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEYS.cremDoneSeen);
+        if (!raw){
+          state.cremDoneSeen = new Set();
+          return;
+        }
+
+        const parsed = JSON.parse(raw);
+        if (parsed?.date !== state.today){
+          state.cremDoneSeen = new Set();
+          return;
+        }
+
+        const keys = Array.isArray(parsed?.keys) ? parsed.keys : [];
+        state.cremDoneSeen = new Set(keys.map(v => String(v ?? '').trim()).filter(Boolean));
+      } catch {
+        state.cremDoneSeen = new Set();
+      }
+    }
+
+    function saveCremDoneSeen(){
+      try{
+        const payload = {
+          date: state.today,
+          keys: Array.from(state.cremDoneSeen)
+        };
+        localStorage.setItem(STORAGE_KEYS.cremDoneSeen, JSON.stringify(payload));
+      } catch {}
+    }
 
     function updateHeaderMeta(){
       dom.refDateText.textContent = `업데이트 ${fmtHHMM(new Date())}`;
@@ -2959,6 +3067,18 @@
         filtered.forEach((it, i) => { it._pos = i; });
         state.currentDisplayData = sortStable(filtered, selected, cremMap);
 
+        if (showCremTimesOnOtherTabs && cremMap){
+          if (!state.cremDoneAlertReady){
+            primeCremDoneSeenFromMap(cremMap);
+            state.cremDoneAlertReady = true;
+          } else {
+            const newDoneItems = collectNewCremDoneAlerts(state.currentDisplayData, cremMap);
+            if (newDoneItems.length){
+              showCremDoneAlert(newDoneItems);
+            }
+          }
+        }
+
         if (!state.currentDisplayData.length){
           dom.listArea.innerHTML = `<div class="no-data">${UI_TEXT.noData}</div>`;
           resetInfinite();
@@ -3171,6 +3291,7 @@
 
     function init(){
       state.pageSize = computePageSize();
+      loadCremDoneSeen();
 
       const saved = localStorage.getItem(STORAGE_KEYS.source);
       const initialSource = (
