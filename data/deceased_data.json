@@ -209304,14 +209304,6 @@
     "retDate": null
   },
   {
-    "deadId": "1653743",
-    "strDate": "2026-03-11",
-    "ensNo": null,
-    "deadName": "김균태",
-    "applName": "김도영",
-    "retDate": null
-  },
-  {
     "deadId": "1653813",
     "strDate": "2026-03-11",
     "ensNo": "1추모의집-11실-무연고-02646",
@@ -209341,6 +209333,14 @@
     "ensNo": "1추모의집-62실-개인단-22015",
     "deadName": "윤준곤",
     "applName": "윤성태",
+    "retDate": null
+  },
+  {
+    "deadId": "1653743",
+    "strDate": "2026-03-11",
+    "ensNo": "1추모의집-62실-개인단-22016",
+    "deadName": "김균태",
+    "applName": "김도영",
     "retDate": null
   }
 ]
