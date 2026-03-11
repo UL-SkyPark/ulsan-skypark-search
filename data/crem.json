@@ -691,17 +691,17 @@
       "burnDate": 1773154800000,
       "burnChasu": "06",
       "burnNo": "06",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "12:08",
       "burnEndTime": "13:01",
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -859,17 +859,17 @@
       "burnDate": 1773154800000,
       "burnChasu": "06",
       "burnNo": "07",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "12:20",
       "burnEndTime": "13:39",
       "waitRoom": "207",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -915,17 +915,17 @@
       "burnDate": 1773154800000,
       "burnChasu": "06",
       "burnNo": "05",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "12:23",
       "burnEndTime": "13:45",
       "waitRoom": "205",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -971,17 +971,17 @@
       "burnDate": 1773154800000,
       "burnChasu": "06",
       "burnNo": "08",
-      "burnStatus": "3",
+      "burnStatus": "9",
       "burnStrTime": "12:28",
-      "burnEndTime": null,
+      "burnEndTime": "13:49",
       "waitRoom": "208",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "9"
         }
       },
       "id": {
@@ -1005,6 +1005,54 @@
     "id": {
       "cremDate": 1773154800000,
       "cremSeq": 25
+    }
+  },
+  {
+    "cremDate": "2026-03-11",
+    "cremSeq": 26,
+    "objt": "B001",
+    "burnDate": 1773154800000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1653715,
+    "thedead": {
+      "deadId": 1653715,
+      "deadName": "미상1",
+      "id": 1653715,
+      "new": false
+    },
+    "applId": 1400556,
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1773154800000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1773154800000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1773154800000,
+      "cremSeq": 26
     }
   },
   {
