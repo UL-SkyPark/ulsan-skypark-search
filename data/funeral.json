@@ -2053,5 +2053,10 @@
     "deadId": "1653816",
     "deadName": "모태용",
     "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1653857",
+    "deadName": "이동식",
+    "dcGubun": "TCM1200002"
   }
 ]
