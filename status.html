@@ -1673,6 +1673,25 @@
       return `<span class="tag objt ${tone}">${esc(label)}</span>`;
     }
 
+    function cremStartSortValue(rec){
+      const time = cremStartOf(rec);
+      if (!/^\d{2}:\d{2}$/.test(time)) return Number.POSITIVE_INFINITY;
+
+      const parts = time.split(':');
+      const hh = parseInt(parts[0], 10);
+      const mm = parseInt(parts[1], 10);
+      if (Number.isNaN(hh) || Number.isNaN(mm)) return Number.POSITIVE_INFINITY;
+      return (hh * 60) + mm;
+    }
+
+    function cremGroupStartSortValue(group){
+      const values = (group?.records || [])
+        .map(cremStartSortValue)
+        .filter(v => Number.isFinite(v));
+
+      return values.length ? Math.min(...values) : Number.POSITIVE_INFINITY;
+    }
+
     function cremDoneKey(deadId, deadName){
       const did = String(deadId ?? '').trim();
       if (did) return `ID:${did}`;
@@ -1774,11 +1793,23 @@
           });
           order.push(chasu);
         }
-        map.get(chasu).records.push(r);
+        map.get(chasu).records.push({
+          row: r,
+          order: map.get(chasu).records.length
+        });
       }
 
       return order
-        .map(k => map.get(k))
+        .map(k => {
+          const group = map.get(k);
+          group.records.sort((a, b) => {
+            const timeDiff = cremStartSortValue(a.row) - cremStartSortValue(b.row);
+            if (timeDiff !== 0) return timeDiff;
+            return a.order - b.order;
+          });
+          group.records = group.records.map(entry => entry.row);
+          return group;
+        })
         .sort((a, b) => parseInt(a.burnChasu, 10) - parseInt(b.burnChasu, 10));
     }
 
