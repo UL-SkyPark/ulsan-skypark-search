@@ -204717,7 +204717,7 @@
     "ensNo": "1추모의집-61실-개인단-21637",
     "deadName": "공재관",
     "applName": "공진원",
-    "retDate": null
+    "retDate": "2026-03-12"
   },
   {
     "deadId": "1650915",
@@ -209304,6 +209304,22 @@
     "retDate": null
   },
   {
+    "deadId": "1653813",
+    "strDate": "2026-03-11",
+    "ensNo": "1추모의집-11실-무연고-02646",
+    "deadName": "이순임",
+    "applName": "노영래",
+    "retDate": null
+  },
+  {
+    "deadId": "1653815",
+    "strDate": "2026-03-11",
+    "ensNo": "1추모의집-16실-무연고-04581",
+    "deadName": "김애숙",
+    "applName": "신지은",
+    "retDate": null
+  },
+  {
     "deadId": "1653710",
     "strDate": "2026-03-11",
     "ensNo": "1추모의집-40실-개인단-13696",
@@ -209317,6 +209333,78 @@
     "ensNo": "1추모의집-62실-개인단-22014",
     "deadName": "김무호",
     "applName": "김영길",
+    "retDate": null
+  },
+  {
+    "deadId": "1653707",
+    "strDate": "2026-03-11",
+    "ensNo": "1추모의집-62실-개인단-22015",
+    "deadName": "윤준곤",
+    "applName": "윤성태",
+    "retDate": null
+  },
+  {
+    "deadId": "1653743",
+    "strDate": "2026-03-11",
+    "ensNo": "1추모의집-62실-개인단-22016",
+    "deadName": "김균태",
+    "applName": "김도영",
+    "retDate": null
+  },
+  {
+    "deadId": "1653753",
+    "strDate": "2026-03-11",
+    "ensNo": "1추모의집-62실-개인단-22017",
+    "deadName": "허용",
+    "applName": "신단아",
+    "retDate": null
+  },
+  {
+    "deadId": "1653780",
+    "strDate": "2026-03-11",
+    "ensNo": "1추모의집-62실-개인단-22018",
+    "deadName": "우성민",
+    "applName": "최유경",
+    "retDate": null
+  },
+  {
+    "deadId": "1653765",
+    "strDate": "2026-03-12",
+    "ensNo": "1추모의집-10실-개인단-02154",
+    "deadName": "이우근",
+    "applName": "이제원",
+    "retDate": null
+  },
+  {
+    "deadId": "1653757",
+    "strDate": "2026-03-12",
+    "ensNo": "1추모의집-48실-개인단-15904",
+    "deadName": "장동화",
+    "applName": "장현민",
+    "retDate": null
+  },
+  {
+    "deadId": "1653857",
+    "strDate": "2026-03-12",
+    "ensNo": "1추모의집-62실-개인단-22019",
+    "deadName": "이동식",
+    "applName": "이봉식",
+    "retDate": null
+  },
+  {
+    "deadId": "1653800",
+    "strDate": "2026-03-12",
+    "ensNo": "1추모의집-62실-개인단-22020",
+    "deadName": "안성순",
+    "applName": "고은정",
+    "retDate": null
+  },
+  {
+    "deadId": "1653782",
+    "strDate": "2026-03-12",
+    "ensNo": "1추모의집-62실-개인단-22021",
+    "deadName": "김경호",
+    "applName": "김인회",
     "retDate": null
   }
 ]
