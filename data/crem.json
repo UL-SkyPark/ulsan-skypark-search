@@ -841,6 +841,118 @@
   },
   {
     "cremDate": "2026-03-12",
+    "cremSeq": 23,
+    "objt": "B001",
+    "burnDate": 1773241200000,
+    "burnNo": "06",
+    "burnChasu": "07",
+    "deadId": 1653723,
+    "thedead": {
+      "deadId": 1653723,
+      "deadName": "미상9",
+      "id": 1653723,
+      "new": false
+    },
+    "applId": 1400556,
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1773241200000,
+      "burnChasu": "07",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1773241200000,
+        "burnChasu": "07",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1773241200000,
+      "cremSeq": 23
+    }
+  },
+  {
+    "cremDate": "2026-03-12",
+    "cremSeq": 24,
+    "objt": "B001",
+    "burnDate": 1773241200000,
+    "burnNo": "03",
+    "burnChasu": "07",
+    "deadId": 1653724,
+    "thedead": {
+      "deadId": 1653724,
+      "deadName": "미상10",
+      "id": 1653724,
+      "new": false
+    },
+    "applId": 1400556,
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1773241200000,
+      "burnChasu": "07",
+      "burnNo": "03",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1773241200000,
+        "burnChasu": "07",
+        "burnNo": "03"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1773241200000,
+      "cremSeq": 24
+    }
+  },
+  {
+    "cremDate": "2026-03-12",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1773241200000,
