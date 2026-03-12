@@ -67842,13 +67842,6 @@
   },
   {
     "natDate": "2026-03-12",
-    "natNo": null,
-    "applName": "김희수",
-    "deadId": "1653808",
-    "deadName": "김을연"
-  },
-  {
-    "natDate": "2026-03-12",
     "natNo": "수목장-2-1-0018",
     "applName": "최현율",
     "deadId": "1653794",
@@ -67895,5 +67888,19 @@
     "applName": "황춘익",
     "deadId": "1653819",
     "deadName": "황붕석"
+  },
+  {
+    "natDate": "2026-03-12",
+    "natNo": "잔디장-2-9-0213",
+    "applName": "김희수",
+    "deadId": "1653808",
+    "deadName": "김을연"
+  },
+  {
+    "natDate": "2026-03-12",
+    "natNo": "잔디장-2-9-0214",
+    "applName": "김희수",
+    "deadId": "1653872",
+    "deadName": "김이택"
   }
 ]
