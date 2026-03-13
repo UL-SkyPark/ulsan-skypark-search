@@ -2080,8 +2080,23 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1653884",
+    "deadName": "최해자",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1653886",
     "deadName": "조우식",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1653895",
+    "deadName": "서정애",
+    "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1653896",
+    "deadName": "이주열",
+    "dcGubun": "TCM1200099"
   }
 ]
