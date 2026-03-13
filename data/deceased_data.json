@@ -209424,14 +209424,6 @@
     "retDate": null
   },
   {
-    "deadId": "1653838",
-    "strDate": "2026-03-13",
-    "ensNo": null,
-    "deadName": "이병돌",
-    "applName": "이은기",
-    "retDate": null
-  },
-  {
     "deadId": "1653895",
     "strDate": "2026-03-13",
     "ensNo": "1추모의집-16실-무연고-04590",
@@ -209453,6 +209445,14 @@
     "ensNo": "1추모의집-62실-개인단-22024",
     "deadName": "권형호",
     "applName": "권현주",
+    "retDate": null
+  },
+  {
+    "deadId": "1653838",
+    "strDate": "2026-03-13",
+    "ensNo": "1추모의집-62실-개인단-22025",
+    "deadName": "이병돌",
+    "applName": "이은기",
     "retDate": null
   }
 ]
