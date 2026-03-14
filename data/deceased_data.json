@@ -209472,14 +209472,6 @@
     "retDate": null
   },
   {
-    "deadId": "1653887",
-    "strDate": "2026-03-14",
-    "ensNo": null,
-    "deadName": "장월분",
-    "applName": "이성석",
-    "retDate": null
-  },
-  {
     "deadId": "1519105",
     "strDate": "2026-03-14",
     "ensNo": "1추모의집-09실-개인단-01892",
@@ -209496,11 +209488,35 @@
     "retDate": null
   },
   {
+    "deadId": "1461135",
+    "strDate": "2026-03-14",
+    "ensNo": "1추모의집-09실-부부단-01893",
+    "deadName": "이규형",
+    "applName": "이성석",
+    "retDate": null
+  },
+  {
+    "deadId": "1653887",
+    "strDate": "2026-03-14",
+    "ensNo": "1추모의집-09실-부부단-01893",
+    "deadName": "장월분",
+    "applName": "이성석",
+    "retDate": null
+  },
+  {
     "deadId": "1653831",
     "strDate": "2026-03-14",
     "ensNo": "1추모의집-33실-개인단-11191",
     "deadName": "주명희",
     "applName": "정윤경",
+    "retDate": null
+  },
+  {
+    "deadId": "1653886",
+    "strDate": "2026-03-14",
+    "ensNo": "1추모의집-47실-개인단-15483",
+    "deadName": "조우식",
+    "applName": "조창현",
     "retDate": null
   },
   {
