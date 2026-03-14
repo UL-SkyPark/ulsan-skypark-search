@@ -207285,7 +207285,7 @@
     "ensNo": "1추모의집-62실-개인단-21847",
     "deadName": "최경석",
     "applName": "최정민",
-    "retDate": null
+    "retDate": "2026-03-14"
   },
   {
     "deadId": "1652455",
@@ -209517,6 +209517,22 @@
     "ensNo": "1추모의집-09실-부부단-01894",
     "deadName": "박용수",
     "applName": "박창희",
+    "retDate": null
+  },
+  {
+    "deadId": "1652458",
+    "strDate": "2026-03-14",
+    "ensNo": "1추모의집-09실-부부단-01895",
+    "deadName": "최경석",
+    "applName": "최정민",
+    "retDate": null
+  },
+  {
+    "deadId": "1653955",
+    "strDate": "2026-03-14",
+    "ensNo": "1추모의집-09실-부부단-01895",
+    "deadName": "류순자",
+    "applName": "최정민",
     "retDate": null
   },
   {
