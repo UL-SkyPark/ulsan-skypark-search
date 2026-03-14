@@ -209616,14 +209616,6 @@
     "retDate": null
   },
   {
-    "deadId": "1653894",
-    "strDate": "2026-03-15",
-    "ensNo": null,
-    "deadName": "박서윤",
-    "applName": "서교빈",
-    "retDate": null
-  },
-  {
     "deadId": "1458224",
     "strDate": "2026-03-15",
     "ensNo": "1추모의집-09실-부부단-01896",
@@ -209661,6 +209653,14 @@
     "ensNo": "1추모의집-62실-개인단-22034",
     "deadName": "정말성",
     "applName": "조용규",
+    "retDate": null
+  },
+  {
+    "deadId": "1653894",
+    "strDate": "2026-03-15",
+    "ensNo": "1추모의집-62실-개인단-22035",
+    "deadName": "박서윤",
+    "applName": "서교빈",
     "retDate": null
   }
 ]
