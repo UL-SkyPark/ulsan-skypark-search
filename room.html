@@ -2,8 +2,9 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=()" />
   <title>추모의집 봉안 현황</title>
@@ -76,29 +77,25 @@
     .panel-top{
       display:flex;
       gap:10px;
-      align-items:center;
+      align-items:stretch;
       flex-wrap:nowrap;
       overflow-x:auto;
       -webkit-overflow-scrolling: touch;
     }
 
-    /* ===== 부부단 다음 봉안 예정 ===== */
     .next-wrap{
-      display:none;
-      flex: 0 0 auto;
-      width: max-content;
-      max-width: none;
-
+      display:flex;
+      flex: 1 1 auto;
+      min-width: 0;
       padding:8px 10px;
       border:1px solid rgba(180,58,58,0.22);
       background: rgba(180,58,58,0.06);
       border-radius: 14px;
       user-select:none;
-
       flex-direction:column;
-      gap:6px;
-      min-width: auto;
+      gap:8px;
     }
+
     .next-head{
       font-weight: 950;
       font-size: 16px;
@@ -120,7 +117,6 @@
       flex: 0 0 auto;
     }
 
-    /* ✅ 기준시간: 제목 아래에 표시 */
     .asof-inline{
       font-size: 14px;
       font-weight: 900;
@@ -128,12 +124,12 @@
       letter-spacing: .15px;
       white-space: nowrap;
       line-height: 1.2;
-      margin-left: 14px; /* PC에서 살짝 들여쓰기 느낌 */
+      margin-left: 14px;
     }
 
     .next-rows{
       display:flex;
-      align-items:stretch;
+      flex-wrap:wrap;
       gap:10px;
     }
 
@@ -143,72 +139,36 @@
       align-items:center;
       gap:8px;
       flex-wrap:nowrap;
-
-      padding:6px 8px;
+      padding:6px 10px;
       border-radius: 12px;
       background: rgba(255,255,255,0.62);
       border:1px solid rgba(180,58,58,0.14);
-
       min-height: 36px;
-      overflow: visible;
       width: max-content;
+      max-width: 100%;
     }
     .next-label{
       font-weight: 950;
       color: var(--next-red-strong);
       white-space: nowrap;
-      flex: 0 0 auto;
-      font-size: 18px;
+      font-size: 17px;
     }
     .next-text{
       font-weight: 950;
-      font-size: 18px;
+      font-size: 17px;
       color: #6b1f1f;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-variant-numeric: tabular-nums;
       letter-spacing: .2px;
       white-space: nowrap;
-      overflow: visible;
-      text-overflow: clip;
-      flex: 0 0 auto;
     }
-    .next-move-btn{
-      border:1px solid rgba(180,58,58,0.28);
-      background: rgba(255,255,255,0.84);
-      color: var(--next-red-strong);
-      border-radius: 999px;
-      padding:8px 10px;
-      cursor:pointer;
-      font-weight: 950;
-      white-space: nowrap;
-      min-height: 34px;
-      flex: 0 0 auto;
-      touch-action: manipulation;
-    }
-    .next-move-btn:hover{ background: rgba(255,255,255,0.98); }
-    .next-move-btn:disabled{ opacity: .45; cursor: not-allowed; }
 
-    /* ===== 검색 ===== */
-    .search{
+    .toolbar{
       display:flex;
-      gap:6px;
       align-items:center;
-      margin-left:auto;
-      flex-wrap:nowrap;
+      gap:8px;
       flex: 0 0 auto;
     }
-    .search input{
-      width: 340px;
-      max-width: 70vw;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border:1px solid var(--panel-border);
-      background:#fff;
-      font-size: 16px;
-      color: var(--text);
-      outline: none;
-    }
-    .search input::placeholder{ color:#9a8f86; }
 
     button{
       border: 1px solid var(--panel-border);
@@ -332,42 +292,6 @@
     }
     .msg.error{ color:#b00020; }
 
-    .search-results{
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      margin-top: 4px;
-      background: #fff;
-      border: 1px solid var(--panel-border);
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      max-height: 320px;
-      overflow-y: auto;
-      z-index: 100;
-      display: none;
-    }
-    .search-results.show{ display: block; }
-    .search-result-item{
-      padding: 10px 12px;
-      cursor: pointer;
-      border-bottom: 1px solid #f0f0f0;
-      transition: background 0.15s;
-    }
-    .search-result-item:hover{ background: #f9f6f2; }
-    .search-result-item:last-child{ border-bottom: none; }
-    .search-result-name{
-      font-weight: 900;
-      font-size: 15px;
-      color: #2f2a25;
-      margin-bottom: 4px;
-    }
-    .search-result-detail{
-      font-size: 13px;
-      color: #6c5f56;
-      font-family: ui-monospace, monospace;
-    }
-
     .scroll-x{
       overflow-x:auto;
       overflow-y: visible;
@@ -394,7 +318,7 @@
       position: sticky;
       left: 0;
 
-      z-index: 9999;
+      z-index: 20;
       background: var(--page-bg);
       border-right: 1px solid rgba(0,0,0,0.06);
       display:flex;
@@ -407,10 +331,6 @@
       box-shadow: 6px 0 10px rgba(0,0,0,0.03);
       box-sizing: border-box;
       min-height: calc(var(--cell-h) + 6px);
-
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      will-change: transform;
     }
 
     .grid{
@@ -436,9 +356,8 @@
       scroll-margin-top: 180px;
     }
 
-    .empty{ background: var(--bg-empty); cursor: default; }
-    .used{ background: var(--bg-used); cursor: pointer; }
-    .used:hover { outline: 2px solid rgba(0,0,0,0.09); outline-offset: 0px; }
+    .empty{ background: var(--bg-empty); }
+    .used{ background: var(--bg-used); }
     .empty .niche-top{ justify-content: center; }
 
     .blank{ background: transparent; border-color: transparent; }
@@ -480,89 +399,26 @@
     }
     .flash { animation: flashRed 1.15s ease-in-out 0s 2; }
 
-    .modal-backdrop{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,0.45);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:16px;
-      z-index: 9999;
-    }
-    .modal{
-      width:min(320px, 88vw);
-      background:#fff;
-      border-radius:16px;
-      border:1px solid var(--panel-border);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
-      overflow:hidden;
-    }
-    .modal-header{
-      padding:14px 14px;
-      border-bottom:1px solid #eee;
-      background: #faf7f2;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px;
-    }
-    .modal-title{ font-weight:900; font-size:20px; letter-spacing:0.2px; }
-    .modal-close{
-      border:1px solid var(--panel-border);
-      background:#fff;
-      border-radius:12px;
-      padding:8px 10px;
-      cursor:pointer;
-      font-size:14px;
-    }
-    .modal-body{
-      padding:14px;
-      font-size:18px;
-      color:#1f1b17;
-      max-height: min(420px, 72vh);
-      overflow:auto;
-    }
-    .kv{
-      display:grid;
-      grid-template-columns: 80px 1fr;
-      gap:12px 10px;
-      align-items:start;
-    }
-    .k{ color: var(--muted); font-weight:900; font-size:14px; padding-top:2px; }
-    .v{ font-weight:900; font-size:17px; white-space: pre-wrap; word-break: break-word; line-height:1.5; }
-    .list { margin:0; padding-left: 18px; }
-    .list li { margin: 6px 0; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-variant-numeric: tabular-nums; }
-
-    /* ===== 메뉴 열기/닫기 핸들 =====
-       기본: PC에서는 아예 표시 안 함 (모바일에서만 @media로 표시)
-    */
     .collapse-handle{
-      display:none; /* ✅ PC에서는 숨김 */
+      display:none;
       position: relative;
-
       height: calc(var(--handle-h) + env(safe-area-inset-top, 0px));
       padding-top: env(safe-area-inset-top, 0px);
-
       border: 1px solid rgba(0,0,0,0.08);
       background: rgba(251,248,244,0.92);
       backdrop-filter: blur(6px);
-
       cursor: pointer;
       touch-action: manipulation;
       user-select: none;
-
       align-items:center;
       justify-content:center;
       gap:10px;
-
       font-weight: 900;
       color: rgba(47,42,37,0.82);
       font-size: 12px;
-
-      /* ✅ 폭 줄이고 가운데 */
       width: 160px;
       max-width: 70vw;
       margin: 0 auto 10px;
-
       border-radius: 999px;
     }
     .collapse-handle .handle-pill{
@@ -582,32 +438,29 @@
       body{ margin:10px; }
       h1{ font-size: 20px; margin-bottom: 8px; }
 
-      /* ✅ 모바일에서 패널과 핸들을 한 덩어리 UI로 */
       #topPanel{
-        margin-bottom: 0;            /* 핸들과 붙게 */
+        margin-bottom: 0;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         box-shadow: 0 2px 10px rgba(0,0,0,0.06);
       }
 
       .collapse-handle{
-        display:flex;               /* ✅ 모바일에서만 표시 */
-        width: 180px;               /* 모바일은 조금 넓게 */
+        display:flex;
+        width: 180px;
         max-width: 76vw;
-        margin: -8px auto 10px;     /* ✅ 패널 아래에 딱 붙게(겹치기) */
-        border-top-left-radius: 0;  /* ✅ 패널과 연결 느낌 */
+        margin: -8px auto 10px;
+        border-top-left-radius: 0;
         border-top-right-radius: 0;
-        border-top: 0;              /* 경계선 제거 */
+        border-top: 0;
         box-shadow: 0 8px 14px rgba(0,0,0,0.06);
       }
 
-      /* ✅ 패널 sticky는 기본 0 (핸들이 위에 없으니 보정 제거) */
       #topPanel.panel.sticky{
         top: 0;
       }
 
       .panel{ padding:10px; }
-
       .tabs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
       :root{
@@ -622,9 +475,6 @@
         padding: 4px 7px 6px;
       }
 
-      .next-rows{ flex-direction:column; }
-
-      /* ✅ 모바일: 부부단 박스 + 검색을 세로로 쌓아서 가로스크롤 제거 */
       .panel-top{
         flex-direction: column;
         align-items: stretch;
@@ -638,29 +488,20 @@
         max-width: 100%;
       }
 
-      /* 제목 아래 기준시간: 모바일은 들여쓰기 제거 */
       .asof-inline{
         margin-left: 0;
         white-space: normal;
       }
 
-      .search{
+      .toolbar{
         width: 100%;
-        margin-left: 0;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .search input{
-        width: 100%;
-        max-width: 100%;
-        flex: 1 1 100%;
-      }
-      .search button{
-        flex: 1 1 calc(50% - 4px);
-        min-width: 0;
       }
 
-      /* 기존 모바일 접기 로직용 */
+      .toolbar button{
+        flex: 1 1 auto;
+        width: 100%;
+      }
+
       .scroll-x{
         overflow-y: auto;
         padding-top: 6px;
@@ -679,14 +520,10 @@
         padding-bottom: 0;
         border-color: transparent;
         pointer-events: none;
-      }
-      /* ✅ 접힘 상태: 핸들만 남기고 자연스럽게 */
-      #topPanel.is-collapsed{
         border-width: 0 !important;
         box-shadow: none !important;
       }
 
-      /* 접힘 상태에서는 핸들이 단독 pill */
       #topPanel.is-collapsed + #collapseHandle{
         margin: 10px auto 10px !important;
         border-radius: 999px !important;
@@ -694,7 +531,6 @@
         box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
       }
 
-      /* 펼침 상태에서는 패널과 한 덩어리로 */
       #topPanel:not(.is-collapsed) + #collapseHandle{
         margin: -8px auto 10px !important;
         border-top-left-radius: 0 !important;
@@ -709,17 +545,6 @@
       }
     }
   </style>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-81YL8WZNP3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-81YL8WZNP3');
-</script>
-
 </head>
 
 <body>
@@ -727,28 +552,25 @@
 
   <div class="panel sticky" id="topPanel">
     <div class="panel-top">
-
-      <div id="nextWrap" class="next-wrap" aria-label="부부단 다음 봉안 예정">
-        <!-- ✅ 제목만 -->
+      <div id="nextWrap" class="next-wrap" aria-label="다음 가능 위치">
         <div class="next-head">
-          <span>부부단 다음 봉안 예정</span>
+          <span>다음 가능 위치</span>
         </div>
-        <!-- ✅ 기준시간을 제목 아래로 -->
         <div class="asof-inline" id="asofInline">0000년 00월 00일 00시00분 기준</div>
 
         <div class="next-rows">
           <div class="next-line">
             <span class="next-label">부부단:</span>
             <span class="next-text" id="nextCoupleText">—</span>
-            <button id="nextCoupleMoveBtn" class="next-move-btn" type="button">이동</button>
+          </div>
+          <div class="next-line">
+            <span class="next-label">개인단:</span>
+            <span class="next-text" id="nextPersonalText">—</span>
           </div>
         </div>
       </div>
 
-      <div class="search" style="position:relative;">
-        <input id="searchInput" type="text" placeholder="안치번호(2~5자리) 또는 고인명을 입력해주세요." autocomplete="off" />
-        <div id="searchResults" class="search-results"></div>
-        <button id="searchBtn" type="button">검색</button>
+      <div class="toolbar">
         <button id="reloadBtn" type="button">새로고침</button>
       </div>
     </div>
@@ -757,7 +579,6 @@
     <div id="roomBtns" class="room-btns"></div>
   </div>
 
-  <!-- ✅ 모바일에서만 보이는 '메뉴 열기/닫기' 버튼: 패널 하단 -->
   <div id="collapseHandle" class="collapse-handle" aria-label="상단 패널 펼치기/접기">
     <span class="handle-pill" aria-hidden="true"></span>
     <span id="handleText" class="handle-text">메뉴 열기 ▾</span>
@@ -770,24 +591,11 @@
     <div id="room" class="room"></div>
   </div>
 
-  <div id="modalBackdrop" class="modal-backdrop">
-    <div class="modal" role="dialog" aria-modal="true">
-      <div class="modal-header">
-        <div class="modal-title" id="modalTitle">상세</div>
-        <button class="modal-close" id="modalCloseBtn">닫기</button>
-      </div>
-      <div class="modal-body" id="modalBody"></div>
-    </div>
-  </div>
-
 <script>
   const DECEASED_JSON_URL = "./data/deceased_data.json";
 
   const JSON_FIELDS = {
-    deadName: "deadName",
-    applName: "applName",
     ensNo: "ensNo",
-    strDate: "strDate",
     retDate: "retDate"
   };
 
@@ -799,7 +607,6 @@
   const STARTS = {
     "01실": 1,    "02실": 217,  "03실": 433,  "04실": 649,  "05실": 865,
     "06실": 1081, "07실": 1279, "08실": 1477, "09실": 1693,
-
     "10실": 2062,  "11실": 2449,  "12실": 2836,  "13실": 3223,  "14실": 3610,
     "15실": 3997,  "16실": 4384,  "17실": 4771,  "18실": 5158,  "19실": 5545,
     "20실": 5932,  "21실": 6319,  "22실": 6706,  "23실": 7093,  "24실": 7480,
@@ -817,12 +624,6 @@
   const $ = (id) => document.getElementById(id);
 
   function pad5(n){ return String(n).padStart(5,"0"); }
-
-  function escapeHtml(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-      .replaceAll('"',"quot;").replaceAll("'","&#039;");
-  }
 
   function setMsg(text, kind="info"){
     const el = $("msg");
@@ -916,17 +717,16 @@
     return "p1";
   }
 
-  const infoByRoom = {};
-  for (const room of Object.keys(ROOM_CFG)) infoByRoom[room] = {};
+  const statusByRoom = {};
+  for (const room of Object.keys(ROOM_CFG)) statusByRoom[room] = {};
 
   let activeTabId = "couple";
   let currentRoom = "01실";
 
   let nextCouple = null;
-  let nextPersonalRoom = null;
+  let nextPersonal = null;
 
   let LAST_SERVER_TIME = null;
-  let SERVER_TIME_FALLBACK = false;
 
   function updateAsOfUI(){
     const d = (LAST_SERVER_TIME instanceof Date && !isNaN(LAST_SERVER_TIME.getTime())) ? LAST_SERVER_TIME : new Date();
@@ -950,19 +750,19 @@
         <div class="icon-bg used single" style="width:26px; height:26px;">
           <img class="state-icon" src="${ICONS.single}" alt="개인단">
         </div>
-        <b>개인단</b>
+        <b>사용중(개인단)</b>
       </span>
       <span class="legend-item">
         <div class="icon-bg used couple" style="width:26px; height:26px;">
           <img class="state-icon" src="${ICONS.couple}" alt="부부단">
         </div>
-        <b>부부단</b>
+        <b>사용중(부부단)</b>
       </span>
       ${
         showNext
           ? `<span class="legend-item">
                <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--next-red);border-radius:8px;"></span>
-               <b>다음자리</b>
+               <b>다음 가능 위치</b>
              </span>`
           : ``
       }
@@ -982,21 +782,12 @@
     }
   }
 
-  function shouldHideRoomButton(room){
-    if (activeTabId === "p1" || activeTabId === "p2a" || activeTabId === "p2b"){
-      return nextPersonalRoom === room;
-    }
-    return false;
-  }
-
   function renderRoomButtons() {
     const wrap = $("roomBtns");
     wrap.innerHTML = "";
 
     const tab = TAB_DEFS.find(x => x.id === activeTabId);
-    const rooms = (tab?.rooms || [])
-      .filter(r => ROOM_CFG[r])
-      .filter(r => !shouldHideRoomButton(r));
+    const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
 
     for (const room of rooms) {
       const btn = document.createElement("button");
@@ -1015,7 +806,7 @@
     buildLegend();
 
     const tab = TAB_DEFS.find(t => t.id === activeTabId);
-    const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]).filter(r => !shouldHideRoomButton(r));
+    const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
 
     if (!rooms.includes(currentRoom)){
       const first = rooms[0];
@@ -1048,13 +839,13 @@
 
   function saveState(){
     try{
-      localStorage.setItem("memorial_ui_state", JSON.stringify({ tab: activeTabId, room: currentRoom }));
+      localStorage.setItem("memorial_public_ui_state", JSON.stringify({ tab: activeTabId, room: currentRoom }));
     }catch(e){}
   }
 
   function restoreState(){
     try{
-      const raw = localStorage.getItem("memorial_ui_state");
+      const raw = localStorage.getItem("memorial_public_ui_state");
       if (!raw) return;
       const s = JSON.parse(raw);
       if (s?.tab && TAB_DEFS.some(t=>t.id===s.tab)) activeTabId = s.tab;
@@ -1078,7 +869,7 @@
 
     const isCouple = isCoupleRoom(cfg.room);
     const src = isCouple ? ICONS.couple : ICONS.single;
-    const alt = isCouple ? "부부단" : "개인단";
+    const alt = isCouple ? "부부단 사용중" : "개인단 사용중";
     const bgClass = isCouple ? "couple" : "single";
 
     return `<div class="icon-bg used ${bgClass}"><img class="state-icon" src="${src}" alt="${alt}"></div>`;
@@ -1087,9 +878,8 @@
   function findNextAvailableNo(cfg){
     for (let n = cfg.start; n <= cfg.end; n++){
       const noStr = pad5(n);
-      const rec = infoByRoom[cfg.room][noStr];
-      if (rec?.status === "used") continue;
-      return noStr;
+      const used = statusByRoom[cfg.room][noStr] === "used";
+      if (!used) return noStr;
     }
     return null;
   }
@@ -1108,7 +898,7 @@
     const host = $("room");
     host.innerHTML = "";
 
-    const nextNo = isCoupleRoom(currentRoom) ? findNextAvailableNo(cfg) : null;
+    const nextNo = findNextAvailableNo(cfg);
 
     for (let r=0; r<cfg.dans; r++){
       const dan = cfg.dans - r;
@@ -1137,8 +927,7 @@
         }
 
         const noStr = pad5(num);
-        const rec = infoByRoom[cfg.room][noStr];
-        const used = (rec?.status === "used");
+        const used = statusByRoom[cfg.room][noStr] === "used";
 
         const niche = document.createElement("div");
         niche.dataset.no = noStr;
@@ -1157,10 +946,7 @@
         no.textContent = noStr;
         niche.appendChild(no);
 
-        if (used){
-          niche.addEventListener("click", () => openModal(cfg.room, noStr, dan));
-        }
-
+        niche.addEventListener("click", () => focusCell(cfg.room, noStr));
         grid.appendChild(niche);
       }
 
@@ -1190,32 +976,19 @@
 
   function updateNextUI(){
     nextCouple = computeNextForRooms(COUPLE_ROOMS);
+    nextPersonal = computeNextForRooms(PERSONAL_ALL_ROOMS);
 
-    const wrap = $("nextWrap");
-    const cText = $("nextCoupleText");
-    const cBtn = $("nextCoupleMoveBtn");
+    $("nextCoupleText").textContent = nextCouple
+      ? `${nextCouple.room} ${nextCouple.no} (${danOfNo(ROOM_CFG[nextCouple.room], nextCouple.no)}단)`
+      : "없음";
 
-    const hasAny = !!nextCouple;
-    wrap.style.display = hasAny ? "flex" : "none";
-    if (hasAny){
-      const cfg = ROOM_CFG[nextCouple.room];
-      const dan = danOfNo(cfg, nextCouple.no);
-      cText.textContent = `${nextCouple.room} ${nextCouple.no} (${dan}단)`;
-      cBtn.disabled = false;
-    }
-
-    const pAll = computeNextForRooms(PERSONAL_ALL_ROOMS);
-    nextPersonalRoom = pAll ? pAll.room : null;
+    $("nextPersonalText").textContent = nextPersonal
+      ? `${nextPersonal.room} ${nextPersonal.no} (${danOfNo(ROOM_CFG[nextPersonal.room], nextPersonal.no)}단)`
+      : "없음";
 
     updateAsOfUI();
     requestAnimationFrame(updateScrollerHeight);
   }
-
-  $("nextCoupleMoveBtn").addEventListener("click", () => {
-    if (!nextCouple) return;
-    setRoom(nextCouple.room, false);
-    requestAnimationFrame(() => focusCell(nextCouple.room, nextCouple.no));
-  });
 
   function pickRowsFromJson(json){
     if (Array.isArray(json)) return json;
@@ -1234,19 +1007,8 @@
     if (!res.ok) throw new Error("fetch fail: " + res.status);
 
     const dateHdr = res.headers.get("Date");
-    if (dateHdr){
-      const d = new Date(dateHdr);
-      if (!isNaN(d.getTime())){
-        LAST_SERVER_TIME = d;
-        SERVER_TIME_FALLBACK = false;
-      } else {
-        LAST_SERVER_TIME = new Date();
-        SERVER_TIME_FALLBACK = true;
-      }
-    } else {
-      LAST_SERVER_TIME = new Date();
-      SERVER_TIME_FALLBACK = true;
-    }
+    LAST_SERVER_TIME = dateHdr ? new Date(dateHdr) : new Date();
+    if (isNaN(LAST_SERVER_TIME.getTime())) LAST_SERVER_TIME = new Date();
 
     return await res.json();
   }
@@ -1271,65 +1033,21 @@
     return null;
   }
 
-  function pushUnique(arr, value){
-    const v = String(value ?? "").trim();
-    if (!v) return;
-    if (!arr.includes(v)) arr.push(v);
-  }
-
-  function parseExcelDate(v){
-    if (v instanceof Date && !isNaN(v.getTime())) return v;
-    if (typeof v === "number" && isFinite(v)) {
-      const ms = (v - 25569) * 86400 * 1000;
-      const d = new Date(ms);
-      return isNaN(d.getTime()) ? null : d;
-    }
-    const s = String(v ?? "").trim();
-    if (!s) return null;
-
-    const m = s.match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})/);
-    if (m) {
-      const y = parseInt(m[1],10);
-      const mo = parseInt(m[2],10);
-      const da = parseInt(m[3],10);
-      const d = new Date(y, mo-1, da);
-      return isNaN(d.getTime()) ? null : d;
-    }
-
-    const d = new Date(s);
-    return isNaN(d.getTime()) ? null : d;
-  }
-
-  function fmtDate(d){
-    const y = d.getFullYear();
-    const m = String(d.getMonth()+1).padStart(2,"0");
-    const da = String(d.getDate()).padStart(2,"0");
-    return `${y}-${m}-${da}`;
-  }
-
-  function addYearsMinusOneDay(d, years){
-    const x = new Date(d.getTime());
-    x.setFullYear(x.getFullYear() + years);
-    x.setDate(x.getDate() - 1);
-    return x;
-  }
-
-  function clearInfo(){
-    for (const room of Object.keys(infoByRoom)) infoByRoom[room] = {};
+  function clearStatus(){
+    for (const room of Object.keys(statusByRoom)) statusByRoom[room] = {};
   }
 
   function applyJsonRows(rows){
-    clearInfo();
+    clearStatus();
 
     if (!rows || !Array.isArray(rows) || rows.length === 0){
-      setMsg("데이터 비어있음", "error");
+      setMsg("데이터가 비어 있습니다.", "error");
       updateNextUI();
       renderRoom(true);
       return;
     }
 
     const bucket = {};
-    let seq = 0;
 
     for (const obj of rows){
       if (!obj || typeof obj !== "object") continue;
@@ -1349,76 +1067,18 @@
       if (!cfg || n < cfg.start || n > cfg.end) continue;
 
       const returned = !isBlank(obj[JSON_FIELDS.retDate]);
-      const burialRaw = obj[JSON_FIELDS.strDate];
-      const d = parseExcelDate(burialRaw);
-      const ms = d ? d.getTime() : null;
 
       const key = `${room}|${no5}`;
-      if (!bucket[key]) bucket[key] = [];
-      bucket[key].push({
-        seq: seq++,
-        room,
-        no5,
-        burialNo: burialNoStr,
-        returned,
-        burialDateRaw: burialRaw,
-        burialDateMs: ms,
-        deceasedName: obj[JSON_FIELDS.deadName],
-        applicantName: obj[JSON_FIELDS.applName]
-      });
-    }
+      if (!bucket[key]) bucket[key] = { active: false };
 
-    function sortKey(e){
-      return { ms: e.burialDateMs != null ? e.burialDateMs : -Infinity, seq: e.seq };
-    }
-
-    for (const [key, entries] of Object.entries(bucket)){
-      if (!entries || entries.length === 0) continue;
-
-      const actives = entries.filter(e => !e.returned);
-      const returns = entries.filter(e => e.returned);
-
-      let chosenIsReturned = false;
-      let pool = null;
-
-      if (actives.length > 0){
-        actives.sort((a,b)=>{
-          const ka = sortKey(a), kb = sortKey(b);
-          if (ka.ms !== kb.ms) return ka.ms - kb.ms;
-          return ka.seq - kb.seq;
-        });
-        pool = actives;
-        chosenIsReturned = false;
-      } else if (returns.length > 0){
-        returns.sort((a,b)=>{
-          const ka = sortKey(a), kb = sortKey(b);
-          if (ka.ms !== kb.ms) return ka.ms - kb.ms;
-          return ka.seq - kb.seq;
-        });
-        pool = returns;
-        chosenIsReturned = true;
-      } else {
-        continue;
+      if (!returned) {
+        bucket[key].active = true;
       }
+    }
 
+    for (const [key, value] of Object.entries(bucket)){
       const [room, no5] = key.split("|");
-
-      const rec = {
-        status: "used",
-        returned: chosenIsReturned,
-        burialNo: (pool[pool.length - 1]?.burialNo || ""),
-        deceasedNames: [],
-        applicantNames: [],
-        burialDatesRaw: []
-      };
-
-      for (const e of pool){
-        pushUnique(rec.deceasedNames, e.deceasedName);
-        pushUnique(rec.applicantNames, e.applicantName);
-        if (!isBlank(e.burialDateRaw)) rec.burialDatesRaw.push(e.burialDateRaw);
-      }
-
-      infoByRoom[room][no5] = rec;
+      statusByRoom[room][no5] = value.active ? "used" : "empty";
     }
 
     updateNextUI();
@@ -1430,7 +1090,7 @@
     requestAnimationFrame(updateScrollerHeight);
   }
 
-  async function loadDeceasedFromJson(){
+  async function loadStatusFromJson(){
     try{
       setMsg("");
       const json = await fetchJsonWithServerTime(DECEASED_JSON_URL);
@@ -1446,77 +1106,20 @@
 
       const sample = rows.find(x => x && typeof x === "object");
       if (sample){
-        const keysOk = (
-          (JSON_FIELDS.ensNo in sample) ||
-          (JSON_FIELDS.deadName in sample) ||
-          (JSON_FIELDS.applName in sample)
-        );
+        const keysOk = (JSON_FIELDS.ensNo in sample);
         if (!keysOk){
-          setMsg("JSON 헤더 키(ensNo/deadName/applName 등)를 확인해 주세요.", "error");
+          setMsg("JSON 헤더 키(ensNo, retDate)를 확인해 주세요.", "error");
         }
       }
 
       applyJsonRows(rows);
     } catch(err){
       console.error(err);
-      setMsg("JSON 로딩 실패", "error");
-
+      setMsg("현황 데이터를 불러오지 못했습니다.", "error");
       LAST_SERVER_TIME = new Date();
-      SERVER_TIME_FALLBACK = true;
       updateAsOfUI();
-
       applyJsonRows([]);
     }
-  }
-
-  function openModal(room, noStr, dan){
-    const rec = infoByRoom[room]?.[noStr];
-    if (!rec || rec.status !== "used") return;
-
-    $("modalTitle").textContent = `${room} ${dan}단 ${noStr}`;
-
-    const deceased = (rec.deceasedNames && rec.deceasedNames.length)
-      ? `<ul class="list">${rec.deceasedNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
-      : "—";
-
-    const applicant = (rec.applicantNames && rec.applicantNames.length)
-      ? `<ul class="list">${rec.applicantNames.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
-      : "—";
-
-    let startDate = null;
-    for (const raw of (rec.burialDatesRaw || [])){
-      const d = parseExcelDate(raw);
-      if (!d) continue;
-      if (!startDate || d.getTime() < startDate.getTime()) startDate = d;
-    }
-
-    const periodText = startDate
-      ? `<div class="mono">${fmtDate(startDate)}<br>~ ${fmtDate(addYearsMinusOneDay(startDate, 15))}</div>`
-      : `<div class="mono">—</div>`;
-
-    $("modalBody").innerHTML = `
-      <div class="kv">
-        <div class="k">고인명</div><div class="v">${deceased}</div>
-        <div class="k">신청자</div><div class="v">${applicant}</div>
-        <div class="k">사용기간</div><div class="v">${periodText}</div>
-      </div>
-    `;
-
-    $("modalBackdrop").style.display = "flex";
-  }
-
-  function closeModal(){ $("modalBackdrop").style.display = "none"; }
-  $("modalCloseBtn").addEventListener("click", closeModal);
-  $("modalBackdrop").addEventListener("click", (e) => { if (e.target.id === "modalBackdrop") closeModal(); });
-  window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
-
-  function findRoomByNo(noStr){
-    const n = parseInt(noStr, 10);
-    if (!Number.isFinite(n)) return null;
-    for (const cfg of ROOM_LIST){
-      if (n >= cfg.start && n <= cfg.end) return cfg.room;
-    }
-    return null;
   }
 
   function focusCell(room, noStr){
@@ -1528,118 +1131,7 @@
     el.classList.add("flash");
   }
 
-  function normalizeText(text){
-    return String(text || "").trim().replace(/\s+/g, "").toLowerCase();
-  }
-
-  function searchByName(query){
-    const normalized = normalizeText(query);
-    if (normalized.length < 2) return [];
-
-    const results = [];
-    for (const room of Object.keys(infoByRoom)){
-      for (const [noStr, rec] of Object.entries(infoByRoom[room])){
-        if (rec.status !== "used") continue;
-        if (rec.returned) continue;
-
-        for (const name of (rec.deceasedNames || [])){
-          const normName = normalizeText(name);
-          if (normName.includes(normalized)){
-            const cfg = ROOM_CFG[room];
-            const dan = danOfNo(cfg, noStr);
-            results.push({ room, noStr, dan, name });
-            break;
-          }
-        }
-      }
-    }
-    return results;
-  }
-
-  function showSearchResults(results){
-    const container = $("searchResults");
-    if (!results || results.length === 0){
-      container.classList.remove("show");
-      return;
-    }
-
-    container.innerHTML = results.map((r, idx) => `
-      <div class="search-result-item" data-idx="${idx}">
-        <div class="search-result-name">${escapeHtml(r.name)}</div>
-        <div class="search-result-detail">${r.room} ${r.dan}단 ${r.noStr}</div>
-      </div>
-    `).join("");
-
-    container.classList.add("show");
-
-    container.querySelectorAll(".search-result-item").forEach((el, idx) => {
-      el.addEventListener("click", () => {
-        const result = results[idx];
-        container.classList.remove("show");
-        $("searchInput").value = "";
-
-        setRoom(result.room, false);
-        requestAnimationFrame(() => {
-          focusCell(result.room, result.noStr);
-          setTimeout(() => openModal(result.room, result.noStr, result.dan), 600);
-        });
-      });
-    });
-  }
-
-  function onSearch(){
-    setMsg("");
-    const raw = ($("searchInput").value || "").trim();
-    if (!raw) return;
-
-    const compact = raw.replace(/\s+/g, "");
-    const digits = compact.replace(/\D/g, "");
-
-    if (digits.length >= 2 && digits.length <= 5 && digits.length === compact.length){
-      const noStr = digits.padStart(5,"0");
-      const room = findRoomByNo(noStr);
-      if (!room){
-        setMsg("해당 번호를 찾을 수 없습니다.", "error");
-        return;
-      }
-      $("searchResults").classList.remove("show");
-      setRoom(room, false);
-      requestAnimationFrame(() => focusCell(room, noStr));
-      return;
-    }
-
-    if (raw.length >= 2){
-      const results = searchByName(raw);
-      if (results.length === 0){
-        setMsg("검색 결과가 없습니다.", "error");
-        $("searchResults").classList.remove("show");
-      } else {
-        setMsg("");
-        showSearchResults(results);
-      }
-    } else {
-      setMsg("고인명은 2자 이상 입력해 주세요.", "error");
-    }
-  }
-
-  $("searchBtn").addEventListener("click", onSearch);
-  $("searchInput").addEventListener("keydown", (e) => { if (e.key === "Enter") onSearch(); });
-
-  $("searchInput").addEventListener("input", () => {
-    const val = ($("searchInput").value || "").trim();
-    if (val.length === 0){
-      $("searchResults").classList.remove("show");
-      setMsg("");
-    }
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".search")){
-      $("searchResults").classList.remove("show");
-    }
-  });
-
-  $("reloadBtn").addEventListener("click", loadDeceasedFromJson);
+  $("reloadBtn").addEventListener("click", loadStatusFromJson);
 
   const UI = { collapsed: false };
 
@@ -1668,14 +1160,14 @@
     if (!isMobileWidth()){
       UI.collapsed = false;
       panel.classList.remove("is-collapsed");
-      handle.style.display = "none";  // ✅ PC에서는 숨김
+      handle.style.display = "none";
       legend.style.display = "";
       if (msg) msg.style.display = (msg.textContent ? "block" : "none");
       requestAnimationFrame(updateScrollerHeight);
       return;
     }
 
-    handle.style.display = "flex"; // ✅ 모바일에서만 표시
+    handle.style.display = "flex";
     panel.classList.toggle("is-collapsed", UI.collapsed);
 
     legend.style.display = UI.collapsed ? "none" : "";
@@ -1701,12 +1193,10 @@
     scroller.style.overflowY = "auto";
 
     const vh = getViewportHeight();
-
     const handleH = handle.getBoundingClientRect().height;
     const panelH  = UI.collapsed ? 0 : panel.getBoundingClientRect().height;
     const legendH = UI.collapsed ? 0 : legend.getBoundingClientRect().height;
     const msgH = (!UI.collapsed && msg && msg.style.display !== "none") ? msg.getBoundingClientRect().height : 0;
-
     const extra = 12;
     const maxH = Math.max(260, Math.floor(vh - handleH - panelH - legendH - msgH - extra));
     scroller.style.maxHeight = maxH + "px";
@@ -1741,10 +1231,9 @@
   renderRoom(false);
 
   LAST_SERVER_TIME = new Date();
-  SERVER_TIME_FALLBACK = true;
   updateAsOfUI();
 
-  loadDeceasedFromJson();
+  loadStatusFromJson();
   requestAnimationFrame(updateScrollerHeight);
 </script>
 </body>
