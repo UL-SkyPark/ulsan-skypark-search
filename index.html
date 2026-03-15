@@ -283,113 +283,6 @@
       margin-bottom: 6px;
     }
 
-    .admin-link {
-      position: absolute;
-      right: 24px;
-      bottom: 18px;
-      font-size: 12px;
-      color: var(--text-soft);
-      opacity: 0.55;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-
-    .admin-link:focus-visible { outline: none; box-shadow: var(--ring); border-radius: 6px; }
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 9999;
-    }
-
-    .modal-overlay.open { display: flex; }
-
-    .modal {
-      width: min(420px, 100%);
-      background: rgba(255, 255, 255, 0.94);
-      border: 1px solid var(--border-soft);
-      border-radius: 18px;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
-      padding: 22px;
-    }
-
-    .modal h3 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 18px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    .modal p {
-      font-size: 13px;
-      color: var(--text-soft);
-      text-align: center;
-      margin-bottom: 14px;
-    }
-
-    .field {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      border: 1px solid rgba(192, 136, 88, 0.35);
-      border-radius: 12px;
-      padding: 10px 12px;
-      background: rgba(255, 255, 255, 0.8);
-    }
-
-    .field input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: transparent;
-      font-size: 15px;
-    }
-
-    .toggle-btn,
-    .btn {
-      min-height: 40px;
-      border-radius: 10px;
-      border: 1px solid rgba(192, 136, 88, 0.35);
-      background: rgba(255, 255, 255, 0.8);
-      cursor: pointer;
-      font-size: 14px;
-      padding: 8px 10px;
-    }
-
-    .toggle-btn:focus-visible,
-    .btn:focus-visible {
-      outline: none;
-      box-shadow: var(--ring);
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .btn { flex: 1; }
-
-    .btn.primary {
-      background: rgba(192, 136, 88, 0.2);
-      border-color: rgba(192, 136, 88, 0.6);
-    }
-
-    .error-text {
-      display: none;
-      color: #b00020;
-      font-size: 12px;
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    .error-text.show { display: block; }
-
     .sr-only {
       position: absolute;
       width: 1px;
@@ -429,14 +322,11 @@
       .info-list dt { margin-top: 8px; }
 
       .map-box { height: 280px; }
-
-      .admin-link { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .circle-btn,
-      .action-btn,
-      .btn { transition: none; }
+      .action-btn { transition: none; }
 
       .circle-btn:active { transform: none; }
     }
@@ -547,86 +437,11 @@
       <p style="margin-top: 8px; font-size: 12px; opacity: 0.75;">최종 업데이트: 2026-03-10</p>
       <p style="margin-top: 8px; opacity: 0.6; font-size: 12px;">Copyright (c) ULSAN INFRASTRUCTURE CORPORATION. All rights reserved.</p>
     </div>
-    <a class="admin-link" onclick="openAdminModal()" role="button" tabindex="0" aria-label="관리자 페이지 열기">관리자 페이지</a>
   </footer>
 
-  <div class="modal-overlay" id="adminModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
-      <h3 id="adminTitle">관리자 비밀번호</h3>
-      <p>비밀번호를 입력하면 관리자 페이지로 이동합니다.</p>
-
-      <div class="field">
-        <input id="adminPassword" type="password" autocomplete="current-password" placeholder="비밀번호 입력" aria-label="관리자 비밀번호" />
-        <button type="button" class="toggle-btn" id="togglePwBtn">표시</button>
-      </div>
-
-      <div class="modal-actions">
-        <button type="button" class="btn" onclick="closeAdminModal()">취소</button>
-        <button type="button" class="btn primary" onclick="submitAdminPassword()">확인</button>
-      </div>
-
-      <div class="error-text" id="adminError">비밀번호가 올바르지 않습니다. 다시 확인해 주세요.</div>
-    </div>
-  </div>
-
   <script>
-    const ADMIN_PASSWORD = 'a1234567!@';
-
-    const modal = document.getElementById('adminModal');
-    const pwInput = document.getElementById('adminPassword');
-    const errorText = document.getElementById('adminError');
-    const toggleBtn = document.getElementById('togglePwBtn');
     const copyAddressBtn = document.getElementById('copyAddressBtn');
     const copyStatus = document.getElementById('copyStatus');
-
-    function openAdminModal() {
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      errorText.classList.remove('show');
-      pwInput.value = '';
-      pwInput.type = 'password';
-      toggleBtn.textContent = '표시';
-      setTimeout(() => pwInput.focus(), 0);
-    }
-
-    function closeAdminModal() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      errorText.classList.remove('show');
-    }
-
-    function submitAdminPassword() {
-      const password = pwInput.value || '';
-      if (password === ADMIN_PASSWORD) {
-        window.location.href = 'admin.html';
-        return;
-      }
-
-      errorText.classList.add('show');
-      pwInput.focus();
-      pwInput.select();
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      const isHidden = pwInput.type === 'password';
-      pwInput.type = isHidden ? 'text' : 'password';
-      toggleBtn.textContent = isHidden ? '가리기' : '표시';
-      pwInput.focus();
-    });
-
-    pwInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') submitAdminPassword();
-      if (e.key === 'Escape') closeAdminModal();
-    });
-
-    modal.addEventListener('mousedown', (e) => {
-      if (e.target === modal) closeAdminModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('open')) closeAdminModal();
-      if (e.key === 'Enter' && document.activeElement && document.activeElement.classList.contains('admin-link')) openAdminModal();
-    });
 
     copyAddressBtn.addEventListener('click', async () => {
       const address = document.getElementById('addressText').textContent;
