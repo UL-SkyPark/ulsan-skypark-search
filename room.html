@@ -241,17 +241,27 @@
     }
 
     .legend{
-      display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      align-items:center;
       margin: 8px 0 10px;
       padding: 12px;
       border:1px solid var(--panel-border);
       border-radius:14px;
       background: var(--panel-bg);
     }
-    .legend-item{ display:inline-flex; align-items:center; gap:8px; font-size: 13px; color: var(--text); }
+    .legend-item{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size: 13px;
+      color: var(--text);
+    }
 
     .icon-bg{
-      width: 26px; height: 26px;
+      width: 26px;
+      height: 26px;
       border-radius: 999px;
       display:flex;
       align-items:center;
@@ -303,21 +313,26 @@
     }
     #room{ padding-top: 4px; }
 
-    .room{ display:flex; flex-direction:column; width: max-content; }
+    .room{
+      display:flex;
+      flex-direction:column;
+      width: max-content;
+    }
 
     .row{
-      display:flex; gap:0; align-items:stretch; position: relative;
+      display:flex;
+      gap:0;
+      align-items:stretch;
+      position: relative;
       width: max-content;
     }
 
     .dan-label{
       width: var(--label-w);
       flex: 0 0 auto;
-
       position: -webkit-sticky;
       position: sticky;
       left: 0;
-
       z-index: 20;
       background: var(--page-bg);
       border-right: 1px solid rgba(0,0,0,0.06);
@@ -354,14 +369,19 @@
       user-select:none;
       position: relative;
       scroll-margin-top: 180px;
+      cursor: default;
     }
 
     .empty{ background: var(--bg-empty); }
     .used{ background: var(--bg-used); }
     .empty .niche-top{ justify-content: center; }
 
-    .blank{ background: transparent; border-color: transparent; }
-    .blank .niche-top, .blank .niche-no{ display:none; }
+    .blank{
+      background: transparent;
+      border-color: transparent;
+    }
+    .blank .niche-top,
+    .blank .niche-no{ display:none; }
 
     .niche-top{
       display:flex;
@@ -595,8 +615,7 @@
   const DECEASED_JSON_URL = "./data/deceased_data.json";
 
   const JSON_FIELDS = {
-    ensNo: "ensNo",
-    retDate: "retDate"
+    ensNo: "ensNo"
   };
 
   const ICONS = {
@@ -607,11 +626,11 @@
   const STARTS = {
     "01실": 1,    "02실": 217,  "03실": 433,  "04실": 649,  "05실": 865,
     "06실": 1081, "07실": 1279, "08실": 1477, "09실": 1693,
-    "10실": 2062,  "11실": 2449,  "12실": 2836,  "13실": 3223,  "14실": 3610,
-    "15실": 3997,  "16실": 4384,  "17실": 4771,  "18실": 5158,  "19실": 5545,
-    "20실": 5932,  "21실": 6319,  "22실": 6706,  "23실": 7093,  "24실": 7480,
-    "25실": 7867,  "26실": 8254,  "27실": 8641,  "28실": 9028,  "29실": 9415,
-    "30실": 9802,  "31실": 10189, "32실": 10576, "33실": 10963, "34실": 11350,
+    "10실": 2062, "11실": 2449, "12실": 2836, "13실": 3223, "14실": 3610,
+    "15실": 3997, "16실": 4384, "17실": 4771, "18실": 5158, "19실": 5545,
+    "20실": 5932, "21실": 6319, "22실": 6706, "23실": 7093, "24실": 7480,
+    "25실": 7867, "26실": 8254, "27실": 8641, "28실": 9028, "29실": 9415,
+    "30실": 9802, "31실": 10189, "32실": 10576, "33실": 10963, "34실": 11350,
     "35실": 11737, "36실": 12394, "37실": 12642, "38실": 12930, "39실": 13202,
     "40실": 13474, "41실": 13762, "42실": 14034, "43실": 14306, "44실": 14594,
     "45실": 14866, "46실": 15138, "47실": 15410, "48실": 15570, "49실": 15954,
@@ -623,9 +642,9 @@
 
   const $ = (id) => document.getElementById(id);
 
-  function pad5(n){ return String(n).padStart(5,"0"); }
+  function pad5(n){ return String(n).padStart(5, "0"); }
 
-  function setMsg(text, kind="info"){
+  function setMsg(text, kind = "info"){
     const el = $("msg");
     if (!text){
       el.textContent = "";
@@ -638,20 +657,24 @@
     el.classList.toggle("error", kind === "error");
   }
 
-  function roomStr(n){ return String(n).padStart(2,"0") + "실"; }
-  function roomsRange(a,b){ const out=[]; for(let i=a;i<=b;i++) out.push(roomStr(i)); return out; }
+  function roomStr(n){ return String(n).padStart(2, "0") + "실"; }
+  function roomsRange(a, b){
+    const out = [];
+    for (let i = a; i <= b; i++) out.push(roomStr(i));
+    return out;
+  }
 
   const itemsByStart = Object.entries(STARTS)
-    .map(([room, start]) => ({ room, start, roomNum: parseInt(room.replace("실",""),10) }))
-    .sort((a,b)=>a.start-b.start);
+    .map(([room, start]) => ({ room, start, roomNum: parseInt(room.replace("실", ""), 10) }))
+    .sort((a, b) => a.start - b.start);
 
   const ROOM_CFG = {};
   const tmp = [];
 
-  for (let i=0; i<itemsByStart.length; i++){
+  for (let i = 0; i < itemsByStart.length; i++){
     const cur = itemsByStart[i];
-    const next = itemsByStart[i+1];
-    let end = next ? (next.start - 1) : (END_OVERRIDE[cur.room] ?? (cur.start + 215));
+    const next = itemsByStart[i + 1];
+    const end = next ? (next.start - 1) : (END_OVERRIDE[cur.room] ?? (cur.start + 215));
     const count = end - cur.start + 1;
 
     const div8 = (count % 8 === 0);
@@ -673,13 +696,12 @@
     return null;
   }
 
-  for (let i=0; i<tmp.length; i++){
+  for (let i = 0; i < tmp.length; i++){
     if (!tmp[i].dans){
       const prev = nearestFixedDans(i, -1);
       const next = nearestFixedDans(i, +1);
       tmp[i].dans = (prev && next && prev === next) ? prev : (prev || next || 9);
     }
-    const cols = Math.ceil(tmp[i].count / tmp[i].dans);
 
     ROOM_CFG[tmp[i].room] = {
       room: tmp[i].room,
@@ -688,24 +710,25 @@
       end: tmp[i].end,
       count: tmp[i].count,
       dans: tmp[i].dans,
-      cols
+      cols: Math.ceil(tmp[i].count / tmp[i].dans)
     };
   }
 
-  const ROOM_LIST = Object.values(ROOM_CFG).sort((a,b)=>a.start-b.start);
+  const ROOM_LIST = Object.values(ROOM_CFG).sort((a, b) => a.start - b.start);
 
-  const COUPLE_ROOMS = roomsRange(1,9);
-  const PERSONAL1_ROOMS = [...roomsRange(10,18), roomStr(61), roomStr(62)];
-  const PERSONAL2A_ROOMS = roomsRange(19,39);
-  const PERSONAL2B_ROOMS = roomsRange(40,60);
+  const COUPLE_ROOMS = roomsRange(1, 9);
+  const PERSONAL1_ROOMS = [...roomsRange(10, 18), roomStr(61), roomStr(62)];
+  const PERSONAL2A_ROOMS = roomsRange(19, 39);
+  const PERSONAL2B_ROOMS = roomsRange(40, 60);
   const PERSONAL_ALL_ROOMS = [...PERSONAL1_ROOMS, ...PERSONAL2A_ROOMS, ...PERSONAL2B_ROOMS];
 
   const TAB_DEFS = [
-    { id:"couple", label:"부부단", rooms: COUPLE_ROOMS },
-    { id:"p1", label:"개인단 1층", rooms: PERSONAL1_ROOMS },
-    { id:"p2a", label:"개인단 2층(19~39)", rooms: PERSONAL2A_ROOMS },
-    { id:"p2b", label:"개인단 2층(40~60)", rooms: PERSONAL2B_ROOMS }
+    { id: "couple", label: "부부단", rooms: COUPLE_ROOMS },
+    { id: "p1", label: "개인단 1층", rooms: PERSONAL1_ROOMS },
+    { id: "p2a", label: "개인단 2층(19~39)", rooms: PERSONAL2A_ROOMS },
+    { id: "p2b", label: "개인단 2층(40~60)", rooms: PERSONAL2B_ROOMS }
   ];
+
   const TAB_ROOM_SETS = Object.fromEntries(TAB_DEFS.map(t => [t.id, new Set(t.rooms)]));
 
   function tabForRoom(room){
@@ -722,19 +745,21 @@
 
   let activeTabId = "couple";
   let currentRoom = "01실";
-
   let nextCouple = null;
   let nextPersonal = null;
-
   let LAST_SERVER_TIME = null;
 
   function updateAsOfUI(){
-    const d = (LAST_SERVER_TIME instanceof Date && !isNaN(LAST_SERVER_TIME.getTime())) ? LAST_SERVER_TIME : new Date();
+    const d = (LAST_SERVER_TIME instanceof Date && !isNaN(LAST_SERVER_TIME.getTime()))
+      ? LAST_SERVER_TIME
+      : new Date();
+
     const y = d.getFullYear();
-    const m = String(d.getMonth()+1).padStart(2,"0");
-    const da = String(d.getDate()).padStart(2,"0");
-    const hh = String(d.getHours()).padStart(2,"0");
-    const mm = String(d.getMinutes()).padStart(2,"0");
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const da = String(d.getDate()).padStart(2, "0");
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mm = String(d.getMinutes()).padStart(2, "0");
+
     const inline = $("asofInline");
     if (inline) inline.textContent = `${y}년 ${m}월 ${da}일 ${hh}시${mm}분 기준`;
   }
@@ -782,14 +807,14 @@
     }
   }
 
-  function renderRoomButtons() {
+  function renderRoomButtons(){
     const wrap = $("roomBtns");
     wrap.innerHTML = "";
 
     const tab = TAB_DEFS.find(x => x.id === activeTabId);
     const rooms = (tab?.rooms || []).filter(r => ROOM_CFG[r]);
 
-    for (const room of rooms) {
+    for (const room of rooms){
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "room-btn" + (room === currentRoom ? " active" : "");
@@ -810,7 +835,10 @@
 
     if (!rooms.includes(currentRoom)){
       const first = rooms[0];
-      if (first) { setRoom(first, true, { skipTabSync:true }); return; }
+      if (first){
+        setRoom(first, true, { skipTabSync: true });
+        return;
+      }
     }
 
     renderTabs();
@@ -848,7 +876,7 @@
       const raw = localStorage.getItem("memorial_public_ui_state");
       if (!raw) return;
       const s = JSON.parse(raw);
-      if (s?.tab && TAB_DEFS.some(t=>t.id===s.tab)) activeTabId = s.tab;
+      if (s?.tab && TAB_DEFS.some(t => t.id === s.tab)) activeTabId = s.tab;
       if (s?.room && ROOM_CFG[s.room]) currentRoom = s.room;
     }catch(e){}
   }
@@ -862,7 +890,9 @@
     return cfg.dans - r;
   }
 
-  function isCoupleRoom(room){ return (ROOM_CFG[room]?.roomNum ?? 99) <= 9; }
+  function isCoupleRoom(room){
+    return (ROOM_CFG[room]?.roomNum ?? 99) <= 9;
+  }
 
   function iconHtml(cfg, used){
     if (!used) return `<div class="niche-plus">+</div>`;
@@ -887,7 +917,7 @@
   function scrollNextSlotIntoCenter(){
     const el = document.querySelector(`.niche.next-slot[data-room="${currentRoom}"]`);
     if (!el) return;
-    el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
+    el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
   }
 
   function renderRoom(autoScrollNext){
@@ -900,7 +930,7 @@
 
     const nextNo = findNextAvailableNo(cfg);
 
-    for (let r=0; r<cfg.dans; r++){
+    for (let r = 0; r < cfg.dans; r++){
       const dan = cfg.dans - r;
 
       const row = document.createElement("div");
@@ -915,7 +945,7 @@
       grid.className = "grid";
       grid.style.gridTemplateColumns = `repeat(${cfg.cols}, var(--cell-w))`;
 
-      for (let c=0; c<cfg.cols; c++){
+      for (let c = 0; c < cfg.cols; c++){
         const idx = c * cfg.dans + r;
         const num = cfg.start + idx;
 
@@ -1013,11 +1043,6 @@
     return await res.json();
   }
 
-  function isBlank(v){
-    const s = String(v ?? "").trim();
-    return s === "" || s === "-" || s === "0";
-  }
-
   function extractNo5(text){
     if (!text) return null;
     const m = String(text).trim().match(/(\d{5})\s*$/);
@@ -1047,7 +1072,7 @@
       return;
     }
 
-    const bucket = {};
+    const seen = new Set();
 
     for (const obj of rows){
       if (!obj || typeof obj !== "object") continue;
@@ -1066,19 +1091,12 @@
       const cfg = ROOM_CFG[room];
       if (!cfg || n < cfg.start || n > cfg.end) continue;
 
-      const returned = !isBlank(obj[JSON_FIELDS.retDate]);
-
-      const key = `${room}|${no5}`;
-      if (!bucket[key]) bucket[key] = { active: false };
-
-      if (!returned) {
-        bucket[key].active = true;
-      }
+      seen.add(`${room}|${no5}`);
     }
 
-    for (const [key, value] of Object.entries(bucket)){
+    for (const key of seen){
       const [room, no5] = key.split("|");
-      statusByRoom[room][no5] = value.active ? "used" : "empty";
+      statusByRoom[room][no5] = "used";
     }
 
     updateNextUI();
@@ -1097,7 +1115,6 @@
       updateAsOfUI();
 
       const rows = pickRowsFromJson(json);
-
       if (!rows || !Array.isArray(rows) || rows.length === 0){
         setMsg("JSON 형식이 올바르지 않습니다.", "error");
         applyJsonRows([]);
@@ -1108,7 +1125,7 @@
       if (sample){
         const keysOk = (JSON_FIELDS.ensNo in sample);
         if (!keysOk){
-          setMsg("JSON 헤더 키(ensNo, retDate)를 확인해 주세요.", "error");
+          setMsg("JSON 헤더 키(ensNo)를 확인해 주세요.", "error");
         }
       }
 
@@ -1125,7 +1142,7 @@
   function focusCell(room, noStr){
     const el = document.querySelector(`.niche[data-room="${room}"][data-no="${noStr}"]`);
     if (!el) return;
-    el.scrollIntoView({ behavior:"smooth", block:"center", inline:"center" });
+    el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     el.classList.remove("flash");
     void el.offsetWidth;
     el.classList.add("flash");
@@ -1140,7 +1157,9 @@
   }
 
   function getViewportHeight(){
-    return (window.visualViewport && window.visualViewport.height) ? window.visualViewport.height : window.innerHeight;
+    return (window.visualViewport && window.visualViewport.height)
+      ? window.visualViewport.height
+      : window.innerHeight;
   }
 
   function setCollapsed(v){
@@ -1153,9 +1172,7 @@
     if (!panel || !handle || !legend) return;
 
     const ht = $("handleText");
-    if (ht){
-      ht.textContent = UI.collapsed ? "메뉴 열기 ▾" : "메뉴 닫기 ▴";
-    }
+    if (ht) ht.textContent = UI.collapsed ? "메뉴 열기 ▾" : "메뉴 닫기 ▴";
 
     if (!isMobileWidth()){
       UI.collapsed = false;
@@ -1194,9 +1211,11 @@
 
     const vh = getViewportHeight();
     const handleH = handle.getBoundingClientRect().height;
-    const panelH  = UI.collapsed ? 0 : panel.getBoundingClientRect().height;
+    const panelH = UI.collapsed ? 0 : panel.getBoundingClientRect().height;
     const legendH = UI.collapsed ? 0 : legend.getBoundingClientRect().height;
-    const msgH = (!UI.collapsed && msg && msg.style.display !== "none") ? msg.getBoundingClientRect().height : 0;
+    const msgH = (!UI.collapsed && msg && msg.style.display !== "none")
+      ? msg.getBoundingClientRect().height
+      : 0;
     const extra = 12;
     const maxH = Math.max(260, Math.floor(vh - handleH - panelH - legendH - msgH - extra));
     scroller.style.maxHeight = maxH + "px";
