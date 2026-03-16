@@ -894,6 +894,10 @@
     return (ROOM_CFG[room]?.roomNum ?? 99) <= 9;
   }
 
+  function isPersonalRoom(room){
+    return PERSONAL_ALL_ROOMS.includes(room);
+  }
+
   function iconHtml(cfg, used){
     if (!used) return `<div class="niche-plus">+</div>`;
 
@@ -1062,6 +1066,10 @@
     for (const room of Object.keys(statusByRoom)) statusByRoom[room] = {};
   }
 
+  function markUsed(room, no5){
+    statusByRoom[room][no5] = "used";
+  }
+
   function applyJsonRows(rows){
     clearStatus();
 
@@ -1073,6 +1081,7 @@
     }
 
     const seen = new Set();
+    let maxPersonalNo = null;
 
     for (const obj of rows){
       if (!obj || typeof obj !== "object") continue;
@@ -1092,11 +1101,33 @@
       if (!cfg || n < cfg.start || n > cfg.end) continue;
 
       seen.add(`${room}|${no5}`);
+
+      if (isPersonalRoom(room)){
+        if (maxPersonalNo === null || n > maxPersonalNo){
+          maxPersonalNo = n;
+        }
+      }
     }
 
     for (const key of seen){
       const [room, no5] = key.split("|");
-      statusByRoom[room][no5] = "used";
+      markUsed(room, no5);
+    }
+
+    // 핵심 규칙:
+    // 개인단에서 가장 뒤까지 진행된 번호(maxPersonalNo) 이전의 개인단 빈자리는
+    // 반환자료가 없더라도 모두 반환관리 자리로 보고 사용중 처리
+    if (maxPersonalNo !== null){
+      for (const room of PERSONAL_ALL_ROOMS){
+        const cfg = ROOM_CFG[room];
+        if (!cfg) continue;
+
+        const endNo = Math.min(cfg.end, maxPersonalNo);
+        for (let n = cfg.start; n <= endNo; n++){
+          const no5 = pad5(n);
+          markUsed(room, no5);
+        }
+      }
     }
 
     updateNextUI();
