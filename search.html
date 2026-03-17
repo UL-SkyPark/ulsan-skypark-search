@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -626,11 +626,6 @@
 
         <div class="divider"></div>
 
-        <div class="info-label">신청자</div>
-        <div class="info-value" id="modalApplicant"></div>
-
-        <div class="divider"></div>
-
         <div class="info-label" id="labelDate">안치일자</div>
         <div class="info-value" id="modalDate"></div>
       </div>
@@ -650,7 +645,6 @@
     const MEM_FIELDS = {
       name:     "deadName",
       loc:      "ensNo",
-      applicant:"applName",
       date:     "strDate",
       returned: "retDate"
     };
@@ -658,7 +652,6 @@
     const NAT_FIELDS = {
       name:     "deadName",
       loc:      "natNo",
-      applicant:"applName",
       date:     "natDate"
     };
 
@@ -795,12 +788,12 @@
 
     function getHeaderLabels(mode){
       if (mode === 'nature'){
-        return { name:"고인명", loc:"안장번호", applicant:"신청자", date:"안장일자" };
+        return { name:"고인명", loc:"안장번호", date:"안장일자" };
       }
       if (mode === 'memorial'){
-        return { name:"고인명", loc:"봉안번호", applicant:"신청자", date:"안치일자" };
+        return { name:"고인명", loc:"봉안번호", date:"안치일자" };
       }
-      return { name:"고인명", loc:"위치번호", applicant:"신청자", date:"안치일자" };
+      return { name:"고인명", loc:"위치번호", date:"안치일자" };
     }
 
     function getMemorialTypeLabelFromLoc(rawLoc){
@@ -823,7 +816,6 @@
     function openModal(record){
       document.getElementById("modalName").textContent = record.name || "";
       document.getElementById("modalLoc").textContent = record.location || "";
-      document.getElementById("modalApplicant").textContent = record.applicant || "";
       document.getElementById("modalDate").textContent = record.date || "";
 
       document.getElementById("labelLoc").textContent = record.locationLabel || "위치번호";
@@ -877,7 +869,6 @@
           typeLabel: getMemorialTypeLabelFromLoc(row[MEM_FIELDS.loc]),
           name: row[MEM_FIELDS.name] || "",
           location: normalizeRoom(row[MEM_FIELDS.loc] || ""),
-          applicant: maskName(row[MEM_FIELDS.applicant]),
           date: row[MEM_FIELDS.date] || "",
           locationLabel: "봉안번호",
           dateLabel: "안치일자"
@@ -897,7 +888,6 @@
           typeLabel: '자연장지',
           name: row[NAT_FIELDS.name] || "",
           location: normalizeNatureNo(row[NAT_FIELDS.loc] || ""),
-          applicant: maskName(row[NAT_FIELDS.applicant]),
           date: row[NAT_FIELDS.date] || "",
           locationLabel: "안장번호",
           dateLabel: "안장일자"
@@ -934,7 +924,6 @@
               <tr>
                 <th>${h.name}</th>
                 <th>${h.loc}</th>
-                <th>${h.applicant}</th>
                 <th>${h.date}</th>
               </tr>
             </thead>
@@ -946,7 +935,6 @@
           <tr data-idx="${idx}">
             <td>${escapeHtml(rec.name)}</td>
             <td class="col-loc">${escapeHtml(rec.location)}</td>
-            <td>${escapeHtml(rec.applicant)}</td>
             <td>${escapeHtml(rec.date)}</td>
           </tr>
         `;
