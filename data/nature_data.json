@@ -68028,13 +68028,6 @@
   },
   {
     "natDate": "2026-03-17",
-    "natNo": null,
-    "applName": "이○일",
-    "deadId": "1654007",
-    "deadName": "이길우"
-  },
-  {
-    "natDate": "2026-03-17",
     "natNo": "잔디장-2-9-0227",
     "applName": "오○규",
     "deadId": "1653987",
@@ -68081,5 +68074,12 @@
     "applName": "이○섭",
     "deadId": "1526259",
     "deadName": "이광직"
+  },
+  {
+    "natDate": "2026-03-17",
+    "natNo": "잔디장-2-9-0234",
+    "applName": "이○일",
+    "deadId": "1654007",
+    "deadName": "이길우"
   }
 ]
