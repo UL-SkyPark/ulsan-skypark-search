@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1351,7 +1351,8 @@
   <script>
     const APP_CONFIG = {
       placeholderWebAppUrl: '여기에_앱스크립트_웹앱_URL_입력',
-      statusApiUrl: 'https://script.google.com/macros/s/AKfycbzC8L_toqBCmy-SBcqzzJZJA68bfq3dtIDi_TG--hWsr6rajcdq8yMNivtces8ehLiO/exec',
+      statusApiUrl: '',
+      enableStatusEditing: false,
       sharedStatusCacheMs: 180000,
       pageSizeSmall: 28,
       pageSizeMedium: 32,
@@ -1462,6 +1463,10 @@
       if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec(\?.*)?$/.test(url)) return false;
 
       return true;
+    }
+
+    function canEditSharedStatuses(){
+      return Boolean(APP_CONFIG.enableStatusEditing) && isConfiguredStatusApi();
     }
 
     function getTodayIso(){
@@ -2126,7 +2131,6 @@
 
         map.set(id, {
           deadId: id,
-          deadName: toTrimmedString(r?.deadName),
           dcGubun: toTrimmedString(r?.dcGubun)
         });
       }
@@ -2235,7 +2239,7 @@
     }
 
     async function saveSharedStatus({ src, id, mode, status }){
-      if (!isConfiguredStatusApi()){
+      if (!canEditSharedStatuses()){
         throw new Error(UI_TEXT.sharedApiInvalid);
       }
 
@@ -2312,7 +2316,7 @@
     function ensMergeKey(r){
       const ens = safeKey(r.ensNO ?? r.ensNo ?? r.ensno);
       if (ens) return `ENS:${ens}`;
-      return `ALT:${safeKey(r.deadId)}|${safeKey(r.strDate)}|${safeKey(r.applname ?? r.applName)}|${safeKey(r.deadname ?? r.deadName ?? r.deceasedName)}`;
+      return `ALT:${safeKey(r.deadId)}|${safeKey(r.strDate)}|${safeKey(r.deadname ?? r.deadName ?? r.deceasedName)}`;
     }
 
     function mergeEnsRows(rows){
@@ -2327,7 +2331,6 @@
             ensNO: safeKey(r.ensNO ?? r.ensNo ?? r.ensno) || '-',
             strDate: r.strDate ?? '-',
             deadname: r.deadname ?? r.deadName ?? r.deceasedName ?? '-',
-            applname: r.applname ?? r.applName ?? '-',
             retDate: pickRetDate(r) || '',
             _raw: [r]
           });
@@ -2335,14 +2338,9 @@
         } else {
           const cur = map.get(key);
           const dn = String(r.deadname ?? r.deadName ?? r.deceasedName ?? '-');
-          const an = String(r.applname ?? r.applName ?? '-');
 
           if (dn && dn !== '-' && !String(cur.deadname).split(' / ').includes(dn)){
             cur.deadname = (cur.deadname && cur.deadname !== '-') ? `${cur.deadname} / ${dn}` : dn;
-          }
-
-          if (an && an !== '-' && !String(cur.applname).split(' / ').includes(an)){
-            cur.applname = (cur.applname && cur.applname !== '-') ? `${cur.applname} / ${an}` : an;
           }
 
           const rd = pickRetDate(r);
@@ -2361,8 +2359,7 @@
 
       for (const r of rows){
         const natNo = safeKey(r.natNo);
-        const appl = safeKey(r.applName);
-        const key = `${natNo}||${appl}`;
+        const key = `${natNo}`;
 
         const rowNames = Array.isArray(r?.deadName)
           ? r.deadName.map(x => String(x ?? '').trim()).filter(Boolean)
@@ -2374,7 +2371,6 @@
           map.set(key, {
             natNo: r.natNo ?? '-',
             deadName: rowNames.join(' / ') || '-',
-            applName: r.applName ?? '-',
             natDate: rowDate,
             _raw: [r]
           });
@@ -2524,7 +2520,6 @@
       const entries = deceasedEntries(item);
       if (!entries.length) return null;
 
-      const nameSet = nameKeySetFromDisplay(displayName);
       let hasSelf = false;
 
       for (const entry of entries){
@@ -2533,9 +2528,6 @@
 
         const rec = funeralMap.get(id);
         if (!rec) continue;
-
-        const recNameKey = normNameKey(rec.deadName);
-        if (!recNameKey || !nameSet.has(recNameKey)) continue;
 
         if (String(rec.dcGubun ?? '').trim() === 'TCM1200099'){
           return TAG_LABEL.orphan;
@@ -3018,7 +3010,6 @@
       if (state.currentSource === FACILITY.house.key){
         html += kv('안치일자', item.strDate ?? '-');
         html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabel));
-        html += kv('신청자', item.applname ?? item.applName ?? '-');
 
         const rdISO = normISO(pickRetDate(item));
         const rdRaw = pickRetDate(item);
@@ -3026,7 +3017,6 @@
       } else {
         html += kv('안장일자', item.natDate ?? '-');
         html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabel));
-        html += kv('신청자', item.applName ?? '-');
       }
 
       if (!isRetModal){
@@ -3098,9 +3088,10 @@
 
       dom.modalStatusSelect.value = currentStatus;
       dom.modalCurrentStatusText.textContent = `현재 상태 ${currentStatus}`;
-      dom.statusEditorBox.style.display = 'flex';
-      dom.sheetSaveBtn.style.display = '';
-      dom.sheetSaveBtn.disabled = false;
+      const editingEnabled = canEditSharedStatuses();
+      dom.statusEditorBox.style.display = editingEnabled ? 'flex' : 'none';
+      dom.sheetSaveBtn.style.display = editingEnabled ? '' : 'none';
+      dom.sheetSaveBtn.disabled = !editingEnabled;
 
       dom.overlay.classList.add('show');
       dom.overlay.setAttribute('aria-hidden', 'false');
