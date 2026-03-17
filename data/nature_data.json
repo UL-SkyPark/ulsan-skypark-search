@@ -68028,13 +68028,6 @@
   },
   {
     "natDate": "2026-03-17",
-    "natNo": null,
-    "applName": "한○미",
-    "deadId": "1653989",
-    "deadName": "최영금"
-  },
-  {
-    "natDate": "2026-03-17",
     "natNo": "잔디장-2-9-0227",
     "applName": "오○규",
     "deadId": "1653987",
@@ -68053,5 +68046,12 @@
     "applName": "정○희",
     "deadId": "1653990",
     "deadName": "정경덕"
+  },
+  {
+    "natDate": "2026-03-17",
+    "natNo": "잔디장-2-9-0230",
+    "applName": "한○미",
+    "deadId": "1653989",
+    "deadName": "최영금"
   }
 ]
