@@ -1465,10 +1465,6 @@
       return true;
     }
 
-    function canEditSharedStatuses(){
-      return Boolean(APP_CONFIG.enableStatusEditing) && isConfiguredStatusApi();
-    }
-
     function getTodayIso(){
       const d = new Date();
       const y = d.getFullYear();
@@ -2239,7 +2235,7 @@
     }
 
     async function saveSharedStatus({ src, id, mode, status }){
-      if (!canEditSharedStatuses()){
+      if (!isConfiguredStatusApi()){
         throw new Error(UI_TEXT.sharedApiInvalid);
       }
 
@@ -3088,10 +3084,9 @@
 
       dom.modalStatusSelect.value = currentStatus;
       dom.modalCurrentStatusText.textContent = `현재 상태 ${currentStatus}`;
-      const editingEnabled = canEditSharedStatuses();
-      dom.statusEditorBox.style.display = editingEnabled ? 'flex' : 'none';
-      dom.sheetSaveBtn.style.display = editingEnabled ? '' : 'none';
-      dom.sheetSaveBtn.disabled = !editingEnabled;
+      dom.statusEditorBox.style.display = 'flex';
+      dom.sheetSaveBtn.style.display = '';
+      dom.sheetSaveBtn.disabled = false;
 
       dom.overlay.classList.add('show');
       dom.overlay.setAttribute('aria-hidden', 'false');
