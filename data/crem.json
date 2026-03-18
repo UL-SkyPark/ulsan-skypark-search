@@ -299,17 +299,17 @@
       "burnDate": 1773759600000,
       "burnChasu": "04",
       "burnNo": "09",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "10:18",
       "burnEndTime": "11:39",
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -355,17 +355,17 @@
       "burnDate": 1773759600000,
       "burnChasu": "04",
       "burnNo": "05",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "10:22",
-      "burnEndTime": null,
+      "burnEndTime": "11:45",
       "waitRoom": "205",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -844,7 +844,7 @@
     "cremSeq": 23,
     "objt": "A001",
     "burnDate": 1773759600000,
-    "burnNo": null,
+    "burnNo": "09",
     "burnChasu": "06",
     "deadId": 1654027,
     "thedead": {
@@ -858,16 +858,24 @@
     "hwaBrazier": {
       "burnDate": 1773759600000,
       "burnChasu": "06",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "09",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "209",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1773759600000,
         "burnChasu": "06",
-        "burnNo": null
+        "burnNo": "09"
       }
     },
     "objtCode": "A001",
@@ -981,6 +989,102 @@
     "id": {
       "cremDate": 1773759600000,
       "cremSeq": 25
+    }
+  },
+  {
+    "cremDate": "2026-03-18",
+    "cremSeq": 26,
+    "objt": "B001",
+    "burnDate": 1773759600000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1653595,
+    "thedead": {
+      "deadId": 1653595,
+      "deadName": "박기홍",
+      "id": 1653595,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1773759600000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1773759600000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1773759600000,
+      "cremSeq": 26
+    }
+  },
+  {
+    "cremDate": "2026-03-18",
+    "cremSeq": 27,
+    "objt": "B001",
+    "burnDate": 1773759600000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1653596,
+    "thedead": {
+      "deadId": 1653596,
+      "deadName": "이금순",
+      "id": 1653596,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1773759600000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1773759600000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1773759600000,
+      "cremSeq": 27
     }
   },
   {
