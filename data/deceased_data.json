@@ -209928,14 +209928,6 @@
     "retDate": null
   },
   {
-    "deadId": "1654107",
-    "strDate": "2026-03-20",
-    "ensNo": null,
-    "deadName": "김웅아",
-    "applName": "이○엽",
-    "retDate": null
-  },
-  {
     "deadId": "1654097",
     "strDate": "2026-03-20",
     "ensNo": "1추모의집-62실-개인단-22052",
@@ -209981,6 +209973,14 @@
     "ensNo": "1추모의집-62실-개인단-22057",
     "deadName": "이석원",
     "applName": "이○주",
+    "retDate": null
+  },
+  {
+    "deadId": "1654107",
+    "strDate": "2026-03-20",
+    "ensNo": "1추모의집-62실-개인단-22058",
+    "deadName": "김웅아",
+    "applName": "김○로",
     "retDate": null
   }
 ]
