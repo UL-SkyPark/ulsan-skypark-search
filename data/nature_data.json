@@ -68154,6 +68154,17 @@
   },
   {
     "natDate": "2026-03-21",
+    "natNo": null,
+    "applName": "김○관",
+    "deadId": [
+      "1654159"
+    ],
+    "deadName": [
+      "김해득"
+    ]
+  },
+  {
+    "natDate": "2026-03-21",
     "natNo": "잔디장-2-9-0244",
     "applName": "이○주",
     "deadId": "1654145",
