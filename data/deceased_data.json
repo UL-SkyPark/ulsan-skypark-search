@@ -210024,14 +210024,6 @@
     "retDate": null
   },
   {
-    "deadId": "1654189",
-    "strDate": "2026-03-22",
-    "ensNo": null,
-    "deadName": "서숙자",
-    "applName": "황○옥",
-    "retDate": null
-  },
-  {
     "deadId": "1468006",
     "strDate": "2026-03-22",
     "ensNo": "1추모의집-09실-부부단-01900",
@@ -210077,6 +210069,14 @@
     "ensNo": "1추모의집-62실-개인단-22066",
     "deadName": "김영인",
     "applName": "김○영",
+    "retDate": null
+  },
+  {
+    "deadId": "1654189",
+    "strDate": "2026-03-22",
+    "ensNo": "1추모의집-62실-개인단-22067",
+    "deadName": "서숙자",
+    "applName": "황○옥",
     "retDate": null
   }
 ]
