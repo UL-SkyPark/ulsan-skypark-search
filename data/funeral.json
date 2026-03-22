@@ -2230,8 +2230,18 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1654189",
+    "deadName": "서숙자",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1654191",
     "deadName": "장훈",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1654192",
+    "deadName": "장금선",
     "dcGubun": "TCM1200001"
   },
   {
