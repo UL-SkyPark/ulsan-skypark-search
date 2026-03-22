@@ -4,13 +4,117 @@
     "cremSeq": 1,
     "objt": "A001",
     "burnDate": 1774191600000,
-    "burnNo": null,
+    "burnNo": "01",
     "burnChasu": "01",
     "deadId": 1654204,
     "thedead": {
       "deadId": 1654204,
       "deadName": "이주영",
       "id": 1654204,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1774191600000,
+      "burnChasu": "01",
+      "burnNo": "01",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "201",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1774191600000,
+        "burnChasu": "01",
+        "burnNo": "01"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1774191600000,
+      "cremSeq": 1
+    }
+  },
+  {
+    "cremDate": "2026-03-23",
+    "cremSeq": 2,
+    "objt": "A001",
+    "burnDate": 1774191600000,
+    "burnNo": null,
+    "burnChasu": "01",
+    "deadId": 1654179,
+    "thedead": {
+      "deadId": 1654179,
+      "deadName": "이경우",
+      "id": 1654179,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1774191600000,
+      "burnChasu": "01",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1774191600000,
+        "burnChasu": "01",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1774191600000,
+      "cremSeq": 2
+    }
+  },
+  {
+    "cremDate": "2026-03-23",
+    "cremSeq": 3,
+    "objt": "A001",
+    "burnDate": 1774191600000,
+    "burnNo": null,
+    "burnChasu": "01",
+    "deadId": 1654205,
+    "thedead": {
+      "deadId": 1654205,
+      "deadName": "함영화",
+      "id": 1654205,
       "new": false
     },
     "applId": "*******",
@@ -44,7 +148,7 @@
     },
     "id": {
       "cremDate": 1774191600000,
-      "cremSeq": 1
+      "cremSeq": 3
     }
   }
 ]
