@@ -210024,10 +210024,10 @@
     "retDate": null
   },
   {
-    "deadId": "1654169",
+    "deadId": "1654172",
     "strDate": "2026-03-22",
     "ensNo": null,
-    "deadName": "김병수",
+    "deadName": "김리아",
     "applName": "김○영",
     "retDate": null
   },
@@ -210085,6 +210085,30 @@
     "ensNo": "1추모의집-62실-개인단-22067",
     "deadName": "서숙자",
     "applName": "황○옥",
+    "retDate": null
+  },
+  {
+    "deadId": "1654169",
+    "strDate": "2026-03-22",
+    "ensNo": "1추모의집-62실-개인단-22068",
+    "deadName": "김병수",
+    "applName": "김○영",
+    "retDate": null
+  },
+  {
+    "deadId": "1654170",
+    "strDate": "2026-03-22",
+    "ensNo": "1추모의집-62실-개인단-22069",
+    "deadName": "김나율",
+    "applName": "김○영",
+    "retDate": null
+  },
+  {
+    "deadId": "1654171",
+    "strDate": "2026-03-22",
+    "ensNo": "1추모의집-62실-개인단-22070",
+    "deadName": "김예담",
+    "applName": "김○영",
     "retDate": null
   }
 ]
