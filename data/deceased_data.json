@@ -6452,7 +6452,7 @@
     "strDate": "2013-09-13",
     "ensNo": "1추모의집-12실-개인단-02946",
     "deadName": "이영희",
-    "applName": "최○영",
+    "applName": "최○재",
     "retDate": null
   },
   {
@@ -210176,19 +210176,19 @@
     "retDate": null
   },
   {
-    "deadId": "1654249",
-    "strDate": "2026-03-25",
-    "ensNo": null,
-    "deadName": "조정민",
-    "applName": "최○화",
-    "retDate": null
-  },
-  {
     "deadId": "1654253",
     "strDate": "2026-03-25",
     "ensNo": "1추모의집-62실-개인단-22078",
     "deadName": "이영부",
     "applName": "이○대",
+    "retDate": null
+  },
+  {
+    "deadId": "1654249",
+    "strDate": "2026-03-25",
+    "ensNo": "1추모의집-62실-개인단-22079",
+    "deadName": "조정민",
+    "applName": "최○아",
     "retDate": null
   }
 ]
