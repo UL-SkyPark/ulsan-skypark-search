@@ -210216,19 +210216,19 @@
     "retDate": null
   },
   {
-    "deadId": "1654260",
-    "strDate": "2026-03-26",
-    "ensNo": null,
-    "deadName": "강옥명",
-    "applName": "한○동",
-    "retDate": null
-  },
-  {
     "deadId": "1654276",
     "strDate": "2026-03-26",
     "ensNo": "1추모의집-62실-개인단-22082",
     "deadName": "장하윤",
     "applName": "이○락",
+    "retDate": null
+  },
+  {
+    "deadId": "1654260",
+    "strDate": "2026-03-26",
+    "ensNo": "1추모의집-62실-개인단-22083",
+    "deadName": "강옥명",
+    "applName": "한○동",
     "retDate": null
   }
 ]
