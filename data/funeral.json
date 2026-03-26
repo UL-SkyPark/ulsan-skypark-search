@@ -2270,8 +2270,28 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1654278",
+    "deadName": "김순득",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1654308",
     "deadName": "LIWEIZI",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1654343",
+    "deadName": "이용우",
+    "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1654344",
+    "deadName": "김상우",
+    "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1654348",
+    "deadName": "이정윤",
+    "dcGubun": "TCM1200002"
   }
 ]
