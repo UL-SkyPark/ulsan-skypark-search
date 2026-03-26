@@ -102781,7 +102781,7 @@
     "ensNo": "1추모의집-36실-개인단-12599",
     "deadName": "박춘자",
     "applName": "김○희",
-    "retDate": null
+    "retDate": "2026-03-26"
   },
   {
     "deadId": "1465771",
@@ -210253,6 +210253,14 @@
     "ensNo": "1추모의집-62실-개인단-22084",
     "deadName": "김홍장",
     "applName": "김○형",
+    "retDate": null
+  },
+  {
+    "deadId": "1654331",
+    "strDate": "2026-03-26",
+    "ensNo": "1추모의집-62실-개인단-22085",
+    "deadName": "조진영",
+    "applName": "조○성",
     "retDate": null
   }
 ]
