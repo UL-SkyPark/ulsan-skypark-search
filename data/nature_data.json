@@ -68300,6 +68300,17 @@
   },
   {
     "natDate": "2026-03-27",
+    "natNo": null,
+    "applName": "김○호",
+    "deadId": [
+      "1653787"
+    ],
+    "deadName": [
+      "김철근"
+    ]
+  },
+  {
+    "natDate": "2026-03-27",
     "natNo": "수목장-2-1-0021",
     "applName": "조○용",
     "deadId": "1654342",
