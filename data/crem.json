@@ -54,5 +54,53 @@
       "cremDate": 1774623600000,
       "cremSeq": 1
     }
+  },
+  {
+    "cremDate": "2026-03-28",
+    "cremSeq": 2,
+    "objt": "A001",
+    "burnDate": 1774623600000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1654364,
+    "thedead": {
+      "deadId": 1654364,
+      "deadName": "정진덕",
+      "id": 1654364,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1774623600000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1774623600000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1774623600000,
+      "cremSeq": 2
+    }
   }
 ]
