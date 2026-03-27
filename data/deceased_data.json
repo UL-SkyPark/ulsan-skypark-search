@@ -26085,7 +26085,7 @@
     "ensNo": "1추모의집-18실-개인단-05291",
     "deadName": "박상호",
     "applName": "박○열",
-    "retDate": null
+    "retDate": "2026-03-27"
   },
   {
     "deadId": "1456182",
@@ -210269,6 +210269,22 @@
     "ensNo": "1추모의집-62실-개인단-22086",
     "deadName": "이정윤",
     "applName": "이○주",
+    "retDate": null
+  },
+  {
+    "deadId": "1498764",
+    "strDate": "2026-03-27",
+    "ensNo": "1추모의집-09실-부부단-01902",
+    "deadName": "박상호",
+    "applName": "박○열",
+    "retDate": null
+  },
+  {
+    "deadId": "1654355",
+    "strDate": "2026-03-27",
+    "ensNo": "1추모의집-09실-부부단-01902",
+    "deadName": "맹노숙",
+    "applName": "박○열",
     "retDate": null
   },
   {
