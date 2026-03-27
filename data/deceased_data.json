@@ -207325,7 +207325,7 @@
     "ensNo": "1추모의집-62실-개인단-21852",
     "deadName": "배은석",
     "applName": "최○빈",
-    "retDate": null
+    "retDate": "2026-03-28"
   },
   {
     "deadId": "1652522",
@@ -210389,6 +210389,14 @@
     "ensNo": "1추모의집-62실-개인단-22092",
     "deadName": "이상명",
     "applName": "이○희",
+    "retDate": null
+  },
+  {
+    "deadId": "1654357",
+    "strDate": "2026-03-28",
+    "ensNo": "1추모의집-62실-개인단-22093",
+    "deadName": "장금향",
+    "applName": "변○무",
     "retDate": null
   }
 ]
