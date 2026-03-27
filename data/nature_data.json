@@ -68361,16 +68361,16 @@
   },
   {
     "natDate": "2026-03-28",
-    "natNo": null,
-    "applName": "김○현",
-    "deadId": "1654362",
-    "deadName": "김이웅"
-  },
-  {
-    "natDate": "2026-03-28",
     "natNo": "잔디장-2-9-0266",
     "applName": "권○영",
     "deadId": "1654364",
     "deadName": "정진덕"
+  },
+  {
+    "natDate": "2026-03-28",
+    "natNo": "잔디장-2-9-0267",
+    "applName": "김○현",
+    "deadId": "1654362",
+    "deadName": "김이웅"
   }
 ]
