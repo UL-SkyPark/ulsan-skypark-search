@@ -385,6 +385,54 @@
   },
   {
     "cremDate": "2026-03-27",
+    "cremSeq": 16,
+    "objt": "A001",
+    "burnDate": 1774537200000,
+    "burnNo": null,
+    "burnChasu": "04",
+    "deadId": 1654324,
+    "thedead": {
+      "deadId": 1654324,
+      "deadName": "권영득",
+      "id": 1654324,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1774537200000,
+      "burnChasu": "04",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1774537200000,
+        "burnChasu": "04",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1774537200000,
+      "cremSeq": 16
+    }
+  },
+  {
+    "cremDate": "2026-03-27",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1774537200000,
