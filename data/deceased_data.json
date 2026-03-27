@@ -27213,7 +27213,7 @@
     "ensNo": "1추모의집-18실-개인단-05422",
     "deadName": "배진해",
     "applName": "배○형",
-    "retDate": null
+    "retDate": "2026-03-28"
   },
   {
     "deadId": "1456323",
@@ -210005,7 +210005,7 @@
     "ensNo": "1추모의집-62실-개인단-22061",
     "deadName": "이광옥",
     "applName": "배○형",
-    "retDate": null
+    "retDate": "2026-03-28"
   },
   {
     "deadId": "1654126",
@@ -210349,6 +210349,14 @@
     "ensNo": "1추모의집-62실-개인단-22091",
     "deadName": "이현숙",
     "applName": "최○화",
+    "retDate": null
+  },
+  {
+    "deadId": "1499276",
+    "strDate": "2026-03-28",
+    "ensNo": "1추모의집-09실-부부단-01904",
+    "deadName": "배진해",
+    "applName": "배○형",
     "retDate": null
   }
 ]
