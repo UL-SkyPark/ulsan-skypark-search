@@ -769,6 +769,54 @@
   },
   {
     "cremDate": "2026-03-28",
+    "cremSeq": 22,
+    "objt": "B001",
+    "burnDate": 1774623600000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1654013,
+    "thedead": {
+      "deadId": 1654013,
+      "deadName": "박을찬",
+      "id": 1654013,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1774623600000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1774623600000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1774623600000,
+      "cremSeq": 22
+    }
+  },
+  {
+    "cremDate": "2026-03-28",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1774623600000,
