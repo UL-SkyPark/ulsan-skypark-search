@@ -210416,14 +210416,6 @@
     "retDate": null
   },
   {
-    "deadId": "1654400",
-    "strDate": "2026-03-29",
-    "ensNo": null,
-    "deadName": "정재용",
-    "applName": "정○철",
-    "retDate": null
-  },
-  {
     "deadId": "1544461",
     "strDate": "2026-03-29",
     "ensNo": "1추모의집-09실-부부단-01906",
@@ -210437,6 +210429,22 @@
     "ensNo": "1추모의집-09실-부부단-01906",
     "deadName": "윤복의",
     "applName": "윤○석",
+    "retDate": null
+  },
+  {
+    "deadId": "1654400",
+    "strDate": "2026-03-29",
+    "ensNo": "1추모의집-09실-부부단-01907",
+    "deadName": "정재용",
+    "applName": "정○철",
+    "retDate": null
+  },
+  {
+    "deadId": "1654421",
+    "strDate": "2026-03-29",
+    "ensNo": "1추모의집-09실-부부단-01907",
+    "deadName": "정창식",
+    "applName": "정○철",
     "retDate": null
   },
   {
