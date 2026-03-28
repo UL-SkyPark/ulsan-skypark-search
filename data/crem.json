@@ -161,6 +161,54 @@
   },
   {
     "cremDate": "2026-03-29",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1774710000000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1654383,
+    "thedead": {
+      "deadId": 1654383,
+      "deadName": "장재규",
+      "id": 1654383,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1774710000000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1774710000000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1774710000000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-03-29",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1774710000000,
