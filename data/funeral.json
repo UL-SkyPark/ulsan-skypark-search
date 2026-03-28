@@ -2320,6 +2320,11 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1654403",
+    "deadName": "윤복의",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1654404",
     "deadName": "김성대",
     "dcGubun": "TCM1200002"
@@ -2333,5 +2338,10 @@
     "deadId": "1654429",
     "deadName": "이경용",
     "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1654430",
+    "deadName": "김원석",
+    "dcGubun": "TCM1200001"
   }
 ]
