@@ -124317,7 +124317,7 @@
     "ensNo": "1추모의집-43실-개인단-14497",
     "deadName": "박술선",
     "applName": "윤○석",
-    "retDate": null
+    "retDate": "2026-03-29"
   },
   {
     "deadId": "1468460",
@@ -210413,6 +210413,22 @@
     "ensNo": "1추모의집-62실-개인단-22094",
     "deadName": "오복식",
     "applName": "오○재",
+    "retDate": null
+  },
+  {
+    "deadId": "1544461",
+    "strDate": "2026-03-29",
+    "ensNo": "1추모의집-09실-부부단-01906",
+    "deadName": "박술선",
+    "applName": "윤○석",
+    "retDate": null
+  },
+  {
+    "deadId": "1654403",
+    "strDate": "2026-03-29",
+    "ensNo": "1추모의집-09실-부부단-01906",
+    "deadName": "윤복의",
+    "applName": "윤○석",
     "retDate": null
   },
   {
