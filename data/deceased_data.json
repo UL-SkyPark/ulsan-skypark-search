@@ -210472,19 +210472,19 @@
     "retDate": null
   },
   {
-    "deadId": "1654420",
-    "strDate": "2026-03-30",
-    "ensNo": null,
-    "deadName": "신현호",
-    "applName": "신○철",
-    "retDate": null
-  },
-  {
     "deadId": "1654406",
     "strDate": "2026-03-30",
     "ensNo": "1추모의집-59실-개인단-20254",
     "deadName": "이승빈",
     "applName": "김○원",
+    "retDate": null
+  },
+  {
+    "deadId": "1654420",
+    "strDate": "2026-03-30",
+    "ensNo": "1추모의집-62실-개인단-22096",
+    "deadName": "신현호",
+    "applName": "신○철",
     "retDate": null
   }
 ]

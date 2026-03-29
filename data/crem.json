@@ -40,7 +40,7 @@
     },
     "objtCode": "A001",
     "objtName": "시신",
-    "burnChasuName": "1회차",
+    "burnChasuName": null,
     "scatterPlaceCode": {
       "basicCd": "TMC06",
       "code": "TMC0600099",
@@ -96,7 +96,7 @@
     },
     "objtCode": "A001",
     "objtName": "시신",
-    "burnChasuName": "1회차",
+    "burnChasuName": null,
     "scatterPlaceCode": {
       "basicCd": "TMC06",
       "code": "TMC0600099",
@@ -152,7 +152,7 @@
     },
     "objtCode": "A001",
     "objtName": "시신",
-    "burnChasuName": "1회차",
+    "burnChasuName": null,
     "scatterPlaceCode": {
       "basicCd": "TMC06",
       "code": "TMC0600099",
@@ -172,7 +172,7 @@
     "cremSeq": 4,
     "objt": "A001",
     "burnDate": 1774796400000,
-    "burnNo": null,
+    "burnNo": "05",
     "burnChasu": "02",
     "deadId": 1654420,
     "thedead": {
@@ -186,21 +186,29 @@
     "hwaBrazier": {
       "burnDate": 1774796400000,
       "burnChasu": "02",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "05",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1774796400000,
         "burnChasu": "02",
-        "burnNo": null
+        "burnNo": "05"
       }
     },
     "objtCode": "A001",
     "objtName": "시신",
-    "burnChasuName": "2회차",
+    "burnChasuName": null,
     "scatterPlaceCode": {
       "basicCd": "TMC06",
       "code": "TMC0600001",
@@ -213,6 +221,62 @@
     "id": {
       "cremDate": 1774796400000,
       "cremSeq": 4
+    }
+  },
+  {
+    "cremDate": "2026-03-30",
+    "cremSeq": 5,
+    "objt": "A001",
+    "burnDate": 1774796400000,
+    "burnNo": "09",
+    "burnChasu": "01",
+    "deadId": 1654436,
+    "thedead": {
+      "deadId": 1654436,
+      "deadName": "이복자",
+      "id": 1654436,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1774796400000,
+      "burnChasu": "01",
+      "burnNo": "09",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "209",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1774796400000,
+        "burnChasu": "01",
+        "burnNo": "09"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": null,
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1774796400000,
+      "cremSeq": 5
     }
   }
 ]
