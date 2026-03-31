@@ -326,5 +326,53 @@
       "cremDate": 1774969200000,
       "cremSeq": 6
     }
+  },
+  {
+    "cremDate": "2026-04-01",
+    "cremSeq": 7,
+    "objt": "A001",
+    "burnDate": 1774969200000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1654468,
+    "thedead": {
+      "deadId": 1654468,
+      "deadName": "김종헌",
+      "id": 1654468,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1774969200000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1774969200000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1774969200000,
+      "cremSeq": 7
+    }
   }
 ]
