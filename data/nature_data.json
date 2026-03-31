@@ -68477,16 +68477,16 @@
   },
   {
     "natDate": "2026-03-31",
-    "natNo": null,
-    "applName": "김○성",
-    "deadId": "1654447",
-    "deadName": "김옥연"
-  },
-  {
-    "natDate": "2026-03-31",
     "natNo": "잔디장-2-9-0277",
     "applName": "정○라",
     "deadId": "1654497",
     "deadName": "정규호"
+  },
+  {
+    "natDate": "2026-03-31",
+    "natNo": "잔디장-2-9-0278",
+    "applName": "김○성",
+    "deadId": "1654447",
+    "deadName": "김옥연"
   }
 ]
