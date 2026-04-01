@@ -68505,10 +68505,14 @@
   },
   {
     "natDate": "2026-04-01",
-    "natNo": null,
+    "natNo": "잔디장-2-8-0097",
     "applName": "황○진",
-    "deadId": "1654496",
-    "deadName": "김순엽"
+    "deadId": [
+      "1654496"
+    ],
+    "deadName": [
+      "김순엽"
+    ]
   },
   {
     "natDate": "2026-04-01",
