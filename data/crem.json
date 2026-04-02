@@ -761,6 +761,54 @@
   },
   {
     "cremDate": "2026-04-02",
+    "cremSeq": 22,
+    "objt": "A001",
+    "burnDate": 1775055600000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1654480,
+    "thedead": {
+      "deadId": 1654480,
+      "deadName": "홍복숙",
+      "id": 1654480,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1775055600000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1775055600000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1775055600000,
+      "cremSeq": 22
+    }
+  },
+  {
+    "cremDate": "2026-04-02",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1775055600000,
