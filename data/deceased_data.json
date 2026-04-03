@@ -210616,14 +210616,6 @@
     "retDate": null
   },
   {
-    "deadId": "1654560",
-    "strDate": "2026-04-03",
-    "ensNo": null,
-    "deadName": "서영복",
-    "applName": "서○진",
-    "retDate": null
-  },
-  {
     "deadId": "1654590",
     "strDate": "2026-04-03",
     "ensNo": "1추모의집-12실-무연고-03088",
@@ -210661,6 +210653,14 @@
     "ensNo": "1추모의집-62실-개인단-22113",
     "deadName": "황종호",
     "applName": "황○필",
+    "retDate": null
+  },
+  {
+    "deadId": "1654560",
+    "strDate": "2026-04-03",
+    "ensNo": "1추모의집-62실-개인단-22114",
+    "deadName": "서영복",
+    "applName": "서○진",
     "retDate": null
   }
 ]
