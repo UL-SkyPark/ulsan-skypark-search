@@ -110,5 +110,53 @@
       "cremDate": 1775228400000,
       "cremSeq": 2
     }
+  },
+  {
+    "cremDate": "2026-04-04",
+    "cremSeq": 3,
+    "objt": "A001",
+    "burnDate": 1775228400000,
+    "burnNo": null,
+    "burnChasu": "01",
+    "deadId": 1654585,
+    "thedead": {
+      "deadId": 1654585,
+      "deadName": "김동희",
+      "id": 1654585,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1775228400000,
+      "burnChasu": "01",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1775228400000,
+        "burnChasu": "01",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1775228400000,
+      "cremSeq": 3
+    }
   }
 ]
