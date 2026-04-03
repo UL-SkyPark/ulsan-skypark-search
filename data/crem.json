@@ -825,6 +825,54 @@
   },
   {
     "cremDate": "2026-04-03",
+    "cremSeq": 23,
+    "objt": "B001",
+    "burnDate": 1775142000000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1654134,
+    "thedead": {
+      "deadId": 1654134,
+      "deadName": "서석수",
+      "id": 1654134,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1775142000000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1775142000000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1775142000000,
+      "cremSeq": 23
+    }
+  },
+  {
+    "cremDate": "2026-04-03",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1775142000000,
