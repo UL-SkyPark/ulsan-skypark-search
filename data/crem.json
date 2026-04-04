@@ -238,7 +238,7 @@
       "new": false
     },
     "applId": "*******",
-    "scatterPlace": "TMC0600099",
+    "scatterPlace": "TMC0600001",
     "hwaBrazier": {
       "burnDate": 1775314800000,
       "burnChasu": "02",
@@ -267,11 +267,11 @@
     "burnChasuName": "2회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
-      "code": "TMC0600099",
-      "name": "반출",
+      "code": "TMC0600001",
+      "name": "추모의집",
       "id": {
         "basicCd": "TMC06",
-        "code": "TMC0600099"
+        "code": "TMC0600001"
       }
     },
     "id": {
@@ -333,6 +333,62 @@
     "id": {
       "cremDate": 1775314800000,
       "cremSeq": 6
+    }
+  },
+  {
+    "cremDate": "2026-04-05",
+    "cremSeq": 7,
+    "objt": "A001",
+    "burnDate": 1775314800000,
+    "burnNo": "04",
+    "burnChasu": "02",
+    "deadId": 1654610,
+    "thedead": {
+      "deadId": 1654610,
+      "deadName": "김부야",
+      "id": 1654610,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1775314800000,
+      "burnChasu": "02",
+      "burnNo": "04",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "204",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1775314800000,
+        "burnChasu": "02",
+        "burnNo": "04"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1775314800000,
+      "cremSeq": 7
     }
   }
 ]
