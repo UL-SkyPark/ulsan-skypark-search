@@ -210688,14 +210688,6 @@
     "retDate": null
   },
   {
-    "deadId": "1654597",
-    "strDate": "2026-04-04",
-    "ensNo": null,
-    "deadName": "정원진",
-    "applName": "정○분",
-    "retDate": null
-  },
-  {
     "deadId": "1654538",
     "strDate": "2026-04-04",
     "ensNo": "1추모의집-27실-개인단-08905",
@@ -210717,6 +210709,14 @@
     "ensNo": "1추모의집-62실-개인단-22116",
     "deadName": "김승우",
     "applName": "이○미",
+    "retDate": null
+  },
+  {
+    "deadId": "1654597",
+    "strDate": "2026-04-04",
+    "ensNo": "1추모의집-62실-개인단-22117",
+    "deadName": "정원진",
+    "applName": "정○분",
     "retDate": null
   }
 ]
