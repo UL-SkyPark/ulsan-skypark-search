@@ -187,17 +187,17 @@
       "burnDate": 1775314800000,
       "burnChasu": "04",
       "burnNo": "02",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "09:27",
       "burnEndTime": "10:38",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -541,6 +541,54 @@
     "id": {
       "cremDate": 1775314800000,
       "cremSeq": 18
+    }
+  },
+  {
+    "cremDate": "2026-04-05",
+    "cremSeq": 19,
+    "objt": "A001",
+    "burnDate": 1775314800000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1654608,
+    "thedead": {
+      "deadId": 1654608,
+      "deadName": "정차숙",
+      "id": 1654608,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1775314800000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1775314800000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1775314800000,
+      "cremSeq": 19
     }
   },
   {
