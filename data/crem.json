@@ -19,17 +19,17 @@
       "burnDate": 1775401200000,
       "burnChasu": "01",
       "burnNo": "08",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:23",
-      "burnEndTime": null,
+      "burnEndTime": "08:45",
       "waitRoom": "208",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
