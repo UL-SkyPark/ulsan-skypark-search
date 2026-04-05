@@ -5901,7 +5901,7 @@
     "ensNo": "1추모의집-12실-개인단-02873",
     "deadName": "박말순",
     "applName": "진○재",
-    "retDate": null
+    "retDate": "2026-04-06"
   },
   {
     "deadId": "1453659",
@@ -210765,6 +210765,14 @@
     "ensNo": "1추모의집-62실-개인단-22123",
     "deadName": "조서인",
     "applName": "조○혁",
+    "retDate": null
+  },
+  {
+    "deadId": "1654646",
+    "strDate": "2026-04-06",
+    "ensNo": null,
+    "deadName": "진종생",
+    "applName": "진○재",
     "retDate": null
   },
   {
