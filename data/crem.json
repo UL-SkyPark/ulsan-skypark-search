@@ -705,6 +705,54 @@
   },
   {
     "cremDate": "2026-04-05",
+    "cremSeq": 21,
+    "objt": "A001",
+    "burnDate": 1775314800000,
+    "burnNo": null,
+    "burnChasu": "05",
+    "deadId": 1654614,
+    "thedead": {
+      "deadId": 1654614,
+      "deadName": "김광명",
+      "id": 1654614,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1775314800000,
+      "burnChasu": "05",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1775314800000,
+        "burnChasu": "05",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1775314800000,
+      "cremSeq": 21
+    }
+  },
+  {
+    "cremDate": "2026-04-05",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1775314800000,

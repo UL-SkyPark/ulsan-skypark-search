@@ -2435,6 +2435,11 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1654643",
+    "deadName": "유복선",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1654644",
     "deadName": "이충효",
     "dcGubun": "TCM1200003"
@@ -2443,5 +2448,10 @@
     "deadId": "1654645",
     "deadName": "박호진",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1654680",
+    "deadName": "정창순",
+    "dcGubun": "TCM1200002"
   }
 ]
