@@ -1195,17 +1195,17 @@
       "burnDate": 1775401200000,
       "burnChasu": "14",
       "burnNo": "05",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "14:26",
-      "burnEndTime": null,
+      "burnEndTime": "14:58",
       "waitRoom": "205",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -1419,17 +1419,17 @@
       "burnDate": 1775401200000,
       "burnChasu": "14",
       "burnNo": "06",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "14:26",
-      "burnEndTime": null,
+      "burnEndTime": "14:59",
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -1811,17 +1811,17 @@
       "burnDate": 1775401200000,
       "burnChasu": "14",
       "burnNo": "09",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "14:26",
-      "burnEndTime": null,
+      "burnEndTime": "15:00",
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -2315,17 +2315,17 @@
       "burnDate": 1775401200000,
       "burnChasu": "13",
       "burnNo": "04",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "14:26",
       "burnEndTime": "14:52",
       "waitRoom": "204",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
