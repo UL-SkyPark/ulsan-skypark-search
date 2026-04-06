@@ -201213,7 +201213,7 @@
     "ensNo": "1추모의집-09실-부부단-01801",
     "deadName": "안윤숙",
     "applName": "김○복",
-    "retDate": null
+    "retDate": "2026-04-06"
   },
   {
     "deadId": "1478076",
@@ -210768,14 +210768,6 @@
     "retDate": null
   },
   {
-    "deadId": "1654660",
-    "strDate": "2026-04-06",
-    "ensNo": null,
-    "deadName": "정민",
-    "applName": "정○진",
-    "retDate": null
-  },
-  {
     "deadId": "1453658",
     "strDate": "2026-04-06",
     "ensNo": "1추모의집-09실-부부단-01908",
@@ -210805,6 +210797,14 @@
     "ensNo": "1추모의집-62실-개인단-22124",
     "deadName": "최병수",
     "applName": "최○자",
+    "retDate": null
+  },
+  {
+    "deadId": "1654660",
+    "strDate": "2026-04-06",
+    "ensNo": "1추모의집-62실-개인단-22125",
+    "deadName": "정민",
+    "applName": "정○진",
     "retDate": null
   }
 ]
