@@ -68718,6 +68718,17 @@
   },
   {
     "natDate": "2026-04-07",
+    "natNo": null,
+    "applName": "조○희",
+    "deadId": [
+      "1654716"
+    ],
+    "deadName": [
+      "조성준"
+    ]
+  },
+  {
+    "natDate": "2026-04-07",
     "natNo": "잔디장-2-9-0301",
     "applName": "한○윤",
     "deadId": "1654718",
