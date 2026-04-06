@@ -68663,16 +68663,16 @@
   },
   {
     "natDate": "2026-04-06",
-    "natNo": null,
-    "applName": "노○정",
-    "deadId": "1654725",
-    "deadName": "노연호"
-  },
-  {
-    "natDate": "2026-04-06",
     "natNo": "잔디장-2-9-0296",
     "applName": "서○환",
     "deadId": "1654658",
     "deadName": "구홍선"
+  },
+  {
+    "natDate": "2026-04-06",
+    "natNo": "잔디장-2-9-0297",
+    "applName": "노○정",
+    "deadId": "1654725",
+    "deadName": "노연호"
   }
 ]
