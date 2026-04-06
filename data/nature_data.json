@@ -68663,6 +68663,17 @@
   },
   {
     "natDate": "2026-04-06",
+    "natNo": null,
+    "applName": "안○원",
+    "deadId": [
+      "1654678"
+    ],
+    "deadName": [
+      "송봉남"
+    ]
+  },
+  {
+    "natDate": "2026-04-06",
     "natNo": "잔디장-2-9-0296",
     "applName": "서○환",
     "deadId": "1654658",
