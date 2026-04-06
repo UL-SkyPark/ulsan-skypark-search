@@ -385,6 +385,62 @@
   },
   {
     "cremDate": "2026-04-06",
+    "cremSeq": 16,
+    "objt": "A001",
+    "burnDate": 1775401200000,
+    "burnNo": "01",
+    "burnChasu": "04",
+    "deadId": 1654672,
+    "thedead": {
+      "deadId": 1654672,
+      "deadName": "이필순",
+      "id": 1654672,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1775401200000,
+      "burnChasu": "04",
+      "burnNo": "01",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "201",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1775401200000,
+        "burnChasu": "04",
+        "burnNo": "01"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1775401200000,
+      "cremSeq": 16
+    }
+  },
+  {
+    "cremDate": "2026-04-06",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1775401200000,
