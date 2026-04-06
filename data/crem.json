@@ -1083,17 +1083,17 @@
       "burnDate": 1775401200000,
       "burnChasu": "06",
       "burnNo": "08",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "208",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -1291,17 +1291,17 @@
       "burnDate": 1775401200000,
       "burnChasu": "06",
       "burnNo": "03",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -1373,6 +1373,54 @@
     "id": {
       "cremDate": 1775401200000,
       "cremSeq": 32
+    }
+  },
+  {
+    "cremDate": "2026-04-06",
+    "cremSeq": 33,
+    "objt": "B001",
+    "burnDate": 1775401200000,
+    "burnNo": null,
+    "burnChasu": "09",
+    "deadId": 1654696,
+    "thedead": {
+      "deadId": 1654696,
+      "deadName": "김우순악",
+      "id": 1654696,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1775401200000,
+      "burnChasu": "09",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1775401200000,
+        "burnChasu": "09",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "9회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1775401200000,
+      "cremSeq": 33
     }
   },
   {
