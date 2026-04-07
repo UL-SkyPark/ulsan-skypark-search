@@ -68718,13 +68718,6 @@
   },
   {
     "natDate": "2026-04-07",
-    "natNo": null,
-    "applName": "김○모",
-    "deadId": "1654709",
-    "deadName": "김석기"
-  },
-  {
-    "natDate": "2026-04-07",
     "natNo": "잔디장-2-8-0101",
     "applName": "조○희",
     "deadId": [
@@ -68756,5 +68749,12 @@
     "applName": "이○근",
     "deadId": "1654689",
     "deadName": "최성분"
+  },
+  {
+    "natDate": "2026-04-07",
+    "natNo": "잔디장-2-9-0304",
+    "applName": "김○모",
+    "deadId": "1654709",
+    "deadName": "김석기"
   }
 ]
