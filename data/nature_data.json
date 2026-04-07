@@ -68718,13 +68718,6 @@
   },
   {
     "natDate": "2026-04-07",
-    "natNo": null,
-    "applName": "J○○○○○○○○○○N",
-    "deadId": "1654728",
-    "deadName": "LIANGJINSHUN"
-  },
-  {
-    "natDate": "2026-04-07",
     "natNo": "잔디장-2-8-0101",
     "applName": "조○희",
     "deadId": [
@@ -68770,5 +68763,12 @@
     "applName": "박○민",
     "deadId": "1654759",
     "deadName": "천태연"
+  },
+  {
+    "natDate": "2026-04-07",
+    "natNo": "잔디장-2-9-0306",
+    "applName": "J○○○○○○○○○○N",
+    "deadId": "1654728",
+    "deadName": "LIANGJINSHUN"
   }
 ]
