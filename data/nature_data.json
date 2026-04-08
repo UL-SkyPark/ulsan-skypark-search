@@ -68807,16 +68807,16 @@
   },
   {
     "natDate": "2026-04-09",
-    "natNo": null,
-    "applName": "원○지",
-    "deadId": "1654771",
-    "deadName": "이선옥"
-  },
-  {
-    "natDate": "2026-04-09",
     "natNo": "잔디장-2-9-0310",
     "applName": "윤○수",
     "deadId": "1654779",
     "deadName": "윤청수"
+  },
+  {
+    "natDate": "2026-04-09",
+    "natNo": "잔디장-2-9-0311",
+    "applName": "원○지",
+    "deadId": "1654771",
+    "deadName": "이선옥"
   }
 ]
