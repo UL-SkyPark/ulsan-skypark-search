@@ -210888,19 +210888,19 @@
     "retDate": null
   },
   {
-    "deadId": "1654814",
-    "strDate": "2026-04-09",
-    "ensNo": null,
-    "deadName": "우정근",
-    "applName": "김○우",
-    "retDate": null
-  },
-  {
     "deadId": "1654840",
     "strDate": "2026-04-09",
     "ensNo": "1추모의집-12실-무연고-03196",
     "deadName": "김복순",
     "applName": "신○은",
+    "retDate": null
+  },
+  {
+    "deadId": "1654814",
+    "strDate": "2026-04-09",
+    "ensNo": "1추모의집-12실-무연고-03205",
+    "deadName": "우정근",
+    "applName": "김○우",
     "retDate": null
   },
   {
