@@ -54,5 +54,53 @@
       "cremDate": 1775919600000,
       "cremSeq": 1
     }
+  },
+  {
+    "cremDate": "2026-04-12",
+    "cremSeq": 2,
+    "objt": "A001",
+    "burnDate": 1775919600000,
+    "burnNo": null,
+    "burnChasu": "01",
+    "deadId": 1654891,
+    "thedead": {
+      "deadId": 1654891,
+      "deadName": "변홍대",
+      "id": 1654891,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1775919600000,
+      "burnChasu": "01",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1775919600000,
+        "burnChasu": "01",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1775919600000,
+      "cremSeq": 2
+    }
   }
 ]
