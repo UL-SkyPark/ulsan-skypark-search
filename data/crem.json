@@ -390,5 +390,53 @@
       "cremDate": 1775919600000,
       "cremSeq": 7
     }
+  },
+  {
+    "cremDate": "2026-04-12",
+    "cremSeq": 8,
+    "objt": "A001",
+    "burnDate": 1775919600000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1654868,
+    "thedead": {
+      "deadId": 1654868,
+      "deadName": "김동하",
+      "id": 1654868,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1775919600000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1775919600000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1775919600000,
+      "cremSeq": 8
+    }
   }
 ]
