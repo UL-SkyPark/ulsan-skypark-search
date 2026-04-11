@@ -75,17 +75,17 @@
       "burnDate": 1775919600000,
       "burnChasu": "01",
       "burnNo": "04",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "07:36",
       "burnEndTime": null,
       "waitRoom": "204",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -131,17 +131,17 @@
       "burnDate": 1775919600000,
       "burnChasu": "01",
       "burnNo": "09",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "07:39",
       "burnEndTime": null,
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -165,6 +165,62 @@
     "id": {
       "cremDate": 1775919600000,
       "cremSeq": 3
+    }
+  },
+  {
+    "cremDate": "2026-04-12",
+    "cremSeq": 4,
+    "objt": "A001",
+    "burnDate": 1775919600000,
+    "burnNo": "05",
+    "burnChasu": "01",
+    "deadId": 1654875,
+    "thedead": {
+      "deadId": 1654875,
+      "deadName": "임종하",
+      "id": 1654875,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1775919600000,
+      "burnChasu": "01",
+      "burnNo": "05",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1775919600000,
+        "burnChasu": "01",
+        "burnNo": "05"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1775919600000,
+      "cremSeq": 4
     }
   }
 ]
