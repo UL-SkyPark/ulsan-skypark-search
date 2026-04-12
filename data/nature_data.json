@@ -68919,13 +68919,6 @@
   },
   {
     "natDate": "2026-04-12",
-    "natNo": null,
-    "applName": "최○환",
-    "deadId": "1654886",
-    "deadName": "최동애"
-  },
-  {
-    "natDate": "2026-04-12",
     "natNo": "잔디장-2-9-0326",
     "applName": "이○태",
     "deadId": "1654871",
@@ -68937,5 +68930,12 @@
     "applName": "김○윤",
     "deadId": "1654872",
     "deadName": "김관수"
+  },
+  {
+    "natDate": "2026-04-12",
+    "natNo": "잔디장-2-9-0328",
+    "applName": "최○환",
+    "deadId": "1654886",
+    "deadName": "최동애"
   }
 ]
