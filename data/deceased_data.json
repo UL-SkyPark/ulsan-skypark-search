@@ -211120,11 +211120,11 @@
     "retDate": null
   },
   {
-    "deadId": "1654884",
+    "deadId": "1654885",
     "strDate": "2026-04-13",
     "ensNo": null,
-    "deadName": "민윤식",
-    "applName": "민○명",
+    "deadName": "김자이",
+    "applName": "문○석",
     "retDate": null
   },
   {
@@ -211133,6 +211133,14 @@
     "ensNo": "1추모의집-62실-개인단-22148",
     "deadName": "임두휘",
     "applName": "임○태",
+    "retDate": null
+  },
+  {
+    "deadId": "1654884",
+    "strDate": "2026-04-13",
+    "ensNo": "1추모의집-62실-개인단-22149",
+    "deadName": "민윤식",
+    "applName": "민○명",
     "retDate": null
   }
 ]
