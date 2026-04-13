@@ -70005,7 +70005,7 @@
     "ensNo": "1추모의집-29실-개인단-09630",
     "deadName": "마순이",
     "applName": "정○교",
-    "retDate": null
+    "retDate": "2026-04-13"
   },
   {
     "deadId": "1461672",
@@ -211133,6 +211133,14 @@
     "ensNo": "1추모의집-09실-부부단-01915",
     "deadName": "신택봉",
     "applName": "신○섭",
+    "retDate": null
+  },
+  {
+    "deadId": "1519001",
+    "strDate": "2026-04-13",
+    "ensNo": "1추모의집-09실-부부단-01916",
+    "deadName": "마순이",
+    "applName": "정○교",
     "retDate": null
   },
   {
