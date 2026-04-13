@@ -579,17 +579,17 @@
       "burnDate": 1776006000000,
       "burnChasu": "02",
       "burnNo": "04",
-      "burnStatus": "3",
+      "burnStatus": "9",
       "burnStrTime": "08:55",
-      "burnEndTime": null,
+      "burnEndTime": "10:23",
       "waitRoom": "204",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "9"
         }
       },
       "id": {
