@@ -211120,14 +211120,6 @@
     "retDate": null
   },
   {
-    "deadId": "1654890",
-    "strDate": "2026-04-13",
-    "ensNo": null,
-    "deadName": "조경래",
-    "applName": "조○현",
-    "retDate": null
-  },
-  {
     "deadId": "1654908",
     "strDate": "2026-04-13",
     "ensNo": "1추모의집-62실-개인단-22148",
@@ -211157,6 +211149,14 @@
     "ensNo": "1추모의집-62실-개인단-22151",
     "deadName": "김천식",
     "applName": "이○한",
+    "retDate": null
+  },
+  {
+    "deadId": "1654890",
+    "strDate": "2026-04-13",
+    "ensNo": "1추모의집-62실-개인단-22152",
+    "deadName": "조경래",
+    "applName": "조○현",
     "retDate": null
   }
 ]
