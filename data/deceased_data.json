@@ -211122,7 +211122,7 @@
   {
     "deadId": "1654912",
     "strDate": "2026-04-13",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-01915",
     "deadName": "신택봉",
     "applName": "신○섭",
     "retDate": null
@@ -211165,6 +211165,14 @@
     "ensNo": "1추모의집-62실-개인단-22152",
     "deadName": "조경래",
     "applName": "조○현",
+    "retDate": null
+  },
+  {
+    "deadId": "1654913",
+    "strDate": "2026-04-13",
+    "ensNo": "1추모의집-62실-개인단-22153",
+    "deadName": "최대철",
+    "applName": "최○관",
     "retDate": null
   }
 ]
