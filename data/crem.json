@@ -161,6 +161,102 @@
   },
   {
     "cremDate": "2026-04-14",
+    "cremSeq": 12,
+    "objt": "B001",
+    "burnDate": 1776092400000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1653412,
+    "thedead": {
+      "deadId": 1653412,
+      "deadName": "김용산",
+      "id": 1653412,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1776092400000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1776092400000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1776092400000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-04-14",
+    "cremSeq": 13,
+    "objt": "B001",
+    "burnDate": 1776092400000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1653413,
+    "thedead": {
+      "deadId": 1653413,
+      "deadName": "김석영",
+      "id": 1653413,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1776092400000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1776092400000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1776092400000,
+      "cremSeq": 13
+    }
+  },
+  {
+    "cremDate": "2026-04-14",
     "cremSeq": 2,
     "objt": "B001",
     "burnDate": 1776092400000,
@@ -179,17 +275,17 @@
       "burnDate": 1776092400000,
       "burnChasu": "07",
       "burnNo": "09",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:19",
-      "burnEndTime": null,
+      "burnEndTime": "08:45",
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -235,17 +331,17 @@
       "burnDate": 1776092400000,
       "burnChasu": "01",
       "burnNo": "04",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:25",
-      "burnEndTime": null,
+      "burnEndTime": "08:45",
       "waitRoom": "204",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
