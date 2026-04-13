@@ -211200,9 +211200,17 @@
     "retDate": null
   },
   {
+    "deadId": "1654885",
+    "strDate": "2026-04-14",
+    "ensNo": "1추모의집-62실-개인단-22098",
+    "deadName": "김자이",
+    "applName": "문○석",
+    "retDate": null
+  },
+  {
     "deadId": "1654922",
     "strDate": "2026-04-14",
-    "ensNo": null,
+    "ensNo": "1추모의집-62실-개인단-22154",
     "deadName": "김문자",
     "applName": "천○화",
     "retDate": null
@@ -211210,17 +211218,9 @@
   {
     "deadId": "1654927",
     "strDate": "2026-04-14",
-    "ensNo": null,
+    "ensNo": "1추모의집-62실-개인단-22155",
     "deadName": "이말복",
     "applName": "이○엽",
-    "retDate": null
-  },
-  {
-    "deadId": "1654885",
-    "strDate": "2026-04-14",
-    "ensNo": "1추모의집-62실-개인단-22098",
-    "deadName": "김자이",
-    "applName": "문○석",
     "retDate": null
   }
 ]
