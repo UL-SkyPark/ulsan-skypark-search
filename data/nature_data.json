@@ -68982,16 +68982,16 @@
   },
   {
     "natDate": "2026-04-14",
-    "natNo": null,
-    "applName": "김○자",
-    "deadId": "1654936",
-    "deadName": "박잠수"
-  },
-  {
-    "natDate": "2026-04-14",
     "natNo": "잔디장-2-9-0332",
     "applName": "김○우",
     "deadId": "1654914",
     "deadName": "김영화"
+  },
+  {
+    "natDate": "2026-04-14",
+    "natNo": "잔디장-2-9-0333",
+    "applName": "김○자",
+    "deadId": "1654936",
+    "deadName": "박잠수"
   }
 ]
