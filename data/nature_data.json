@@ -68982,13 +68982,6 @@
   },
   {
     "natDate": "2026-04-14",
-    "natNo": null,
-    "applName": "김○환",
-    "deadId": "1654948",
-    "deadName": "김상태"
-  },
-  {
-    "natDate": "2026-04-14",
     "natNo": "잔디장-2-9-0332",
     "applName": "김○우",
     "deadId": "1654914",
@@ -69007,5 +69000,12 @@
     "applName": "문○규",
     "deadId": "1654928",
     "deadName": "김필연"
+  },
+  {
+    "natDate": "2026-04-14",
+    "natNo": "잔디장-2-9-0335",
+    "applName": "김○환",
+    "deadId": "1654948",
+    "deadName": "김상태"
   }
 ]
