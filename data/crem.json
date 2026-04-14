@@ -691,17 +691,17 @@
       "burnDate": 1776092400000,
       "burnChasu": "05",
       "burnNo": "06",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "11:18",
       "burnEndTime": "12:38",
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -747,17 +747,17 @@
       "burnDate": 1776092400000,
       "burnChasu": "05",
       "burnNo": "02",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "11:22",
       "burnEndTime": "12:39",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -1027,17 +1027,17 @@
       "burnDate": 1776092400000,
       "burnChasu": "08",
       "burnNo": "09",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "12:45",
       "burnEndTime": null,
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -1083,17 +1083,17 @@
       "burnDate": 1776092400000,
       "burnChasu": "08",
       "burnNo": "01",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "12:45",
       "burnEndTime": null,
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
