@@ -69024,6 +69024,13 @@
   },
   {
     "natDate": "2026-04-15",
+    "natNo": null,
+    "applName": "김○덕",
+    "deadId": "1654994",
+    "deadName": "박수야"
+  },
+  {
+    "natDate": "2026-04-15",
     "natNo": "잔디장-2-8-0103",
     "applName": "이○우",
     "deadId": [
