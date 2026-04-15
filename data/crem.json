@@ -844,7 +844,7 @@
     "cremSeq": 23,
     "objt": "A001",
     "burnDate": 1776178800000,
-    "burnNo": null,
+    "burnNo": "02",
     "burnChasu": "06",
     "deadId": 1655035,
     "thedead": {
@@ -858,16 +858,24 @@
     "hwaBrazier": {
       "burnDate": 1776178800000,
       "burnChasu": "06",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "02",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1776178800000,
         "burnChasu": "06",
-        "burnNo": null
+        "burnNo": "02"
       }
     },
     "objtCode": "A001",
@@ -981,6 +989,62 @@
     "id": {
       "cremDate": 1776178800000,
       "cremSeq": 25
+    }
+  },
+  {
+    "cremDate": "2026-04-15",
+    "cremSeq": 26,
+    "objt": "A001",
+    "burnDate": 1776178800000,
+    "burnNo": "07",
+    "burnChasu": "06",
+    "deadId": 1655016,
+    "thedead": {
+      "deadId": 1655016,
+      "deadName": "김부영",
+      "id": 1655016,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1776178800000,
+      "burnChasu": "06",
+      "burnNo": "07",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1776178800000,
+        "burnChasu": "06",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1776178800000,
+      "cremSeq": 26
     }
   },
   {
