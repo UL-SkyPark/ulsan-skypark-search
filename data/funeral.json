@@ -2625,6 +2625,11 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1655016",
+    "deadName": "김부영",
+    "dcGubun": "TCM1200099"
+  },
+  {
     "deadId": "1655024",
     "deadName": "박목기",
     "dcGubun": "TCM1200001"
@@ -2643,5 +2648,10 @@
     "deadId": "1655035",
     "deadName": "한근자",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1655037",
+    "deadName": "김승수",
+    "dcGubun": "TCM1200002"
   }
 ]
