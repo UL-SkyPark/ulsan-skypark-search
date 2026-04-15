@@ -69024,17 +69024,10 @@
   },
   {
     "natDate": "2026-04-15",
-    "natNo": null,
+    "natNo": "수목장-2-1-0028",
     "applName": "임○현",
     "deadId": "1654954",
     "deadName": "김명애"
-  },
-  {
-    "natDate": "2026-04-15",
-    "natNo": null,
-    "applName": "김○덕",
-    "deadId": "1654994",
-    "deadName": "박수야"
   },
   {
     "natDate": "2026-04-15",
@@ -69075,5 +69068,12 @@
     "applName": "김○욱",
     "deadId": "1654978",
     "deadName": "이말례"
+  },
+  {
+    "natDate": "2026-04-15",
+    "natNo": "잔디장-2-9-0340",
+    "applName": "김○덕",
+    "deadId": "1654994",
+    "deadName": "박수야"
   }
 ]
