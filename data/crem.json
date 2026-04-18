@@ -916,8 +916,8 @@
       "burnChasu": "08",
       "burnNo": "03",
       "burnStatus": "8",
-      "burnStrTime": null,
-      "burnEndTime": "13:58",
+      "burnStrTime": "14:05",
+      "burnEndTime": "14:05",
       "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
