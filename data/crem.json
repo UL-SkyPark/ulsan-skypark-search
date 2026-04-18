@@ -467,17 +467,17 @@
       "burnDate": 1776438000000,
       "burnChasu": "05",
       "burnNo": "06",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "11:40",
       "burnEndTime": "13:02",
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -837,6 +837,62 @@
     "id": {
       "cremDate": 1776438000000,
       "cremSeq": 22
+    }
+  },
+  {
+    "cremDate": "2026-04-18",
+    "cremSeq": 23,
+    "objt": "B001",
+    "burnDate": 1776438000000,
+    "burnNo": "07",
+    "burnChasu": "08",
+    "deadId": 1654963,
+    "thedead": {
+      "deadId": 1654963,
+      "deadName": "김종규",
+      "id": 1654963,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1776438000000,
+      "burnChasu": "08",
+      "burnNo": "07",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1776438000000,
+        "burnChasu": "08",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "8회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1776438000000,
+      "cremSeq": 23
     }
   },
   {
