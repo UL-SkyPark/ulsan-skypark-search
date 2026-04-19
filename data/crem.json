@@ -222,5 +222,53 @@
       "cremDate": 1776610800000,
       "cremSeq": 4
     }
+  },
+  {
+    "cremDate": "2026-04-20",
+    "cremSeq": 5,
+    "objt": "A001",
+    "burnDate": 1776610800000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1655125,
+    "thedead": {
+      "deadId": 1655125,
+      "deadName": "이정애",
+      "id": 1655125,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1776610800000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1776610800000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1776610800000,
+      "cremSeq": 5
+    }
   }
 ]
