@@ -169,6 +169,62 @@
   },
   {
     "cremDate": "2026-04-19",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1776524400000,
+    "burnNo": "06",
+    "burnChasu": "03",
+    "deadId": 1655099,
+    "thedead": {
+      "deadId": 1655099,
+      "deadName": "김영보",
+      "id": 1655099,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1776524400000,
+      "burnChasu": "03",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1776524400000,
+        "burnChasu": "03",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1776524400000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-04-19",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1776524400000,
