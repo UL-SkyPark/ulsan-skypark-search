@@ -676,7 +676,7 @@
     "cremSeq": 20,
     "objt": "B001",
     "burnDate": 1776610800000,
-    "burnNo": null,
+    "burnNo": "09",
     "burnChasu": "07",
     "deadId": 1655067,
     "thedead": {
@@ -690,16 +690,24 @@
     "hwaBrazier": {
       "burnDate": 1776610800000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "09",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "209",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
       "id": {
         "burnDate": 1776610800000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "09"
       }
     },
     "objtCode": "B001",
