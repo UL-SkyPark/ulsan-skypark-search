@@ -747,17 +747,17 @@
       "burnDate": 1776610800000,
       "burnChasu": "05",
       "burnNo": "03",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "11:56",
       "burnEndTime": "13:14",
       "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
