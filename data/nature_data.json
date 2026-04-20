@@ -69211,6 +69211,17 @@
   },
   {
     "natDate": "2026-04-20",
+    "natNo": null,
+    "applName": "권○춘",
+    "deadId": [
+      "1655135"
+    ],
+    "deadName": [
+      "최옥연"
+    ]
+  },
+  {
+    "natDate": "2026-04-20",
     "natNo": "잔디장-2-9-0358",
     "applName": "김○옥",
     "deadId": "1655125",
