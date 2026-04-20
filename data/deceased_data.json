@@ -34829,7 +34829,7 @@
     "ensNo": "1추모의집-20실-개인단-06200",
     "deadName": "한정필",
     "applName": "박○동",
-    "retDate": null
+    "retDate": "2026-04-21"
   },
   {
     "deadId": "1457275",
@@ -211429,6 +211429,14 @@
     "ensNo": "1추모의집-62실-개인단-22172",
     "deadName": "이상도",
     "applName": "이○욱",
+    "retDate": null
+  },
+  {
+    "deadId": "1655147",
+    "strDate": "2026-04-21",
+    "ensNo": "1추모의집-62실-개인단-22173",
+    "deadName": "정우열",
+    "applName": "정○보",
     "retDate": null
   }
 ]
