@@ -2253,6 +2253,35 @@
       }
     }
 
+    function wait(ms){
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function saveSharedStatusViaNoCors(payload){
+      await fetch(APP_CONFIG.statusApiUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        cache: 'no-store',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      });
+    }
+
+    async function verifySharedStatusSaved(src, id, mode, status){
+      const key = statusKey(src, id, mode);
+
+      for (let i = 0; i < 4; i++){
+        await wait(700 + (i * 250));
+        await loadSharedStatuses(true);
+        if (state.sharedStatusMap.get(key) === status){
+          return true;
+        }
+      }
+
+      return false;
+    }
+
     async function loadSharedStatuses(force = false){
       if (!isConfiguredStatusApi()){
         state.sharedStatusMap = new Map();
@@ -2324,8 +2353,23 @@
       } catch (err){
         if (err?.code === 'STATUS_API_AUTH'){
           promptStatusApiLogin();
+          throw err;
         }
-        throw err;
+
+        const isFetchFailure =
+          err instanceof TypeError ||
+          /failed to fetch|load failed|networkerror/i.test(String(err?.message || ''));
+
+        if (!isFetchFailure) throw err;
+
+        await saveSharedStatusViaNoCors({ action: 'save', src, id, mode, status });
+
+        const verified = await verifySharedStatusSaved(src, id, mode, status);
+        if (!verified){
+          throw new Error(UI_TEXT.sharedStatusSaveError);
+        }
+
+        json = { ok: true };
       }
 
       if (!json?.ok) throw new Error(json?.message || UI_TEXT.sharedStatusSaveError);
