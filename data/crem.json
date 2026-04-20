@@ -462,7 +462,7 @@
       "new": false
     },
     "applId": "*******",
-    "scatterPlace": "TMC0600099",
+    "scatterPlace": "TMC0600010",
     "hwaBrazier": {
       "burnDate": 1776697200000,
       "burnChasu": "03",
@@ -491,11 +491,11 @@
     "burnChasuName": "3회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
-      "code": "TMC0600099",
-      "name": "반출",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
       "id": {
         "basicCd": "TMC06",
-        "code": "TMC0600099"
+        "code": "TMC0600010"
       }
     },
     "id": {
