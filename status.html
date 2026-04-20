@@ -2205,13 +2205,16 @@
       const finalUrl = String(res?.url || '');
       const body = String(text || '');
       const type = String(contentType || '').toLowerCase();
+      const redirectedToGoogleLogin =
+        finalUrl.includes('accounts.google.com') ||
+        finalUrl.includes('ServiceLogin');
+      const looksLikeLoginPage =
+        type.includes('text/html') &&
+        /accounts\.google\.com|serviceLogin|Google 계정|로그인|Sign in/i.test(body);
 
       return Boolean(
-        res?.redirected ||
-        finalUrl.includes('accounts.google.com') ||
-        finalUrl.includes('ServiceLogin') ||
-        type.includes('text/html') ||
-        /accounts\.google\.com|serviceLogin|Google 계정|로그인|Sign in/i.test(body)
+        redirectedToGoogleLogin ||
+        looksLikeLoginPage
       );
     }
 
