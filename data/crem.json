@@ -243,17 +243,17 @@
       "burnDate": 1776610800000,
       "burnChasu": "04",
       "burnNo": "09",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "10:19",
       "burnEndTime": "11:39",
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -299,17 +299,17 @@
       "burnDate": 1776610800000,
       "burnChasu": "04",
       "burnNo": "05",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "10:22",
       "burnEndTime": "11:40",
       "waitRoom": "205",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -717,6 +717,62 @@
     "id": {
       "cremDate": 1776610800000,
       "cremSeq": 20
+    }
+  },
+  {
+    "cremDate": "2026-04-20",
+    "cremSeq": 21,
+    "objt": "A001",
+    "burnDate": 1776610800000,
+    "burnNo": "03",
+    "burnChasu": "05",
+    "deadId": 1655108,
+    "thedead": {
+      "deadId": 1655108,
+      "deadName": "김입호",
+      "id": 1655108,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1776610800000,
+      "burnChasu": "05",
+      "burnNo": "03",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1776610800000,
+        "burnChasu": "05",
+        "burnNo": "03"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1776610800000,
+      "cremSeq": 21
     }
   },
   {
