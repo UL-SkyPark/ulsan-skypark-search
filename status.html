@@ -1351,7 +1351,7 @@
   <script>
     const APP_CONFIG = {
       placeholderWebAppUrl: '여기에_앱스크립트_웹앱_URL_입력',
-      statusApiUrl: 'https://script.google.com/macros/s/AKfycbzC8L_toqBCmy-SBcqzzJZJA68bfq3dtIDi_TG--hWsr6rajcdq8yMNivtces8ehLiO/exec',
+      statusApiUrl: 'https://script.google.com/macros/s/AKfycbyE-L53LiqHcMK_cPYvAzC_jqBV2vzFTnOtGNackNFg0AhB8uR83xRSB2k_-v0HBJDa/exec',
       enableStatusEditing: true,
       sharedStatusCacheMs: 180000,
       pageSizeSmall: 28,
@@ -1377,6 +1377,7 @@
       noChanges: '변경된 상태가 없습니다.',
       sharedStatusLoadError: '공유 상태 정보를 불러오지 못했습니다.',
       sharedStatusSaveError: '공유 상태 저장에 실패했습니다.',
+      sharedStatusAuthRequired: '앱스크립트 로그인이 필요합니다. 새 탭에서 로그인 후 다시 시도해 주세요.',
       sharedApiNotConfigured: '공유 저장 API 주소가 설정되지 않았습니다.',
       sharedApiInvalid: '공유 저장 API 주소 형식이 올바르지 않습니다.',
       dataFileNotFound: '데이터 파일을 찾을 수 없습니다.',
@@ -1881,6 +1882,7 @@
       sharedStatusMap: new Map(),
       sharedStatusFetchedAt: 0,
       sharedStatusLoadingPromise: null,
+      statusApiAuthPromptedAt: 0,
 
       dataCache: {
         house: null,
@@ -2184,6 +2186,74 @@
       return `${src}||${mode}||${id}`;
     }
 
+    function createStatusApiAuthError(){
+      const err = new Error(UI_TEXT.sharedStatusAuthRequired);
+      err.code = 'STATUS_API_AUTH';
+      return err;
+    }
+
+    function buildStatusApiUrl(params = {}){
+      const url = new URL(APP_CONFIG.statusApiUrl);
+      for (const [key, value] of Object.entries(params)){
+        if (value == null || value === '') continue;
+        url.searchParams.set(key, String(value));
+      }
+      return url.toString();
+    }
+
+    function looksLikeStatusApiAuthResponse(res, text, contentType){
+      const finalUrl = String(res?.url || '');
+      const body = String(text || '');
+      const type = String(contentType || '').toLowerCase();
+
+      return Boolean(
+        res?.redirected ||
+        finalUrl.includes('accounts.google.com') ||
+        finalUrl.includes('ServiceLogin') ||
+        type.includes('text/html') ||
+        /accounts\.google\.com|serviceLogin|Google 계정|로그인|Sign in/i.test(body)
+      );
+    }
+
+    function promptStatusApiLogin(){
+      const now = Date.now();
+      if (state.statusApiAuthPromptedAt && (now - state.statusApiAuthPromptedAt) < 10000) return;
+      state.statusApiAuthPromptedAt = now;
+
+      toast(UI_TEXT.sharedStatusAuthRequired, 3200);
+
+      try{
+        window.open(buildStatusApiUrl({ action: 'list' }), '_blank', 'noopener');
+      } catch {}
+    }
+
+    async function fetchStatusApiJson(params = {}, init = {}, fallbackMessage = UI_TEXT.sharedStatusLoadError){
+      const res = await fetch(buildStatusApiUrl(params), {
+        cache: 'no-store',
+        mode: 'cors',
+        credentials: 'include',
+        redirect: 'follow',
+        ...init
+      });
+
+      const contentType = String(res.headers.get('content-type') || '').toLowerCase();
+      const text = await res.text();
+
+      if (looksLikeStatusApiAuthResponse(res, text, contentType)){
+        throw createStatusApiAuthError();
+      }
+
+      if (!res.ok){
+        throw new Error(fallbackMessage);
+      }
+
+      try{
+        return text ? JSON.parse(text) : {};
+      } catch {
+        throw new Error(fallbackMessage);
+      }
+    }
+
     async function loadSharedStatuses(force = false){
       if (!isConfiguredStatusApi()){
         state.sharedStatusMap = new Map();
@@ -2201,14 +2271,11 @@
       }
 
       state.sharedStatusLoadingPromise = (async () => {
-        const url = force
-          ? `${APP_CONFIG.statusApiUrl}?action=list&_=${Date.now()}`
-          : `${APP_CONFIG.statusApiUrl}?action=list`;
-
-        const res = await fetch(url, { cache: 'no-store' });
-        if (!res.ok) throw new Error(UI_TEXT.sharedStatusLoadError);
-
-        const json = await res.json();
+        const json = await fetchStatusApiJson(
+          { action: 'list', _: force ? Date.now() : '' },
+          {},
+          UI_TEXT.sharedStatusLoadError
+        );
         const items = Array.isArray(json?.items) ? json.items : [];
 
         const map = new Map();
@@ -2229,6 +2296,11 @@
 
       try{
         await state.sharedStatusLoadingPromise;
+      } catch (err){
+        if (err?.code === 'STATUS_API_AUTH'){
+          promptStatusApiLogin();
+        }
+        throw err;
       } finally {
         state.sharedStatusLoadingPromise = null;
       }
@@ -2239,15 +2311,24 @@
         throw new Error(UI_TEXT.sharedApiInvalid);
       }
 
-      const res = await fetch(APP_CONFIG.statusApiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action: 'save', src, id, mode, status })
-      });
+      let json;
+      try{
+        json = await fetchStatusApiJson(
+          {},
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'save', src, id, mode, status })
+          },
+          UI_TEXT.sharedStatusSaveError
+        );
+      } catch (err){
+        if (err?.code === 'STATUS_API_AUTH'){
+          promptStatusApiLogin();
+        }
+        throw err;
+      }
 
-      if (!res.ok) throw new Error(UI_TEXT.sharedStatusSaveError);
-
-      const json = await res.json();
       if (!json?.ok) throw new Error(json?.message || UI_TEXT.sharedStatusSaveError);
 
       state.sharedStatusMap.set(statusKey(src, id, mode), status);
