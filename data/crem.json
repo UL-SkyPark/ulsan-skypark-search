@@ -299,17 +299,17 @@
       "burnDate": 1776697200000,
       "burnChasu": "04",
       "burnNo": "07",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "10:27",
       "burnEndTime": "11:46",
       "waitRoom": "207",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -669,6 +669,118 @@
     "id": {
       "cremDate": 1776697200000,
       "cremSeq": 2
+    }
+  },
+  {
+    "cremDate": "2026-04-21",
+    "cremSeq": 20,
+    "objt": "B001",
+    "burnDate": 1776697200000,
+    "burnNo": "10",
+    "burnChasu": "08",
+    "deadId": 1655181,
+    "thedead": {
+      "deadId": 1655181,
+      "deadName": "이상만",
+      "id": 1655181,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1776697200000,
+      "burnChasu": "08",
+      "burnNo": "10",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1776697200000,
+        "burnChasu": "08",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "8회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1776697200000,
+      "cremSeq": 20
+    }
+  },
+  {
+    "cremDate": "2026-04-21",
+    "cremSeq": 21,
+    "objt": "B001",
+    "burnDate": 1776697200000,
+    "burnNo": "01",
+    "burnChasu": "07",
+    "deadId": 1653588,
+    "thedead": {
+      "deadId": 1653588,
+      "deadName": "손란",
+      "id": 1653588,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1776697200000,
+      "burnChasu": "07",
+      "burnNo": "01",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "201",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1776697200000,
+        "burnChasu": "07",
+        "burnNo": "01"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1776697200000,
+      "cremSeq": 21
     }
   },
   {
