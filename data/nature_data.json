@@ -69273,13 +69273,6 @@
   },
   {
     "natDate": "2026-04-22",
-    "natNo": null,
-    "applName": "허○희",
-    "deadId": "1655169",
-    "deadName": "박기운"
-  },
-  {
-    "natDate": "2026-04-22",
     "natNo": "잔디장-2-9-0365",
     "applName": "나○우",
     "deadId": "1655191",
@@ -69291,5 +69284,12 @@
     "applName": "김○철",
     "deadId": "1655180",
     "deadName": "김석근"
+  },
+  {
+    "natDate": "2026-04-22",
+    "natNo": "잔디장-2-9-0367",
+    "applName": "허○희",
+    "deadId": "1655169",
+    "deadName": "박기운"
   }
 ]
