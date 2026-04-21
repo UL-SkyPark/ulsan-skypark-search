@@ -446,5 +446,61 @@
       "cremDate": 1776783600000,
       "cremSeq": 8
     }
+  },
+  {
+    "cremDate": "2026-04-22",
+    "cremSeq": 9,
+    "objt": "A001",
+    "burnDate": 1776783600000,
+    "burnNo": "07",
+    "burnChasu": "03",
+    "deadId": 1655169,
+    "thedead": {
+      "deadId": 1655169,
+      "deadName": "박기운",
+      "id": 1655169,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1776783600000,
+      "burnChasu": "03",
+      "burnNo": "07",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1776783600000,
+        "burnChasu": "03",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1776783600000,
+      "cremSeq": 9
+    }
   }
 ]
