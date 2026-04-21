@@ -69245,13 +69245,6 @@
   },
   {
     "natDate": "2026-04-21",
-    "natNo": null,
-    "applName": "김○수",
-    "deadId": "1655144",
-    "deadName": "오상권"
-  },
-  {
-    "natDate": "2026-04-21",
     "natNo": "잔디장-2-9-0361",
     "applName": "이○후",
     "deadId": "1655149",
@@ -69270,5 +69263,12 @@
     "applName": "이○우",
     "deadId": "1655146",
     "deadName": "이종원"
+  },
+  {
+    "natDate": "2026-04-21",
+    "natNo": "잔디장-2-9-0364",
+    "applName": "오○규",
+    "deadId": "1655144",
+    "deadName": "오상권"
   }
 ]
