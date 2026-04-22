@@ -57,6 +57,62 @@
   },
   {
     "cremDate": "2026-04-23",
+    "cremSeq": 10,
+    "objt": "A001",
+    "burnDate": 1776870000000,
+    "burnNo": "10",
+    "burnChasu": "03",
+    "deadId": 1655204,
+    "thedead": {
+      "deadId": 1655204,
+      "deadName": "조필련",
+      "id": 1655204,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1776870000000,
+      "burnChasu": "03",
+      "burnNo": "10",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1776870000000,
+        "burnChasu": "03",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1776870000000,
+      "cremSeq": 10
+    }
+  },
+  {
+    "cremDate": "2026-04-23",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1776870000000,
@@ -355,17 +411,17 @@
       "burnDate": 1776870000000,
       "burnChasu": "02",
       "burnNo": "08",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "08:23",
       "burnEndTime": null,
       "waitRoom": "208",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -467,17 +523,17 @@
       "burnDate": 1776870000000,
       "burnChasu": "02",
       "burnNo": "09",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
