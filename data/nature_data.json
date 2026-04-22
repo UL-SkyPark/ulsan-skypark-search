@@ -69273,6 +69273,13 @@
   },
   {
     "natDate": "2026-04-22",
+    "natNo": null,
+    "applName": "강○양",
+    "deadId": "1655200",
+    "deadName": "강원구"
+  },
+  {
+    "natDate": "2026-04-22",
     "natNo": "잔디장-2-9-0365",
     "applName": "나○우",
     "deadId": "1655191",
