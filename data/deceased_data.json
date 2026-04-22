@@ -211448,14 +211448,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655176",
-    "strDate": "2026-04-22",
-    "ensNo": null,
-    "deadName": "김용순",
-    "applName": "정○정",
-    "retDate": null
-  },
-  {
     "deadId": "1655194",
     "strDate": "2026-04-22",
     "ensNo": "1추모의집-62실-개인단-22175",
@@ -211469,6 +211461,14 @@
     "ensNo": "1추모의집-62실-개인단-22176",
     "deadName": "김미성",
     "applName": "김○리",
+    "retDate": null
+  },
+  {
+    "deadId": "1655176",
+    "strDate": "2026-04-22",
+    "ensNo": "1추모의집-62실-개인단-22177",
+    "deadName": "김용순",
+    "applName": "정○정",
     "retDate": null
   }
 ]
