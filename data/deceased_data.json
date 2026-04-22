@@ -211496,14 +211496,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655211",
-    "strDate": "2026-04-23",
-    "ensNo": null,
-    "deadName": "김정해",
-    "applName": "박○배",
-    "retDate": null
-  },
-  {
     "deadId": "1655172",
     "strDate": "2026-04-23",
     "ensNo": "1추모의집-46실-개인단-15238",
@@ -211525,6 +211517,14 @@
     "ensNo": "1추모의집-62실-개인단-22180",
     "deadName": "박근태",
     "applName": "박○훈",
+    "retDate": null
+  },
+  {
+    "deadId": "1655211",
+    "strDate": "2026-04-23",
+    "ensNo": "1추모의집-62실-개인단-22181",
+    "deadName": "김정해",
+    "applName": "박○배",
     "retDate": null
   }
 ]
