@@ -52965,7 +52965,7 @@
     "ensNo": "1추모의집-25실-개인단-08027",
     "deadName": "신승화",
     "applName": "신○각",
-    "retDate": null
+    "retDate": "2026-04-22"
   },
   {
     "deadId": "1459542",
@@ -211445,6 +211445,22 @@
     "ensNo": "1추모의집-62실-개인단-22174",
     "deadName": "김영목",
     "applName": "최○리",
+    "retDate": null
+  },
+  {
+    "deadId": "1510760",
+    "strDate": "2026-04-22",
+    "ensNo": "1추모의집-09실-부부단-01918",
+    "deadName": "신승화",
+    "applName": "신○각",
+    "retDate": null
+  },
+  {
+    "deadId": "1655183",
+    "strDate": "2026-04-22",
+    "ensNo": "1추모의집-09실-부부단-01918",
+    "deadName": "성경녀",
+    "applName": "신○각",
     "retDate": null
   },
   {
