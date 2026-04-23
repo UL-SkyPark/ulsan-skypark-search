@@ -729,6 +729,54 @@
   },
   {
     "cremDate": "2026-04-23",
+    "cremSeq": 21,
+    "objt": "A001",
+    "burnDate": 1776870000000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1655250,
+    "thedead": {
+      "deadId": 1655250,
+      "deadName": "공영숙",
+      "id": 1655250,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1776870000000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1776870000000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1776870000000,
+      "cremSeq": 21
+    }
+  },
+  {
+    "cremDate": "2026-04-23",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1776870000000,
