@@ -2750,6 +2750,11 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1655236",
+    "deadName": "유재화",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1655237",
     "deadName": "최희준",
     "dcGubun": "TCM1200001"
@@ -2758,5 +2763,10 @@
     "deadId": "1655246",
     "deadName": "유광자",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1655265",
+    "deadName": "이충희",
+    "dcGubun": "TCM1200002"
   }
 ]
