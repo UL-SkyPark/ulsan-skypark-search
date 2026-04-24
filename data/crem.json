@@ -446,5 +446,53 @@
       "cremDate": 1776956400000,
       "cremSeq": 8
     }
+  },
+  {
+    "cremDate": "2026-04-24",
+    "cremSeq": 9,
+    "objt": "A001",
+    "burnDate": 1776956400000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1655224,
+    "thedead": {
+      "deadId": 1655224,
+      "deadName": "박영선",
+      "id": 1655224,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1776956400000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1776956400000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1776956400000,
+      "cremSeq": 9
+    }
   }
 ]
