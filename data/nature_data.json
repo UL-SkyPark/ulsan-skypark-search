@@ -69364,13 +69364,6 @@
   },
   {
     "natDate": "2026-04-25",
-    "natNo": null,
-    "applName": "나○자",
-    "deadId": "1655258",
-    "deadName": "김정훈"
-  },
-  {
-    "natDate": "2026-04-25",
     "natNo": "잔디장-2-9-0378",
     "applName": "정○석",
     "deadId": "1655284",
@@ -69396,5 +69389,12 @@
     "applName": "한○욱",
     "deadId": "1655323",
     "deadName": "김예빈"
+  },
+  {
+    "natDate": "2026-04-25",
+    "natNo": "잔디장-2-9-0382",
+    "applName": "나○자",
+    "deadId": "1655258",
+    "deadName": "김정훈"
   }
 ]
