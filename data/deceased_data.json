@@ -211624,14 +211624,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655262",
-    "strDate": "2026-04-26",
-    "ensNo": null,
-    "deadName": "최호철",
-    "applName": "최○영",
-    "retDate": null
-  },
-  {
     "deadId": "1655331",
     "strDate": "2026-04-26",
     "ensNo": "1추모의집-13실-무연고-03412",
@@ -211645,6 +211637,14 @@
     "ensNo": "1추모의집-13실-무연고-03448",
     "deadName": "노태균",
     "applName": "노○래",
+    "retDate": null
+  },
+  {
+    "deadId": "1655262",
+    "strDate": "2026-04-26",
+    "ensNo": "1추모의집-62실-개인단-22188",
+    "deadName": "최호철",
+    "applName": "최○영",
     "retDate": null
   }
 ]
