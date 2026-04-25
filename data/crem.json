@@ -75,17 +75,17 @@
       "burnDate": 1777042800000,
       "burnChasu": "03",
       "burnNo": "10",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "09:41",
       "burnEndTime": "11:03",
       "waitRoom": "210",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -187,17 +187,17 @@
       "burnDate": 1777042800000,
       "burnChasu": "08",
       "burnNo": "02",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "10:31",
       "burnEndTime": "11:03",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
