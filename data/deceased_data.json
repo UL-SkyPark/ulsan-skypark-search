@@ -211626,9 +211626,17 @@
   {
     "deadId": "1655331",
     "strDate": "2026-04-26",
-    "ensNo": null,
+    "ensNo": "1추모의집-13실-무연고-03412",
     "deadName": "강칠성",
     "applName": "배○준",
+    "retDate": null
+  },
+  {
+    "deadId": "1655332",
+    "strDate": "2026-04-26",
+    "ensNo": "1추모의집-13실-무연고-03448",
+    "deadName": "노태균",
+    "applName": "노○래",
     "retDate": null
   }
 ]
