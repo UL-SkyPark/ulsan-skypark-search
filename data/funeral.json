@@ -2783,5 +2783,15 @@
     "deadId": "1655320",
     "deadName": "장병순",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1655331",
+    "deadName": "강칠성",
+    "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1655332",
+    "deadName": "노태균",
+    "dcGubun": "TCM1200099"
   }
 ]
