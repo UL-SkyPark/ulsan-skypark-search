@@ -691,17 +691,17 @@
       "burnDate": 1777215600000,
       "burnChasu": "05",
       "burnNo": "10",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "11:31",
       "burnEndTime": "12:58",
       "waitRoom": "210",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -949,6 +949,62 @@
     "id": {
       "cremDate": 1777215600000,
       "cremSeq": 24
+    }
+  },
+  {
+    "cremDate": "2026-04-27",
+    "cremSeq": 25,
+    "objt": "B001",
+    "burnDate": 1777215600000,
+    "burnNo": "03",
+    "burnChasu": "07",
+    "deadId": 1655325,
+    "thedead": {
+      "deadId": 1655325,
+      "deadName": "윤승열",
+      "id": 1655325,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1777215600000,
+      "burnChasu": "07",
+      "burnNo": "03",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1777215600000,
+        "burnChasu": "07",
+        "burnNo": "03"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1777215600000,
+      "cremSeq": 25
     }
   },
   {
