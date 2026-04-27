@@ -393,6 +393,54 @@
   },
   {
     "cremDate": "2026-04-27",
+    "cremSeq": 16,
+    "objt": "A001",
+    "burnDate": 1777215600000,
+    "burnNo": null,
+    "burnChasu": "05",
+    "deadId": 1655342,
+    "thedead": {
+      "deadId": 1655342,
+      "deadName": "이경미",
+      "id": 1655342,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1777215600000,
+      "burnChasu": "05",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1777215600000,
+        "burnChasu": "05",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1777215600000,
+      "cremSeq": 16
+    }
+  },
+  {
+    "cremDate": "2026-04-27",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1777215600000,
