@@ -168429,7 +168429,7 @@
     "ensNo": "1추모의집-56실-개인단-18636",
     "deadName": "강기화",
     "applName": "서○수",
-    "retDate": null
+    "retDate": "2026-04-27"
   },
   {
     "deadId": "1473974",
@@ -211653,6 +211653,14 @@
     "ensNo": "1추모의집-62실-개인단-22189",
     "deadName": "이석윤",
     "applName": "이○나",
+    "retDate": null
+  },
+  {
+    "deadId": "1655347",
+    "strDate": "2026-04-27",
+    "ensNo": "1추모의집-09실-부부단-01919",
+    "deadName": "서진학",
+    "applName": "서○수",
     "retDate": null
   },
   {
