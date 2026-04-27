@@ -897,6 +897,62 @@
   },
   {
     "cremDate": "2026-04-27",
+    "cremSeq": 24,
+    "objt": "A001",
+    "burnDate": 1777215600000,
+    "burnNo": "07",
+    "burnChasu": "06",
+    "deadId": 1655356,
+    "thedead": {
+      "deadId": 1655356,
+      "deadName": "김연순",
+      "id": 1655356,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1777215600000,
+      "burnChasu": "06",
+      "burnNo": "07",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1777215600000,
+        "burnChasu": "06",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1777215600000,
+      "cremSeq": 24
+    }
+  },
+  {
+    "cremDate": "2026-04-27",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1777215600000,
