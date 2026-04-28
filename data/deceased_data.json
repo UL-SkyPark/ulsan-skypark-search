@@ -211776,19 +211776,19 @@
     "retDate": null
   },
   {
-    "deadId": "1655406",
-    "strDate": "2026-04-29",
-    "ensNo": null,
-    "deadName": "김태순",
-    "applName": "한○국",
-    "retDate": null
-  },
-  {
     "deadId": "1655374",
     "strDate": "2026-04-29",
     "ensNo": "1추모의집-61실-개인단-21553",
     "deadName": "진현희",
     "applName": "류○규",
+    "retDate": null
+  },
+  {
+    "deadId": "1655406",
+    "strDate": "2026-04-29",
+    "ensNo": "1추모의집-63실-개인단-22200",
+    "deadName": "김태순",
+    "applName": "주○환",
     "retDate": null
   }
 ]
