@@ -69467,27 +69467,6 @@
   },
   {
     "natDate": "2026-04-28",
-    "natNo": null,
-    "applName": "박○수",
-    "deadId": "1655397",
-    "deadName": "박정길"
-  },
-  {
-    "natDate": "2026-04-28",
-    "natNo": null,
-    "applName": "박○수",
-    "deadId": "1655398",
-    "deadName": "정두연"
-  },
-  {
-    "natDate": "2026-04-28",
-    "natNo": null,
-    "applName": "박○수",
-    "deadId": "1655399",
-    "deadName": "김포동"
-  },
-  {
-    "natDate": "2026-04-28",
     "natNo": "잔디장-2-9-0388",
     "applName": "신○국",
     "deadId": "1655370",
@@ -69506,5 +69485,26 @@
     "applName": "손○화",
     "deadId": "1655348",
     "deadName": "배병섭"
+  },
+  {
+    "natDate": "2026-04-28",
+    "natNo": "잔디장-2-9-0391",
+    "applName": "박○수",
+    "deadId": "1655399",
+    "deadName": "김포동"
+  },
+  {
+    "natDate": "2026-04-28",
+    "natNo": "잔디장-2-9-0392",
+    "applName": "박○수",
+    "deadId": "1655397",
+    "deadName": "박정길"
+  },
+  {
+    "natDate": "2026-04-28",
+    "natNo": "잔디장-2-9-0393",
+    "applName": "박○수",
+    "deadId": "1655398",
+    "deadName": "정두연"
   }
 ]
