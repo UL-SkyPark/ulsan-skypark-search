@@ -747,17 +747,17 @@
       "burnDate": 1777302000000,
       "burnChasu": "08",
       "burnNo": "10",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "12:37",
-      "burnEndTime": null,
+      "burnEndTime": "13:24",
       "waitRoom": "210",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -803,17 +803,17 @@
       "burnDate": 1777302000000,
       "burnChasu": "07",
       "burnNo": "01",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "12:39",
       "burnEndTime": "13:16",
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -1121,6 +1121,102 @@
   },
   {
     "cremDate": "2026-04-28",
+    "cremSeq": 28,
+    "objt": "B001",
+    "burnDate": 1777302000000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1655397,
+    "thedead": {
+      "deadId": 1655397,
+      "deadName": "박정길",
+      "id": 1655397,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1777302000000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1777302000000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1777302000000,
+      "cremSeq": 28
+    }
+  },
+  {
+    "cremDate": "2026-04-28",
+    "cremSeq": 29,
+    "objt": "B001",
+    "burnDate": 1777302000000,
+    "burnNo": null,
+    "burnChasu": "08",
+    "deadId": 1655399,
+    "thedead": {
+      "deadId": 1655399,
+      "deadName": "김포동",
+      "id": 1655399,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1777302000000,
+      "burnChasu": "08",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1777302000000,
+        "burnChasu": "08",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "8회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1777302000000,
+      "cremSeq": 29
+    }
+  },
+  {
+    "cremDate": "2026-04-28",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1777302000000,
@@ -1173,6 +1269,54 @@
     "id": {
       "cremDate": 1777302000000,
       "cremSeq": 3
+    }
+  },
+  {
+    "cremDate": "2026-04-28",
+    "cremSeq": 30,
+    "objt": "B001",
+    "burnDate": 1777302000000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1655398,
+    "thedead": {
+      "deadId": 1655398,
+      "deadName": "정두연",
+      "id": 1655398,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1777302000000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1777302000000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1777302000000,
+      "cremSeq": 30
     }
   },
   {
