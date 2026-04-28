@@ -211776,14 +211776,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655378",
-    "strDate": "2026-04-29",
-    "ensNo": null,
-    "deadName": "최승기",
-    "applName": "최○구",
-    "retDate": null
-  },
-  {
     "deadId": "1655374",
     "strDate": "2026-04-29",
     "ensNo": "1추모의집-61실-개인단-21553",
@@ -211805,6 +211797,14 @@
     "ensNo": "1추모의집-63실-개인단-22201",
     "deadName": "JIN YUJIN",
     "applName": "신○룡",
+    "retDate": null
+  },
+  {
+    "deadId": "1655378",
+    "strDate": "2026-04-29",
+    "ensNo": "1추모의집-63실-개인단-22202",
+    "deadName": "최승기",
+    "applName": "최○구",
     "retDate": null
   }
 ]
