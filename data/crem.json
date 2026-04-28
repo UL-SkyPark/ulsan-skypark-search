@@ -284,7 +284,7 @@
     "cremSeq": 14,
     "objt": "A001",
     "burnDate": 1777302000000,
-    "burnNo": null,
+    "burnNo": "05",
     "burnChasu": "04",
     "deadId": 1655359,
     "thedead": {
@@ -298,16 +298,24 @@
     "hwaBrazier": {
       "burnDate": 1777302000000,
       "burnChasu": "04",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "05",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1777302000000,
         "burnChasu": "04",
-        "burnNo": null
+        "burnNo": "05"
       }
     },
     "objtCode": "A001",
@@ -325,6 +333,62 @@
     "id": {
       "cremDate": 1777302000000,
       "cremSeq": 14
+    }
+  },
+  {
+    "cremDate": "2026-04-28",
+    "cremSeq": 15,
+    "objt": "A001",
+    "burnDate": 1777302000000,
+    "burnNo": "10",
+    "burnChasu": "04",
+    "deadId": 1655360,
+    "thedead": {
+      "deadId": 1655360,
+      "deadName": "윤해식",
+      "id": 1655360,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1777302000000,
+      "burnChasu": "04",
+      "burnNo": "10",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1777302000000,
+        "burnChasu": "04",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1777302000000,
+      "cremSeq": 15
     }
   },
   {
@@ -627,17 +691,17 @@
       "burnDate": 1777302000000,
       "burnChasu": "02",
       "burnNo": "06",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "08:29",
-      "burnEndTime": null,
+      "burnEndTime": "09:51",
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -683,17 +747,17 @@
       "burnDate": 1777302000000,
       "burnChasu": "02",
       "burnNo": "02",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "08:35",
-      "burnEndTime": null,
+      "burnEndTime": "09:52",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
