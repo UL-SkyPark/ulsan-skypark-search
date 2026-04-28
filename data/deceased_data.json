@@ -211776,11 +211776,11 @@
     "retDate": null
   },
   {
-    "deadId": "1655396",
+    "deadId": "1655378",
     "strDate": "2026-04-29",
     "ensNo": null,
-    "deadName": "JIN YUJIN",
-    "applName": "신○룡",
+    "deadName": "최승기",
+    "applName": "최○구",
     "retDate": null
   },
   {
@@ -211797,6 +211797,14 @@
     "ensNo": "1추모의집-63실-개인단-22200",
     "deadName": "김태순",
     "applName": "주○환",
+    "retDate": null
+  },
+  {
+    "deadId": "1655396",
+    "strDate": "2026-04-29",
+    "ensNo": "1추모의집-63실-개인단-22201",
+    "deadName": "JIN YUJIN",
+    "applName": "신○룡",
     "retDate": null
   }
 ]
