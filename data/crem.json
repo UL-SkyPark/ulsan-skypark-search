@@ -243,17 +243,17 @@
       "burnDate": 1777388400000,
       "burnChasu": "03",
       "burnNo": "02",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "09:28",
       "burnEndTime": null,
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -299,17 +299,17 @@
       "burnDate": 1777388400000,
       "burnChasu": "04",
       "burnNo": "07",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "207",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -333,6 +333,150 @@
     "id": {
       "cremDate": 1777388400000,
       "cremSeq": 14
+    }
+  },
+  {
+    "cremDate": "2026-04-29",
+    "cremSeq": 16,
+    "objt": "A001",
+    "burnDate": 1777388400000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1655447,
+    "thedead": {
+      "deadId": 1655447,
+      "deadName": "박준범",
+      "id": 1655447,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1777388400000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1777388400000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1777388400000,
+      "cremSeq": 16
+    }
+  },
+  {
+    "cremDate": "2026-04-29",
+    "cremSeq": 17,
+    "objt": "A001",
+    "burnDate": 1777388400000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1655446,
+    "thedead": {
+      "deadId": 1655446,
+      "deadName": "최평치",
+      "id": 1655446,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1777388400000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1777388400000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1777388400000,
+      "cremSeq": 17
+    }
+  },
+  {
+    "cremDate": "2026-04-29",
+    "cremSeq": 18,
+    "objt": "A001",
+    "burnDate": 1777388400000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1655445,
+    "thedead": {
+      "deadId": 1655445,
+      "deadName": "김종복",
+      "id": 1655445,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1777388400000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1777388400000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1777388400000,
+      "cremSeq": 18
     }
   },
   {
