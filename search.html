@@ -122,7 +122,7 @@
 
     .tabs{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:repeat(4,minmax(0,1fr));
       padding:0 26px;
       margin-top:16px;
     }
@@ -133,8 +133,8 @@
       background:rgba(241,245,249,1);
       color:#334155;
       cursor:pointer;
-      padding:16px 10px;
-      font-size:18px;
+      padding:16px 8px;
+      font-size:17px;
       font-weight:900;
       position:relative;
       border-top-left-radius:12px;
@@ -460,7 +460,7 @@
       .header{ padding:20px 18px 12px; }
       .title{ font-size:26px; }
       .tabs{ padding:0 18px; }
-      .tab-btn{ font-size:15px; padding:14px 8px; }
+      .tab-btn{ font-size:13px; padding:13px 4px; }
       .tab-btn.active::after{ left:22%; right:22%; height:5px; bottom:7px; }
       .content{ padding:14px 18px 18px; background:rgba(255,255,255,0.90); }
       .search-box{ grid-template-columns:1fr; gap:10px; }
@@ -577,6 +577,7 @@
         <button type="button" class="tab-btn active" data-mode="all">전체</button>
         <button type="button" class="tab-btn" data-mode="memorial">추모의집</button>
         <button type="button" class="tab-btn" data-mode="nature">자연장지</button>
+        <button type="button" class="tab-btn" data-mode="scat">유택동산</button>
       </div>
     </div>
 
@@ -614,7 +615,7 @@
         <div class="info-label">고인명</div>
         <div class="info-value" id="modalName"></div>
 
-        <div class="divider"></div>
+        <div class="divider" id="dividerAfterLocation"></div>
 
         <div class="info-label" id="labelType" style="display:none;">시설명</div>
         <div class="info-value" id="modalType" style="display:none;"></div>
@@ -639,7 +640,8 @@
   <script>
     const SOURCES = {
       memorial: 'data/deceased_data.json',
-      nature:   'data/nature_data.json'
+      nature:   'data/nature_data.json',
+      scat:     'data/scat.json'
     };
 
     const MEM_FIELDS = {
@@ -655,13 +657,20 @@
       date:     "natDate"
     };
 
+    const SCAT_FIELDS = {
+      name: "deadName",
+      date: "scaDate"
+    };
+
     const MAX_RESULTS = 100;
 
     let currentMode = 'all';
     let excelDataMemorial = [];
     let excelDataNature = [];
+    let excelDataScat = [];
     let loadPromiseMemorial = null;
     let loadPromiseNature = null;
+    let loadPromiseScat = null;
     let lastFound = [];
 
     function escapeHtml(value){
@@ -693,7 +702,7 @@
       const m1 = (params.get("mode") || "").toLowerCase();
       const h = (location.hash || "").replace("#","").toLowerCase();
       const m = m1 || h;
-      if (["all","memorial","nature"].includes(m)) return m;
+      if (["all","memorial","nature","scat"].includes(m)) return m;
       return "all";
     }
 
@@ -744,6 +753,16 @@
       await loadPromiseNature;
     }
 
+    async function ensureScatLoaded(){
+      if (excelDataScat.length > 0) return;
+      if (!loadPromiseScat){
+        loadPromiseScat = fetchJson(SOURCES.scat)
+          .then(data => { excelDataScat = data || []; })
+          .finally(() => { loadPromiseScat = null; });
+      }
+      await loadPromiseScat;
+    }
+
     async function ensureDataForSearch(mode){
       if (mode === 'memorial'){
         await ensureMemorialLoaded();
@@ -753,8 +772,12 @@
         await ensureNatureLoaded();
         return;
       }
-      await Promise.all([ensureMemorialLoaded(), ensureNatureLoaded()]);
-      if (excelDataMemorial.length === 0 && excelDataNature.length === 0){
+      if (mode === 'scat'){
+        await ensureScatLoaded();
+        return;
+      }
+      await Promise.all([ensureMemorialLoaded(), ensureNatureLoaded(), ensureScatLoaded()]);
+      if (excelDataMemorial.length === 0 && excelDataNature.length === 0 && excelDataScat.length === 0){
         throw new Error('전체 데이터 로딩에 실패했습니다.');
       }
     }
@@ -787,13 +810,23 @@
     }
 
     function getHeaderLabels(mode){
+      if (mode === 'scat'){
+        return { name:"고인명", loc:"", date:"산골일자", showLocation:false };
+      }
       if (mode === 'nature'){
-        return { name:"고인명", loc:"안장번호", date:"안장일자" };
+        return { name:"고인명", loc:"안장번호", date:"안장일자", showLocation:true };
       }
       if (mode === 'memorial'){
-        return { name:"고인명", loc:"봉안번호", date:"안치일자" };
+        return { name:"고인명", loc:"봉안번호", date:"안치일자", showLocation:true };
       }
-      return { name:"고인명", loc:"위치번호", date:"안치일자" };
+      return { name:"고인명", loc:"구분/위치", date:"일자", showLocation:true };
+    }
+
+    function getModeLabel(mode){
+      if (mode === 'memorial') return '추모의집';
+      if (mode === 'nature') return '자연장지';
+      if (mode === 'scat') return '유택동산';
+      return '전체';
     }
 
     function getMemorialTypeLabelFromLoc(rawLoc){
@@ -814,6 +847,8 @@
     }
 
     function openModal(record){
+      document.getElementById("detailModalTitle").textContent =
+        record.type === 'scat' ? "울산하늘공원 유택동산 안내" : "울산하늘공원 고인 위치 안내";
       document.getElementById("modalName").textContent = record.name || "";
       document.getElementById("modalLoc").textContent = record.location || "";
       document.getElementById("modalDate").textContent = record.date || "";
@@ -826,6 +861,11 @@
       document.getElementById("modalType").style.display = showType ? "block" : "none";
       document.getElementById("dividerAfterType").style.display = showType ? "block" : "none";
       if (showType) document.getElementById("modalType").textContent = record.typeLabel;
+
+      const showLocation = record.type !== 'scat';
+      document.getElementById("labelLoc").style.display = showLocation ? "block" : "none";
+      document.getElementById("modalLoc").style.display = showLocation ? "block" : "none";
+      document.getElementById("dividerAfterLocation").style.display = showLocation ? "block" : "none";
 
       document.getElementById("detailModal").showModal();
     }
@@ -894,9 +934,29 @@
         }));
     }
 
+    function searchScat(keyword){
+      const k = normalizeForSearch(keyword);
+      return excelDataScat
+        .filter(row => {
+          const rawName = row[SCAT_FIELDS.name];
+          if (!rawName) return false;
+          return normalizeForSearch(rawName).includes(k);
+        })
+        .map(row => ({
+          type: 'scat',
+          typeLabel: '',
+          name: row[SCAT_FIELDS.name] || "",
+          location: "유택동산",
+          date: row[SCAT_FIELDS.date] || "",
+          locationLabel: "",
+          dateLabel: "산골일자"
+        }));
+    }
+
     function renderResults(records, keyword, isLimited){
       const resultDiv = document.getElementById("result");
       const h = getHeaderLabels(currentMode);
+      const showLocation = h.showLocation !== false;
 
       if (!records || records.length === 0){
         resultDiv.innerHTML = `<div class="no-result">'${escapeHtml(keyword)}'에 대한 검색 결과가 없습니다.</div>`;
@@ -904,10 +964,7 @@
       }
 
       const titleLeft =
-        `${currentMode === 'all'
-          ? '전체'
-          : (currentMode === 'memorial' ? '추모의집' : '자연장지')
-        } 검색 결과 ${records.length}건`;
+        `${getModeLabel(currentMode)} 검색 결과 ${records.length}건`;
 
       const titleRight = isLimited
         ? `검색 결과가 많아 상위 ${MAX_RESULTS}건만 표시됩니다.`
@@ -923,7 +980,7 @@
             <thead>
               <tr>
                 <th>${h.name}</th>
-                <th>${h.loc}</th>
+                ${showLocation ? `<th>${h.loc}</th>` : ``}
                 <th>${h.date}</th>
               </tr>
             </thead>
@@ -934,7 +991,7 @@
         html += `
           <tr data-idx="${idx}">
             <td>${escapeHtml(rec.name)}</td>
-            <td class="col-loc">${escapeHtml(rec.location)}</td>
+            ${showLocation ? `<td class="col-loc">${escapeHtml(rec.location)}</td>` : ``}
             <td>${escapeHtml(rec.date)}</td>
           </tr>
         `;
@@ -973,9 +1030,11 @@
       let found = [];
       if (currentMode === 'memorial') found = searchMemorial(keyword);
       else if (currentMode === 'nature') found = searchNature(keyword);
+      else if (currentMode === 'scat') found = searchScat(keyword);
       else{
         if (excelDataMemorial.length > 0) found.push(...searchMemorial(keyword));
         if (excelDataNature.length > 0) found.push(...searchNature(keyword));
+        if (excelDataScat.length > 0) found.push(...searchScat(keyword));
       }
 
       const isLimited = found.length > MAX_RESULTS;
