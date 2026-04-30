@@ -217,6 +217,54 @@
   },
   {
     "cremDate": "2026-04-30",
+    "cremSeq": 13,
+    "objt": "A001",
+    "burnDate": 1777474800000,
+    "burnNo": null,
+    "burnChasu": "04",
+    "deadId": 1655455,
+    "thedead": {
+      "deadId": 1655455,
+      "deadName": "최병석",
+      "id": 1655455,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1777474800000,
+      "burnChasu": "04",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1777474800000,
+        "burnChasu": "04",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1777474800000,
+      "cremSeq": 13
+    }
+  },
+  {
+    "cremDate": "2026-04-30",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1777474800000,
