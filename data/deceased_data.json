@@ -211882,7 +211882,7 @@
   {
     "deadId": "1655451",
     "strDate": "2026-05-01",
-    "ensNo": "1추모의집-13실-개인단-03601",
+    "ensNo": "1추모의집-13실-무연고-03601",
     "deadName": "유정근",
     "applName": "원○석",
     "retDate": null
@@ -211901,6 +211901,14 @@
     "ensNo": "1추모의집-63실-개인단-22208",
     "deadName": "안종복",
     "applName": "안○수",
+    "retDate": null
+  },
+  {
+    "deadId": "1655465",
+    "strDate": "2026-05-01",
+    "ensNo": "1추모의집-63실-개인단-22209",
+    "deadName": "변양자",
+    "applName": "임○원",
     "retDate": null
   }
 ]
