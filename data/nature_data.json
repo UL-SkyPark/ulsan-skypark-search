@@ -69564,13 +69564,6 @@
   },
   {
     "natDate": "2026-05-01",
-    "natNo": null,
-    "applName": "홍○일",
-    "deadId": "1655472",
-    "deadName": "김순희"
-  },
-  {
-    "natDate": "2026-05-01",
     "natNo": "수목장-2-2-0003",
     "applName": "임○채",
     "deadId": "1655464",
@@ -69602,5 +69595,12 @@
     "applName": "이○훈",
     "deadId": "1655450",
     "deadName": "심덕자"
+  },
+  {
+    "natDate": "2026-05-01",
+    "natNo": "잔디장-2-9-0401",
+    "applName": "홍○일",
+    "deadId": "1655472",
+    "deadName": "김순희"
   }
 ]
