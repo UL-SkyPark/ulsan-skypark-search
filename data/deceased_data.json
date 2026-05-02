@@ -211936,14 +211936,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655511",
-    "strDate": "2026-05-03",
-    "ensNo": null,
-    "deadName": "송춘재",
-    "applName": "안○성",
-    "retDate": null
-  },
-  {
     "deadId": "1655486",
     "strDate": "2026-05-03",
     "ensNo": "1추모의집-62실-개인단-21838",
@@ -211965,6 +211957,14 @@
     "ensNo": "1추모의집-63실-개인단-22214",
     "deadName": "김신쾌",
     "applName": "박○주",
+    "retDate": null
+  },
+  {
+    "deadId": "1655511",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-63실-개인단-22215",
+    "deadName": "송춘재",
+    "applName": "안○성",
     "retDate": null
   }
 ]
