@@ -393,6 +393,54 @@
   },
   {
     "cremDate": "2026-05-02",
+    "cremSeq": 16,
+    "objt": "A001",
+    "burnDate": 1777647600000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1655543,
+    "thedead": {
+      "deadId": 1655543,
+      "deadName": "송영곤",
+      "id": 1655543,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1777647600000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1777647600000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1777647600000,
+      "cremSeq": 16
+    }
+  },
+  {
+    "cremDate": "2026-05-02",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1777647600000,
