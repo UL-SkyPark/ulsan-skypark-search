@@ -2890,8 +2890,18 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1655535",
+    "deadName": "이남이",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1655536",
     "deadName": "조옥선",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1655543",
+    "deadName": "송영곤",
+    "dcGubun": "TCM1200002"
   }
 ]
