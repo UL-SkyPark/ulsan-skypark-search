@@ -29269,7 +29269,7 @@
     "ensNo": "1추모의집-19실-개인단-05659",
     "deadName": "우영복",
     "applName": "우○환",
-    "retDate": null
+    "retDate": "2026-05-03"
   },
   {
     "deadId": "1456579",
@@ -211936,9 +211936,17 @@
     "retDate": null
   },
   {
+    "deadId": "1456578",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-09실-부부단-01920",
+    "deadName": "우영복",
+    "applName": "우○환",
+    "retDate": null
+  },
+  {
     "deadId": "1655514",
     "strDate": "2026-05-03",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-01920",
     "deadName": "차옥자",
     "applName": "우○환",
     "retDate": null
