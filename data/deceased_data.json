@@ -29269,7 +29269,7 @@
     "ensNo": "1추모의집-19실-개인단-05659",
     "deadName": "우영복",
     "applName": "우○환",
-    "retDate": null
+    "retDate": "2026-05-03"
   },
   {
     "deadId": "1456579",
@@ -118117,7 +118117,7 @@
     "ensNo": "1추모의집-10실-개인단-02401",
     "deadName": "천평길",
     "applName": "천○화",
-    "retDate": null
+    "retDate": "2026-05-03"
   },
   {
     "deadId": "1467689",
@@ -207133,7 +207133,7 @@
     "ensNo": "1추모의집-62실-개인단-21838",
     "deadName": "고형규",
     "applName": "고○범",
-    "retDate": null
+    "retDate": "2026-05-01"
   },
   {
     "deadId": "1652417",
@@ -209908,7 +209908,7 @@
     "strDate": "2026-03-19",
     "ensNo": "1추모의집-62실-개인단-22049",
     "deadName": "박상재",
-    "applName": "박○우",
+    "applName": "이○미",
     "retDate": null
   },
   {
@@ -211213,7 +211213,7 @@
     "ensNo": "1추모의집-62실-개인단-22154",
     "deadName": "김문자",
     "applName": "천○화",
-    "retDate": null
+    "retDate": "2026-05-03"
   },
   {
     "deadId": "1654927",
@@ -211845,6 +211845,174 @@
     "ensNo": "1추모의집-63실-개인단-22203",
     "deadName": "강대인",
     "applName": "강○중",
+    "retDate": null
+  },
+  {
+    "deadId": "1655448",
+    "strDate": "2026-04-30",
+    "ensNo": "1추모의집-12실-개인단-03131",
+    "deadName": "방혜영",
+    "applName": "방○영",
+    "retDate": null
+  },
+  {
+    "deadId": "1655416",
+    "strDate": "2026-04-30",
+    "ensNo": "1추모의집-63실-개인단-22204",
+    "deadName": "최해경",
+    "applName": "최○문",
+    "retDate": null
+  },
+  {
+    "deadId": "1655432",
+    "strDate": "2026-04-30",
+    "ensNo": "1추모의집-63실-개인단-22205",
+    "deadName": "오미란",
+    "applName": "이○환",
+    "retDate": "2026-05-01"
+  },
+  {
+    "deadId": "1655426",
+    "strDate": "2026-04-30",
+    "ensNo": "1추모의집-63실-개인단-22206",
+    "deadName": "허영자",
+    "applName": "차○환",
+    "retDate": null
+  },
+  {
+    "deadId": "1655451",
+    "strDate": "2026-05-01",
+    "ensNo": "1추모의집-13실-무연고-03601",
+    "deadName": "유정근",
+    "applName": "원○석",
+    "retDate": null
+  },
+  {
+    "deadId": "1655485",
+    "strDate": "2026-05-01",
+    "ensNo": "1추모의집-63실-개인단-22207",
+    "deadName": "김옥수",
+    "applName": "김○이",
+    "retDate": null
+  },
+  {
+    "deadId": "1655462",
+    "strDate": "2026-05-01",
+    "ensNo": "1추모의집-63실-개인단-22208",
+    "deadName": "안종복",
+    "applName": "안○수",
+    "retDate": null
+  },
+  {
+    "deadId": "1655465",
+    "strDate": "2026-05-01",
+    "ensNo": "1추모의집-63실-개인단-22209",
+    "deadName": "변양자",
+    "applName": "임○원",
+    "retDate": null
+  },
+  {
+    "deadId": "1655491",
+    "strDate": "2026-05-01",
+    "ensNo": "1추모의집-63실-개인단-22210",
+    "deadName": "김인식",
+    "applName": "김○식",
+    "retDate": null
+  },
+  {
+    "deadId": "1655483",
+    "strDate": "2026-05-02",
+    "ensNo": "1추모의집-63실-개인단-22211",
+    "deadName": "윤기철",
+    "applName": "윤○호",
+    "retDate": null
+  },
+  {
+    "deadId": "1655501",
+    "strDate": "2026-05-02",
+    "ensNo": "1추모의집-63실-개인단-22212",
+    "deadName": "박태자",
+    "applName": "공○성",
+    "retDate": null
+  },
+  {
+    "deadId": "1456578",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-09실-부부단-01920",
+    "deadName": "우영복",
+    "applName": "우○환",
+    "retDate": null
+  },
+  {
+    "deadId": "1655514",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-09실-부부단-01920",
+    "deadName": "차옥자",
+    "applName": "우○환",
+    "retDate": null
+  },
+  {
+    "deadId": "1541655",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-09실-부부단-01921",
+    "deadName": "천평길",
+    "applName": "천○화",
+    "retDate": null
+  },
+  {
+    "deadId": "1654922",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-09실-부부단-01921",
+    "deadName": "김문자",
+    "applName": "천○화",
+    "retDate": null
+  },
+  {
+    "deadId": "1655486",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-62실-개인단-21838",
+    "deadName": "윤향식",
+    "applName": "윤○호",
+    "retDate": null
+  },
+  {
+    "deadId": "1655520",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-63실-개인단-22213",
+    "deadName": "윤진건",
+    "applName": "윤○욱",
+    "retDate": null
+  },
+  {
+    "deadId": "1655526",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-63실-개인단-22214",
+    "deadName": "김신쾌",
+    "applName": "박○주",
+    "retDate": null
+  },
+  {
+    "deadId": "1655511",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-63실-개인단-22215",
+    "deadName": "송춘재",
+    "applName": "안○성",
+    "retDate": null
+  },
+  {
+    "deadId": "1655510",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-63실-개인단-22216",
+    "deadName": "장태경",
+    "applName": "장○라",
+    "retDate": null
+  },
+  {
+    "deadId": "1655574",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-63실-개인단-22217",
+    "deadName": "류석환",
+    "applName": "류○정",
     "retDate": null
   }
 ]
