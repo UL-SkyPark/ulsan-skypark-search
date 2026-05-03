@@ -212016,19 +212016,19 @@
     "retDate": null
   },
   {
-    "deadId": "1655558",
-    "strDate": "2026-05-04",
-    "ensNo": null,
-    "deadName": "이수형",
-    "applName": "이○만",
-    "retDate": null
-  },
-  {
     "deadId": "1655559",
     "strDate": "2026-05-04",
     "ensNo": "1추모의집-63실-개인단-22218",
     "deadName": "김두기",
     "applName": "김○리",
+    "retDate": null
+  },
+  {
+    "deadId": "1655558",
+    "strDate": "2026-05-04",
+    "ensNo": "1추모의집-63실-개인단-22219",
+    "deadName": "이수형",
+    "applName": "이○만",
     "retDate": null
   }
 ]
