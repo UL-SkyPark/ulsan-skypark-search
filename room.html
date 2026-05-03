@@ -572,9 +572,9 @@
 
   <div class="panel sticky" id="topPanel">
     <div class="panel-top">
-      <div id="nextWrap" class="next-wrap" aria-label="다음 가능 위치">
+      <div id="nextWrap" class="next-wrap" aria-label="다음 안장 위치">
         <div class="next-head">
-          <span>다음 가능 위치</span>
+          <span>다음 안장 위치</span>
         </div>
         <div class="asof-inline" id="asofInline">0000년 00월 00일 00시00분 기준</div>
 
@@ -787,7 +787,7 @@
         showNext
           ? `<span class="legend-item">
                <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--next-red);border-radius:8px;"></span>
-               <b>다음 가능 위치</b>
+               <b>다음 안장 위치</b>
              </span>`
           : ``
       }
@@ -1018,7 +1018,7 @@
 
     $("nextPersonalText").textContent = nextPersonal
       ? `${nextPersonal.room} ${nextPersonal.no} (${danOfNo(ROOM_CFG[nextPersonal.room], nextPersonal.no)}단)`
-      : "없음";
+      : "-";
 
     updateAsOfUI();
     requestAnimationFrame(updateScrollerHeight);
