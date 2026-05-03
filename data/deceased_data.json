@@ -211213,7 +211213,7 @@
     "ensNo": "1추모의집-62실-개인단-22154",
     "deadName": "김문자",
     "applName": "천○화",
-    "retDate": null
+    "retDate": "2026-05-03"
   },
   {
     "deadId": "1654927",
@@ -211949,6 +211949,22 @@
     "ensNo": "1추모의집-09실-부부단-01920",
     "deadName": "차옥자",
     "applName": "우○환",
+    "retDate": null
+  },
+  {
+    "deadId": "1541655",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-09실-부부단-01921",
+    "deadName": "천평길",
+    "applName": "천○화",
+    "retDate": null
+  },
+  {
+    "deadId": "1654922",
+    "strDate": "2026-05-03",
+    "ensNo": "1추모의집-09실-부부단-01921",
+    "deadName": "김문자",
+    "applName": "천○화",
     "retDate": null
   },
   {
