@@ -119589,7 +119589,7 @@
     "ensNo": "1추모의집-42실-개인단-14129",
     "deadName": "김옥란",
     "applName": "박○석",
-    "retDate": null
+    "retDate": "2026-05-04"
   },
   {
     "deadId": "1467870",
@@ -212013,6 +212013,14 @@
     "ensNo": "1추모의집-63실-개인단-22217",
     "deadName": "류석환",
     "applName": "류○정",
+    "retDate": null
+  },
+  {
+    "deadId": "1655555",
+    "strDate": "2026-05-04",
+    "ensNo": null,
+    "deadName": "박성태",
+    "applName": "박○석",
     "retDate": null
   },
   {
