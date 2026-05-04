@@ -212016,14 +212016,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655555",
-    "strDate": "2026-05-04",
-    "ensNo": null,
-    "deadName": "박성태",
-    "applName": "박○석",
-    "retDate": null
-  },
-  {
     "deadId": "1457046",
     "strDate": "2026-05-04",
     "ensNo": "1추모의집-09실-부부단-01922",
@@ -212037,6 +212029,22 @@
     "ensNo": "1추모의집-09실-부부단-01922",
     "deadName": "박종자",
     "applName": "안○훈",
+    "retDate": null
+  },
+  {
+    "deadId": "1542254",
+    "strDate": "2026-05-04",
+    "ensNo": "1추모의집-09실-부부단-01923",
+    "deadName": "김옥란",
+    "applName": "박○석",
+    "retDate": null
+  },
+  {
+    "deadId": "1655555",
+    "strDate": "2026-05-04",
+    "ensNo": "1추모의집-09실-부부단-01923",
+    "deadName": "박성태",
+    "applName": "박○석",
     "retDate": null
   },
   {
@@ -212077,6 +212085,14 @@
     "ensNo": "1추모의집-63실-개인단-22222",
     "deadName": "박현아",
     "applName": "박○열",
+    "retDate": null
+  },
+  {
+    "deadId": "1655552",
+    "strDate": "2026-05-04",
+    "ensNo": "1추모의집-63실-개인단-22223",
+    "deadName": "이승호",
+    "applName": "이○겸",
     "retDate": null
   }
 ]
