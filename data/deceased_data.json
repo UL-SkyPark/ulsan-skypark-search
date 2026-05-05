@@ -212104,9 +212104,17 @@
     "retDate": null
   },
   {
+    "deadId": "1655511",
+    "strDate": "2026-05-05",
+    "ensNo": "1추모의집-09실-부부단-01924",
+    "deadName": "송춘재",
+    "applName": "안○성",
+    "retDate": null
+  },
+  {
     "deadId": "1655602",
     "strDate": "2026-05-05",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-01924",
     "deadName": "안재동",
     "applName": "안○성",
     "retDate": null
