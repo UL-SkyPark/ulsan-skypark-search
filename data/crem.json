@@ -222,5 +222,117 @@
       "cremDate": 1777993200000,
       "cremSeq": 4
     }
+  },
+  {
+    "cremDate": "2026-05-06",
+    "cremSeq": 5,
+    "objt": "A001",
+    "burnDate": 1777993200000,
+    "burnNo": "07",
+    "burnChasu": "02",
+    "deadId": 1655603,
+    "thedead": {
+      "deadId": 1655603,
+      "deadName": "김치규",
+      "id": 1655603,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1777993200000,
+      "burnChasu": "02",
+      "burnNo": "07",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1777993200000,
+        "burnChasu": "02",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1777993200000,
+      "cremSeq": 5
+    }
+  },
+  {
+    "cremDate": "2026-05-06",
+    "cremSeq": 6,
+    "objt": "A001",
+    "burnDate": 1777993200000,
+    "burnNo": "03",
+    "burnChasu": "02",
+    "deadId": 1655661,
+    "thedead": {
+      "deadId": 1655661,
+      "deadName": "김장호",
+      "id": 1655661,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1777993200000,
+      "burnChasu": "02",
+      "burnNo": "03",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1777993200000,
+        "burnChasu": "02",
+        "burnNo": "03"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1777993200000,
+      "cremSeq": 6
+    }
   }
 ]
