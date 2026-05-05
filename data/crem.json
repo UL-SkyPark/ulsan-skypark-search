@@ -131,17 +131,17 @@
       "burnDate": 1777906800000,
       "burnChasu": "02",
       "burnNo": "02",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "08:19",
       "burnEndTime": "09:41",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -411,17 +411,17 @@
       "burnDate": 1777906800000,
       "burnChasu": "03",
       "burnNo": "09",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "09:46",
       "burnEndTime": null,
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -445,6 +445,62 @@
     "id": {
       "cremDate": 1777906800000,
       "cremSeq": 8
+    }
+  },
+  {
+    "cremDate": "2026-05-05",
+    "cremSeq": 9,
+    "objt": "A001",
+    "burnDate": 1777906800000,
+    "burnNo": "05",
+    "burnChasu": "03",
+    "deadId": 1655608,
+    "thedead": {
+      "deadId": 1655608,
+      "deadName": "박민지",
+      "id": 1655608,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1777906800000,
+      "burnChasu": "03",
+      "burnNo": "05",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1777906800000,
+        "burnChasu": "03",
+        "burnNo": "05"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1777906800000,
+      "cremSeq": 9
     }
   }
 ]
