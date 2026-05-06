@@ -299,17 +299,17 @@
       "burnDate": 1777993200000,
       "burnChasu": "02",
       "burnNo": "03",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -333,6 +333,118 @@
     "id": {
       "cremDate": 1777993200000,
       "cremSeq": 6
+    }
+  },
+  {
+    "cremDate": "2026-05-06",
+    "cremSeq": 7,
+    "objt": "A001",
+    "burnDate": 1777993200000,
+    "burnNo": "08",
+    "burnChasu": "03",
+    "deadId": 1655646,
+    "thedead": {
+      "deadId": 1655646,
+      "deadName": "문주한",
+      "id": 1655646,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1777993200000,
+      "burnChasu": "03",
+      "burnNo": "08",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "208",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1777993200000,
+        "burnChasu": "03",
+        "burnNo": "08"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1777993200000,
+      "cremSeq": 7
+    }
+  },
+  {
+    "cremDate": "2026-05-06",
+    "cremSeq": 8,
+    "objt": "A001",
+    "burnDate": 1777993200000,
+    "burnNo": "04",
+    "burnChasu": "03",
+    "deadId": 1655618,
+    "thedead": {
+      "deadId": 1655618,
+      "deadName": "최길자",
+      "id": 1655618,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1777993200000,
+      "burnChasu": "03",
+      "burnNo": "04",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "204",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1777993200000,
+        "burnChasu": "03",
+        "burnNo": "04"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1777993200000,
+      "cremSeq": 8
     }
   }
 ]
