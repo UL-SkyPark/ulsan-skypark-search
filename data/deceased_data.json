@@ -212176,14 +212176,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655643",
-    "strDate": "2026-05-07",
-    "ensNo": null,
-    "deadName": "김월용",
-    "applName": "김○우",
-    "retDate": null
-  },
-  {
     "deadId": "1655658",
     "strDate": "2026-05-07",
     "ensNo": "1추모의집-10실-개인단-02401",
@@ -212213,6 +212205,14 @@
     "ensNo": "1추모의집-63실-개인단-22232",
     "deadName": "이호영",
     "applName": "신○수",
+    "retDate": null
+  },
+  {
+    "deadId": "1655643",
+    "strDate": "2026-05-07",
+    "ensNo": "1추모의집-63실-개인단-22233",
+    "deadName": "김월용",
+    "applName": "김○우",
     "retDate": null
   }
 ]
