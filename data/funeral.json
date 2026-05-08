@@ -2990,6 +2990,11 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1655674",
+    "deadName": "김정희",
+    "dcGubun": "TCM1200007"
+  },
+  {
     "deadId": "1655706",
     "deadName": "박순이",
     "dcGubun": "TCM1200001"
@@ -3010,8 +3015,18 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1655724",
+    "deadName": "김유엘",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1655736",
     "deadName": "강용갑",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1655742",
+    "deadName": "김영진",
     "dcGubun": "TCM1200002"
   }
 ]
