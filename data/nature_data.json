@@ -69852,13 +69852,6 @@
   },
   {
     "natDate": "2026-05-09",
-    "natNo": null,
-    "applName": "김○만",
-    "deadId": "1655735",
-    "deadName": "오일심"
-  },
-  {
-    "natDate": "2026-05-09",
     "natNo": "잔디장-2-8-0115",
     "applName": "한○관",
     "deadId": [
@@ -69883,5 +69876,12 @@
     "applName": "윤○민",
     "deadId": "1655746",
     "deadName": "윤희업"
+  },
+  {
+    "natDate": "2026-05-09",
+    "natNo": "잔디장-2-9-0428",
+    "applName": "김○만",
+    "deadId": "1655735",
+    "deadName": "오일심"
   }
 ]
