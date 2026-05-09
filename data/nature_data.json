@@ -69852,6 +69852,17 @@
   },
   {
     "natDate": "2026-05-09",
+    "natNo": null,
+    "applName": "한○관",
+    "deadId": [
+      "1655718"
+    ],
+    "deadName": [
+      "김서대"
+    ]
+  },
+  {
+    "natDate": "2026-05-09",
     "natNo": "잔디장-2-9-0426",
     "applName": "이○익",
     "deadId": "1655700",
