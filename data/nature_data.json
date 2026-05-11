@@ -69942,13 +69942,6 @@
   },
   {
     "natDate": "2026-05-12",
-    "natNo": null,
-    "applName": "이○우",
-    "deadId": "1655795",
-    "deadName": "한명숙"
-  },
-  {
-    "natDate": "2026-05-12",
     "natNo": "잔디장-2-9-0437",
     "applName": "한○희",
     "deadId": "1655831",
@@ -69960,5 +69953,12 @@
     "applName": "안○준",
     "deadId": "1655796",
     "deadName": "강정자"
+  },
+  {
+    "natDate": "2026-05-12",
+    "natNo": "잔디장-2-9-0439",
+    "applName": "이○우",
+    "deadId": "1655795",
+    "deadName": "한명숙"
   }
 ]
