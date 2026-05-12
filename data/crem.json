@@ -393,6 +393,54 @@
   },
   {
     "cremDate": "2026-05-12",
+    "cremSeq": 16,
+    "objt": "A001",
+    "burnDate": 1778511600000,
+    "burnNo": null,
+    "burnChasu": "05",
+    "deadId": 1655841,
+    "thedead": {
+      "deadId": 1655841,
+      "deadName": "이철우",
+      "id": 1655841,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1778511600000,
+      "burnChasu": "05",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1778511600000,
+        "burnChasu": "05",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1778511600000,
+      "cremSeq": 16
+    }
+  },
+  {
+    "cremDate": "2026-05-12",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1778511600000,
