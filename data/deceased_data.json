@@ -212448,14 +212448,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655834",
-    "strDate": "2026-05-13",
-    "ensNo": null,
-    "deadName": "김순례",
-    "applName": "우○준",
-    "retDate": null
-  },
-  {
     "deadId": "1655852",
     "strDate": "2026-05-13",
     "ensNo": "1추모의집-14실-무연고-03646",
@@ -212477,6 +212469,14 @@
     "ensNo": "1추모의집-63실-개인단-22256",
     "deadName": "김교덕",
     "applName": "김○인",
+    "retDate": null
+  },
+  {
+    "deadId": "1655834",
+    "strDate": "2026-05-13",
+    "ensNo": "1추모의집-63실-개인단-22257",
+    "deadName": "김순례",
+    "applName": "우○준",
     "retDate": null
   }
 ]
