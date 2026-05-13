@@ -334,5 +334,53 @@
       "cremDate": 1778684400000,
       "cremSeq": 6
     }
+  },
+  {
+    "cremDate": "2026-05-14",
+    "cremSeq": 7,
+    "objt": "A001",
+    "burnDate": 1778684400000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1655883,
+    "thedead": {
+      "deadId": 1655883,
+      "deadName": "이영철",
+      "id": 1655883,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1778684400000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1778684400000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1778684400000,
+      "cremSeq": 7
+    }
   }
 ]
