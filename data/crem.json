@@ -222,5 +222,53 @@
       "cremDate": 1778684400000,
       "cremSeq": 4
     }
+  },
+  {
+    "cremDate": "2026-05-14",
+    "cremSeq": 5,
+    "objt": "A001",
+    "burnDate": 1778684400000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1655863,
+    "thedead": {
+      "deadId": 1655863,
+      "deadName": "유덕순",
+      "id": 1655863,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1778684400000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1778684400000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1778684400000,
+      "cremSeq": 5
+    }
   }
 ]
