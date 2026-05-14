@@ -212512,22 +212512,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655894",
-    "strDate": "2026-05-14",
-    "ensNo": null,
-    "deadName": "이태우",
-    "applName": "이○열",
-    "retDate": null
-  },
-  {
-    "deadId": "1655896",
-    "strDate": "2026-05-14",
-    "ensNo": null,
-    "deadName": "이음전",
-    "applName": "허○학",
-    "retDate": null
-  },
-  {
     "deadId": "1655885",
     "strDate": "2026-05-14",
     "ensNo": "1추모의집-09실-부부단-01848",
@@ -212581,6 +212565,22 @@
     "ensNo": "1추모의집-63실-개인단-22265",
     "deadName": "이상하",
     "applName": "이○희",
+    "retDate": null
+  },
+  {
+    "deadId": "1655896",
+    "strDate": "2026-05-14",
+    "ensNo": "1추모의집-63실-개인단-22266",
+    "deadName": "이음전",
+    "applName": "허○학",
+    "retDate": null
+  },
+  {
+    "deadId": "1655894",
+    "strDate": "2026-05-14",
+    "ensNo": "1추모의집-63실-개인단-22267",
+    "deadName": "이태우",
+    "applName": "이○열",
     "retDate": null
   }
 ]
