@@ -212512,14 +212512,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655862",
-    "strDate": "2026-05-14",
-    "ensNo": null,
-    "deadName": "배교훈",
-    "applName": "배○모",
-    "retDate": null
-  },
-  {
     "deadId": "1655823",
     "strDate": "2026-05-14",
     "ensNo": "1추모의집-22실-개인단-06729",
@@ -212541,6 +212533,14 @@
     "ensNo": "1추모의집-63실-개인단-22263",
     "deadName": "김미경",
     "applName": "김○헌",
+    "retDate": null
+  },
+  {
+    "deadId": "1655862",
+    "strDate": "2026-05-14",
+    "ensNo": "1추모의집-63실-개인단-22264",
+    "deadName": "배교훈",
+    "applName": "배○모",
     "retDate": null
   }
 ]
