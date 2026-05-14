@@ -3105,8 +3105,18 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1655914",
+    "deadName": "김상근",
+    "dcGubun": "TCM1200003"
+  },
+  {
     "deadId": "1655918",
     "deadName": "차외선",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1655950",
+    "deadName": "송정애",
     "dcGubun": "TCM1200002"
   }
 ]
