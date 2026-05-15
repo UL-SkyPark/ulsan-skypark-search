@@ -337,6 +337,54 @@
   },
   {
     "cremDate": "2026-05-15",
+    "cremSeq": 15,
+    "objt": "B001",
+    "burnDate": 1778770800000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1655295,
+    "thedead": {
+      "deadId": 1655295,
+      "deadName": "김아지",
+      "id": 1655295,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1778770800000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1778770800000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1778770800000,
+      "cremSeq": 15
+    }
+  },
+  {
+    "cremDate": "2026-05-15",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1778770800000,
