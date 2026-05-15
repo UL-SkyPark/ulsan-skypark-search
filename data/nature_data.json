@@ -70083,13 +70083,6 @@
   },
   {
     "natDate": "2026-05-15",
-    "natNo": null,
-    "applName": "김○수",
-    "deadId": "1655954",
-    "deadName": "김성일"
-  },
-  {
-    "natDate": "2026-05-15",
     "natNo": "수목장-2-2-0006",
     "applName": "윤○호",
     "deadId": "1655913",
@@ -70108,5 +70101,12 @@
     "applName": "김○구",
     "deadId": "1655907",
     "deadName": "김재주"
+  },
+  {
+    "natDate": "2026-05-15",
+    "natNo": "잔디장-2-9-0447",
+    "applName": "김○수",
+    "deadId": "1655954",
+    "deadName": "김성일"
   }
 ]
