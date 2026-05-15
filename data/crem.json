@@ -54,5 +54,53 @@
       "cremDate": 1778857200000,
       "cremSeq": 1
     }
+  },
+  {
+    "cremDate": "2026-05-16",
+    "cremSeq": 2,
+    "objt": "A001",
+    "burnDate": 1778857200000,
+    "burnNo": null,
+    "burnChasu": "01",
+    "deadId": 1655961,
+    "thedead": {
+      "deadId": 1655961,
+      "deadName": "백수현",
+      "id": 1655961,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1778857200000,
+      "burnChasu": "01",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1778857200000,
+        "burnChasu": "01",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1778857200000,
+      "cremSeq": 2
+    }
   }
 ]
