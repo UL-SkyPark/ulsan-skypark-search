@@ -212672,14 +212672,6 @@
     "retDate": null
   },
   {
-    "deadId": "1655975",
-    "strDate": "2026-05-17",
-    "ensNo": null,
-    "deadName": "현옥자",
-    "applName": "박○수",
-    "retDate": null
-  },
-  {
     "deadId": "1655938",
     "strDate": "2026-05-17",
     "ensNo": "1추모의집-40실-개인단-13534",
@@ -212725,6 +212717,14 @@
     "ensNo": "1추모의집-63실-개인단-22283",
     "deadName": "이홍자",
     "applName": "김○열",
+    "retDate": null
+  },
+  {
+    "deadId": "1655975",
+    "strDate": "2026-05-17",
+    "ensNo": "1추모의집-63실-개인단-22284",
+    "deadName": "현옥자",
+    "applName": "박○수",
     "retDate": null
   }
 ]
