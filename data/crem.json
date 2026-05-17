@@ -803,17 +803,17 @@
       "burnDate": 1778943600000,
       "burnChasu": "07",
       "burnNo": "09",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "12:08",
-      "burnEndTime": null,
+      "burnEndTime": "12:36",
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
