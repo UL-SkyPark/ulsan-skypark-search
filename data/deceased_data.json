@@ -193413,7 +193413,7 @@
     "ensNo": "1추모의집-60실-개인단-20736",
     "deadName": "서철규",
     "applName": "서○국",
-    "retDate": null
+    "retDate": "2026-05-18"
   },
   {
     "deadId": "1477097",
@@ -212765,6 +212765,22 @@
     "ensNo": "1추모의집-63실-개인단-22288",
     "deadName": "장혜남",
     "applName": "박○영",
+    "retDate": null
+  },
+  {
+    "deadId": "1477096",
+    "strDate": "2026-05-18",
+    "ensNo": "1추모의집-09실-부부단-01927",
+    "deadName": "서철규",
+    "applName": "서○국",
+    "retDate": null
+  },
+  {
+    "deadId": "1656021",
+    "strDate": "2026-05-18",
+    "ensNo": "1추모의집-09실-부부단-01927",
+    "deadName": "김소선",
+    "applName": "서○국",
     "retDate": null
   }
 ]
