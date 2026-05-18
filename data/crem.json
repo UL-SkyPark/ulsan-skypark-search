@@ -355,17 +355,17 @@
       "burnDate": 1779116400000,
       "burnChasu": "02",
       "burnNo": "05",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "205",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -389,6 +389,62 @@
     "id": {
       "cremDate": 1779116400000,
       "cremSeq": 7
+    }
+  },
+  {
+    "cremDate": "2026-05-19",
+    "cremSeq": 8,
+    "objt": "A001",
+    "burnDate": 1779116400000,
+    "burnNo": "10",
+    "burnChasu": "02",
+    "deadId": 1656044,
+    "thedead": {
+      "deadId": 1656044,
+      "deadName": "유동섭",
+      "id": 1656044,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1779116400000,
+      "burnChasu": "02",
+      "burnNo": "10",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1779116400000,
+        "burnChasu": "02",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1779116400000,
+      "cremSeq": 8
     }
   }
 ]
