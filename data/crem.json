@@ -355,17 +355,17 @@
       "burnDate": 1779030000000,
       "burnChasu": "04",
       "burnNo": "01",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "10:22",
       "burnEndTime": null,
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -411,17 +411,17 @@
       "burnDate": 1779030000000,
       "burnChasu": "04",
       "burnNo": "07",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "10:25",
       "burnEndTime": null,
       "waitRoom": "207",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -452,8 +452,8 @@
     "cremSeq": 18,
     "objt": "A001",
     "burnDate": 1779030000000,
-    "burnNo": null,
-    "burnChasu": "05",
+    "burnNo": "03",
+    "burnChasu": "04",
     "deadId": 1656032,
     "thedead": {
       "deadId": 1656032,
@@ -465,22 +465,30 @@
     "scatterPlace": "TMC0600010",
     "hwaBrazier": {
       "burnDate": 1779030000000,
-      "burnChasu": "05",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnChasu": "04",
+      "burnNo": "03",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
       "id": {
         "burnDate": 1779030000000,
-        "burnChasu": "05",
-        "burnNo": null
+        "burnChasu": "04",
+        "burnNo": "03"
       }
     },
     "objtCode": "A001",
     "objtName": "시신",
-    "burnChasuName": "5회차",
+    "burnChasuName": "4회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
       "code": "TMC0600010",
