@@ -210485,7 +210485,7 @@
     "ensNo": "1추모의집-10실-개인단-02285",
     "deadName": "심신석",
     "applName": "심○",
-    "retDate": null
+    "retDate": "2026-05-18"
   },
   {
     "deadId": "1654392",
@@ -212813,6 +212813,14 @@
     "ensNo": "1추모의집-63실-개인단-22292",
     "deadName": "김덕재",
     "applName": "한○호",
+    "retDate": null
+  },
+  {
+    "deadId": "1656074",
+    "strDate": "2026-05-18",
+    "ensNo": "1추모의집-63실-개인단-22293",
+    "deadName": "최항일",
+    "applName": "최○민",
     "retDate": null
   }
 ]
