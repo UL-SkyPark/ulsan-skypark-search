@@ -411,17 +411,17 @@
       "burnDate": 1779116400000,
       "burnChasu": "04",
       "burnNo": "10",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "10:30",
       "burnEndTime": "11:59",
       "waitRoom": "210",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -892,13 +892,69 @@
     "cremSeq": 24,
     "objt": "A001",
     "burnDate": 1779116400000,
-    "burnNo": null,
+    "burnNo": "05",
     "burnChasu": "06",
     "deadId": 1656068,
     "thedead": {
       "deadId": 1656068,
       "deadName": "김금옥",
       "id": 1656068,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1779116400000,
+      "burnChasu": "06",
+      "burnNo": "05",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1779116400000,
+        "burnChasu": "06",
+        "burnNo": "05"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1779116400000,
+      "cremSeq": 24
+    }
+  },
+  {
+    "cremDate": "2026-05-19",
+    "cremSeq": 25,
+    "objt": "A001",
+    "burnDate": 1779116400000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1656077,
+    "thedead": {
+      "deadId": 1656077,
+      "deadName": "변영식",
+      "id": 1656077,
       "new": false
     },
     "applId": "*******",
@@ -932,7 +988,7 @@
     },
     "id": {
       "cremDate": 1779116400000,
-      "cremSeq": 24
+      "cremSeq": 25
     }
   },
   {
