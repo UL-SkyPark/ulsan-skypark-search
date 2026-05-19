@@ -212888,19 +212888,19 @@
     "retDate": null
   },
   {
-    "deadId": "1656080",
-    "strDate": "2026-05-20",
-    "ensNo": null,
-    "deadName": "정상민",
-    "applName": "정○영",
-    "retDate": null
-  },
-  {
     "deadId": "1656064",
     "strDate": "2026-05-20",
     "ensNo": "1추모의집-46실-개인단-15399",
     "deadName": "김홍대",
     "applName": "김○운",
+    "retDate": null
+  },
+  {
+    "deadId": "1656080",
+    "strDate": "2026-05-20",
+    "ensNo": "1추모의집-63실-개인단-22302",
+    "deadName": "정상민",
+    "applName": "정○영",
     "retDate": null
   }
 ]
