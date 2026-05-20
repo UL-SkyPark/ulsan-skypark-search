@@ -956,7 +956,7 @@
     "cremSeq": 25,
     "objt": "B001",
     "burnDate": 1779202800000,
-    "burnNo": null,
+    "burnNo": "03",
     "burnChasu": "07",
     "deadId": 1656109,
     "thedead": {
@@ -970,16 +970,24 @@
     "hwaBrazier": {
       "burnDate": 1779202800000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "03",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1779202800000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "03"
       }
     },
     "objtCode": "B001",
@@ -997,6 +1005,54 @@
     "id": {
       "cremDate": 1779202800000,
       "cremSeq": 25
+    }
+  },
+  {
+    "cremDate": "2026-05-20",
+    "cremSeq": 26,
+    "objt": "A001",
+    "burnDate": 1779202800000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1656108,
+    "thedead": {
+      "deadId": 1656108,
+      "deadName": "김금재",
+      "id": 1656108,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1779202800000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1779202800000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1779202800000,
+      "cremSeq": 26
     }
   },
   {
