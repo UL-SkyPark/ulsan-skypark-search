@@ -340,8 +340,8 @@
     "cremSeq": 7,
     "objt": "B001",
     "burnDate": 1779375600000,
-    "burnNo": null,
-    "burnChasu": null,
+    "burnNo": "02",
+    "burnChasu": "07",
     "deadId": 1656186,
     "thedead": {
       "deadId": 1656186,
@@ -353,22 +353,30 @@
     "scatterPlace": "TMC0600006",
     "hwaBrazier": {
       "burnDate": 1779375600000,
-      "burnChasu": null,
-      "burnNo": null,
-      "burnStatus": null,
+      "burnChasu": "07",
+      "burnNo": "02",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1779375600000,
-        "burnChasu": null,
-        "burnNo": null
+        "burnChasu": "07",
+        "burnNo": "02"
       }
     },
     "objtCode": "B001",
     "objtName": "개장유골",
-    "burnChasuName": null,
+    "burnChasuName": "7회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
       "code": "TMC0600006",
