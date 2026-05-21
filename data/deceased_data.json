@@ -212960,19 +212960,19 @@
     "retDate": null
   },
   {
-    "deadId": "1656153",
-    "strDate": "2026-05-22",
-    "ensNo": null,
-    "deadName": "남난희",
-    "applName": "정○호",
-    "retDate": null
-  },
-  {
     "deadId": "1656128",
     "strDate": "2026-05-22",
     "ensNo": "1추모의집-63실-개인단-22307",
     "deadName": "박수생",
     "applName": "김○란",
+    "retDate": null
+  },
+  {
+    "deadId": "1656153",
+    "strDate": "2026-05-22",
+    "ensNo": "1추모의집-63실-개인단-22308",
+    "deadName": "남난희",
+    "applName": "정○호",
     "retDate": null
   }
 ]
