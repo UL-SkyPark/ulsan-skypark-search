@@ -212962,8 +212962,16 @@
   {
     "deadId": "1656131",
     "strDate": "2026-05-22",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-01929",
     "deadName": "김영부",
+    "applName": "김○열",
+    "retDate": null
+  },
+  {
+    "deadId": "1656141",
+    "strDate": "2026-05-22",
+    "ensNo": "1추모의집-09실-부부단-01929",
+    "deadName": "박성리",
     "applName": "김○열",
     "retDate": null
   },
