@@ -116,7 +116,7 @@
     "cremSeq": 11,
     "objt": "A001",
     "burnDate": 1779375600000,
-    "burnNo": null,
+    "burnNo": "08",
     "burnChasu": "03",
     "deadId": 1656153,
     "thedead": {
@@ -130,16 +130,24 @@
     "hwaBrazier": {
       "burnDate": 1779375600000,
       "burnChasu": "03",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "08",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "208",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1779375600000,
         "burnChasu": "03",
-        "burnNo": null
+        "burnNo": "08"
       }
     },
     "objtCode": "A001",
@@ -212,7 +220,7 @@
     "cremSeq": 13,
     "objt": "A001",
     "burnDate": 1779375600000,
-    "burnNo": null,
+    "burnNo": "04",
     "burnChasu": "03",
     "deadId": 1656131,
     "thedead": {
@@ -226,16 +234,24 @@
     "hwaBrazier": {
       "burnDate": 1779375600000,
       "burnChasu": "03",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "04",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "204",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1779375600000,
         "burnChasu": "03",
-        "burnNo": null
+        "burnNo": "04"
       }
     },
     "objtCode": "A001",
@@ -331,17 +347,17 @@
       "burnDate": 1779375600000,
       "burnChasu": "01",
       "burnNo": "09",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:25",
-      "burnEndTime": null,
+      "burnEndTime": "09:00",
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
