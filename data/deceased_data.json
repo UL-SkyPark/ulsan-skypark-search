@@ -125197,7 +125197,7 @@
     "ensNo": "1추모의집-44실-개인단-14626",
     "deadName": "박춘매",
     "applName": "이○실",
-    "retDate": null
+    "retDate": "2026-05-23"
   },
   {
     "deadId": "1468566",
@@ -213056,9 +213056,17 @@
     "retDate": null
   },
   {
+    "deadId": "1468565",
+    "strDate": "2026-05-23",
+    "ensNo": "1추모의집-09실-부부단-01933",
+    "deadName": "박춘매",
+    "applName": "박○현",
+    "retDate": null
+  },
+  {
     "deadId": "1656154",
     "strDate": "2026-05-23",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-01933",
     "deadName": "이영복",
     "applName": "박○현",
     "retDate": null
