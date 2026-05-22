@@ -213056,11 +213056,11 @@
     "retDate": null
   },
   {
-    "deadId": "1656193",
+    "deadId": "1656190",
     "strDate": "2026-05-23",
     "ensNo": null,
-    "deadName": "김재복",
-    "applName": "김○현",
+    "deadName": "박성근",
+    "applName": "박○태",
     "retDate": null
   },
   {
@@ -213069,6 +213069,14 @@
     "ensNo": "1추모의집-63실-개인단-22311",
     "deadName": "이윤락",
     "applName": "이○용",
+    "retDate": null
+  },
+  {
+    "deadId": "1656193",
+    "strDate": "2026-05-23",
+    "ensNo": "1추모의집-63실-개인단-22312",
+    "deadName": "김재복",
+    "applName": "김○현",
     "retDate": null
   }
 ]
