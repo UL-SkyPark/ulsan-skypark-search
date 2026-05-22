@@ -213054,5 +213054,21 @@
     "deadName": "정창우",
     "applName": "김○희",
     "retDate": null
+  },
+  {
+    "deadId": "1656193",
+    "strDate": "2026-05-23",
+    "ensNo": null,
+    "deadName": "김재복",
+    "applName": "김○현",
+    "retDate": null
+  },
+  {
+    "deadId": "1656187",
+    "strDate": "2026-05-23",
+    "ensNo": "1추모의집-63실-개인단-22311",
+    "deadName": "이윤락",
+    "applName": "이○용",
+    "retDate": null
   }
 ]
