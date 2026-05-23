@@ -214,5 +214,61 @@
       "cremDate": 1779548400000,
       "cremSeq": 4
     }
+  },
+  {
+    "cremDate": "2026-05-24",
+    "cremSeq": 5,
+    "objt": "A001",
+    "burnDate": 1779548400000,
+    "burnNo": "05",
+    "burnChasu": "02",
+    "deadId": 1656206,
+    "thedead": {
+      "deadId": 1656206,
+      "deadName": "김명창",
+      "id": 1656206,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1779548400000,
+      "burnChasu": "02",
+      "burnNo": "05",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1779548400000,
+        "burnChasu": "02",
+        "burnNo": "05"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1779548400000,
+      "cremSeq": 5
+    }
   }
 ]
