@@ -3255,6 +3255,11 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1656216",
+    "deadName": "임진택",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1656231",
     "deadName": "홍성복",
     "dcGubun": "TCM1200099"
@@ -3277,6 +3282,11 @@
   {
     "deadId": "1656244",
     "deadName": "김경호",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1656259",
+    "deadName": "한경례",
     "dcGubun": "TCM1200001"
   },
   {
