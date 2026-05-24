@@ -505,6 +505,54 @@
   },
   {
     "cremDate": "2026-05-24",
+    "cremSeq": 18,
+    "objt": "A002",
+    "burnDate": 1779548400000,
+    "burnNo": null,
+    "burnChasu": "08",
+    "deadId": 1656261,
+    "thedead": {
+      "deadId": 1656261,
+      "deadName": "박주현사산",
+      "id": 1656261,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1779548400000,
+      "burnChasu": "08",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1779548400000,
+        "burnChasu": "08",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A002",
+    "objtName": "사산아",
+    "burnChasuName": "8회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1779548400000,
+      "cremSeq": 18
+    }
+  },
+  {
+    "cremDate": "2026-05-24",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1779548400000,
