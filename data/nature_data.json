@@ -70409,6 +70409,17 @@
   },
   {
     "natDate": "2026-05-25",
+    "natNo": null,
+    "applName": "안○준",
+    "deadId": [
+      "1656225"
+    ],
+    "deadName": [
+      "안영조"
+    ]
+  },
+  {
+    "natDate": "2026-05-25",
     "natNo": "수목장-2-2-0011",
     "applName": "차○수",
     "deadId": "1656247",
