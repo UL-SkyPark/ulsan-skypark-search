@@ -636,9 +636,16 @@
     "45실": 14866, "46실": 15138, "47실": 15410, "48실": 15570, "49실": 15954,
     "50실": 16338, "51실": 16722, "52실": 17066, "53실": 17426, "54실": 17786,
     "55실": 18146, "56실": 18506, "57실": 18866, "58실": 19570, "59실": 19890,
-    "60실": 20394, "61실": 21078, "62실": 21726, "63실": 22194
+    "60실": 20394, "61실": 21078, "62실": 21726, "63실": 22194,
+    "64실": 22662, "65실": 23283, "66실": 23886
   };
-  const END_OVERRIDE = { "62실": 22193, "63실": 22661 };
+  const END_OVERRIDE = {
+    "62실": 22193,
+    "63실": 22661,
+    "64실": 23282,
+    "65실": 23885,
+    "66실": 24776
+  };
 
   const $ = (id) => document.getElementById(id);
 
@@ -717,7 +724,15 @@
   const ROOM_LIST = Object.values(ROOM_CFG).sort((a, b) => a.start - b.start);
 
   const COUPLE_ROOMS = roomsRange(1, 9);
-  const PERSONAL1_ROOMS = [...roomsRange(10, 18), roomStr(61), roomStr(62), roomStr(63)];
+  const PERSONAL1_ROOMS = [
+    ...roomsRange(10, 18),
+    roomStr(61),
+    roomStr(62),
+    roomStr(63),
+    roomStr(64),
+    roomStr(65),
+    roomStr(66)
+  ];
   const PERSONAL2A_ROOMS = roomsRange(19, 39);
   const PERSONAL2B_ROOMS = roomsRange(40, 60);
   const PERSONAL_ALL_ROOMS = [...PERSONAL1_ROOMS, ...PERSONAL2A_ROOMS, ...PERSONAL2B_ROOMS];
