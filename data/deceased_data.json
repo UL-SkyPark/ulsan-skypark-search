@@ -213160,14 +213160,6 @@
     "retDate": null
   },
   {
-    "deadId": "1656274",
-    "strDate": "2026-05-25",
-    "ensNo": null,
-    "deadName": "최희민",
-    "applName": "최○라",
-    "retDate": null
-  },
-  {
     "deadId": "1656256",
     "strDate": "2026-05-25",
     "ensNo": "1추모의집-09실-부부단-01934",
@@ -213205,6 +213197,14 @@
     "ensNo": "1추모의집-63실-개인단-22320",
     "deadName": "김준성",
     "applName": "김○만",
+    "retDate": null
+  },
+  {
+    "deadId": "1656274",
+    "strDate": "2026-05-25",
+    "ensNo": "1추모의집-63실-개인단-22321",
+    "deadName": "최희민",
+    "applName": "최○라",
     "retDate": null
   }
 ]
