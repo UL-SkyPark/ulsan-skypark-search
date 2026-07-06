@@ -2121,20 +2121,28 @@
 
       const raw = await fetchJson(DATA_URLS.funeral, force);
       const arr = Array.isArray(raw) ? raw : [];
-      const map = new Map();
+      const byId = new Map();
+      const byName = new Map();
 
       for (const r of arr){
         const id = toTrimmedString(r?.deadId);
-        if (!id) continue;
-
-        map.set(id, {
+        const deadName = toTrimmedString(r?.deadName);
+        const record = {
           deadId: id,
+          deadName,
           dcGubun: toTrimmedString(r?.dcGubun)
-        });
+        };
+
+        if (id) byId.set(id, record);
+
+        const nameKey = normNameKey(deadName);
+        if (nameKey && !byName.has(nameKey)){
+          byName.set(nameKey, record);
+        }
       }
 
-      state.funeralMapCache = map;
-      return map;
+      state.funeralMapCache = { byId, byName };
+      return state.funeralMapCache;
     }
 
     function warmCachesSoon(){
@@ -2561,6 +2569,29 @@
       return set;
     }
 
+    function getFuneralRecord(funeralMap, entry){
+      if (!funeralMap || !entry) return null;
+
+      const id = String(entry.deadId ?? '').trim();
+      const deadName = String(entry.deadName ?? '').trim();
+
+      if (funeralMap instanceof Map){
+        return id ? (funeralMap.get(id) || null) : null;
+      }
+
+      if (id && funeralMap.byId instanceof Map){
+        const rec = funeralMap.byId.get(id);
+        if (rec) return rec;
+      }
+
+      const nameKey = normNameKey(deadName);
+      if (nameKey && funeralMap.byName instanceof Map){
+        return funeralMap.byName.get(nameKey) || null;
+      }
+
+      return null;
+    }
+
     function funeralBadgeLabelForItem(item, displayName, funeralMap){
       if (!funeralMap) return null;
 
@@ -2570,10 +2601,7 @@
       let hasSelf = false;
 
       for (const entry of entries){
-        const id = String(entry.deadId ?? '').trim();
-        if (!id) continue;
-
-        const rec = funeralMap.get(id);
+        const rec = getFuneralRecord(funeralMap, entry);
         if (!rec) continue;
 
         if (String(rec.dcGubun ?? '').trim() === 'TCM1200099'){
