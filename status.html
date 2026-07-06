@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline' https://script.google.com https://script.googleusercontent.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=()" />
   <title>울산하늘공원 접수 현황</title>
@@ -2232,30 +2232,53 @@
       } catch {}
     }
 
+    function makeJsonpCallbackName(){
+      const rand = Math.random().toString(36).slice(2);
+      return `__uicStatusJsonp_${Date.now()}_${rand}`;
+    }
+
     async function fetchStatusApiJson(params = {}, init = {}, fallbackMessage = UI_TEXT.sharedStatusLoadError){
-      const res = await fetch(buildStatusApiUrl(params), {
-        cache: 'no-store',
-        mode: 'cors',
-        redirect: 'follow',
-        ...init
+      if (!isConfiguredStatusApi()){
+        throw new Error(UI_TEXT.sharedApiInvalid);
+      }
+
+      const timeoutMs = Number(init?.timeoutMs || 12000);
+
+      return new Promise((resolve, reject) => {
+        const callbackName = makeJsonpCallbackName();
+        const script = document.createElement('script');
+        let timer = null;
+        let settled = false;
+
+        const cleanup = () => {
+          if (timer) clearTimeout(timer);
+          try { delete window[callbackName]; } catch { window[callbackName] = undefined; }
+          if (script.parentNode) script.parentNode.removeChild(script);
+        };
+
+        const finish = (fn, value) => {
+          if (settled) return;
+          settled = true;
+          cleanup();
+          fn(value);
+        };
+
+        window[callbackName] = (json) => {
+          finish(resolve, json || {});
+        };
+
+        script.onerror = () => {
+          finish(reject, new Error(fallbackMessage));
+        };
+
+        timer = setTimeout(() => {
+          finish(reject, new Error(fallbackMessage));
+        }, timeoutMs);
+
+        script.async = true;
+        script.src = buildStatusApiUrl({ ...params, callback: callbackName, _: Date.now() });
+        document.head.appendChild(script);
       });
-
-      const contentType = String(res.headers.get('content-type') || '').toLowerCase();
-      const text = await res.text();
-
-      if (looksLikeStatusApiAuthResponse(res, text, contentType)){
-        throw createStatusApiAuthError();
-      }
-
-      if (!res.ok){
-        throw new Error(fallbackMessage);
-      }
-
-      try{
-        return text ? JSON.parse(text) : {};
-      } catch {
-        throw new Error(fallbackMessage);
-      }
     }
 
     function wait(ms){
@@ -2344,42 +2367,16 @@
         throw new Error(UI_TEXT.sharedApiInvalid);
       }
 
-      let json;
-      try{
-        json = await fetchStatusApiJson(
-          {},
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: 'save', src, id, mode, status })
-          },
-          UI_TEXT.sharedStatusSaveError
-        );
-      } catch (err){
-        if (err?.code === 'STATUS_API_AUTH'){
-          promptStatusApiLogin();
-          throw err;
-        }
-
-        const isFetchFailure =
-          err instanceof TypeError ||
-          /failed to fetch|load failed|networkerror/i.test(String(err?.message || ''));
-
-        if (!isFetchFailure) throw err;
-
-        await saveSharedStatusViaNoCors({ action: 'save', src, id, mode, status });
-
-        const verified = await verifySharedStatusSaved(src, id, mode, status);
-        if (!verified){
-          throw new Error(UI_TEXT.sharedStatusSaveError);
-        }
-
-        json = { ok: true };
-      }
+      const json = await fetchStatusApiJson(
+        { action: 'save', src, id, mode, status },
+        { timeoutMs: 15000 },
+        UI_TEXT.sharedStatusSaveError
+      );
 
       if (!json?.ok) throw new Error(json?.message || UI_TEXT.sharedStatusSaveError);
 
-      state.sharedStatusMap.set(statusKey(src, id, mode), status);
+      const savedStatus = toTrimmedString(json?.item?.status) || status;
+      state.sharedStatusMap.set(statusKey(src, id, mode), savedStatus);
       state.sharedStatusFetchedAt = Date.now();
       saveSharedStatusCache();
     }
