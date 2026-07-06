@@ -2304,8 +2304,21 @@
 
       if (!json?.ok) throw new Error(json?.message || UI_TEXT.sharedStatusSaveError);
 
-      const savedStatus = toTrimmedString(json?.item?.status) || status;
-      state.sharedStatusMap.set(statusKey(src, id, mode), savedStatus);
+      const savedSrc = toTrimmedString(json?.item?.src) || toTrimmedString(src);
+      const savedId = toTrimmedString(json?.item?.id) || toTrimmedString(id);
+      const savedMode = toTrimmedString(json?.item?.mode) || toTrimmedString(mode);
+      const savedStatus = toTrimmedString(json?.item?.status) || toTrimmedString(status);
+      const key = statusKey(savedSrc, savedId, savedMode);
+
+      state.sharedStatusMap.set(key, savedStatus);
+      state.sharedStatusFetchedAt = Date.now();
+      saveSharedStatusCache();
+
+      try{
+        await loadSharedStatuses(true);
+      } catch {}
+
+      state.sharedStatusMap.set(key, savedStatus);
       state.sharedStatusFetchedAt = Date.now();
       saveSharedStatusCache();
     }
