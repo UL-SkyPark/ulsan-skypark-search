@@ -1379,7 +1379,6 @@
       noChanges: '변경된 상태가 없습니다.',
       sharedStatusLoadError: '공유 상태 정보를 불러오지 못했습니다.',
       sharedStatusSaveError: '공유 상태 저장에 실패했습니다.',
-      sharedStatusAuthRequired: '앱스크립트 로그인이 필요합니다. 새 탭에서 로그인 후 다시 시도해 주세요.',
       sharedApiNotConfigured: '공유 저장 API 주소가 설정되지 않았습니다.',
       sharedApiInvalid: '공유 저장 API 주소 형식이 올바르지 않습니다.',
       dataFileNotFound: '데이터 파일을 찾을 수 없습니다.',
@@ -1884,7 +1883,6 @@
       sharedStatusMap: new Map(),
       sharedStatusFetchedAt: 0,
       sharedStatusLoadingPromise: null,
-      statusApiAuthPromptedAt: 0,
 
       dataCache: {
         house: null,
@@ -2188,12 +2186,6 @@
       return `${src}||${mode}||${id}`;
     }
 
-    function createStatusApiAuthError(){
-      const err = new Error(UI_TEXT.sharedStatusAuthRequired);
-      err.code = 'STATUS_API_AUTH';
-      return err;
-    }
-
     function buildStatusApiUrl(params = {}){
       const url = new URL(APP_CONFIG.statusApiUrl);
       for (const [key, value] of Object.entries(params)){
@@ -2201,35 +2193,6 @@
         url.searchParams.set(key, String(value));
       }
       return url.toString();
-    }
-
-    function looksLikeStatusApiAuthResponse(res, text, contentType){
-      const finalUrl = String(res?.url || '');
-      const body = String(text || '');
-      const type = String(contentType || '').toLowerCase();
-      const redirectedToGoogleLogin =
-        finalUrl.includes('accounts.google.com') ||
-        finalUrl.includes('ServiceLogin');
-      const looksLikeLoginPage =
-        type.includes('text/html') &&
-        /accounts\.google\.com|serviceLogin|Google 계정|로그인|Sign in/i.test(body);
-
-      return Boolean(
-        redirectedToGoogleLogin ||
-        looksLikeLoginPage
-      );
-    }
-
-    function promptStatusApiLogin(){
-      const now = Date.now();
-      if (state.statusApiAuthPromptedAt && (now - state.statusApiAuthPromptedAt) < 10000) return;
-      state.statusApiAuthPromptedAt = now;
-
-      toast(UI_TEXT.sharedStatusAuthRequired, 3200);
-
-      try{
-        window.open(buildStatusApiUrl({ action: 'list' }), '_blank', 'noopener');
-      } catch {}
     }
 
     function makeJsonpCallbackName(){
@@ -2281,35 +2244,6 @@
       });
     }
 
-    function wait(ms){
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    async function saveSharedStatusViaNoCors(payload){
-      await fetch(APP_CONFIG.statusApiUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        cache: 'no-store',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload),
-        keepalive: true
-      });
-    }
-
-    async function verifySharedStatusSaved(src, id, mode, status){
-      const key = statusKey(src, id, mode);
-
-      for (let i = 0; i < 4; i++){
-        await wait(700 + (i * 250));
-        await loadSharedStatuses(true);
-        if (state.sharedStatusMap.get(key) === status){
-          return true;
-        }
-      }
-
-      return false;
-    }
-
     async function loadSharedStatuses(force = false){
       if (!isConfiguredStatusApi()){
         state.sharedStatusMap = new Map();
@@ -2352,11 +2286,6 @@
 
       try{
         await state.sharedStatusLoadingPromise;
-      } catch (err){
-        if (err?.code === 'STATUS_API_AUTH'){
-          promptStatusApiLogin();
-        }
-        throw err;
       } finally {
         state.sharedStatusLoadingPromise = null;
       }
