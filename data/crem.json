@@ -75,17 +75,17 @@
       "burnDate": 1783436400000,
       "burnChasu": "01",
       "burnNo": "04",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "204",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -109,6 +109,110 @@
     "id": {
       "cremDate": 1783436400000,
       "cremSeq": 2
+    }
+  },
+  {
+    "cremDate": "2026-07-08",
+    "cremSeq": 3,
+    "objt": "A001",
+    "burnDate": 1783436400000,
+    "burnNo": "09",
+    "burnChasu": "01",
+    "deadId": 1666813,
+    "thedead": {
+      "deadId": 1666813,
+      "deadName": "CUIYUECHUN",
+      "id": 1666813,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1783436400000,
+      "burnChasu": "01",
+      "burnNo": "09",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "209",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1783436400000,
+        "burnChasu": "01",
+        "burnNo": "09"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1783436400000,
+      "cremSeq": 3
+    }
+  },
+  {
+    "cremDate": "2026-07-08",
+    "cremSeq": 4,
+    "objt": "A001",
+    "burnDate": 1783436400000,
+    "burnNo": null,
+    "burnChasu": "01",
+    "deadId": 1666828,
+    "thedead": {
+      "deadId": 1666828,
+      "deadName": "이인순",
+      "id": 1666828,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1783436400000,
+      "burnChasu": "01",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1783436400000,
+        "burnChasu": "01",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1783436400000,
+      "cremSeq": 4
     }
   }
 ]
