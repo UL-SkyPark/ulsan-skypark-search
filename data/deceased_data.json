@@ -188440,13 +188440,6 @@
     "retDate": null
   },
   {
-    "deadId": "1666842",
-    "strDate": "2026-07-09",
-    "ensNo": null,
-    "deadName": "왕남경",
-    "retDate": null
-  },
-  {
     "deadId": "1666838",
     "strDate": "2026-07-09",
     "ensNo": "1추모의집-63실-개인단-22488",
@@ -188465,6 +188458,13 @@
     "strDate": "2026-07-09",
     "ensNo": "1추모의집-63실-개인단-22490",
     "deadName": "권성희",
+    "retDate": null
+  },
+  {
+    "deadId": "1666842",
+    "strDate": "2026-07-09",
+    "ensNo": "1추모의집-63실-개인단-22491",
+    "deadName": "왕남경",
     "retDate": null
   }
 ]
