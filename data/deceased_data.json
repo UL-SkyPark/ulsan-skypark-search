@@ -188475,9 +188475,16 @@
     "retDate": null
   },
   {
-    "deadId": "1666889",
+    "deadId": "1666894",
     "strDate": "2026-07-10",
     "ensNo": null,
+    "deadName": "박계영",
+    "retDate": null
+  },
+  {
+    "deadId": "1666889",
+    "strDate": "2026-07-10",
+    "ensNo": "1추모의집-63실-개인단-22493",
     "deadName": "황금석",
     "retDate": null
   }
