@@ -66784,7 +66784,7 @@
     "strDate": "2018-12-08",
     "ensNo": "1추모의집-31실-개인단-10219",
     "deadName": "최현빈",
-    "retDate": null
+    "retDate": "2026-07-08"
   },
   {
     "deadId": "1462461",
@@ -70102,7 +70102,7 @@
     "strDate": "2019-02-27",
     "ensNo": "1추모의집-31실-개인단-10573",
     "deadName": "신판생",
-    "retDate": null
+    "retDate": "2026-07-08"
   },
   {
     "deadId": "1462938",
@@ -83717,7 +83717,7 @@
     "strDate": "2020-03-18",
     "ensNo": "1추모의집-35실-개인단-11994",
     "deadName": "김영수",
-    "retDate": null
+    "retDate": "2026-07-12"
   },
   {
     "deadId": "1464880",
@@ -118724,7 +118724,7 @@
     "strDate": "2022-06-26",
     "ensNo": "1추모의집-48실-개인단-15630",
     "deadName": "유필선",
-    "retDate": null
+    "retDate": "2026-07-07"
   },
   {
     "deadId": "1469879",
@@ -183523,7 +183523,7 @@
     "strDate": "2026-03-16",
     "ensNo": "1추모의집-62실-개인단-22039",
     "deadName": "송민현",
-    "retDate": null
+    "retDate": "2026-07-11"
   },
   {
     "deadId": "1653959",
@@ -188360,6 +188360,237 @@
     "strDate": "2026-07-06",
     "ensNo": "1추모의집-63실-개인단-22478",
     "deadName": "윤영길",
+    "retDate": null
+  },
+  {
+    "deadId": "1666762",
+    "strDate": "2026-07-07",
+    "ensNo": "1추모의집-63실-개인단-22479",
+    "deadName": "서순례",
+    "retDate": null
+  },
+  {
+    "deadId": "1666771",
+    "strDate": "2026-07-07",
+    "ensNo": "1추모의집-63실-개인단-22480",
+    "deadName": "김광영",
+    "retDate": null
+  },
+  {
+    "deadId": "1666774",
+    "strDate": "2026-07-07",
+    "ensNo": "1추모의집-63실-개인단-22481",
+    "deadName": "최성교",
+    "retDate": null
+  },
+  {
+    "deadId": "1666781",
+    "strDate": "2026-07-07",
+    "ensNo": "1추모의집-63실-개인단-22482",
+    "deadName": "김동일",
+    "retDate": null
+  },
+  {
+    "deadId": "1666837",
+    "strDate": "2026-07-07",
+    "ensNo": "1추모의집-63실-개인단-22483",
+    "deadName": "박백합자",
+    "retDate": null
+  },
+  {
+    "deadId": "1462460",
+    "strDate": "2026-07-08",
+    "ensNo": "1추모의집-09실-부부단-01965",
+    "deadName": "최현빈",
+    "retDate": null
+  },
+  {
+    "deadId": "1666787",
+    "strDate": "2026-07-08",
+    "ensNo": "1추모의집-09실-부부단-01965",
+    "deadName": "박증자",
+    "retDate": null
+  },
+  {
+    "deadId": "1666821",
+    "strDate": "2026-07-08",
+    "ensNo": "1추모의집-63실-개인단-22484",
+    "deadName": "윤무현",
+    "retDate": null
+  },
+  {
+    "deadId": "1666844",
+    "strDate": "2026-07-08",
+    "ensNo": "1추모의집-63실-개인단-22485",
+    "deadName": "정재희",
+    "retDate": null
+  },
+  {
+    "deadId": "1666796",
+    "strDate": "2026-07-08",
+    "ensNo": "1추모의집-63실-개인단-22486",
+    "deadName": "남영진",
+    "retDate": null
+  },
+  {
+    "deadId": "1666835",
+    "strDate": "2026-07-08",
+    "ensNo": "1추모의집-63실-개인단-22487",
+    "deadName": "김유민",
+    "retDate": null
+  },
+  {
+    "deadId": "1666838",
+    "strDate": "2026-07-09",
+    "ensNo": "1추모의집-63실-개인단-22488",
+    "deadName": "박봉화",
+    "retDate": null
+  },
+  {
+    "deadId": "1666851",
+    "strDate": "2026-07-09",
+    "ensNo": "1추모의집-63실-개인단-22489",
+    "deadName": "김영수",
+    "retDate": null
+  },
+  {
+    "deadId": "1666850",
+    "strDate": "2026-07-09",
+    "ensNo": "1추모의집-63실-개인단-22490",
+    "deadName": "권성희",
+    "retDate": null
+  },
+  {
+    "deadId": "1666842",
+    "strDate": "2026-07-09",
+    "ensNo": "1추모의집-63실-개인단-22491",
+    "deadName": "왕남경",
+    "retDate": null
+  },
+  {
+    "deadId": "1666890",
+    "strDate": "2026-07-09",
+    "ensNo": "1추모의집-63실-개인단-22492",
+    "deadName": "김훈우",
+    "retDate": null
+  },
+  {
+    "deadId": "1666889",
+    "strDate": "2026-07-10",
+    "ensNo": "1추모의집-63실-개인단-22493",
+    "deadName": "황금석",
+    "retDate": null
+  },
+  {
+    "deadId": "1666894",
+    "strDate": "2026-07-10",
+    "ensNo": "1추모의집-63실-개인단-22494",
+    "deadName": "박계영",
+    "retDate": null
+  },
+  {
+    "deadId": "1666880",
+    "strDate": "2026-07-10",
+    "ensNo": "1추모의집-63실-개인단-22495",
+    "deadName": "염백규",
+    "retDate": null
+  },
+  {
+    "deadId": "1666891",
+    "strDate": "2026-07-10",
+    "ensNo": "1추모의집-63실-개인단-22496",
+    "deadName": "이태수",
+    "retDate": null
+  },
+  {
+    "deadId": "1666913",
+    "strDate": "2026-07-10",
+    "ensNo": "1추모의집-63실-개인단-22497",
+    "deadName": "손영태",
+    "retDate": null
+  },
+  {
+    "deadId": "1666917",
+    "strDate": "2026-07-11",
+    "ensNo": "1추모의집-63실-개인단-22498",
+    "deadName": "유진영",
+    "retDate": null
+  },
+  {
+    "deadId": "1666903",
+    "strDate": "2026-07-11",
+    "ensNo": "1추모의집-63실-개인단-22499",
+    "deadName": "김예선",
+    "retDate": null
+  },
+  {
+    "deadId": "1666904",
+    "strDate": "2026-07-11",
+    "ensNo": "1추모의집-63실-개인단-22500",
+    "deadName": "박점례",
+    "retDate": null
+  },
+  {
+    "deadId": "1666908",
+    "strDate": "2026-07-11",
+    "ensNo": "1추모의집-63실-개인단-22501",
+    "deadName": "김창곤",
+    "retDate": null
+  },
+  {
+    "deadId": "1666941",
+    "strDate": "2026-07-11",
+    "ensNo": "1추모의집-63실-개인단-22502",
+    "deadName": "이영현",
+    "retDate": null
+  },
+  {
+    "deadId": "1666892",
+    "strDate": "2026-07-12",
+    "ensNo": "1추모의집-48실-개인단-15630",
+    "deadName": "이상길",
+    "retDate": null
+  },
+  {
+    "deadId": "1666979",
+    "strDate": "2026-07-12",
+    "ensNo": "1추모의집-63실-개인단-22503",
+    "deadName": "이정병",
+    "retDate": null
+  },
+  {
+    "deadId": "1666981",
+    "strDate": "2026-07-12",
+    "ensNo": "1추모의집-63실-개인단-22504",
+    "deadName": "김남익",
+    "retDate": null
+  },
+  {
+    "deadId": "1666932",
+    "strDate": "2026-07-12",
+    "ensNo": "1추모의집-63실-개인단-22505",
+    "deadName": "서도원",
+    "retDate": null
+  },
+  {
+    "deadId": "1666947",
+    "strDate": "2026-07-12",
+    "ensNo": "1추모의집-63실-개인단-22506",
+    "deadName": "이동락",
+    "retDate": null
+  },
+  {
+    "deadId": "1666949",
+    "strDate": "2026-07-12",
+    "ensNo": "1추모의집-63실-개인단-22507",
+    "deadName": "이택형",
+    "retDate": null
+  },
+  {
+    "deadId": "1666967",
+    "strDate": "2026-07-13",
+    "ensNo": "1추모의집-63실-개인단-22508",
+    "deadName": "김성응",
     "retDate": null
   }
 ]

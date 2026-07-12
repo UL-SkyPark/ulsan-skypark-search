@@ -4045,6 +4045,21 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1666772",
+    "deadName": "오순학",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1666773",
+    "deadName": "조은예",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1666782",
+    "deadName": "박인철",
+    "dcGubun": "TCM1200003"
+  },
+  {
     "deadId": "1666801",
     "deadName": "박노열",
     "dcGubun": "TCM1200002"
@@ -4053,5 +4068,75 @@
     "deadId": "1666806",
     "deadName": "윤영길",
     "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1666836",
+    "deadName": "이지연",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1666837",
+    "deadName": "박백합자",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1666844",
+    "deadName": "정재희",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1666865",
+    "deadName": "임원조",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1666866",
+    "deadName": "김영내",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1666874",
+    "deadName": "박이남",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1666886",
+    "deadName": "황봉두",
+    "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1666935",
+    "deadName": "박상만",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1666940",
+    "deadName": "신현준",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1666941",
+    "deadName": "이영현",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1666942",
+    "deadName": "변정화",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1666979",
+    "deadName": "이정병",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1666980",
+    "deadName": "김복출",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1666981",
+    "deadName": "김남익",
+    "dcGubun": "TCM1200001"
   }
 ]
