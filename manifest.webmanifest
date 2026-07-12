@@ -1,0 +1,25 @@
+{
+  "name": "울산하늘공원 접수 현황",
+  "short_name": "하늘공원",
+  "description": "울산하늘공원 접수 현황을 모바일 홈 화면에서 앱처럼 실행할 수 있습니다.",
+  "start_url": "./status.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f4f6f9",
+  "theme_color": "#1f4e79",
+  "icons": [
+    {
+      "src": "./images/pwa/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./images/pwa/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
