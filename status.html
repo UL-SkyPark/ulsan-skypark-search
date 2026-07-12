@@ -6,10 +6,15 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline' https://script.google.com https://script.googleusercontent.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=()" />
+  <meta name="theme-color" content="#1f4e79" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="울산하늘공원" />
   <title>울산하늘공원 접수 현황</title>
 
   <link rel="icon" type="image/png" href="./images/symbol.png">
   <link rel="apple-touch-icon" href="./images/symbol.png">
+  <link rel="manifest" href="./manifest.webmanifest">
 
   <style>
     :root{
@@ -1174,6 +1179,56 @@
       letter-spacing: var(--ls-base);
     }
 
+    .installBanner{
+      position: fixed;
+      left: 50%;
+      bottom: calc(84px + env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      width: min(94vw, 420px);
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(217,224,234,.94);
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 18px 44px rgba(15,23,42,.16);
+      z-index: 10003;
+      display: none;
+      gap: 10px;
+    }
+
+    .installBanner.show{
+      display: grid;
+    }
+
+    .installTitle{
+      font-weight: 950;
+      color:#0f172a;
+      font-size: var(--fs-md);
+      line-height: var(--lh-tight);
+      letter-spacing: var(--ls-base);
+    }
+
+    .installText{
+      color: rgba(31,42,55,.72);
+      font-weight: 850;
+      font-size: var(--fs-sm);
+      line-height: calc(var(--lh-base) * var(--scale-lh));
+      letter-spacing: var(--ls-base);
+    }
+
+    .installActions{
+      display:flex;
+      gap: 10px;
+    }
+
+    .installActions .btn{
+      min-height: 40px;
+      padding: 8px 12px;
+    }
+
+    .installActions .btn.secondary{
+      flex: 0 0 auto;
+    }
+
     @keyframes spin{
       to { transform: rotate(360deg); }
     }
@@ -1348,6 +1403,15 @@
     </div>
   </div>
 
+  <div id="installBanner" class="installBanner" aria-live="polite" aria-hidden="true">
+    <div class="installTitle" id="installTitle">앱처럼 설치해서 사용하세요</div>
+    <div class="installText" id="installText">홈 화면에 추가하면 모바일에서 앱처럼 빠르게 실행할 수 있습니다.</div>
+    <div class="installActions">
+      <button class="btn primary" type="button" id="installActionBtn">앱 설치</button>
+      <button class="btn secondary" type="button" id="installCloseBtn">닫기</button>
+    </div>
+  </div>
+
   <script>
     const APP_CONFIG = {
       deploymentId: 'AKfycbwCesxavOcWU4UpIvcYlhReMAvJxWeUZgraMoXymVv4DCrh7gxNXYHXNwlOYll6sKwi',
@@ -1364,7 +1428,8 @@
     const STORAGE_KEYS = {
       source: 'uic_source_selected',
       cremDoneSeen: 'uic_crem_done_seen',
-      sharedStatusCache: 'uic_shared_status_cache'
+      sharedStatusCache: 'uic_shared_status_cache',
+      installPromptDismissed: 'uic_status_pwa_prompt_dismissed'
     };
 
     const UI_TEXT = {
@@ -1852,7 +1917,13 @@
       savingDesc: $('#savingDesc'),
 
       ptr: $('#pullToRefresh'),
-      ptrFillCircle: $('#ptrFillCircle')
+      ptrFillCircle: $('#ptrFillCircle'),
+
+      installBanner: $('#installBanner'),
+      installTitle: $('#installTitle'),
+      installText: $('#installText'),
+      installActionBtn: $('#installActionBtn'),
+      installCloseBtn: $('#installCloseBtn')
     };
 
     (function applyIosClass(){
@@ -1883,6 +1954,8 @@
       sharedStatusMap: new Map(),
       sharedStatusFetchedAt: 0,
       sharedStatusLoadingPromise: null,
+      deferredInstallPrompt: null,
+      pwaInstallMode: '',
 
       dataCache: {
         house: null,
@@ -1987,6 +2060,127 @@
           items: serializeSharedStatusMap(state.sharedStatusMap)
         };
         localStorage.setItem(STORAGE_KEYS.sharedStatusCache, JSON.stringify(payload));
+      } catch {}
+    }
+
+    function isStandalonePwa(){
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+
+    function isIosDevice(){
+      const ua = navigator.userAgent || '';
+      return /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+
+    function isMobileViewport(){
+      return Math.min(window.innerWidth || 0, screen.width || 0) <= 900;
+    }
+
+    function hideInstallBanner(persist = false){
+      dom.installBanner.classList.remove('show');
+      dom.installBanner.setAttribute('aria-hidden', 'true');
+      if (persist){
+        try{
+          localStorage.setItem(STORAGE_KEYS.installPromptDismissed, String(Date.now()));
+        } catch {}
+      }
+    }
+
+    function showInstallBanner({ title, text, actionLabel, mode }){
+      if (!isMobileViewport() || isStandalonePwa()) return;
+
+      dom.installTitle.textContent = title;
+      dom.installText.textContent = text;
+      dom.installActionBtn.textContent = actionLabel;
+      dom.installActionBtn.dataset.mode = mode;
+      dom.installBanner.classList.add('show');
+      dom.installBanner.setAttribute('aria-hidden', 'false');
+      state.pwaInstallMode = mode;
+    }
+
+    function maybeShowInstallBanner(){
+      if (isStandalonePwa() || !isMobileViewport()) return;
+
+      let dismissedAt = 0;
+      try{
+        dismissedAt = Number(localStorage.getItem(STORAGE_KEYS.installPromptDismissed) || 0) || 0;
+      } catch {}
+
+      if (dismissedAt && (Date.now() - dismissedAt) < (1000 * 60 * 60 * 24 * 3)) return;
+
+      if (state.deferredInstallPrompt){
+        showInstallBanner({
+          title: '앱처럼 설치해서 사용하세요',
+          text: '홈 화면에 설치하면 모바일에서 더 빠르게 열 수 있습니다.',
+          actionLabel: '앱 설치',
+          mode: 'install'
+        });
+        return;
+      }
+
+      if (isIosDevice()){
+        showInstallBanner({
+          title: '홈 화면에 추가',
+          text: 'Safari 공유 버튼을 누른 뒤 "홈 화면에 추가"를 선택하면 앱처럼 사용할 수 있습니다.',
+          actionLabel: '설치 안내',
+          mode: 'ios-help'
+        });
+      }
+    }
+
+    async function handleInstallAction(){
+      const mode = dom.installActionBtn.dataset.mode || state.pwaInstallMode;
+
+      if (mode === 'install' && state.deferredInstallPrompt){
+        const promptEvent = state.deferredInstallPrompt;
+        state.deferredInstallPrompt = null;
+        promptEvent.prompt();
+        try{
+          const choice = await promptEvent.userChoice;
+          if (choice?.outcome === 'accepted'){
+            hideInstallBanner(true);
+            toast('앱 설치가 시작되었습니다.', 1800);
+          } else {
+            maybeShowInstallBanner();
+          }
+        } catch {
+          maybeShowInstallBanner();
+        }
+        return;
+      }
+
+      toast('Safari 공유 버튼에서 홈 화면에 추가를 선택해 주세요.', 2400);
+    }
+
+    function bindPwaInstall(){
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        state.deferredInstallPrompt = event;
+        maybeShowInstallBanner();
+      });
+
+      window.addEventListener('appinstalled', () => {
+        state.deferredInstallPrompt = null;
+        hideInstallBanner(true);
+        toast('앱이 설치되었습니다.', 1800);
+      });
+
+      dom.installActionBtn.addEventListener('click', handleInstallAction);
+      dom.installCloseBtn.addEventListener('click', () => hideInstallBanner(true));
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden){
+          maybeShowInstallBanner();
+        }
+      });
+    }
+
+    async function registerServiceWorker(){
+      if (!('serviceWorker' in navigator)) return;
+      if (!window.isSecureContext) return;
+
+      try{
+        await navigator.serviceWorker.register('./service-worker.js');
       } catch {}
     }
 
@@ -3562,7 +3756,10 @@
       updateFAB();
       setHeaderLoading(UI_TEXT.loadingInitial);
 
+      bindPwaInstall();
       bindEvents();
+      maybeShowInstallBanner();
+      registerServiceWorker();
       load(true, UI_TEXT.loadingInitial);
     }
 
