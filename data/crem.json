@@ -390,5 +390,53 @@
       "cremDate": 1783954800000,
       "cremSeq": 7
     }
+  },
+  {
+    "cremDate": "2026-07-14",
+    "cremSeq": 8,
+    "objt": "A001",
+    "burnDate": 1783954800000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1666962,
+    "thedead": {
+      "deadId": 1666962,
+      "deadName": "최종두",
+      "id": 1666962,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1783954800000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1783954800000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1783954800000,
+      "cremSeq": 8
+    }
   }
 ]
