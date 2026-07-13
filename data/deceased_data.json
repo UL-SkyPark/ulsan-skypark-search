@@ -188594,17 +188594,17 @@
     "retDate": null
   },
   {
-    "deadId": "1666962",
-    "strDate": "2026-07-14",
-    "ensNo": null,
-    "deadName": "최종두",
-    "retDate": null
-  },
-  {
     "deadId": "1666978",
     "strDate": "2026-07-14",
     "ensNo": null,
     "deadName": "고선옥",
+    "retDate": null
+  },
+  {
+    "deadId": "1666993",
+    "strDate": "2026-07-14",
+    "ensNo": null,
+    "deadName": "김상근",
     "retDate": null
   },
   {
@@ -188633,6 +188633,13 @@
     "strDate": "2026-07-14",
     "ensNo": "1추모의집-61실-개인단-21297",
     "deadName": "양충환",
+    "retDate": null
+  },
+  {
+    "deadId": "1666962",
+    "strDate": "2026-07-14",
+    "ensNo": "1추모의집-63실-개인단-22510",
+    "deadName": "최종두",
     "retDate": null
   }
 ]
