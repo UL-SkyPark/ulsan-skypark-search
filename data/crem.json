@@ -340,7 +340,7 @@
     "cremSeq": 15,
     "objt": "B001",
     "burnDate": 1783868400000,
-    "burnNo": null,
+    "burnNo": "10",
     "burnChasu": "08",
     "deadId": 1666870,
     "thedead": {
@@ -354,16 +354,24 @@
     "hwaBrazier": {
       "burnDate": 1783868400000,
       "burnChasu": "08",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "10",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1783868400000,
         "burnChasu": "08",
-        "burnNo": null
+        "burnNo": "10"
       }
     },
     "objtCode": "B001",
@@ -388,7 +396,7 @@
     "cremSeq": 16,
     "objt": "B001",
     "burnDate": 1783868400000,
-    "burnNo": null,
+    "burnNo": "01",
     "burnChasu": "08",
     "deadId": 1666871,
     "thedead": {
@@ -402,16 +410,24 @@
     "hwaBrazier": {
       "burnDate": 1783868400000,
       "burnChasu": "08",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "01",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "201",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1783868400000,
         "burnChasu": "08",
-        "burnNo": null
+        "burnNo": "01"
       }
     },
     "objtCode": "B001",
@@ -436,7 +452,7 @@
     "cremSeq": 17,
     "objt": "B001",
     "burnDate": 1783868400000,
-    "burnNo": null,
+    "burnNo": "04",
     "burnChasu": "07",
     "deadId": 1666807,
     "thedead": {
@@ -450,16 +466,24 @@
     "hwaBrazier": {
       "burnDate": 1783868400000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "04",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "204",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1783868400000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "04"
       }
     },
     "objtCode": "B001",
@@ -484,7 +508,7 @@
     "cremSeq": 18,
     "objt": "B001",
     "burnDate": 1783868400000,
-    "burnNo": null,
+    "burnNo": "09",
     "burnChasu": "07",
     "deadId": 1666808,
     "thedead": {
@@ -498,16 +522,24 @@
     "hwaBrazier": {
       "burnDate": 1783868400000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "09",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "209",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1783868400000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "09"
       }
     },
     "objtCode": "B001",
@@ -659,17 +691,17 @@
       "burnDate": 1783868400000,
       "burnChasu": "05",
       "burnNo": "08",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "208",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
