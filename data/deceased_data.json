@@ -188657,13 +188657,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667019",
-    "strDate": "2026-07-15",
-    "ensNo": null,
-    "deadName": "김기봉",
-    "retDate": null
-  },
-  {
     "deadId": "1469196",
     "strDate": "2026-07-15",
     "ensNo": "1추모의집-09실-부부단-01966",
@@ -188703,6 +188696,13 @@
     "strDate": "2026-07-15",
     "ensNo": "1추모의집-63실-개인단-22515",
     "deadName": "박지동",
+    "retDate": null
+  },
+  {
+    "deadId": "1667019",
+    "strDate": "2026-07-15",
+    "ensNo": "1추모의집-63실-개인단-22516",
+    "deadName": "김기봉",
     "retDate": null
   }
 ]
