@@ -188594,13 +188594,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667037",
-    "strDate": "2026-07-14",
-    "ensNo": null,
-    "deadName": "한봉희",
-    "retDate": null
-  },
-  {
     "deadId": "1666987",
     "strDate": "2026-07-14",
     "ensNo": "1추모의집-14실-개인단-03613",
@@ -188654,6 +188647,13 @@
     "strDate": "2026-07-14",
     "ensNo": "1추모의집-63실-개인단-22512",
     "deadName": "장금수",
+    "retDate": null
+  },
+  {
+    "deadId": "1667037",
+    "strDate": "2026-07-14",
+    "ensNo": "1추모의집-63실-개인단-22513",
+    "deadName": "한봉희",
     "retDate": null
   }
 ]
