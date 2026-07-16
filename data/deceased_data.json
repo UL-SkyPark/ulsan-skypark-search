@@ -188762,17 +188762,17 @@
     "retDate": null
   },
   {
-    "deadId": "1667079",
-    "strDate": "2026-07-17",
-    "ensNo": null,
-    "deadName": "박화순",
-    "retDate": null
-  },
-  {
     "deadId": "1667077",
     "strDate": "2026-07-17",
     "ensNo": "1추모의집-63실-개인단-22522",
     "deadName": "김복자",
+    "retDate": null
+  },
+  {
+    "deadId": "1667079",
+    "strDate": "2026-07-17",
+    "ensNo": "1추모의집-63실-개인단-22523",
+    "deadName": "박화순",
     "retDate": null
   }
 ]
