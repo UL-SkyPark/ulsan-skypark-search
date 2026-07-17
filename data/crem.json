@@ -54,5 +54,53 @@
       "cremDate": 1784300400000,
       "cremSeq": 1
     }
+  },
+  {
+    "cremDate": "2026-07-18",
+    "cremSeq": 2,
+    "objt": "A001",
+    "burnDate": 1784300400000,
+    "burnNo": null,
+    "burnChasu": "01",
+    "deadId": 1667121,
+    "thedead": {
+      "deadId": 1667121,
+      "deadName": "강수간자",
+      "id": 1667121,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1784300400000,
+      "burnChasu": "01",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1784300400000,
+        "burnChasu": "01",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1784300400000,
+      "cremSeq": 2
+    }
   }
 ]
