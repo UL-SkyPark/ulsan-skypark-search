@@ -62293,6 +62293,12 @@
   },
   {
     "natDate": "2026-07-17",
+    "natNo": null,
+    "deadId": "1667081",
+    "deadName": "김승철"
+  },
+  {
+    "natDate": "2026-07-17",
     "natNo": "잔디장-2-9-0626",
     "deadId": "1667082",
     "deadName": "강점분"
