@@ -131,17 +131,17 @@
       "burnDate": 1784300400000,
       "burnChasu": "03",
       "burnNo": "08",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "09:27",
-      "burnEndTime": null,
+      "burnEndTime": "10:59",
       "waitRoom": "208",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -187,17 +187,17 @@
       "burnDate": 1784300400000,
       "burnChasu": "03",
       "burnNo": "04",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "09:32",
-      "burnEndTime": null,
+      "burnEndTime": "11:00",
       "waitRoom": "204",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -564,7 +564,7 @@
     "cremSeq": 19,
     "objt": "A001",
     "burnDate": 1784300400000,
-    "burnNo": null,
+    "burnNo": "07",
     "burnChasu": "05",
     "deadId": 1667115,
     "thedead": {
@@ -578,16 +578,24 @@
     "hwaBrazier": {
       "burnDate": 1784300400000,
       "burnChasu": "05",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "07",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1784300400000,
         "burnChasu": "05",
-        "burnNo": null
+        "burnNo": "07"
       }
     },
     "objtCode": "A001",
@@ -668,7 +676,7 @@
     "cremSeq": 20,
     "objt": "A001",
     "burnDate": 1784300400000,
-    "burnNo": null,
+    "burnNo": "03",
     "burnChasu": "05",
     "deadId": 1667113,
     "thedead": {
@@ -682,16 +690,24 @@
     "hwaBrazier": {
       "burnDate": 1784300400000,
       "burnChasu": "05",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "03",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1784300400000,
         "burnChasu": "05",
-        "burnNo": null
+        "burnNo": "03"
       }
     },
     "objtCode": "A001",
@@ -709,6 +725,54 @@
     "id": {
       "cremDate": 1784300400000,
       "cremSeq": 20
+    }
+  },
+  {
+    "cremDate": "2026-07-18",
+    "cremSeq": 21,
+    "objt": "B001",
+    "burnDate": 1784300400000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1667125,
+    "thedead": {
+      "deadId": 1667125,
+      "deadName": "김정호",
+      "id": 1667125,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1784300400000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1784300400000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1784300400000,
+      "cremSeq": 21
     }
   },
   {
