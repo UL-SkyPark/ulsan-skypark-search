@@ -4243,5 +4243,10 @@
     "deadId": "1667160",
     "deadName": "서보식",
     "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1667161",
+    "deadName": "박덕근",
+    "dcGubun": "TCM1200001"
   }
 ]
