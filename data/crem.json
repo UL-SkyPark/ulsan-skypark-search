@@ -225,6 +225,54 @@
   },
   {
     "cremDate": "2026-07-19",
+    "cremSeq": 13,
+    "objt": "B001",
+    "burnDate": 1784386800000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1666716,
+    "thedead": {
+      "deadId": 1666716,
+      "deadName": "김용오",
+      "id": 1666716,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1784386800000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1784386800000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1784386800000,
+      "cremSeq": 13
+    }
+  },
+  {
+    "cremDate": "2026-07-19",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1784386800000,
