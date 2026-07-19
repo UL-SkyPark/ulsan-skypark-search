@@ -169,6 +169,62 @@
   },
   {
     "cremDate": "2026-07-19",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1784386800000,
+    "burnNo": "10",
+    "burnChasu": "04",
+    "deadId": 1667161,
+    "thedead": {
+      "deadId": 1667161,
+      "deadName": "박덕근",
+      "id": 1667161,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1784386800000,
+      "burnChasu": "04",
+      "burnNo": "10",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1784386800000,
+        "burnChasu": "04",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1784386800000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-07-19",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1784386800000,
