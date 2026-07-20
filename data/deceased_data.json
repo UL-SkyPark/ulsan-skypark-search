@@ -120719,7 +120719,7 @@
     "strDate": "2022-08-13",
     "ensNo": "1추모의집-48실-개인단-15837",
     "deadName": "김이홍",
-    "retDate": null
+    "retDate": "2026-07-20"
   },
   {
     "deadId": "1470166",
@@ -188888,6 +188888,20 @@
     "retDate": null
   },
   {
+    "deadId": "1470165",
+    "strDate": "2026-07-20",
+    "ensNo": "1추모의집-09실-부부단-01968",
+    "deadName": "김이홍",
+    "retDate": null
+  },
+  {
+    "deadId": "1667184",
+    "strDate": "2026-07-20",
+    "ensNo": "1추모의집-09실-부부단-01968",
+    "deadName": "장필련",
+    "retDate": null
+  },
+  {
     "deadId": "1667166",
     "strDate": "2026-07-20",
     "ensNo": "1추모의집-63실-개인단-22540",
@@ -188913,6 +188927,20 @@
     "strDate": "2026-07-20",
     "ensNo": "1추모의집-63실-개인단-22543",
     "deadName": "신영희",
+    "retDate": null
+  },
+  {
+    "deadId": "1667168",
+    "strDate": "2026-07-20",
+    "ensNo": "1추모의집-63실-개인단-22544",
+    "deadName": "최말해",
+    "retDate": null
+  },
+  {
+    "deadId": "1667156",
+    "strDate": "2026-07-20",
+    "ensNo": "1추모의집-63실-개인단-22545",
+    "deadName": "최종환",
     "retDate": null
   }
 ]
