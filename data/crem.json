@@ -161,6 +161,54 @@
   },
   {
     "cremDate": "2026-07-21",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1784559600000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1667170,
+    "thedead": {
+      "deadId": 1667170,
+      "deadName": "김영화",
+      "id": 1667170,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1784559600000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1784559600000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1784559600000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-07-21",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1784559600000,
