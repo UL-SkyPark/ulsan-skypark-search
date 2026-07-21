@@ -841,6 +841,62 @@
   },
   {
     "cremDate": "2026-07-21",
+    "cremSeq": 23,
+    "objt": "B001",
+    "burnDate": 1784559600000,
+    "burnNo": "06",
+    "burnChasu": "07",
+    "deadId": 1666939,
+    "thedead": {
+      "deadId": 1666939,
+      "deadName": "진성도",
+      "id": 1666939,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1784559600000,
+      "burnChasu": "07",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1784559600000,
+        "burnChasu": "07",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1784559600000,
+      "cremSeq": 23
+    }
+  },
+  {
+    "cremDate": "2026-07-21",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1784559600000,
