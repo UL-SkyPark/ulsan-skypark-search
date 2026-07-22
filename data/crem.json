@@ -1068,13 +1068,117 @@
     "cremSeq": 27,
     "objt": "B001",
     "burnDate": 1784646000000,
-    "burnNo": null,
+    "burnNo": "06",
     "burnChasu": "07",
     "deadId": 1667083,
     "thedead": {
       "deadId": 1667083,
       "deadName": "박태호",
       "id": 1667083,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1784646000000,
+      "burnChasu": "07",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1784646000000,
+        "burnChasu": "07",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1784646000000,
+      "cremSeq": 27
+    }
+  },
+  {
+    "cremDate": "2026-07-22",
+    "cremSeq": 28,
+    "objt": "B001",
+    "burnDate": 1784646000000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1666881,
+    "thedead": {
+      "deadId": 1666881,
+      "deadName": "장영식",
+      "id": 1666881,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1784646000000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1784646000000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1784646000000,
+      "cremSeq": 28
+    }
+  },
+  {
+    "cremDate": "2026-07-22",
+    "cremSeq": 29,
+    "objt": "B001",
+    "burnDate": 1784646000000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1666882,
+    "thedead": {
+      "deadId": 1666882,
+      "deadName": "유향란",
+      "id": 1666882,
       "new": false
     },
     "applId": "*******",
@@ -1108,7 +1212,7 @@
     },
     "id": {
       "cremDate": 1784646000000,
-      "cremSeq": 27
+      "cremSeq": 29
     }
   },
   {
