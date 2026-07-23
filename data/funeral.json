@@ -4335,8 +4335,18 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1667301",
+    "deadName": "임두리",
+    "dcGubun": "TCM1200003"
+  },
+  {
     "deadId": "1667303",
     "deadName": "김효은",
     "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1667323",
+    "deadName": "정연은",
+    "dcGubun": "TCM1200001"
   }
 ]
