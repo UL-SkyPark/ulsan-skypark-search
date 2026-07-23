@@ -284,13 +284,69 @@
     "cremSeq": 6,
     "objt": "A001",
     "burnDate": 1784818800000,
-    "burnNo": null,
+    "burnNo": "01",
     "burnChasu": "02",
     "deadId": 1667288,
     "thedead": {
       "deadId": 1667288,
       "deadName": "김의천",
       "id": 1667288,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1784818800000,
+      "burnChasu": "02",
+      "burnNo": "01",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "201",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1784818800000,
+        "burnChasu": "02",
+        "burnNo": "01"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1784818800000,
+      "cremSeq": 6
+    }
+  },
+  {
+    "cremDate": "2026-07-24",
+    "cremSeq": 7,
+    "objt": "A001",
+    "burnDate": 1784818800000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1667299,
+    "thedead": {
+      "deadId": 1667299,
+      "deadName": "김도화",
+      "id": 1667299,
       "new": false
     },
     "applId": "*******",
@@ -324,7 +380,55 @@
     },
     "id": {
       "cremDate": 1784818800000,
-      "cremSeq": 6
+      "cremSeq": 7
+    }
+  },
+  {
+    "cremDate": "2026-07-24",
+    "cremSeq": 8,
+    "objt": "B001",
+    "burnDate": 1784818800000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1667293,
+    "thedead": {
+      "deadId": 1667293,
+      "deadName": "김윤식",
+      "id": 1667293,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1784818800000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1784818800000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1784818800000,
+      "cremSeq": 8
     }
   }
 ]
