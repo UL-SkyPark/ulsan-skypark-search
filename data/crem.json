@@ -294,7 +294,7 @@
       "new": false
     },
     "applId": "*******",
-    "scatterPlace": "TMC0600099",
+    "scatterPlace": "TMC0600010",
     "hwaBrazier": {
       "burnDate": 1784818800000,
       "burnChasu": "04",
@@ -323,6 +323,54 @@
     "burnChasuName": "4회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1784818800000,
+      "cremSeq": 14
+    }
+  },
+  {
+    "cremDate": "2026-07-24",
+    "cremSeq": 15,
+    "objt": "A001",
+    "burnDate": 1784818800000,
+    "burnNo": null,
+    "burnChasu": "04",
+    "deadId": 1667291,
+    "thedead": {
+      "deadId": 1667291,
+      "deadName": "최월숙",
+      "id": 1667291,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1784818800000,
+      "burnChasu": "04",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1784818800000,
+        "burnChasu": "04",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
       "code": "TMC0600099",
       "name": "반출",
       "id": {
@@ -332,7 +380,7 @@
     },
     "id": {
       "cremDate": 1784818800000,
-      "cremSeq": 14
+      "cremSeq": 15
     }
   },
   {
