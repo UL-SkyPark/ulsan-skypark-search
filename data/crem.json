@@ -508,7 +508,7 @@
     "cremSeq": 18,
     "objt": "A001",
     "burnDate": 1784818800000,
-    "burnNo": null,
+    "burnNo": "01",
     "burnChasu": "05",
     "deadId": 1667304,
     "thedead": {
@@ -519,6 +519,62 @@
     },
     "applId": "*******",
     "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1784818800000,
+      "burnChasu": "05",
+      "burnNo": "01",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "201",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1784818800000,
+        "burnChasu": "05",
+        "burnNo": "01"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1784818800000,
+      "cremSeq": 18
+    }
+  },
+  {
+    "cremDate": "2026-07-24",
+    "cremSeq": 19,
+    "objt": "A001",
+    "burnDate": 1784818800000,
+    "burnNo": null,
+    "burnChasu": "05",
+    "deadId": 1667330,
+    "thedead": {
+      "deadId": 1667330,
+      "deadName": "김재식",
+      "id": 1667330,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
     "hwaBrazier": {
       "burnDate": 1784818800000,
       "burnChasu": "05",
@@ -539,16 +595,16 @@
     "burnChasuName": "5회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
-      "code": "TMC0600010",
-      "name": "시설내자연장",
+      "code": "TMC0600006",
+      "name": "유택동산",
       "id": {
         "basicCd": "TMC06",
-        "code": "TMC0600010"
+        "code": "TMC0600006"
       }
     },
     "id": {
       "cremDate": 1784818800000,
-      "cremSeq": 18
+      "cremSeq": 19
     }
   },
   {
