@@ -169,6 +169,62 @@
   },
   {
     "cremDate": "2026-07-26",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1784991600000,
+    "burnNo": "08",
+    "burnChasu": "03",
+    "deadId": 1667370,
+    "thedead": {
+      "deadId": 1667370,
+      "deadName": "SONGJISHUO",
+      "id": 1667370,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1784991600000,
+      "burnChasu": "03",
+      "burnNo": "08",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "208",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1784991600000,
+        "burnChasu": "03",
+        "burnNo": "08"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1784991600000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-07-26",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1784991600000,
@@ -243,17 +299,17 @@
       "burnDate": 1784991600000,
       "burnChasu": "01",
       "burnNo": "09",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:26",
-      "burnEndTime": null,
+      "burnEndTime": "08:50",
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -299,17 +355,17 @@
       "burnDate": 1784991600000,
       "burnChasu": "01",
       "burnNo": "05",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:29",
-      "burnEndTime": null,
+      "burnEndTime": "08:51",
       "waitRoom": "205",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
