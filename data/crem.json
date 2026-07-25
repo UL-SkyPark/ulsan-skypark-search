@@ -172,7 +172,7 @@
     "cremSeq": 12,
     "objt": "A001",
     "burnDate": 1784905200000,
-    "burnNo": null,
+    "burnNo": "06",
     "burnChasu": "03",
     "deadId": 1667333,
     "thedead": {
@@ -186,16 +186,24 @@
     "hwaBrazier": {
       "burnDate": 1784905200000,
       "burnChasu": "03",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "06",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1784905200000,
         "burnChasu": "03",
-        "burnNo": null
+        "burnNo": "06"
       }
     },
     "objtCode": "A001",
@@ -213,6 +221,62 @@
     "id": {
       "cremDate": 1784905200000,
       "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-07-25",
+    "cremSeq": 13,
+    "objt": "A001",
+    "burnDate": 1784905200000,
+    "burnNo": "02",
+    "burnChasu": "04",
+    "deadId": 1667343,
+    "thedead": {
+      "deadId": 1667343,
+      "deadName": "최문정",
+      "id": 1667343,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1784905200000,
+      "burnChasu": "04",
+      "burnNo": "02",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1784905200000,
+        "burnChasu": "04",
+        "burnNo": "02"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1784905200000,
+      "cremSeq": 13
     }
   },
   {
