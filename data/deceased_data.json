@@ -41591,7 +41591,7 @@
     "strDate": "2016-12-05",
     "ensNo": "1추모의집-23실-개인단-07463",
     "deadName": "최인근",
-    "retDate": null
+    "retDate": "2026-07-25"
   },
   {
     "deadId": "1458860",
@@ -189151,6 +189151,13 @@
     "strDate": "2026-07-25",
     "ensNo": "1추모의집-63실-개인단-22572",
     "deadName": "박종찬",
+    "retDate": null
+  },
+  {
+    "deadId": "1667336",
+    "strDate": "2026-07-25",
+    "ensNo": "1추모의집-63실-개인단-22573",
+    "deadName": "이창원",
     "retDate": null
   }
 ]
