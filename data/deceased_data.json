@@ -189203,17 +189203,17 @@
     "retDate": null
   },
   {
-    "deadId": "1667395",
-    "strDate": "2026-07-27",
-    "ensNo": null,
-    "deadName": "김화자",
-    "retDate": null
-  },
-  {
     "deadId": "1667340",
     "strDate": "2026-07-27",
     "ensNo": "1추모의집-48실-개인단-15837",
     "deadName": "황우순",
+    "retDate": null
+  },
+  {
+    "deadId": "1667395",
+    "strDate": "2026-07-27",
+    "ensNo": "1추모의집-63실-개인단-22580",
+    "deadName": "김화자",
     "retDate": null
   }
 ]
