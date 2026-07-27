@@ -665,6 +665,54 @@
   },
   {
     "cremDate": "2026-07-27",
+    "cremSeq": 21,
+    "objt": "A001",
+    "burnDate": 1785078000000,
+    "burnNo": null,
+    "burnChasu": "05",
+    "deadId": 1667408,
+    "thedead": {
+      "deadId": 1667408,
+      "deadName": "심귀주",
+      "id": 1667408,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1785078000000,
+      "burnChasu": "05",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1785078000000,
+        "burnChasu": "05",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1785078000000,
+      "cremSeq": 21
+    }
+  },
+  {
+    "cremDate": "2026-07-27",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1785078000000,
