@@ -243,17 +243,17 @@
       "burnDate": 1785164400000,
       "burnChasu": "04",
       "burnNo": "09",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "10:18",
-      "burnEndTime": null,
+      "burnEndTime": "11:45",
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -299,17 +299,17 @@
       "burnDate": 1785164400000,
       "burnChasu": "04",
       "burnNo": "05",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "10:23",
-      "burnEndTime": null,
+      "burnEndTime": "11:46",
       "waitRoom": "205",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -781,6 +781,102 @@
     "id": {
       "cremDate": 1785164400000,
       "cremSeq": 21
+    }
+  },
+  {
+    "cremDate": "2026-07-28",
+    "cremSeq": 22,
+    "objt": "B001",
+    "burnDate": 1785164400000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1667457,
+    "thedead": {
+      "deadId": 1667457,
+      "deadName": "심원식",
+      "id": 1667457,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1785164400000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1785164400000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1785164400000,
+      "cremSeq": 22
+    }
+  },
+  {
+    "cremDate": "2026-07-28",
+    "cremSeq": 23,
+    "objt": "B001",
+    "burnDate": 1785164400000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1667468,
+    "thedead": {
+      "deadId": 1667468,
+      "deadName": "박계산",
+      "id": 1667468,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1785164400000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1785164400000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1785164400000,
+      "cremSeq": 23
     }
   },
   {
