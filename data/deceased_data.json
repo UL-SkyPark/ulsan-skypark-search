@@ -189357,13 +189357,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667519",
-    "strDate": "2026-07-30",
-    "ensNo": null,
-    "deadName": "유승수",
-    "retDate": null
-  },
-  {
     "deadId": "1667442",
     "strDate": "2026-07-30",
     "ensNo": "1추모의집-45실-개인단-15088",
@@ -189396,6 +189389,13 @@
     "strDate": "2026-07-30",
     "ensNo": "1추모의집-63실-개인단-22599",
     "deadName": "이정호",
+    "retDate": null
+  },
+  {
+    "deadId": "1667519",
+    "strDate": "2026-07-30",
+    "ensNo": "1추모의집-63실-개인단-22600",
+    "deadName": "유승수",
     "retDate": null
   }
 ]
