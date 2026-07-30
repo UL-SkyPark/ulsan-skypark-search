@@ -138551,17 +138551,17 @@
     "retDate": null
   },
   {
-    "deadId": "1472714",
-    "strDate": "2023-08-30",
-    "ensNo": "1추모의집-무연고1실-개인단-00114",
-    "deadName": "김영호",
-    "retDate": null
-  },
-  {
     "deadId": "1472713",
     "strDate": "2023-08-30",
     "ensNo": "1추모의집-무연고1실-무연고-00113",
     "deadName": "박태우",
+    "retDate": null
+  },
+  {
+    "deadId": "1472714",
+    "strDate": "2023-08-30",
+    "ensNo": "1추모의집-무연고1실-무연고-00114",
+    "deadName": "김영호",
     "retDate": null
   },
   {
