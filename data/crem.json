@@ -299,17 +299,17 @@
       "burnDate": 1785423600000,
       "burnChasu": "04",
       "burnNo": "07",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "10:19",
       "burnEndTime": "11:41",
       "waitRoom": "207",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -355,17 +355,17 @@
       "burnDate": 1785423600000,
       "burnChasu": "04",
       "burnNo": "03",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "10:23",
-      "burnEndTime": null,
+      "burnEndTime": "11:46",
       "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -788,13 +788,69 @@
     "cremSeq": 22,
     "objt": "A001",
     "burnDate": 1785423600000,
-    "burnNo": null,
+    "burnNo": "06",
     "burnChasu": "06",
     "deadId": 1667571,
     "thedead": {
       "deadId": 1667571,
       "deadName": "YU XUANQUAN",
       "id": 1667571,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1785423600000,
+      "burnChasu": "06",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1785423600000,
+        "burnChasu": "06",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1785423600000,
+      "cremSeq": 22
+    }
+  },
+  {
+    "cremDate": "2026-07-31",
+    "cremSeq": 23,
+    "objt": "A001",
+    "burnDate": 1785423600000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1667570,
+    "thedead": {
+      "deadId": 1667570,
+      "deadName": "이덕혜",
+      "id": 1667570,
       "new": false
     },
     "applId": "*******",
@@ -828,7 +884,7 @@
     },
     "id": {
       "cremDate": 1785423600000,
-      "cremSeq": 22
+      "cremSeq": 23
     }
   },
   {
