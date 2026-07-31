@@ -189399,13 +189399,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667566",
-    "strDate": "2026-07-31",
-    "ensNo": null,
-    "deadName": "김시원",
-    "retDate": null
-  },
-  {
     "deadId": "1667532",
     "strDate": "2026-07-31",
     "ensNo": "1추모의집-09실-부부단-01970",
@@ -189466,6 +189459,13 @@
     "strDate": "2026-07-31",
     "ensNo": "1추모의집-63실-개인단-22606",
     "deadName": "민안주",
+    "retDate": null
+  },
+  {
+    "deadId": "1667566",
+    "strDate": "2026-07-31",
+    "ensNo": "1추모의집-63실-개인단-22607",
+    "deadName": "김시원",
     "retDate": null
   }
 ]
