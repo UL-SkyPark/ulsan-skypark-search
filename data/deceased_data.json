@@ -189497,13 +189497,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667602",
-    "strDate": "2026-08-02",
-    "ensNo": null,
-    "deadName": "권재호",
-    "retDate": null
-  },
-  {
     "deadId": "1667556",
     "strDate": "2026-08-02",
     "ensNo": "1추모의집-29실-개인단-09799",
@@ -189515,6 +189508,13 @@
     "strDate": "2026-08-02",
     "ensNo": "1추모의집-63실-개인단-22610",
     "deadName": "이상열",
+    "retDate": null
+  },
+  {
+    "deadId": "1667602",
+    "strDate": "2026-08-02",
+    "ensNo": "1추모의집-63실-개인단-22611",
+    "deadName": "권재호",
     "retDate": null
   }
 ]
