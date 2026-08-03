@@ -189354,7 +189354,7 @@
     "strDate": "2026-07-29",
     "ensNo": "1추모의집-63실-개인단-22595",
     "deadName": "나순석",
-    "retDate": null
+    "retDate": "2026-08-03"
   },
   {
     "deadId": "1667442",
@@ -189529,6 +189529,13 @@
     "strDate": "2026-08-02",
     "ensNo": "1추모의집-63실-개인단-22612",
     "deadName": "이종두",
+    "retDate": null
+  },
+  {
+    "deadId": "1667616",
+    "strDate": "2026-08-03",
+    "ensNo": null,
+    "deadName": "임판섭",
     "retDate": null
   },
   {
