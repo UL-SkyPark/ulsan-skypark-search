@@ -189532,9 +189532,16 @@
     "retDate": null
   },
   {
+    "deadId": "1667480",
+    "strDate": "2026-08-03",
+    "ensNo": "1추모의집-09실-부부단-01971",
+    "deadName": "나순석",
+    "retDate": null
+  },
+  {
     "deadId": "1667616",
     "strDate": "2026-08-03",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-01971",
     "deadName": "임판섭",
     "retDate": null
   },
