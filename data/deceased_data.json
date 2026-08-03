@@ -189532,13 +189532,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667632",
-    "strDate": "2026-08-03",
-    "ensNo": null,
-    "deadName": "박병민",
-    "retDate": null
-  },
-  {
     "deadId": "1667687",
     "strDate": "2026-08-03",
     "ensNo": "1추모의집-15실-개인단-04216",
@@ -189564,6 +189557,13 @@
     "strDate": "2026-08-03",
     "ensNo": "1추모의집-63실-개인단-22615",
     "deadName": "박용출",
+    "retDate": null
+  },
+  {
+    "deadId": "1667632",
+    "strDate": "2026-08-03",
+    "ensNo": "1추모의집-63실-개인단-22616",
+    "deadName": "박병민",
     "retDate": null
   }
 ]
