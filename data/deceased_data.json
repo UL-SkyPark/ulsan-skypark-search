@@ -189700,24 +189700,24 @@
     "retDate": null
   },
   {
+    "deadId": "1667677",
+    "strDate": "2026-08-06",
+    "ensNo": "1추모의집-16실-개인단-04589",
+    "deadName": "최영미",
+    "retDate": null
+  },
+  {
     "deadId": "1667698",
     "strDate": "2026-08-06",
-    "ensNo": null,
+    "ensNo": "1추모의집-63실-개인단-22626",
     "deadName": "문종기",
     "retDate": null
   },
   {
     "deadId": "1667741",
     "strDate": "2026-08-06",
-    "ensNo": null,
+    "ensNo": "1추모의집-63실-개인단-22627",
     "deadName": "이지혜",
-    "retDate": null
-  },
-  {
-    "deadId": "1667677",
-    "strDate": "2026-08-06",
-    "ensNo": "1추모의집-16실-개인단-04589",
-    "deadName": "최영미",
     "retDate": null
   }
 ]
