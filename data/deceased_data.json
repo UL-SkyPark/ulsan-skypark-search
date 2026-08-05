@@ -189700,13 +189700,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667727",
-    "strDate": "2026-08-06",
-    "ensNo": null,
-    "deadName": "추해용",
-    "retDate": null
-  },
-  {
     "deadId": "1667677",
     "strDate": "2026-08-06",
     "ensNo": "1추모의집-16실-개인단-04589",
@@ -189732,6 +189725,13 @@
     "strDate": "2026-08-06",
     "ensNo": "1추모의집-63실-개인단-22628",
     "deadName": "이광열",
+    "retDate": null
+  },
+  {
+    "deadId": "1667727",
+    "strDate": "2026-08-06",
+    "ensNo": "1추모의집-63실-개인단-22629",
+    "deadName": "추해용",
     "retDate": null
   }
 ]
