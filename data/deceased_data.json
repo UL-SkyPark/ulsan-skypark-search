@@ -189616,13 +189616,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667717",
-    "strDate": "2026-08-05",
-    "ensNo": null,
-    "deadName": "황갑선",
-    "retDate": null
-  },
-  {
     "deadId": "1667682",
     "strDate": "2026-08-05",
     "ensNo": "1추모의집-09실-부부단-01973",
@@ -189634,6 +189627,20 @@
     "strDate": "2026-08-05",
     "ensNo": "1추모의집-09실-부부단-01973",
     "deadName": "김성태",
+    "retDate": null
+  },
+  {
+    "deadId": "1667717",
+    "strDate": "2026-08-05",
+    "ensNo": "1추모의집-09실-부부단-01974",
+    "deadName": "황갑선",
+    "retDate": null
+  },
+  {
+    "deadId": "1667769",
+    "strDate": "2026-08-05",
+    "ensNo": "1추모의집-09실-부부단-01974",
+    "deadName": "하영원",
     "retDate": null
   },
   {
