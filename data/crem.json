@@ -54,5 +54,101 @@
       "cremDate": 1786028400000,
       "cremSeq": 1
     }
+  },
+  {
+    "cremDate": "2026-08-07",
+    "cremSeq": 2,
+    "objt": "A001",
+    "burnDate": 1786028400000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1667749,
+    "thedead": {
+      "deadId": 1667749,
+      "deadName": "박춘근",
+      "id": 1667749,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1786028400000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1786028400000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1786028400000,
+      "cremSeq": 2
+    }
+  },
+  {
+    "cremDate": "2026-08-07",
+    "cremSeq": 3,
+    "objt": "A001",
+    "burnDate": 1786028400000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1667754,
+    "thedead": {
+      "deadId": 1667754,
+      "deadName": "김길전",
+      "id": 1667754,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1786028400000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1786028400000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1786028400000,
+      "cremSeq": 3
+    }
   }
 ]
