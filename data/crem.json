@@ -113,6 +113,54 @@
   },
   {
     "cremDate": "2026-08-07",
+    "cremSeq": 11,
+    "objt": "A001",
+    "burnDate": 1786028400000,
+    "burnNo": null,
+    "burnChasu": "04",
+    "deadId": 1667770,
+    "thedead": {
+      "deadId": 1667770,
+      "deadName": "이안생",
+      "id": 1667770,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1786028400000,
+      "burnChasu": "04",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1786028400000,
+        "burnChasu": "04",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1786028400000,
+      "cremSeq": 11
+    }
+  },
+  {
+    "cremDate": "2026-08-07",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1786028400000,
