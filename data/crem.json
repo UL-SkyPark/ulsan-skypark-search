@@ -75,17 +75,17 @@
       "burnDate": 1786114800000,
       "burnChasu": "03",
       "burnNo": "03",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "09:18",
       "burnEndTime": "10:38",
       "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -131,17 +131,17 @@
       "burnDate": 1786114800000,
       "burnChasu": "03",
       "burnNo": "08",
-      "burnStatus": "3",
+      "burnStatus": "9",
       "burnStrTime": "09:22",
-      "burnEndTime": null,
+      "burnEndTime": "10:44",
       "waitRoom": "208",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "9"
         }
       },
       "id": {
@@ -187,17 +187,17 @@
       "burnDate": 1786114800000,
       "burnChasu": "03",
       "burnNo": "04",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "09:28",
-      "burnEndTime": null,
+      "burnEndTime": "10:46",
       "waitRoom": "204",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -561,6 +561,62 @@
   },
   {
     "cremDate": "2026-08-08",
+    "cremSeq": 19,
+    "objt": "A001",
+    "burnDate": 1786114800000,
+    "burnNo": "07",
+    "burnChasu": "05",
+    "deadId": 1667828,
+    "thedead": {
+      "deadId": 1667828,
+      "deadName": "지재용",
+      "id": 1667828,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1786114800000,
+      "burnChasu": "05",
+      "burnNo": "07",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1786114800000,
+        "burnChasu": "05",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1786114800000,
+      "cremSeq": 19
+    }
+  },
+  {
+    "cremDate": "2026-08-08",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1786114800000,
@@ -613,6 +669,62 @@
     "id": {
       "cremDate": 1786114800000,
       "cremSeq": 2
+    }
+  },
+  {
+    "cremDate": "2026-08-08",
+    "cremSeq": 20,
+    "objt": "A001",
+    "burnDate": 1786114800000,
+    "burnNo": "03",
+    "burnChasu": "05",
+    "deadId": 1667826,
+    "thedead": {
+      "deadId": 1667826,
+      "deadName": "최광호",
+      "id": 1667826,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1786114800000,
+      "burnChasu": "05",
+      "burnNo": "03",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1786114800000,
+        "burnChasu": "05",
+        "burnNo": "03"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1786114800000,
+      "cremSeq": 20
     }
   },
   {
