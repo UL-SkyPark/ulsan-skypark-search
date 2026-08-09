@@ -187,17 +187,17 @@
       "burnDate": 1786201200000,
       "burnChasu": "03",
       "burnNo": "01",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "09:25",
       "burnEndTime": null,
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -277,6 +277,118 @@
     "id": {
       "cremDate": 1786201200000,
       "cremSeq": 13
+    }
+  },
+  {
+    "cremDate": "2026-08-09",
+    "cremSeq": 14,
+    "objt": "A001",
+    "burnDate": 1786201200000,
+    "burnNo": "02",
+    "burnChasu": "04",
+    "deadId": 1667861,
+    "thedead": {
+      "deadId": 1667861,
+      "deadName": "임채순",
+      "id": 1667861,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1786201200000,
+      "burnChasu": "04",
+      "burnNo": "02",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1786201200000,
+        "burnChasu": "04",
+        "burnNo": "02"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1786201200000,
+      "cremSeq": 14
+    }
+  },
+  {
+    "cremDate": "2026-08-09",
+    "cremSeq": 15,
+    "objt": "B001",
+    "burnDate": 1786201200000,
+    "burnNo": "07",
+    "burnChasu": "07",
+    "deadId": 1667874,
+    "thedead": {
+      "deadId": 1667874,
+      "deadName": "김수웅",
+      "id": 1667874,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1786201200000,
+      "burnChasu": "07",
+      "burnNo": "07",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1786201200000,
+        "burnChasu": "07",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1786201200000,
+      "cremSeq": 15
     }
   },
   {
@@ -676,7 +788,7 @@
     "cremSeq": 9,
     "objt": "A001",
     "burnDate": 1786201200000,
-    "burnNo": "02",
+    "burnNo": null,
     "burnChasu": "05",
     "deadId": 1667907,
     "thedead": {
@@ -690,24 +802,16 @@
     "hwaBrazier": {
       "burnDate": 1786201200000,
       "burnChasu": "05",
-      "burnNo": "02",
-      "burnStatus": "1",
+      "burnNo": null,
+      "burnStatus": null,
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": "202",
-      "burnStatusCode": {
-        "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
-        "id": {
-          "basicCd": "BURN_STA",
-          "code": "1"
-        }
-      },
+      "waitRoom": null,
+      "burnStatusCode": null,
       "id": {
         "burnDate": 1786201200000,
         "burnChasu": "05",
-        "burnNo": "02"
+        "burnNo": null
       }
     },
     "objtCode": "A001",
