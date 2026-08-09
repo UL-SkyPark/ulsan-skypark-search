@@ -299,17 +299,17 @@
       "burnDate": 1786201200000,
       "burnChasu": "04",
       "burnNo": "02",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "10:16",
       "burnEndTime": "11:35",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -355,17 +355,17 @@
       "burnDate": 1786201200000,
       "burnChasu": "07",
       "burnNo": "07",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "10:16",
       "burnEndTime": "10:52",
       "waitRoom": "207",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -781,6 +781,110 @@
     "id": {
       "cremDate": 1786201200000,
       "cremSeq": 21
+    }
+  },
+  {
+    "cremDate": "2026-08-09",
+    "cremSeq": 22,
+    "objt": "A001",
+    "burnDate": 1786201200000,
+    "burnNo": "06",
+    "burnChasu": "06",
+    "deadId": 1667847,
+    "thedead": {
+      "deadId": 1667847,
+      "deadName": "김기호",
+      "id": 1667847,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1786201200000,
+      "burnChasu": "06",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1786201200000,
+        "burnChasu": "06",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1786201200000,
+      "cremSeq": 22
+    }
+  },
+  {
+    "cremDate": "2026-08-09",
+    "cremSeq": 23,
+    "objt": "A001",
+    "burnDate": 1786201200000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1667856,
+    "thedead": {
+      "deadId": 1667856,
+      "deadName": "김인석",
+      "id": 1667856,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1786201200000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1786201200000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1786201200000,
+      "cremSeq": 23
     }
   },
   {
