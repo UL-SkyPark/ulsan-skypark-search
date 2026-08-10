@@ -189903,13 +189903,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667945",
-    "strDate": "2026-08-10",
-    "ensNo": null,
-    "deadName": "곽광화",
-    "retDate": null
-  },
-  {
     "deadId": "1551564",
     "strDate": "2026-08-10",
     "ensNo": "1추모의집-09실-부부단-01979",
@@ -189921,6 +189914,13 @@
     "strDate": "2026-08-10",
     "ensNo": "1추모의집-09실-부부단-01979",
     "deadName": "김순희",
+    "retDate": null
+  },
+  {
+    "deadId": "1667945",
+    "strDate": "2026-08-10",
+    "ensNo": "1추모의집-11실-개인단-02664",
+    "deadName": "곽광화",
     "retDate": null
   },
   {
@@ -189956,6 +189956,13 @@
     "strDate": "2026-08-10",
     "ensNo": "1추모의집-63실-개인단-22647",
     "deadName": "김방자",
+    "retDate": null
+  },
+  {
+    "deadId": "1667886",
+    "strDate": "2026-08-10",
+    "ensNo": "1추모의집-63실-개인단-22648",
+    "deadName": "조정자",
     "retDate": null
   }
 ]
