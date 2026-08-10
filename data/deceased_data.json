@@ -189903,13 +189903,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667866",
-    "strDate": "2026-08-10",
-    "ensNo": null,
-    "deadName": "이한영",
-    "retDate": null
-  },
-  {
     "deadId": "1551564",
     "strDate": "2026-08-10",
     "ensNo": "1추모의집-09실-부부단-01979",
@@ -189921,6 +189914,13 @@
     "strDate": "2026-08-10",
     "ensNo": "1추모의집-09실-부부단-01979",
     "deadName": "김순희",
+    "retDate": null
+  },
+  {
+    "deadId": "1667866",
+    "strDate": "2026-08-10",
+    "ensNo": "1추모의집-33실-개인단-11290",
+    "deadName": "이한영",
     "retDate": null
   },
   {
