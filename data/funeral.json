@@ -4660,8 +4660,23 @@
     "dcGubun": "TCM1200099"
   },
   {
+    "deadId": "1667920",
+    "deadName": "최정경",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1667926",
+    "deadName": "강정순",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1667943",
     "deadName": "박달신",
     "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1667945",
+    "deadName": "곽광화",
+    "dcGubun": "TCM1200099"
   }
 ]
