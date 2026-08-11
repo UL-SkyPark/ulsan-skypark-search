@@ -1161,6 +1161,54 @@
   },
   {
     "cremDate": "2026-08-11",
+    "cremSeq": 29,
+    "objt": "A001",
+    "burnDate": 1786374000000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1667978,
+    "thedead": {
+      "deadId": 1667978,
+      "deadName": "김외문",
+      "id": 1667978,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1786374000000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1786374000000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1786374000000,
+      "cremSeq": 29
+    }
+  },
+  {
+    "cremDate": "2026-08-11",
     "cremSeq": 3,
     "objt": "B001",
     "burnDate": 1786374000000,
