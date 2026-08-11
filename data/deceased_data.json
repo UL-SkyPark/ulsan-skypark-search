@@ -189966,13 +189966,6 @@
     "retDate": null
   },
   {
-    "deadId": "1667936",
-    "strDate": "2026-08-11",
-    "ensNo": null,
-    "deadName": "조성태",
-    "retDate": null
-  },
-  {
     "deadId": "1471712",
     "strDate": "2026-08-11",
     "ensNo": "1추모의집-09실-부부단-01980",
@@ -190026,6 +190019,13 @@
     "strDate": "2026-08-11",
     "ensNo": "1추모의집-63실-개인단-22652",
     "deadName": "전보수",
+    "retDate": null
+  },
+  {
+    "deadId": "1667936",
+    "strDate": "2026-08-11",
+    "ensNo": "1추모의집-63실-개인단-22653",
+    "deadName": "조성태",
     "retDate": null
   }
 ]
