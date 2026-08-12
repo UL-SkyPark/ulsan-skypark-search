@@ -19,17 +19,17 @@
       "burnDate": 1786546800000,
       "burnChasu": "01",
       "burnNo": "01",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:17",
-      "burnEndTime": null,
+      "burnEndTime": "08:38",
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -118,7 +118,7 @@
       "new": false
     },
     "applId": "*******",
-    "scatterPlace": "TMC0600010",
+    "scatterPlace": "TMC0600099",
     "hwaBrazier": {
       "burnDate": 1786546800000,
       "burnChasu": "07",
@@ -139,11 +139,11 @@
     "burnChasuName": "7회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
-      "code": "TMC0600010",
-      "name": "시설내자연장",
+      "code": "TMC0600099",
+      "name": "반출",
       "id": {
         "basicCd": "TMC06",
-        "code": "TMC0600010"
+        "code": "TMC0600099"
       }
     },
     "id": {
@@ -171,17 +171,17 @@
       "burnDate": 1786546800000,
       "burnChasu": "01",
       "burnNo": "06",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:21",
-      "burnEndTime": null,
+      "burnEndTime": "08:41",
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
