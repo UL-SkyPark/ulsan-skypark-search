@@ -19,17 +19,17 @@
       "burnDate": 1786546800000,
       "burnChasu": "01",
       "burnNo": "01",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "07:17",
       "burnEndTime": "08:38",
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -171,17 +171,17 @@
       "burnDate": 1786546800000,
       "burnChasu": "01",
       "burnNo": "06",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "07:21",
       "burnEndTime": "08:41",
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -227,17 +227,17 @@
       "burnDate": 1786546800000,
       "burnChasu": "01",
       "burnNo": "02",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:25",
-      "burnEndTime": null,
+      "burnEndTime": "08:46",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -502,7 +502,7 @@
       "new": false
     },
     "applId": "*******",
-    "scatterPlace": "TMC0600001",
+    "scatterPlace": "TMC0600099",
     "hwaBrazier": {
       "burnDate": 1786546800000,
       "burnChasu": "02",
@@ -531,11 +531,11 @@
     "burnChasuName": "2회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
-      "code": "TMC0600001",
-      "name": "추모의집",
+      "code": "TMC0600099",
+      "name": "반출",
       "id": {
         "basicCd": "TMC06",
-        "code": "TMC0600001"
+        "code": "TMC0600099"
       }
     },
     "id": {
