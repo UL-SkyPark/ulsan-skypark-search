@@ -161,6 +161,102 @@
   },
   {
     "cremDate": "2026-08-12",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1786460400000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1667981,
+    "thedead": {
+      "deadId": 1667981,
+      "deadName": "강병환",
+      "id": 1667981,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1786460400000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1786460400000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1786460400000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-08-12",
+    "cremSeq": 13,
+    "objt": "B001",
+    "burnDate": 1786460400000,
+    "burnNo": null,
+    "burnChasu": "08",
+    "deadId": 1668005,
+    "thedead": {
+      "deadId": 1668005,
+      "deadName": "백외순",
+      "id": 1668005,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1786460400000,
+      "burnChasu": "08",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1786460400000,
+        "burnChasu": "08",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "8회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1786460400000,
+      "cremSeq": 13
+    }
+  },
+  {
+    "cremDate": "2026-08-12",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1786460400000,
@@ -347,17 +443,17 @@
       "burnDate": 1786460400000,
       "burnChasu": "02",
       "burnNo": "01",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "08:19",
       "burnEndTime": "09:35",
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
