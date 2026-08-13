@@ -63205,6 +63205,12 @@
   },
   {
     "natDate": "2026-08-13",
+    "natNo": null,
+    "deadId": "1668009",
+    "deadName": "고관수"
+  },
+  {
+    "natDate": "2026-08-13",
     "natNo": "수목장-2-3-0002",
     "deadId": "1668001",
     "deadName": "박소삼"
