@@ -60,7 +60,7 @@
     "cremSeq": 10,
     "objt": "A001",
     "burnDate": 1786892400000,
-    "burnNo": null,
+    "burnNo": "05",
     "burnChasu": "03",
     "deadId": 1668134,
     "thedead": {
@@ -74,16 +74,24 @@
     "hwaBrazier": {
       "burnDate": 1786892400000,
       "burnChasu": "03",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "05",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1786892400000,
         "burnChasu": "03",
-        "burnNo": null
+        "burnNo": "05"
       }
     },
     "objtCode": "A001",
@@ -101,6 +109,62 @@
     "id": {
       "cremDate": 1786892400000,
       "cremSeq": 10
+    }
+  },
+  {
+    "cremDate": "2026-08-17",
+    "cremSeq": 11,
+    "objt": "A001",
+    "burnDate": 1786892400000,
+    "burnNo": "10",
+    "burnChasu": "03",
+    "deadId": 1668113,
+    "thedead": {
+      "deadId": 1668113,
+      "deadName": "유재호",
+      "id": 1668113,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1786892400000,
+      "burnChasu": "03",
+      "burnNo": "10",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1786892400000,
+        "burnChasu": "03",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1786892400000,
+      "cremSeq": 11
     }
   },
   {
@@ -493,54 +557,6 @@
     "id": {
       "cremDate": 1786892400000,
       "cremSeq": 8
-    }
-  },
-  {
-    "cremDate": "2026-08-17",
-    "cremSeq": 9,
-    "objt": "A001",
-    "burnDate": 1786892400000,
-    "burnNo": null,
-    "burnChasu": "03",
-    "deadId": 1668113,
-    "thedead": {
-      "deadId": 1668113,
-      "deadName": "유재호",
-      "id": 1668113,
-      "new": false
-    },
-    "applId": "*******",
-    "scatterPlace": "TMC0600099",
-    "hwaBrazier": {
-      "burnDate": 1786892400000,
-      "burnChasu": "03",
-      "burnNo": null,
-      "burnStatus": null,
-      "burnStrTime": null,
-      "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
-      "id": {
-        "burnDate": 1786892400000,
-        "burnChasu": "03",
-        "burnNo": null
-      }
-    },
-    "objtCode": "A001",
-    "objtName": "시신",
-    "burnChasuName": "3회차",
-    "scatterPlaceCode": {
-      "basicCd": "TMC06",
-      "code": "TMC0600099",
-      "name": "반출",
-      "id": {
-        "basicCd": "TMC06",
-        "code": "TMC0600099"
-      }
-    },
-    "id": {
-      "cremDate": 1786892400000,
-      "cremSeq": 9
     }
   }
 ]
