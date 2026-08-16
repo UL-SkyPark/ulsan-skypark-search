@@ -299,17 +299,17 @@
       "burnDate": 1786892400000,
       "burnChasu": "01",
       "burnNo": "02",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:26",
-      "burnEndTime": null,
+      "burnEndTime": "08:53",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -355,17 +355,17 @@
       "burnDate": 1786892400000,
       "burnChasu": "01",
       "burnNo": "07",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:31",
-      "burnEndTime": null,
+      "burnEndTime": "08:54",
       "waitRoom": "207",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
