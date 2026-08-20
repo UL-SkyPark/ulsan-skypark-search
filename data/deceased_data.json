@@ -190365,13 +190365,6 @@
     "retDate": null
   },
   {
-    "deadId": "1668251",
-    "strDate": "2026-08-21",
-    "ensNo": null,
-    "deadName": "백만현",
-    "retDate": null
-  },
-  {
     "deadId": "1668266",
     "strDate": "2026-08-21",
     "ensNo": null,
@@ -190383,6 +190376,13 @@
     "strDate": "2026-08-21",
     "ensNo": "1추모의집-52실-개인단-17238",
     "deadName": "정경자",
+    "retDate": null
+  },
+  {
+    "deadId": "1668251",
+    "strDate": "2026-08-21",
+    "ensNo": "1추모의집-64실-개인단-22690",
+    "deadName": "백만현",
     "retDate": null
   }
 ]
