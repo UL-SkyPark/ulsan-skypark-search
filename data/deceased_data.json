@@ -190402,8 +190402,15 @@
   {
     "deadId": "1668280",
     "strDate": "2026-08-22",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-01987",
     "deadName": "김임순",
+    "retDate": null
+  },
+  {
+    "deadId": "1668339",
+    "strDate": "2026-08-22",
+    "ensNo": "1추모의집-09실-부부단-01987",
+    "deadName": "박종호",
     "retDate": null
   },
   {
