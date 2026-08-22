@@ -63691,6 +63691,12 @@
   },
   {
     "natDate": "2026-08-23",
+    "natNo": null,
+    "deadId": "1668324",
+    "deadName": "이영주"
+  },
+  {
+    "natDate": "2026-08-23",
     "natNo": "잔디장-2-9-0749",
     "deadId": "1668326",
     "deadName": "김순옥"
