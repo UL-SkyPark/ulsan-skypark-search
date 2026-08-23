@@ -190491,13 +190491,6 @@
     "retDate": null
   },
   {
-    "deadId": "1668352",
-    "strDate": "2026-08-24",
-    "ensNo": null,
-    "deadName": "박지훈",
-    "retDate": null
-  },
-  {
     "deadId": "1668316",
     "strDate": "2026-08-24",
     "ensNo": "1추모의집-31실-개인단-10573",
@@ -190509,6 +190502,13 @@
     "strDate": "2026-08-24",
     "ensNo": "1추모의집-44실-개인단-14798",
     "deadName": "한상숙",
+    "retDate": null
+  },
+  {
+    "deadId": "1668352",
+    "strDate": "2026-08-24",
+    "ensNo": "1추모의집-64실-개인단-22699",
+    "deadName": "박지훈",
     "retDate": null
   }
 ]
