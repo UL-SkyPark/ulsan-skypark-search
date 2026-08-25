@@ -4955,6 +4955,16 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1668411",
+    "deadName": "임재두",
+    "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1668413",
+    "deadName": "박천익",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1668415",
     "deadName": "허정순",
     "dcGubun": "TCM1200002"
@@ -4962,6 +4972,11 @@
   {
     "deadId": "1668438",
     "deadName": "JIN YINGYU",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1668439",
+    "deadName": "김정희",
     "dcGubun": "TCM1200001"
   }
 ]
