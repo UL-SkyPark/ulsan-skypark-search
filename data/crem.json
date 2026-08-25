@@ -57,6 +57,150 @@
   },
   {
     "cremDate": "2026-08-25",
+    "cremSeq": 10,
+    "objt": "A001",
+    "burnDate": 1787583600000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1668382,
+    "thedead": {
+      "deadId": 1668382,
+      "deadName": "심경자",
+      "id": 1668382,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1787583600000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1787583600000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1787583600000,
+      "cremSeq": 10
+    }
+  },
+  {
+    "cremDate": "2026-08-25",
+    "cremSeq": 11,
+    "objt": "A001",
+    "burnDate": 1787583600000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1668359,
+    "thedead": {
+      "deadId": 1668359,
+      "deadName": "안종광",
+      "id": 1668359,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1787583600000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1787583600000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1787583600000,
+      "cremSeq": 11
+    }
+  },
+  {
+    "cremDate": "2026-08-25",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1787583600000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1668413,
+    "thedead": {
+      "deadId": 1668413,
+      "deadName": "박천익",
+      "id": 1668413,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1787583600000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1787583600000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1787583600000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-08-25",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1787583600000,

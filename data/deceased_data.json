@@ -190526,10 +190526,24 @@
     "retDate": null
   },
   {
+    "deadId": "1668359",
+    "strDate": "2026-08-25",
+    "ensNo": null,
+    "deadName": "안종광",
+    "retDate": null
+  },
+  {
     "deadId": "1668377",
     "strDate": "2026-08-25",
     "ensNo": null,
     "deadName": "한초자",
+    "retDate": null
+  },
+  {
+    "deadId": "1668382",
+    "strDate": "2026-08-25",
+    "ensNo": null,
+    "deadName": "심경자",
     "retDate": null
   }
 ]
