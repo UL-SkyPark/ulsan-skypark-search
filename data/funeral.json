@@ -4985,6 +4985,16 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1668445",
+    "deadName": "설수식",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1668446",
+    "deadName": "유일순",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1668447",
     "deadName": "함호숙",
     "dcGubun": "TCM1200001"
@@ -4993,5 +5003,10 @@
     "deadId": "1668476",
     "deadName": "최정선",
     "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1668477",
+    "deadName": "조명훈",
+    "dcGubun": "TCM1200001"
   }
 ]
