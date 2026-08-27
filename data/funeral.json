@@ -5000,6 +5000,16 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1668448",
+    "deadName": "김도석",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1668468",
+    "deadName": "이재호",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1668476",
     "deadName": "최정선",
     "dcGubun": "TCM1200002"
@@ -5013,5 +5023,10 @@
     "deadId": "1668507",
     "deadName": "김은곤",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1668512",
+    "deadName": "조종화",
+    "dcGubun": "TCM1200099"
   }
 ]
