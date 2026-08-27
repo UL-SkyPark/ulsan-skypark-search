@@ -190631,13 +190631,6 @@
     "retDate": null
   },
   {
-    "deadId": "1668502",
-    "strDate": "2026-08-28",
-    "ensNo": null,
-    "deadName": "박기재",
-    "retDate": null
-  },
-  {
     "deadId": "1668437",
     "strDate": "2026-08-28",
     "ensNo": "1추모의집-48실-개인단-15863",
@@ -190649,6 +190642,13 @@
     "strDate": "2026-08-28",
     "ensNo": "1추모의집-64실-개인단-22710",
     "deadName": "김한석",
+    "retDate": null
+  },
+  {
+    "deadId": "1668502",
+    "strDate": "2026-08-28",
+    "ensNo": "1추모의집-64실-개인단-22711",
+    "deadName": "박기재",
     "retDate": null
   }
 ]
