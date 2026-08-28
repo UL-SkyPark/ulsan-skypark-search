@@ -225,6 +225,54 @@
   },
   {
     "cremDate": "2026-08-28",
+    "cremSeq": 13,
+    "objt": "A001",
+    "burnDate": 1787842800000,
+    "burnNo": null,
+    "burnChasu": "04",
+    "deadId": 1668458,
+    "thedead": {
+      "deadId": 1668458,
+      "deadName": "이우예",
+      "id": 1668458,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1787842800000,
+      "burnChasu": "04",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1787842800000,
+        "burnChasu": "04",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1787842800000,
+      "cremSeq": 13
+    }
+  },
+  {
+    "cremDate": "2026-08-28",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1787842800000,
