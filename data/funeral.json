@@ -5020,6 +5020,11 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1668482",
+    "deadName": "이태분",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1668507",
     "deadName": "김은곤",
     "dcGubun": "TCM1200001"
@@ -5030,6 +5035,11 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1668509",
+    "deadName": "최재영",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1668511",
     "deadName": "김좌생",
     "dcGubun": "TCM1200001"
@@ -5038,5 +5048,10 @@
     "deadId": "1668512",
     "deadName": "조종화",
     "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1668520",
+    "deadName": "김남필",
+    "dcGubun": "TCM1200001"
   }
 ]
