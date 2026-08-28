@@ -190631,13 +190631,6 @@
     "retDate": null
   },
   {
-    "deadId": "1668489",
-    "strDate": "2026-08-28",
-    "ensNo": null,
-    "deadName": "강성복",
-    "retDate": null
-  },
-  {
     "deadId": "1668437",
     "strDate": "2026-08-28",
     "ensNo": "1추모의집-48실-개인단-15863",
@@ -190663,6 +190656,13 @@
     "strDate": "2026-08-28",
     "ensNo": "1추모의집-64실-개인단-22712",
     "deadName": "서정숙",
+    "retDate": null
+  },
+  {
+    "deadId": "1668489",
+    "strDate": "2026-08-28",
+    "ensNo": "1추모의집-64실-개인단-22713",
+    "deadName": "강성복",
     "retDate": null
   }
 ]
