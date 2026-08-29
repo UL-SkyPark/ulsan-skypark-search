@@ -390,5 +390,61 @@
       "cremDate": 1788015600000,
       "cremSeq": 7
     }
+  },
+  {
+    "cremDate": "2026-08-30",
+    "cremSeq": 8,
+    "objt": "A001",
+    "burnDate": 1788015600000,
+    "burnNo": "02",
+    "burnChasu": "02",
+    "deadId": 1668554,
+    "thedead": {
+      "deadId": 1668554,
+      "deadName": "이복희",
+      "id": 1668554,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1788015600000,
+      "burnChasu": "02",
+      "burnNo": "02",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1788015600000,
+        "burnChasu": "02",
+        "burnNo": "02"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1788015600000,
+      "cremSeq": 8
+    }
   }
 ]
