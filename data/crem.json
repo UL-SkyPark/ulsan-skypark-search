@@ -75,17 +75,17 @@
       "burnDate": 1787929200000,
       "burnChasu": "03",
       "burnNo": "10",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "210",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -131,17 +131,17 @@
       "burnDate": 1787929200000,
       "burnChasu": "03",
       "burnNo": "01",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -172,7 +172,7 @@
     "cremSeq": 12,
     "objt": "A001",
     "burnDate": 1787929200000,
-    "burnNo": null,
+    "burnNo": "06",
     "burnChasu": "03",
     "deadId": 1668503,
     "thedead": {
@@ -183,6 +183,62 @@
     },
     "applId": "*******",
     "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1787929200000,
+      "burnChasu": "03",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1787929200000,
+        "burnChasu": "03",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1787929200000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-08-29",
+    "cremSeq": 13,
+    "objt": "A001",
+    "burnDate": 1787929200000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1668522,
+    "thedead": {
+      "deadId": 1668522,
+      "deadName": "류정현",
+      "id": 1668522,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
     "hwaBrazier": {
       "burnDate": 1787929200000,
       "burnChasu": "03",
@@ -203,16 +259,16 @@
     "burnChasuName": "3회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
-      "code": "TMC0600099",
-      "name": "반출",
+      "code": "TMC0600001",
+      "name": "추모의집",
       "id": {
         "basicCd": "TMC06",
-        "code": "TMC0600099"
+        "code": "TMC0600001"
       }
     },
     "id": {
       "cremDate": 1787929200000,
-      "cremSeq": 12
+      "cremSeq": 13
     }
   },
   {
