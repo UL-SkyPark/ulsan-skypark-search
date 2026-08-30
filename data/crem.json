@@ -673,54 +673,6 @@
   },
   {
     "cremDate": "2026-08-30",
-    "cremSeq": 20,
-    "objt": "A001",
-    "burnDate": 1788015600000,
-    "burnNo": null,
-    "burnChasu": null,
-    "deadId": 1668613,
-    "thedead": {
-      "deadId": 1668613,
-      "deadName": "홍길동",
-      "id": 1668613,
-      "new": false
-    },
-    "applId": "*******",
-    "scatterPlace": "TMC0600001",
-    "hwaBrazier": {
-      "burnDate": 1788015600000,
-      "burnChasu": null,
-      "burnNo": null,
-      "burnStatus": null,
-      "burnStrTime": null,
-      "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
-      "id": {
-        "burnDate": 1788015600000,
-        "burnChasu": null,
-        "burnNo": null
-      }
-    },
-    "objtCode": "A001",
-    "objtName": "시신",
-    "burnChasuName": null,
-    "scatterPlaceCode": {
-      "basicCd": "TMC06",
-      "code": "TMC0600001",
-      "name": "추모의집",
-      "id": {
-        "basicCd": "TMC06",
-        "code": "TMC0600001"
-      }
-    },
-    "id": {
-      "cremDate": 1788015600000,
-      "cremSeq": 20
-    }
-  },
-  {
-    "cremDate": "2026-08-30",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1788015600000,
