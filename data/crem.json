@@ -19,17 +19,17 @@
       "burnDate": 1788188400000,
       "burnChasu": "01",
       "burnNo": "01",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "07:20",
       "burnEndTime": "08:38",
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -53,6 +53,54 @@
     "id": {
       "cremDate": 1788188400000,
       "cremSeq": 1
+    }
+  },
+  {
+    "cremDate": "2026-09-01",
+    "cremSeq": 10,
+    "objt": "A001",
+    "burnDate": 1788188400000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1668610,
+    "thedead": {
+      "deadId": 1668610,
+      "deadName": "오복래",
+      "id": 1668610,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1788188400000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1788188400000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1788188400000,
+      "cremSeq": 10
     }
   },
   {
@@ -131,17 +179,17 @@
       "burnDate": 1788188400000,
       "burnChasu": "01",
       "burnNo": "02",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:25",
-      "burnEndTime": null,
+      "burnEndTime": "08:45",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -187,17 +235,17 @@
       "burnDate": 1788188400000,
       "burnChasu": "01",
       "burnNo": "07",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "07:30",
-      "burnEndTime": null,
+      "burnEndTime": "08:46",
       "waitRoom": "207",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -445,6 +493,62 @@
     "id": {
       "cremDate": 1788188400000,
       "cremSeq": 8
+    }
+  },
+  {
+    "cremDate": "2026-09-01",
+    "cremSeq": 9,
+    "objt": "A001",
+    "burnDate": 1788188400000,
+    "burnNo": "05",
+    "burnChasu": "03",
+    "deadId": 1668597,
+    "thedead": {
+      "deadId": 1668597,
+      "deadName": "이경화",
+      "id": 1668597,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1788188400000,
+      "burnChasu": "03",
+      "burnNo": "05",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1788188400000,
+        "burnChasu": "03",
+        "burnNo": "05"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1788188400000,
+      "cremSeq": 9
     }
   }
 ]
