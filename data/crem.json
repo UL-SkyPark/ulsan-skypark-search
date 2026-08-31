@@ -19,17 +19,17 @@
       "burnDate": 1788188400000,
       "burnChasu": "01",
       "burnNo": "01",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -53,6 +53,174 @@
     "id": {
       "cremDate": 1788188400000,
       "cremSeq": 1
+    }
+  },
+  {
+    "cremDate": "2026-09-01",
+    "cremSeq": 2,
+    "objt": "A001",
+    "burnDate": 1788188400000,
+    "burnNo": "06",
+    "burnChasu": "01",
+    "deadId": 1668651,
+    "thedead": {
+      "deadId": 1668651,
+      "deadName": "박원석",
+      "id": 1668651,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1788188400000,
+      "burnChasu": "01",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1788188400000,
+        "burnChasu": "01",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1788188400000,
+      "cremSeq": 2
+    }
+  },
+  {
+    "cremDate": "2026-09-01",
+    "cremSeq": 3,
+    "objt": "A001",
+    "burnDate": 1788188400000,
+    "burnNo": "02",
+    "burnChasu": "01",
+    "deadId": 1668639,
+    "thedead": {
+      "deadId": 1668639,
+      "deadName": "황금자",
+      "id": 1668639,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1788188400000,
+      "burnChasu": "01",
+      "burnNo": "02",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1788188400000,
+        "burnChasu": "01",
+        "burnNo": "02"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1788188400000,
+      "cremSeq": 3
+    }
+  },
+  {
+    "cremDate": "2026-09-01",
+    "cremSeq": 4,
+    "objt": "A001",
+    "burnDate": 1788188400000,
+    "burnNo": "07",
+    "burnChasu": "01",
+    "deadId": 1668615,
+    "thedead": {
+      "deadId": 1668615,
+      "deadName": "주경자",
+      "id": 1668615,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1788188400000,
+      "burnChasu": "01",
+      "burnNo": "07",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1788188400000,
+        "burnChasu": "01",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1788188400000,
+      "cremSeq": 4
     }
   }
 ]
