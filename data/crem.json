@@ -732,13 +732,13 @@
     "cremSeq": 21,
     "objt": "A001",
     "burnDate": 1788188400000,
-    "burnNo": null,
+    "burnNo": "01",
     "burnChasu": "06",
-    "deadId": 1668618,
+    "deadId": 1668620,
     "thedead": {
-      "deadId": 1668618,
-      "deadName": "신수빈",
-      "id": 1668618,
+      "deadId": 1668620,
+      "deadName": "유말례",
+      "id": 1668620,
       "new": false
     },
     "applId": "*******",
@@ -746,16 +746,24 @@
     "hwaBrazier": {
       "burnDate": 1788188400000,
       "burnChasu": "06",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "01",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "201",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1788188400000,
         "burnChasu": "06",
-        "burnNo": null
+        "burnNo": "01"
       }
     },
     "objtCode": "A001",

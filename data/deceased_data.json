@@ -190778,13 +190778,6 @@
     "retDate": null
   },
   {
-    "deadId": "1668618",
-    "strDate": "2026-09-01",
-    "ensNo": null,
-    "deadName": "신수빈",
-    "retDate": null
-  },
-  {
     "deadId": "1668624",
     "strDate": "2026-09-01",
     "ensNo": "1추모의집-64실-개인단-22728",
@@ -190817,6 +190810,13 @@
     "strDate": "2026-09-01",
     "ensNo": "1추모의집-64실-개인단-22732",
     "deadName": "신용자",
+    "retDate": null
+  },
+  {
+    "deadId": "1668620",
+    "strDate": "2026-09-01",
+    "ensNo": "1추모의집-64실-개인단-22733",
+    "deadName": "유말례",
     "retDate": null
   }
 ]
