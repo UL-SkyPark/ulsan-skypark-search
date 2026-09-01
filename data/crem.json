@@ -131,17 +131,17 @@
       "burnDate": 1788274800000,
       "burnChasu": "02",
       "burnNo": "10",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "210",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -299,17 +299,17 @@
       "burnDate": 1788274800000,
       "burnChasu": "02",
       "burnNo": "01",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -437,6 +437,62 @@
     "id": {
       "cremDate": 1788274800000,
       "cremSeq": 8
+    }
+  },
+  {
+    "cremDate": "2026-09-02",
+    "cremSeq": 9,
+    "objt": "A001",
+    "burnDate": 1788274800000,
+    "burnNo": "02",
+    "burnChasu": "02",
+    "deadId": 1668648,
+    "thedead": {
+      "deadId": 1668648,
+      "deadName": "방학수",
+      "id": 1668648,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1788274800000,
+      "burnChasu": "02",
+      "burnNo": "02",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1788274800000,
+        "burnChasu": "02",
+        "burnNo": "02"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1788274800000,
+      "cremSeq": 9
     }
   }
 ]
