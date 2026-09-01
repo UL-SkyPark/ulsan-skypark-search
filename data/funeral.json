@@ -5115,6 +5115,16 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1668618",
+    "deadName": "신수빈",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1668620",
+    "deadName": "유말례",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1668639",
     "deadName": "황금자",
     "dcGubun": "TCM1200003"
@@ -5128,5 +5138,15 @@
     "deadId": "1668649",
     "deadName": "김권순",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1668650",
+    "deadName": "임홍순",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1668651",
+    "deadName": "박원석",
+    "dcGubun": "TCM1200099"
   }
 ]
