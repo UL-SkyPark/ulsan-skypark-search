@@ -1009,6 +1009,54 @@
   },
   {
     "cremDate": "2026-09-02",
+    "cremSeq": 26,
+    "objt": "B001",
+    "burnDate": 1788274800000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1668688,
+    "thedead": {
+      "deadId": 1668688,
+      "deadName": "양준기",
+      "id": 1668688,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1788274800000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1788274800000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1788274800000,
+      "cremSeq": 26
+    }
+  },
+  {
+    "cremDate": "2026-09-02",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1788274800000,
