@@ -841,6 +841,54 @@
   },
   {
     "cremDate": "2026-09-02",
+    "cremSeq": 23,
+    "objt": "A001",
+    "burnDate": 1788274800000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1668706,
+    "thedead": {
+      "deadId": 1668706,
+      "deadName": "김길용",
+      "id": 1668706,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1788274800000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1788274800000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1788274800000,
+      "cremSeq": 23
+    }
+  },
+  {
+    "cremDate": "2026-09-02",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1788274800000,
