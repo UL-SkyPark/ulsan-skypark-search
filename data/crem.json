@@ -446,5 +446,53 @@
       "cremDate": 1788361200000,
       "cremSeq": 8
     }
+  },
+  {
+    "cremDate": "2026-09-03",
+    "cremSeq": 9,
+    "objt": "A001",
+    "burnDate": 1788361200000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1668757,
+    "thedead": {
+      "deadId": 1668757,
+      "deadName": "최현숙",
+      "id": 1668757,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1788361200000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1788361200000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1788361200000,
+      "cremSeq": 9
+    }
   }
 ]
