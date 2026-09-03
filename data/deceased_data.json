@@ -190897,13 +190897,6 @@
     "retDate": null
   },
   {
-    "deadId": "1668761",
-    "strDate": "2026-09-04",
-    "ensNo": null,
-    "deadName": "심순자",
-    "retDate": null
-  },
-  {
     "deadId": "1668776",
     "strDate": "2026-09-04",
     "ensNo": "1추모의집-64실-개인단-22742",
@@ -190922,6 +190915,13 @@
     "strDate": "2026-09-04",
     "ensNo": "1추모의집-64실-개인단-22744",
     "deadName": "문달국",
+    "retDate": null
+  },
+  {
+    "deadId": "1668761",
+    "strDate": "2026-09-04",
+    "ensNo": "1추모의집-64실-개인단-22745",
+    "deadName": "심순자",
     "retDate": null
   }
 ]
