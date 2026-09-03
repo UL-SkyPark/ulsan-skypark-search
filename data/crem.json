@@ -222,5 +222,53 @@
       "cremDate": 1788447600000,
       "cremSeq": 4
     }
+  },
+  {
+    "cremDate": "2026-09-04",
+    "cremSeq": 5,
+    "objt": "A001",
+    "burnDate": 1788447600000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1668732,
+    "thedead": {
+      "deadId": 1668732,
+      "deadName": "나은식",
+      "id": 1668732,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1788447600000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1788447600000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1788447600000,
+      "cremSeq": 5
+    }
   }
 ]
