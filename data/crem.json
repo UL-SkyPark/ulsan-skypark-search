@@ -228,13 +228,69 @@
     "cremSeq": 5,
     "objt": "A001",
     "burnDate": 1788447600000,
-    "burnNo": null,
+    "burnNo": "10",
     "burnChasu": "02",
     "deadId": 1668732,
     "thedead": {
       "deadId": 1668732,
       "deadName": "나은식",
       "id": 1668732,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1788447600000,
+      "burnChasu": "02",
+      "burnNo": "10",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1788447600000,
+        "burnChasu": "02",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1788447600000,
+      "cremSeq": 5
+    }
+  },
+  {
+    "cremDate": "2026-09-04",
+    "cremSeq": 6,
+    "objt": "A001",
+    "burnDate": 1788447600000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1668764,
+    "thedead": {
+      "deadId": 1668764,
+      "deadName": "문달국",
+      "id": 1668764,
       "new": false
     },
     "applId": "*******",
@@ -268,7 +324,55 @@
     },
     "id": {
       "cremDate": 1788447600000,
-      "cremSeq": 5
+      "cremSeq": 6
+    }
+  },
+  {
+    "cremDate": "2026-09-04",
+    "cremSeq": 7,
+    "objt": "A001",
+    "burnDate": 1788447600000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1668738,
+    "thedead": {
+      "deadId": 1668738,
+      "deadName": "김창곤",
+      "id": 1668738,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1788447600000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1788447600000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1788447600000,
+      "cremSeq": 7
     }
   }
 ]
