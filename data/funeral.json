@@ -5225,8 +5225,18 @@
     "dcGubun": "TCM1200003"
   },
   {
+    "deadId": "1668761",
+    "deadName": "심순자",
+    "dcGubun": "TCM1200003"
+  },
+  {
     "deadId": "1668793",
     "deadName": "윤준용",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1668804",
+    "deadName": "김선수",
+    "dcGubun": "TCM1200002"
   }
 ]
