@@ -98900,7 +98900,7 @@
     "strDate": "2021-04-05",
     "ensNo": "1추모의집-40실-개인단-13528",
     "deadName": "손두락",
-    "retDate": null
+    "retDate": "2026-09-06"
   },
   {
     "deadId": "1467046",
@@ -190957,6 +190957,20 @@
     "strDate": "2026-09-05",
     "ensNo": "1추모의집-64실-개인단-22750",
     "deadName": "정애희",
+    "retDate": null
+  },
+  {
+    "deadId": "1467044",
+    "strDate": "2026-09-06",
+    "ensNo": "1추모의집-09실-부부단-01992",
+    "deadName": "손두락",
+    "retDate": null
+  },
+  {
+    "deadId": "1668838",
+    "strDate": "2026-09-06",
+    "ensNo": "1추모의집-09실-부부단-01992",
+    "deadName": "김정식",
     "retDate": null
   },
   {
