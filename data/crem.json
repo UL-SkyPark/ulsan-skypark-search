@@ -19,17 +19,17 @@
       "burnDate": 1788706800000,
       "burnChasu": "01",
       "burnNo": "01",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "07:26",
       "burnEndTime": "08:48",
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -60,7 +60,7 @@
     "cremSeq": 10,
     "objt": "A001",
     "burnDate": 1788706800000,
-    "burnNo": null,
+    "burnNo": "06",
     "burnChasu": "03",
     "deadId": 1668875,
     "thedead": {
@@ -71,6 +71,62 @@
     },
     "applId": "*******",
     "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1788706800000,
+      "burnChasu": "03",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1788706800000,
+        "burnChasu": "03",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1788706800000,
+      "cremSeq": 10
+    }
+  },
+  {
+    "cremDate": "2026-09-07",
+    "cremSeq": 11,
+    "objt": "A001",
+    "burnDate": 1788706800000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1668855,
+    "thedead": {
+      "deadId": 1668855,
+      "deadName": "김지훈",
+      "id": 1668855,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
     "hwaBrazier": {
       "burnDate": 1788706800000,
       "burnChasu": "03",
@@ -91,16 +147,16 @@
     "burnChasuName": "3회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
-      "code": "TMC0600001",
-      "name": "추모의집",
+      "code": "TMC0600099",
+      "name": "반출",
       "id": {
         "basicCd": "TMC06",
-        "code": "TMC0600001"
+        "code": "TMC0600099"
       }
     },
     "id": {
       "cremDate": 1788706800000,
-      "cremSeq": 10
+      "cremSeq": 11
     }
   },
   {
