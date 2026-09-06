@@ -190960,13 +190960,6 @@
     "retDate": null
   },
   {
-    "deadId": "1668850",
-    "strDate": "2026-09-06",
-    "ensNo": null,
-    "deadName": "조장환",
-    "retDate": null
-  },
-  {
     "deadId": "1467044",
     "strDate": "2026-09-06",
     "ensNo": "1추모의집-09실-부부단-01992",
@@ -190992,6 +190985,20 @@
     "strDate": "2026-09-06",
     "ensNo": "1추모의집-64실-개인단-22752",
     "deadName": "이갑덕",
+    "retDate": null
+  },
+  {
+    "deadId": "1668850",
+    "strDate": "2026-09-06",
+    "ensNo": "1추모의집-64실-개인단-22753",
+    "deadName": "조장환",
+    "retDate": null
+  },
+  {
+    "deadId": "1668848",
+    "strDate": "2026-09-06",
+    "ensNo": "1추모의집-64실-개인단-22754",
+    "deadName": "장성애",
     "retDate": null
   }
 ]
