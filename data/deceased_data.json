@@ -191016,13 +191016,6 @@
     "retDate": null
   },
   {
-    "deadId": "1668880",
-    "strDate": "2026-09-07",
-    "ensNo": null,
-    "deadName": "서영완",
-    "retDate": null
-  },
-  {
     "deadId": "1668585",
     "strDate": "2026-09-07",
     "ensNo": "1추모의집-25실-개인단-08230",
@@ -191034,6 +191027,13 @@
     "strDate": "2026-09-07",
     "ensNo": "1추모의집-64실-개인단-22756",
     "deadName": "신인숙",
+    "retDate": null
+  },
+  {
+    "deadId": "1668880",
+    "strDate": "2026-09-07",
+    "ensNo": "1추모의집-64실-개인단-22757",
+    "deadName": "서영완",
     "retDate": null
   }
 ]
