@@ -154431,7 +154431,7 @@
     "strDate": "2024-08-04",
     "ensNo": "1추모의집-57실-개인단-19327",
     "deadName": "정병철",
-    "retDate": null
+    "retDate": "2026-09-08"
   },
   {
     "deadId": "1474982",
@@ -190789,7 +190789,7 @@
     "strDate": "2026-09-01",
     "ensNo": "1추모의집-64실-개인단-22729",
     "deadName": "강연숙",
-    "retDate": null
+    "retDate": "2026-09-08"
   },
   {
     "deadId": "1668610",
@@ -191055,6 +191055,20 @@
     "strDate": "2026-09-08",
     "ensNo": "1추모의집-09실-개인단-01993",
     "deadName": "김춘자",
+    "retDate": null
+  },
+  {
+    "deadId": "1567285",
+    "strDate": "2026-09-08",
+    "ensNo": "1추모의집-09실-개인단-01994",
+    "deadName": "정병철",
+    "retDate": null
+  },
+  {
+    "deadId": "1668626",
+    "strDate": "2026-09-08",
+    "ensNo": "1추모의집-09실-개인단-01994",
+    "deadName": "강연숙",
     "retDate": null
   },
   {
