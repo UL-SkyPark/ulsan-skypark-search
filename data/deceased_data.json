@@ -191142,17 +191142,17 @@
     "retDate": null
   },
   {
-    "deadId": "1668987",
-    "strDate": "2026-09-10",
-    "ensNo": null,
-    "deadName": "김우식",
-    "retDate": null
-  },
-  {
     "deadId": "1668964",
     "strDate": "2026-09-10",
     "ensNo": "1추모의집-64실-개인단-22765",
     "deadName": "김석태",
+    "retDate": null
+  },
+  {
+    "deadId": "1668987",
+    "strDate": "2026-09-10",
+    "ensNo": "1추모의집-64실-개인단-22766",
+    "deadName": "김우식",
     "retDate": null
   }
 ]
