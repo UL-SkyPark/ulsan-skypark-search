@@ -184881,7 +184881,7 @@
     "strDate": "2026-04-16",
     "ensNo": "1추모의집-62실-개인단-22158",
     "deadName": "박정순",
-    "retDate": null
+    "retDate": "2026-09-11"
   },
   {
     "deadId": "1655006",
@@ -191195,6 +191195,20 @@
     "strDate": "2026-09-11",
     "ensNo": "1추모의집-09실-부부단-01996",
     "deadName": "박행림",
+    "retDate": null
+  },
+  {
+    "deadId": "1669078",
+    "strDate": "2026-09-11",
+    "ensNo": "1추모의집-09실-부부단-01997",
+    "deadName": "김동한",
+    "retDate": null
+  },
+  {
+    "deadId": "1669079",
+    "strDate": "2026-09-11",
+    "ensNo": "1추모의집-09실-부부단-01997",
+    "deadName": "박정순",
     "retDate": null
   }
 ]
