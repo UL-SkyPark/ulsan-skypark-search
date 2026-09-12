@@ -178325,17 +178325,17 @@
     "retDate": null
   },
   {
-    "deadId": "1650357",
-    "strDate": "2025-12-04",
-    "ensNo": "1추모의집-31실-개인단-10495",
-    "deadName": "배순양",
-    "retDate": null
-  },
-  {
     "deadId": "1650356",
     "strDate": "2025-12-04",
     "ensNo": "1추모의집-31실-무연고-10189",
     "deadName": "임동원",
+    "retDate": null
+  },
+  {
+    "deadId": "1650357",
+    "strDate": "2025-12-04",
+    "ensNo": "1추모의집-31실-무연고-10495",
+    "deadName": "배순양",
     "retDate": null
   },
   {
