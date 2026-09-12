@@ -1070,11 +1070,11 @@
     "burnDate": 1789138800000,
     "burnNo": null,
     "burnChasu": null,
-    "deadId": 1669132,
+    "deadId": 1669134,
     "thedead": {
-      "deadId": 1669132,
+      "deadId": 1669134,
       "deadName": "홍길동",
-      "id": 1669132,
+      "id": 1669134,
       "new": false
     },
     "applId": "*******",
