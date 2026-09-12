@@ -191212,13 +191212,6 @@
     "retDate": null
   },
   {
-    "deadId": "1669059",
-    "strDate": "2026-09-12",
-    "ensNo": null,
-    "deadName": "전용희",
-    "retDate": null
-  },
-  {
     "deadId": "1668996",
     "strDate": "2026-09-12",
     "ensNo": "1추모의집-22실-개인단-07005",
@@ -191244,6 +191237,13 @@
     "strDate": "2026-09-12",
     "ensNo": "1추모의집-64실-개인단-22771",
     "deadName": "김경애",
+    "retDate": null
+  },
+  {
+    "deadId": "1669059",
+    "strDate": "2026-09-12",
+    "ensNo": "1추모의집-64실-개인단-22772",
+    "deadName": "전용희",
     "retDate": null
   }
 ]
