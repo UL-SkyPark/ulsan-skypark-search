@@ -57,6 +57,54 @@
   },
   {
     "cremDate": "2026-09-13",
+    "cremSeq": 10,
+    "objt": "A001",
+    "burnDate": 1789225200000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1669073,
+    "thedead": {
+      "deadId": 1669073,
+      "deadName": "이재섭",
+      "id": 1669073,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1789225200000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1789225200000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1789225200000,
+      "cremSeq": 10
+    }
+  },
+  {
+    "cremDate": "2026-09-13",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1789225200000,
@@ -452,7 +500,7 @@
     "cremSeq": 9,
     "objt": "A001",
     "burnDate": 1789225200000,
-    "burnNo": null,
+    "burnNo": "05",
     "burnChasu": "03",
     "deadId": 1669066,
     "thedead": {
@@ -466,16 +514,24 @@
     "hwaBrazier": {
       "burnDate": 1789225200000,
       "burnChasu": "03",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "05",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1789225200000,
         "burnChasu": "03",
-        "burnNo": null
+        "burnNo": "05"
       }
     },
     "objtCode": "A001",
