@@ -191261,13 +191261,6 @@
     "retDate": null
   },
   {
-    "deadId": "1669106",
-    "strDate": "2026-09-13",
-    "ensNo": null,
-    "deadName": "박영순",
-    "retDate": null
-  },
-  {
     "deadId": "1669054",
     "strDate": "2026-09-13",
     "ensNo": "1추모의집-34실-개인단-11462",
@@ -191321,6 +191314,13 @@
     "strDate": "2026-09-13",
     "ensNo": "1추모의집-64실-개인단-22777",
     "deadName": "박성달",
+    "retDate": null
+  },
+  {
+    "deadId": "1669106",
+    "strDate": "2026-09-13",
+    "ensNo": "1추모의집-64실-개인단-22778",
+    "deadName": "박영순",
     "retDate": null
   }
 ]
