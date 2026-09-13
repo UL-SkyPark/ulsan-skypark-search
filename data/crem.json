@@ -225,7 +225,55 @@
   },
   {
     "cremDate": "2026-09-14",
-    "cremSeq": 5,
+    "cremSeq": 6,
+    "objt": "A001",
+    "burnDate": 1789311600000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1669116,
+    "thedead": {
+      "deadId": 1669116,
+      "deadName": "김막동",
+      "id": 1669116,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1789311600000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1789311600000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1789311600000,
+      "cremSeq": 6
+    }
+  },
+  {
+    "cremDate": "2026-09-14",
+    "cremSeq": 7,
     "objt": "A001",
     "burnDate": 1789311600000,
     "burnNo": null,
@@ -268,7 +316,7 @@
     },
     "id": {
       "cremDate": 1789311600000,
-      "cremSeq": 5
+      "cremSeq": 7
     }
   }
 ]
