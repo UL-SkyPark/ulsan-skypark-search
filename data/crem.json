@@ -54,5 +54,61 @@
       "cremDate": 1789398000000,
       "cremSeq": 1
     }
+  },
+  {
+    "cremDate": "2026-09-15",
+    "cremSeq": 2,
+    "objt": "A001",
+    "burnDate": 1789398000000,
+    "burnNo": "06",
+    "burnChasu": "01",
+    "deadId": 1669158,
+    "thedead": {
+      "deadId": 1669158,
+      "deadName": "이성여",
+      "id": 1669158,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1789398000000,
+      "burnChasu": "01",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1789398000000,
+        "burnChasu": "01",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1789398000000,
+      "cremSeq": 2
+    }
   }
 ]
