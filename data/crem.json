@@ -169,6 +169,62 @@
   },
   {
     "cremDate": "2026-09-15",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1789398000000,
+    "burnNo": "06",
+    "burnChasu": "04",
+    "deadId": 1669156,
+    "thedead": {
+      "deadId": 1669156,
+      "deadName": "정순탁",
+      "id": 1669156,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1789398000000,
+      "burnChasu": "04",
+      "burnNo": "06",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1789398000000,
+        "burnChasu": "04",
+        "burnNo": "06"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1789398000000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-09-15",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1789398000000,
@@ -467,17 +523,17 @@
       "burnDate": 1789398000000,
       "burnChasu": "03",
       "burnNo": "04",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "09:16",
       "burnEndTime": "10:25",
       "waitRoom": "204",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
