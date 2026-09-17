@@ -5933,7 +5933,7 @@
     "strDate": "2013-09-23",
     "ensNo": "1추모의집-12실-개인단-02992",
     "deadName": "박용순",
-    "retDate": null
+    "retDate": "2026-09-17"
   },
   {
     "deadId": "1453769",
@@ -191412,6 +191412,20 @@
     "strDate": "2026-09-16",
     "ensNo": "1추모의집-64실-개인단-22788",
     "deadName": "임순매",
+    "retDate": null
+  },
+  {
+    "deadId": "1453768",
+    "strDate": "2026-09-17",
+    "ensNo": "1추모의집-09실-부부단-01999",
+    "deadName": "박용순",
+    "retDate": null
+  },
+  {
+    "deadId": "1669293",
+    "strDate": "2026-09-17",
+    "ensNo": "1추모의집-09실-부부단-01999",
+    "deadName": "조병희",
     "retDate": null
   },
   {
