@@ -5475,8 +5475,18 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1669263",
+    "deadName": "이태옥",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1669267",
     "deadName": "김종선",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1669295",
+    "deadName": "금분연",
     "dcGubun": "TCM1200001"
   }
 ]
