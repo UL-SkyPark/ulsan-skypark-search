@@ -191415,13 +191415,6 @@
     "retDate": null
   },
   {
-    "deadId": "1669239",
-    "strDate": "2026-09-17",
-    "ensNo": null,
-    "deadName": "이소선",
-    "retDate": null
-  },
-  {
     "deadId": "1669197",
     "strDate": "2026-09-17",
     "ensNo": "1추모의집-63실-개인단-22656",
@@ -191461,6 +191454,13 @@
     "strDate": "2026-09-17",
     "ensNo": "1추모의집-64실-개인단-22793",
     "deadName": "김미혜",
+    "retDate": null
+  },
+  {
+    "deadId": "1669239",
+    "strDate": "2026-09-17",
+    "ensNo": "1추모의집-64실-개인단-22794",
+    "deadName": "이소선",
     "retDate": null
   }
 ]
