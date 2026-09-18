@@ -438,5 +438,53 @@
       "cremDate": 1789743600000,
       "cremSeq": 8
     }
+  },
+  {
+    "cremDate": "2026-09-19",
+    "cremSeq": 9,
+    "objt": "A001",
+    "burnDate": 1789743600000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1669281,
+    "thedead": {
+      "deadId": 1669281,
+      "deadName": "서복숙",
+      "id": 1669281,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1789743600000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1789743600000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1789743600000,
+      "cremSeq": 9
+    }
   }
 ]
