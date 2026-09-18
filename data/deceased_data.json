@@ -191534,17 +191534,17 @@
     "retDate": null
   },
   {
-    "deadId": "1669296",
-    "strDate": "2026-09-19",
-    "ensNo": null,
-    "deadName": "전수백",
-    "retDate": null
-  },
-  {
     "deadId": "1669308",
     "strDate": "2026-09-19",
     "ensNo": "1추모의집-64실-개인단-22801",
     "deadName": "권응복",
+    "retDate": null
+  },
+  {
+    "deadId": "1669296",
+    "strDate": "2026-09-19",
+    "ensNo": "1추모의집-64실-개인단-22802",
+    "deadName": "전수백",
     "retDate": null
   }
 ]
