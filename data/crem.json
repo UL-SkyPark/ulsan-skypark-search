@@ -393,6 +393,118 @@
   },
   {
     "cremDate": "2026-09-19",
+    "cremSeq": 16,
+    "objt": "A001",
+    "burnDate": 1789743600000,
+    "burnNo": "03",
+    "burnChasu": "04",
+    "deadId": 1669306,
+    "thedead": {
+      "deadId": 1669306,
+      "deadName": "김재천",
+      "id": 1669306,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1789743600000,
+      "burnChasu": "04",
+      "burnNo": "03",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1789743600000,
+        "burnChasu": "04",
+        "burnNo": "03"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1789743600000,
+      "cremSeq": 16
+    }
+  },
+  {
+    "cremDate": "2026-09-19",
+    "cremSeq": 17,
+    "objt": "A001",
+    "burnDate": 1789743600000,
+    "burnNo": "04",
+    "burnChasu": "04",
+    "deadId": 1669305,
+    "thedead": {
+      "deadId": 1669305,
+      "deadName": "김복수",
+      "id": 1669305,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1789743600000,
+      "burnChasu": "04",
+      "burnNo": "04",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "204",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1789743600000,
+        "burnChasu": "04",
+        "burnNo": "04"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1789743600000,
+      "cremSeq": 17
+    }
+  },
+  {
+    "cremDate": "2026-09-19",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1789743600000,
