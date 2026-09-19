@@ -64807,6 +64807,12 @@
   },
   {
     "natDate": "2026-09-20",
+    "natNo": null,
+    "deadId": "1669319",
+    "deadName": "이순분"
+  },
+  {
+    "natDate": "2026-09-20",
     "natNo": "수목장-2-3-0013",
     "deadId": "1669371",
     "deadName": "강신필"
