@@ -243,17 +243,17 @@
       "burnDate": 1789743600000,
       "burnChasu": "03",
       "burnNo": "02",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "09:30",
       "burnEndTime": "10:46",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -788,7 +788,7 @@
     "cremSeq": 22,
     "objt": "B001",
     "burnDate": 1789743600000,
-    "burnNo": null,
+    "burnNo": "02",
     "burnChasu": "07",
     "deadId": 1669080,
     "thedead": {
@@ -802,16 +802,24 @@
     "hwaBrazier": {
       "burnDate": 1789743600000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "02",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1789743600000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "02"
       }
     },
     "objtCode": "B001",
@@ -836,7 +844,7 @@
     "cremSeq": 23,
     "objt": "A001",
     "burnDate": 1789743600000,
-    "burnNo": null,
+    "burnNo": "06",
     "burnChasu": "05",
     "deadId": 1669312,
     "thedead": {
@@ -850,16 +858,24 @@
     "hwaBrazier": {
       "burnDate": 1789743600000,
       "burnChasu": "05",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "06",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1789743600000,
         "burnChasu": "05",
-        "burnNo": null
+        "burnNo": "06"
       }
     },
     "objtCode": "A001",
