@@ -169,6 +169,54 @@
   },
   {
     "cremDate": "2026-09-19",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1789743600000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1669309,
+    "thedead": {
+      "deadId": 1669309,
+      "deadName": "서종태",
+      "id": 1669309,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1789743600000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1789743600000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1789743600000,
+      "cremSeq": 12
+    }
+  },
+  {
+    "cremDate": "2026-09-19",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1789743600000,
