@@ -5505,6 +5505,11 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1669318",
+    "deadName": "신용필",
+    "dcGubun": "TCM1200099"
+  },
+  {
     "deadId": "1669329",
     "deadName": "이사범",
     "dcGubun": "TCM1200001"
@@ -5513,5 +5518,10 @@
     "deadId": "1669330",
     "deadName": "임옥선",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1669360",
+    "deadName": "최한홍",
+    "dcGubun": "TCM1200099"
   }
 ]
