@@ -1060,7 +1060,7 @@
     "cremSeq": 27,
     "objt": "B001",
     "burnDate": 1789830000000,
-    "burnNo": null,
+    "burnNo": "01",
     "burnChasu": "07",
     "deadId": 1668942,
     "thedead": {
@@ -1074,16 +1074,24 @@
     "hwaBrazier": {
       "burnDate": 1789830000000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "01",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "201",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1789830000000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "01"
       }
     },
     "objtCode": "B001",
@@ -1108,7 +1116,7 @@
     "cremSeq": 28,
     "objt": "B001",
     "burnDate": 1789830000000,
-    "burnNo": null,
+    "burnNo": "06",
     "burnChasu": "07",
     "deadId": 1668943,
     "thedead": {
@@ -1122,16 +1130,24 @@
     "hwaBrazier": {
       "burnDate": 1789830000000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "06",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "206",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1789830000000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "06"
       }
     },
     "objtCode": "B001",
@@ -1156,7 +1172,7 @@
     "cremSeq": 29,
     "objt": "B001",
     "burnDate": 1789830000000,
-    "burnNo": null,
+    "burnNo": "02",
     "burnChasu": "07",
     "deadId": 1668940,
     "thedead": {
@@ -1170,16 +1186,24 @@
     "hwaBrazier": {
       "burnDate": 1789830000000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "02",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1789830000000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "02"
       }
     },
     "objtCode": "B001",
@@ -1260,7 +1284,7 @@
     "cremSeq": 30,
     "objt": "B001",
     "burnDate": 1789830000000,
-    "burnNo": null,
+    "burnNo": "07",
     "burnChasu": "07",
     "deadId": 1668941,
     "thedead": {
@@ -1274,16 +1298,24 @@
     "hwaBrazier": {
       "burnDate": 1789830000000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "07",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1789830000000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "07"
       }
     },
     "objtCode": "B001",
