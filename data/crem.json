@@ -393,6 +393,62 @@
   },
   {
     "cremDate": "2026-09-21",
+    "cremSeq": 16,
+    "objt": "A001",
+    "burnDate": 1789916400000,
+    "burnNo": "10",
+    "burnChasu": "05",
+    "deadId": 1669397,
+    "thedead": {
+      "deadId": 1669397,
+      "deadName": "박혜빈",
+      "id": 1669397,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1789916400000,
+      "burnChasu": "05",
+      "burnNo": "10",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1789916400000,
+        "burnChasu": "05",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1789916400000,
+      "cremSeq": 16
+    }
+  },
+  {
+    "cremDate": "2026-09-21",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1789916400000,
