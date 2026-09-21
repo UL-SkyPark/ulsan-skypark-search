@@ -110,5 +110,61 @@
       "cremDate": 1790002800000,
       "cremSeq": 2
     }
+  },
+  {
+    "cremDate": "2026-09-22",
+    "cremSeq": 3,
+    "objt": "A001",
+    "burnDate": 1790002800000,
+    "burnNo": "09",
+    "burnChasu": "01",
+    "deadId": 1669412,
+    "thedead": {
+      "deadId": 1669412,
+      "deadName": "손병호",
+      "id": 1669412,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1790002800000,
+      "burnChasu": "01",
+      "burnNo": "09",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "209",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1790002800000,
+        "burnChasu": "01",
+        "burnNo": "09"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1790002800000,
+      "cremSeq": 3
+    }
   }
 ]
