@@ -113,6 +113,54 @@
   },
   {
     "cremDate": "2026-09-21",
+    "cremSeq": 11,
+    "objt": "A001",
+    "burnDate": 1789916400000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1669363,
+    "thedead": {
+      "deadId": 1669363,
+      "deadName": "김홍주",
+      "id": 1669363,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1789916400000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1789916400000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1789916400000,
+      "cremSeq": 11
+    }
+  },
+  {
+    "cremDate": "2026-09-21",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1789916400000,
@@ -243,17 +291,17 @@
       "burnDate": 1789916400000,
       "burnChasu": "01",
       "burnNo": "07",
-      "burnStatus": "3",
+      "burnStatus": "9",
       "burnStrTime": "07:38",
-      "burnEndTime": null,
+      "burnEndTime": "09:00",
       "waitRoom": "207",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "9"
         }
       },
       "id": {
