@@ -60,7 +60,7 @@
     "cremSeq": 10,
     "objt": "A001",
     "burnDate": 1790175600000,
-    "burnNo": "07",
+    "burnNo": "03",
     "burnChasu": "03",
     "deadId": 1669470,
     "thedead": {
@@ -74,11 +74,11 @@
     "hwaBrazier": {
       "burnDate": 1790175600000,
       "burnChasu": "03",
-      "burnNo": "07",
+      "burnNo": "03",
       "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": "207",
+      "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
         "code": "1",
@@ -91,7 +91,7 @@
       "id": {
         "burnDate": 1790175600000,
         "burnChasu": "03",
-        "burnNo": "07"
+        "burnNo": "03"
       }
     },
     "objtCode": "A001",
@@ -116,7 +116,7 @@
     "cremSeq": 11,
     "objt": "A001",
     "burnDate": 1790175600000,
-    "burnNo": "03",
+    "burnNo": null,
     "burnChasu": "03",
     "deadId": 1669450,
     "thedead": {
@@ -130,24 +130,16 @@
     "hwaBrazier": {
       "burnDate": 1790175600000,
       "burnChasu": "03",
-      "burnNo": "03",
-      "burnStatus": "1",
+      "burnNo": null,
+      "burnStatus": null,
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": "203",
-      "burnStatusCode": {
-        "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
-        "id": {
-          "basicCd": "BURN_STA",
-          "code": "1"
-        }
-      },
+      "waitRoom": null,
+      "burnStatusCode": null,
       "id": {
         "burnDate": 1790175600000,
         "burnChasu": "03",
-        "burnNo": "03"
+        "burnNo": null
       }
     },
     "objtCode": "A001",
@@ -217,6 +209,62 @@
   },
   {
     "cremDate": "2026-09-24",
+    "cremSeq": 13,
+    "objt": "A001",
+    "burnDate": 1790175600000,
+    "burnNo": "07",
+    "burnChasu": "02",
+    "deadId": 1669501,
+    "thedead": {
+      "deadId": 1669501,
+      "deadName": "문영애",
+      "id": 1669501,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1790175600000,
+      "burnChasu": "02",
+      "burnNo": "07",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1790175600000,
+        "burnChasu": "02",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1790175600000,
+      "cremSeq": 13
+    }
+  },
+  {
+    "cremDate": "2026-09-24",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1790175600000,
@@ -235,17 +283,17 @@
       "burnDate": 1790175600000,
       "burnChasu": "01",
       "burnNo": "08",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "07:23",
       "burnEndTime": "08:32",
       "waitRoom": "208",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -347,17 +395,17 @@
       "burnDate": 1790175600000,
       "burnChasu": "01",
       "burnNo": "09",
-      "burnStatus": "3",
+      "burnStatus": "9",
       "burnStrTime": "07:36",
-      "burnEndTime": null,
+      "burnEndTime": "08:54",
       "waitRoom": "209",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "9"
         }
       },
       "id": {
