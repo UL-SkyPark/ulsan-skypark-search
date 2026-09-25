@@ -214,5 +214,61 @@
       "cremDate": 1790348400000,
       "cremSeq": 4
     }
+  },
+  {
+    "cremDate": "2026-09-26",
+    "cremSeq": 5,
+    "objt": "A001",
+    "burnDate": 1790348400000,
+    "burnNo": "05",
+    "burnChasu": "01",
+    "deadId": 1669571,
+    "thedead": {
+      "deadId": 1669571,
+      "deadName": "박정민",
+      "id": 1669571,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1790348400000,
+      "burnChasu": "01",
+      "burnNo": "05",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1790348400000,
+        "burnChasu": "01",
+        "burnNo": "05"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "1회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1790348400000,
+      "cremSeq": 5
+    }
   }
 ]
