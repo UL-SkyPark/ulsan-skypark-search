@@ -334,5 +334,53 @@
       "cremDate": 1790348400000,
       "cremSeq": 6
     }
+  },
+  {
+    "cremDate": "2026-09-26",
+    "cremSeq": 7,
+    "objt": "A001",
+    "burnDate": 1790348400000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1669492,
+    "thedead": {
+      "deadId": 1669492,
+      "deadName": "고경환",
+      "id": 1669492,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1790348400000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1790348400000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1790348400000,
+      "cremSeq": 7
+    }
   }
 ]
