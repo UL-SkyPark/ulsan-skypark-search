@@ -8887,7 +8887,7 @@
     "strDate": "2014-01-03",
     "ensNo": "1추모의집-13실-개인단-03440",
     "deadName": "하갑용",
-    "retDate": null
+    "retDate": "2026-09-27"
   },
   {
     "deadId": "1454191",
@@ -191720,6 +191720,20 @@
     "strDate": "2026-09-26",
     "ensNo": "1추모의집-64실-개인단-22823",
     "deadName": "안정례",
+    "retDate": null
+  },
+  {
+    "deadId": "1454190",
+    "strDate": "2026-09-27",
+    "ensNo": "1추모의집-09실-부부단-02000",
+    "deadName": "하갑용",
+    "retDate": null
+  },
+  {
+    "deadId": "1669569",
+    "strDate": "2026-09-27",
+    "ensNo": "1추모의집-09실-부부단-02000",
+    "deadName": "김차선",
     "retDate": null
   },
   {
