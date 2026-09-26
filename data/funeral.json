@@ -5635,6 +5635,11 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1669570",
+    "deadName": "서미애",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1669571",
     "deadName": "박정민",
     "dcGubun": "TCM1200001"
@@ -5643,5 +5648,10 @@
     "deadId": "1669573",
     "deadName": "신용학",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1669592",
+    "deadName": "박옥자",
+    "dcGubun": "TCM1200002"
   }
 ]
