@@ -191723,13 +191723,6 @@
     "retDate": null
   },
   {
-    "deadId": "1669577",
-    "strDate": "2026-09-27",
-    "ensNo": null,
-    "deadName": "이복자",
-    "retDate": null
-  },
-  {
     "deadId": "1454190",
     "strDate": "2026-09-27",
     "ensNo": "1추모의집-09실-부부단-02000",
@@ -191741,6 +191734,20 @@
     "strDate": "2026-09-27",
     "ensNo": "1추모의집-09실-부부단-02000",
     "deadName": "김차선",
+    "retDate": null
+  },
+  {
+    "deadId": "1466522",
+    "strDate": "2026-09-27",
+    "ensNo": "1추모의집-09실-부부단-02001",
+    "deadName": "박석문",
+    "retDate": null
+  },
+  {
+    "deadId": "1669577",
+    "strDate": "2026-09-27",
+    "ensNo": "1추모의집-09실-부부단-02001",
+    "deadName": "이복자",
     "retDate": null
   },
   {
