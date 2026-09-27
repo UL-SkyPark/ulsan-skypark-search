@@ -446,5 +446,53 @@
       "cremDate": 1790521200000,
       "cremSeq": 8
     }
+  },
+  {
+    "cremDate": "2026-09-28",
+    "cremSeq": 9,
+    "objt": "A001",
+    "burnDate": 1790521200000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1669584,
+    "thedead": {
+      "deadId": 1669584,
+      "deadName": "김상태",
+      "id": 1669584,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1790521200000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1790521200000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1790521200000,
+      "cremSeq": 9
+    }
   }
 ]
