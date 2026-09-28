@@ -65182,5 +65182,15 @@
     "natNo": null,
     "deadId": "1669580",
     "deadName": "성성자"
+  },
+  {
+    "natDate": "2026-09-28",
+    "natNo": null,
+    "deadId": [
+      "1669622"
+    ],
+    "deadName": [
+      "노영창"
+    ]
   }
 ]
