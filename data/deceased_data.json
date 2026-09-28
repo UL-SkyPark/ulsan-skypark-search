@@ -49571,7 +49571,7 @@
     "strDate": "2017-08-24",
     "ensNo": "1추모의집-26실-개인단-08360",
     "deadName": "조덕래",
-    "retDate": null
+    "retDate": "2026-09-28"
   },
   {
     "deadId": "1460005",
@@ -191804,6 +191804,20 @@
     "strDate": "2026-09-28",
     "ensNo": "1추모의집-09실-부부단-02003",
     "deadName": "조성례",
+    "retDate": null
+  },
+  {
+    "deadId": "1460001",
+    "strDate": "2026-09-28",
+    "ensNo": "1추모의집-09실-부부단-02004",
+    "deadName": "조덕래",
+    "retDate": null
+  },
+  {
+    "deadId": "1669106",
+    "strDate": "2026-09-28",
+    "ensNo": "1추모의집-09실-부부단-02004",
+    "deadName": "박영순",
     "retDate": null
   },
   {
