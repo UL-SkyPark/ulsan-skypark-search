@@ -5685,6 +5685,11 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1669610",
+    "deadName": "오윤석",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1669611",
     "deadName": "강다연",
     "dcGubun": "TCM1200001"
@@ -5692,6 +5697,11 @@
   {
     "deadId": "1669646",
     "deadName": "이삼길",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1669647",
+    "deadName": "박영호",
     "dcGubun": "TCM1200001"
   }
 ]
