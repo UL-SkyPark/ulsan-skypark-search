@@ -60,7 +60,7 @@
     "cremSeq": 10,
     "objt": "A001",
     "burnDate": 1790694000000,
-    "burnNo": null,
+    "burnNo": "02",
     "burnChasu": "02",
     "deadId": 1669669,
     "thedead": {
@@ -74,16 +74,24 @@
     "hwaBrazier": {
       "burnDate": 1790694000000,
       "burnChasu": "02",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "02",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
       "id": {
         "burnDate": 1790694000000,
         "burnChasu": "02",
-        "burnNo": null
+        "burnNo": "02"
       }
     },
     "objtCode": "A001",
@@ -403,17 +411,17 @@
       "burnDate": 1790694000000,
       "burnChasu": "02",
       "burnNo": "06",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "08:27",
       "burnEndTime": null,
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -444,7 +452,7 @@
     "cremSeq": 8,
     "objt": "A001",
     "burnDate": 1790694000000,
-    "burnNo": null,
+    "burnNo": "07",
     "burnChasu": "03",
     "deadId": 1669698,
     "thedead": {
@@ -458,16 +466,24 @@
     "hwaBrazier": {
       "burnDate": 1790694000000,
       "burnChasu": "03",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "07",
+      "burnStatus": "1",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
       "id": {
         "burnDate": 1790694000000,
         "burnChasu": "03",
-        "burnNo": null
+        "burnNo": "07"
       }
     },
     "objtCode": "A001",
@@ -502,7 +518,7 @@
       "new": false
     },
     "applId": "*******",
-    "scatterPlace": "TMC0600099",
+    "scatterPlace": "TMC0600001",
     "hwaBrazier": {
       "burnDate": 1790694000000,
       "burnChasu": "03",
@@ -523,11 +539,11 @@
     "burnChasuName": "3회차",
     "scatterPlaceCode": {
       "basicCd": "TMC06",
-      "code": "TMC0600099",
-      "name": "반출",
+      "code": "TMC0600001",
+      "name": "추모의집",
       "id": {
         "basicCd": "TMC06",
-        "code": "TMC0600099"
+        "code": "TMC0600001"
       }
     },
     "id": {
