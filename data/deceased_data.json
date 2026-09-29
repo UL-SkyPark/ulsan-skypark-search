@@ -191856,17 +191856,17 @@
     "retDate": null
   },
   {
-    "deadId": "1669656",
-    "strDate": "2026-09-29",
-    "ensNo": null,
-    "deadName": "유은호",
-    "retDate": null
-  },
-  {
     "deadId": "1669706",
     "strDate": "2026-09-29",
     "ensNo": "1추모의집-64실-개인단-22831",
     "deadName": "정미정",
+    "retDate": null
+  },
+  {
+    "deadId": "1669656",
+    "strDate": "2026-09-29",
+    "ensNo": "1추모의집-64실-개인단-22832",
+    "deadName": "유은호",
     "retDate": null
   }
 ]
