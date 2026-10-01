@@ -40,6 +40,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
 (() => {
   if (typeof document === 'undefined' || new URLSearchParams(location.search).get('kiosk') !== '1') return;
   const IDLE_MS = 90_000, WARNING_MS = 15_000, AFTER_PRINT_MS = 15_000;
+  document.body.classList.add('kiosk-mode');
+  const initialUrl = new URL(location.href);
+  if (!initialUrl.searchParams.has('mode') && !initialUrl.hash) {
+    initialUrl.searchParams.set('mode', 'memorial');
+    history.replaceState(null, '', initialUrl);
+  }
   const input = document.getElementById('keyword');
   const form = document.getElementById('searchForm');
   const modal = document.getElementById('detailModal');
@@ -50,8 +56,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
   input.setAttribute('spellcheck', 'false');
   const toggle = document.createElement('button');
   toggle.type = 'button'; toggle.className = 'kiosk-keyboard-toggle';
-  toggle.textContent = '터치 키보드 열기'; toggle.setAttribute('aria-controls', 'kioskKeyboard');
-  input.parentElement.append(toggle);
+  toggle.textContent = '키보드 열기'; toggle.setAttribute('aria-controls', 'kioskKeyboard');
+  const searchButton = form.querySelector('.btn-search');
+  const searchActions = document.createElement('div');
+  searchActions.className = 'kiosk-search-actions';
+  searchButton.before(searchActions);
+  searchActions.append(searchButton, toggle);
   const keyboard = document.createElement('section');
   keyboard.id = 'kioskKeyboard'; keyboard.className = 'kiosk-keyboard'; keyboard.hidden = true;
   keyboard.setAttribute('aria-label', '고인명 입력용 터치 키보드');
@@ -86,10 +96,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
     input.value = '';
     ['modalName','modalType','modalLoc','modalDate'].forEach(id => document.getElementById(id).textContent = '');
     language = 'ko'; shifted = false; drawKeys();
-    // Remove both mode sources so reloading also opens the initial "전체" tab.
-    const url = new URL(location.href); url.searchParams.delete('mode'); url.hash = '';
+    // Every kiosk session returns to the memorial search, including on reload.
+    const url = new URL(location.href); url.searchParams.set('mode', 'memorial'); url.hash = '';
     history.replaceState(null, '', url);
-    setMode('all');
+    setMode('memorial');
     window.scrollTo({top:0, behavior:'instant'});
     deadline = Date.now() + IDLE_MS;
     // No focus stealing or automatic keyboard popup while the welcome screen waits.
@@ -186,7 +196,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
     if (!notice.hidden) {
       const parent = modal.open ? modal : document.body;
       if (notice.parentElement !== parent) parent.append(notice);
-      const text = `${afterPrint ? '출력 창이 닫혔습니다. ' : ''}${Math.ceil(remaining / 1000)}초 후 검색 초기화면으로 돌아갑니다.`;
+      const text = `${String(Math.ceil(remaining / 1000)).padStart(2, '0')}초 후에 첫화면으로 돌아갑니다.`;
       if (message.textContent !== text) message.textContent = text;
     }
   }
