@@ -9,6 +9,7 @@
   <title>울산하늘공원 고인 검색</title>
   <link rel="icon" type="image/x-icon" href="./images/symbol.png">
   <link rel="apple-touch-icon" href="./images/symbol.png">
+  <link rel="stylesheet" href="./kiosk.css">
 
   <style>
     *{ margin:0; padding:0; box-sizing:border-box; }
@@ -672,6 +673,7 @@
     let loadPromiseNature = null;
     let loadPromiseScat = null;
     let lastFound = [];
+    let searchRequestId = 0;
 
     function escapeHtml(value){
       return String(value ?? '')
@@ -868,6 +870,7 @@
       document.getElementById("dividerAfterLocation").style.display = showLocation ? "block" : "none";
 
       document.getElementById("detailModal").showModal();
+      window.kioskController?.hideKeyboard();
     }
 
     function bindTableClick(){
@@ -1010,6 +1013,9 @@
       const resultDiv = document.getElementById("result");
 
       if (!keyword) return;
+      const requestId = ++searchRequestId;
+      const searchMode = currentMode;
+      window.kioskController?.hideKeyboard();
 
       if (!isSearchKeywordValid(keyword)){
         resultDiv.style.display = "block";
@@ -1021,11 +1027,13 @@
       resultDiv.innerHTML = `<div class="loading">데이터를 불러오고 있습니다...</div>`;
 
       try{
-        await ensureDataForSearch(currentMode);
+        await ensureDataForSearch(searchMode);
       }catch(err){
+        if (requestId !== searchRequestId) return;
         resultDiv.innerHTML = `<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>`;
         return;
       }
+      if (requestId !== searchRequestId) return;
 
       let found = [];
       if (currentMode === 'memorial') found = searchMemorial(keyword);
@@ -1048,6 +1056,7 @@
     });
 
     function resetResultOnly(){
+      searchRequestId++;
       const resultDiv = document.getElementById("result");
       resultDiv.style.display = "none";
       resultDiv.innerHTML = "";
@@ -1055,6 +1064,10 @@
     }
 
     function goHome(){
+      if (window.kioskController){
+        window.kioskController.reset();
+        return;
+      }
       document.getElementById("keyword").value = "";
       resetResultOnly();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1111,5 +1124,6 @@
       }, { passive:true });
     })();
   </script>
+  <script src="./kiosk.js"></script>
 </body>
 </html>
