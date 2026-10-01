@@ -57,6 +57,54 @@
   },
   {
     "cremDate": "2026-10-02",
+    "cremSeq": 10,
+    "objt": "A001",
+    "burnDate": 1790866800000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1669745,
+    "thedead": {
+      "deadId": 1669745,
+      "deadName": "김덕태",
+      "id": 1669745,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1790866800000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1790866800000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1790866800000,
+      "cremSeq": 10
+    }
+  },
+  {
+    "cremDate": "2026-10-02",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1790866800000,
@@ -75,17 +123,17 @@
       "burnDate": 1790866800000,
       "burnChasu": "01",
       "burnNo": "04",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "07:21",
       "burnEndTime": "08:38",
       "waitRoom": "204",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
@@ -467,17 +515,17 @@
       "burnDate": 1790866800000,
       "burnChasu": "02",
       "burnNo": "02",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "08:43",
       "burnEndTime": null,
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
