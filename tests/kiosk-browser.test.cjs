@@ -29,6 +29,9 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
     await page.route('**/data/*.json', route => route.fulfill({json:[{deadName:'홍길동',ensNo:'1추모의집-01실-001',strDate:'2026-01-01'}]}));
     await page.clock.install();
     await page.goto(url + '?kiosk=1');
+    assert.equal(await page.locator('.tab-btn.active').getAttribute('data-mode'), 'memorial');
+    assert.equal(new URL(page.url()).searchParams.get('mode'), 'memorial');
+    assert.equal(await page.locator('.kiosk-search-actions .kiosk-keyboard-toggle').textContent(), '키보드 열기');
     const input = page.locator('#keyword');
     const key = text => page.locator('.kiosk-key').filter({hasText:new RegExp('^' + text + '$')});
     await page.locator('.kiosk-keyboard-toggle').click();
@@ -43,6 +46,7 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
     assert.equal(await page.locator('#detailModal').evaluate(el => el.open), true);
     await page.clock.fastForward(75_100);
     assert.equal(await page.locator('.kiosk-notice').isVisible(), true);
+    assert.match(await page.locator('.kiosk-notice span').textContent(), /^\d{2}초 후에 첫화면으로 돌아갑니다\.$/);
     // The notice must live inside the modal so its button is not inert.
     await page.locator('#detailModal .kiosk-notice button').click();
     await page.clock.fastForward(89_000);
@@ -51,7 +55,7 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
     assert.equal(await input.inputValue(), '');
     assert.equal(await page.locator('#detailModal').evaluate(el => el.open), false);
     assert.equal(await page.locator('#modalName').textContent(), '');
-    assert.equal(await page.locator('.tab-btn.active').getAttribute('data-mode'), 'all');
+    assert.equal(await page.locator('.tab-btn.active').getAttribute('data-mode'), 'memorial');
     assert.equal(await input.evaluate(el => el === document.activeElement), true);
     assert.equal(new URL(page.url()).searchParams.get('kiosk'), '1');
 
@@ -70,12 +74,12 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
     await page.clock.fastForward(120_000);
     assert.equal(await input.inputValue(), '홍길동');
     await page.evaluate(() => window.dispatchEvent(new Event('afterprint')));
-    assert.match(await page.locator('.kiosk-notice').textContent(), /출력 창/);
+    assert.equal(await page.locator('.kiosk-notice span').textContent(), '15초 후에 첫화면으로 돌아갑니다.');
     await page.clock.fastForward(15_100);
     assert.equal(await input.inputValue(), '');
     await page.goto(url + '?kiosk=1&mode=nature#nature');
     await page.locator('#globalLogo').click();
-    assert.equal(new URL(page.url()).searchParams.get('mode'), null);
+    assert.equal(new URL(page.url()).searchParams.get('mode'), 'memorial');
     assert.equal(new URL(page.url()).hash, '');
 
     // A response arriving after reset must never redisplay the previous search.
