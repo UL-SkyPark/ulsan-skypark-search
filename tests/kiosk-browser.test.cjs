@@ -23,7 +23,7 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
   const browser = await chromium.launch({headless:true, ...(process.env.CHROME_PATH ? {executablePath:process.env.CHROME_PATH} : {})});
   const errors = [];
   try {
-    const page = await browser.newPage({viewport:{width:1280,height:1024}});
+    const page = await browser.newPage({viewport:{width:1280,height:1024}, reducedMotion:'reduce'});
     page.on('pageerror', error => errors.push(error.message));
     await page.route('https://www.googletagmanager.com/**', route => route.abort());
     await page.route('**/data/*.json', route => route.fulfill({json:[{deadName:'홍길동',ensNo:'1추모의집-01실-001',strDate:'2026-01-01'}]}));
@@ -94,6 +94,25 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
     release();
     await page.waitForFunction(() => loadPromiseMemorial === null && loadPromiseNature === null && loadPromiseScat === null);
     assert.equal(await page.locator('#result').textContent(), '');
+
+    // Check actual opening motion and close spacing on wide, portrait and small screens.
+    await page.emulateMedia({reducedMotion:'no-preference'});
+    for (const [width,height] of [[1280,1024],[1080,1920],[1366,768],[390,844]]) {
+      await page.setViewportSize({width,height});
+      await page.evaluate(() => window.kioskController.hideKeyboard());
+      await page.clock.runFor(400);
+      await page.evaluate(() => document.getAnimations().forEach(animation => animation.finish()));
+      const closedTop = (await page.locator('main').boundingBox()).y;
+      await page.locator('.kiosk-keyboard-toggle').evaluate(el => el.click());
+      assert.equal(await page.locator('#kioskKeyboard').evaluate(el => el.getAnimations().length), 1);
+      assert.equal(await page.locator('#kioskKeyboard').evaluate(el => el.getAnimations()[0].effect.getKeyframes()[0].transform), 'translateY(-24px)');
+      await page.clock.runFor(400);
+      await page.evaluate(() => document.getAnimations().forEach(animation => animation.finish()));
+      const search = await page.locator('main').boundingBox();
+      const keys = await page.locator('#kioskKeyboard').boundingBox();
+      assert.ok(search.y < closedTop, 'search panel moves up when opening');
+      assert.ok(Math.abs(keys.y - search.y - search.height - (width <= 768 ? 16 : 20)) < 1, 'keyboard stays near search panel without overlap');
+    }
 
     await page.goto(url);
     assert.equal(await page.locator('#kioskKeyboard').count(), 0);
