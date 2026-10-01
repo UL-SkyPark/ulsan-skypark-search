@@ -130638,7 +130638,7 @@
     "strDate": "2023-03-10",
     "ensNo": "1추모의집-51실-개인단-16927",
     "deadName": "홍정자",
-    "retDate": null
+    "retDate": "2026-10-01"
   },
   {
     "deadId": "1471579",
@@ -191905,9 +191905,16 @@
     "retDate": null
   },
   {
+    "deadId": "1554948",
+    "strDate": "2026-10-01",
+    "ensNo": "1추모의집-09실-부부단-02005",
+    "deadName": "홍정자",
+    "retDate": null
+  },
+  {
     "deadId": "1669740",
     "strDate": "2026-10-01",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-02005",
     "deadName": "김성호",
     "retDate": null
   },
