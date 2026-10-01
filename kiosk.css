@@ -1,11 +1,12 @@
 /* These controls are created only for search.html?kiosk=1. */
 .kiosk-mode .search-box { align-items:start; }
+.kiosk-stage { width:min(1080px, 100%); display:flex; flex-direction:column; gap:20px; }
+.kiosk-stage > main { width:100%; flex-shrink:0; }
 .kiosk-search-actions { display:flex; flex-direction:column; align-items:center; gap:8px; }
 .kiosk-keyboard-toggle { padding:6px 14px; border:1px solid rgba(25,118,210,.22); border-radius:999px; background:rgba(255,255,255,.8); color:#345b82; font-family:inherit; font-size:14px; font-weight:600; cursor:pointer; }
 .kiosk-keyboard-toggle:hover { background:#edf5ff; border-color:#1976d2; }
-.kiosk-keyboard { position:fixed; bottom:22px; left:50%; transform:translateX(-50%); width:min(1080px, calc(100% - 44px)); z-index:40; background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(237,244,252,.95)); border:1px solid rgba(31,58,90,.16); border-radius:22px; padding:18px 20px 20px; box-shadow:0 18px 55px rgba(15,23,42,.18),0 3px 12px rgba(25,118,210,.08); backdrop-filter:blur(18px); max-height:45vh; overflow:auto; }
+.kiosk-keyboard { position:relative; width:100%; flex-shrink:0; z-index:40; background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(237,244,252,.95)); border:1px solid rgba(31,58,90,.16); border-radius:22px; padding:18px 20px 20px; box-shadow:0 18px 55px rgba(15,23,42,.18),0 3px 12px rgba(25,118,210,.08); backdrop-filter:blur(18px); max-height:45vh; overflow:auto; }
 .kiosk-keyboard[hidden], .kiosk-notice[hidden] { display:none !important; }
-body.kiosk-keyboard-open { padding-bottom:420px; }
 .kiosk-keyboard-heading { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:0 2px; color:#12335a; font-size:16px; font-weight:700; text-align:left; }
 .kiosk-key-row { display:flex; justify-content:center; gap:8px; margin-top:8px; }
 .kiosk-key { flex:1; min-width:0; min-height:54px; border:1px solid rgba(31,58,90,.14); border-radius:12px; background:linear-gradient(180deg,#fff,#f8fbff); box-shadow:0 3px 8px rgba(15,23,42,.05); color:#12335a; font-family:inherit; font-size:25px; font-weight:700; cursor:pointer; touch-action:manipulation; transition:background .12s,box-shadow .12s; }
@@ -17,5 +18,5 @@ body.kiosk-keyboard-open { padding-bottom:420px; }
 .kiosk-key[aria-pressed="true"] { background:#b8d8ff; }
 .kiosk-notice { position:fixed; z-index:100; top:14px; left:50%; transform:translateX(-50%); width:min(650px, calc(100% - 24px)); padding:14px; border:2px solid #1976d2; border-radius:12px; background:white; color:#12335a; box-shadow:0 5px 20px #0003; font-size:19px; text-align:center; }
 .kiosk-notice button { margin-left:12px; padding:10px 18px; border:0; border-radius:8px; background:#1976d2; color:white; font-family:inherit; font-size:18px; cursor:pointer; }
-@media (max-width:768px) { .kiosk-keyboard { bottom:12px; width:calc(100% - 24px); border-radius:18px; padding:12px; } .kiosk-key { min-height:46px; border-radius:9px; font-size:20px; } .kiosk-key.action { font-size:13px; } .kiosk-key-row { gap:4px; } .kiosk-search-actions { width:100%; } body.kiosk-keyboard-open { padding-bottom:350px; } }
-@media print { .kiosk-keyboard, .kiosk-keyboard-toggle, .kiosk-notice { display:none !important; } body.kiosk-keyboard-open { padding-bottom:0; } }
+@media (max-width:768px) { .kiosk-stage { gap:16px; } .kiosk-keyboard { border-radius:18px; padding:12px; } .kiosk-key { min-height:46px; border-radius:9px; font-size:20px; } .kiosk-key.action { font-size:13px; } .kiosk-key-row { gap:4px; } .kiosk-search-actions { width:100%; } }
+@media print { .kiosk-keyboard, .kiosk-keyboard-toggle, .kiosk-notice { display:none !important; } }
