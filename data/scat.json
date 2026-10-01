@@ -31638,5 +31638,655 @@
     "deadId": "1667305",
     "scaDate": "2026-07-23",
     "deadName": "김정근"
+  },
+  {
+    "deadId": "1667316",
+    "scaDate": "2026-07-24",
+    "deadName": "이성근"
+  },
+  {
+    "deadId": "1667330",
+    "scaDate": "2026-07-24",
+    "deadName": "김재식"
+  },
+  {
+    "deadId": "1667332",
+    "scaDate": "2026-07-25",
+    "deadName": "최성율"
+  },
+  {
+    "deadId": "1667343",
+    "scaDate": "2026-07-25",
+    "deadName": "최문정"
+  },
+  {
+    "deadId": "1667364",
+    "scaDate": "2026-07-25",
+    "deadName": "김유진"
+  },
+  {
+    "deadId": "1667402",
+    "scaDate": "2026-07-27",
+    "deadName": "안재율"
+  },
+  {
+    "deadId": "1667413",
+    "scaDate": "2026-07-27",
+    "deadName": "김영자"
+  },
+  {
+    "deadId": "1667425",
+    "scaDate": "2026-07-27",
+    "deadName": "LIJILONG"
+  },
+  {
+    "deadId": "1667462",
+    "scaDate": "2026-07-27",
+    "deadName": "이종희"
+  },
+  {
+    "deadId": "1667463",
+    "scaDate": "2026-07-27",
+    "deadName": "안혹환"
+  },
+  {
+    "deadId": "1667350",
+    "scaDate": "2026-07-28",
+    "deadName": "김영준"
+  },
+  {
+    "deadId": "1667457",
+    "scaDate": "2026-07-28",
+    "deadName": "심원식"
+  },
+  {
+    "deadId": "1667468",
+    "scaDate": "2026-07-28",
+    "deadName": "박계산"
+  },
+  {
+    "deadId": "1667478",
+    "scaDate": "2026-07-29",
+    "deadName": "박태우"
+  },
+  {
+    "deadId": "1667506",
+    "scaDate": "2026-07-29",
+    "deadName": "고술생"
+  },
+  {
+    "deadId": "1667524",
+    "scaDate": "2026-07-30",
+    "deadName": "김종관"
+  },
+  {
+    "deadId": "1667554",
+    "scaDate": "2026-07-30",
+    "deadName": "손자비자"
+  },
+  {
+    "deadId": "1667567",
+    "scaDate": "2026-07-31",
+    "deadName": "박정자"
+  },
+  {
+    "deadId": "1667569",
+    "scaDate": "2026-07-31",
+    "deadName": "이덕수"
+  },
+  {
+    "deadId": "1667570",
+    "scaDate": "2026-07-31",
+    "deadName": "이덕혜"
+  },
+  {
+    "deadId": "1667571",
+    "scaDate": "2026-07-31",
+    "deadName": "YU XUANQUAN"
+  },
+  {
+    "deadId": "1667573",
+    "scaDate": "2026-07-31",
+    "deadName": "백지연사산"
+  },
+  {
+    "deadId": "1667558",
+    "scaDate": "2026-08-01",
+    "deadName": "김석재"
+  },
+  {
+    "deadId": "1667562",
+    "scaDate": "2026-08-01",
+    "deadName": "서영숙"
+  },
+  {
+    "deadId": "1667563",
+    "scaDate": "2026-08-01",
+    "deadName": "서기수"
+  },
+  {
+    "deadId": "1667603",
+    "scaDate": "2026-08-01",
+    "deadName": "박덕자"
+  },
+  {
+    "deadId": "1666643",
+    "scaDate": "2026-08-02",
+    "deadName": "정오순"
+  },
+  {
+    "deadId": "1666644",
+    "scaDate": "2026-08-02",
+    "deadName": "김종원"
+  },
+  {
+    "deadId": "1667617",
+    "scaDate": "2026-08-02",
+    "deadName": "양성태"
+  },
+  {
+    "deadId": "1667599",
+    "scaDate": "2026-08-04",
+    "deadName": "최정수"
+  },
+  {
+    "deadId": "1667697",
+    "scaDate": "2026-08-05",
+    "deadName": "조갑래"
+  },
+  {
+    "deadId": "1667701",
+    "scaDate": "2026-08-05",
+    "deadName": "정말숙"
+  },
+  {
+    "deadId": "1667723",
+    "scaDate": "2026-08-05",
+    "deadName": "김종현"
+  },
+  {
+    "deadId": "1667765",
+    "scaDate": "2026-08-05",
+    "deadName": "임원도"
+  },
+  {
+    "deadId": "1667756",
+    "scaDate": "2026-08-06",
+    "deadName": "김말점"
+  },
+  {
+    "deadId": "1667763",
+    "scaDate": "2026-08-07",
+    "deadName": "조창래"
+  },
+  {
+    "deadId": "1667806",
+    "scaDate": "2026-08-07",
+    "deadName": "정금호"
+  },
+  {
+    "deadId": "1667801",
+    "scaDate": "2026-08-08",
+    "deadName": "박유학"
+  },
+  {
+    "deadId": "1667827",
+    "scaDate": "2026-08-08",
+    "deadName": "김전이"
+  },
+  {
+    "deadId": "1667834",
+    "scaDate": "2026-08-08",
+    "deadName": "박상석"
+  },
+  {
+    "deadId": "1667918",
+    "scaDate": "2026-08-09",
+    "deadName": "최유나"
+  },
+  {
+    "deadId": "1667926",
+    "scaDate": "2026-08-10",
+    "deadName": "강정순"
+  },
+  {
+    "deadId": "1667928",
+    "scaDate": "2026-08-10",
+    "deadName": "신현수"
+  },
+  {
+    "deadId": "1667993",
+    "scaDate": "2026-08-12",
+    "deadName": "서영남사산"
+  },
+  {
+    "deadId": "1667994",
+    "scaDate": "2026-08-12",
+    "deadName": "장홍조사산"
+  },
+  {
+    "deadId": "1667995",
+    "scaDate": "2026-08-12",
+    "deadName": "KHATUNMOSTAMINA사산"
+  },
+  {
+    "deadId": "1668045",
+    "scaDate": "2026-08-14",
+    "deadName": "문명진"
+  },
+  {
+    "deadId": "1668095",
+    "scaDate": "2026-08-16",
+    "deadName": "최재석"
+  },
+  {
+    "deadId": "1668134",
+    "scaDate": "2026-08-17",
+    "deadName": "박영자"
+  },
+  {
+    "deadId": "1668182",
+    "scaDate": "2026-08-18",
+    "deadName": "이동정"
+  },
+  {
+    "deadId": "1668214",
+    "scaDate": "2026-08-18",
+    "deadName": "이진기"
+  },
+  {
+    "deadId": "1668215",
+    "scaDate": "2026-08-19",
+    "deadName": "김일용"
+  },
+  {
+    "deadId": "1668219",
+    "scaDate": "2026-08-19",
+    "deadName": "김임금"
+  },
+  {
+    "deadId": "1668232",
+    "scaDate": "2026-08-19",
+    "deadName": "나철옥"
+  },
+  {
+    "deadId": "1668233",
+    "scaDate": "2026-08-19",
+    "deadName": "김진봉"
+  },
+  {
+    "deadId": "1668211",
+    "scaDate": "2026-08-20",
+    "deadName": "박태수"
+  },
+  {
+    "deadId": "1668241",
+    "scaDate": "2026-08-20",
+    "deadName": "정희조"
+  },
+  {
+    "deadId": "1668245",
+    "scaDate": "2026-08-20",
+    "deadName": "강윤순"
+  },
+  {
+    "deadId": "1668260",
+    "scaDate": "2026-08-20",
+    "deadName": "김대홍"
+  },
+  {
+    "deadId": "1668248",
+    "scaDate": "2026-08-21",
+    "deadName": "이윤애"
+  },
+  {
+    "deadId": "1668279",
+    "scaDate": "2026-08-21",
+    "deadName": "김영배"
+  },
+  {
+    "deadId": "1668295",
+    "scaDate": "2026-08-22",
+    "deadName": "이권자"
+  },
+  {
+    "deadId": "1668310",
+    "scaDate": "2026-08-22",
+    "deadName": "정재용"
+  },
+  {
+    "deadId": "1668337",
+    "scaDate": "2026-08-22",
+    "deadName": "김복순"
+  },
+  {
+    "deadId": "1668292",
+    "scaDate": "2026-08-23",
+    "deadName": "차재열"
+  },
+  {
+    "deadId": "1668340",
+    "scaDate": "2026-08-23",
+    "deadName": "구진웅"
+  },
+  {
+    "deadId": "1668351",
+    "scaDate": "2026-08-24",
+    "deadName": "이광재"
+  },
+  {
+    "deadId": "1668362",
+    "scaDate": "2026-08-24",
+    "deadName": "지영재"
+  },
+  {
+    "deadId": "1668402",
+    "scaDate": "2026-08-25",
+    "deadName": "백을생"
+  },
+  {
+    "deadId": "1668411",
+    "scaDate": "2026-08-25",
+    "deadName": "임재두"
+  },
+  {
+    "deadId": "1668413",
+    "scaDate": "2026-08-25",
+    "deadName": "박천익"
+  },
+  {
+    "deadId": "1668438",
+    "scaDate": "2026-08-25",
+    "deadName": "JIN YINGYU"
+  },
+  {
+    "deadId": "1668476",
+    "scaDate": "2026-08-26",
+    "deadName": "최정선"
+  },
+  {
+    "deadId": "1668468",
+    "scaDate": "2026-08-27",
+    "deadName": "이재호"
+  },
+  {
+    "deadId": "1668549",
+    "scaDate": "2026-08-29",
+    "deadName": "박인철"
+  },
+  {
+    "deadId": "1668575",
+    "scaDate": "2026-08-30",
+    "deadName": "정옥애"
+  },
+  {
+    "deadId": "1668608",
+    "scaDate": "2026-08-31",
+    "deadName": "WU YINGJI"
+  },
+  {
+    "deadId": "1668622",
+    "scaDate": "2026-09-01",
+    "deadName": "LI ANDREI"
+  },
+  {
+    "deadId": "1668650",
+    "scaDate": "2026-09-01",
+    "deadName": "임홍순"
+  },
+  {
+    "deadId": "1668651",
+    "scaDate": "2026-09-01",
+    "deadName": "박원석"
+  },
+  {
+    "deadId": "1668653",
+    "scaDate": "2026-09-02",
+    "deadName": "김계순"
+  },
+  {
+    "deadId": "1668654",
+    "scaDate": "2026-09-02",
+    "deadName": "이상호"
+  },
+  {
+    "deadId": "1668731",
+    "scaDate": "2026-09-02",
+    "deadName": "김선홍"
+  },
+  {
+    "deadId": "1668750",
+    "scaDate": "2026-09-04",
+    "deadName": "김미진사산"
+  },
+  {
+    "deadId": "1668752",
+    "scaDate": "2026-09-04",
+    "deadName": "황애령사산"
+  },
+  {
+    "deadId": "1668753",
+    "scaDate": "2026-09-04",
+    "deadName": "민보담사산"
+  },
+  {
+    "deadId": "1668754",
+    "scaDate": "2026-09-04",
+    "deadName": "육주형사산"
+  },
+  {
+    "deadId": "1668805",
+    "scaDate": "2026-09-04",
+    "deadName": "김다영사산"
+  },
+  {
+    "deadId": "1668820",
+    "scaDate": "2026-09-05",
+    "deadName": "이희원"
+  },
+  {
+    "deadId": "1668837",
+    "scaDate": "2026-09-06",
+    "deadName": "정인봉"
+  },
+  {
+    "deadId": "1668872",
+    "scaDate": "2026-09-06",
+    "deadName": "류영용"
+  },
+  {
+    "deadId": "1668883",
+    "scaDate": "2026-09-07",
+    "deadName": "윤애자"
+  },
+  {
+    "deadId": "1668845",
+    "scaDate": "2026-09-08",
+    "deadName": "김수연사산"
+  },
+  {
+    "deadId": "1668846",
+    "scaDate": "2026-09-08",
+    "deadName": "김수빈사산"
+  },
+  {
+    "deadId": "1668920",
+    "scaDate": "2026-09-08",
+    "deadName": "이정옥"
+  },
+  {
+    "deadId": "1668948",
+    "scaDate": "2026-09-08",
+    "deadName": "김주환"
+  },
+  {
+    "deadId": "1668935",
+    "scaDate": "2026-09-09",
+    "deadName": "박윤점"
+  },
+  {
+    "deadId": "1668992",
+    "scaDate": "2026-09-10",
+    "deadName": "양계남"
+  },
+  {
+    "deadId": "1669018",
+    "scaDate": "2026-09-10",
+    "deadName": "이광철"
+  },
+  {
+    "deadId": "1669039",
+    "scaDate": "2026-09-11",
+    "deadName": "고달석"
+  },
+  {
+    "deadId": "1669064",
+    "scaDate": "2026-09-11",
+    "deadName": "김덕수"
+  },
+  {
+    "deadId": "1669030",
+    "scaDate": "2026-09-12",
+    "deadName": "김성일"
+  },
+  {
+    "deadId": "1669061",
+    "scaDate": "2026-09-13",
+    "deadName": "임일호"
+  },
+  {
+    "deadId": "1669101",
+    "scaDate": "2026-09-13",
+    "deadName": "김중호"
+  },
+  {
+    "deadId": "1669163",
+    "scaDate": "2026-09-15",
+    "deadName": "허상철"
+  },
+  {
+    "deadId": "1669246",
+    "scaDate": "2026-09-17",
+    "deadName": "임순덕"
+  },
+  {
+    "deadId": "1669260",
+    "scaDate": "2026-09-17",
+    "deadName": "이승희"
+  },
+  {
+    "deadId": "1669288",
+    "scaDate": "2026-09-18",
+    "deadName": "최재남"
+  },
+  {
+    "deadId": "1669292",
+    "scaDate": "2026-09-19",
+    "deadName": "류한수"
+  },
+  {
+    "deadId": "1669318",
+    "scaDate": "2026-09-19",
+    "deadName": "신용필"
+  },
+  {
+    "deadId": "1669360",
+    "scaDate": "2026-09-19",
+    "deadName": "최한홍"
+  },
+  {
+    "deadId": "1669373",
+    "scaDate": "2026-09-20",
+    "deadName": "김영부"
+  },
+  {
+    "deadId": "1669394",
+    "scaDate": "2026-09-22",
+    "deadName": "이삼순"
+  },
+  {
+    "deadId": "1669408",
+    "scaDate": "2026-09-22",
+    "deadName": "김형자"
+  },
+  {
+    "deadId": "1669435",
+    "scaDate": "2026-09-22",
+    "deadName": "심지율사산"
+  },
+  {
+    "deadId": "1669436",
+    "scaDate": "2026-09-22",
+    "deadName": "안솔사산"
+  },
+  {
+    "deadId": "1669444",
+    "scaDate": "2026-09-23",
+    "deadName": "정영화"
+  },
+  {
+    "deadId": "1669501",
+    "scaDate": "2026-09-24",
+    "deadName": "문영애"
+  },
+  {
+    "deadId": "1669541",
+    "scaDate": "2026-09-26",
+    "deadName": "정덕순"
+  },
+  {
+    "deadId": "1669572",
+    "scaDate": "2026-09-26",
+    "deadName": "김재천"
+  },
+  {
+    "deadId": "1669575",
+    "scaDate": "2026-09-27",
+    "deadName": "현봉일"
+  },
+  {
+    "deadId": "1669649",
+    "scaDate": "2026-09-29",
+    "deadName": "서진석"
+  },
+  {
+    "deadId": "1669703",
+    "scaDate": "2026-09-29",
+    "deadName": "강상목"
+  },
+  {
+    "deadId": "1669677",
+    "scaDate": "2026-09-30",
+    "deadName": "김인선"
+  },
+  {
+    "deadId": "1669678",
+    "scaDate": "2026-09-30",
+    "deadName": "김민지사산"
+  },
+  {
+    "deadId": "1669679",
+    "scaDate": "2026-09-30",
+    "deadName": "조영희사산"
+  },
+  {
+    "deadId": "1669721",
+    "scaDate": "2026-10-01",
+    "deadName": "김병훈"
+  },
+  {
+    "deadId": "1669786",
+    "scaDate": "2026-10-01",
+    "deadName": "이재승"
+  },
+  {
+    "deadId": "1669788",
+    "scaDate": "2026-10-01",
+    "deadName": "이춘희"
+  },
+  {
+    "deadId": "1669790",
+    "scaDate": "2026-10-01",
+    "deadName": "박현철"
   }
 ]
