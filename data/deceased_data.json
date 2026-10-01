@@ -191905,13 +191905,6 @@
     "retDate": null
   },
   {
-    "deadId": "1669730",
-    "strDate": "2026-10-01",
-    "ensNo": null,
-    "deadName": "김영갑",
-    "retDate": null
-  },
-  {
     "deadId": "1669791",
     "strDate": "2026-10-01",
     "ensNo": "1추모의집-11실-무연고-02709",
@@ -191930,6 +191923,13 @@
     "strDate": "2026-10-01",
     "ensNo": "1추모의집-64실-개인단-22838",
     "deadName": "이병국",
+    "retDate": null
+  },
+  {
+    "deadId": "1669730",
+    "strDate": "2026-10-01",
+    "ensNo": "1추모의집-64실-개인단-22839",
+    "deadName": "김영갑",
     "retDate": null
   }
 ]
