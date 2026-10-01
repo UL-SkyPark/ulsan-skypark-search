@@ -49,6 +49,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
   const input = document.getElementById('keyword');
   const form = document.getElementById('searchForm');
   const modal = document.getElementById('detailModal');
+  const main = document.querySelector('main');
   const composer = new KioskHangulComposer();
   let pendingStart = 0, language = 'ko', shifted = false, nativeComposing = false;
   let printing = false, afterPrint = false, resetting = false, deadline = Date.now() + IDLE_MS;
@@ -65,7 +66,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
   const keyboard = document.createElement('section');
   keyboard.id = 'kioskKeyboard'; keyboard.className = 'kiosk-keyboard'; keyboard.hidden = true;
   keyboard.setAttribute('aria-label', '고인명 입력용 터치 키보드');
-  document.body.append(keyboard);
+  const stage = document.createElement('div');
+  stage.className = 'kiosk-stage';
+  main.before(stage);
+  stage.append(main, keyboard);
   const notice = document.createElement('aside');
   notice.className = 'kiosk-notice'; notice.hidden = true;
   const message = document.createElement('span');
@@ -75,14 +79,35 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
   notice.append(message, continueBtn); document.body.append(notice);
 
   function commitComposition() { composer.reset(); }
+  let mainMotion = null, keyboardMotion = null;
+  const motionOptions = { duration:360, easing:'cubic-bezier(.22,1,.36,1)' };
+  function animateMain(previousTop) {
+    mainMotion?.cancel();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const offset = previousTop - main.getBoundingClientRect().top;
+    if (Math.abs(offset) > 1) mainMotion = main.animate([
+      {transform:`translateY(${offset}px)`}, {transform:'translateY(0)'}
+    ], motionOptions);
+  }
   function hideKeyboard() {
+    const wasVisible = !keyboard.hidden;
+    const previousTop = main.getBoundingClientRect().top;
+    keyboardMotion?.cancel();
     commitComposition(); keyboard.hidden = true;
     document.body.classList.remove('kiosk-keyboard-open'); toggle.setAttribute('aria-expanded', 'false');
+    if (wasVisible) animateMain(previousTop);
   }
   function showKeyboard() {
     if (modal.open || printing) return;
+    if (!keyboard.hidden) { input.focus({preventScroll:true}); return; }
+    const previousTop = main.getBoundingClientRect().top;
     keyboard.hidden = false; document.body.classList.add('kiosk-keyboard-open');
     toggle.setAttribute('aria-expanded', 'true'); input.focus({preventScroll:true});
+    animateMain(previousTop);
+    keyboardMotion?.cancel();
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) keyboardMotion = keyboard.animate([
+      {transform:'translateY(-24px)', opacity:0}, {transform:'translateY(0)', opacity:1}
+    ], motionOptions);
   }
   function activity(event) {
     if (printing || resetting) return;
@@ -156,7 +181,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
       if (key === 'shift') b.setAttribute('aria-pressed', String(shifted));
       row.append(b);
     }
-    [...['1234567890'], ...rows].forEach(chars => {
+    rows.forEach(chars => {
       const row = document.createElement('div'); row.className = 'kiosk-key-row';
       [...chars].forEach(char => button(row,char,char)); keyboard.append(row);
     });
