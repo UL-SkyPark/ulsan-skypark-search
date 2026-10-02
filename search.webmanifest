@@ -1,0 +1,16 @@
+{
+  "id": "/ulsan-skypark-search/search-app",
+  "name": "울산하늘공원 고인검색",
+  "short_name": "고인검색",
+  "description": "울산하늘공원 고인 검색과 봉안 위치 안내를 별도 앱으로 이용합니다.",
+  "start_url": "./search.html",
+  "scope": "./search.html",
+  "display": "standalone",
+  "background_color": "#f4f6f9",
+  "theme_color": "#12335a",
+  "lang": "ko",
+  "icons": [
+    {"src":"./images/pwa/icon-192.png", "sizes":"192x192", "type":"image/png", "purpose":"any maskable"},
+    {"src":"./images/pwa/icon-512.png", "sizes":"512x512", "type":"image/png", "purpose":"any maskable"}
+  ]
+}
