@@ -3,7 +3,7 @@
   "short_name": "하늘공원",
   "description": "울산하늘공원 접수 현황을 모바일 홈 화면에서 앱처럼 실행할 수 있습니다.",
   "start_url": "./status.html",
-  "scope": "./",
+  "scope": "./status.html",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#f4f6f9",
