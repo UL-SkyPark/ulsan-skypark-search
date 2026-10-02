@@ -3,6 +3,15 @@
 .kiosk-stage { width:min(1080px, 100%); display:flex; flex-direction:column; gap:20px; }
 .kiosk-stage > main { width:100%; flex-shrink:0; }
 .kiosk-search-actions { display:flex; flex-direction:column; align-items:center; gap:8px; }
+.kiosk-search-tools { display:flex; align-items:center; justify-content:center; gap:8px; }
+.kiosk-home { min-height:44px; padding:8px 14px; border:1px solid rgba(25,118,210,.25); border-radius:999px; background:#edf5ff; color:#12335a; font-family:inherit; font-size:14px; font-weight:700; cursor:pointer; }
+.btn-retry { margin-top:14px; min-height:48px; padding:10px 24px; border:0; border-radius:10px; background:#1976d2; color:white; font-family:inherit; font-size:18px; cursor:pointer; }
+.kiosk-home:focus-visible, .btn-retry:focus-visible { outline:3px solid #1976d2; outline-offset:2px; }
+.kiosk-mode .btn-print, .kiosk-mode .btn-close { min-width:100px; min-height:52px; font-size:18px; }
+.kiosk-mode .btn-print { display:inline-block; }
+.kiosk-mode #result .table-wrapper { max-height:min(34vh,360px); overflow:auto; overscroll-behavior:contain; }
+.kiosk-mode.kiosk-keyboard-open #result .table-wrapper { max-height:min(18vh,180px); }
+.kiosk-mode #result thead { position:sticky; top:0; z-index:1; background:#f1f5f9; }
 .kiosk-keyboard-toggle { padding:6px 14px; border:1px solid rgba(25,118,210,.22); border-radius:999px; background:rgba(255,255,255,.8); color:#345b82; font-family:inherit; font-size:14px; font-weight:600; cursor:pointer; }
 .kiosk-keyboard-toggle:hover { background:#edf5ff; border-color:#1976d2; }
 .kiosk-keyboard { position:relative; width:100%; flex-shrink:0; z-index:40; background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(237,244,252,.95)); border:1px solid rgba(31,58,90,.16); border-radius:22px; padding:18px 20px 20px; box-shadow:0 18px 55px rgba(15,23,42,.18),0 3px 12px rgba(25,118,210,.08); backdrop-filter:blur(18px); max-height:45vh; overflow:auto; }
@@ -19,4 +28,4 @@
 .kiosk-notice { position:fixed; z-index:100; top:14px; left:50%; transform:translateX(-50%); width:min(650px, calc(100% - 24px)); padding:14px; border:2px solid #1976d2; border-radius:12px; background:white; color:#12335a; box-shadow:0 5px 20px #0003; font-size:19px; text-align:center; }
 .kiosk-notice button { margin-left:12px; padding:10px 18px; border:0; border-radius:8px; background:#1976d2; color:white; font-family:inherit; font-size:18px; cursor:pointer; }
 @media (max-width:768px) { .kiosk-stage { gap:16px; } .kiosk-keyboard { border-radius:18px; padding:12px; } .kiosk-key { min-height:46px; border-radius:9px; font-size:20px; } .kiosk-key.action { font-size:13px; } .kiosk-key-row { gap:4px; } .kiosk-search-actions { width:100%; } }
-@media print { .kiosk-keyboard, .kiosk-keyboard-toggle, .kiosk-notice { display:none !important; } }
+@media print { .kiosk-keyboard, .kiosk-keyboard-toggle, .kiosk-home, .kiosk-notice { display:none !important; } }
