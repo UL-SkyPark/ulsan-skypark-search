@@ -39,6 +39,11 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
   if (!shouldHandle(url)) return;
+  // Explicit fresh-data requests must not receive an older cached JSON response.
+  if (request.cache === 'no-store') {
+    event.respondWith(fetch(request));
+    return;
+  }
 
   if (request.mode === 'navigate') {
     event.respondWith((async () => {
