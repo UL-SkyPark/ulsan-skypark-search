@@ -39,7 +39,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
 
 (() => {
   if (typeof document === 'undefined' || new URLSearchParams(location.search).get('kiosk') !== '1') return;
-  const IDLE_MS = 90_000, WARNING_MS = 15_000, AFTER_PRINT_MS = 15_000;
+  const IDLE_MS = 90_000, WARNING_MS = 15_000, AFTER_PRINT_MS = 10_000;
+  const DATA_REFRESH_MS = 5 * 60_000;
   document.body.classList.add('kiosk-mode');
   const initialUrl = new URL(location.href);
   if (!initialUrl.searchParams.has('mode') && !initialUrl.hash) {
@@ -50,9 +51,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
   const form = document.getElementById('searchForm');
   const modal = document.getElementById('detailModal');
   const main = document.querySelector('main');
+  main.querySelector('.hint').textContent = '※ 결과를 선택하면 상세정보가 표시됩니다. 목록은 위아래로 스크롤할 수 있습니다.';
   const composer = new KioskHangulComposer();
   let pendingStart = 0, language = 'ko', shifted = false, nativeComposing = false;
   let printing = false, afterPrint = false, resetting = false, deadline = Date.now() + IDLE_MS;
+  let closingModalForReset = false;
+  let lastActivityAt = Date.now(), nextRefreshAt = Date.now() + DATA_REFRESH_MS, refreshingData = false;
   input.setAttribute('inputmode', 'none');
   input.setAttribute('spellcheck', 'false');
   const toggle = document.createElement('button');
@@ -62,7 +66,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
   const searchActions = document.createElement('div');
   searchActions.className = 'kiosk-search-actions';
   searchButton.before(searchActions);
-  searchActions.append(searchButton, toggle);
+  const searchTools = document.createElement('div');
+  searchTools.className = 'kiosk-search-tools';
+  const homeButton = document.createElement('button');
+  homeButton.type = 'button'; homeButton.className = 'kiosk-home'; homeButton.textContent = '처음으로';
+  searchTools.append(toggle, homeButton);
+  searchActions.append(searchButton, searchTools);
   const keyboard = document.createElement('section');
   keyboard.id = 'kioskKeyboard'; keyboard.className = 'kiosk-keyboard'; keyboard.hidden = true;
   keyboard.setAttribute('aria-label', '고인명 입력용 터치 키보드');
@@ -112,26 +121,48 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
   function activity(event) {
     if (printing || resetting) return;
     if (event?.target && notice.contains(event.target)) return;
-    afterPrint = false; deadline = Date.now() + IDLE_MS; notice.hidden = true;
+    lastActivityAt = Date.now();
+    afterPrint = false; deadline = lastActivityAt + IDLE_MS; notice.hidden = true;
+  }
+  function hasSessionContent() {
+    return !!input.value.trim() || !!document.getElementById('result').textContent.trim() || modal.open;
+  }
+  function canRefreshData() {
+    return !printing && !resetting && !afterPrint && !nativeComposing && !hasSessionContent() && Date.now() - lastActivityAt >= 10_000;
+  }
+  async function refreshWhileIdle() {
+    if (document.hidden || refreshingData || Date.now() < nextRefreshAt || !canRefreshData()) return;
+    refreshingData = true;
+    // Defer the next attempt even if offline, to avoid repeated failing requests.
+    nextRefreshAt = Date.now() + DATA_REFRESH_MS;
+    try {
+      if (!await refreshSearchData(canRefreshData)) nextRefreshAt = Date.now() + 60_000;
+    } catch { /* Retain the last successful data while the network is unavailable. */ }
+    finally { refreshingData = false; }
   }
   function reset() {
     if (printing) return;
-    resetting = true; hideKeyboard(); notice.hidden = true; afterPrint = false;
-    if (modal.open) modal.close();
+    resetting = true; commitComposition(); notice.hidden = true; afterPrint = false;
+    if (modal.open) {
+      closingModalForReset = true;
+      modal.close();
+    }
     input.value = '';
     ['modalName','modalType','modalLoc','modalDate'].forEach(id => document.getElementById(id).textContent = '');
-    language = 'ko'; shifted = false; drawKeys();
+    language = 'ko'; shifted = false; nativeComposing = false; drawKeys();
     // Every kiosk session returns to the memorial search, including on reload.
     const url = new URL(location.href); url.searchParams.set('mode', 'memorial'); url.hash = '';
     history.replaceState(null, '', url);
     setMode('memorial');
     window.scrollTo({top:0, behavior:'instant'});
     deadline = Date.now() + IDLE_MS;
-    // No focus stealing or automatic keyboard popup while the welcome screen waits.
-    input.focus({preventScroll:true}); hideKeyboard();
+    lastActivityAt = Date.now();
+    // Leave the first screen ready for the next visitor to type a Korean name.
+    input.focus({preventScroll:true}); showKeyboard();
     setTimeout(() => { resetting = false; }, 0);
   }
   window.kioskController = { reset, hideKeyboard };
+  homeButton.addEventListener('click', reset);
 
   function emitInput() { input.dispatchEvent(new Event('input', {bubbles:true})); }
   function replace(start, end, text) {
@@ -203,7 +234,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
   input.addEventListener('compositionstart', () => { nativeComposing = true; });
   input.addEventListener('compositionend', () => { nativeComposing = false; });
   form.addEventListener('submit', hideKeyboard);
-  modal.addEventListener('close', () => { if (!resetting && !printing) { input.focus({preventScroll:true}); hideKeyboard(); } });
+  modal.addEventListener('close', () => {
+    // The dialog's delayed close event must not hide the freshly reset keyboard.
+    if (closingModalForReset) { closingModalForReset = false; return; }
+    if (!resetting && !printing) { input.focus({preventScroll:true}); hideKeyboard(); }
+  });
   continueBtn.addEventListener('click', () => { activity(); if (!modal.open) { input.focus({preventScroll:true}); hideKeyboard(); } });
   ['pointerdown','keydown','input','wheel'].forEach(type => document.addEventListener(type, activity, {capture:true, passive:true}));
   document.addEventListener('scroll', activity, {capture:true, passive:true});
@@ -215,6 +250,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
   });
   function updateNotice() {
     if (printing || resetting) return;
+    if (!afterPrint && !hasSessionContent()) { notice.hidden = true; return; }
     const remaining = deadline - Date.now();
     if (remaining <= 0) { reset(); return; }
     notice.hidden = remaining > WARNING_MS;
@@ -226,5 +262,6 @@ if (typeof module !== 'undefined' && module.exports) module.exports = KioskHangu
     }
   }
   setInterval(updateNotice, 250);
+  setInterval(refreshWhileIdle, 15_000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) updateNotice(); });
 })();
