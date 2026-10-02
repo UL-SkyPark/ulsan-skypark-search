@@ -22,7 +22,7 @@ self.addEventListener('activate', (event) => {
     const keys = await caches.keys();
     await Promise.all(
       keys
-        .filter((key) => ![SHELL_CACHE, RUNTIME_CACHE].includes(key))
+        .filter((key) => key.startsWith('ulsan-status-') && ![SHELL_CACHE, RUNTIME_CACHE].includes(key))
         .map((key) => caches.delete(key))
     );
     await self.clients.claim();
