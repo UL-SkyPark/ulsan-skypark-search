@@ -23,7 +23,7 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
   const browser = await chromium.launch({headless:true, ...(process.env.CHROME_PATH ? {executablePath:process.env.CHROME_PATH} : {})});
   const errors = [];
   try {
-    const page = await browser.newPage({viewport:{width:1280,height:1024}, reducedMotion:'reduce'});
+    const page = await browser.newPage({viewport:{width:1280,height:1024}, reducedMotion:'reduce', serviceWorkers:'block'});
     page.on('pageerror', error => errors.push(error.message));
     await page.route('https://www.googletagmanager.com/**', route => route.abort());
     await page.route('**/data/*.json', route => route.fulfill({json:[{deadName:'홍길동',ensNo:'1추모의집-01실-001',strDate:'2026-01-01'}]}));
