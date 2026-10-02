@@ -674,6 +674,8 @@
     let loadPromiseScat = null;
     let lastFound = [];
     let searchRequestId = 0;
+    const loadedSources = { memorial:false, nature:false, scat:false };
+    const DATA_REQUEST_TIMEOUT_MS = 10000;
 
     function escapeHtml(value){
       return String(value ?? '')
@@ -727,39 +729,46 @@
     }
 
     async function fetchJson(url){
-      const response = await fetch(url, { cache: "no-store" });
-      if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다: ' + url);
-      const data = await response.json();
-      if (data && typeof data === "object" && Array.isArray(data.Sheet1)) return data.Sheet1;
-      if (Array.isArray(data)) return data;
-      return [];
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), DATA_REQUEST_TIMEOUT_MS);
+      try {
+        const response = await fetch(url, { cache: "no-store", signal:controller.signal });
+        if (!response.ok) throw new Error('데이터 파일을 찾을 수 없습니다: ' + url);
+        const data = await response.json();
+        if (data && typeof data === "object" && Array.isArray(data.Sheet1)) return data.Sheet1;
+        if (Array.isArray(data)) return data;
+        throw new Error('데이터 파일 형식이 올바르지 않습니다.');
+      } catch (err) {
+        if (controller.signal.aborted) throw new DOMException('데이터 요청 시간이 초과되었습니다.', 'TimeoutError');
+        throw err;
+      } finally { clearTimeout(timeout); }
     }
 
     async function ensureMemorialLoaded(){
-      if (excelDataMemorial.length > 0) return;
+      if (loadedSources.memorial) return;
       if (!loadPromiseMemorial){
         loadPromiseMemorial = fetchJson(SOURCES.memorial)
-          .then(data => { excelDataMemorial = data || []; })
+          .then(data => { excelDataMemorial = data; loadedSources.memorial = true; })
           .finally(() => { loadPromiseMemorial = null; });
       }
       await loadPromiseMemorial;
     }
 
     async function ensureNatureLoaded(){
-      if (excelDataNature.length > 0) return;
+      if (loadedSources.nature) return;
       if (!loadPromiseNature){
         loadPromiseNature = fetchJson(SOURCES.nature)
-          .then(data => { excelDataNature = data || []; })
+          .then(data => { excelDataNature = data; loadedSources.nature = true; })
           .finally(() => { loadPromiseNature = null; });
       }
       await loadPromiseNature;
     }
 
     async function ensureScatLoaded(){
-      if (excelDataScat.length > 0) return;
+      if (loadedSources.scat) return;
       if (!loadPromiseScat){
         loadPromiseScat = fetchJson(SOURCES.scat)
-          .then(data => { excelDataScat = data || []; })
+          .then(data => { excelDataScat = data; loadedSources.scat = true; })
           .finally(() => { loadPromiseScat = null; });
       }
       await loadPromiseScat;
@@ -779,9 +788,20 @@
         return;
       }
       await Promise.all([ensureMemorialLoaded(), ensureNatureLoaded(), ensureScatLoaded()]);
-      if (excelDataMemorial.length === 0 && excelDataNature.length === 0 && excelDataScat.length === 0){
-        throw new Error('전체 데이터 로딩에 실패했습니다.');
+    }
+
+    async function refreshSearchData(canApply){
+      // Fetch a complete replacement first; retain the previous data on any failure.
+      const modes = Object.keys(SOURCES).filter(mode => mode === 'memorial' || loadedSources[mode]);
+      const replacements = await Promise.all(modes.map(async mode => [mode, await fetchJson(SOURCES[mode])]));
+      if (!canApply()) return false;
+      for (const [mode, data] of replacements){
+        if (mode === 'memorial') excelDataMemorial = data;
+        else if (mode === 'nature') excelDataNature = data;
+        else excelDataScat = data;
+        loadedSources[mode] = true;
       }
+      return true;
     }
 
     function normalizeRoom(raw){
@@ -956,7 +976,7 @@
         }));
     }
 
-    function renderResults(records, keyword, isLimited){
+    function renderResults(records, keyword, isLimited, totalCount = records.length){
       const resultDiv = document.getElementById("result");
       const h = getHeaderLabels(currentMode);
       const showLocation = h.showLocation !== false;
@@ -967,10 +987,10 @@
       }
 
       const titleLeft =
-        `${getModeLabel(currentMode)} 검색 결과 ${records.length}건`;
+        `${getModeLabel(currentMode)} 검색 결과 ${totalCount}건`;
 
       const titleRight = isLimited
-        ? `검색 결과가 많아 상위 ${MAX_RESULTS}건만 표시됩니다.`
+        ? `상위 ${MAX_RESULTS}건을 표시합니다. 고인명을 더 자세히 입력해 주세요.`
         : `결과를 선택하면<span class="m-br"></span>상세 정보가 표시됩니다.`;
 
       let html = `
@@ -1030,7 +1050,13 @@
         await ensureDataForSearch(searchMode);
       }catch(err){
         if (requestId !== searchRequestId) return;
-        resultDiv.innerHTML = `<div class="no-result">데이터 파일을 불러올 수 없습니다.<br>관리자에게 문의하세요.</div>`;
+        const message = err.name === 'TimeoutError'
+          ? '연결이 지연되고 있습니다. 다시 시도해 주세요.'
+          : '검색 데이터를 불러오지 못했습니다. 연결 상태를 확인한 뒤 다시 시도해 주세요.';
+        resultDiv.innerHTML = `<div class="no-result" role="alert">${message}<br><button type="button" class="btn-retry">다시 시도</button></div>`;
+        resultDiv.querySelector('.btn-retry').addEventListener('click', () => {
+          if (requestId === searchRequestId) document.getElementById('searchForm').requestSubmit();
+        });
         return;
       }
       if (requestId !== searchRequestId) return;
@@ -1045,14 +1071,17 @@
         if (excelDataScat.length > 0) found.push(...searchScat(keyword));
       }
 
-      const isLimited = found.length > MAX_RESULTS;
+      const normalizedKeyword = normalizeForSearch(keyword);
+      found.sort((a,b) => Number(normalizeForSearch(b.name) === normalizedKeyword) - Number(normalizeForSearch(a.name) === normalizedKeyword));
+      const totalCount = found.length;
+      const isLimited = totalCount > MAX_RESULTS;
       if (isLimited) {
         found = found.slice(0, MAX_RESULTS);
       }
 
       lastFound = found;
       resultDiv.style.display = "block";
-      renderResults(found, keyword, isLimited);
+      renderResults(found, keyword, isLimited, totalCount);
     });
 
     function resetResultOnly(){
