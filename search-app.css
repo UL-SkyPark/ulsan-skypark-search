@@ -1,0 +1,9 @@
+.search-install { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:60; width:min(560px,calc(100% - 24px)); padding:16px 18px; border:1px solid #cbd9e8; border-radius:16px; background:#fff; box-shadow:0 12px 35px #12335a25; color:#12335a; text-align:left; }
+.search-install[hidden] { display:none; }
+.search-install-title { font-size:18px; font-weight:800; }
+.search-install-text { margin-top:6px; font-size:14px; line-height:1.5; }
+.search-install-actions { display:flex; gap:8px; margin-top:12px; }
+.search-install button { min-height:44px; padding:8px 18px; border:1px solid #1976d2; border-radius:9px; background:#1976d2; color:white; font-family:inherit; font-size:15px; font-weight:700; cursor:pointer; }
+.search-install button.search-install-dismiss { background:white; color:#12335a; border-color:#cbd9e8; }
+.search-install button:focus-visible { outline:3px solid #1976d2; outline-offset:2px; }
+@media print { .search-install { display:none !important; } }
