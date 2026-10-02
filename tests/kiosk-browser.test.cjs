@@ -57,6 +57,8 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
     assert.equal(await page.locator('#modalName').textContent(), '');
     assert.equal(await page.locator('.tab-btn.active').getAttribute('data-mode'), 'memorial');
     assert.equal(await input.evaluate(el => el === document.activeElement), true);
+    assert.equal(await page.locator('#kioskKeyboard').isVisible(), true);
+    assert.equal(await page.locator('.kiosk-keyboard-heading').textContent(), '고인명 입력 · 한글 두벌식');
     assert.equal(new URL(page.url()).searchParams.get('kiosk'), '1');
 
     // Physical keyboard, English, Shift, selection replacement and maxlength.
@@ -74,13 +76,18 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
     await page.clock.fastForward(120_000);
     assert.equal(await input.inputValue(), '홍길동');
     await page.evaluate(() => window.dispatchEvent(new Event('afterprint')));
-    assert.equal(await page.locator('.kiosk-notice span').textContent(), '15초 후에 첫화면으로 돌아갑니다.');
-    await page.clock.fastForward(15_100);
+    assert.equal(await page.locator('.kiosk-notice span').textContent(), '10초 후에 첫화면으로 돌아갑니다.');
+    await page.clock.fastForward(9_000);
+    assert.equal(await input.inputValue(), '홍길동');
+    await page.clock.fastForward(1_100);
     assert.equal(await input.inputValue(), '');
+    assert.equal(await page.locator('#kioskKeyboard').isVisible(), true);
+    assert.equal(await page.locator('.kiosk-keyboard-heading').textContent(), '고인명 입력 · 한글 두벌식');
     await page.goto(url + '?kiosk=1&mode=nature#nature');
     await page.locator('#globalLogo').click();
     assert.equal(new URL(page.url()).searchParams.get('mode'), 'memorial');
     assert.equal(new URL(page.url()).hash, '');
+    assert.equal(await page.locator('#kioskKeyboard').isVisible(), true);
 
     // A response arriving after reset must never redisplay the previous search.
     await page.goto(url + '?kiosk=1');
@@ -94,6 +101,94 @@ test('Kiosk keyboard, reset, print lifecycle, stale searches, and normal mode', 
     release();
     await page.waitForFunction(() => loadPromiseMemorial === null && loadPromiseNature === null && loadPromiseScat === null);
     assert.equal(await page.locator('#result').textContent(), '');
+
+    // Waiting on an empty first screen never produces a recurring reset notice.
+    await page.unroute('**/data/*.json');
+    let responseData = [{deadName:'이전이름',ensNo:'01실-00001'}];
+    let status = 200, dataRequests = 0;
+    await page.route('**/data/*.json', route => {
+      dataRequests++;
+      return route.fulfill({status,json:responseData});
+    });
+    await page.goto(url + '?kiosk=1');
+    await page.clock.fastForward(90_100);
+    assert.equal(await page.locator('.kiosk-notice').isVisible(), false);
+    assert.equal(await page.locator('#kioskKeyboard').isVisible(), true);
+
+    // HTTP failure is distinct from a successful empty search, and retry recovers.
+    status = 503;
+    await input.fill('이전이름'); await input.press('Enter');
+    await page.locator('.btn-retry').waitFor();
+    assert.match(await page.locator('#result').textContent(), /불러오지 못했습니다/);
+    status = 200;
+    await page.locator('.btn-retry').click();
+    await page.locator('#result tr[data-idx="0"]').waitFor();
+    assert.equal(await page.locator('#result tbody tr:first-child td:first-child').textContent(), '이전이름');
+    await page.locator('.kiosk-home').click();
+
+    // Periodic replacement applies while idle, then retains old data when offline.
+    responseData = [{deadName:'새이름',ensNo:'01실-00002'}];
+    await page.clock.fastForward(300_100);
+    await page.waitForFunction(() => excelDataMemorial[0]?.deadName === '새이름');
+    assert.equal(await page.locator('.kiosk-notice').isVisible(), false);
+    status = 503;
+    const beforeFailure = dataRequests;
+    const refreshFailure = page.waitForResponse(response => response.url().includes('/data/deceased_data.json') && response.status() === 503);
+    await page.clock.fastForward(300_100);
+    await refreshFailure;
+    assert.ok(dataRequests > beforeFailure);
+    await input.fill('새이름'); await input.press('Enter');
+    await page.locator('#result tr[data-idx="0"]').waitFor();
+    assert.equal(await page.locator('#result tbody tr:first-child td:first-child').textContent(), '새이름');
+
+    // Exact names remain visible even when more than 100 partial matches precede them.
+    status = 200;
+    responseData = [...Array.from({length:101}, (_,i) => ({deadName:'홍길동' + i,ensNo:'01실-00001'})), {deadName:'홍길동',ensNo:'01실-00002'}];
+    await page.goto(url + '?kiosk=1');
+    await input.fill('홍길동'); await input.press('Enter');
+    await page.locator('#result tr[data-idx="0"]').waitFor();
+    assert.equal(await page.locator('#result tbody tr:first-child td:first-child').textContent(), '홍길동');
+    assert.equal(await page.locator('#result tbody tr').count(), 100);
+    assert.match(await page.locator('.result-title').textContent(), /102건/);
+    assert.equal(await page.locator('.table-wrapper').evaluate(el => el.scrollHeight > el.clientHeight), true);
+    // Active visitors keep their current snapshot until their session is over.
+    responseData = [{deadName:'다른이름'}];
+    const activeRequests = dataRequests;
+    for (let i = 0; i < 6; i++) {
+      await page.clock.fastForward(60_000);
+      await page.locator('#keyword').dispatchEvent('input');
+    }
+    assert.equal(dataRequests, activeRequests);
+    assert.equal(await page.locator('#result tbody tr:first-child td:first-child').textContent(), '홍길동');
+    await page.locator('.kiosk-home').click();
+
+    // If a visitor starts typing during background fetch, defer applying its data.
+    let pendingRefresh;
+    await page.route('**/data/deceased_data.json', route => { pendingRefresh = route; });
+    const refreshStarted = page.waitForRequest(request => request.url().includes('/data/deceased_data.json'));
+    await page.clock.fastForward(300_100);
+    await refreshStarted;
+    await input.fill('홍길동');
+    const refreshResponse = page.waitForResponse(response => response.url().includes('/data/deceased_data.json'));
+    await pendingRefresh.fulfill({json:[{deadName:'교체이름'}]});
+    await refreshResponse;
+    await page.clock.runFor(100);
+    await input.press('Enter');
+    await page.locator('#result tr[data-idx="0"]').waitFor();
+    assert.equal(await page.locator('#result tbody tr:first-child td:first-child').textContent(), '홍길동');
+    await page.unroute('**/data/deceased_data.json');
+
+    // A stalled request ends after 10 seconds and offers retry rather than staying busy.
+    await page.unroute('**/data/*.json');
+    let stalledRoute;
+    await page.route('**/data/*.json', route => { stalledRoute = route; });
+    await page.goto(url + '?kiosk=1');
+    await input.fill('테스트이름'); await input.press('Enter');
+    await page.clock.fastForward(10_100);
+    await page.locator('.btn-retry').waitFor();
+    assert.match(await page.locator('#result').textContent(), /연결이 지연/);
+    if (stalledRoute) await stalledRoute.abort().catch(() => {});
+    await page.locator('.kiosk-home').click();
 
     // Check actual opening motion and close spacing on wide, portrait and small screens.
     await page.emulateMedia({reducedMotion:'no-preference'});
