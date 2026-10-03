@@ -191975,13 +191975,6 @@
     "retDate": null
   },
   {
-    "deadId": "1669813",
-    "strDate": "2026-10-03",
-    "ensNo": null,
-    "deadName": "정한규",
-    "retDate": null
-  },
-  {
     "deadId": "1669883",
     "strDate": "2026-10-03",
     "ensNo": "1추모의집-11실-무연고-02718",
@@ -192028,6 +192021,13 @@
     "strDate": "2026-10-03",
     "ensNo": "1추모의집-64실-개인단-22848",
     "deadName": "이순조",
+    "retDate": null
+  },
+  {
+    "deadId": "1669813",
+    "strDate": "2026-10-03",
+    "ensNo": "1추모의집-64실-개인단-22849",
+    "deadName": "정한규",
     "retDate": null
   }
 ]
