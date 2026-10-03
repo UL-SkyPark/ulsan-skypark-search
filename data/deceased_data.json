@@ -192059,17 +192059,17 @@
     "retDate": null
   },
   {
-    "deadId": "1669833",
-    "strDate": "2026-10-04",
-    "ensNo": null,
-    "deadName": "전민순",
-    "retDate": null
-  },
-  {
     "deadId": "1669881",
     "strDate": "2026-10-04",
     "ensNo": "1추모의집-64실-개인단-22851",
     "deadName": "이선구",
+    "retDate": null
+  },
+  {
+    "deadId": "1669833",
+    "strDate": "2026-10-04",
+    "ensNo": "1추모의집-64실-개인단-22852",
+    "deadName": "전민순",
     "retDate": null
   }
 ]
