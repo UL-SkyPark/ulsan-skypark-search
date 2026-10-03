@@ -5805,8 +5805,23 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1669850",
+    "deadName": "김천호",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1669851",
+    "deadName": "이상현",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1669883",
     "deadName": "성명불상",
+    "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1669884",
+    "deadName": "홍맹곤",
     "dcGubun": "TCM1200099"
   }
 ]
