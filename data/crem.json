@@ -675,17 +675,17 @@
       "burnDate": 1791126000000,
       "burnChasu": "05",
       "burnNo": "06",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -731,17 +731,17 @@
       "burnDate": 1791126000000,
       "burnChasu": "05",
       "burnNo": "01",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -772,13 +772,69 @@
     "cremSeq": 22,
     "objt": "A001",
     "burnDate": 1791126000000,
-    "burnNo": null,
+    "burnNo": "09",
     "burnChasu": "05",
     "deadId": 1669910,
     "thedead": {
       "deadId": 1669910,
       "deadName": "전천호",
       "id": 1669910,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1791126000000,
+      "burnChasu": "05",
+      "burnNo": "09",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "209",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1791126000000,
+        "burnChasu": "05",
+        "burnNo": "09"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1791126000000,
+      "cremSeq": 22
+    }
+  },
+  {
+    "cremDate": "2026-10-05",
+    "cremSeq": 23,
+    "objt": "A001",
+    "burnDate": 1791126000000,
+    "burnNo": null,
+    "burnChasu": "05",
+    "deadId": 1669923,
+    "thedead": {
+      "deadId": 1669923,
+      "deadName": "장연실",
+      "id": 1669923,
       "new": false
     },
     "applId": "*******",
@@ -812,7 +868,7 @@
     },
     "id": {
       "cremDate": 1791126000000,
-      "cremSeq": 22
+      "cremSeq": 23
     }
   },
   {
