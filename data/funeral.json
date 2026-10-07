@@ -5880,6 +5880,11 @@
     "dcGubun": "TCM1200099"
   },
   {
+    "deadId": "1669968",
+    "deadName": "이강조",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1669969",
     "deadName": "강광자",
     "dcGubun": "TCM1200002"
@@ -5892,6 +5897,11 @@
   {
     "deadId": "1669971",
     "deadName": "김후준",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1670004",
+    "deadName": "박화자",
     "dcGubun": "TCM1200001"
   }
 ]
