@@ -192117,8 +192117,15 @@
   {
     "deadId": "1669962",
     "strDate": "2026-10-07",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-02007",
     "deadName": "최병상",
+    "retDate": null
+  },
+  {
+    "deadId": "1670028",
+    "strDate": "2026-10-07",
+    "ensNo": "1추모의집-09실-부부단-02007",
+    "deadName": "조시",
     "retDate": null
   },
   {
