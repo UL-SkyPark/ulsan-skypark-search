@@ -953,6 +953,118 @@
   },
   {
     "cremDate": "2026-10-07",
+    "cremSeq": 25,
+    "objt": "A002",
+    "burnDate": 1791298800000,
+    "burnNo": "03",
+    "burnChasu": "07",
+    "deadId": 1669895,
+    "thedead": {
+      "deadId": 1669895,
+      "deadName": "김다솔사산",
+      "id": 1669895,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1791298800000,
+      "burnChasu": "07",
+      "burnNo": "03",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1791298800000,
+        "burnChasu": "07",
+        "burnNo": "03"
+      }
+    },
+    "objtCode": "A002",
+    "objtName": "사산아",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1791298800000,
+      "cremSeq": 25
+    }
+  },
+  {
+    "cremDate": "2026-10-07",
+    "cremSeq": 26,
+    "objt": "A002",
+    "burnDate": 1791298800000,
+    "burnNo": "08",
+    "burnChasu": "07",
+    "deadId": 1669896,
+    "thedead": {
+      "deadId": 1669896,
+      "deadName": "권현정사산",
+      "id": 1669896,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1791298800000,
+      "burnChasu": "07",
+      "burnNo": "08",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "208",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1791298800000,
+        "burnChasu": "07",
+        "burnNo": "08"
+      }
+    },
+    "objtCode": "A002",
+    "objtName": "사산아",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1791298800000,
+      "cremSeq": 26
+    }
+  },
+  {
+    "cremDate": "2026-10-07",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1791298800000,
