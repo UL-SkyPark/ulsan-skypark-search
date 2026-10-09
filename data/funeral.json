@@ -5920,8 +5920,18 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1670088",
+    "deadName": "변화숙",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1670089",
     "deadName": "임태성",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1670103",
+    "deadName": "김영수",
+    "dcGubun": "TCM1200099"
   }
 ]
