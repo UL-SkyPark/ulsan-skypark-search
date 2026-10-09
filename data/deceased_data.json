@@ -97213,7 +97213,7 @@
     "strDate": "2021-02-22",
     "ensNo": "1추모의집-39실-개인단-13361",
     "deadName": "김성관",
-    "retDate": null
+    "retDate": "2026-10-09"
   },
   {
     "deadId": "1466809",
@@ -192199,13 +192199,6 @@
     "retDate": null
   },
   {
-    "deadId": "1670060",
-    "strDate": "2026-10-09",
-    "ensNo": null,
-    "deadName": "박소선",
-    "retDate": null
-  },
-  {
     "deadId": "1470485",
     "strDate": "2026-10-09",
     "ensNo": "1추모의집-09실-부부단-02010",
@@ -192231,6 +192224,13 @@
     "strDate": "2026-10-09",
     "ensNo": "1추모의집-09실-부부단-02011",
     "deadName": "박준열",
+    "retDate": null
+  },
+  {
+    "deadId": "1670060",
+    "strDate": "2026-10-09",
+    "ensNo": "1추모의집-09실-부부단-02012",
+    "deadName": "박소선",
     "retDate": null
   },
   {
