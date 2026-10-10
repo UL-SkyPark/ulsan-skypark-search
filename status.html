@@ -494,6 +494,12 @@
       color: rgba(180,83,9,.95);
     }
 
+    .tag.advance{
+      border-color: rgba(14,116,144,.28);
+      background: linear-gradient(180deg, rgba(6,182,212,.14), rgba(34,211,238,.08));
+      color: rgba(14,116,144,.98);
+    }
+
     .tag.objt{
       border-color: rgba(15,23,42,.16);
       background: linear-gradient(180deg, rgba(15,23,42,.08), rgba(15,23,42,.04));
@@ -1489,7 +1495,8 @@
 
     const TAG_LABEL = {
       self: '자체',
-      orphan: '무연고'
+      orphan: '무연고',
+      advance: '사전'
     };
 
     const CREM_OBJT_LABEL = {
@@ -2807,6 +2814,32 @@
       return hasSelf ? TAG_LABEL.self : null;
     }
 
+    function hasAdvanceRemark(item){
+      if (state.currentSource !== FACILITY.nature.key) return false;
+
+      const raws = Array.isArray(item?._raw) ? item._raw : [item];
+      return raws.some(r => {
+        const remarks = [
+          r?.remark,
+          r?.naturedead?.remark,
+          r?.natureDead?.remark,
+          r?.thedead?.remark
+        ];
+
+        return remarks.some(value => String(value ?? '').includes(TAG_LABEL.advance));
+      });
+    }
+
+    function badgeLabelsForItem(item, displayName, funeralMap, mode){
+      if (mode === 'ret') return [];
+
+      const labels = [];
+      const funeralLabel = funeralBadgeLabelForItem(item, displayName, funeralMap);
+      if (funeralLabel) labels.push(funeralLabel);
+      if (hasAdvanceRemark(item)) labels.push(TAG_LABEL.advance);
+      return labels;
+    }
+
     function calcCounts(src, data, iso){
       const dateKey = FACILITY[src].dateKey;
 
@@ -2869,8 +2902,20 @@
 
     function badgeHTML(label){
       if (!label) return '';
-      const cls = (label === TAG_LABEL.orphan) ? 'tag orphan' : 'tag self';
+
+      const cls =
+        label === TAG_LABEL.orphan ? 'tag orphan' :
+        label === TAG_LABEL.advance ? 'tag advance' :
+        'tag self';
+
       return `<span class="${cls}">${esc(label)}</span>`;
+    }
+
+    function badgesHTML(labels){
+      return (Array.isArray(labels) ? labels : [labels])
+        .filter(Boolean)
+        .map(badgeHTML)
+        .join('');
     }
 
     function leftCls(src, mode, status){
@@ -3001,8 +3046,8 @@
       const status = getItemStatus(item, selected);
       const displayId = getDisplayId(item);
       const displayName = getDisplayName(item);
-      const badgeLabel = (mode === 'ret') ? null : funeralBadgeLabelForItem(item, displayName, funeralMap);
-      const tag = badgeHTML(badgeLabel);
+      const badgeLabels = badgeLabelsForItem(item, displayName, funeralMap, mode);
+      const tags = badgesHTML(badgeLabels);
       const cremInfoHtml = cremLinesHTML(item, cremMap, mode);
 
       return `
@@ -3017,7 +3062,7 @@
                     <div class="nameLine">
                       <div class="nameWrap" title="${esc(displayName)}">
                         <span class="nameText">${esc(displayName)}</span>
-                        ${tag}
+                        ${tags}
                       </div>
                     </div>
                   </div>
@@ -3231,11 +3276,11 @@
       updateHeaderMeta();
     }
 
-    function buildModalNameHTML(displayName, badgeLabel){
+    function buildModalNameHTML(displayName, badgeLabels){
       return `
         <span style="display:inline-flex;align-items:center;gap:3px;min-width:0;max-width:100%;width:fit-content;flex-wrap:wrap;">
           <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(displayName)}</span>
-          ${badgeHTML(badgeLabel)}
+          ${badgesHTML(badgeLabels)}
         </span>
       `;
     }
@@ -3271,20 +3316,21 @@
       const cremMap = showCrem ? state.cremMapCache : null;
 
       const displayName = getDisplayName(item);
-      const badgeLabel = isRetModal ? null : funeralBadgeLabelForItem(item, displayName, state.funeralMapCache);
+      const mode = isRetModal ? 'ret' : 'recv';
+      const badgeLabels = badgeLabelsForItem(item, displayName, state.funeralMapCache, mode);
 
       let html = '';
 
       if (state.currentSource === FACILITY.house.key){
         html += kv('안치일자', item.strDate ?? '-');
-        html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabel));
+        html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabels));
 
         const rdISO = normISO(pickRetDate(item));
         const rdRaw = pickRetDate(item);
         if (rdISO) html += kv('반환일자', String(rdRaw ?? rdISO));
       } else {
         html += kv('안장일자', item.natDate ?? '-');
-        html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabel));
+        html += kvHTML('고인명', buildModalNameHTML(displayName, badgeLabels));
       }
 
       if (!isRetModal){
