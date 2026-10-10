@@ -192290,13 +192290,6 @@
     "retDate": null
   },
   {
-    "deadId": "1670125",
-    "strDate": "2026-10-11",
-    "ensNo": null,
-    "deadName": "김창선",
-    "retDate": null
-  },
-  {
     "deadId": "1670122",
     "strDate": "2026-10-11",
     "ensNo": "1추모의집-64실-개인단-22870",
@@ -192308,6 +192301,13 @@
     "strDate": "2026-10-11",
     "ensNo": "1추모의집-64실-개인단-22871",
     "deadName": "이연옥",
+    "retDate": null
+  },
+  {
+    "deadId": "1670125",
+    "strDate": "2026-10-11",
+    "ensNo": "1추모의집-64실-개인단-22872",
+    "deadName": "김창선",
     "retDate": null
   }
 ]
