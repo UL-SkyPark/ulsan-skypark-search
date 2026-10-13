@@ -192460,8 +192460,15 @@
   {
     "deadId": "1670261",
     "strDate": "2026-10-14",
-    "ensNo": null,
+    "ensNo": "1추모의집-64실-개인단-22879",
     "deadName": "김성진",
+    "retDate": null
+  },
+  {
+    "deadId": "1670221",
+    "strDate": "2026-10-14",
+    "ensNo": "1추모의집-64실-개인단-22880",
+    "deadName": "오판수",
     "retDate": null
   }
 ]
