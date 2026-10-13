@@ -6000,6 +6000,11 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1670201",
+    "deadName": "문정숙",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1670251",
     "deadName": "정장순",
     "dcGubun": "TCM1200001"
@@ -6012,6 +6017,11 @@
   {
     "deadId": "1670253",
     "deadName": "이종남",
+    "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1670254",
+    "deadName": "손형락",
     "dcGubun": "TCM1200002"
   }
 ]
