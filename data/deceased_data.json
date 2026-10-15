@@ -192514,17 +192514,17 @@
     "retDate": null
   },
   {
-    "deadId": "1670311",
-    "strDate": "2026-10-15",
-    "ensNo": null,
-    "deadName": "한주상",
-    "retDate": null
-  },
-  {
     "deadId": "1670336",
     "strDate": "2026-10-15",
     "ensNo": "1추모의집-64실-개인단-22886",
     "deadName": "조팔만",
+    "retDate": null
+  },
+  {
+    "deadId": "1670311",
+    "strDate": "2026-10-15",
+    "ensNo": "1추모의집-64실-개인단-22887",
+    "deadName": "한주상",
     "retDate": null
   }
 ]
