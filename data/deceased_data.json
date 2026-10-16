@@ -51062,7 +51062,7 @@
     "strDate": "2017-10-08",
     "ensNo": "1추모의집-26실-개인단-08530",
     "deadName": "정복순",
-    "retDate": null
+    "retDate": "2026-10-16"
   },
   {
     "deadId": "1460220",
@@ -192525,6 +192525,13 @@
     "strDate": "2026-10-15",
     "ensNo": "1추모의집-64실-개인단-22887",
     "deadName": "한주상",
+    "retDate": null
+  },
+  {
+    "deadId": "1670379",
+    "strDate": "2026-10-16",
+    "ensNo": null,
+    "deadName": "이재호",
     "retDate": null
   },
   {
