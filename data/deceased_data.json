@@ -192528,13 +192528,6 @@
     "retDate": null
   },
   {
-    "deadId": "1670330",
-    "strDate": "2026-10-16",
-    "ensNo": null,
-    "deadName": "강성원",
-    "retDate": null
-  },
-  {
     "deadId": "1670287",
     "strDate": "2026-10-16",
     "ensNo": "1추모의집-47실-개인단-15469",
@@ -192567,6 +192560,13 @@
     "strDate": "2026-10-16",
     "ensNo": "1추모의집-64실-개인단-22888",
     "deadName": "남국자",
+    "retDate": null
+  },
+  {
+    "deadId": "1670330",
+    "strDate": "2026-10-16",
+    "ensNo": "1추모의집-64실-개인단-22889",
+    "deadName": "강성원",
     "retDate": null
   }
 ]
