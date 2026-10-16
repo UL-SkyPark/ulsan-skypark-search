@@ -803,17 +803,17 @@
       "burnDate": 1792076400000,
       "burnChasu": "05",
       "burnNo": "03",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "11:23",
-      "burnEndTime": null,
+      "burnEndTime": "12:49",
       "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -1139,17 +1139,17 @@
       "burnDate": 1792076400000,
       "burnChasu": "07",
       "burnNo": "06",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "12:48",
       "burnEndTime": null,
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -1180,7 +1180,7 @@
     "cremSeq": 31,
     "objt": "A002",
     "burnDate": 1792076400000,
-    "burnNo": null,
+    "burnNo": "02",
     "burnChasu": "07",
     "deadId": 1670352,
     "thedead": {
@@ -1194,16 +1194,24 @@
     "hwaBrazier": {
       "burnDate": 1792076400000,
       "burnChasu": "07",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "02",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
       "id": {
         "burnDate": 1792076400000,
         "burnChasu": "07",
-        "burnNo": null
+        "burnNo": "02"
       }
     },
     "objtCode": "A002",
@@ -1221,6 +1229,62 @@
     "id": {
       "cremDate": 1792076400000,
       "cremSeq": 31
+    }
+  },
+  {
+    "cremDate": "2026-10-16",
+    "cremSeq": 32,
+    "objt": "A002",
+    "burnDate": 1792076400000,
+    "burnNo": "07",
+    "burnChasu": "08",
+    "deadId": 1670354,
+    "thedead": {
+      "deadId": 1670354,
+      "deadName": "강안희사산",
+      "id": 1670354,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1792076400000,
+      "burnChasu": "08",
+      "burnNo": "07",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "207",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1792076400000,
+        "burnChasu": "08",
+        "burnNo": "07"
+      }
+    },
+    "objtCode": "A002",
+    "objtName": "사산아",
+    "burnChasuName": "8회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1792076400000,
+      "cremSeq": 32
     }
   },
   {
