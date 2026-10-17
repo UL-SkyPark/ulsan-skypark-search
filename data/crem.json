@@ -355,17 +355,17 @@
       "burnDate": 1792162800000,
       "burnChasu": "04",
       "burnNo": "03",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "10:36",
-      "burnEndTime": null,
+      "burnEndTime": "11:56",
       "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
@@ -844,13 +844,69 @@
     "cremSeq": 23,
     "objt": "B001",
     "burnDate": 1792162800000,
-    "burnNo": null,
+    "burnNo": "02",
     "burnChasu": "07",
     "deadId": 1669766,
     "thedead": {
       "deadId": 1669766,
       "deadName": "이종학",
       "id": 1669766,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1792162800000,
+      "burnChasu": "07",
+      "burnNo": "02",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1792162800000,
+        "burnChasu": "07",
+        "burnNo": "02"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1792162800000,
+      "cremSeq": 23
+    }
+  },
+  {
+    "cremDate": "2026-10-17",
+    "cremSeq": 24,
+    "objt": "B001",
+    "burnDate": 1792162800000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1669767,
+    "thedead": {
+      "deadId": 1669767,
+      "deadName": "서진출",
+      "id": 1669767,
       "new": false
     },
     "applId": "*******",
@@ -884,7 +940,7 @@
     },
     "id": {
       "cremDate": 1792162800000,
-      "cremSeq": 23
+      "cremSeq": 24
     }
   },
   {
