@@ -6078,5 +6078,10 @@
     "deadId": "1670411",
     "deadName": "장병례",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1670441",
+    "deadName": "정상용",
+    "dcGubun": "TCM1200002"
   }
 ]
