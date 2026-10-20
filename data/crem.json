@@ -449,6 +449,54 @@
   },
   {
     "cremDate": "2026-10-20",
+    "cremSeq": 17,
+    "objt": "A001",
+    "burnDate": 1792422000000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1670523,
+    "thedead": {
+      "deadId": 1670523,
+      "deadName": "오승철",
+      "id": 1670523,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1792422000000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1792422000000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1792422000000,
+      "cremSeq": 17
+    }
+  },
+  {
+    "cremDate": "2026-10-20",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1792422000000,
