@@ -74526,7 +74526,7 @@
     "strDate": "2019-07-13",
     "ensNo": "1추모의집-33실-개인단-11047",
     "deadName": "이명삼",
-    "retDate": null
+    "retDate": "2026-10-22"
   },
   {
     "deadId": "1463568",
@@ -192791,6 +192791,20 @@
     "strDate": "2026-10-21",
     "ensNo": "1추모의집-64실-개인단-22912",
     "deadName": "조오식",
+    "retDate": null
+  },
+  {
+    "deadId": "1463567",
+    "strDate": "2026-10-22",
+    "ensNo": "1추모의집-09실-부부단-02019",
+    "deadName": "이명삼",
+    "retDate": null
+  },
+  {
+    "deadId": "1670547",
+    "strDate": "2026-10-22",
+    "ensNo": "1추모의집-09실-부부단-02019",
+    "deadName": "김중자",
     "retDate": null
   },
   {
