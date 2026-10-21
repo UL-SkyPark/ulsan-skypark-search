@@ -243,17 +243,17 @@
       "burnDate": 1792508400000,
       "burnChasu": "06",
       "burnNo": "01",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -803,17 +803,17 @@
       "burnDate": 1792508400000,
       "burnChasu": "06",
       "burnNo": "06",
-      "burnStatus": "1",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
       "waitRoom": "206",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "1",
-        "name": "접수",
+        "code": "2",
+        "name": "운구 중",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "1"
+          "code": "2"
         }
       },
       "id": {
@@ -949,6 +949,118 @@
     "id": {
       "cremDate": 1792508400000,
       "cremSeq": 24
+    }
+  },
+  {
+    "cremDate": "2026-10-21",
+    "cremSeq": 25,
+    "objt": "A001",
+    "burnDate": 1792508400000,
+    "burnNo": "03",
+    "burnChasu": "06",
+    "deadId": 1670512,
+    "thedead": {
+      "deadId": 1670512,
+      "deadName": "손순현",
+      "id": 1670512,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1792508400000,
+      "burnChasu": "06",
+      "burnNo": "03",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "203",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1792508400000,
+        "burnChasu": "06",
+        "burnNo": "03"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1792508400000,
+      "cremSeq": 25
+    }
+  },
+  {
+    "cremDate": "2026-10-21",
+    "cremSeq": 26,
+    "objt": "B001",
+    "burnDate": 1792508400000,
+    "burnNo": "08",
+    "burnChasu": "07",
+    "deadId": 1670513,
+    "thedead": {
+      "deadId": 1670513,
+      "deadName": "손영호",
+      "id": 1670513,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1792508400000,
+      "burnChasu": "07",
+      "burnNo": "08",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "208",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1792508400000,
+        "burnChasu": "07",
+        "burnNo": "08"
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1792508400000,
+      "cremSeq": 26
     }
   },
   {
