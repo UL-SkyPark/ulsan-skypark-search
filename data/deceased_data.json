@@ -192761,8 +192761,15 @@
   {
     "deadId": "1670522",
     "strDate": "2026-10-21",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-02018",
     "deadName": "박옥연",
+    "retDate": null
+  },
+  {
+    "deadId": "1670591",
+    "strDate": "2026-10-21",
+    "ensNo": "1추모의집-09실-부부단-02018",
+    "deadName": "이규석",
     "retDate": null
   },
   {
