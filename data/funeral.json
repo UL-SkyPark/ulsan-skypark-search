@@ -6180,6 +6180,16 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1670602",
+    "deadName": "정나경",
+    "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1670603",
+    "deadName": "박지유",
+    "dcGubun": "TCM1200099"
+  },
+  {
     "deadId": "1670624",
     "deadName": "박판진",
     "dcGubun": "TCM1200002"
@@ -6187,6 +6197,11 @@
   {
     "deadId": "1670629",
     "deadName": "최임선",
+    "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1670631",
+    "deadName": "강동제",
     "dcGubun": "TCM1200001"
   }
 ]
