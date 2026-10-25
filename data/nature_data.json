@@ -66421,6 +66421,12 @@
   },
   {
     "natDate": "2026-10-25",
+    "natNo": null,
+    "deadId": "1670656",
+    "deadName": "김순호"
+  },
+  {
+    "natDate": "2026-10-25",
     "natNo": "수목장-2-3-0023",
     "deadId": "1670658",
     "deadName": "이옥자"
