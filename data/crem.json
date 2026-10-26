@@ -77,7 +77,7 @@
       "burnNo": "03",
       "burnStatus": "9",
       "burnStrTime": "09:32",
-      "burnEndTime": "10:10",
+      "burnEndTime": "10:49",
       "waitRoom": "203",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
@@ -747,17 +747,17 @@
       "burnDate": 1792940400000,
       "burnChasu": "02",
       "burnNo": "02",
-      "burnStatus": "8",
+      "burnStatus": "9",
       "burnStrTime": "08:58",
       "burnEndTime": "10:07",
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "8",
-        "name": "화장 종료",
+        "code": "9",
+        "name": "유골인도",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "8"
+          "code": "9"
         }
       },
       "id": {
