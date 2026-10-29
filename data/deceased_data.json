@@ -193109,17 +193109,17 @@
     "retDate": null
   },
   {
-    "deadId": "1670773",
-    "strDate": "2026-10-29",
-    "ensNo": null,
-    "deadName": "현기문",
-    "retDate": null
-  },
-  {
     "deadId": "1670791",
     "strDate": "2026-10-29",
     "ensNo": "1추모의집-64실-개인단-22940",
     "deadName": "금석준",
+    "retDate": null
+  },
+  {
+    "deadId": "1670773",
+    "strDate": "2026-10-29",
+    "ensNo": "1추모의집-64실-개인단-22941",
+    "deadName": "현기문",
     "retDate": null
   }
 ]
