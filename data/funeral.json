@@ -6340,8 +6340,18 @@
     "dcGubun": "TCM1200002"
   },
   {
+    "deadId": "1670830",
+    "deadName": "정희석",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1670832",
     "deadName": "신원구",
     "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1670833",
+    "deadName": "김광섭",
+    "dcGubun": "TCM1200001"
   }
 ]
