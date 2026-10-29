@@ -492,7 +492,7 @@
     "cremSeq": 18,
     "objt": "A001",
     "burnDate": 1793199600000,
-    "burnNo": null,
+    "burnNo": "05",
     "burnChasu": "04",
     "deadId": 1670835,
     "thedead": {
@@ -506,16 +506,24 @@
     "hwaBrazier": {
       "burnDate": 1793199600000,
       "burnChasu": "04",
-      "burnNo": null,
-      "burnStatus": null,
+      "burnNo": "05",
+      "burnStatus": "2",
       "burnStrTime": null,
       "burnEndTime": null,
-      "waitRoom": null,
-      "burnStatusCode": null,
+      "waitRoom": "205",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
       "id": {
         "burnDate": 1793199600000,
         "burnChasu": "04",
-        "burnNo": null
+        "burnNo": "05"
       }
     },
     "objtCode": "A001",
@@ -533,6 +541,54 @@
     "id": {
       "cremDate": 1793199600000,
       "cremSeq": 18
+    }
+  },
+  {
+    "cremDate": "2026-10-29",
+    "cremSeq": 19,
+    "objt": "A001",
+    "burnDate": 1793199600000,
+    "burnNo": null,
+    "burnChasu": "05",
+    "deadId": 1670817,
+    "thedead": {
+      "deadId": 1670817,
+      "deadName": "정광자",
+      "id": 1670817,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1793199600000,
+      "burnChasu": "05",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1793199600000,
+        "burnChasu": "05",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1793199600000,
+      "cremSeq": 19
     }
   },
   {
@@ -947,17 +1003,17 @@
       "burnDate": 1793199600000,
       "burnChasu": "03",
       "burnNo": "01",
-      "burnStatus": "3",
+      "burnStatus": "8",
       "burnStrTime": "09:21",
-      "burnEndTime": null,
+      "burnEndTime": "10:37",
       "waitRoom": "201",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "3",
-        "name": "화장 시작",
+        "code": "8",
+        "name": "화장 종료",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "3"
+          "code": "8"
         }
       },
       "id": {
