@@ -62339,7 +62339,7 @@
     "strDate": "2018-07-28",
     "ensNo": "1추모의집-21실-개인단-06352",
     "deadName": "구인업",
-    "retDate": null
+    "retDate": "2026-10-31"
   },
   {
     "deadId": "1461826",
@@ -193162,6 +193162,20 @@
     "strDate": "2026-10-30",
     "ensNo": "1추모의집-64실-개인단-22946",
     "deadName": "김상옥",
+    "retDate": null
+  },
+  {
+    "deadId": "1461827",
+    "strDate": "2026-10-31",
+    "ensNo": "1추모의집-09실-부부단-02025",
+    "deadName": "구인업",
+    "retDate": null
+  },
+  {
+    "deadId": "1670849",
+    "strDate": "2026-10-31",
+    "ensNo": "1추모의집-09실-부부단-02025",
+    "deadName": "박복동",
     "retDate": null
   },
   {
