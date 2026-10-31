@@ -193165,13 +193165,6 @@
     "retDate": null
   },
   {
-    "deadId": "1670875",
-    "strDate": "2026-10-31",
-    "ensNo": null,
-    "deadName": "이중구",
-    "retDate": null
-  },
-  {
     "deadId": "1461827",
     "strDate": "2026-10-31",
     "ensNo": "1추모의집-09실-부부단-02025",
@@ -193211,6 +193204,13 @@
     "strDate": "2026-10-31",
     "ensNo": "1추모의집-64실-개인단-22950",
     "deadName": "홍미경",
+    "retDate": null
+  },
+  {
+    "deadId": "1670875",
+    "strDate": "2026-10-31",
+    "ensNo": "1추모의집-64실-개인단-22951",
+    "deadName": "이중구",
     "retDate": null
   }
 ]
