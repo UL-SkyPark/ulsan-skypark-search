@@ -193235,17 +193235,17 @@
     "retDate": null
   },
   {
-    "deadId": "1670916",
-    "strDate": "2026-11-01",
-    "ensNo": null,
-    "deadName": "이영미",
-    "retDate": null
-  },
-  {
     "deadId": "1670928",
     "strDate": "2026-11-01",
     "ensNo": "1추모의집-64실-개인단-22955",
     "deadName": "정영필",
+    "retDate": null
+  },
+  {
+    "deadId": "1670916",
+    "strDate": "2026-11-01",
+    "ensNo": "1추모의집-64실-개인단-22956",
+    "deadName": "이영미",
     "retDate": null
   }
 ]
