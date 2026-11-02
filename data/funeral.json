@@ -6410,8 +6410,18 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1670976",
+    "deadName": "조순영",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1670977",
     "deadName": "김계련",
     "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1670978",
+    "deadName": "라병래",
+    "dcGubun": "TCM1200001"
   }
 ]
