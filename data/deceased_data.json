@@ -193270,13 +193270,6 @@
     "retDate": null
   },
   {
-    "deadId": "1670946",
-    "strDate": "2026-11-03",
-    "ensNo": null,
-    "deadName": "이귀옥",
-    "retDate": null
-  },
-  {
     "deadId": "1670938",
     "strDate": "2026-11-03",
     "ensNo": "1추모의집-43실-개인단-14575",
@@ -193288,6 +193281,13 @@
     "strDate": "2026-11-03",
     "ensNo": "1추모의집-51실-개인단-16759",
     "deadName": "장영란",
+    "retDate": null
+  },
+  {
+    "deadId": "1670946",
+    "strDate": "2026-11-03",
+    "ensNo": "1추모의집-64실-개인단-22959",
+    "deadName": "이귀옥",
     "retDate": null
   }
 ]
