@@ -193270,13 +193270,6 @@
     "retDate": null
   },
   {
-    "deadId": "1670987",
-    "strDate": "2026-11-03",
-    "ensNo": null,
-    "deadName": "채호석",
-    "retDate": null
-  },
-  {
     "deadId": "1670992",
     "strDate": "2026-11-03",
     "ensNo": null,
@@ -193309,6 +193302,13 @@
     "strDate": "2026-11-03",
     "ensNo": "1추모의집-64실-개인단-22960",
     "deadName": "이재우",
+    "retDate": null
+  },
+  {
+    "deadId": "1670987",
+    "strDate": "2026-11-03",
+    "ensNo": "1추모의집-64실-개인단-22961",
+    "deadName": "채호석",
     "retDate": null
   }
 ]
