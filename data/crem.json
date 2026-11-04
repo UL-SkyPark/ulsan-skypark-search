@@ -60,13 +60,117 @@
     "cremSeq": 10,
     "objt": "A001",
     "burnDate": 1793804400000,
-    "burnNo": null,
+    "burnNo": "10",
     "burnChasu": "03",
     "deadId": 1671053,
     "thedead": {
       "deadId": 1671053,
       "deadName": "윤수옥",
       "id": 1671053,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1793804400000,
+      "burnChasu": "03",
+      "burnNo": "10",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1793804400000,
+        "burnChasu": "03",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1793804400000,
+      "cremSeq": 10
+    }
+  },
+  {
+    "cremDate": "2026-11-05",
+    "cremSeq": 11,
+    "objt": "A001",
+    "burnDate": 1793804400000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1671043,
+    "thedead": {
+      "deadId": 1671043,
+      "deadName": "전복이",
+      "id": 1671043,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1793804400000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1793804400000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1793804400000,
+      "cremSeq": 11
+    }
+  },
+  {
+    "cremDate": "2026-11-05",
+    "cremSeq": 12,
+    "objt": "A001",
+    "burnDate": 1793804400000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1671046,
+    "thedead": {
+      "deadId": 1671046,
+      "deadName": "송봉식",
+      "id": 1671046,
       "new": false
     },
     "applId": "*******",
@@ -100,7 +204,7 @@
     },
     "id": {
       "cremDate": 1793804400000,
-      "cremSeq": 10
+      "cremSeq": 12
     }
   },
   {
