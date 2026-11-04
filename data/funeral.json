@@ -6445,8 +6445,18 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1671065",
+    "deadName": "이신길",
+    "dcGubun": "TCM1200099"
+  },
+  {
     "deadId": "1671071",
     "deadName": "윤동섭",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1671089",
+    "deadName": "성명불상",
+    "dcGubun": "TCM1200099"
   }
 ]
