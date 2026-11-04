@@ -193319,17 +193319,24 @@
     "retDate": null
   },
   {
-    "deadId": "1671035",
-    "strDate": "2026-11-04",
-    "ensNo": null,
-    "deadName": "박재선",
-    "retDate": null
-  },
-  {
     "deadId": "1671071",
     "strDate": "2026-11-04",
     "ensNo": "1추모의집-64실-개인단-22964",
     "deadName": "윤동섭",
+    "retDate": null
+  },
+  {
+    "deadId": "1671035",
+    "strDate": "2026-11-04",
+    "ensNo": "1추모의집-64실-개인단-22965",
+    "deadName": "박재선",
+    "retDate": null
+  },
+  {
+    "deadId": "1671014",
+    "strDate": "2026-11-04",
+    "ensNo": "1추모의집-64실-개인단-22966",
+    "deadName": "이수자",
     "retDate": null
   }
 ]
