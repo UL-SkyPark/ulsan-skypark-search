@@ -193531,8 +193531,15 @@
   {
     "deadId": "1671185",
     "strDate": "2026-11-08",
-    "ensNo": null,
+    "ensNo": "1추모의집-17실-무연고-04779",
     "deadName": "강신관",
+    "retDate": null
+  },
+  {
+    "deadId": "1671186",
+    "strDate": "2026-11-08",
+    "ensNo": "1추모의집-17실-무연고-04788",
+    "deadName": "김익수",
     "retDate": null
   }
 ]
