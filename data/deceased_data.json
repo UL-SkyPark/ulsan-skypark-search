@@ -49515,7 +49515,7 @@
     "strDate": "2017-08-22",
     "ensNo": "1추모의집-26실-개인단-08354",
     "deadName": "이왕걸",
-    "retDate": null
+    "retDate": "2026-11-08"
   },
   {
     "deadId": "1459995",
@@ -193526,6 +193526,20 @@
     "strDate": "2026-11-07",
     "ensNo": "1추모의집-64실-개인단-22984",
     "deadName": "최고봉",
+    "retDate": null
+  },
+  {
+    "deadId": "1512962",
+    "strDate": "2026-11-08",
+    "ensNo": "1추모의집-09실-부부단-02027",
+    "deadName": "이왕걸",
+    "retDate": null
+  },
+  {
+    "deadId": "1671171",
+    "strDate": "2026-11-08",
+    "ensNo": "1추모의집-09실-부부단-02027",
+    "deadName": "김정희",
     "retDate": null
   },
   {
