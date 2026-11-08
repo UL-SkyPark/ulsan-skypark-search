@@ -1177,6 +1177,54 @@
   },
   {
     "cremDate": "2026-11-08",
+    "cremSeq": 29,
+    "objt": "B001",
+    "burnDate": 1794063600000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1670012,
+    "thedead": {
+      "deadId": 1670012,
+      "deadName": "박기열",
+      "id": 1670012,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600006",
+    "hwaBrazier": {
+      "burnDate": 1794063600000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1794063600000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600006",
+      "name": "유택동산",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600006"
+      }
+    },
+    "id": {
+      "cremDate": 1794063600000,
+      "cremSeq": 29
+    }
+  },
+  {
+    "cremDate": "2026-11-08",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1794063600000,
