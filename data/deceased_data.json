@@ -153787,7 +153787,7 @@
     "strDate": "2024-07-20",
     "ensNo": "1추모의집-57실-개인단-19272",
     "deadName": "윤화자",
-    "retDate": null
+    "retDate": "2026-11-09"
   },
   {
     "deadId": "1474891",
@@ -193603,6 +193603,20 @@
     "strDate": "2026-11-08",
     "ensNo": "1추모의집-64실-개인단-22989",
     "deadName": "김가매",
+    "retDate": null
+  },
+  {
+    "deadId": "1566950",
+    "strDate": "2026-11-09",
+    "ensNo": "1추모의집-09실-부부단-02029",
+    "deadName": "윤화자",
+    "retDate": null
+  },
+  {
+    "deadId": "1671224",
+    "strDate": "2026-11-09",
+    "ensNo": "1추모의집-09실-부부단-02029",
+    "deadName": "박일수",
     "retDate": null
   }
 ]
