@@ -187383,20 +187383,6 @@
     "retDate": null
   },
   {
-    "deadId": "1541552",
-    "strDate": "2026-06-16",
-    "ensNo": "1추모의집-09실-개인단-01950",
-    "deadName": "윤영순",
-    "retDate": null
-  },
-  {
-    "deadId": "1656855",
-    "strDate": "2026-06-16",
-    "ensNo": "1추모의집-09실-개인단-01950",
-    "deadName": "김동길",
-    "retDate": null
-  },
-  {
     "deadId": "1657019",
     "strDate": "2026-06-16",
     "ensNo": "1추모의집-09실-부부단-01945",
@@ -187464,6 +187450,20 @@
     "strDate": "2026-06-16",
     "ensNo": "1추모의집-09실-부부단-01949",
     "deadName": "김덕재",
+    "retDate": null
+  },
+  {
+    "deadId": "1541552",
+    "strDate": "2026-06-16",
+    "ensNo": "1추모의집-09실-부부단-01950",
+    "deadName": "윤영순",
+    "retDate": null
+  },
+  {
+    "deadId": "1656855",
+    "strDate": "2026-06-16",
+    "ensNo": "1추모의집-09실-부부단-01950",
+    "deadName": "김동길",
     "retDate": null
   },
   {
@@ -187915,20 +187915,6 @@
     "retDate": null
   },
   {
-    "deadId": "1474413",
-    "strDate": "2026-06-27",
-    "ensNo": "1추모의집-09실-개인단-01960",
-    "deadName": "김용득",
-    "retDate": null
-  },
-  {
-    "deadId": "1666459",
-    "strDate": "2026-06-27",
-    "ensNo": "1추모의집-09실-개인단-01960",
-    "deadName": "박옥순",
-    "retDate": null
-  },
-  {
     "deadId": "1578376",
     "strDate": "2026-06-27",
     "ensNo": "1추모의집-09실-부부단-01959",
@@ -187940,6 +187926,20 @@
     "strDate": "2026-06-27",
     "ensNo": "1추모의집-09실-부부단-01959",
     "deadName": "신승원",
+    "retDate": null
+  },
+  {
+    "deadId": "1474413",
+    "strDate": "2026-06-27",
+    "ensNo": "1추모의집-09실-부부단-01960",
+    "deadName": "김용득",
+    "retDate": null
+  },
+  {
+    "deadId": "1666459",
+    "strDate": "2026-06-27",
+    "ensNo": "1추모의집-09실-부부단-01960",
+    "deadName": "박옥순",
     "retDate": null
   },
   {
@@ -190087,14 +190087,14 @@
   {
     "deadId": "1545705",
     "strDate": "2026-08-13",
-    "ensNo": "1추모의집-09실-개인단-01982",
+    "ensNo": "1추모의집-09실-부부단-01982",
     "deadName": "최해석",
     "retDate": null
   },
   {
     "deadId": "1667963",
     "strDate": "2026-08-13",
-    "ensNo": "1추모의집-09실-개인단-01982",
+    "ensNo": "1추모의집-09실-부부단-01982",
     "deadName": "전말순",
     "retDate": null
   },
@@ -190339,14 +190339,14 @@
   {
     "deadId": "1517592",
     "strDate": "2026-08-20",
-    "ensNo": "1추모의집-09실-개인단-01986",
+    "ensNo": "1추모의집-09실-부부단-01986",
     "deadName": "김치남",
     "retDate": null
   },
   {
     "deadId": "1567948",
     "strDate": "2026-08-20",
-    "ensNo": "1추모의집-09실-개인단-01986",
+    "ensNo": "1추모의집-09실-부부단-01986",
     "deadName": "박영자",
     "retDate": null
   },
@@ -191039,28 +191039,28 @@
   {
     "deadId": "1554245",
     "strDate": "2026-09-08",
-    "ensNo": "1추모의집-09실-개인단-01993",
+    "ensNo": "1추모의집-09실-부부단-01993",
     "deadName": "박승호",
     "retDate": null
   },
   {
     "deadId": "1652972",
     "strDate": "2026-09-08",
-    "ensNo": "1추모의집-09실-개인단-01993",
+    "ensNo": "1추모의집-09실-부부단-01993",
     "deadName": "김춘자",
     "retDate": null
   },
   {
     "deadId": "1567285",
     "strDate": "2026-09-08",
-    "ensNo": "1추모의집-09실-개인단-01994",
+    "ensNo": "1추모의집-09실-부부단-01994",
     "deadName": "정병철",
     "retDate": null
   },
   {
     "deadId": "1668626",
     "strDate": "2026-09-08",
-    "ensNo": "1추모의집-09실-개인단-01994",
+    "ensNo": "1추모의집-09실-부부단-01994",
     "deadName": "강연숙",
     "retDate": null
   },
@@ -191716,20 +191716,6 @@
     "retDate": "2026-09-27"
   },
   {
-    "deadId": "1466346",
-    "strDate": "2026-09-27",
-    "ensNo": "1추모의집-09실-개인단-02002",
-    "deadName": "장재원",
-    "retDate": null
-  },
-  {
-    "deadId": "1669529",
-    "strDate": "2026-09-27",
-    "ensNo": "1추모의집-09실-개인단-02002",
-    "deadName": "안정례",
-    "retDate": null
-  },
-  {
     "deadId": "1454190",
     "strDate": "2026-09-27",
     "ensNo": "1추모의집-09실-부부단-02000",
@@ -191755,6 +191741,20 @@
     "strDate": "2026-09-27",
     "ensNo": "1추모의집-09실-부부단-02001",
     "deadName": "이복자",
+    "retDate": null
+  },
+  {
+    "deadId": "1466346",
+    "strDate": "2026-09-27",
+    "ensNo": "1추모의집-09실-부부단-02002",
+    "deadName": "장재원",
+    "retDate": null
+  },
+  {
+    "deadId": "1669529",
+    "strDate": "2026-09-27",
+    "ensNo": "1추모의집-09실-부부단-02002",
+    "deadName": "안정례",
     "retDate": null
   },
   {
@@ -192843,20 +192843,6 @@
     "retDate": null
   },
   {
-    "deadId": "1473063",
-    "strDate": "2026-10-23",
-    "ensNo": "1추모의집-09실-개인단-02021",
-    "deadName": "임행남",
-    "retDate": null
-  },
-  {
-    "deadId": "1670516",
-    "strDate": "2026-10-23",
-    "ensNo": "1추모의집-09실-개인단-02021",
-    "deadName": "주옥분",
-    "retDate": null
-  },
-  {
     "deadId": "1670600",
     "strDate": "2026-10-23",
     "ensNo": "1추모의집-09실-부부단-02020",
@@ -192868,6 +192854,20 @@
     "strDate": "2026-10-23",
     "ensNo": "1추모의집-09실-부부단-02020",
     "deadName": "최정숙",
+    "retDate": null
+  },
+  {
+    "deadId": "1473063",
+    "strDate": "2026-10-23",
+    "ensNo": "1추모의집-09실-부부단-02021",
+    "deadName": "임행남",
+    "retDate": null
+  },
+  {
+    "deadId": "1670516",
+    "strDate": "2026-10-23",
+    "ensNo": "1추모의집-09실-부부단-02021",
+    "deadName": "주옥분",
     "retDate": null
   },
   {
@@ -192971,14 +192971,14 @@
   {
     "deadId": "1668377",
     "strDate": "2026-10-25",
-    "ensNo": "1추모의집-09실-개인단-02024",
+    "ensNo": "1추모의집-09실-부부단-02024",
     "deadName": "한초자",
     "retDate": null
   },
   {
     "deadId": "1670644",
     "strDate": "2026-10-25",
-    "ensNo": "1추모의집-09실-개인단-02024",
+    "ensNo": "1추모의집-09실-부부단-02024",
     "deadName": "전복도",
     "retDate": null
   },
@@ -193529,20 +193529,6 @@
     "retDate": null
   },
   {
-    "deadId": "1477080",
-    "strDate": "2026-11-08",
-    "ensNo": "1추모의집-09실-개인단-02028",
-    "deadName": "차영화",
-    "retDate": null
-  },
-  {
-    "deadId": "1671245",
-    "strDate": "2026-11-08",
-    "ensNo": "1추모의집-09실-개인단-02028",
-    "deadName": "한명",
-    "retDate": null
-  },
-  {
     "deadId": "1512962",
     "strDate": "2026-11-08",
     "ensNo": "1추모의집-09실-부부단-02027",
@@ -193554,6 +193540,20 @@
     "strDate": "2026-11-08",
     "ensNo": "1추모의집-09실-부부단-02027",
     "deadName": "김정희",
+    "retDate": null
+  },
+  {
+    "deadId": "1477080",
+    "strDate": "2026-11-08",
+    "ensNo": "1추모의집-09실-부부단-02028",
+    "deadName": "차영화",
+    "retDate": null
+  },
+  {
+    "deadId": "1671245",
+    "strDate": "2026-11-08",
+    "ensNo": "1추모의집-09실-부부단-02028",
+    "deadName": "한명",
     "retDate": null
   },
   {
