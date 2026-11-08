@@ -222,5 +222,53 @@
       "cremDate": 1794150000000,
       "cremSeq": 4
     }
+  },
+  {
+    "cremDate": "2026-11-09",
+    "cremSeq": 5,
+    "objt": "A001",
+    "burnDate": 1794150000000,
+    "burnNo": null,
+    "burnChasu": "02",
+    "deadId": 1671210,
+    "thedead": {
+      "deadId": 1671210,
+      "deadName": "손정재",
+      "id": 1671210,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1794150000000,
+      "burnChasu": "02",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1794150000000,
+        "burnChasu": "02",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1794150000000,
+      "cremSeq": 5
+    }
   }
 ]
