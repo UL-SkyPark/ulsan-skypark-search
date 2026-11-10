@@ -321,6 +321,54 @@
   },
   {
     "cremDate": "2026-11-10",
+    "cremSeq": 15,
+    "objt": "A001",
+    "burnDate": 1794236400000,
+    "burnNo": null,
+    "burnChasu": "04",
+    "deadId": 1671257,
+    "thedead": {
+      "deadId": 1671257,
+      "deadName": "이종식",
+      "id": 1671257,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1794236400000,
+      "burnChasu": "04",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1794236400000,
+        "burnChasu": "04",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "4회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1794236400000,
+      "cremSeq": 15
+    }
+  },
+  {
+    "cremDate": "2026-11-10",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1794236400000,
