@@ -193690,13 +193690,6 @@
     "retDate": null
   },
   {
-    "deadId": "1671282",
-    "strDate": "2026-11-11",
-    "ensNo": null,
-    "deadName": "강순례",
-    "retDate": null
-  },
-  {
     "deadId": "1671339",
     "strDate": "2026-11-11",
     "ensNo": "1추모의집-17실-무연고-04797",
@@ -193729,6 +193722,13 @@
     "strDate": "2026-11-11",
     "ensNo": "1추모의집-64실-개인단-22997",
     "deadName": "이경순",
+    "retDate": null
+  },
+  {
+    "deadId": "1671282",
+    "strDate": "2026-11-11",
+    "ensNo": "1추모의집-64실-개인단-22998",
+    "deadName": "강순례",
     "retDate": null
   }
 ]
