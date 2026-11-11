@@ -6580,8 +6580,23 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1671307",
+    "deadName": "황태호",
+    "dcGubun": "TCM1200002"
+  },
+  {
     "deadId": "1671308",
     "deadName": "강을남",
     "dcGubun": "TCM1200001"
+  },
+  {
+    "deadId": "1671339",
+    "deadName": "최애엽",
+    "dcGubun": "TCM1200099"
+  },
+  {
+    "deadId": "1671355",
+    "deadName": "정중수",
+    "dcGubun": "TCM1200002"
   }
 ]
