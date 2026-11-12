@@ -67286,8 +67286,12 @@
   {
     "natDate": "2026-11-12",
     "natNo": null,
-    "deadId": "1671334",
-    "deadName": "윤자영"
+    "deadId": [
+      "1671334"
+    ],
+    "deadName": [
+      "윤자영"
+    ]
   },
   {
     "natDate": "2026-11-12",
