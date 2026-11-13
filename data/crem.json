@@ -859,17 +859,17 @@
       "burnDate": 1794495600000,
       "burnChasu": "06",
       "burnNo": "02",
-      "burnStatus": "2",
-      "burnStrTime": null,
+      "burnStatus": "3",
+      "burnStrTime": "12:35",
       "burnEndTime": null,
       "waitRoom": "202",
       "burnStatusCode": {
         "basicCd": "BURN_STA",
-        "code": "2",
-        "name": "운구 중",
+        "code": "3",
+        "name": "화장 시작",
         "id": {
           "basicCd": "BURN_STA",
-          "code": "2"
+          "code": "3"
         }
       },
       "id": {
@@ -893,6 +893,54 @@
     "id": {
       "cremDate": 1794495600000,
       "cremSeq": 23
+    }
+  },
+  {
+    "cremDate": "2026-11-13",
+    "cremSeq": 24,
+    "objt": "A001",
+    "burnDate": 1794495600000,
+    "burnNo": null,
+    "burnChasu": "06",
+    "deadId": 1671368,
+    "thedead": {
+      "deadId": 1671368,
+      "deadName": "안재홍",
+      "id": 1671368,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1794495600000,
+      "burnChasu": "06",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1794495600000,
+        "burnChasu": "06",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1794495600000,
+      "cremSeq": 24
     }
   },
   {
