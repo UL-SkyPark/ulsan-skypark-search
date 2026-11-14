@@ -160857,7 +160857,7 @@
     "strDate": "2024-12-07",
     "ensNo": "1추모의집-59실-개인단-19949",
     "deadName": "한진화",
-    "retDate": null
+    "retDate": "2026-11-15"
   },
   {
     "deadId": "1475899",
@@ -193862,6 +193862,13 @@
     "strDate": "2026-11-14",
     "ensNo": "1추모의집-64실-개인단-23012",
     "deadName": "정임식",
+    "retDate": null
+  },
+  {
+    "deadId": "1671426",
+    "strDate": "2026-11-15",
+    "ensNo": null,
+    "deadName": "서상연",
     "retDate": null
   },
   {
