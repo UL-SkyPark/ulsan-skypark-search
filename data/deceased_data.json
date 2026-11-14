@@ -193865,17 +193865,24 @@
     "retDate": null
   },
   {
-    "deadId": "1671426",
-    "strDate": "2026-11-15",
-    "ensNo": null,
-    "deadName": "서상연",
-    "retDate": null
-  },
-  {
     "deadId": "1671490",
     "strDate": "2026-11-15",
     "ensNo": null,
     "deadName": "서주원",
+    "retDate": null
+  },
+  {
+    "deadId": "1570418",
+    "strDate": "2026-11-15",
+    "ensNo": "1추모의집-09실-부부단-02033",
+    "deadName": "한진화",
+    "retDate": null
+  },
+  {
+    "deadId": "1671426",
+    "strDate": "2026-11-15",
+    "ensNo": "1추모의집-09실-부부단-02033",
+    "deadName": "서상연",
     "retDate": null
   }
 ]
