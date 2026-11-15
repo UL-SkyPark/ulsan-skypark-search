@@ -57,6 +57,102 @@
   },
   {
     "cremDate": "2026-11-15",
+    "cremSeq": 10,
+    "objt": "A001",
+    "burnDate": 1794668400000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1671430,
+    "thedead": {
+      "deadId": 1671430,
+      "deadName": "정은희",
+      "id": 1671430,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1794668400000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1794668400000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1794668400000,
+      "cremSeq": 10
+    }
+  },
+  {
+    "cremDate": "2026-11-15",
+    "cremSeq": 11,
+    "objt": "A001",
+    "burnDate": 1794668400000,
+    "burnNo": null,
+    "burnChasu": "03",
+    "deadId": 1671424,
+    "thedead": {
+      "deadId": 1671424,
+      "deadName": "홍종열",
+      "id": 1671424,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600001",
+    "hwaBrazier": {
+      "burnDate": 1794668400000,
+      "burnChasu": "03",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1794668400000,
+        "burnChasu": "03",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "3회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600001",
+      "name": "추모의집",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600001"
+      }
+    },
+    "id": {
+      "cremDate": 1794668400000,
+      "cremSeq": 11
+    }
+  },
+  {
+    "cremDate": "2026-11-15",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1794668400000,
