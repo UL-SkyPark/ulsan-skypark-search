@@ -165897,7 +165897,7 @@
     "strDate": "2025-03-14",
     "ensNo": "1추모의집-60실-개인단-20436",
     "deadName": "이기성",
-    "retDate": null
+    "retDate": "2026-11-18"
   },
   {
     "deadId": "1476621",
@@ -193991,9 +193991,16 @@
     "retDate": null
   },
   {
+    "deadId": "1476620",
+    "strDate": "2026-11-18",
+    "ensNo": "1추모의집-09실-부부단-02035",
+    "deadName": "이기성",
+    "retDate": null
+  },
+  {
     "deadId": "1671504",
     "strDate": "2026-11-18",
-    "ensNo": null,
+    "ensNo": "1추모의집-09실-부부단-02035",
     "deadName": "박정희",
     "retDate": null
   },
