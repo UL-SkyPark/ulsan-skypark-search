@@ -194047,13 +194047,6 @@
     "retDate": null
   },
   {
-    "deadId": "1671583",
-    "strDate": "2026-11-19",
-    "ensNo": null,
-    "deadName": "김인준",
-    "retDate": null
-  },
-  {
     "deadId": "1671574",
     "strDate": "2026-11-19",
     "ensNo": "1추모의집-64실-개인단-23026",
@@ -194072,6 +194065,13 @@
     "strDate": "2026-11-19",
     "ensNo": "1추모의집-64실-개인단-23028",
     "deadName": "신진순",
+    "retDate": null
+  },
+  {
+    "deadId": "1671583",
+    "strDate": "2026-11-19",
+    "ensNo": "1추모의집-64실-개인단-23029",
+    "deadName": "김인준",
     "retDate": null
   }
 ]
