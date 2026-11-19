@@ -390,5 +390,61 @@
       "cremDate": 1795100400000,
       "cremSeq": 7
     }
+  },
+  {
+    "cremDate": "2026-11-20",
+    "cremSeq": 8,
+    "objt": "A001",
+    "burnDate": 1795100400000,
+    "burnNo": "02",
+    "burnChasu": "02",
+    "deadId": 1671591,
+    "thedead": {
+      "deadId": 1671591,
+      "deadName": "박규철",
+      "id": 1671591,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1795100400000,
+      "burnChasu": "02",
+      "burnNo": "02",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "202",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1795100400000,
+        "burnChasu": "02",
+        "burnNo": "02"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "2회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1795100400000,
+      "cremSeq": 8
+    }
   }
 ]
