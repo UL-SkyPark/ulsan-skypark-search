@@ -194047,13 +194047,6 @@
     "retDate": null
   },
   {
-    "deadId": "1671540",
-    "strDate": "2026-11-19",
-    "ensNo": null,
-    "deadName": "전상호",
-    "retDate": null
-  },
-  {
     "deadId": "1671574",
     "strDate": "2026-11-19",
     "ensNo": "1추모의집-64실-개인단-23026",
@@ -194086,6 +194079,13 @@
     "strDate": "2026-11-19",
     "ensNo": "1추모의집-64실-개인단-23030",
     "deadName": "남궁미애",
+    "retDate": null
+  },
+  {
+    "deadId": "1671540",
+    "strDate": "2026-11-19",
+    "ensNo": "1추모의집-64실-개인단-23031",
+    "deadName": "전상호",
     "retDate": null
   }
 ]
