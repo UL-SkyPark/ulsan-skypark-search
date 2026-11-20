@@ -194110,13 +194110,6 @@
     "retDate": null
   },
   {
-    "deadId": "1671611",
-    "strDate": "2026-11-20",
-    "ensNo": null,
-    "deadName": "김귀란",
-    "retDate": null
-  },
-  {
     "deadId": "1671604",
     "strDate": "2026-11-20",
     "ensNo": "1추모의집-64실-개인단-23034",
@@ -194135,6 +194128,13 @@
     "strDate": "2026-11-20",
     "ensNo": "1추모의집-64실-개인단-23036",
     "deadName": "배인규",
+    "retDate": null
+  },
+  {
+    "deadId": "1671611",
+    "strDate": "2026-11-20",
+    "ensNo": "1추모의집-64실-개인단-23037",
+    "deadName": "김귀란",
     "retDate": null
   }
 ]
