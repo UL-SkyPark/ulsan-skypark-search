@@ -6740,6 +6740,11 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1671687",
+    "deadName": "정재용",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1671709",
     "deadName": "심재일",
     "dcGubun": "TCM1200099"
@@ -6760,8 +6765,18 @@
     "dcGubun": "TCM1200001"
   },
   {
+    "deadId": "1671752",
+    "deadName": "김인주",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1671753",
     "deadName": "최준혁",
     "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1671757",
+    "deadName": "정용식",
+    "dcGubun": "TCM1200001"
   }
 ]
