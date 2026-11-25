@@ -101672,7 +101672,7 @@
     "strDate": "2021-06-20",
     "ensNo": "1추모의집-41실-개인단-13818",
     "deadName": "박무영",
-    "retDate": null
+    "retDate": "2026-11-26"
   },
   {
     "deadId": "1467446",
@@ -194429,6 +194429,13 @@
     "strDate": "2026-11-25",
     "ensNo": "1추모의집-64실-개인단-23061",
     "deadName": "이영선",
+    "retDate": null
+  },
+  {
+    "deadId": "1671858",
+    "strDate": "2026-11-26",
+    "ensNo": null,
+    "deadName": "최임숙",
     "retDate": null
   }
 ]
