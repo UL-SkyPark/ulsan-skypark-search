@@ -769,6 +769,62 @@
   },
   {
     "cremDate": "2026-11-25",
+    "cremSeq": 22,
+    "objt": "A001",
+    "burnDate": 1795532400000,
+    "burnNo": "10",
+    "burnChasu": "05",
+    "deadId": 1671800,
+    "thedead": {
+      "deadId": 1671800,
+      "deadName": "권원술",
+      "id": 1671800,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1795532400000,
+      "burnChasu": "05",
+      "burnNo": "10",
+      "burnStatus": "2",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "210",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "2",
+        "name": "운구 중",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "2"
+        }
+      },
+      "id": {
+        "burnDate": 1795532400000,
+        "burnChasu": "05",
+        "burnNo": "10"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1795532400000,
+      "cremSeq": 22
+    }
+  },
+  {
+    "cremDate": "2026-11-25",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1795532400000,
