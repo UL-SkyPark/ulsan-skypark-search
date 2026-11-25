@@ -194404,13 +194404,6 @@
     "retDate": null
   },
   {
-    "deadId": "1671722",
-    "strDate": "2026-11-25",
-    "ensNo": null,
-    "deadName": "이영선",
-    "retDate": null
-  },
-  {
     "deadId": "1671799",
     "strDate": "2026-11-25",
     "ensNo": "1추모의집-64실-개인단-23058",
@@ -194429,6 +194422,13 @@
     "strDate": "2026-11-25",
     "ensNo": "1추모의집-64실-개인단-23060",
     "deadName": "김선희",
+    "retDate": null
+  },
+  {
+    "deadId": "1671722",
+    "strDate": "2026-11-25",
+    "ensNo": "1추모의집-64실-개인단-23061",
+    "deadName": "이영선",
     "retDate": null
   }
 ]
