@@ -6815,6 +6815,11 @@
     "dcGubun": "TCM1200003"
   },
   {
+    "deadId": "1671817",
+    "deadName": "이인순",
+    "dcGubun": "TCM1200001"
+  },
+  {
     "deadId": "1671827",
     "deadName": "김종환",
     "dcGubun": "TCM1200001"
@@ -6823,5 +6828,10 @@
     "deadId": "1671829",
     "deadName": "최현석",
     "dcGubun": "TCM1200002"
+  },
+  {
+    "deadId": "1671858",
+    "deadName": "최임숙",
+    "dcGubun": "TCM1200001"
   }
 ]
