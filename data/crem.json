@@ -777,6 +777,110 @@
   },
   {
     "cremDate": "2026-11-26",
+    "cremSeq": 22,
+    "objt": "A001",
+    "burnDate": 1795618800000,
+    "burnNo": "08",
+    "burnChasu": "06",
+    "deadId": 1671802,
+    "thedead": {
+      "deadId": 1671802,
+      "deadName": "양은석",
+      "id": 1671802,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1795618800000,
+      "burnChasu": "06",
+      "burnNo": "08",
+      "burnStatus": "1",
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": "208",
+      "burnStatusCode": {
+        "basicCd": "BURN_STA",
+        "code": "1",
+        "name": "접수",
+        "id": {
+          "basicCd": "BURN_STA",
+          "code": "1"
+        }
+      },
+      "id": {
+        "burnDate": 1795618800000,
+        "burnChasu": "06",
+        "burnNo": "08"
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "6회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1795618800000,
+      "cremSeq": 22
+    }
+  },
+  {
+    "cremDate": "2026-11-26",
+    "cremSeq": 23,
+    "objt": "B001",
+    "burnDate": 1795618800000,
+    "burnNo": null,
+    "burnChasu": "07",
+    "deadId": 1671363,
+    "thedead": {
+      "deadId": 1671363,
+      "deadName": "강중관",
+      "id": 1671363,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600099",
+    "hwaBrazier": {
+      "burnDate": 1795618800000,
+      "burnChasu": "07",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1795618800000,
+        "burnChasu": "07",
+        "burnNo": null
+      }
+    },
+    "objtCode": "B001",
+    "objtName": "개장유골",
+    "burnChasuName": "7회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600099",
+      "name": "반출",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600099"
+      }
+    },
+    "id": {
+      "cremDate": 1795618800000,
+      "cremSeq": 23
+    }
+  },
+  {
+    "cremDate": "2026-11-26",
     "cremSeq": 3,
     "objt": "A001",
     "burnDate": 1795618800000,
