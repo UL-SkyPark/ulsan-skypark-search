@@ -561,6 +561,54 @@
   },
   {
     "cremDate": "2026-11-28",
+    "cremSeq": 19,
+    "objt": "A001",
+    "burnDate": 1795791600000,
+    "burnNo": null,
+    "burnChasu": "05",
+    "deadId": 1671910,
+    "thedead": {
+      "deadId": 1671910,
+      "deadName": "홍사연",
+      "id": 1671910,
+      "new": false
+    },
+    "applId": "*******",
+    "scatterPlace": "TMC0600010",
+    "hwaBrazier": {
+      "burnDate": 1795791600000,
+      "burnChasu": "05",
+      "burnNo": null,
+      "burnStatus": null,
+      "burnStrTime": null,
+      "burnEndTime": null,
+      "waitRoom": null,
+      "burnStatusCode": null,
+      "id": {
+        "burnDate": 1795791600000,
+        "burnChasu": "05",
+        "burnNo": null
+      }
+    },
+    "objtCode": "A001",
+    "objtName": "시신",
+    "burnChasuName": "5회차",
+    "scatterPlaceCode": {
+      "basicCd": "TMC06",
+      "code": "TMC0600010",
+      "name": "시설내자연장",
+      "id": {
+        "basicCd": "TMC06",
+        "code": "TMC0600010"
+      }
+    },
+    "id": {
+      "cremDate": 1795791600000,
+      "cremSeq": 19
+    }
+  },
+  {
+    "cremDate": "2026-11-28",
     "cremSeq": 2,
     "objt": "A001",
     "burnDate": 1795791600000,
